@@ -1,6 +1,14 @@
 # tooling-protos
 
-This repo holds the protobuf definitions for the `job-distributor` and `orchestrator` services.
+This repo holds the protobuf definitions and generated Go SDKs for the `job-distributor` and `orchestrator` services.
+
+Go applications should depend on the necessary SDKs directly
+
+```bash
+$ go get github.com/smartcontractkit/tooling-protos/job-distributor/app
+```
+
+Other applications may build their own SDKs directly from the provided protobufs.
 
 ## dependencies
 
