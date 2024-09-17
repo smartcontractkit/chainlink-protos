@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package tooling.distributor.app;
+package app;
 
-option go_package = "job-distributor/app";
+option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/app";
 
 /* AppService exposes two endpoints for querying the health and version of the
  * API */

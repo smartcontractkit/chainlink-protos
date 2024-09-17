@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package tooling.distributor.job;
+package job;
 
 import "google/protobuf/timestamp.proto";
 import "job-distributor/shared/ptypes/label.proto";
 
-option go_package = "job-distributor/job";
+option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/job";
 
 // JobService provides RPCs for managing jobs and job proposals within the
 // system.
@@ -71,7 +71,7 @@ message Job {
       6; // Timestamp when the job was last updated.
   google.protobuf.Timestamp deleted_at =
       7; // Timestamp when the job was deleted, if applicable.
-  repeated tooling.distributor.label.Label labels =
+  repeated label.Label labels =
       8; // Set of labels associated with the job.
 }
 
@@ -123,7 +123,7 @@ message ListJobsRequest {
   message Filter {
     repeated string ids = 1;      // Filter by job IDs.
     repeated string node_ids = 2; // Filter by node IDs.
-    repeated tooling.distributor.label.Selector selectors =
+    repeated label.Selector selectors =
         3; // Filter by selectors
   }
 
@@ -155,7 +155,7 @@ message ListProposalsResponse {
 message ProposeJobRequest {
   string node_id = 1; // ID of the node to which the job is proposed.
   string spec = 2;    // Specification of the job being proposed.
-  repeated tooling.distributor.label.Label labels =
+  repeated label.Label labels =
       3; // Labels to associate with the job.
 }
 
@@ -196,7 +196,7 @@ message UpdateJobRequest {
     string id = 1;   // Unique identifier of the job to update.
     string uuid = 2; // Universally unique identifier of the job to update.
   }
-  repeated tooling.distributor.label.Label labels =
+  repeated label.Label labels =
       3; // Set of labels associated with the job.
 }
 

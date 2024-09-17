@@ -2,7 +2,54 @@
 
 version: "3"
 
-includes:
-  generate:
-    taskfile: ./taskfiles/generate/taskfile.yml
-    aliases: [gen]
+tasks:
+  proto:all:
+    desc: Generate all protobuf files for all services
+    cmds:
+      - task proto:gen:job-distributor
+      - task proto:gen:orchestrator
+      - task go:mod:tidy
+
+  proto:gen:job-distributor:
+    desc: Generate all protobuf files for the job-distributor service
+    cmds:
+      - find ./job-distributor/ -name '*.pb.go' -delete
+      - task: proto:gen
+        vars:
+          SERVICE_NAME: job-distributor
+
+  proto:gen:orchestrator:
+    desc: "Generate Go code from protobuf files for orchestrator"
+    cmds:
+      - find ./orchestrator/ -name '*.pb.go' -delete
+      - task: proto:wsrpc:gen
+        vars:
+          SERVICE_NAME: orchestrator
+
+  proto:clean:
+    desc: "Clean generated protobuf files for all services"
+    cmds:
+      - find ./job-distributor/ -name '*.pb.go' -delete
+      - find ./orchestrator/ -name '*.pb.go' -delete
+
+  go:mod:tidy:
+    desc: "Run go mod tidy in each service folder"
+    cmds:
+      - (cd ./job-distributor && go mod tidy)
+      - (cd ./orchestrator && go mod tidy)
+
+  proto:gen:
+    internal: true
+    desc: "Generate Go code from protobuf files"
+    cmds:
+      - |
+        proto_files=$(find ./{{.SERVICE_NAME}} -name "*.proto")
+        protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative $proto_files
+
+  proto:wsrpc:gen:
+    internal: true
+    desc: "Generate Go code from protobuf files with wsrpc"
+    cmds:
+      - |
+        proto_files=$(find ./{{.SERVICE_NAME}} -name "*.proto")
+        protoc --go_out=. --go_opt=paths=source_relative --go-wsrpc_out=. --go-wsrpc_opt=paths=source_relative $proto_files
