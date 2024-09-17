@@ -1,0 +1,22 @@
+# Log files
+*.log
+
+# Compiled binaries
+bin/
+dist/
+
+# Editor files
+.vscode
+
+# Direnv
+.envrc
+
+*.out
+
+*.DS_Store
+
+# Taskfile
+.task/
+
+# npm
+node_modules
