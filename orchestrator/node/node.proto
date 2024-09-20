@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package tooling.orchestrator.node;
+package node;
 
-option go_package = "orchestrator/node";
+option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/node";
 
 // RPC methods that the FMS will call on the node.
 service NodeService {

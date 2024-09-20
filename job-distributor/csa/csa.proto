@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package tooling.distributor.csa;
+package csa;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "job-distributor/csa";
+option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/csa";
 
 service CSAService {
   rpc GetKeypair(GetKeypairRequest) returns (GetKeypairResponse);
