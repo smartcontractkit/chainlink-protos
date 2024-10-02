@@ -20,18 +20,15 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	AppService_Version_FullMethodName = "/app.AppService/Version"
-	AppService_Health_FullMethodName  = "/app.AppService/Health"
 )
 
 // AppServiceClient is the client API for AppService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// AppService exposes two endpoints for querying the health and version of the
-// API
+// AppService exposes one endpoint for querying the version of the API
 type AppServiceClient interface {
 	Version(ctx context.Context, in *VersionRequest, opts ...grpc.CallOption) (*VersionResponse, error)
-	Health(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error)
 }
 
 type appServiceClient struct {
@@ -52,25 +49,13 @@ func (c *appServiceClient) Version(ctx context.Context, in *VersionRequest, opts
 	return out, nil
 }
 
-func (c *appServiceClient) Health(ctx context.Context, in *HealthRequest, opts ...grpc.CallOption) (*HealthResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HealthResponse)
-	err := c.cc.Invoke(ctx, AppService_Health_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // AppServiceServer is the server API for AppService service.
 // All implementations must embed UnimplementedAppServiceServer
 // for forward compatibility.
 //
-// AppService exposes two endpoints for querying the health and version of the
-// API
+// AppService exposes one endpoint for querying the version of the API
 type AppServiceServer interface {
 	Version(context.Context, *VersionRequest) (*VersionResponse, error)
-	Health(context.Context, *HealthRequest) (*HealthResponse, error)
 	mustEmbedUnimplementedAppServiceServer()
 }
 
@@ -83,9 +68,6 @@ type UnimplementedAppServiceServer struct{}
 
 func (UnimplementedAppServiceServer) Version(context.Context, *VersionRequest) (*VersionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Version not implemented")
-}
-func (UnimplementedAppServiceServer) Health(context.Context, *HealthRequest) (*HealthResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Health not implemented")
 }
 func (UnimplementedAppServiceServer) mustEmbedUnimplementedAppServiceServer() {}
 func (UnimplementedAppServiceServer) testEmbeddedByValue()                    {}
@@ -126,24 +108,6 @@ func _AppService_Version_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AppService_Health_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HealthRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AppServiceServer).Health(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: AppService_Health_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppServiceServer).Health(ctx, req.(*HealthRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // AppService_ServiceDesc is the grpc.ServiceDesc for AppService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -154,10 +118,6 @@ var AppService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Version",
 			Handler:    _AppService_Version_Handler,
-		},
-		{
-			MethodName: "Health",
-			Handler:    _AppService_Health_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

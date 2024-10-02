@@ -10,8 +10,8 @@ import (
 	wsrpc "github.com/smartcontractkit/wsrpc"
 )
 
-// FeedsManagerClient is the client API for FeedsManager service.
-type FeedsManagerClient interface {
+// JobDistributorClient is the client API for JobDistributor service.
+type JobDistributorClient interface {
 	ApprovedJob(ctx context.Context, in *ApprovedJobRequest) (*ApprovedJobResponse, error)
 	Healthcheck(ctx context.Context, in *HealthcheckRequest) (*HealthcheckResponse, error)
 	UpdateNode(ctx context.Context, in *UpdateNodeRequest) (*UpdateNodeResponse, error)
@@ -19,15 +19,15 @@ type FeedsManagerClient interface {
 	CancelledJob(ctx context.Context, in *CancelledJobRequest) (*CancelledJobResponse, error)
 }
 
-type feedsManagerClient struct {
+type jobDistributorClient struct {
 	cc wsrpc.ClientInterface
 }
 
-func NewFeedsManagerClient(cc wsrpc.ClientInterface) FeedsManagerClient {
-	return &feedsManagerClient{cc}
+func NewJobDistributorClient(cc wsrpc.ClientInterface) JobDistributorClient {
+	return &jobDistributorClient{cc}
 }
 
-func (c *feedsManagerClient) ApprovedJob(ctx context.Context, in *ApprovedJobRequest) (*ApprovedJobResponse, error) {
+func (c *jobDistributorClient) ApprovedJob(ctx context.Context, in *ApprovedJobRequest) (*ApprovedJobResponse, error) {
 	out := new(ApprovedJobResponse)
 	err := c.cc.Invoke(ctx, "ApprovedJob", in, out)
 	if err != nil {
@@ -36,7 +36,7 @@ func (c *feedsManagerClient) ApprovedJob(ctx context.Context, in *ApprovedJobReq
 	return out, nil
 }
 
-func (c *feedsManagerClient) Healthcheck(ctx context.Context, in *HealthcheckRequest) (*HealthcheckResponse, error) {
+func (c *jobDistributorClient) Healthcheck(ctx context.Context, in *HealthcheckRequest) (*HealthcheckResponse, error) {
 	out := new(HealthcheckResponse)
 	err := c.cc.Invoke(ctx, "Healthcheck", in, out)
 	if err != nil {
@@ -45,7 +45,7 @@ func (c *feedsManagerClient) Healthcheck(ctx context.Context, in *HealthcheckReq
 	return out, nil
 }
 
-func (c *feedsManagerClient) UpdateNode(ctx context.Context, in *UpdateNodeRequest) (*UpdateNodeResponse, error) {
+func (c *jobDistributorClient) UpdateNode(ctx context.Context, in *UpdateNodeRequest) (*UpdateNodeResponse, error) {
 	out := new(UpdateNodeResponse)
 	err := c.cc.Invoke(ctx, "UpdateNode", in, out)
 	if err != nil {
@@ -54,7 +54,7 @@ func (c *feedsManagerClient) UpdateNode(ctx context.Context, in *UpdateNodeReque
 	return out, nil
 }
 
-func (c *feedsManagerClient) RejectedJob(ctx context.Context, in *RejectedJobRequest) (*RejectedJobResponse, error) {
+func (c *jobDistributorClient) RejectedJob(ctx context.Context, in *RejectedJobRequest) (*RejectedJobResponse, error) {
 	out := new(RejectedJobResponse)
 	err := c.cc.Invoke(ctx, "RejectedJob", in, out)
 	if err != nil {
@@ -63,7 +63,7 @@ func (c *feedsManagerClient) RejectedJob(ctx context.Context, in *RejectedJobReq
 	return out, nil
 }
 
-func (c *feedsManagerClient) CancelledJob(ctx context.Context, in *CancelledJobRequest) (*CancelledJobResponse, error) {
+func (c *jobDistributorClient) CancelledJob(ctx context.Context, in *CancelledJobRequest) (*CancelledJobResponse, error) {
 	out := new(CancelledJobResponse)
 	err := c.cc.Invoke(ctx, "CancelledJob", in, out)
 	if err != nil {
@@ -72,8 +72,8 @@ func (c *feedsManagerClient) CancelledJob(ctx context.Context, in *CancelledJobR
 	return out, nil
 }
 
-// FeedsManagerServer is the server API for FeedsManager service.
-type FeedsManagerServer interface {
+// JobDistributorServer is the server API for JobDistributor service.
+type JobDistributorServer interface {
 	ApprovedJob(context.Context, *ApprovedJobRequest) (*ApprovedJobResponse, error)
 	Healthcheck(context.Context, *HealthcheckRequest) (*HealthcheckResponse, error)
 	UpdateNode(context.Context, *UpdateNodeRequest) (*UpdateNodeResponse, error)
@@ -81,76 +81,76 @@ type FeedsManagerServer interface {
 	CancelledJob(context.Context, *CancelledJobRequest) (*CancelledJobResponse, error)
 }
 
-func RegisterFeedsManagerServer(s wsrpc.ServiceRegistrar, srv FeedsManagerServer) {
-	s.RegisterService(&FeedsManager_ServiceDesc, srv)
+func RegisterJobDistributorServer(s wsrpc.ServiceRegistrar, srv JobDistributorServer) {
+	s.RegisterService(&JobDistributor_ServiceDesc, srv)
 }
 
-func _FeedsManager_ApprovedJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _JobDistributor_ApprovedJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(ApprovedJobRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	return srv.(FeedsManagerServer).ApprovedJob(ctx, in)
+	return srv.(JobDistributorServer).ApprovedJob(ctx, in)
 }
 
-func _FeedsManager_Healthcheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _JobDistributor_Healthcheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(HealthcheckRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	return srv.(FeedsManagerServer).Healthcheck(ctx, in)
+	return srv.(JobDistributorServer).Healthcheck(ctx, in)
 }
 
-func _FeedsManager_UpdateNode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _JobDistributor_UpdateNode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(UpdateNodeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	return srv.(FeedsManagerServer).UpdateNode(ctx, in)
+	return srv.(JobDistributorServer).UpdateNode(ctx, in)
 }
 
-func _FeedsManager_RejectedJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _JobDistributor_RejectedJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(RejectedJobRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	return srv.(FeedsManagerServer).RejectedJob(ctx, in)
+	return srv.(JobDistributorServer).RejectedJob(ctx, in)
 }
 
-func _FeedsManager_CancelledJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+func _JobDistributor_CancelledJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
 	in := new(CancelledJobRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
-	return srv.(FeedsManagerServer).CancelledJob(ctx, in)
+	return srv.(JobDistributorServer).CancelledJob(ctx, in)
 }
 
-// FeedsManager_ServiceDesc is the wsrpc.ServiceDesc for FeedsManager service.
+// JobDistributor_ServiceDesc is the wsrpc.ServiceDesc for JobDistributor service.
 // It's only intended for direct use with wsrpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var FeedsManager_ServiceDesc = wsrpc.ServiceDesc{
-	ServiceName: "proposer.FeedsManager",
-	HandlerType: (*FeedsManagerServer)(nil),
+var JobDistributor_ServiceDesc = wsrpc.ServiceDesc{
+	ServiceName: "proposer.JobDistributor",
+	HandlerType: (*JobDistributorServer)(nil),
 	Methods: []wsrpc.MethodDesc{
 		{
 			MethodName: "ApprovedJob",
-			Handler:    _FeedsManager_ApprovedJob_Handler,
+			Handler:    _JobDistributor_ApprovedJob_Handler,
 		},
 		{
 			MethodName: "Healthcheck",
-			Handler:    _FeedsManager_Healthcheck_Handler,
+			Handler:    _JobDistributor_Healthcheck_Handler,
 		},
 		{
 			MethodName: "UpdateNode",
-			Handler:    _FeedsManager_UpdateNode_Handler,
+			Handler:    _JobDistributor_UpdateNode_Handler,
 		},
 		{
 			MethodName: "RejectedJob",
-			Handler:    _FeedsManager_RejectedJob_Handler,
+			Handler:    _JobDistributor_RejectedJob_Handler,
 		},
 		{
 			MethodName: "CancelledJob",
-			Handler:    _FeedsManager_CancelledJob_Handler,
+			Handler:    _JobDistributor_CancelledJob_Handler,
 		},
 	},
 }

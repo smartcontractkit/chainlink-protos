@@ -4,17 +4,11 @@ package app;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/app";
 
-/* AppService exposes two endpoints for querying the health and version of the
- * API */
+// AppService exposes one endpoint for querying the version of the API
 service AppService {
-  rpc Version(VersionRequest) returns (VersionResponse) {}
-  rpc Health(HealthRequest) returns (HealthResponse) {}
+    rpc Version(VersionRequest) returns (VersionResponse) {}
 }
 
 message VersionRequest {}
 
 message VersionResponse { string version = 1; }
-
-message HealthRequest {}
-
-message HealthResponse {}
