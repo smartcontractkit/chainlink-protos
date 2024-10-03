@@ -1,6 +1,11 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.3/schema.json",
-  "changelog": "@changesets/changelog-github",
+  "changelog": [
+    "@changesets/changelog-github",
+    {
+      "repo": "smartcontractkit/chainlink-protos"
+    }
+  ],
   "commit": false,
   "fixed": [],
   "linked": [],
