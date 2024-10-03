@@ -2,7 +2,7 @@
   "name": "@chainlink/chainlink-protos",
   "private": true,
   "scripts": {
-    "ci:changeset:publish": "pnpm changeset publish",
+    "ci:changeset:publish": "sh ./scripts/tag-and-push.sh",
     "ci:changeset:version": "pnpm changeset version",
     "changesets": "pnpm changeset"
   },
