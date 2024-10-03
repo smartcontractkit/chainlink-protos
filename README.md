@@ -11,8 +11,8 @@ This repository serves as a central hub for shared protobuf definitions used acr
 Go applications can import only the necessary SDKs.
 
 ```bash
-$ go get github.com/smartcontractkit/chainlink-protos/job-distributor
-$ go get github.com/smartcontractkit/chainlink-protos/orchestrator
+$ go get github.com/smartcontractkit/chainlink-protos/job-distributor@v0.0.1
+$ go get github.com/smartcontractkit/chainlink-protos/orchestrator@v0.0.1
 ```
 
 ## Dependencies
