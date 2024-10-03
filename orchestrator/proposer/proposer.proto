@@ -4,7 +4,7 @@ package proposer;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/proposer";
 
-// RPC methods that the node will call on the FMS.
+// RPC methods that the node will call on the JD.
 service JobDistributor {
     rpc ApprovedJob(ApprovedJobRequest) returns (ApprovedJobResponse);
     rpc Healthcheck(HealthcheckRequest) returns (HealthcheckResponse);
@@ -31,13 +31,6 @@ enum ChainType {
 message Chain {
     string id      = 1;
     ChainType type = 2;
-}
-
-// An account on a specific blockchain
-message Account {
-    ChainType chain_type = 1;
-    string chain_id      = 2;
-    string address       = 3;
 }
 
 // The config for Flux Monitor on a specific chain
@@ -109,6 +102,13 @@ message ChainConfig {
     // using this value and this pub key needs to be passed into the starknet
     // relayer, we request the node to send this directly to CLO.
     optional string account_address_public_key = 7;
+}
+
+// An account on a specific blockchain
+message Account {
+    ChainType chain_type = 1;
+    string chain_id      = 2;
+    string address       = 3;
 }
 
 message UpdateNodeRequest {

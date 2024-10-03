@@ -4,6 +4,7 @@ package node;
 
 import "google/protobuf/timestamp.proto";
 import "job-distributor/shared/ptypes/label.proto";
+import "orchestrator/proposer/proposer.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/node";
 
@@ -40,89 +41,6 @@ message Node {
     repeated label.Label labels = 6; // Set of labels associated with the node.
     google.protobuf.Timestamp created_at = 7; // Timestamp when the node was created.
     google.protobuf.Timestamp updated_at = 8; // Timestamp when the node was last updated.
-}
-
-enum ChainType {
-    CHAIN_TYPE_UNSPECIFIED = 0;
-    CHAIN_TYPE_EVM         = 1;
-    CHAIN_TYPE_SOLANA      = 2;
-    CHAIN_TYPE_STARKNET    = 3;
-}
-
-message Chain {
-    string id      = 1;
-    ChainType type = 2;
-}
-
-// The config for Flux Monitor on a specific chain
-message FluxMonitorConfig {
-    bool enabled = 1;
-}
-
-// The config for OCR1 on a specific chain
-message OCR1Config {
-    message P2PKeyBundle {
-        string peer_id    = 1;
-        string public_key = 2;
-    }
-
-    message OCRKeyBundle {
-        string bundle_id               = 1;
-        string config_public_key       = 2;
-        string offchain_public_key     = 3;
-        string onchain_signing_address = 4;
-    }
-
-    bool enabled                = 1;
-    bool is_bootstrap           = 2;
-    P2PKeyBundle p2p_key_bundle = 3;
-    OCRKeyBundle ocr_key_bundle = 4;
-    string multiaddr            = 5;
-}
-
-// The config for OCR2 on a specific chain
-message OCR2Config {
-    message P2PKeyBundle {
-        string peer_id    = 1;
-        string public_key = 2;
-    }
-
-    message OCRKeyBundle {
-        string bundle_id               = 1;
-        string config_public_key       = 2;
-        string offchain_public_key     = 3;
-        string onchain_signing_address = 4;
-    }
-
-    message Plugins {
-        bool commit     = 1;
-        bool execute    = 2;
-        bool median     = 3;
-        bool mercury    = 4;
-        bool rebalancer = 5;
-    }
-
-    bool enabled                      = 1;
-    bool is_bootstrap                 = 2;
-    P2PKeyBundle p2p_key_bundle       = 3;
-    OCRKeyBundle ocr_key_bundle       = 4;
-    string multiaddr                  = 5;
-    Plugins plugins                   = 6;
-    optional string forwarder_address = 7;
-}
-
-message ChainConfig {
-    Chain chain                           = 1;
-    string account_address                = 2;
-    string admin_address                  = 3;
-    FluxMonitorConfig flux_monitor_config = 4;
-    OCR1Config ocr1_config                = 5;
-    OCR2Config ocr2_config                = 6;
-    // For EVM chains, we do not need this value and it is kept in the node's
-    // keystore. For starknet, because the wallet address needs to be deployed
-    // using this value and this pub key needs to be passed into the starknet
-    // relayer, we request the node to send this directly to CLO.
-    optional string account_address_public_key = 7;
 }
 
 // RegisterNodeRequest contains the information needed to register a new node.
@@ -220,6 +138,4 @@ message ListNodeChainConfigsRequest {
     Filter filter = 1;
 }
 
-message ListNodeChainConfigsResponse {
-    repeated ChainConfig chain_configs = 1;
-}
+message ListNodeChainConfigsResponse { repeated proposer.ChainConfig chain_configs = 1; }
