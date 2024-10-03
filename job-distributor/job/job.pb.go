@@ -84,8 +84,7 @@ func (ProposalStatus) EnumDescriptor() ([]byte, []int) {
 	return file_job_distributor_job_job_proto_rawDescGZIP(), []int{0}
 }
 
-// ProposalDeliveryStatus defines the delivery status of the proposal to the
-// node.
+// ProposalDeliveryStatus defines the delivery status of the proposal to the node.
 type ProposalDeliveryStatus int32
 
 const (
@@ -780,8 +779,7 @@ func (x *ListProposalsResponse) GetProposals() []*Proposal {
 	return nil
 }
 
-// ProposeJobRequest contains the information needed to submit a new job
-// proposal.
+// ProposeJobRequest contains the information needed to submit a new job proposal.
 type ProposeJobRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

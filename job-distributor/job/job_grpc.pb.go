@@ -33,8 +33,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// JobService provides RPCs for managing jobs and job proposals within the
-// system.
+// JobService provides RPCs for managing jobs and job proposals within the system.
 type JobServiceClient interface {
 	// GetJob retrieves the details of a specific job by its ID or UUID.
 	GetJob(ctx context.Context, in *GetJobRequest, opts ...grpc.CallOption) (*GetJobResponse, error)
@@ -42,8 +41,7 @@ type JobServiceClient interface {
 	GetProposal(ctx context.Context, in *GetProposalRequest, opts ...grpc.CallOption) (*GetProposalResponse, error)
 	// ListJobs returns a list of jobs, optionally filtered by IDs or node IDs.
 	ListJobs(ctx context.Context, in *ListJobsRequest, opts ...grpc.CallOption) (*ListJobsResponse, error)
-	// ListProposals returns a list of proposals, optionally filtered by proposal
-	// or job IDs.
+	// ListProposals returns a list of proposals, optionally filtered by proposal or job IDs.
 	ListProposals(ctx context.Context, in *ListProposalsRequest, opts ...grpc.CallOption) (*ListProposalsResponse, error)
 	// ProposeJob submits a new job proposal to a node.
 	ProposeJob(ctx context.Context, in *ProposeJobRequest, opts ...grpc.CallOption) (*ProposeJobResponse, error)
@@ -147,8 +145,7 @@ func (c *jobServiceClient) UpdateJob(ctx context.Context, in *UpdateJobRequest, 
 // All implementations must embed UnimplementedJobServiceServer
 // for forward compatibility.
 //
-// JobService provides RPCs for managing jobs and job proposals within the
-// system.
+// JobService provides RPCs for managing jobs and job proposals within the system.
 type JobServiceServer interface {
 	// GetJob retrieves the details of a specific job by its ID or UUID.
 	GetJob(context.Context, *GetJobRequest) (*GetJobResponse, error)
@@ -156,8 +153,7 @@ type JobServiceServer interface {
 	GetProposal(context.Context, *GetProposalRequest) (*GetProposalResponse, error)
 	// ListJobs returns a list of jobs, optionally filtered by IDs or node IDs.
 	ListJobs(context.Context, *ListJobsRequest) (*ListJobsResponse, error)
-	// ListProposals returns a list of proposals, optionally filtered by proposal
-	// or job IDs.
+	// ListProposals returns a list of proposals, optionally filtered by proposal or job IDs.
 	ListProposals(context.Context, *ListProposalsRequest) (*ListProposalsResponse, error)
 	// ProposeJob submits a new job proposal to a node.
 	ProposeJob(context.Context, *ProposeJobRequest) (*ProposeJobResponse, error)

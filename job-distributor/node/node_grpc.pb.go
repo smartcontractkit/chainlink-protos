@@ -34,15 +34,13 @@ const (
 //
 // NodeService provides RPCs for managing nodes within the Job Distributor.
 type NodeServiceClient interface {
-	// DisableNode marks a node as disabled, disabling any active operations on
-	// it.
+	// DisableNode marks a node as disabled, disabling any active operations on it.
 	DisableNode(ctx context.Context, in *DisableNodeRequest, opts ...grpc.CallOption) (*DisableNodeResponse, error)
 	// EnableNode enabled a disabled node, allowing operations to resume.
 	EnableNode(ctx context.Context, in *EnableNodeRequest, opts ...grpc.CallOption) (*EnableNodeResponse, error)
 	// GetNode retrieves the details of a node by its unique identifier.
 	GetNode(ctx context.Context, in *GetNodeRequest, opts ...grpc.CallOption) (*GetNodeResponse, error)
-	// ListNodes returns a list of nodes, optionally filtered by the provided
-	// criteria.
+	// ListNodes returns a list of nodes, optionally filtered by the provided criteria.
 	ListNodes(ctx context.Context, in *ListNodesRequest, opts ...grpc.CallOption) (*ListNodesResponse, error)
 	ListNodeChainConfigs(ctx context.Context, in *ListNodeChainConfigsRequest, opts ...grpc.CallOption) (*ListNodeChainConfigsResponse, error)
 	// RegisterNode registers a new node to the system.
@@ -135,15 +133,13 @@ func (c *nodeServiceClient) UpdateNode(ctx context.Context, in *UpdateNodeReques
 //
 // NodeService provides RPCs for managing nodes within the Job Distributor.
 type NodeServiceServer interface {
-	// DisableNode marks a node as disabled, disabling any active operations on
-	// it.
+	// DisableNode marks a node as disabled, disabling any active operations on it.
 	DisableNode(context.Context, *DisableNodeRequest) (*DisableNodeResponse, error)
 	// EnableNode enabled a disabled node, allowing operations to resume.
 	EnableNode(context.Context, *EnableNodeRequest) (*EnableNodeResponse, error)
 	// GetNode retrieves the details of a node by its unique identifier.
 	GetNode(context.Context, *GetNodeRequest) (*GetNodeResponse, error)
-	// ListNodes returns a list of nodes, optionally filtered by the provided
-	// criteria.
+	// ListNodes returns a list of nodes, optionally filtered by the provided criteria.
 	ListNodes(context.Context, *ListNodesRequest) (*ListNodesResponse, error)
 	ListNodeChainConfigs(context.Context, *ListNodeChainConfigsRequest) (*ListNodeChainConfigsResponse, error)
 	// RegisterNode registers a new node to the system.

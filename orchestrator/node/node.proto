@@ -4,7 +4,7 @@ package node;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/node";
 
-// RPC methods that the FMS will call on the node.
+// RPC methods that the JD will call on the node.
 service NodeService {
   rpc ProposeJob(ProposeJobRequest) returns (ProposeJobResponse);
   rpc DeleteJob(DeleteJobRequest) returns (DeleteJobResponse);
