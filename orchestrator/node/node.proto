@@ -6,8 +6,11 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/n
 
 // RPC methods that the JD will call on the node.
 service NodeService {
+  // ProposeJob is called by the JD to propose a job to the node.
   rpc ProposeJob(ProposeJobRequest) returns (ProposeJobResponse);
+  // DeleteJob is called by the JD to delete a job from the node.
   rpc DeleteJob(DeleteJobRequest) returns (DeleteJobResponse);
+  // RevokeJob is called by the JD to revoke a job from the node.
   rpc RevokeJob(RevokeJobRequest) returns (RevokeJobResponse);
 }
 
