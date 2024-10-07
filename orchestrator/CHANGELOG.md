@@ -1,5 +1,11 @@
 # @chainlink/orchestrator
 
+## 0.0.4
+
+### Patch Changes
+
+- [#13](https://github.com/smartcontractkit/chainlink-protos/pull/13) [`7bcd983`](https://github.com/smartcontractkit/chainlink-protos/commit/7bcd9834ebc807a7eda939bc7cf0bbe59480bde1) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Update package name node -> corenode
+
 ## 0.0.3
 
 ### Patch Changes
