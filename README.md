@@ -11,8 +11,8 @@ This repository serves as a central hub for shared protobuf definitions used acr
 Go applications can import only the necessary SDKs.
 
 ```bash
-$ go get github.com/smartcontractkit/chainlink-protos/job-distributor@v0.0.1
-$ go get github.com/smartcontractkit/chainlink-protos/orchestrator@v0.0.1
+$ go get github.com/smartcontractkit/chainlink-protos/job-distributor@v<LATEST_VERSION>
+$ go get github.com/smartcontractkit/chainlink-protos/orchestrator@v<LATEST_VERSION>
 ```
 
 ## Dependencies
@@ -30,6 +30,9 @@ Communication between core node and job distributor requires the library [wsRPC]
 Follow the instructions [here](https://github.com/smartcontractkit/wsrpc?tab=readme-ov-file#set-up) to install it.
 
 ## Generating GO SDKs
+
+> [!Note]
+> You do not need to commit the generated code resulting from the proto changes. The CI will automatically update the pull request with the generated files through the GitHub workflow.
 
 Generate the GO SDKs to implement gRPC services or clients via [task](https://taskfile.dev/installation/)
 

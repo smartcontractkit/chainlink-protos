@@ -43,7 +43,7 @@ jobs:
         if: github.actor != 'app-token-issuer-engops[bot]'
         uses: actions/setup-go@v5
         with:
-          go-version: "1.23.1"
+          go-version: "1.22.5"
 
       - name: Cache Dependencies
         if: github.actor != 'app-token-issuer-engops[bot]'
