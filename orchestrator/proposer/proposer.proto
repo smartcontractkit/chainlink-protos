@@ -4,7 +4,7 @@ package proposer;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/proposer";
 
-// RPC methods that the node will call on the FMS.
+// RPC methods that the node will call on the JD.
 service JobDistributor {
     rpc ApprovedJob(ApprovedJobRequest) returns (ApprovedJobResponse);
     rpc Healthcheck(HealthcheckRequest) returns (HealthcheckResponse);

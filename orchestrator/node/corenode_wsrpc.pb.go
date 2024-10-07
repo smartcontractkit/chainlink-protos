@@ -3,7 +3,7 @@
 // - protoc-gen-go-wsrpc v0.0.1
 // - protoc             v5.28.1
 
-package node
+package corenode
 
 import (
 	context "context"
@@ -97,7 +97,7 @@ func _NodeService_RevokeJob_Handler(srv interface{}, ctx context.Context, dec fu
 // It's only intended for direct use with wsrpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var NodeService_ServiceDesc = wsrpc.ServiceDesc{
-	ServiceName: "node.NodeService",
+	ServiceName: "corenode.NodeService",
 	HandlerType: (*NodeServiceServer)(nil),
 	Methods: []wsrpc.MethodDesc{
 		{

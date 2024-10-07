@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package node;
+package corenode;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/node";
+option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/corenode";
 
 // RPC methods that the JD will call on the node.
 service NodeService {
