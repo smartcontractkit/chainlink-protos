@@ -7,8 +7,13 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributo
 // AppService exposes one endpoint for querying the version of the API
 service AppService {
     rpc Version(VersionRequest) returns (VersionResponse) {}
+    rpc Awesome(AwesomeRequest) returns (AwesomeResponse) {}
 }
 
 message VersionRequest {}
 
 message VersionResponse { string version = 1; }
+
+message AwesomeRequest {}
+
+message AwesomeResponse {}
