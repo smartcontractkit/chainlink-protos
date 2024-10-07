@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	AppService_Version_FullMethodName = "/app.AppService/Version"
+	AppService_Awesome_FullMethodName = "/app.AppService/Awesome"
 )
 
 // AppServiceClient is the client API for AppService service.
@@ -29,6 +30,7 @@ const (
 // AppService exposes one endpoint for querying the version of the API
 type AppServiceClient interface {
 	Version(ctx context.Context, in *VersionRequest, opts ...grpc.CallOption) (*VersionResponse, error)
+	Awesome(ctx context.Context, in *AwesomeRequest, opts ...grpc.CallOption) (*AwesomeResponse, error)
 }
 
 type appServiceClient struct {
@@ -49,6 +51,16 @@ func (c *appServiceClient) Version(ctx context.Context, in *VersionRequest, opts
 	return out, nil
 }
 
+func (c *appServiceClient) Awesome(ctx context.Context, in *AwesomeRequest, opts ...grpc.CallOption) (*AwesomeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AwesomeResponse)
+	err := c.cc.Invoke(ctx, AppService_Awesome_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppServiceServer is the server API for AppService service.
 // All implementations must embed UnimplementedAppServiceServer
 // for forward compatibility.
@@ -56,6 +68,7 @@ func (c *appServiceClient) Version(ctx context.Context, in *VersionRequest, opts
 // AppService exposes one endpoint for querying the version of the API
 type AppServiceServer interface {
 	Version(context.Context, *VersionRequest) (*VersionResponse, error)
+	Awesome(context.Context, *AwesomeRequest) (*AwesomeResponse, error)
 	mustEmbedUnimplementedAppServiceServer()
 }
 
@@ -68,6 +81,9 @@ type UnimplementedAppServiceServer struct{}
 
 func (UnimplementedAppServiceServer) Version(context.Context, *VersionRequest) (*VersionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Version not implemented")
+}
+func (UnimplementedAppServiceServer) Awesome(context.Context, *AwesomeRequest) (*AwesomeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Awesome not implemented")
 }
 func (UnimplementedAppServiceServer) mustEmbedUnimplementedAppServiceServer() {}
 func (UnimplementedAppServiceServer) testEmbeddedByValue()                    {}
@@ -108,6 +124,24 @@ func _AppService_Version_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppService_Awesome_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AwesomeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppServiceServer).Awesome(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppService_Awesome_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppServiceServer).Awesome(ctx, req.(*AwesomeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AppService_ServiceDesc is the grpc.ServiceDesc for AppService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -118,6 +152,10 @@ var AppService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Version",
 			Handler:    _AppService_Version_Handler,
+		},
+		{
+			MethodName: "Awesome",
+			Handler:    _AppService_Awesome_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
