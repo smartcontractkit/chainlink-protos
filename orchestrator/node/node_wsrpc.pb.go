@@ -12,8 +12,11 @@ import (
 
 // NodeServiceClient is the client API for NodeService service.
 type NodeServiceClient interface {
+	// ProposeJob is called by the JD to propose a job to the node.
 	ProposeJob(ctx context.Context, in *ProposeJobRequest) (*ProposeJobResponse, error)
+	// DeleteJob is called by the JD to delete a job from the node.
 	DeleteJob(ctx context.Context, in *DeleteJobRequest) (*DeleteJobResponse, error)
+	// RevokeJob is called by the JD to revoke a job from the node.
 	RevokeJob(ctx context.Context, in *RevokeJobRequest) (*RevokeJobResponse, error)
 }
 
@@ -54,8 +57,11 @@ func (c *nodeServiceClient) RevokeJob(ctx context.Context, in *RevokeJobRequest)
 
 // NodeServiceServer is the server API for NodeService service.
 type NodeServiceServer interface {
+	// ProposeJob is called by the JD to propose a job to the node.
 	ProposeJob(context.Context, *ProposeJobRequest) (*ProposeJobResponse, error)
+	// DeleteJob is called by the JD to delete a job from the node.
 	DeleteJob(context.Context, *DeleteJobRequest) (*DeleteJobResponse, error)
+	// RevokeJob is called by the JD to revoke a job from the node.
 	RevokeJob(context.Context, *RevokeJobRequest) (*RevokeJobResponse, error)
 }
 

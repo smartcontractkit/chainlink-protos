@@ -27,7 +27,9 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CSAServiceClient interface {
+	// GetKeypair retrieves the active CSA Keypair used to authenticate node connections.
 	GetKeypair(ctx context.Context, in *GetKeypairRequest, opts ...grpc.CallOption) (*GetKeypairResponse, error)
+	// ListKeypairs returns a list of all CSA Keypairs.
 	ListKeypairs(ctx context.Context, in *ListKeypairsRequest, opts ...grpc.CallOption) (*ListKeypairsResponse, error)
 }
 
@@ -63,7 +65,9 @@ func (c *cSAServiceClient) ListKeypairs(ctx context.Context, in *ListKeypairsReq
 // All implementations must embed UnimplementedCSAServiceServer
 // for forward compatibility.
 type CSAServiceServer interface {
+	// GetKeypair retrieves the active CSA Keypair used to authenticate node connections.
 	GetKeypair(context.Context, *GetKeypairRequest) (*GetKeypairResponse, error)
+	// ListKeypairs returns a list of all CSA Keypairs.
 	ListKeypairs(context.Context, *ListKeypairsRequest) (*ListKeypairsResponse, error)
 	mustEmbedUnimplementedCSAServiceServer()
 }
