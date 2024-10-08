@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	JobService_GetJob_FullMethodName        = "/job.JobService/GetJob"
-	JobService_GetProposal_FullMethodName   = "/job.JobService/GetProposal"
-	JobService_ListJobs_FullMethodName      = "/job.JobService/ListJobs"
-	JobService_ListProposals_FullMethodName = "/job.JobService/ListProposals"
-	JobService_ProposeJob_FullMethodName    = "/job.JobService/ProposeJob"
-	JobService_RevokeJob_FullMethodName     = "/job.JobService/RevokeJob"
-	JobService_DeleteJob_FullMethodName     = "/job.JobService/DeleteJob"
-	JobService_UpdateJob_FullMethodName     = "/job.JobService/UpdateJob"
+	JobService_GetJob_FullMethodName        = "/api.job.v1.JobService/GetJob"
+	JobService_GetProposal_FullMethodName   = "/api.job.v1.JobService/GetProposal"
+	JobService_ListJobs_FullMethodName      = "/api.job.v1.JobService/ListJobs"
+	JobService_ListProposals_FullMethodName = "/api.job.v1.JobService/ListProposals"
+	JobService_ProposeJob_FullMethodName    = "/api.job.v1.JobService/ProposeJob"
+	JobService_RevokeJob_FullMethodName     = "/api.job.v1.JobService/RevokeJob"
+	JobService_DeleteJob_FullMethodName     = "/api.job.v1.JobService/DeleteJob"
+	JobService_UpdateJob_FullMethodName     = "/api.job.v1.JobService/UpdateJob"
 )
 
 // JobServiceClient is the client API for JobService service.
@@ -366,7 +366,7 @@ func _JobService_UpdateJob_Handler(srv interface{}, ctx context.Context, dec fun
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var JobService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "job.JobService",
+	ServiceName: "api.job.v1.JobService",
 	HandlerType: (*JobServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package app;
+package api.app.v1;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/app";
 
 // AppService exposes one endpoint for querying the version of the API
 service AppService {
-    rpc Version(VersionRequest) returns (VersionResponse) {}
+  rpc Version(VersionRequest) returns (VersionResponse) {}
 }
 
 message VersionRequest {}

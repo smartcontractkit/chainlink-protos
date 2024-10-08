@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package csa;
+package api.csa.v1;
 
 import "google/protobuf/timestamp.proto";
 
@@ -21,8 +21,13 @@ message Keypair {
 
 message GetKeypairRequest {}
 
-message GetKeypairResponse { Keypair keypair = 1; }
+message GetKeypairResponse {
+  Keypair keypair = 1;
+}
 
-message ListKeypairsRequest {}
+message ListKeypairsRequest {
+}
 
-message ListKeypairsResponse { repeated Keypair keypairs = 1; }
+message ListKeypairsResponse {
+  repeated Keypair keypairs = 1;
+}

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package job;
+package api.job.v1;
 
 import "google/protobuf/timestamp.proto";
 import "job-distributor/shared/ptypes/label.proto";
@@ -62,7 +62,7 @@ message Job {
     google.protobuf.Timestamp created_at = 5; // Timestamp when the job was created.
     google.protobuf.Timestamp updated_at = 6; // Timestamp when the job was last updated.
     google.protobuf.Timestamp deleted_at = 7; // Timestamp when the job was deleted, if applicable.
-    repeated label.Label labels = 8; // Set of labels associated with the job.
+    repeated api.label.Label labels = 8; // Set of labels associated with the job.
 }
 
 // Proposal represents a job proposal.
@@ -107,7 +107,7 @@ message ListJobsRequest {
     message Filter {
         repeated string ids = 1; // Filter by job IDs.
         repeated string node_ids = 2; // Filter by node IDs.
-        repeated label.Selector selectors = 3; // Filter by selectors
+        repeated api.label.Selector selectors = 3; // Filter by selectors
     }
 
     Filter filter = 1; // Filters applied to the job listing.
@@ -137,7 +137,7 @@ message ListProposalsResponse {
 message ProposeJobRequest {
     string node_id = 1; // ID of the node to which the job is proposed.
     string spec = 2; // Specification of the job being proposed.
-    repeated label.Label labels = 3; // Labels to associate with the job.
+    repeated api.label.Label labels = 3; // Labels to associate with the job.
 }
 
 // ProposeJobResponse returns the newly created proposal.
@@ -173,14 +173,14 @@ message DeleteJobResponse {
 
 // UpdateJobRequest specifies the criteria for updating a job.
 message UpdateJobRequest {
-    oneof id_oneof {
-        string id = 1; // Unique identifier of the job to update.
-        string uuid = 2; // Universally unique identifier of the job to update.
-    }
-    repeated label.Label labels = 3; // Set of labels associated with the job.
+  oneof id_oneof {
+    string id = 1; // Unique identifier of the job to update.
+    string uuid = 2; // Universally unique identifier of the job to update.
+  }
+  repeated api.label.Label labels = 3; // Set of labels associated with the job.
 }
 
 // UpdateJobResponse returns details of the updated job.
 message UpdateJobResponse {
-    Job job = 1; // Details of the updated job.
+  Job job = 1; // Details of the updated job.
 }

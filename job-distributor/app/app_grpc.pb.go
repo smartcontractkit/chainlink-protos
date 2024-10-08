@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AppService_Version_FullMethodName = "/app.AppService/Version"
+	AppService_Version_FullMethodName = "/api.app.v1.AppService/Version"
 )
 
 // AppServiceClient is the client API for AppService service.
@@ -112,7 +112,7 @@ func _AppService_Version_Handler(srv interface{}, ctx context.Context, dec func(
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AppService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "app.AppService",
+	ServiceName: "api.app.v1.AppService",
 	HandlerType: (*AppServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
