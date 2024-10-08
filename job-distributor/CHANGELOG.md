@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.1.0
+
+### Minor Changes
+
+- [#15](https://github.com/smartcontractkit/chainlink-protos/pull/15) [`2c57ba3`](https://github.com/smartcontractkit/chainlink-protos/commit/2c57ba38a8029157148ab89b468972348a292b97) Thanks [@graham-chainlink](https://github.com/graham-chainlink)! - realign package name and service name to JD and CLO
+
 ## 0.0.3
 
 ### Patch Changes
