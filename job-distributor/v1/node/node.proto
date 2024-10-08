@@ -3,9 +3,9 @@ syntax = "proto3";
 package api.node.v1;
 
 import "google/protobuf/timestamp.proto";
-import "job-distributor/shared/ptypes/label.proto";
+import "job-distributor/v1/shared/ptypes/label.proto";
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/node";
+option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/v1/node";
 
 // NodeService provides RPCs for managing nodes within the Job Distributor.
 service NodeService {

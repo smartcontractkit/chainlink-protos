@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/corenode";
+option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/feedsmanager";
 
 package cfm;
 

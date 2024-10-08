@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.28.1
-// source: job-distributor/app/app.proto
+// source: job-distributor/v1/app/app.proto
 
 package app
 
@@ -121,5 +121,5 @@ var AppService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "job-distributor/app/app.proto",
+	Metadata: "job-distributor/v1/app/app.proto",
 }

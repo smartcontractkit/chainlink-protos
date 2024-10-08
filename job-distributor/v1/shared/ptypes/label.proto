@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package api.label;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/shared/ptypes";
+option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/v1/shared/ptypes";
 
 // Label defines a label as a key value pair
 message Label {

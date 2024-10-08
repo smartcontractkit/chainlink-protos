@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.28.1
-// source: job-distributor/csa/csa.proto
+// source: job-distributor/v1/csa/csa.proto
 
 package csa
 
@@ -159,5 +159,5 @@ var CSAService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "job-distributor/csa/csa.proto",
+	Metadata: "job-distributor/v1/csa/csa.proto",
 }

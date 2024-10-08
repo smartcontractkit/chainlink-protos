@@ -3,9 +3,9 @@ syntax = "proto3";
 package api.job.v1;
 
 import "google/protobuf/timestamp.proto";
-import "job-distributor/shared/ptypes/label.proto";
+import "job-distributor/v1/shared/ptypes/label.proto";
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/job";
+option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/v1/job";
 
 // JobService provides RPCs for managing jobs and job proposals within the system.
 service JobService {

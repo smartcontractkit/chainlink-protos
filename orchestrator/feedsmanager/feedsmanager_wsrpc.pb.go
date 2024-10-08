@@ -3,7 +3,7 @@
 // - protoc-gen-go-wsrpc v0.0.1
 // - protoc             v5.28.1
 
-package corenode
+package feedsmanager
 
 import (
 	context "context"
