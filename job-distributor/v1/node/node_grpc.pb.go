@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.28.1
-// source: job-distributor/node/node.proto
+// source: job-distributor/v1/node/node.proto
 
 package node
 
@@ -19,13 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	NodeService_DisableNode_FullMethodName          = "/node.NodeService/DisableNode"
-	NodeService_EnableNode_FullMethodName           = "/node.NodeService/EnableNode"
-	NodeService_GetNode_FullMethodName              = "/node.NodeService/GetNode"
-	NodeService_ListNodes_FullMethodName            = "/node.NodeService/ListNodes"
-	NodeService_ListNodeChainConfigs_FullMethodName = "/node.NodeService/ListNodeChainConfigs"
-	NodeService_RegisterNode_FullMethodName         = "/node.NodeService/RegisterNode"
-	NodeService_UpdateNode_FullMethodName           = "/node.NodeService/UpdateNode"
+	NodeService_DisableNode_FullMethodName          = "/api.node.v1.NodeService/DisableNode"
+	NodeService_EnableNode_FullMethodName           = "/api.node.v1.NodeService/EnableNode"
+	NodeService_GetNode_FullMethodName              = "/api.node.v1.NodeService/GetNode"
+	NodeService_ListNodes_FullMethodName            = "/api.node.v1.NodeService/ListNodes"
+	NodeService_ListNodeChainConfigs_FullMethodName = "/api.node.v1.NodeService/ListNodeChainConfigs"
+	NodeService_RegisterNode_FullMethodName         = "/api.node.v1.NodeService/RegisterNode"
+	NodeService_UpdateNode_FullMethodName           = "/api.node.v1.NodeService/UpdateNode"
 )
 
 // NodeServiceClient is the client API for NodeService service.
@@ -328,7 +328,7 @@ func _NodeService_UpdateNode_Handler(srv interface{}, ctx context.Context, dec f
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var NodeService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "node.NodeService",
+	ServiceName: "api.node.v1.NodeService",
 	HandlerType: (*NodeServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -361,5 +361,5 @@ var NodeService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "job-distributor/node/node.proto",
+	Metadata: "job-distributor/v1/node/node.proto",
 }

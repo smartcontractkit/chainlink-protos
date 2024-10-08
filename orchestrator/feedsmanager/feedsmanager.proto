@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package proposer;
+option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/feedsmanager";
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/proposer";
+package cfm;
 
 // RPC methods that the node will call on the JD.
-service JobDistributor {
+service FeedsManager {
     rpc ApprovedJob(ApprovedJobRequest) returns (ApprovedJobResponse);
     rpc Healthcheck(HealthcheckRequest) returns (HealthcheckResponse);
     rpc UpdateNode(UpdateNodeRequest) returns (UpdateNodeResponse);
@@ -81,11 +81,11 @@ message OCR2Config {
     }
 
     message Plugins {
-        bool commit     = 1;
-        bool execute    = 2;
-        bool median     = 3;
-        bool mercury    = 4;
-        bool rebalancer = 5;
+        bool commit          = 1;
+        bool execute         = 2;
+        bool median          = 3;
+        bool mercury         = 4;
+        bool rebalancer      = 5;
     }
 
     bool enabled                      = 1;
@@ -146,3 +146,37 @@ message CancelledJobRequest {
     int64 version = 2;
 }
 message CancelledJobResponse {}
+
+// RPC methods that the FMS will call on the node.
+service NodeService {
+    // ProposeJob is called by the JD to propose a job to the node.
+    rpc ProposeJob(ProposeJobRequest) returns (ProposeJobResponse);
+    // DeleteJob is called by the JD to delete a job from the node.
+    rpc DeleteJob(DeleteJobRequest) returns (DeleteJobResponse);
+    // RevokeJob is called by the JD to revoke a job from the node.
+    rpc RevokeJob(RevokeJobRequest) returns (RevokeJobResponse);
+}
+
+message ProposeJobRequest {
+    string id                  = 1;
+    string spec                = 2;
+    repeated string multiaddrs = 3;
+    int64 version              = 4;
+}
+message ProposeJobResponse {
+    string id = 2;
+}
+
+message DeleteJobRequest {
+    string id = 1;
+}
+message DeleteJobResponse {
+    string id = 1;
+}
+
+message RevokeJobRequest {
+    string id = 1;
+}
+message RevokeJobResponse {
+    string id = 1;
+}

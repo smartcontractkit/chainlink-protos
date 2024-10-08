@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.28.1
-// source: job-distributor/csa/csa.proto
+// source: job-distributor/v1/csa/csa.proto
 
 package csa
 
@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CSAService_GetKeypair_FullMethodName   = "/csa.CSAService/GetKeypair"
-	CSAService_ListKeypairs_FullMethodName = "/csa.CSAService/ListKeypairs"
+	CSAService_GetKeypair_FullMethodName   = "/api.csa.v1.CSAService/GetKeypair"
+	CSAService_ListKeypairs_FullMethodName = "/api.csa.v1.CSAService/ListKeypairs"
 )
 
 // CSAServiceClient is the client API for CSAService service.
@@ -146,7 +146,7 @@ func _CSAService_ListKeypairs_Handler(srv interface{}, ctx context.Context, dec 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var CSAService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "csa.CSAService",
+	ServiceName: "api.csa.v1.CSAService",
 	HandlerType: (*CSAServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -159,5 +159,5 @@ var CSAService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "job-distributor/csa/csa.proto",
+	Metadata: "job-distributor/v1/csa/csa.proto",
 }
