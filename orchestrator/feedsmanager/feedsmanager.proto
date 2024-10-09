@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/feedsmanager";
+option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/proto";
 
 package cfm;
 
-// RPC methods that the node will call on the JD.
+// RPC methods that the node will call on the FMS.
 service FeedsManager {
     rpc ApprovedJob(ApprovedJobRequest) returns (ApprovedJobResponse);
     rpc Healthcheck(HealthcheckRequest) returns (HealthcheckResponse);
@@ -149,11 +149,8 @@ message CancelledJobResponse {}
 
 // RPC methods that the FMS will call on the node.
 service NodeService {
-    // ProposeJob is called by the JD to propose a job to the node.
     rpc ProposeJob(ProposeJobRequest) returns (ProposeJobResponse);
-    // DeleteJob is called by the JD to delete a job from the node.
     rpc DeleteJob(DeleteJobRequest) returns (DeleteJobResponse);
-    // RevokeJob is called by the JD to revoke a job from the node.
     rpc RevokeJob(RevokeJobRequest) returns (RevokeJobResponse);
 }
 
