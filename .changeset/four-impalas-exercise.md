@@ -3,4 +3,4 @@
 "@chainlink/orchestrator": minor
 ---
 
-Downgrade Go Version
+Downgrading Go version to align with CORE node, which uses an older Go version.
