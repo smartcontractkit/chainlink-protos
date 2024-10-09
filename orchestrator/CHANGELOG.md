@@ -1,5 +1,11 @@
 # @chainlink/orchestrator
 
+## 0.2.0
+
+### Minor Changes
+
+- [#17](https://github.com/smartcontractkit/chainlink-protos/pull/17) [`b89d8d5`](https://github.com/smartcontractkit/chainlink-protos/commit/b89d8d5c191cc4759450f55f1ba897f0dc0cc8d2) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Downgrading Go version to align with CORE node, which uses an older Go version.
+
 ## 0.1.0
 
 ### Minor Changes
