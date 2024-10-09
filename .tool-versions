@@ -1,4 +1,4 @@
-golang 1.23.1
+golang 1.22.5
 task 3.39.0
 protoc 28.1
 protoc-gen-go-grpc 1.5.1
