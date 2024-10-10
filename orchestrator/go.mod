@@ -4,7 +4,7 @@ go 1.22.5
 
 require (
 	github.com/smartcontractkit/wsrpc v0.8.2
-	google.golang.org/protobuf v1.35.1
+	google.golang.org/protobuf v1.34.2
 )
 
 require (
@@ -15,5 +15,5 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.26.0 // indirect
 	golang.org/x/net v0.29.0 // indirect
-	google.golang.org/grpc v1.62.1 // indirect
+	google.golang.org/grpc v1.65.0 // indirect
 )
