@@ -1,0 +1,94 @@
+name: Regenerate Protobuf Files
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  regenerate-protobuf:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Assume aws gati role
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+        with:
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN_GATI }}
+          role-duration-seconds: 900
+          aws-region: ${{ secrets.AWS_REGION }}
+          mask-aws-account-id: true
+
+      - name: Get github token from gati
+        id: get-gh-token
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        uses: smartcontractkit/chainlink-github-actions/github-app-token-issuer@main
+        with:
+          url: ${{ secrets.AWS_LAMBDA_URL_GATI }}
+
+      - name: Checkout repo
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+        # Include the pull request ref in the checkout action to prevent merge commit
+        # https://github.com/actions/checkout?tab=readme-ov-file#checkout-pull-request-head-commit-instead-of-merge-commit
+          ref: ${{ github.event.pull_request.head.sha }}
+          token: ${{ steps.get-gh-token.outputs.access-token }}
+          fetch-depth: 1
+
+      - name: Set up Go
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.22.5"
+
+      - name: Cache Dependencies
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        id: cache-deps
+        uses: actions/cache@v4
+        with:
+          path: |
+            /usr/local/bin/task
+            ~/go/bin
+          key: ${{ runner.os }}-cache-regenerate-protobuf
+
+      - name: Install task CLI
+        if: github.actor != 'app-token-issuer-engops[bot]' && steps.cache-deps.outputs.cache-hit != 'true'
+        run: |
+          TASK_VERSION=3.39.0
+          curl -sL https://github.com/go-task/task/releases/download/v${TASK_VERSION}/task_linux_amd64.tar.gz | tar -xz -C /usr/local/bin task
+
+      - name: Install grpc and wsrpc
+        if: github.actor != 'app-token-issuer-engops[bot]' && steps.cache-deps.outputs.cache-hit != 'true'
+        run: |
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.34.2
+          go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.5.1
+          go install github.com/smartcontractkit/wsrpc/cmd/protoc-gen-go-wsrpc@v0.8.2
+
+      - name: Install protoc
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        run: |
+          PROTOC_VERSION=28.1
+          curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip
+          unzip protoc-${PROTOC_VERSION}-linux-x86_64.zip -d protoc3
+          sudo mv protoc3/bin/* /usr/local/bin/
+          sudo mv protoc3/include/* /usr/local/include/
+          rm -rf protoc3 protoc-${PROTOC_VERSION}-linux-x86_64.zip
+
+      - name: Regenerate protobuf files
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        run: |
+          task proto:all
+
+      - uses: planetscale/ghcommit-action@v0.1.45
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        with:
+          commit_message: "bot: regenerate protobuf files"
+          repo: ${{ github.repository }}
+          branch: ${{ github.head_ref || github.ref_name }}
+          file_pattern: '*.pb.go'
+        env:
+          GITHUB_TOKEN: ${{ steps.get-gh-token.outputs.access-token }}
