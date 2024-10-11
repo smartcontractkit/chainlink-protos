@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.3.0
+
+### Minor Changes
+
+- [#20](https://github.com/smartcontractkit/chainlink-protos/pull/20) [`0d7cff1`](https://github.com/smartcontractkit/chainlink-protos/commit/0d7cff1e886bac8c7550b339e67f069ee4a682e1) Thanks [@graham-chainlink](https://github.com/graham-chainlink)! - Add APTOS chaintype
+
 ## 0.2.0
 
 ### Minor Changes
