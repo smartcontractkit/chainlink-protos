@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.4.0
+
+### Minor Changes
+
+- [#23](https://github.com/smartcontractkit/chainlink-protos/pull/23) [`6c77bec`](https://github.com/smartcontractkit/chainlink-protos/commit/6c77becaeb4766277984beb9c5364cac8bc02488) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - add node id to chain config proto
+
 ## 0.3.0
 
 ### Minor Changes
