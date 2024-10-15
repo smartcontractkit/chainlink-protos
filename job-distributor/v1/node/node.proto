@@ -124,6 +124,7 @@ message ChainConfig {
     // using this value and this pub key needs to be passed into the starknet
     // relayer, we request the node to send this directly to CLO.
     optional string account_address_public_key = 7;
+    string node_id = 8;
 }
 
 // RegisterNodeRequest contains the information needed to register a new node.
