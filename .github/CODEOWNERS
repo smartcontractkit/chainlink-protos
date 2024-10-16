@@ -1,4 +1,4 @@
-* @smartcontractkit/op-core
+* @smartcontractkit/deployment-automation
 
-/job-distributor/ @smartcontractkit/op-core
-/orchestrator/ @smartcontractkit/op-core
+/job-distributor/ @smartcontractkit/deployment-automation
+/orchestrator/ @smartcontractkit/deployment-automation
