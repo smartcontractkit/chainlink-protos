@@ -8,6 +8,7 @@ This repository serves as a central hub for shared protobuf definitions used acr
 
 ## Why use Chainlink Protos?
 
+- **No More Copy-Pasting Code**: Centralized proto definitions eliminate the need to copy-paste code across different repositories.
 - **Publicly Accessible Repository**: No need for tokens, credentials, or GOPRIVATE settings.
 - **Proto Breaking Changes Validation with Buf**: Ensures backward compatibility and consistent formatting.
 - **Automated Golang SDK Generation**: GitHub workflows keep the generated code up-to-date.

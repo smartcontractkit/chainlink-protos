@@ -11,4 +11,6 @@ service AppService {
 
 message VersionRequest {}
 
-message VersionResponse { string version = 1; }
+message VersionResponse {
+  string version = 1;
+}
