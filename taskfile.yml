@@ -3,6 +3,11 @@
 version: "3"
 
 tasks:
+  fmt:
+    desc: "Run buf format"
+    cmds:
+      - buf format -w
+
   proto:all:
     desc: Generate all protobuf files for all services
     cmds:
