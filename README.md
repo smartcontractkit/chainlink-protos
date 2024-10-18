@@ -6,6 +6,14 @@
 
 This repository serves as a central hub for shared protobuf definitions used across various services. Currently, it includes protobuf definitions and generated Go SDKs for the job-distributor and orchestrator services. Contributions and additional proto files for other services are welcome.
 
+## Why use Chainlink Protos?
+
+- **No More Copy-Pasting Code**: Centralized proto definitions eliminate the need to copy-paste code across different repositories.
+- **Publicly Accessible Repository**: No need for tokens, credentials, or GOPRIVATE settings.
+- **Proto Breaking Changes Validation with Buf**: Ensures backward compatibility and consistent formatting.
+- **Automated Golang SDK Generation**: GitHub workflows keep the generated code up-to-date.
+- **Independent Versioning in a Monorepo**: Each package is versioned separately for better control and integration.
+
 ## Usage
 
 Go applications can import only the necessary SDKs.
@@ -15,12 +23,15 @@ $ go get github.com/smartcontractkit/chainlink-protos/job-distributor@v<LATEST_V
 $ go get github.com/smartcontractkit/chainlink-protos/orchestrator@v<LATEST_VERSION>
 ```
 
-## Dependencies
+## Getting Started
+
+### Dependencies
 
 Dependencies are managed via [asdf](https://asdf-vm.com/guide/getting-started.html).
 
 ```bash
-$ asdf install
+./scripts/setup-asdf-plugin.sh
+asdf install
 ```
 
 ### Installing wsRPC
@@ -29,10 +40,18 @@ Communication between core node and job distributor requires the library [wsRPC]
 
 Follow the instructions [here](https://github.com/smartcontractkit/wsrpc?tab=readme-ov-file#set-up) to install it.
 
+## Formatting
+
+Ensure [buf](https://buf.build/product/cli) is installed following the dependencies above.
+
+```bash
+task fmt
+```
+
 ## Generating GO SDKs
 
 > [!Note]
-> You do not need to commit the generated code resulting from the proto changes. The CI will automatically update the pull request with the generated files through the GitHub workflow.
+> Commiting the generated code resulting from the proto changes is optional. The CI will automatically update the pull request with the generated files through the GitHub workflow.
 
 Generate the GO SDKs to implement gRPC services or clients via [task](https://taskfile.dev/installation/)
 

@@ -1,0 +1,15 @@
+# For details on buf.yaml configuration, visit https://buf.build/docs/configuration/v2/buf-yaml
+version: v2
+lint:
+  use:
+    - STANDARD
+  ignore:
+    # existing service, unable to fix lint due to breaking changes
+    - job-distributor
+    - orchestrator
+    - node_modules
+breaking:
+  use:
+    - FILE
+  ignore:
+    - node_modules
