@@ -25,8 +25,7 @@ message GetKeypairResponse {
   Keypair keypair = 1;
 }
 
-message ListKeypairsRequest {
-}
+message ListKeypairsRequest {}
 
 message ListKeypairsResponse {
   repeated Keypair keypairs = 1;
