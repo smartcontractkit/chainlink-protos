@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.4.1
+
+### Patch Changes
+
+- [#28](https://github.com/smartcontractkit/chainlink-protos/pull/28) [`a265b4a`](https://github.com/smartcontractkit/chainlink-protos/commit/a265b4a663f963b563deccbdb9d480beab8ffea0) Thanks [@graham-chainlink](https://github.com/graham-chainlink)! - deprecate job lookup via UUID for GetJob, RevokeJob, DeleteJob & UpdateJob
+
 ## 0.4.0
 
 ### Minor Changes
