@@ -83,7 +83,10 @@ message Proposal {
 message GetJobRequest {
   oneof id_oneof {
     string id = 1; // Unique identifier of the job.
-    string uuid = 2; // Universally unique identifier of the job.
+    // Universally unique identifier of the job.
+    // This will not work when the same job uuid is found for multiple different nodes.
+    // Deprecated: Use `id` instead.
+    string uuid = 2 [deprecated = true];
   }
 }
 
@@ -149,7 +152,10 @@ message ProposeJobResponse {
 message RevokeJobRequest {
   oneof id_oneof {
     string id = 1; // Unique identifier of the proposal to revoke.
-    string uuid = 2; // Universally unique identifier of the proposal to revoke.
+    // Universally unique identifier of the proposal to revoke.
+    // This will not work when the same job uuid is found for multiple different nodes.
+    // Deprecated: Use `id` instead.
+    string uuid = 2 [deprecated = true];
   }
 }
 
@@ -162,7 +168,10 @@ message RevokeJobResponse {
 message DeleteJobRequest {
   oneof id_oneof {
     string id = 1; // Unique identifier of the job to delete.
-    string uuid = 2; // Universally unique identifier of the job to delete.
+    // Universally unique identifier of the job to delete.
+    // This will not work when the same job uuid is found for multiple different nodes.
+    // Deprecated: Use `id` instead.
+    string uuid = 2 [deprecated = true];
   }
 }
 
@@ -175,7 +184,10 @@ message DeleteJobResponse {
 message UpdateJobRequest {
   oneof id_oneof {
     string id = 1; // Unique identifier of the job to update.
-    string uuid = 2; // Universally unique identifier of the job to update.
+    // Universally unique identifier of the job to update.
+    // This will not work when the same job uuid is found for multiple different nodes.
+    // Deprecated: Use `id` instead.
+    string uuid = 2 [deprecated = true];
   }
   repeated api.label.Label labels = 3; // Set of labels associated with the job.
 }
