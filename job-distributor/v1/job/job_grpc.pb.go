@@ -19,14 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	JobService_GetJob_FullMethodName        = "/api.job.v1.JobService/GetJob"
-	JobService_GetProposal_FullMethodName   = "/api.job.v1.JobService/GetProposal"
-	JobService_ListJobs_FullMethodName      = "/api.job.v1.JobService/ListJobs"
-	JobService_ListProposals_FullMethodName = "/api.job.v1.JobService/ListProposals"
-	JobService_ProposeJob_FullMethodName    = "/api.job.v1.JobService/ProposeJob"
-	JobService_RevokeJob_FullMethodName     = "/api.job.v1.JobService/RevokeJob"
-	JobService_DeleteJob_FullMethodName     = "/api.job.v1.JobService/DeleteJob"
-	JobService_UpdateJob_FullMethodName     = "/api.job.v1.JobService/UpdateJob"
+	JobService_GetJob_FullMethodName          = "/api.job.v1.JobService/GetJob"
+	JobService_GetProposal_FullMethodName     = "/api.job.v1.JobService/GetProposal"
+	JobService_ListJobs_FullMethodName        = "/api.job.v1.JobService/ListJobs"
+	JobService_ListProposals_FullMethodName   = "/api.job.v1.JobService/ListProposals"
+	JobService_ProposeJob_FullMethodName      = "/api.job.v1.JobService/ProposeJob"
+	JobService_BatchProposeJob_FullMethodName = "/api.job.v1.JobService/BatchProposeJob"
+	JobService_RevokeJob_FullMethodName       = "/api.job.v1.JobService/RevokeJob"
+	JobService_DeleteJob_FullMethodName       = "/api.job.v1.JobService/DeleteJob"
+	JobService_UpdateJob_FullMethodName       = "/api.job.v1.JobService/UpdateJob"
 )
 
 // JobServiceClient is the client API for JobService service.
@@ -45,6 +46,8 @@ type JobServiceClient interface {
 	ListProposals(ctx context.Context, in *ListProposalsRequest, opts ...grpc.CallOption) (*ListProposalsResponse, error)
 	// ProposeJob submits a new job proposal to a node.
 	ProposeJob(ctx context.Context, in *ProposeJobRequest, opts ...grpc.CallOption) (*ProposeJobResponse, error)
+	// BatchProposeJob submits a job proposals to a batch of nodes.
+	BatchProposeJob(ctx context.Context, in *BatchProposeJobRequest, opts ...grpc.CallOption) (*BatchProposeJobResponse, error)
 	// RevokeJob revokes an existing job proposal.
 	RevokeJob(ctx context.Context, in *RevokeJobRequest, opts ...grpc.CallOption) (*RevokeJobResponse, error)
 	// DeleteJob deletes a job from the system.
@@ -111,6 +114,16 @@ func (c *jobServiceClient) ProposeJob(ctx context.Context, in *ProposeJobRequest
 	return out, nil
 }
 
+func (c *jobServiceClient) BatchProposeJob(ctx context.Context, in *BatchProposeJobRequest, opts ...grpc.CallOption) (*BatchProposeJobResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BatchProposeJobResponse)
+	err := c.cc.Invoke(ctx, JobService_BatchProposeJob_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *jobServiceClient) RevokeJob(ctx context.Context, in *RevokeJobRequest, opts ...grpc.CallOption) (*RevokeJobResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RevokeJobResponse)
@@ -157,6 +170,8 @@ type JobServiceServer interface {
 	ListProposals(context.Context, *ListProposalsRequest) (*ListProposalsResponse, error)
 	// ProposeJob submits a new job proposal to a node.
 	ProposeJob(context.Context, *ProposeJobRequest) (*ProposeJobResponse, error)
+	// BatchProposeJob submits a job proposals to a batch of nodes.
+	BatchProposeJob(context.Context, *BatchProposeJobRequest) (*BatchProposeJobResponse, error)
 	// RevokeJob revokes an existing job proposal.
 	RevokeJob(context.Context, *RevokeJobRequest) (*RevokeJobResponse, error)
 	// DeleteJob deletes a job from the system.
@@ -187,6 +202,9 @@ func (UnimplementedJobServiceServer) ListProposals(context.Context, *ListProposa
 }
 func (UnimplementedJobServiceServer) ProposeJob(context.Context, *ProposeJobRequest) (*ProposeJobResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProposeJob not implemented")
+}
+func (UnimplementedJobServiceServer) BatchProposeJob(context.Context, *BatchProposeJobRequest) (*BatchProposeJobResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchProposeJob not implemented")
 }
 func (UnimplementedJobServiceServer) RevokeJob(context.Context, *RevokeJobRequest) (*RevokeJobResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RevokeJob not implemented")
@@ -308,6 +326,24 @@ func _JobService_ProposeJob_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _JobService_BatchProposeJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchProposeJobRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobServiceServer).BatchProposeJob(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: JobService_BatchProposeJob_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobServiceServer).BatchProposeJob(ctx, req.(*BatchProposeJobRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _JobService_RevokeJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RevokeJobRequest)
 	if err := dec(in); err != nil {
@@ -388,6 +424,10 @@ var JobService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ProposeJob",
 			Handler:    _JobService_ProposeJob_Handler,
+		},
+		{
+			MethodName: "BatchProposeJob",
+			Handler:    _JobService_BatchProposeJob_Handler,
 		},
 		{
 			MethodName: "RevokeJob",

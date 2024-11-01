@@ -24,6 +24,9 @@ service JobService {
   // ProposeJob submits a new job proposal to a node.
   rpc ProposeJob(ProposeJobRequest) returns (ProposeJobResponse) {}
 
+  // BatchProposeJob submits a job proposals to a batch of nodes.
+  rpc BatchProposeJob(BatchProposeJobRequest) returns (BatchProposeJobResponse) {}
+
   // RevokeJob revokes an existing job proposal.
   rpc RevokeJob(RevokeJobRequest) returns (RevokeJobResponse) {}
 
@@ -146,6 +149,27 @@ message ProposeJobRequest {
 // ProposeJobResponse returns the newly created proposal.
 message ProposeJobResponse {
   Proposal proposal = 1; // Details of the newly created proposal.
+}
+
+// BatchProposeJobRequest contains the job spec and list of nodes to propose it to.
+message BatchProposeJobRequest {
+  repeated string node_ids = 1; // List of node IDs to which the job will be proposed.
+  string spec = 2; // Shared job spec across all nodes.
+  repeated api.label.Label labels = 3; // Shared labels associated with the job.
+}
+
+// ProposeJobFailure Represents detailed information for a failed job proposal.
+message ProposeJobFailure {
+  string error_message = 1; // Description of the error.
+}
+
+// BatchProposeJobResponse provides the success and failure statuses for each node in the batch.
+message BatchProposeJobResponse {
+  // Contains the successful job proposals, mapped by node ID.
+  map<string, ProposeJobResponse> success_responses = 1;
+
+  // Contains error details for each failed job proposal, mapped by node ID.
+  map<string, ProposeJobFailure> failed_responses = 2;
 }
 
 // RevokeJobRequest specifies the criteria for revoking a job proposal.
