@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.5.0
+
+### Minor Changes
+
+- [#30](https://github.com/smartcontractkit/chainlink-protos/pull/30) [`a2bbf29`](https://github.com/smartcontractkit/chainlink-protos/commit/a2bbf294266b54ea4a750f89c69337cda39d8c8d) Thanks [@giogam](https://github.com/giogam)! - feat: adds proto definitions for BatchProposeJob endpoint
+
 ## 0.4.1
 
 ### Patch Changes
