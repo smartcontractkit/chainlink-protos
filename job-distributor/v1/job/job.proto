@@ -114,6 +114,7 @@ message ListJobsRequest {
     repeated string ids = 1; // Filter by job IDs.
     repeated string node_ids = 2; // Filter by node IDs.
     repeated api.label.Selector selectors = 3; // Filter by selectors
+    repeated string uuids = 4; // Filter by job UUIDs.
   }
 
   Filter filter = 1; // Filters applied to the job listing.
