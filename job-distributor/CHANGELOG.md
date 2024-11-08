@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.6.0
+
+### Minor Changes
+
+- [#32](https://github.com/smartcontractkit/chainlink-protos/pull/32) [`ff0c1ae`](https://github.com/smartcontractkit/chainlink-protos/commit/ff0c1aebb9ef939e83cb222b833336031eb6e313) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add filter by uuids to ListJobsRequest
+
 ## 0.5.0
 
 ### Minor Changes
