@@ -8,6 +8,11 @@ tasks:
     cmds:
       - buf format -w
 
+  lint:
+    desc: "Run buf lint"
+    cmds:
+      - buf lint
+
   proto:all:
     desc: Generate all protobuf files for all services
     cmds:
