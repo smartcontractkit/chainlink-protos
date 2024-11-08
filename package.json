@@ -3,8 +3,7 @@
   "private": true,
   "scripts": {
     "ci:changeset:publish": "sh ./scripts/tag-and-push.sh",
-    "ci:changeset:version": "pnpm changeset version",
-    "changeset": "pnpm changeset"
+    "ci:changeset:version": "pnpm changeset version"
   },
   "author": "smartcontractkit",
   "license": "MIT",
