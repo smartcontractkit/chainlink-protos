@@ -91,3 +91,8 @@ $ task proto:gen:orchestrator: # only run for orchestrator
 
 For instructions on how to contribute to `chainlink-protos` and the release process,
 see [CONTRIBUTING.md](https://github.com/smartcontractkit/chainlink-protos/blob/main/CONTRIBUTING.md)
+
+## Releasing
+
+For instructions on how to release `chainlink-protos`,
+see [RELEASE.md](https://github.com/smartcontractkit/chainlink-protos/blob/main/RELEASE.md)
