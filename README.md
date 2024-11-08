@@ -1,8 +1,9 @@
-# chainlink-protos
-
-> **Note**
->
-> _This demo represents an educational example to use a Chainlink system, product, or service and is provided to demonstrate how to interact with Chainlink’s systems, products, and services to integrate them into your own. This template is provided “AS IS” and “AS AVAILABLE” without warranties of any kind, it has not been audited, and it may be missing key checks or error handling to make the usage of the system, product or service more clear. Do not use the code in this example in a production environment without completing your own audits and application of best practices. Neither Chainlink Labs, the Chainlink Foundation, nor Chainlink node operators are responsible for unintended outputs that are generated due to errors in code._
+<div align="center">
+  <h1>Chainlink Protos</h1>
+  <a><img src="https://github.com/smartcontractkit/chainlink-protos/actions/workflows/push-main.yml/badge.svg" /></a>
+  <br/>
+  <br/>
+</div>
 
 This repository serves as a central hub for shared protobuf definitions used across various services. Currently, it includes protobuf definitions and generated Go SDKs for the job-distributor and orchestrator services. Contributions and additional proto files for other services are welcome.
 
@@ -23,24 +24,43 @@ $ go get github.com/smartcontractkit/chainlink-protos/job-distributor@v<LATEST_V
 $ go get github.com/smartcontractkit/chainlink-protos/orchestrator@v<LATEST_VERSION>
 ```
 
-## Getting Started
+### Import
 
-### Dependencies
+The import varies depending on the `go_package` option defined in the protos.
+Below is an example when `go_package` is set to `github.com/smartcontractkit/chainlink-protos/job-distributor/v1/node`
 
-Dependencies are managed via [asdf](https://asdf-vm.com/guide/getting-started.html).
+```go
+import "github.com/smartcontractkit/chainlink-protos/job-distributor/v1/node"
+```
+
+## Development
+
+### Getting Started
+
+#### Setup
+
+[asdf](https://asdf-vm.com/) is a tool version manager. All dependencies used for local development of this repo are
+managed through `asdf`. To install `asdf`:
+
+1. [Install asdf](https://asdf-vm.com/guide/getting-started.html)
+2. Follow the instructions to ensure `asdf` is shimmed into your terminal or development environment
+
+#### Installing Dependencies
+
+Install the required tools using [asdf](https://asdf-vm.com/guide/getting-started.html):
 
 ```bash
 ./scripts/setup-asdf-plugin.sh
 asdf install
 ```
 
-### Installing wsRPC
+#### Installing wsRPC
 
 Communication between core node and job distributor requires the library [wsRPC](https://github.com/smartcontractkit/wsrpc). To generate protos that are compatible with wsRPC, we will need to install the CLI.
 
 Follow the instructions [here](https://github.com/smartcontractkit/wsrpc?tab=readme-ov-file#set-up) to install it.
 
-## Formatting
+### Formatting
 
 Ensure [buf](https://buf.build/product/cli) is installed following the dependencies above.
 
@@ -48,7 +68,13 @@ Ensure [buf](https://buf.build/product/cli) is installed following the dependenc
 task fmt
 ```
 
-## Generating GO SDKs
+### Linting
+
+```bash
+task lint
+```
+
+### Generating GO SDKs
 
 > [!Note]
 > Commiting the generated code resulting from the proto changes is optional. The CI will automatically update the pull request with the generated files through the GitHub workflow.
@@ -63,32 +89,5 @@ $ task proto:gen:orchestrator: # only run for orchestrator
 
 ## Contributing
 
-### Filing a PR
-
-Before creating a PR with your change, you should generate a "changeset" file.
-
-Let's assume that you've made some local changes in one of the protos.
-Before filing a PR you need to generate a "changeset" description required for
-the automated release process. Follow the steps below:
-
-- Run `pnpm changset` in the git top level directory.
-- This repo contains multiple packages, so it will ask you for which package it
-  should generate changeset update.
-- Answer remaining questions. At the end, you will have a new
-  `.changeset/<random-name>.md` file generated.
-- Now you need to commit and push your changes
-- Create a Pull request which includes your code change and generated
-  "changeset" file.
-
-#### Preparing a release
-
-After merging your PR, a changesets CI job will create or update a "Version
-Packages" PR which contains a release bump.
-
-#### Merging Version Packages PR
-
-Now you can Approve/Request approval and Merge the PR from the previous step.
-After merging, it will kick off the push-main.yml workflow and that will release
-a new versions and push tags automatically. You can navigate to the
-[tags view](https://github.com/smartcontractkit/chainlink-protos/tags), to check if the
-latest tag is available.
+For instructions on how to contribute to `chainlink-protos` and the release process,
+see [CONTRIBUTING.md](https://github.com/smartcontractkit/chainlink-protos/blob/main/CONTRIBUTING.md)
