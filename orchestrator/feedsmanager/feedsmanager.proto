@@ -124,6 +124,7 @@ message UpdateNodeRequest {
   repeated Chain chains = 9;
 
   repeated ChainConfig chain_configs = 10;
+  string workflow_key = 11;
 }
 message UpdateNodeResponse {}
 
