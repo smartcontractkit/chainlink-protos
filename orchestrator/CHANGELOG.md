@@ -1,5 +1,11 @@
 # @chainlink/orchestrator
 
+## 0.3.1
+
+### Patch Changes
+
+- [#38](https://github.com/smartcontractkit/chainlink-protos/pull/38) [`0aeb1b5`](https://github.com/smartcontractkit/chainlink-protos/commit/0aeb1b5e0a3695a875d04251df25ae92cb3dc575) Thanks [@MStreet3](https://github.com/MStreet3)! - feat(feedsmanager): adds workflow key to update node
+
 ## 0.3.0
 
 ### Minor Changes
