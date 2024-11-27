@@ -1,5 +1,11 @@
 # @chainlink/orchestrator
 
+## 0.3.2
+
+### Patch Changes
+
+- [#40](https://github.com/smartcontractkit/chainlink-protos/pull/40) [`90cade7`](https://github.com/smartcontractkit/chainlink-protos/commit/90cade76ba4f9c594439b4bdf5e224c5e741e38c) Thanks [@agparadiso](https://github.com/agparadiso)! - fix: make workflow_key optional
+
 ## 0.3.1
 
 ### Patch Changes
