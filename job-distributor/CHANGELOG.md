@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.7.0
+
+### Minor Changes
+
+- [#43](https://github.com/smartcontractkit/chainlink-protos/pull/43) [`af39a65`](https://github.com/smartcontractkit/chainlink-protos/commit/af39a654898df1a1aa87c75a48ff8be0a857c062) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add workflow_key to node
+
 ## 0.6.0
 
 ### Minor Changes
