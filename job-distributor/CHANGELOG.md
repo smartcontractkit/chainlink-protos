@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.8.0
+
+### Minor Changes
+
+- [#45](https://github.com/smartcontractkit/chainlink-protos/pull/45) [`b65f833`](https://github.com/smartcontractkit/chainlink-protos/commit/b65f8336087db06c5a87cb29caa604dfcdd587f0) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add public key to ListNodesRequest Filter and GetNodeRequest
+
 ## 0.7.0
 
 ### Minor Changes
