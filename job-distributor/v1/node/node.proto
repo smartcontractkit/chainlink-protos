@@ -143,6 +143,7 @@ message RegisterNodeResponse {
 // GetNodeRequest is the request to retrieve a single node by its ID.
 message GetNodeRequest {
   string id = 1; // Unique identifier of the node to retrieve.
+  optional string public_key = 2; // Public Key of the node to retrieve.
 }
 
 // GetNodeResponse is the response containing the requested node.
@@ -172,6 +173,7 @@ message ListNodesRequest {
     repeated string ids = 1;
     EnableState enabled = 2;
     repeated api.label.Selector selectors = 3;
+    repeated string public_keys = 4;
   }
 
   Filter filter = 1;
