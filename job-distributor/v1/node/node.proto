@@ -140,7 +140,7 @@ message RegisterNodeResponse {
   Node node = 1; // Details of the newly registered node.
 }
 
-// GetNodeRequest is the request to retrieve a single node by its ID.
+// GetNodeRequest is the request to retrieve a single node by either its ID or public key (but not both).
 message GetNodeRequest {
   string id = 1; // Unique identifier of the node to retrieve.
   optional string public_key = 2; // Public Key of the node to retrieve.
@@ -165,6 +165,7 @@ enum EnableState {
  *   * ids - A list of node ids.
  *   * archived - The archived state of the node.
  *   * selectors - A list of selectors to filter nodes by their labels.
+ *   * public_keys - A list of node public keys.
  *
  * If no filter is provided, all nodes are returned.
  */
