@@ -1,5 +1,11 @@
 # @chainlink/orchestrator
 
+## 0.4.0
+
+### Minor Changes
+
+- [#47](https://github.com/smartcontractkit/chainlink-protos/pull/47) [`b4b9c80`](https://github.com/smartcontractkit/chainlink-protos/commit/b4b9c80fec56a47ca985dba9ea89dbbafad9e29d) Thanks [@graham-chainlink](https://github.com/graham-chainlink)! - add tron chain type
+
 ## 0.3.2
 
 ### Patch Changes
