@@ -49,6 +49,7 @@ enum ChainType {
   CHAIN_TYPE_SOLANA = 2;
   CHAIN_TYPE_STARKNET = 3;
   CHAIN_TYPE_APTOS = 4;
+  CHAIN_TYPE_TRON = 5;
 }
 
 message Chain {
