@@ -127,7 +127,12 @@ message UpdateNodeRequest {
   repeated ChainConfig chain_configs = 10;
   optional string workflow_key = 11;
 }
-message UpdateNodeResponse {}
+message UpdateNodeResponse {
+  map<string, ChainConfigError> chain_config_errors = 1;
+}
+message ChainConfigError {
+  string message = 1;
+}
 
 message ApprovedJobRequest {
   string uuid = 1;
