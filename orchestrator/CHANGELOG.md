@@ -1,5 +1,15 @@
 # @chainlink/orchestrator
 
+## 0.5.0
+
+### Minor Changes
+
+- [#52](https://github.com/smartcontractkit/chainlink-protos/pull/52) [`5d657dd`](https://github.com/smartcontractkit/chainlink-protos/commit/5d657dd517379adea2e3c4408999cc804b953aa4) Thanks [@gustavogama-cll](https://github.com/gustavogama-cll)! - chore: fix changeset file
+
+### Patch Changes
+
+- [#50](https://github.com/smartcontractkit/chainlink-protos/pull/50) [`ee0f592`](https://github.com/smartcontractkit/chainlink-protos/commit/ee0f5924c05f80210887b42525524eef26809806) Thanks [@gustavogama-cll](https://github.com/gustavogama-cll)! - Add `errors` field to orchestrator's `UpdateNodeResponse` message
+
 ## 0.4.0
 
 ### Minor Changes
