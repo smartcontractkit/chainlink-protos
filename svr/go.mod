@@ -1,4 +1,4 @@
-module github.com/smartcontractkit/chainlink-protos/job-distributor
+module github.com/smartcontractkit/chainlink-protos/svr
 
 go 1.22.5
 

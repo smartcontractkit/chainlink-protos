@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/svr/v1";
 
-package v1;
+package svr.v1;
 
 message TxMessage {
 	string hash = 1;
