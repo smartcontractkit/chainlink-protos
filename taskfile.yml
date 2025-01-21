@@ -41,7 +41,7 @@ tasks:
     desc: "Generate Go code from protobuf files for svr"
     cmds:
       - find ./svr/ -name '*.pb.go' -delete
-      - task: proto:wsrpc:gen
+      - task: proto:gen
         vars:
           SERVICE_NAME: svr
 
