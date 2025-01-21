@@ -18,6 +18,7 @@ tasks:
     cmds:
       - task proto:gen:job-distributor
       - task proto:gen:orchestrator
+      - task proto:gen:svr
       - task go:mod:tidy
 
   proto:gen:job-distributor:
@@ -36,17 +37,27 @@ tasks:
         vars:
           SERVICE_NAME: orchestrator
 
+  proto:gen:svr:
+    desc: "Generate Go code from protobuf files for svr"
+    cmds:
+      - find ./svr/ -name '*.pb.go' -delete
+      - task: proto:wsrpc:gen
+        vars:
+          SERVICE_NAME: svr
+
   proto:clean:
     desc: "Clean generated protobuf files for all services"
     cmds:
       - find ./job-distributor/ -name '*.pb.go' -delete
       - find ./orchestrator/ -name '*.pb.go' -delete
+      - find ./svr/ -name '*.pb.go' -delete
 
   go:mod:tidy:
     desc: "Run go mod tidy in each service folder"
     cmds:
       - (cd ./job-distributor && go mod tidy)
       - (cd ./orchestrator && go mod tidy)
+      - (cd ./svr && go mod tidy)
 
   proto:gen:
     internal: true
