@@ -5,8 +5,8 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/svr/v1";
 package v1;
 
 message TxMessage {
-	string Hash = 1;
-	string FromAddress = 2;
-	string ToAddress = 3;
-	string Nonce = 4;
+	string hash = 1;
+	string from_address = 2;
+	string to_address = 3;
+	string nonce = 4;
 }
