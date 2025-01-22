@@ -2,4 +2,4 @@
 
 /job-distributor/ @smartcontractkit/deployment-automation
 /orchestrator/ @smartcontractkit/deployment-automation
-/svr/ @smartcontractkit/data-feeds/oev
+/svr/ @smartcontractkit/oev
