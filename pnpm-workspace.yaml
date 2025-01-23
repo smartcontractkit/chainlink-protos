@@ -1,3 +1,4 @@
 packages:
   - 'job-distributor'
   - 'orchestrator'
+  - 'svr'

@@ -85,6 +85,7 @@ Generate the GO SDKs to implement gRPC services or clients via [task](https://ta
 $ task proto:all
 $ task proto:gen:job-distributor # only run for job-distributor
 $ task proto:gen:orchestrator: # only run for orchestrator
+$ task proto:gen:svr: # only run for svr
 ```
 
 ## Contributing
