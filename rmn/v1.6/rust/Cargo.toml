@@ -1,0 +1,13 @@
+[package]
+name = "rmn"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+# new dependencies
+prost = "0.13.1"
+prost-types = "0.13.1"
+
+[build-dependencies]
+prost-build = "0.13.1"
