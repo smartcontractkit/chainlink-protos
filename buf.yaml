@@ -8,6 +8,15 @@ lint:
     - job-distributor
     - orchestrator
     - node_modules
+  ignore_only:
+    PACKAGE_DIRECTORY_MATCH:
+      - rmn
+    FIELD_LOWER_SNAKE_CASE:
+      - rmn
+    PACKAGE_VERSION_SUFFIX:
+      - rmn
+    DIRECTORY_SAME_PACKAGE:
+      - rmn
 breaking:
   use:
     - FILE

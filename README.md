@@ -86,6 +86,7 @@ $ task proto:all
 $ task proto:gen:job-distributor # only run for job-distributor
 $ task proto:gen:orchestrator: # only run for orchestrator
 $ task proto:gen:svr: # only run for svr
+$ task proto:gen:rmn
 ```
 
 ## Contributing

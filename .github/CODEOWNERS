@@ -3,3 +3,4 @@
 /job-distributor/ @smartcontractkit/deployment-automation
 /orchestrator/ @smartcontractkit/deployment-automation
 /svr/ @smartcontractkit/oev
+/rmn/ @smartcontractkit/RMN @smartcontractkit/ccip

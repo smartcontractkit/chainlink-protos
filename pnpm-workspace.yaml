@@ -2,3 +2,4 @@ packages:
   - 'job-distributor'
   - 'orchestrator'
   - 'svr'
+  - 'rmn'

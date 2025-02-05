@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package rageproxy;
+
+option go_package = "./;serialization";
+
+// TODO: convert this entire file to lower snake case https://protobuf.dev/programming-guides/style/#message-field-names
+
+message MessageProxyToProxyTarget {
+  bytes senderPeerId = 1;
+  string streamName = 2;
+  bytes payload = 3;
+}
+
+message MessageProxyTargetToProxy {
+  bytes receiverPeerId = 1;
+  string streamName = 2;
+  bytes payload = 3;
+}
+
+message AddGroup {
+  bytes configDigest = 1;
+  repeated bytes peerIds = 2; // convert to string?
+  repeated Bootstrapper bootstrappers = 3;
+}
+
+message RemoveGroup {
+  bytes configDigest = 1;
+}
+
+// To be kept in sync with https://pkg.go.dev/github.com/smartcontractkit/libocr@v0.0.0-20240717170647-ae747ca5b812/ragep2p#TokenBucketParams
+message TokenBucketParams {
+  double rate = 1;
+  uint32 capacity = 2;
+}
+
+// To be kept in sync with https://pkg.go.dev/github.com/smartcontractkit/libocr@v0.0.0-20240717170647-ae747ca5b812/ragep2p#Host.NewStream
+message NewStream {
+  bytes other = 1;
+  string streamName = 2;
+  uint64 outgoingBufferSize = 3;
+  uint64 incomingBufferSize = 4;
+  uint64 maxMessageLength = 5;
+  TokenBucketParams messagesLimit = 6;
+  TokenBucketParams bytesLimit = 7;
+}
+
+message CloseStream {
+  bytes other = 1;
+  string streamName = 2;
+}
+
+// TODO: have response type?
+
+message Bootstrapper {
+  bytes peerId = 1;
+  repeated string addrs = 2;
+}
+
+message ProxyTargetToProxy {
+  oneof msg {
+    AddGroup addGroup = 1;
+    RemoveGroup removeGroup = 2;
+    NewStream newStream = 3;
+    CloseStream closeStream = 4;
+    MessageProxyTargetToProxy messageProxyTargetToProxy = 5;
+  }
+}
+
+message ProxyToProxyTarget {
+  oneof msg {
+    MessageProxyToProxyTarget messageProxyToProxyTarget = 1;
+  }
+}
