@@ -2,4 +2,4 @@ beholder:
   domain: svr
   schemas:
     - entity: beholder_tx_message
-      schema: "./svr/beholder_tx_message.proto"
+      schema: "./svr/v1/beholder_tx_message.proto"
