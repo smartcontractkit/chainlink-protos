@@ -1,0 +1,37 @@
+name: Deploy Schemas
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '**/beholder.yaml'
+      - '**/svr/v1/*.proto'
+jobs:
+  deploy-schemas:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.
+    - name: Configure AWS Credentials via OIDC
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ secrets.AWS_ARN_ROLE }}
+        aws-region: us-west-2
+
+    - name: Deploy schemas with Pulumi
+      uses: smartcontractkit/.github/actions/beholder-pulumi-deploy-schema@6f4520cd6ee3d6cd4f931c4e2032b22867db8182 # v1.0.0
+      with:
+        pulumi_s3_bucket: ${{ secrets.PULUMI_S3_BUCKET }}
+        deploy_environment: "production"
+        deploy_config_path: "./beholder.yaml"
+        aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+        aws_region: "us-west-2"
+      env:
+        CONFLUENT_CLOUD_API_KEY: ${{ secrets.CONFLUENT_CLOUD_API_KEY }}
+        CONFLUENT_CLOUD_API_SECRET: ${{ secrets.CONFLUENT_CLOUD_API_SECRET }}
+        SCHEMA_REGISTRY_KEY: ${{ secrets.SCHEMA_REGISTRY_KEY }}
+        SCHEMA_REGISTRY_SECRET: ${{ secrets.SCHEMA_REGISTRY_SECRET }}
+        PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}

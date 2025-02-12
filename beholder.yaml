@@ -1,0 +1,5 @@
+beholder:
+  domain: svr
+  schemas:
+    - entity: beholder_tx_message
+      schema: "./svr/v1/beholder_tx_message.proto"
