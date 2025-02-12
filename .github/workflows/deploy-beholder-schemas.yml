@@ -18,11 +18,12 @@ jobs:
     - name: Configure AWS Credentials via OIDC
       uses: aws-actions/configure-aws-credentials@v4
       with:
+        mask-aws-account-id: true
         role-to-assume: ${{ secrets.AWS_ARN_ROLE }}
         aws-region: us-west-2
 
     - name: Deploy schemas with Pulumi
-      uses: smartcontractkit/.github/actions/beholder-pulumi-deploy-schema@6f4520cd6ee3d6cd4f931c4e2032b22867db8182 # v1.0.0
+      uses: smartcontractkit/.github/actions/beholder-pulumi-deploy-schema@690c054c807d61409754edeb80829322c9bfd114 # v1.1.0
       with:
         pulumi_s3_bucket: ${{ secrets.PULUMI_S3_BUCKET }}
         deploy_environment: "production"
