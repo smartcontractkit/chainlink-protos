@@ -26,7 +26,7 @@ jobs:
       uses: smartcontractkit/.github/actions/beholder-pulumi-deploy-schema@690c054c807d61409754edeb80829322c9bfd114 # v1.1.0
       with:
         pulumi_s3_bucket: ${{ secrets.PULUMI_S3_BUCKET }}
-        deploy_environment: "production"
+        deploy_environment: "sandbox"
         deploy_config_path: "./beholder.yaml"
         aws_account_id: ${{ secrets.AWS_ACCOUNT_ID }}
         aws_region: "us-west-2"
