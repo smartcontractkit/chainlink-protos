@@ -9,4 +9,8 @@ message TxMessage {
   string from_address = 2;
   string to_address = 3;
   string nonce = 4;
+  int64 created_at = 5;
+  string chain_id = 6;
+  string feed_address = 7;
+  string feed_name = 8;
 }
