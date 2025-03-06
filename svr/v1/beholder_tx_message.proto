@@ -12,5 +12,4 @@ message TxMessage {
   int64 created_at = 5;
   string chain_id = 6;
   string feed_address = 7;
-  string feed_name = 8;
 }
