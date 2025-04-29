@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package workflows.v1.events;
+
+option go_package = ".;events";
+
+// MeteringReportNodeDetail is consumed by
+// capability responses and by Metering Report.
+// It currently lives in its own file due to a
+// restriction in proto registration for Beholder.
+message MeteringReportNodeDetail {
+  string peer_2_peer_id = 1;
+  string spend_unit = 2;
+  string spend_value = 3;
+}

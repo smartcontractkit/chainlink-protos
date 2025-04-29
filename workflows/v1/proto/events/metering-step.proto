@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package workflows.v1.events;
+
+option go_package = ".;events";
+
+import "events/metering-detail.proto";
+
+// MeteringReportStep is consumed by MeteringReport.
+// It lives in a different file from MeteringReport due to a
+// current restriction in proto registration in Beholder.
+message MeteringReportStep {
+  repeated MeteringReportNodeDetail nodes = 1;
+}

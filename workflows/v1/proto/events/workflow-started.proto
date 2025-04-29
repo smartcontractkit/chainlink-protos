@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package workflows.v1.events;
+
+option go_package = ".;events";
+
+import "events/metadata.proto";
+
+message WorkflowExecutionStarted {
+  WorkflowMetadata m = 1;
+  string timestamp = 2;
+  string TriggerID = 3;
+} 

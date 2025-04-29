@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package workflows.v1.events;
+
+option go_package = ".;events";
+
+import "events/metadata.proto";
+
+message CapabilityExecutionFinished {
+  WorkflowMetadata m = 1;
+  string timestamp = 2;
+  string capabilityID = 3;
+  string stepRef = 4;
+  string status = 5;
+} 

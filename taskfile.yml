@@ -20,6 +20,7 @@ tasks:
       - task proto:gen:orchestrator
       - task proto:gen:svr
       - task proto:gen:rmn
+      - task proto:gen:workflows
       - task go:mod:tidy
 
   proto:gen:job-distributor:
@@ -60,6 +61,18 @@ tasks:
             --go-grpc_opt=paths=source_relative \
             $proto_files
         - cd rmn/v1.6/rust && cargo build
+
+  proto:gen:workflows:
+      desc: "Generate Go code from protobuf files for workflows v1"
+      cmds:
+        - find ./workflows/v1/go -name '*.pb.go' -delete
+        - |
+          proto_files=$(find ./workflows/v1/proto -name "*.proto")
+          protoc \
+            -I=./workflows/v1/proto \
+            --go_out=./workflows/v1/go \
+            --go_opt=paths=source_relative \
+            $proto_files
 
   proto:clean:
     desc: "Clean generated protobuf files for all services"

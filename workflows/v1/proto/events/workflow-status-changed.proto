@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package workflows.v1.events;
+
+option go_package = ".;events";
+
+import "events/metadata.proto";
+
+message WorkflowStatusChanged {
+  WorkflowMetadata m = 1;
+  string status = 2;
+  string details = 3;
+}
