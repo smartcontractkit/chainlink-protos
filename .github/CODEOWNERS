@@ -4,3 +4,5 @@
 /orchestrator/ @smartcontractkit/deployment-automation @smartcontractkit/devex-tooling
 /svr/ @smartcontractkit/oev
 /rmn/ @smartcontractkit/RMN @smartcontractkit/ccip
+/billing/ @smartcontractkit/cre-business @smartcontractkit/core
+/workflows/ @smartcontractkit/foundations @smartcontractkit/core
