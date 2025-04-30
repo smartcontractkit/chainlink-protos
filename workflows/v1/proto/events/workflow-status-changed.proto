@@ -10,4 +10,11 @@ message WorkflowStatusChanged {
   WorkflowMetadata m = 1;
   string status = 2;
   string details = 3;
+  TransactionInfo txInfo = 4;
+}
+
+message TransactionInfo {
+  string chainSelector = 1;
+  string txHash = 2;
+  string gasCost = 3;
 }

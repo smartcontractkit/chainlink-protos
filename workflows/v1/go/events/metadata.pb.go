@@ -22,19 +22,22 @@ const (
 )
 
 type WorkflowMetadata struct {
-	state               protoimpl.MessageState `protogen:"open.v1"`
-	WorkflowOwner       string                 `protobuf:"bytes,1,opt,name=workflowOwner,proto3" json:"workflowOwner,omitempty"`
-	WorkflowName        string                 `protobuf:"bytes,2,opt,name=workflowName,proto3" json:"workflowName,omitempty"`
-	Version             string                 `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
-	WorkflowID          string                 `protobuf:"bytes,4,opt,name=workflowID,proto3" json:"workflowID,omitempty"`
-	WorkflowExecutionID string                 `protobuf:"bytes,5,opt,name=workflowExecutionID,proto3" json:"workflowExecutionID,omitempty"`
-	DonID               int32                  `protobuf:"varint,6,opt,name=donID,proto3" json:"donID,omitempty"`
-	DonF                int32                  `protobuf:"varint,7,opt,name=donF,proto3" json:"donF,omitempty"`
-	DonN                int32                  `protobuf:"varint,8,opt,name=donN,proto3" json:"donN,omitempty"`
-	DonQ                int32                  `protobuf:"varint,9,opt,name=donQ,proto3" json:"donQ,omitempty"`
-	P2PID               string                 `protobuf:"bytes,10,opt,name=p2pID,proto3" json:"p2pID,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	state                   protoimpl.MessageState `protogen:"open.v1"`
+	WorkflowOwner           string                 `protobuf:"bytes,1,opt,name=workflowOwner,proto3" json:"workflowOwner,omitempty"`
+	WorkflowName            string                 `protobuf:"bytes,2,opt,name=workflowName,proto3" json:"workflowName,omitempty"`
+	Version                 string                 `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
+	WorkflowID              string                 `protobuf:"bytes,4,opt,name=workflowID,proto3" json:"workflowID,omitempty"`
+	WorkflowExecutionID     string                 `protobuf:"bytes,5,opt,name=workflowExecutionID,proto3" json:"workflowExecutionID,omitempty"`
+	DonID                   int32                  `protobuf:"varint,6,opt,name=donID,proto3" json:"donID,omitempty"`
+	DonF                    int32                  `protobuf:"varint,7,opt,name=donF,proto3" json:"donF,omitempty"`
+	DonN                    int32                  `protobuf:"varint,8,opt,name=donN,proto3" json:"donN,omitempty"`
+	P2PID                   string                 `protobuf:"bytes,9,opt,name=p2pID,proto3" json:"p2pID,omitempty"`
+	WorkflowRegistryAddress string                 `protobuf:"bytes,10,opt,name=workflowRegistryAddress,proto3" json:"workflowRegistryAddress,omitempty"`
+	WorkflowRegistryVersion string                 `protobuf:"bytes,11,opt,name=workflowRegistryVersion,proto3" json:"workflowRegistryVersion,omitempty"`
+	WorkflowRegistryChain   string                 `protobuf:"bytes,12,opt,name=workflowRegistryChain,proto3" json:"workflowRegistryChain,omitempty"`
+	EngineVersion           string                 `protobuf:"bytes,13,opt,name=engineVersion,proto3" json:"engineVersion,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *WorkflowMetadata) Reset() {
@@ -123,16 +126,37 @@ func (x *WorkflowMetadata) GetDonN() int32 {
 	return 0
 }
 
-func (x *WorkflowMetadata) GetDonQ() int32 {
-	if x != nil {
-		return x.DonQ
-	}
-	return 0
-}
-
 func (x *WorkflowMetadata) GetP2PID() string {
 	if x != nil {
 		return x.P2PID
+	}
+	return ""
+}
+
+func (x *WorkflowMetadata) GetWorkflowRegistryAddress() string {
+	if x != nil {
+		return x.WorkflowRegistryAddress
+	}
+	return ""
+}
+
+func (x *WorkflowMetadata) GetWorkflowRegistryVersion() string {
+	if x != nil {
+		return x.WorkflowRegistryVersion
+	}
+	return ""
+}
+
+func (x *WorkflowMetadata) GetWorkflowRegistryChain() string {
+	if x != nil {
+		return x.WorkflowRegistryChain
+	}
+	return ""
+}
+
+func (x *WorkflowMetadata) GetEngineVersion() string {
+	if x != nil {
+		return x.EngineVersion
 	}
 	return ""
 }
@@ -141,7 +165,7 @@ var File_events_metadata_proto protoreflect.FileDescriptor
 
 const file_events_metadata_proto_rawDesc = "" +
 	"\n" +
-	"\x15events/metadata.proto\x12\x13workflows.v1.events\"\xb0\x02\n" +
+	"\x15events/metadata.proto\x12\x13workflows.v1.events\"\xec\x03\n" +
 	"\x10WorkflowMetadata\x12$\n" +
 	"\rworkflowOwner\x18\x01 \x01(\tR\rworkflowOwner\x12\"\n" +
 	"\fworkflowName\x18\x02 \x01(\tR\fworkflowName\x12\x18\n" +
@@ -152,10 +176,13 @@ const file_events_metadata_proto_rawDesc = "" +
 	"\x13workflowExecutionID\x18\x05 \x01(\tR\x13workflowExecutionID\x12\x14\n" +
 	"\x05donID\x18\x06 \x01(\x05R\x05donID\x12\x12\n" +
 	"\x04donF\x18\a \x01(\x05R\x04donF\x12\x12\n" +
-	"\x04donN\x18\b \x01(\x05R\x04donN\x12\x12\n" +
-	"\x04donQ\x18\t \x01(\x05R\x04donQ\x12\x14\n" +
-	"\x05p2pID\x18\n" +
-	" \x01(\tR\x05p2pIDB\n" +
+	"\x04donN\x18\b \x01(\x05R\x04donN\x12\x14\n" +
+	"\x05p2pID\x18\t \x01(\tR\x05p2pID\x128\n" +
+	"\x17workflowRegistryAddress\x18\n" +
+	" \x01(\tR\x17workflowRegistryAddress\x128\n" +
+	"\x17workflowRegistryVersion\x18\v \x01(\tR\x17workflowRegistryVersion\x124\n" +
+	"\x15workflowRegistryChain\x18\f \x01(\tR\x15workflowRegistryChain\x12$\n" +
+	"\rengineVersion\x18\r \x01(\tR\rengineVersionB\n" +
 	"Z\b.;eventsb\x06proto3"
 
 var (

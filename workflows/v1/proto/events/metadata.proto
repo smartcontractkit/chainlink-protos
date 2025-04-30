@@ -13,6 +13,9 @@ message WorkflowMetadata {
   int32 donID = 6;
   int32 donF = 7;
   int32 donN = 8;
-  int32 donQ = 9;
-  string p2pID = 10;
+  string p2pID = 9;
+  string workflowRegistryAddress = 10;
+  string workflowRegistryVersion = 11;
+  string workflowRegistryChain = 12;
+  string engineVersion = 13;
 } 

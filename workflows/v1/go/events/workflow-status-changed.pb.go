@@ -26,6 +26,7 @@ type WorkflowStatusChanged struct {
 	M             *WorkflowMetadata      `protobuf:"bytes,1,opt,name=m,proto3" json:"m,omitempty"`
 	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
 	Details       string                 `protobuf:"bytes,3,opt,name=details,proto3" json:"details,omitempty"`
+	TxInfo        *TransactionInfo       `protobuf:"bytes,4,opt,name=txInfo,proto3" json:"txInfo,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -81,15 +82,87 @@ func (x *WorkflowStatusChanged) GetDetails() string {
 	return ""
 }
 
+func (x *WorkflowStatusChanged) GetTxInfo() *TransactionInfo {
+	if x != nil {
+		return x.TxInfo
+	}
+	return nil
+}
+
+type TransactionInfo struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ChainSelector string                 `protobuf:"bytes,1,opt,name=chainSelector,proto3" json:"chainSelector,omitempty"`
+	TxHash        string                 `protobuf:"bytes,2,opt,name=txHash,proto3" json:"txHash,omitempty"`
+	GasCost       string                 `protobuf:"bytes,3,opt,name=gasCost,proto3" json:"gasCost,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TransactionInfo) Reset() {
+	*x = TransactionInfo{}
+	mi := &file_events_workflow_status_changed_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TransactionInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransactionInfo) ProtoMessage() {}
+
+func (x *TransactionInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_events_workflow_status_changed_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransactionInfo.ProtoReflect.Descriptor instead.
+func (*TransactionInfo) Descriptor() ([]byte, []int) {
+	return file_events_workflow_status_changed_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *TransactionInfo) GetChainSelector() string {
+	if x != nil {
+		return x.ChainSelector
+	}
+	return ""
+}
+
+func (x *TransactionInfo) GetTxHash() string {
+	if x != nil {
+		return x.TxHash
+	}
+	return ""
+}
+
+func (x *TransactionInfo) GetGasCost() string {
+	if x != nil {
+		return x.GasCost
+	}
+	return ""
+}
+
 var File_events_workflow_status_changed_proto protoreflect.FileDescriptor
 
 const file_events_workflow_status_changed_proto_rawDesc = "" +
 	"\n" +
-	"$events/workflow-status-changed.proto\x12\x13workflows.v1.events\x1a\x15events/metadata.proto\"~\n" +
+	"$events/workflow-status-changed.proto\x12\x13workflows.v1.events\x1a\x15events/metadata.proto\"\xbc\x01\n" +
 	"\x15WorkflowStatusChanged\x123\n" +
 	"\x01m\x18\x01 \x01(\v2%.workflows.v1.events.WorkflowMetadataR\x01m\x12\x16\n" +
 	"\x06status\x18\x02 \x01(\tR\x06status\x12\x18\n" +
-	"\adetails\x18\x03 \x01(\tR\adetailsB\n" +
+	"\adetails\x18\x03 \x01(\tR\adetails\x12<\n" +
+	"\x06txInfo\x18\x04 \x01(\v2$.workflows.v1.events.TransactionInfoR\x06txInfo\"i\n" +
+	"\x0fTransactionInfo\x12$\n" +
+	"\rchainSelector\x18\x01 \x01(\tR\rchainSelector\x12\x16\n" +
+	"\x06txHash\x18\x02 \x01(\tR\x06txHash\x12\x18\n" +
+	"\agasCost\x18\x03 \x01(\tR\agasCostB\n" +
 	"Z\b.;eventsb\x06proto3"
 
 var (
@@ -104,18 +177,20 @@ func file_events_workflow_status_changed_proto_rawDescGZIP() []byte {
 	return file_events_workflow_status_changed_proto_rawDescData
 }
 
-var file_events_workflow_status_changed_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_events_workflow_status_changed_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_events_workflow_status_changed_proto_goTypes = []any{
 	(*WorkflowStatusChanged)(nil), // 0: workflows.v1.events.WorkflowStatusChanged
-	(*WorkflowMetadata)(nil),      // 1: workflows.v1.events.WorkflowMetadata
+	(*TransactionInfo)(nil),       // 1: workflows.v1.events.TransactionInfo
+	(*WorkflowMetadata)(nil),      // 2: workflows.v1.events.WorkflowMetadata
 }
 var file_events_workflow_status_changed_proto_depIdxs = []int32{
-	1, // 0: workflows.v1.events.WorkflowStatusChanged.m:type_name -> workflows.v1.events.WorkflowMetadata
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2, // 0: workflows.v1.events.WorkflowStatusChanged.m:type_name -> workflows.v1.events.WorkflowMetadata
+	1, // 1: workflows.v1.events.WorkflowStatusChanged.txInfo:type_name -> workflows.v1.events.TransactionInfo
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_events_workflow_status_changed_proto_init() }
@@ -130,7 +205,7 @@ func file_events_workflow_status_changed_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_events_workflow_status_changed_proto_rawDesc), len(file_events_workflow_status_changed_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
