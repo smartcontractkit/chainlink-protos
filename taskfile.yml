@@ -74,6 +74,21 @@ tasks:
             --go_opt=paths=source_relative \
             $proto_files
 
+  proto:gen:billing:
+      desc: "Generate Go code from protobuf files for billing v1"
+      cmds:
+        - find ./billing/go -name '*.pb.go' -delete
+        - |
+          proto_files=$(find ./billing/proto/v1 -name "*.proto")
+          protoc \
+            --proto_path=./billing/proto/v1 \
+            --proto_path=./workflows/proto/v1 \
+            --go_out=./billing/go \
+            --go_opt=Mservice/billing-service.proto=github.com/smartcontractkit/chainlink-protos/billing/go/service \
+            --go_opt=Mevents/metering.proto=github.com/smartcontractkit/chainlink-protos/workflows/go/events \
+            --go_opt=paths=source_relative \
+            $proto_files
+
   proto:clean:
     desc: "Clean generated protobuf files for all services"
     cmds:
