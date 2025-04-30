@@ -20,7 +20,7 @@ tasks:
       - task proto:gen:orchestrator
       - task proto:gen:svr
       - task proto:gen:rmn
-      - task proto:gen:workflows:v1
+      - task proto:gen:workflows
       - task go:mod:tidy
 
   proto:gen:job-distributor:
@@ -62,7 +62,7 @@ tasks:
             $proto_files
         - cd rmn/v1.6/rust && cargo build
 
-  proto:gen:workflows:v1:
+  proto:gen:workflows:
       desc: "Generate Go code from protobuf files for workflows v1"
       cmds:
         - find ./workflows/go -name '*.pb.go' -delete
