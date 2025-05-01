@@ -18,9 +18,15 @@ modules:
         - FIELD_LOWER_SNAKE_CASE
         - PACKAGE_VERSION_SUFFIX
         - DIRECTORY_SAME_PACKAGE
+  - path: svr
+    lint:
+      except:
+        - PACKAGE_DIRECTORY_MATCH
 lint:
   use:
     - STANDARD
 breaking:
   use:
     - FILE
+  ignore:
+    - node_modules
