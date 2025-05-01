@@ -81,7 +81,7 @@ jobs:
           key: ${{ runner.os }}-cache-regenerate-protobuf
 
       - name: Install task CLI
-        if: github.actor != 'app-token-issuer-engops[bot]' && steps.cache-deps.outputs.cache-hit != 'true'
+        if: github.actor != 'app-token-issuer-engops[bot]'
         run: |
           asdf install task
 
