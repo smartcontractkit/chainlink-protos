@@ -52,13 +52,14 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           token: ${{ steps.get-gh-token.outputs.access-token }}
           fetch-depth: 1
-      - uses: asdf-vm/actions/install@v3.0.2
+     
       - uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
         id: tool-versions
+
+      - uses: asdf-vm/actions/plugins-add@v3.0.2
+        if: github.actor != 'app-token-issuer-engops[bot]' && steps.cache-deps.outputs.cache-hit != 'true'
         with:
           asdf_branch: v0.16.7
-          before_install: |
-            asdf install golang ${{ steps.tool-versions.outputs.golang_version }}
 
       - name: Set up Go
         if: github.actor != 'app-token-issuer-engops[bot]'
@@ -79,8 +80,7 @@ jobs:
       - name: Install task CLI
         if: github.actor != 'app-token-issuer-engops[bot]' && steps.cache-deps.outputs.cache-hit != 'true'
         run: |
-          TASK_VERSION=3.39.0
-          curl -sL https://github.com/go-task/task/releases/download/v${TASK_VERSION}/task_linux_amd64.tar.gz | tar -xz -C /usr/local/bin task
+          asdf install task
 
       - name: Install grpc and wsrpc
         if: github.actor != 'app-token-issuer-engops[bot]' && steps.cache-deps.outputs.cache-hit != 'true'
@@ -92,12 +92,7 @@ jobs:
       - name: Install protoc
         if: github.actor != 'app-token-issuer-engops[bot]'
         run: |
-          PROTOC_VERSION=28.1
-          curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip
-          unzip protoc-${PROTOC_VERSION}-linux-x86_64.zip -d protoc3
-          sudo mv protoc3/bin/* /usr/local/bin/
-          sudo mv protoc3/include/* /usr/local/include/
-          rm -rf protoc3 protoc-${PROTOC_VERSION}-linux-x86_64.zip
+          asdf install protoc
 
       - name: Regenerate protobuf files
         if: github.actor != 'app-token-issuer-engops[bot]'
