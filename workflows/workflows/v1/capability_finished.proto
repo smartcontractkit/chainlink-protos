@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package workflows.v1;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/events";
-
 import "workflows/v1/metadata.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/events";
 
 message CapabilityExecutionFinished {
   WorkflowMetadata m = 1;
@@ -12,4 +12,4 @@ message CapabilityExecutionFinished {
   string capabilityID = 3;
   string stepRef = 4;
   string status = 5;
-} 
+}

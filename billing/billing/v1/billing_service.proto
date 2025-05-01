@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package billing.v1;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/billing/go;billing";
-
 import "google/protobuf/timestamp.proto";
 import "workflows/v1/metering.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/billing/go;billing";
 
 // ------------------------------------------
 // Shared messages
