@@ -52,12 +52,15 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           token: ${{ steps.get-gh-token.outputs.access-token }}
           fetch-depth: 1
-     
-      - uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
-        id: tool-versions
 
-      - uses: asdf-vm/actions/plugins-add@v3.0.2
+      - name: Set tool versions to env vars 
+        id: tool-versions
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
+
+      - name: Install asdf and Plugins
         if: github.actor != 'app-token-issuer-engops[bot]' && steps.cache-deps.outputs.cache-hit != 'true'
+        uses: asdf-vm/actions/plugins-add@v3.0.2
         with:
           asdf_branch: v0.16.7
 
