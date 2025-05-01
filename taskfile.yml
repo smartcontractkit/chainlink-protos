@@ -101,12 +101,9 @@ tasks:
   go:mod:tidy:
     desc: "Run go mod tidy in each service folder"
     cmds:
-      - (cd ./job-distributor && go mod tidy)
-      - (cd ./orchestrator && go mod tidy)
-      - (cd ./svr && go mod tidy)
-      - (cd ./rmn/v1.6/go && go mod tidy)
-      - (cd ./billing/go && go mod tidy)
-      - (cd ./workflows/go && go mod tidy)
+      - go install github.com/jmank88/gomods@v0.1.5
+      - asdf reshim golang
+      - gomods tidy
 
   proto:gen:
     internal: true

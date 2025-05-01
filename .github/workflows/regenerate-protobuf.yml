@@ -14,10 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
+        id: tool-versions
       - uses: bufbuild/buf-action@v1
         with:
           breaking: ${{ github.event_name == 'pull_request' }}
-          version: 1.45.0
+          version: ${{ steps.tool-versions.outputs.buf_version }}
           exclude_paths: node_modules
 
   regenerate-protobuf:
@@ -50,12 +52,15 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           token: ${{ steps.get-gh-token.outputs.access-token }}
           fetch-depth: 1
+      
+      - uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
+        id: tool-versions
 
       - name: Set up Go
         if: github.actor != 'app-token-issuer-engops[bot]'
         uses: actions/setup-go@v5
         with:
-          go-version: "1.22.5"
+          go-version: ${{ steps.tool-versions.outputs.golang_version }}
 
       - name: Cache Dependencies
         if: github.actor != 'app-token-issuer-engops[bot]'
