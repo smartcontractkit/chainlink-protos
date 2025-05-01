@@ -55,6 +55,10 @@ jobs:
       - uses: asdf-vm/actions/install@v3.0.2
       - uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
         id: tool-versions
+        with:
+          asdf_branch: v0.16.7
+          before_install: |
+            asdf install golang
 
       - name: Set up Go
         if: github.actor != 'app-token-issuer-engops[bot]'
