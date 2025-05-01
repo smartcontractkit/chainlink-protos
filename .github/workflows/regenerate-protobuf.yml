@@ -14,11 +14,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: bufbuild/buf-action@v1
         with:
-          breaking: ${{ github.event_name == 'pull_request' }}
           version: 1.45.0
-          exclude_paths: node_modules
+          setup_only: true
+
+      - name: Buf build / lint / format
+        run: |
+          buf build  --error-format github-actions --exclude-path node_modules
+          buf lint   --error-format github-actions --exclude-path node_modules
+          buf format --diff --error-format github-actions --exit-code --exclude-path node_modules
+
+      # Breaking-change check
+      # • Runs only on pull-requests
+      # • Skips files that exist only in the PR (`--limit-to-input-files`)
+      - name: Buf breaking (skip brand-new modules)
+        if: github.event_name == 'pull_request'
+        run: |
+          buf breaking \
+            --error-format github-actions \
+            --against "https://github.com/${{ github.repository }}.git#branch=main" \
+            --limit-to-input-files \
+            --exclude-path node_modules
 
   regenerate-protobuf:
     runs-on: ubuntu-latest
