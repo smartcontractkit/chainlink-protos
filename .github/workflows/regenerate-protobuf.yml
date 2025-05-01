@@ -58,7 +58,7 @@ jobs:
         with:
           asdf_branch: v0.16.7
           before_install: |
-            asdf install golang
+            asdf install golang ${{ steps.tool-versions.outputs.golang_version }}
 
       - name: Set up Go
         if: github.actor != 'app-token-issuer-engops[bot]'
