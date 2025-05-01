@@ -117,7 +117,7 @@ message UpdateNodeRequest {
   repeated JobType job_types = 1;
   int64 chain_id = 2; // To be removed when all nodes are upgraded to 1.2
   repeated string account_addresses = 3;
-  string is_bootstrap_peer = 4;
+  bool is_bootstrap_peer = 4;
   string bootstrap_multiaddr = 5;
   string version = 6;
   repeated int64 chain_ids = 7;
@@ -126,6 +126,7 @@ message UpdateNodeRequest {
 
   repeated ChainConfig chain_configs = 10;
   optional string workflow_key = 11;
+  string new_field = 12;
 }
 message UpdateNodeResponse {
   map<string, ChainConfigError> chain_config_errors = 1;
