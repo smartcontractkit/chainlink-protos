@@ -20,7 +20,7 @@ while read -r line; do
 
   if [[ -n "${plugins[$plugin]}" ]]; then
     echo "Installing $plugin $version..."
-    asdf plugin-add "$plugin" "${plugins[$plugin]}"
+    asdf plugin add "$plugin" "${plugins[$plugin]}"
   else
     echo "No repository URL found for plugin $plugin. Skipping..."
   fi

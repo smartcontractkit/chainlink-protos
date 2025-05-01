@@ -1,22 +1,30 @@
 # For details on buf.yaml configuration, visit https://buf.build/docs/configuration/v2/buf-yaml
 version: v2
+modules:
+  - path: workflows
+    lint:
+      except:
+        - FIELD_LOWER_SNAKE_CASE
+  - path: billing
+    lint:
+      use:
+        - BASIC
+      except:
+        - FIELD_LOWER_SNAKE_CASE
+  - path: rmn/v1.6/proto
+    lint:
+      except:
+        - PACKAGE_DIRECTORY_MATCH
+        - FIELD_LOWER_SNAKE_CASE
+        - PACKAGE_VERSION_SUFFIX
+        - DIRECTORY_SAME_PACKAGE
+  - path: svr
+    lint:
+      except:
+        - PACKAGE_DIRECTORY_MATCH
 lint:
   use:
     - STANDARD
-  ignore:
-    # existing service, unable to fix lint due to breaking changes
-    - job-distributor
-    - orchestrator
-    - node_modules
-  ignore_only:
-    PACKAGE_DIRECTORY_MATCH:
-      - rmn
-    FIELD_LOWER_SNAKE_CASE:
-      - rmn
-    PACKAGE_VERSION_SUFFIX:
-      - rmn
-    DIRECTORY_SAME_PACKAGE:
-      - rmn
 breaking:
   use:
     - FILE

@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package workflows.v1;
+
+import "workflows/v1/metadata.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/events";
+
+message CapabilityExecutionStarted {
+  WorkflowMetadata m = 1;
+  string timestamp = 2;
+  string capabilityID = 3;
+  string stepRef = 4;
+}
