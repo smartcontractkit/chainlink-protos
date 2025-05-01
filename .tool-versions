@@ -6,4 +6,4 @@ protoc-gen-go 1.36.6
 nodejs 20.13.1
 pnpm 9.10.0
 buf 1.45.0
-cargo 1.84.0
+rust 1.84.0

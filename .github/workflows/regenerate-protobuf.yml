@@ -14,10 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
+        id: tool-versions
       - uses: bufbuild/buf-action@v1
         with:
           breaking: ${{ github.event_name == 'pull_request' }}
-          version: 1.45.0
+          version: ${{ steps.tool-versions.outputs.buf_version }}
           exclude_paths: node_modules
 
   regenerate-protobuf:
@@ -51,11 +53,22 @@ jobs:
           token: ${{ steps.get-gh-token.outputs.access-token }}
           fetch-depth: 1
 
+      - name: Set tool versions to env vars 
+        id: tool-versions
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
+
+      - name: Install asdf and Plugins
+        if: github.actor != 'app-token-issuer-engops[bot]' && steps.cache-deps.outputs.cache-hit != 'true'
+        uses: asdf-vm/actions/plugins-add@05e0d2ed97b598bfce82fd30daf324ae0c4570e6
+        with:
+          asdf_branch: v0.16.7
+
       - name: Set up Go
         if: github.actor != 'app-token-issuer-engops[bot]'
         uses: actions/setup-go@v5
         with:
-          go-version: "1.22.5"
+          go-version: ${{ steps.tool-versions.outputs.golang_version }}
 
       - name: Cache Dependencies
         if: github.actor != 'app-token-issuer-engops[bot]'
@@ -68,10 +81,9 @@ jobs:
           key: ${{ runner.os }}-cache-regenerate-protobuf
 
       - name: Install task CLI
-        if: github.actor != 'app-token-issuer-engops[bot]' && steps.cache-deps.outputs.cache-hit != 'true'
+        if: github.actor != 'app-token-issuer-engops[bot]'
         run: |
-          TASK_VERSION=3.39.0
-          curl -sL https://github.com/go-task/task/releases/download/v${TASK_VERSION}/task_linux_amd64.tar.gz | tar -xz -C /usr/local/bin task
+          asdf install task
 
       - name: Install grpc and wsrpc
         if: github.actor != 'app-token-issuer-engops[bot]' && steps.cache-deps.outputs.cache-hit != 'true'
@@ -83,12 +95,7 @@ jobs:
       - name: Install protoc
         if: github.actor != 'app-token-issuer-engops[bot]'
         run: |
-          PROTOC_VERSION=28.1
-          curl -LO https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-linux-x86_64.zip
-          unzip protoc-${PROTOC_VERSION}-linux-x86_64.zip -d protoc3
-          sudo mv protoc3/bin/* /usr/local/bin/
-          sudo mv protoc3/include/* /usr/local/include/
-          rm -rf protoc3 protoc-${PROTOC_VERSION}-linux-x86_64.zip
+          asdf install protoc
 
       - name: Regenerate protobuf files
         if: github.actor != 'app-token-issuer-engops[bot]'
