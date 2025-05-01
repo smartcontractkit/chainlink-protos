@@ -20,6 +20,7 @@ tasks:
       - task proto:gen:orchestrator
       - task proto:gen:svr
       - task proto:gen:rmn
+      - task proto:gen:billing:v1
       - task go:mod:tidy
 
   proto:gen:job-distributor:
@@ -61,12 +62,27 @@ tasks:
             $proto_files
         - cd rmn/v1.6/rust && cargo build
 
+  proto:gen:billing:v1:
+      desc: "Generate Go code from protobuf files for billing v1"
+      cmds:
+        - find ./billing/go -name '*.pb.go' -delete
+        - |
+          proto_files=$(find ./billing/billing/v1 -name "*.proto")
+          protoc \
+            --proto_path=./billing \
+            --proto_path=./workflows \
+            --go_out=./billing/go \
+            --go_opt=Mevents/metering.proto=github.com/smartcontractkit/chainlink-protos/workflows/go/events \
+            --go_opt=module=github.com/smartcontractkit/chainlink-protos/billing/go \
+            $proto_files
+
   proto:clean:
     desc: "Clean generated protobuf files for all services"
     cmds:
       - find ./job-distributor/ -name '*.pb.go' -delete
       - find ./orchestrator/ -name '*.pb.go' -delete
       - find ./svr/ -name '*.pb.go' -delete
+      - find ./billing/ -name '*.pb.go' -delete
 
   go:mod:tidy:
     desc: "Run go mod tidy in each service folder"
@@ -75,6 +91,7 @@ tasks:
       - (cd ./orchestrator && go mod tidy)
       - (cd ./svr && go mod tidy)
       - (cd ./rmn/v1.6/go && go mod tidy)
+      - (cd ./billing/go && go mod tidy)
 
   proto:gen:
     internal: true
