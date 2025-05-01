@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package workflows.v1.events;
+package workflows.v1;
 
-option go_package = ".;events";
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/events";
 
 message TransmissionsScheduledEvent {
   string timestamp = 1;

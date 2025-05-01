@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package workflows.v1.events;
+package workflows.v1;
 
-option go_package = ".;events";
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/events";
 
-import "events/metering-detail.proto";
+import "workflows/v1/metering_detail.proto";
 
 // MeteringReportStep is consumed by MeteringReport.
 // It lives in a different file from MeteringReport due to a

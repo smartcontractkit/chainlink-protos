@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: events/workflow-started.proto
+// source: workflows/v1/workflow_started.proto
 
 package events
 
@@ -32,7 +32,7 @@ type WorkflowExecutionStarted struct {
 
 func (x *WorkflowExecutionStarted) Reset() {
 	*x = WorkflowExecutionStarted{}
-	mi := &file_events_workflow_started_proto_msgTypes[0]
+	mi := &file_workflows_v1_workflow_started_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44,7 +44,7 @@ func (x *WorkflowExecutionStarted) String() string {
 func (*WorkflowExecutionStarted) ProtoMessage() {}
 
 func (x *WorkflowExecutionStarted) ProtoReflect() protoreflect.Message {
-	mi := &file_events_workflow_started_proto_msgTypes[0]
+	mi := &file_workflows_v1_workflow_started_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57,7 +57,7 @@ func (x *WorkflowExecutionStarted) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WorkflowExecutionStarted.ProtoReflect.Descriptor instead.
 func (*WorkflowExecutionStarted) Descriptor() ([]byte, []int) {
-	return file_events_workflow_started_proto_rawDescGZIP(), []int{0}
+	return file_workflows_v1_workflow_started_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *WorkflowExecutionStarted) GetM() *WorkflowMetadata {
@@ -81,36 +81,35 @@ func (x *WorkflowExecutionStarted) GetTriggerID() string {
 	return ""
 }
 
-var File_events_workflow_started_proto protoreflect.FileDescriptor
+var File_workflows_v1_workflow_started_proto protoreflect.FileDescriptor
 
-const file_events_workflow_started_proto_rawDesc = "" +
+const file_workflows_v1_workflow_started_proto_rawDesc = "" +
 	"\n" +
-	"\x1devents/workflow-started.proto\x12\x13workflows.v1.events\x1a\x15events/metadata.proto\"\x8b\x01\n" +
-	"\x18WorkflowExecutionStarted\x123\n" +
-	"\x01m\x18\x01 \x01(\v2%.workflows.v1.events.WorkflowMetadataR\x01m\x12\x1c\n" +
+	"#workflows/v1/workflow_started.proto\x12\fworkflows.v1\x1a\x1bworkflows/v1/metadata.proto\"\x84\x01\n" +
+	"\x18WorkflowExecutionStarted\x12,\n" +
+	"\x01m\x18\x01 \x01(\v2\x1e.workflows.v1.WorkflowMetadataR\x01m\x12\x1c\n" +
 	"\ttimestamp\x18\x02 \x01(\tR\ttimestamp\x12\x1c\n" +
-	"\tTriggerID\x18\x03 \x01(\tR\tTriggerIDB\n" +
-	"Z\b.;eventsb\x06proto3"
+	"\tTriggerID\x18\x03 \x01(\tR\tTriggerIDBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
 
 var (
-	file_events_workflow_started_proto_rawDescOnce sync.Once
-	file_events_workflow_started_proto_rawDescData []byte
+	file_workflows_v1_workflow_started_proto_rawDescOnce sync.Once
+	file_workflows_v1_workflow_started_proto_rawDescData []byte
 )
 
-func file_events_workflow_started_proto_rawDescGZIP() []byte {
-	file_events_workflow_started_proto_rawDescOnce.Do(func() {
-		file_events_workflow_started_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_events_workflow_started_proto_rawDesc), len(file_events_workflow_started_proto_rawDesc)))
+func file_workflows_v1_workflow_started_proto_rawDescGZIP() []byte {
+	file_workflows_v1_workflow_started_proto_rawDescOnce.Do(func() {
+		file_workflows_v1_workflow_started_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_workflows_v1_workflow_started_proto_rawDesc), len(file_workflows_v1_workflow_started_proto_rawDesc)))
 	})
-	return file_events_workflow_started_proto_rawDescData
+	return file_workflows_v1_workflow_started_proto_rawDescData
 }
 
-var file_events_workflow_started_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
-var file_events_workflow_started_proto_goTypes = []any{
-	(*WorkflowExecutionStarted)(nil), // 0: workflows.v1.events.WorkflowExecutionStarted
-	(*WorkflowMetadata)(nil),         // 1: workflows.v1.events.WorkflowMetadata
+var file_workflows_v1_workflow_started_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_workflows_v1_workflow_started_proto_goTypes = []any{
+	(*WorkflowExecutionStarted)(nil), // 0: workflows.v1.WorkflowExecutionStarted
+	(*WorkflowMetadata)(nil),         // 1: workflows.v1.WorkflowMetadata
 }
-var file_events_workflow_started_proto_depIdxs = []int32{
-	1, // 0: workflows.v1.events.WorkflowExecutionStarted.m:type_name -> workflows.v1.events.WorkflowMetadata
+var file_workflows_v1_workflow_started_proto_depIdxs = []int32{
+	1, // 0: workflows.v1.WorkflowExecutionStarted.m:type_name -> workflows.v1.WorkflowMetadata
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -118,27 +117,27 @@ var file_events_workflow_started_proto_depIdxs = []int32{
 	0, // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_events_workflow_started_proto_init() }
-func file_events_workflow_started_proto_init() {
-	if File_events_workflow_started_proto != nil {
+func init() { file_workflows_v1_workflow_started_proto_init() }
+func file_workflows_v1_workflow_started_proto_init() {
+	if File_workflows_v1_workflow_started_proto != nil {
 		return
 	}
-	file_events_metadata_proto_init()
+	file_workflows_v1_metadata_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_events_workflow_started_proto_rawDesc), len(file_events_workflow_started_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_workflows_v1_workflow_started_proto_rawDesc), len(file_workflows_v1_workflow_started_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_events_workflow_started_proto_goTypes,
-		DependencyIndexes: file_events_workflow_started_proto_depIdxs,
-		MessageInfos:      file_events_workflow_started_proto_msgTypes,
+		GoTypes:           file_workflows_v1_workflow_started_proto_goTypes,
+		DependencyIndexes: file_workflows_v1_workflow_started_proto_depIdxs,
+		MessageInfos:      file_workflows_v1_workflow_started_proto_msgTypes,
 	}.Build()
-	File_events_workflow_started_proto = out.File
-	file_events_workflow_started_proto_goTypes = nil
-	file_events_workflow_started_proto_depIdxs = nil
+	File_workflows_v1_workflow_started_proto = out.File
+	file_workflows_v1_workflow_started_proto_goTypes = nil
+	file_workflows_v1_workflow_started_proto_depIdxs = nil
 }

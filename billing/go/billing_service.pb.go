@@ -2,9 +2,9 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: service/billing-service.proto
+// source: billing/v1/billing_service.proto
 
-package service
+package billing
 
 import (
 	events "github.com/smartcontractkit/chainlink-protos/workflows/go/events"
@@ -31,7 +31,7 @@ type EmptyRequest struct {
 
 func (x *EmptyRequest) Reset() {
 	*x = EmptyRequest{}
-	mi := &file_service_billing_service_proto_msgTypes[0]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +43,7 @@ func (x *EmptyRequest) String() string {
 func (*EmptyRequest) ProtoMessage() {}
 
 func (x *EmptyRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[0]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +56,7 @@ func (x *EmptyRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EmptyRequest.ProtoReflect.Descriptor instead.
 func (*EmptyRequest) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{0}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{0}
 }
 
 type EmptyResponse struct {
@@ -68,7 +68,7 @@ type EmptyResponse struct {
 
 func (x *EmptyResponse) Reset() {
 	*x = EmptyResponse{}
-	mi := &file_service_billing_service_proto_msgTypes[1]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -80,7 +80,7 @@ func (x *EmptyResponse) String() string {
 func (*EmptyResponse) ProtoMessage() {}
 
 func (x *EmptyResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[1]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -93,7 +93,7 @@ func (x *EmptyResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EmptyResponse.ProtoReflect.Descriptor instead.
 func (*EmptyResponse) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{1}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *EmptyResponse) GetMessage() string {
@@ -113,7 +113,7 @@ type AccountCreditsInput struct {
 
 func (x *AccountCreditsInput) Reset() {
 	*x = AccountCreditsInput{}
-	mi := &file_service_billing_service_proto_msgTypes[2]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -125,7 +125,7 @@ func (x *AccountCreditsInput) String() string {
 func (*AccountCreditsInput) ProtoMessage() {}
 
 func (x *AccountCreditsInput) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[2]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -138,7 +138,7 @@ func (x *AccountCreditsInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AccountCreditsInput.ProtoReflect.Descriptor instead.
 func (*AccountCreditsInput) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{2}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *AccountCreditsInput) GetCredits() float32 {
@@ -165,7 +165,7 @@ type AllocateCreditsRequest struct {
 
 func (x *AllocateCreditsRequest) Reset() {
 	*x = AllocateCreditsRequest{}
-	mi := &file_service_billing_service_proto_msgTypes[3]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -177,7 +177,7 @@ func (x *AllocateCreditsRequest) String() string {
 func (*AllocateCreditsRequest) ProtoMessage() {}
 
 func (x *AllocateCreditsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[3]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -190,7 +190,7 @@ func (x *AllocateCreditsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AllocateCreditsRequest.ProtoReflect.Descriptor instead.
 func (*AllocateCreditsRequest) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{3}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *AllocateCreditsRequest) GetAccountId() string {
@@ -216,7 +216,7 @@ type AllocateCreditsResponse struct {
 
 func (x *AllocateCreditsResponse) Reset() {
 	*x = AllocateCreditsResponse{}
-	mi := &file_service_billing_service_proto_msgTypes[4]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -228,7 +228,7 @@ func (x *AllocateCreditsResponse) String() string {
 func (*AllocateCreditsResponse) ProtoMessage() {}
 
 func (x *AllocateCreditsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[4]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -241,7 +241,7 @@ func (x *AllocateCreditsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AllocateCreditsResponse.ProtoReflect.Descriptor instead.
 func (*AllocateCreditsResponse) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{4}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *AllocateCreditsResponse) GetSuccess() bool {
@@ -263,7 +263,7 @@ type BillAccountRequest struct {
 
 func (x *BillAccountRequest) Reset() {
 	*x = BillAccountRequest{}
-	mi := &file_service_billing_service_proto_msgTypes[5]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -275,7 +275,7 @@ func (x *BillAccountRequest) String() string {
 func (*BillAccountRequest) ProtoMessage() {}
 
 func (x *BillAccountRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[5]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -288,7 +288,7 @@ func (x *BillAccountRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BillAccountRequest.ProtoReflect.Descriptor instead.
 func (*BillAccountRequest) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{5}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *BillAccountRequest) GetAccountId() string {
@@ -328,7 +328,7 @@ type BillAccountResponse struct {
 
 func (x *BillAccountResponse) Reset() {
 	*x = BillAccountResponse{}
-	mi := &file_service_billing_service_proto_msgTypes[6]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -340,7 +340,7 @@ func (x *BillAccountResponse) String() string {
 func (*BillAccountResponse) ProtoMessage() {}
 
 func (x *BillAccountResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[6]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -353,7 +353,7 @@ func (x *BillAccountResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BillAccountResponse.ProtoReflect.Descriptor instead.
 func (*BillAccountResponse) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{6}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *BillAccountResponse) GetBillId() string {
@@ -372,7 +372,7 @@ type GetAccountCreditsRequest struct {
 
 func (x *GetAccountCreditsRequest) Reset() {
 	*x = GetAccountCreditsRequest{}
-	mi := &file_service_billing_service_proto_msgTypes[7]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -384,7 +384,7 @@ func (x *GetAccountCreditsRequest) String() string {
 func (*GetAccountCreditsRequest) ProtoMessage() {}
 
 func (x *GetAccountCreditsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[7]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -397,7 +397,7 @@ func (x *GetAccountCreditsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAccountCreditsRequest.ProtoReflect.Descriptor instead.
 func (*GetAccountCreditsRequest) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{7}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GetAccountCreditsRequest) GetAccountId() string {
@@ -417,7 +417,7 @@ type GetAccountCreditsResponse struct {
 
 func (x *GetAccountCreditsResponse) Reset() {
 	*x = GetAccountCreditsResponse{}
-	mi := &file_service_billing_service_proto_msgTypes[8]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -429,7 +429,7 @@ func (x *GetAccountCreditsResponse) String() string {
 func (*GetAccountCreditsResponse) ProtoMessage() {}
 
 func (x *GetAccountCreditsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[8]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -442,7 +442,7 @@ func (x *GetAccountCreditsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAccountCreditsResponse.ProtoReflect.Descriptor instead.
 func (*GetAccountCreditsResponse) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{8}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GetAccountCreditsResponse) GetAccountId() string {
@@ -468,7 +468,7 @@ type BatchGetCreditsForAccountsRequest struct {
 
 func (x *BatchGetCreditsForAccountsRequest) Reset() {
 	*x = BatchGetCreditsForAccountsRequest{}
-	mi := &file_service_billing_service_proto_msgTypes[9]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -480,7 +480,7 @@ func (x *BatchGetCreditsForAccountsRequest) String() string {
 func (*BatchGetCreditsForAccountsRequest) ProtoMessage() {}
 
 func (x *BatchGetCreditsForAccountsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[9]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -493,7 +493,7 @@ func (x *BatchGetCreditsForAccountsRequest) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use BatchGetCreditsForAccountsRequest.ProtoReflect.Descriptor instead.
 func (*BatchGetCreditsForAccountsRequest) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{9}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *BatchGetCreditsForAccountsRequest) GetAccountIds() []string {
@@ -512,7 +512,7 @@ type BatchGetCreditsForAccountsResponse struct {
 
 func (x *BatchGetCreditsForAccountsResponse) Reset() {
 	*x = BatchGetCreditsForAccountsResponse{}
-	mi := &file_service_billing_service_proto_msgTypes[10]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -524,7 +524,7 @@ func (x *BatchGetCreditsForAccountsResponse) String() string {
 func (*BatchGetCreditsForAccountsResponse) ProtoMessage() {}
 
 func (x *BatchGetCreditsForAccountsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[10]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -537,7 +537,7 @@ func (x *BatchGetCreditsForAccountsResponse) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use BatchGetCreditsForAccountsResponse.ProtoReflect.Descriptor instead.
 func (*BatchGetCreditsForAccountsResponse) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{10}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *BatchGetCreditsForAccountsResponse) GetAccounts() []*AccountWithCredits {
@@ -560,7 +560,7 @@ type AccountCredits struct {
 
 func (x *AccountCredits) Reset() {
 	*x = AccountCredits{}
-	mi := &file_service_billing_service_proto_msgTypes[11]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -572,7 +572,7 @@ func (x *AccountCredits) String() string {
 func (*AccountCredits) ProtoMessage() {}
 
 func (x *AccountCredits) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[11]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -585,7 +585,7 @@ func (x *AccountCredits) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AccountCredits.ProtoReflect.Descriptor instead.
 func (*AccountCredits) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{11}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *AccountCredits) GetCredits() float32 {
@@ -633,7 +633,7 @@ type AccountWithCredits struct {
 
 func (x *AccountWithCredits) Reset() {
 	*x = AccountWithCredits{}
-	mi := &file_service_billing_service_proto_msgTypes[12]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -645,7 +645,7 @@ func (x *AccountWithCredits) String() string {
 func (*AccountWithCredits) ProtoMessage() {}
 
 func (x *AccountWithCredits) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[12]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -658,7 +658,7 @@ func (x *AccountWithCredits) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AccountWithCredits.ProtoReflect.Descriptor instead.
 func (*AccountWithCredits) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{12}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *AccountWithCredits) GetAccountId() string {
@@ -688,7 +688,7 @@ type ReserveCreditsRequest struct {
 
 func (x *ReserveCreditsRequest) Reset() {
 	*x = ReserveCreditsRequest{}
-	mi := &file_service_billing_service_proto_msgTypes[13]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -700,7 +700,7 @@ func (x *ReserveCreditsRequest) String() string {
 func (*ReserveCreditsRequest) ProtoMessage() {}
 
 func (x *ReserveCreditsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[13]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -713,7 +713,7 @@ func (x *ReserveCreditsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReserveCreditsRequest.ProtoReflect.Descriptor instead.
 func (*ReserveCreditsRequest) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{13}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ReserveCreditsRequest) GetAccountId() string {
@@ -753,7 +753,7 @@ type ReserveCreditsResponse struct {
 
 func (x *ReserveCreditsResponse) Reset() {
 	*x = ReserveCreditsResponse{}
-	mi := &file_service_billing_service_proto_msgTypes[14]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -765,7 +765,7 @@ func (x *ReserveCreditsResponse) String() string {
 func (*ReserveCreditsResponse) ProtoMessage() {}
 
 func (x *ReserveCreditsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[14]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -778,7 +778,7 @@ func (x *ReserveCreditsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReserveCreditsResponse.ProtoReflect.Descriptor instead.
 func (*ReserveCreditsResponse) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{14}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ReserveCreditsResponse) GetSuccess() bool {
@@ -799,7 +799,7 @@ type ReleaseReservationRequest struct {
 
 func (x *ReleaseReservationRequest) Reset() {
 	*x = ReleaseReservationRequest{}
-	mi := &file_service_billing_service_proto_msgTypes[15]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -811,7 +811,7 @@ func (x *ReleaseReservationRequest) String() string {
 func (*ReleaseReservationRequest) ProtoMessage() {}
 
 func (x *ReleaseReservationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[15]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -824,7 +824,7 @@ func (x *ReleaseReservationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReleaseReservationRequest.ProtoReflect.Descriptor instead.
 func (*ReleaseReservationRequest) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{15}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ReleaseReservationRequest) GetAccountId() string {
@@ -857,7 +857,7 @@ type ReleaseReservationResponse struct {
 
 func (x *ReleaseReservationResponse) Reset() {
 	*x = ReleaseReservationResponse{}
-	mi := &file_service_billing_service_proto_msgTypes[16]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -869,7 +869,7 @@ func (x *ReleaseReservationResponse) String() string {
 func (*ReleaseReservationResponse) ProtoMessage() {}
 
 func (x *ReleaseReservationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[16]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -882,7 +882,7 @@ func (x *ReleaseReservationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReleaseReservationResponse.ProtoReflect.Descriptor instead.
 func (*ReleaseReservationResponse) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{16}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ReleaseReservationResponse) GetSuccess() bool {
@@ -903,7 +903,7 @@ type ConsumeCreditsRequest struct {
 
 func (x *ConsumeCreditsRequest) Reset() {
 	*x = ConsumeCreditsRequest{}
-	mi := &file_service_billing_service_proto_msgTypes[17]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -915,7 +915,7 @@ func (x *ConsumeCreditsRequest) String() string {
 func (*ConsumeCreditsRequest) ProtoMessage() {}
 
 func (x *ConsumeCreditsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[17]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -928,7 +928,7 @@ func (x *ConsumeCreditsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConsumeCreditsRequest.ProtoReflect.Descriptor instead.
 func (*ConsumeCreditsRequest) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{17}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ConsumeCreditsRequest) GetAccountId() string {
@@ -961,7 +961,7 @@ type ConsumeCreditsResponse struct {
 
 func (x *ConsumeCreditsResponse) Reset() {
 	*x = ConsumeCreditsResponse{}
-	mi := &file_service_billing_service_proto_msgTypes[18]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -973,7 +973,7 @@ func (x *ConsumeCreditsResponse) String() string {
 func (*ConsumeCreditsResponse) ProtoMessage() {}
 
 func (x *ConsumeCreditsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[18]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -986,7 +986,7 @@ func (x *ConsumeCreditsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConsumeCreditsResponse.ProtoReflect.Descriptor instead.
 func (*ConsumeCreditsResponse) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{18}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ConsumeCreditsResponse) GetSuccess() bool {
@@ -1007,7 +1007,7 @@ type ConsumeReservationRequest struct {
 
 func (x *ConsumeReservationRequest) Reset() {
 	*x = ConsumeReservationRequest{}
-	mi := &file_service_billing_service_proto_msgTypes[19]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1019,7 +1019,7 @@ func (x *ConsumeReservationRequest) String() string {
 func (*ConsumeReservationRequest) ProtoMessage() {}
 
 func (x *ConsumeReservationRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[19]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1032,7 +1032,7 @@ func (x *ConsumeReservationRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConsumeReservationRequest.ProtoReflect.Descriptor instead.
 func (*ConsumeReservationRequest) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{19}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *ConsumeReservationRequest) GetAccountId() string {
@@ -1065,7 +1065,7 @@ type ConsumeReservationResponse struct {
 
 func (x *ConsumeReservationResponse) Reset() {
 	*x = ConsumeReservationResponse{}
-	mi := &file_service_billing_service_proto_msgTypes[20]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1077,7 +1077,7 @@ func (x *ConsumeReservationResponse) String() string {
 func (*ConsumeReservationResponse) ProtoMessage() {}
 
 func (x *ConsumeReservationResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[20]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1090,7 +1090,7 @@ func (x *ConsumeReservationResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConsumeReservationResponse.ProtoReflect.Descriptor instead.
 func (*ConsumeReservationResponse) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{20}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *ConsumeReservationResponse) GetSuccess() bool {
@@ -1112,7 +1112,7 @@ type SubmitWorkflowReceiptRequest struct {
 
 func (x *SubmitWorkflowReceiptRequest) Reset() {
 	*x = SubmitWorkflowReceiptRequest{}
-	mi := &file_service_billing_service_proto_msgTypes[21]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1124,7 +1124,7 @@ func (x *SubmitWorkflowReceiptRequest) String() string {
 func (*SubmitWorkflowReceiptRequest) ProtoMessage() {}
 
 func (x *SubmitWorkflowReceiptRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[21]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1137,7 +1137,7 @@ func (x *SubmitWorkflowReceiptRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitWorkflowReceiptRequest.ProtoReflect.Descriptor instead.
 func (*SubmitWorkflowReceiptRequest) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{21}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *SubmitWorkflowReceiptRequest) GetAccountId() string {
@@ -1177,7 +1177,7 @@ type SubmitWorkflowReceiptResponse struct {
 
 func (x *SubmitWorkflowReceiptResponse) Reset() {
 	*x = SubmitWorkflowReceiptResponse{}
-	mi := &file_service_billing_service_proto_msgTypes[22]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1189,7 +1189,7 @@ func (x *SubmitWorkflowReceiptResponse) String() string {
 func (*SubmitWorkflowReceiptResponse) ProtoMessage() {}
 
 func (x *SubmitWorkflowReceiptResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_service_billing_service_proto_msgTypes[22]
+	mi := &file_billing_v1_billing_service_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1202,7 +1202,7 @@ func (x *SubmitWorkflowReceiptResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitWorkflowReceiptResponse.ProtoReflect.Descriptor instead.
 func (*SubmitWorkflowReceiptResponse) Descriptor() ([]byte, []int) {
-	return file_service_billing_service_proto_rawDescGZIP(), []int{22}
+	return file_billing_v1_billing_service_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *SubmitWorkflowReceiptResponse) GetSuccess() bool {
@@ -1212,22 +1212,23 @@ func (x *SubmitWorkflowReceiptResponse) GetSuccess() bool {
 	return false
 }
 
-var File_service_billing_service_proto protoreflect.FileDescriptor
+var File_billing_v1_billing_service_proto protoreflect.FileDescriptor
 
-const file_service_billing_service_proto_rawDesc = "" +
+const file_billing_v1_billing_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1dservice/billing-service.proto\x12\x12billing.v1.service\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x15events/metering.proto\"\x0e\n" +
+	" billing/v1/billing_service.proto\x12\n" +
+	"billing.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bworkflows/v1/metering.proto\"\x0e\n" +
 	"\fEmptyRequest\")\n" +
 	"\rEmptyResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\"P\n" +
 	"\x13AccountCreditsInput\x12\x18\n" +
 	"\acredits\x18\x01 \x01(\x02R\acredits\x12\x1f\n" +
 	"\vcredit_type\x18\x02 \x01(\tR\n" +
-	"creditType\"z\n" +
+	"creditType\"r\n" +
 	"\x16AllocateCreditsRequest\x12\x1d\n" +
 	"\n" +
-	"account_id\x18\x01 \x01(\tR\taccountId\x12A\n" +
-	"\acredits\x18\x02 \x03(\v2'.billing.v1.service.AccountCreditsInputR\acredits\"3\n" +
+	"account_id\x18\x01 \x01(\tR\taccountId\x129\n" +
+	"\acredits\x18\x02 \x03(\v2\x1f.billing.v1.AccountCreditsInputR\acredits\"3\n" +
 	"\x17AllocateCreditsResponse\x12\x18\n" +
 	"\aSuccess\x18\x01 \x01(\bR\aSuccess\"\x8a\x01\n" +
 	"\x12BillAccountRequest\x12\x1d\n" +
@@ -1240,16 +1241,16 @@ const file_service_billing_service_proto_rawDesc = "" +
 	"\abill_id\x18\x01 \x01(\tR\x06billId\"9\n" +
 	"\x18GetAccountCreditsRequest\x12\x1d\n" +
 	"\n" +
-	"account_id\x18\x01 \x01(\tR\taccountId\"x\n" +
+	"account_id\x18\x01 \x01(\tR\taccountId\"p\n" +
 	"\x19GetAccountCreditsResponse\x12\x1d\n" +
 	"\n" +
-	"account_id\x18\x01 \x01(\tR\taccountId\x12<\n" +
-	"\acredits\x18\x02 \x03(\v2\".billing.v1.service.AccountCreditsR\acredits\"D\n" +
+	"account_id\x18\x01 \x01(\tR\taccountId\x124\n" +
+	"\acredits\x18\x02 \x03(\v2\x1a.billing.v1.AccountCreditsR\acredits\"D\n" +
 	"!BatchGetCreditsForAccountsRequest\x12\x1f\n" +
 	"\vaccount_ids\x18\x01 \x03(\tR\n" +
-	"accountIds\"h\n" +
-	"\"BatchGetCreditsForAccountsResponse\x12B\n" +
-	"\baccounts\x18\x01 \x03(\v2&.billing.v1.service.AccountWithCreditsR\baccounts\"\xec\x01\n" +
+	"accountIds\"`\n" +
+	"\"BatchGetCreditsForAccountsResponse\x12:\n" +
+	"\baccounts\x18\x01 \x03(\v2\x1e.billing.v1.AccountWithCreditsR\baccounts\"\xec\x01\n" +
 	"\x0eAccountCredits\x12\x18\n" +
 	"\acredits\x18\x01 \x01(\x02R\acredits\x12)\n" +
 	"\x10credits_reserved\x18\x02 \x01(\x02R\x0fcreditsReserved\x12\x1f\n" +
@@ -1258,18 +1259,18 @@ const file_service_billing_service_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"q\n" +
+	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"i\n" +
 	"\x12AccountWithCredits\x12\x1d\n" +
 	"\n" +
-	"account_id\x18\x01 \x01(\tR\taccountId\x12<\n" +
-	"\acredits\x18\x02 \x03(\v2\".billing.v1.service.AccountCreditsR\acredits\"\xce\x01\n" +
+	"account_id\x18\x01 \x01(\tR\taccountId\x124\n" +
+	"\acredits\x18\x02 \x03(\v2\x1a.billing.v1.AccountCreditsR\acredits\"\xc6\x01\n" +
 	"\x15ReserveCreditsRequest\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x01 \x01(\tR\taccountId\x12\x1f\n" +
 	"\vworkflow_id\x18\x02 \x01(\tR\n" +
 	"workflowId\x122\n" +
-	"\x15workflow_execution_id\x18\x03 \x01(\tR\x13workflowExecutionId\x12A\n" +
-	"\acredits\x18\x04 \x03(\v2'.billing.v1.service.AccountCreditsInputR\acredits\"2\n" +
+	"\x15workflow_execution_id\x18\x03 \x01(\tR\x13workflowExecutionId\x129\n" +
+	"\acredits\x18\x04 \x03(\v2\x1f.billing.v1.AccountCreditsInputR\acredits\"2\n" +
 	"\x16ReserveCreditsResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x8f\x01\n" +
 	"\x19ReleaseReservationRequest\x12\x1d\n" +
@@ -1279,13 +1280,13 @@ const file_service_billing_service_proto_rawDesc = "" +
 	"workflowId\x122\n" +
 	"\x15workflow_execution_id\x18\x03 \x01(\tR\x13workflowExecutionId\"6\n" +
 	"\x1aReleaseReservationResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x9a\x01\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x92\x01\n" +
 	"\x15ConsumeCreditsRequest\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x01 \x01(\tR\taccountId\x12\x1f\n" +
 	"\vworkflow_id\x18\x02 \x01(\tR\n" +
-	"workflowId\x12A\n" +
-	"\acredits\x18\x03 \x03(\v2'.billing.v1.service.AccountCreditsInputR\acredits\"2\n" +
+	"workflowId\x129\n" +
+	"\acredits\x18\x03 \x03(\v2\x1f.billing.v1.AccountCreditsInputR\acredits\"2\n" +
 	"\x16ConsumeCreditsResponse\x12\x18\n" +
 	"\asuccess\x18\x01 \x01(\bR\asuccess\"\x8f\x01\n" +
 	"\x19ConsumeReservationRequest\x12\x1d\n" +
@@ -1295,99 +1296,99 @@ const file_service_billing_service_proto_rawDesc = "" +
 	"workflowId\x122\n" +
 	"\x15workflow_execution_id\x18\x03 \x01(\tR\x13workflowExecutionId\"6\n" +
 	"\x1aConsumeReservationResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xd3\x01\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"\xcc\x01\n" +
 	"\x1cSubmitWorkflowReceiptRequest\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x01 \x01(\tR\taccountId\x12\x1f\n" +
 	"\vworkflow_id\x18\x02 \x01(\tR\n" +
 	"workflowId\x122\n" +
-	"\x15workflow_execution_id\x18\x03 \x01(\tR\x13workflowExecutionId\x12?\n" +
-	"\bmetering\x18\x04 \x01(\v2#.workflows.v1.events.MeteringReportR\bmetering\"9\n" +
+	"\x15workflow_execution_id\x18\x03 \x01(\tR\x13workflowExecutionId\x128\n" +
+	"\bmetering\x18\x04 \x01(\v2\x1c.workflows.v1.MeteringReportR\bmetering\"9\n" +
 	"\x1dSubmitWorkflowReceiptResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\xd3\x02\n" +
-	"\x13SubscriptionService\x12p\n" +
-	"\x11GetAccountCredits\x12,.billing.v1.service.GetAccountCreditsRequest\x1a-.billing.v1.service.GetAccountCreditsResponse\x12j\n" +
-	"\x0fAllocateCredits\x12*.billing.v1.service.AllocateCreditsRequest\x1a+.billing.v1.service.AllocateCreditsResponse\x12^\n" +
-	"\vBillAccount\x12&.billing.v1.service.BillAccountRequest\x1a'.billing.v1.service.BillAccountResponse2\xc5\x06\n" +
-	"\x0fWorkflowService\x12p\n" +
-	"\x11GetAccountCredits\x12,.billing.v1.service.GetAccountCreditsRequest\x1a-.billing.v1.service.GetAccountCreditsResponse\x12\x8b\x01\n" +
-	"\x1aBatchGetCreditsForAccounts\x125.billing.v1.service.BatchGetCreditsForAccountsRequest\x1a6.billing.v1.service.BatchGetCreditsForAccountsResponse\x12g\n" +
-	"\x0eReserveCredits\x12).billing.v1.service.ReserveCreditsRequest\x1a*.billing.v1.service.ReserveCreditsResponse\x12s\n" +
-	"\x12ReleaseReservation\x12-.billing.v1.service.ReleaseReservationRequest\x1a..billing.v1.service.ReleaseReservationResponse\x12g\n" +
-	"\x0eConsumeCredits\x12).billing.v1.service.ConsumeCreditsRequest\x1a*.billing.v1.service.ConsumeCreditsResponse\x12s\n" +
-	"\x12ConsumeReservation\x12-.billing.v1.service.ConsumeReservationRequest\x1a..billing.v1.service.ConsumeReservationResponse\x12v\n" +
-	"\x0fWorkflowReceipt\x120.billing.v1.service.SubmitWorkflowReceiptRequest\x1a1.billing.v1.service.SubmitWorkflowReceiptResponseb\x06proto3"
+	"\asuccess\x18\x01 \x01(\bR\asuccess2\xa3\x02\n" +
+	"\x13SubscriptionService\x12`\n" +
+	"\x11GetAccountCredits\x12$.billing.v1.GetAccountCreditsRequest\x1a%.billing.v1.GetAccountCreditsResponse\x12Z\n" +
+	"\x0fAllocateCredits\x12\".billing.v1.AllocateCreditsRequest\x1a#.billing.v1.AllocateCreditsResponse\x12N\n" +
+	"\vBillAccount\x12\x1e.billing.v1.BillAccountRequest\x1a\x1f.billing.v1.BillAccountResponse2\xd4\x05\n" +
+	"\x0fWorkflowService\x12`\n" +
+	"\x11GetAccountCredits\x12$.billing.v1.GetAccountCreditsRequest\x1a%.billing.v1.GetAccountCreditsResponse\x12{\n" +
+	"\x1aBatchGetCreditsForAccounts\x12-.billing.v1.BatchGetCreditsForAccountsRequest\x1a..billing.v1.BatchGetCreditsForAccountsResponse\x12W\n" +
+	"\x0eReserveCredits\x12!.billing.v1.ReserveCreditsRequest\x1a\".billing.v1.ReserveCreditsResponse\x12c\n" +
+	"\x12ReleaseReservation\x12%.billing.v1.ReleaseReservationRequest\x1a&.billing.v1.ReleaseReservationResponse\x12W\n" +
+	"\x0eConsumeCredits\x12!.billing.v1.ConsumeCreditsRequest\x1a\".billing.v1.ConsumeCreditsResponse\x12c\n" +
+	"\x12ConsumeReservation\x12%.billing.v1.ConsumeReservationRequest\x1a&.billing.v1.ConsumeReservationResponse\x12f\n" +
+	"\x0fWorkflowReceipt\x12(.billing.v1.SubmitWorkflowReceiptRequest\x1a).billing.v1.SubmitWorkflowReceiptResponseBAZ?github.com/smartcontractkit/chainlink-protos/billing/go;billingb\x06proto3"
 
 var (
-	file_service_billing_service_proto_rawDescOnce sync.Once
-	file_service_billing_service_proto_rawDescData []byte
+	file_billing_v1_billing_service_proto_rawDescOnce sync.Once
+	file_billing_v1_billing_service_proto_rawDescData []byte
 )
 
-func file_service_billing_service_proto_rawDescGZIP() []byte {
-	file_service_billing_service_proto_rawDescOnce.Do(func() {
-		file_service_billing_service_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_service_billing_service_proto_rawDesc), len(file_service_billing_service_proto_rawDesc)))
+func file_billing_v1_billing_service_proto_rawDescGZIP() []byte {
+	file_billing_v1_billing_service_proto_rawDescOnce.Do(func() {
+		file_billing_v1_billing_service_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_billing_v1_billing_service_proto_rawDesc), len(file_billing_v1_billing_service_proto_rawDesc)))
 	})
-	return file_service_billing_service_proto_rawDescData
+	return file_billing_v1_billing_service_proto_rawDescData
 }
 
-var file_service_billing_service_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
-var file_service_billing_service_proto_goTypes = []any{
-	(*EmptyRequest)(nil),                       // 0: billing.v1.service.EmptyRequest
-	(*EmptyResponse)(nil),                      // 1: billing.v1.service.EmptyResponse
-	(*AccountCreditsInput)(nil),                // 2: billing.v1.service.AccountCreditsInput
-	(*AllocateCreditsRequest)(nil),             // 3: billing.v1.service.AllocateCreditsRequest
-	(*AllocateCreditsResponse)(nil),            // 4: billing.v1.service.AllocateCreditsResponse
-	(*BillAccountRequest)(nil),                 // 5: billing.v1.service.BillAccountRequest
-	(*BillAccountResponse)(nil),                // 6: billing.v1.service.BillAccountResponse
-	(*GetAccountCreditsRequest)(nil),           // 7: billing.v1.service.GetAccountCreditsRequest
-	(*GetAccountCreditsResponse)(nil),          // 8: billing.v1.service.GetAccountCreditsResponse
-	(*BatchGetCreditsForAccountsRequest)(nil),  // 9: billing.v1.service.BatchGetCreditsForAccountsRequest
-	(*BatchGetCreditsForAccountsResponse)(nil), // 10: billing.v1.service.BatchGetCreditsForAccountsResponse
-	(*AccountCredits)(nil),                     // 11: billing.v1.service.AccountCredits
-	(*AccountWithCredits)(nil),                 // 12: billing.v1.service.AccountWithCredits
-	(*ReserveCreditsRequest)(nil),              // 13: billing.v1.service.ReserveCreditsRequest
-	(*ReserveCreditsResponse)(nil),             // 14: billing.v1.service.ReserveCreditsResponse
-	(*ReleaseReservationRequest)(nil),          // 15: billing.v1.service.ReleaseReservationRequest
-	(*ReleaseReservationResponse)(nil),         // 16: billing.v1.service.ReleaseReservationResponse
-	(*ConsumeCreditsRequest)(nil),              // 17: billing.v1.service.ConsumeCreditsRequest
-	(*ConsumeCreditsResponse)(nil),             // 18: billing.v1.service.ConsumeCreditsResponse
-	(*ConsumeReservationRequest)(nil),          // 19: billing.v1.service.ConsumeReservationRequest
-	(*ConsumeReservationResponse)(nil),         // 20: billing.v1.service.ConsumeReservationResponse
-	(*SubmitWorkflowReceiptRequest)(nil),       // 21: billing.v1.service.SubmitWorkflowReceiptRequest
-	(*SubmitWorkflowReceiptResponse)(nil),      // 22: billing.v1.service.SubmitWorkflowReceiptResponse
+var file_billing_v1_billing_service_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
+var file_billing_v1_billing_service_proto_goTypes = []any{
+	(*EmptyRequest)(nil),                       // 0: billing.v1.EmptyRequest
+	(*EmptyResponse)(nil),                      // 1: billing.v1.EmptyResponse
+	(*AccountCreditsInput)(nil),                // 2: billing.v1.AccountCreditsInput
+	(*AllocateCreditsRequest)(nil),             // 3: billing.v1.AllocateCreditsRequest
+	(*AllocateCreditsResponse)(nil),            // 4: billing.v1.AllocateCreditsResponse
+	(*BillAccountRequest)(nil),                 // 5: billing.v1.BillAccountRequest
+	(*BillAccountResponse)(nil),                // 6: billing.v1.BillAccountResponse
+	(*GetAccountCreditsRequest)(nil),           // 7: billing.v1.GetAccountCreditsRequest
+	(*GetAccountCreditsResponse)(nil),          // 8: billing.v1.GetAccountCreditsResponse
+	(*BatchGetCreditsForAccountsRequest)(nil),  // 9: billing.v1.BatchGetCreditsForAccountsRequest
+	(*BatchGetCreditsForAccountsResponse)(nil), // 10: billing.v1.BatchGetCreditsForAccountsResponse
+	(*AccountCredits)(nil),                     // 11: billing.v1.AccountCredits
+	(*AccountWithCredits)(nil),                 // 12: billing.v1.AccountWithCredits
+	(*ReserveCreditsRequest)(nil),              // 13: billing.v1.ReserveCreditsRequest
+	(*ReserveCreditsResponse)(nil),             // 14: billing.v1.ReserveCreditsResponse
+	(*ReleaseReservationRequest)(nil),          // 15: billing.v1.ReleaseReservationRequest
+	(*ReleaseReservationResponse)(nil),         // 16: billing.v1.ReleaseReservationResponse
+	(*ConsumeCreditsRequest)(nil),              // 17: billing.v1.ConsumeCreditsRequest
+	(*ConsumeCreditsResponse)(nil),             // 18: billing.v1.ConsumeCreditsResponse
+	(*ConsumeReservationRequest)(nil),          // 19: billing.v1.ConsumeReservationRequest
+	(*ConsumeReservationResponse)(nil),         // 20: billing.v1.ConsumeReservationResponse
+	(*SubmitWorkflowReceiptRequest)(nil),       // 21: billing.v1.SubmitWorkflowReceiptRequest
+	(*SubmitWorkflowReceiptResponse)(nil),      // 22: billing.v1.SubmitWorkflowReceiptResponse
 	(*timestamppb.Timestamp)(nil),              // 23: google.protobuf.Timestamp
-	(*events.MeteringReport)(nil),              // 24: workflows.v1.events.MeteringReport
+	(*events.MeteringReport)(nil),              // 24: workflows.v1.MeteringReport
 }
-var file_service_billing_service_proto_depIdxs = []int32{
-	2,  // 0: billing.v1.service.AllocateCreditsRequest.credits:type_name -> billing.v1.service.AccountCreditsInput
-	11, // 1: billing.v1.service.GetAccountCreditsResponse.credits:type_name -> billing.v1.service.AccountCredits
-	12, // 2: billing.v1.service.BatchGetCreditsForAccountsResponse.accounts:type_name -> billing.v1.service.AccountWithCredits
-	23, // 3: billing.v1.service.AccountCredits.created_at:type_name -> google.protobuf.Timestamp
-	23, // 4: billing.v1.service.AccountCredits.updated_at:type_name -> google.protobuf.Timestamp
-	11, // 5: billing.v1.service.AccountWithCredits.credits:type_name -> billing.v1.service.AccountCredits
-	2,  // 6: billing.v1.service.ReserveCreditsRequest.credits:type_name -> billing.v1.service.AccountCreditsInput
-	2,  // 7: billing.v1.service.ConsumeCreditsRequest.credits:type_name -> billing.v1.service.AccountCreditsInput
-	24, // 8: billing.v1.service.SubmitWorkflowReceiptRequest.metering:type_name -> workflows.v1.events.MeteringReport
-	7,  // 9: billing.v1.service.SubscriptionService.GetAccountCredits:input_type -> billing.v1.service.GetAccountCreditsRequest
-	3,  // 10: billing.v1.service.SubscriptionService.AllocateCredits:input_type -> billing.v1.service.AllocateCreditsRequest
-	5,  // 11: billing.v1.service.SubscriptionService.BillAccount:input_type -> billing.v1.service.BillAccountRequest
-	7,  // 12: billing.v1.service.WorkflowService.GetAccountCredits:input_type -> billing.v1.service.GetAccountCreditsRequest
-	9,  // 13: billing.v1.service.WorkflowService.BatchGetCreditsForAccounts:input_type -> billing.v1.service.BatchGetCreditsForAccountsRequest
-	13, // 14: billing.v1.service.WorkflowService.ReserveCredits:input_type -> billing.v1.service.ReserveCreditsRequest
-	15, // 15: billing.v1.service.WorkflowService.ReleaseReservation:input_type -> billing.v1.service.ReleaseReservationRequest
-	17, // 16: billing.v1.service.WorkflowService.ConsumeCredits:input_type -> billing.v1.service.ConsumeCreditsRequest
-	19, // 17: billing.v1.service.WorkflowService.ConsumeReservation:input_type -> billing.v1.service.ConsumeReservationRequest
-	21, // 18: billing.v1.service.WorkflowService.WorkflowReceipt:input_type -> billing.v1.service.SubmitWorkflowReceiptRequest
-	8,  // 19: billing.v1.service.SubscriptionService.GetAccountCredits:output_type -> billing.v1.service.GetAccountCreditsResponse
-	4,  // 20: billing.v1.service.SubscriptionService.AllocateCredits:output_type -> billing.v1.service.AllocateCreditsResponse
-	6,  // 21: billing.v1.service.SubscriptionService.BillAccount:output_type -> billing.v1.service.BillAccountResponse
-	8,  // 22: billing.v1.service.WorkflowService.GetAccountCredits:output_type -> billing.v1.service.GetAccountCreditsResponse
-	10, // 23: billing.v1.service.WorkflowService.BatchGetCreditsForAccounts:output_type -> billing.v1.service.BatchGetCreditsForAccountsResponse
-	14, // 24: billing.v1.service.WorkflowService.ReserveCredits:output_type -> billing.v1.service.ReserveCreditsResponse
-	16, // 25: billing.v1.service.WorkflowService.ReleaseReservation:output_type -> billing.v1.service.ReleaseReservationResponse
-	18, // 26: billing.v1.service.WorkflowService.ConsumeCredits:output_type -> billing.v1.service.ConsumeCreditsResponse
-	20, // 27: billing.v1.service.WorkflowService.ConsumeReservation:output_type -> billing.v1.service.ConsumeReservationResponse
-	22, // 28: billing.v1.service.WorkflowService.WorkflowReceipt:output_type -> billing.v1.service.SubmitWorkflowReceiptResponse
+var file_billing_v1_billing_service_proto_depIdxs = []int32{
+	2,  // 0: billing.v1.AllocateCreditsRequest.credits:type_name -> billing.v1.AccountCreditsInput
+	11, // 1: billing.v1.GetAccountCreditsResponse.credits:type_name -> billing.v1.AccountCredits
+	12, // 2: billing.v1.BatchGetCreditsForAccountsResponse.accounts:type_name -> billing.v1.AccountWithCredits
+	23, // 3: billing.v1.AccountCredits.created_at:type_name -> google.protobuf.Timestamp
+	23, // 4: billing.v1.AccountCredits.updated_at:type_name -> google.protobuf.Timestamp
+	11, // 5: billing.v1.AccountWithCredits.credits:type_name -> billing.v1.AccountCredits
+	2,  // 6: billing.v1.ReserveCreditsRequest.credits:type_name -> billing.v1.AccountCreditsInput
+	2,  // 7: billing.v1.ConsumeCreditsRequest.credits:type_name -> billing.v1.AccountCreditsInput
+	24, // 8: billing.v1.SubmitWorkflowReceiptRequest.metering:type_name -> workflows.v1.MeteringReport
+	7,  // 9: billing.v1.SubscriptionService.GetAccountCredits:input_type -> billing.v1.GetAccountCreditsRequest
+	3,  // 10: billing.v1.SubscriptionService.AllocateCredits:input_type -> billing.v1.AllocateCreditsRequest
+	5,  // 11: billing.v1.SubscriptionService.BillAccount:input_type -> billing.v1.BillAccountRequest
+	7,  // 12: billing.v1.WorkflowService.GetAccountCredits:input_type -> billing.v1.GetAccountCreditsRequest
+	9,  // 13: billing.v1.WorkflowService.BatchGetCreditsForAccounts:input_type -> billing.v1.BatchGetCreditsForAccountsRequest
+	13, // 14: billing.v1.WorkflowService.ReserveCredits:input_type -> billing.v1.ReserveCreditsRequest
+	15, // 15: billing.v1.WorkflowService.ReleaseReservation:input_type -> billing.v1.ReleaseReservationRequest
+	17, // 16: billing.v1.WorkflowService.ConsumeCredits:input_type -> billing.v1.ConsumeCreditsRequest
+	19, // 17: billing.v1.WorkflowService.ConsumeReservation:input_type -> billing.v1.ConsumeReservationRequest
+	21, // 18: billing.v1.WorkflowService.WorkflowReceipt:input_type -> billing.v1.SubmitWorkflowReceiptRequest
+	8,  // 19: billing.v1.SubscriptionService.GetAccountCredits:output_type -> billing.v1.GetAccountCreditsResponse
+	4,  // 20: billing.v1.SubscriptionService.AllocateCredits:output_type -> billing.v1.AllocateCreditsResponse
+	6,  // 21: billing.v1.SubscriptionService.BillAccount:output_type -> billing.v1.BillAccountResponse
+	8,  // 22: billing.v1.WorkflowService.GetAccountCredits:output_type -> billing.v1.GetAccountCreditsResponse
+	10, // 23: billing.v1.WorkflowService.BatchGetCreditsForAccounts:output_type -> billing.v1.BatchGetCreditsForAccountsResponse
+	14, // 24: billing.v1.WorkflowService.ReserveCredits:output_type -> billing.v1.ReserveCreditsResponse
+	16, // 25: billing.v1.WorkflowService.ReleaseReservation:output_type -> billing.v1.ReleaseReservationResponse
+	18, // 26: billing.v1.WorkflowService.ConsumeCredits:output_type -> billing.v1.ConsumeCreditsResponse
+	20, // 27: billing.v1.WorkflowService.ConsumeReservation:output_type -> billing.v1.ConsumeReservationResponse
+	22, // 28: billing.v1.WorkflowService.WorkflowReceipt:output_type -> billing.v1.SubmitWorkflowReceiptResponse
 	19, // [19:29] is the sub-list for method output_type
 	9,  // [9:19] is the sub-list for method input_type
 	9,  // [9:9] is the sub-list for extension type_name
@@ -1395,26 +1396,26 @@ var file_service_billing_service_proto_depIdxs = []int32{
 	0,  // [0:9] is the sub-list for field type_name
 }
 
-func init() { file_service_billing_service_proto_init() }
-func file_service_billing_service_proto_init() {
-	if File_service_billing_service_proto != nil {
+func init() { file_billing_v1_billing_service_proto_init() }
+func file_billing_v1_billing_service_proto_init() {
+	if File_billing_v1_billing_service_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_service_billing_service_proto_rawDesc), len(file_service_billing_service_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_billing_v1_billing_service_proto_rawDesc), len(file_billing_v1_billing_service_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   23,
 			NumExtensions: 0,
 			NumServices:   2,
 		},
-		GoTypes:           file_service_billing_service_proto_goTypes,
-		DependencyIndexes: file_service_billing_service_proto_depIdxs,
-		MessageInfos:      file_service_billing_service_proto_msgTypes,
+		GoTypes:           file_billing_v1_billing_service_proto_goTypes,
+		DependencyIndexes: file_billing_v1_billing_service_proto_depIdxs,
+		MessageInfos:      file_billing_v1_billing_service_proto_msgTypes,
 	}.Build()
-	File_service_billing_service_proto = out.File
-	file_service_billing_service_proto_goTypes = nil
-	file_service_billing_service_proto_depIdxs = nil
+	File_billing_v1_billing_service_proto = out.File
+	file_billing_v1_billing_service_proto_goTypes = nil
+	file_billing_v1_billing_service_proto_depIdxs = nil
 }

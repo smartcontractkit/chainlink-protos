@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: events/metadata.proto
+// source: workflows/v1/metadata.proto
 
 package events
 
@@ -42,7 +42,7 @@ type WorkflowMetadata struct {
 
 func (x *WorkflowMetadata) Reset() {
 	*x = WorkflowMetadata{}
-	mi := &file_events_metadata_proto_msgTypes[0]
+	mi := &file_workflows_v1_metadata_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -54,7 +54,7 @@ func (x *WorkflowMetadata) String() string {
 func (*WorkflowMetadata) ProtoMessage() {}
 
 func (x *WorkflowMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_events_metadata_proto_msgTypes[0]
+	mi := &file_workflows_v1_metadata_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -67,7 +67,7 @@ func (x *WorkflowMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WorkflowMetadata.ProtoReflect.Descriptor instead.
 func (*WorkflowMetadata) Descriptor() ([]byte, []int) {
-	return file_events_metadata_proto_rawDescGZIP(), []int{0}
+	return file_workflows_v1_metadata_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *WorkflowMetadata) GetWorkflowOwner() string {
@@ -161,11 +161,11 @@ func (x *WorkflowMetadata) GetEngineVersion() string {
 	return ""
 }
 
-var File_events_metadata_proto protoreflect.FileDescriptor
+var File_workflows_v1_metadata_proto protoreflect.FileDescriptor
 
-const file_events_metadata_proto_rawDesc = "" +
+const file_workflows_v1_metadata_proto_rawDesc = "" +
 	"\n" +
-	"\x15events/metadata.proto\x12\x13workflows.v1.events\"\xec\x03\n" +
+	"\x1bworkflows/v1/metadata.proto\x12\fworkflows.v1\"\xec\x03\n" +
 	"\x10WorkflowMetadata\x12$\n" +
 	"\rworkflowOwner\x18\x01 \x01(\tR\rworkflowOwner\x12\"\n" +
 	"\fworkflowName\x18\x02 \x01(\tR\fworkflowName\x12\x18\n" +
@@ -182,26 +182,25 @@ const file_events_metadata_proto_rawDesc = "" +
 	" \x01(\tR\x17workflowRegistryAddress\x128\n" +
 	"\x17workflowRegistryVersion\x18\v \x01(\tR\x17workflowRegistryVersion\x124\n" +
 	"\x15workflowRegistryChain\x18\f \x01(\tR\x15workflowRegistryChain\x12$\n" +
-	"\rengineVersion\x18\r \x01(\tR\rengineVersionB\n" +
-	"Z\b.;eventsb\x06proto3"
+	"\rengineVersion\x18\r \x01(\tR\rengineVersionBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
 
 var (
-	file_events_metadata_proto_rawDescOnce sync.Once
-	file_events_metadata_proto_rawDescData []byte
+	file_workflows_v1_metadata_proto_rawDescOnce sync.Once
+	file_workflows_v1_metadata_proto_rawDescData []byte
 )
 
-func file_events_metadata_proto_rawDescGZIP() []byte {
-	file_events_metadata_proto_rawDescOnce.Do(func() {
-		file_events_metadata_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_events_metadata_proto_rawDesc), len(file_events_metadata_proto_rawDesc)))
+func file_workflows_v1_metadata_proto_rawDescGZIP() []byte {
+	file_workflows_v1_metadata_proto_rawDescOnce.Do(func() {
+		file_workflows_v1_metadata_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_workflows_v1_metadata_proto_rawDesc), len(file_workflows_v1_metadata_proto_rawDesc)))
 	})
-	return file_events_metadata_proto_rawDescData
+	return file_workflows_v1_metadata_proto_rawDescData
 }
 
-var file_events_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
-var file_events_metadata_proto_goTypes = []any{
-	(*WorkflowMetadata)(nil), // 0: workflows.v1.events.WorkflowMetadata
+var file_workflows_v1_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_workflows_v1_metadata_proto_goTypes = []any{
+	(*WorkflowMetadata)(nil), // 0: workflows.v1.WorkflowMetadata
 }
-var file_events_metadata_proto_depIdxs = []int32{
+var file_workflows_v1_metadata_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
 	0, // [0:0] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -209,26 +208,26 @@ var file_events_metadata_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_events_metadata_proto_init() }
-func file_events_metadata_proto_init() {
-	if File_events_metadata_proto != nil {
+func init() { file_workflows_v1_metadata_proto_init() }
+func file_workflows_v1_metadata_proto_init() {
+	if File_workflows_v1_metadata_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_events_metadata_proto_rawDesc), len(file_events_metadata_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_workflows_v1_metadata_proto_rawDesc), len(file_workflows_v1_metadata_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_events_metadata_proto_goTypes,
-		DependencyIndexes: file_events_metadata_proto_depIdxs,
-		MessageInfos:      file_events_metadata_proto_msgTypes,
+		GoTypes:           file_workflows_v1_metadata_proto_goTypes,
+		DependencyIndexes: file_workflows_v1_metadata_proto_depIdxs,
+		MessageInfos:      file_workflows_v1_metadata_proto_msgTypes,
 	}.Build()
-	File_events_metadata_proto = out.File
-	file_events_metadata_proto_goTypes = nil
-	file_events_metadata_proto_depIdxs = nil
+	File_workflows_v1_metadata_proto = out.File
+	file_workflows_v1_metadata_proto_goTypes = nil
+	file_workflows_v1_metadata_proto_depIdxs = nil
 }

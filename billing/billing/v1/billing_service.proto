@@ -1,9 +1,11 @@
 syntax = "proto3";
 
-package billing.v1.service;
+package billing.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/billing/go;billing";
 
 import "google/protobuf/timestamp.proto";
-import "events/metering.proto";
+import "workflows/v1/metering.proto";
 
 // ------------------------------------------
 // Shared messages
@@ -104,7 +106,7 @@ message SubmitWorkflowReceiptRequest {
   string account_id = 1;
   string workflow_id = 2;
   string workflow_execution_id = 3;
-  workflows.v1.events.MeteringReport metering = 4;
+  workflows.v1.MeteringReport metering = 4;
 }
 message SubmitWorkflowReceiptResponse {
   bool success = 1;

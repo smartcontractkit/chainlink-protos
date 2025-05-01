@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: events/transmit-schedule-event.proto
+// source: workflows/v1/transmit_schedule_event.proto
 
 package events
 
@@ -37,7 +37,7 @@ type TransmissionsScheduledEvent struct {
 
 func (x *TransmissionsScheduledEvent) Reset() {
 	*x = TransmissionsScheduledEvent{}
-	mi := &file_events_transmit_schedule_event_proto_msgTypes[0]
+	mi := &file_workflows_v1_transmit_schedule_event_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49,7 +49,7 @@ func (x *TransmissionsScheduledEvent) String() string {
 func (*TransmissionsScheduledEvent) ProtoMessage() {}
 
 func (x *TransmissionsScheduledEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_events_transmit_schedule_event_proto_msgTypes[0]
+	mi := &file_workflows_v1_transmit_schedule_event_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62,7 +62,7 @@ func (x *TransmissionsScheduledEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TransmissionsScheduledEvent.ProtoReflect.Descriptor instead.
 func (*TransmissionsScheduledEvent) Descriptor() ([]byte, []int) {
-	return file_events_transmit_schedule_event_proto_rawDescGZIP(), []int{0}
+	return file_workflows_v1_transmit_schedule_event_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *TransmissionsScheduledEvent) GetTimestamp() string {
@@ -114,43 +114,42 @@ func (x *TransmissionsScheduledEvent) GetPeerTransmissionDelays() map[string]int
 	return nil
 }
 
-var File_events_transmit_schedule_event_proto protoreflect.FileDescriptor
+var File_workflows_v1_transmit_schedule_event_proto protoreflect.FileDescriptor
 
-const file_events_transmit_schedule_event_proto_rawDesc = "" +
+const file_workflows_v1_transmit_schedule_event_proto_rawDesc = "" +
 	"\n" +
-	"$events/transmit-schedule-event.proto\x12\x13workflows.v1.events\"\xc9\x03\n" +
+	"*workflows/v1/transmit_schedule_event.proto\x12\fworkflows.v1\"\xc1\x03\n" +
 	"\x1bTransmissionsScheduledEvent\x12\x1c\n" +
 	"\ttimestamp\x18\x01 \x01(\tR\ttimestamp\x12\"\n" +
 	"\fscheduleType\x18\x02 \x01(\tR\fscheduleType\x120\n" +
 	"\x13workflowExecutionID\x18\x03 \x01(\tR\x13workflowExecutionID\x12&\n" +
 	"\x0etransmissionID\x18\x04 \x01(\tR\x0etransmissionID\x12\"\n" +
 	"\fcapabilityID\x18\x05 \x01(\tR\fcapabilityID\x12\x18\n" +
-	"\astepRef\x18\x06 \x01(\tR\astepRef\x12\x84\x01\n" +
-	"\x16peerTransmissionDelays\x18\a \x03(\v2L.workflows.v1.events.TransmissionsScheduledEvent.PeerTransmissionDelaysEntryR\x16peerTransmissionDelays\x1aI\n" +
+	"\astepRef\x18\x06 \x01(\tR\astepRef\x12}\n" +
+	"\x16peerTransmissionDelays\x18\a \x03(\v2E.workflows.v1.TransmissionsScheduledEvent.PeerTransmissionDelaysEntryR\x16peerTransmissionDelays\x1aI\n" +
 	"\x1bPeerTransmissionDelaysEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01B\n" +
-	"Z\b.;eventsb\x06proto3"
+	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01BBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
 
 var (
-	file_events_transmit_schedule_event_proto_rawDescOnce sync.Once
-	file_events_transmit_schedule_event_proto_rawDescData []byte
+	file_workflows_v1_transmit_schedule_event_proto_rawDescOnce sync.Once
+	file_workflows_v1_transmit_schedule_event_proto_rawDescData []byte
 )
 
-func file_events_transmit_schedule_event_proto_rawDescGZIP() []byte {
-	file_events_transmit_schedule_event_proto_rawDescOnce.Do(func() {
-		file_events_transmit_schedule_event_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_events_transmit_schedule_event_proto_rawDesc), len(file_events_transmit_schedule_event_proto_rawDesc)))
+func file_workflows_v1_transmit_schedule_event_proto_rawDescGZIP() []byte {
+	file_workflows_v1_transmit_schedule_event_proto_rawDescOnce.Do(func() {
+		file_workflows_v1_transmit_schedule_event_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_workflows_v1_transmit_schedule_event_proto_rawDesc), len(file_workflows_v1_transmit_schedule_event_proto_rawDesc)))
 	})
-	return file_events_transmit_schedule_event_proto_rawDescData
+	return file_workflows_v1_transmit_schedule_event_proto_rawDescData
 }
 
-var file_events_transmit_schedule_event_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_events_transmit_schedule_event_proto_goTypes = []any{
-	(*TransmissionsScheduledEvent)(nil), // 0: workflows.v1.events.TransmissionsScheduledEvent
-	nil,                                 // 1: workflows.v1.events.TransmissionsScheduledEvent.PeerTransmissionDelaysEntry
+var file_workflows_v1_transmit_schedule_event_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_workflows_v1_transmit_schedule_event_proto_goTypes = []any{
+	(*TransmissionsScheduledEvent)(nil), // 0: workflows.v1.TransmissionsScheduledEvent
+	nil,                                 // 1: workflows.v1.TransmissionsScheduledEvent.PeerTransmissionDelaysEntry
 }
-var file_events_transmit_schedule_event_proto_depIdxs = []int32{
-	1, // 0: workflows.v1.events.TransmissionsScheduledEvent.peerTransmissionDelays:type_name -> workflows.v1.events.TransmissionsScheduledEvent.PeerTransmissionDelaysEntry
+var file_workflows_v1_transmit_schedule_event_proto_depIdxs = []int32{
+	1, // 0: workflows.v1.TransmissionsScheduledEvent.peerTransmissionDelays:type_name -> workflows.v1.TransmissionsScheduledEvent.PeerTransmissionDelaysEntry
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -158,26 +157,26 @@ var file_events_transmit_schedule_event_proto_depIdxs = []int32{
 	0, // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_events_transmit_schedule_event_proto_init() }
-func file_events_transmit_schedule_event_proto_init() {
-	if File_events_transmit_schedule_event_proto != nil {
+func init() { file_workflows_v1_transmit_schedule_event_proto_init() }
+func file_workflows_v1_transmit_schedule_event_proto_init() {
+	if File_workflows_v1_transmit_schedule_event_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_events_transmit_schedule_event_proto_rawDesc), len(file_events_transmit_schedule_event_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_workflows_v1_transmit_schedule_event_proto_rawDesc), len(file_workflows_v1_transmit_schedule_event_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_events_transmit_schedule_event_proto_goTypes,
-		DependencyIndexes: file_events_transmit_schedule_event_proto_depIdxs,
-		MessageInfos:      file_events_transmit_schedule_event_proto_msgTypes,
+		GoTypes:           file_workflows_v1_transmit_schedule_event_proto_goTypes,
+		DependencyIndexes: file_workflows_v1_transmit_schedule_event_proto_depIdxs,
+		MessageInfos:      file_workflows_v1_transmit_schedule_event_proto_msgTypes,
 	}.Build()
-	File_events_transmit_schedule_event_proto = out.File
-	file_events_transmit_schedule_event_proto_goTypes = nil
-	file_events_transmit_schedule_event_proto_depIdxs = nil
+	File_workflows_v1_transmit_schedule_event_proto = out.File
+	file_workflows_v1_transmit_schedule_event_proto_goTypes = nil
+	file_workflows_v1_transmit_schedule_event_proto_depIdxs = nil
 }

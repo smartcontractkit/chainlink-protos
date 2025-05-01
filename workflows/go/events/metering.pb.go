@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: events/metering.proto
+// source: workflows/v1/metering.proto
 
 package events
 
@@ -32,7 +32,7 @@ type MeteringReport struct {
 
 func (x *MeteringReport) Reset() {
 	*x = MeteringReport{}
-	mi := &file_events_metering_proto_msgTypes[0]
+	mi := &file_workflows_v1_metering_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44,7 +44,7 @@ func (x *MeteringReport) String() string {
 func (*MeteringReport) ProtoMessage() {}
 
 func (x *MeteringReport) ProtoReflect() protoreflect.Message {
-	mi := &file_events_metering_proto_msgTypes[0]
+	mi := &file_workflows_v1_metering_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57,7 +57,7 @@ func (x *MeteringReport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MeteringReport.ProtoReflect.Descriptor instead.
 func (*MeteringReport) Descriptor() ([]byte, []int) {
-	return file_events_metering_proto_rawDescGZIP(), []int{0}
+	return file_workflows_v1_metering_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *MeteringReport) GetSteps() map[string]*MeteringReportStep {
@@ -74,43 +74,42 @@ func (x *MeteringReport) GetMetadata() *WorkflowMetadata {
 	return nil
 }
 
-var File_events_metering_proto protoreflect.FileDescriptor
+var File_workflows_v1_metering_proto protoreflect.FileDescriptor
 
-const file_events_metering_proto_rawDesc = "" +
+const file_workflows_v1_metering_proto_rawDesc = "" +
 	"\n" +
-	"\x15events/metering.proto\x12\x13workflows.v1.events\x1a\x15events/metadata.proto\x1a\x1aevents/metering-step.proto\"\xfc\x01\n" +
-	"\x0eMeteringReport\x12D\n" +
-	"\x05steps\x18\x01 \x03(\v2..workflows.v1.events.MeteringReport.StepsEntryR\x05steps\x12A\n" +
-	"\bmetadata\x18\x02 \x01(\v2%.workflows.v1.events.WorkflowMetadataR\bmetadata\x1aa\n" +
+	"\x1bworkflows/v1/metering.proto\x12\fworkflows.v1\x1a\x1bworkflows/v1/metadata.proto\x1a workflows/v1/metering_step.proto\"\xe7\x01\n" +
+	"\x0eMeteringReport\x12=\n" +
+	"\x05steps\x18\x01 \x03(\v2'.workflows.v1.MeteringReport.StepsEntryR\x05steps\x12:\n" +
+	"\bmetadata\x18\x02 \x01(\v2\x1e.workflows.v1.WorkflowMetadataR\bmetadata\x1aZ\n" +
 	"\n" +
 	"StepsEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12=\n" +
-	"\x05value\x18\x02 \x01(\v2'.workflows.v1.events.MeteringReportStepR\x05value:\x028\x01B\n" +
-	"Z\b.;eventsb\x06proto3"
+	"\x03key\x18\x01 \x01(\tR\x03key\x126\n" +
+	"\x05value\x18\x02 \x01(\v2 .workflows.v1.MeteringReportStepR\x05value:\x028\x01BBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
 
 var (
-	file_events_metering_proto_rawDescOnce sync.Once
-	file_events_metering_proto_rawDescData []byte
+	file_workflows_v1_metering_proto_rawDescOnce sync.Once
+	file_workflows_v1_metering_proto_rawDescData []byte
 )
 
-func file_events_metering_proto_rawDescGZIP() []byte {
-	file_events_metering_proto_rawDescOnce.Do(func() {
-		file_events_metering_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_events_metering_proto_rawDesc), len(file_events_metering_proto_rawDesc)))
+func file_workflows_v1_metering_proto_rawDescGZIP() []byte {
+	file_workflows_v1_metering_proto_rawDescOnce.Do(func() {
+		file_workflows_v1_metering_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_workflows_v1_metering_proto_rawDesc), len(file_workflows_v1_metering_proto_rawDesc)))
 	})
-	return file_events_metering_proto_rawDescData
+	return file_workflows_v1_metering_proto_rawDescData
 }
 
-var file_events_metering_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_events_metering_proto_goTypes = []any{
-	(*MeteringReport)(nil),     // 0: workflows.v1.events.MeteringReport
-	nil,                        // 1: workflows.v1.events.MeteringReport.StepsEntry
-	(*WorkflowMetadata)(nil),   // 2: workflows.v1.events.WorkflowMetadata
-	(*MeteringReportStep)(nil), // 3: workflows.v1.events.MeteringReportStep
+var file_workflows_v1_metering_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_workflows_v1_metering_proto_goTypes = []any{
+	(*MeteringReport)(nil),     // 0: workflows.v1.MeteringReport
+	nil,                        // 1: workflows.v1.MeteringReport.StepsEntry
+	(*WorkflowMetadata)(nil),   // 2: workflows.v1.WorkflowMetadata
+	(*MeteringReportStep)(nil), // 3: workflows.v1.MeteringReportStep
 }
-var file_events_metering_proto_depIdxs = []int32{
-	1, // 0: workflows.v1.events.MeteringReport.steps:type_name -> workflows.v1.events.MeteringReport.StepsEntry
-	2, // 1: workflows.v1.events.MeteringReport.metadata:type_name -> workflows.v1.events.WorkflowMetadata
-	3, // 2: workflows.v1.events.MeteringReport.StepsEntry.value:type_name -> workflows.v1.events.MeteringReportStep
+var file_workflows_v1_metering_proto_depIdxs = []int32{
+	1, // 0: workflows.v1.MeteringReport.steps:type_name -> workflows.v1.MeteringReport.StepsEntry
+	2, // 1: workflows.v1.MeteringReport.metadata:type_name -> workflows.v1.WorkflowMetadata
+	3, // 2: workflows.v1.MeteringReport.StepsEntry.value:type_name -> workflows.v1.MeteringReportStep
 	3, // [3:3] is the sub-list for method output_type
 	3, // [3:3] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
@@ -118,28 +117,28 @@ var file_events_metering_proto_depIdxs = []int32{
 	0, // [0:3] is the sub-list for field type_name
 }
 
-func init() { file_events_metering_proto_init() }
-func file_events_metering_proto_init() {
-	if File_events_metering_proto != nil {
+func init() { file_workflows_v1_metering_proto_init() }
+func file_workflows_v1_metering_proto_init() {
+	if File_workflows_v1_metering_proto != nil {
 		return
 	}
-	file_events_metadata_proto_init()
-	file_events_metering_step_proto_init()
+	file_workflows_v1_metadata_proto_init()
+	file_workflows_v1_metering_step_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_events_metering_proto_rawDesc), len(file_events_metering_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_workflows_v1_metering_proto_rawDesc), len(file_workflows_v1_metering_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_events_metering_proto_goTypes,
-		DependencyIndexes: file_events_metering_proto_depIdxs,
-		MessageInfos:      file_events_metering_proto_msgTypes,
+		GoTypes:           file_workflows_v1_metering_proto_goTypes,
+		DependencyIndexes: file_workflows_v1_metering_proto_depIdxs,
+		MessageInfos:      file_workflows_v1_metering_proto_msgTypes,
 	}.Build()
-	File_events_metering_proto = out.File
-	file_events_metering_proto_goTypes = nil
-	file_events_metering_proto_depIdxs = nil
+	File_workflows_v1_metering_proto = out.File
+	file_workflows_v1_metering_proto_goTypes = nil
+	file_workflows_v1_metering_proto_depIdxs = nil
 }
