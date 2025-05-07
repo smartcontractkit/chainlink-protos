@@ -20,8 +20,8 @@ tasks:
       - task proto:gen:orchestrator
       - task proto:gen:svr
       - task proto:gen:rmn
-      - task proto:gen:workflows:v1
-      - task proto:gen:billing:v1
+      - task proto:gen:workflows
+      - task proto:gen:billing
       - task go:mod:tidy
 
   proto:gen:job-distributor:
@@ -63,33 +63,17 @@ tasks:
             $proto_files
         - cd rmn/v1.6/rust && cargo build
 
-  proto:gen:workflows:v1:
-      desc: "Generate Go code from protobuf files for workflows v1"
+  proto:gen:workflows:
+      desc: "Generate Go code from protobuf files for workflows"
       cmds:
-        - find ./workflows/go -name '*.pb.go' -delete
-        - |
-          proto_files=$(find ./workflows/workflows/v1 -name "*.proto")
-          protoc \
-            --proto_path=./workflows \
-            --go_out=./workflows/go \
-            --go_opt=module=github.com/smartcontractkit/chainlink-protos/workflows/go \
-            $proto_files
+        - cd billing
+        - make generate
 
-  proto:gen:billing:v1:
-      desc: "Generate Go code from protobuf files for billing v1"
+  proto:gen:billing:
+      desc: "Generate Go code from protobuf files for billing"
       cmds:
-        - find ./billing/go -name '*.pb.go' -delete
-        - |
-          proto_files=$(find ./billing/billing/v1 -name "*.proto")
-          protoc \
-            --proto_path=./billing \
-            --proto_path=./workflows \
-            --go_out=./billing/go \
-            --go_opt=Mevents/metering.proto=github.com/smartcontractkit/chainlink-protos/workflows/go/events \
-            --go_opt=module=github.com/smartcontractkit/chainlink-protos/billing/go \
-            --go-grpc_out=./billing/go \
-            --go-grpc_opt=module=github.com/smartcontractkit/chainlink-protos/billing/go \
-            $proto_files
+        - cd billing
+        - make generate
 
   proto:clean:
     desc: "Clean generated protobuf files for all services"
