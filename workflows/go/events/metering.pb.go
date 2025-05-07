@@ -182,22 +182,14 @@ var File_workflows_v1_metering_proto protoreflect.FileDescriptor
 
 const file_workflows_v1_metering_proto_rawDesc = "" +
 	"\n" +
-	"\x1bworkflows/v1/metering.proto\x12\fworkflows.v1\x1a\x1bworkflows/v1/metadata.proto\"\xe7\x01\n" +
+	"\x1bworkflows/v1/metering.proto\x12\fworkflows.v1\x1a\x1bworkflows/v1/metadata.proto\x1a workflows/v1/metering_step.proto\"\xe7\x01\n" +
 	"\x0eMeteringReport\x12=\n" +
 	"\x05steps\x18\x01 \x03(\v2'.workflows.v1.MeteringReport.StepsEntryR\x05steps\x12:\n" +
 	"\bmetadata\x18\x02 \x01(\v2\x1e.workflows.v1.WorkflowMetadataR\bmetadata\x1aZ\n" +
 	"\n" +
 	"StepsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x126\n" +
-	"\x05value\x18\x02 \x01(\v2 .workflows.v1.MeteringReportStepR\x05value:\x028\x01\"R\n" +
-	"\x12MeteringReportStep\x12<\n" +
-	"\x05nodes\x18\x01 \x03(\v2&.workflows.v1.MeteringReportNodeDetailR\x05nodes\"\x7f\n" +
-	"\x18MeteringReportNodeDetail\x12#\n" +
-	"\x0epeer_2_peer_id\x18\x01 \x01(\tR\vpeer2PeerId\x12\x1d\n" +
-	"\n" +
-	"spend_unit\x18\x02 \x01(\tR\tspendUnit\x12\x1f\n" +
-	"\vspend_value\x18\x03 \x01(\tR\n" +
-	"spendValueBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
+	"\x05value\x18\x02 \x01(\v2 .workflows.v1.MeteringReportStepR\x05value:\x028\x01BBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
 
 var (
 	file_workflows_v1_metering_proto_rawDescOnce sync.Once
@@ -237,6 +229,7 @@ func file_workflows_v1_metering_proto_init() {
 		return
 	}
 	file_workflows_v1_metadata_proto_init()
+	file_workflows_v1_metering_step_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

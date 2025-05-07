@@ -21,9 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Old name for backwards compatibility
-// Copy of TransmissionsScheduledEvent
-type TransmitScheduleEvent struct {
+type TransmissionsScheduledEvent struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	Timestamp           string                 `protobuf:"bytes,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	ScheduleType        string                 `protobuf:"bytes,2,opt,name=scheduleType,proto3" json:"scheduleType,omitempty"`
@@ -37,8 +35,8 @@ type TransmitScheduleEvent struct {
 	sizeCache              protoimpl.SizeCache
 }
 
-func (x *TransmitScheduleEvent) Reset() {
-	*x = TransmitScheduleEvent{}
+func (x *TransmissionsScheduledEvent) Reset() {
+	*x = TransmissionsScheduledEvent{}
 	mi := &file_workflows_v1_transmit_schedule_event_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
@@ -120,15 +118,15 @@ var File_workflows_v1_transmit_schedule_event_proto protoreflect.FileDescriptor
 
 const file_workflows_v1_transmit_schedule_event_proto_rawDesc = "" +
 	"\n" +
-	"*workflows/v1/transmit_schedule_event.proto\x12\fworkflows.v1\"\xb5\x03\n" +
-	"\x15TransmitScheduleEvent\x12\x1c\n" +
+	"*workflows/v1/transmit_schedule_event.proto\x12\fworkflows.v1\"\xc1\x03\n" +
+	"\x1bTransmissionsScheduledEvent\x12\x1c\n" +
 	"\ttimestamp\x18\x01 \x01(\tR\ttimestamp\x12\"\n" +
 	"\fscheduleType\x18\x02 \x01(\tR\fscheduleType\x120\n" +
 	"\x13workflowExecutionID\x18\x03 \x01(\tR\x13workflowExecutionID\x12&\n" +
 	"\x0etransmissionID\x18\x04 \x01(\tR\x0etransmissionID\x12\"\n" +
 	"\fcapabilityID\x18\x05 \x01(\tR\fcapabilityID\x12\x18\n" +
-	"\astepRef\x18\x06 \x01(\tR\astepRef\x12w\n" +
-	"\x16peerTransmissionDelays\x18\a \x03(\v2?.workflows.v1.TransmitScheduleEvent.PeerTransmissionDelaysEntryR\x16peerTransmissionDelays\x1aI\n" +
+	"\astepRef\x18\x06 \x01(\tR\astepRef\x12}\n" +
+	"\x16peerTransmissionDelays\x18\a \x03(\v2E.workflows.v1.TransmissionsScheduledEvent.PeerTransmissionDelaysEntryR\x16peerTransmissionDelays\x1aI\n" +
 	"\x1bPeerTransmissionDelaysEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01BBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"

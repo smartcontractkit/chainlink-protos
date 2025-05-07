@@ -28,8 +28,4 @@ clean: ## Remove generated files
 
 .PHONY: generate
 generate: clean ## Generate go-proto files
-	protoc \
-		--proto_path=./ \
-		--go_out=./go \
-		--go_opt=module=github.com/smartcontractkit/chainlink-protos/workflows/go \
-		$(shell find ./workflows/v1 -name "*.proto")
+	cd go && go generate ./...
