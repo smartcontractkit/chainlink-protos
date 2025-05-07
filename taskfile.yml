@@ -66,14 +66,12 @@ tasks:
   proto:gen:workflows:
       desc: "Generate Go code from protobuf files for workflows"
       cmds:
-        - cd billing
-        - make generate
+        - cd billing && make generate
 
   proto:gen:billing:
       desc: "Generate Go code from protobuf files for billing"
       cmds:
-        - cd billing
-        - make generate
+        - cd billing && make generate
 
   proto:clean:
     desc: "Clean generated protobuf files for all services"
