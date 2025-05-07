@@ -41,6 +41,7 @@ message Node {
   google.protobuf.Timestamp created_at = 7; // Timestamp when the node was created.
   google.protobuf.Timestamp updated_at = 8; // Timestamp when the node was last updated.
   optional string workflow_key = 9; // Workflow Public key
+  bool test = 10;
 }
 
 enum ChainType {
