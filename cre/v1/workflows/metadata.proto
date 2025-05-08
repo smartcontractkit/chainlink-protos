@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package workflows.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/cre/go/workflows/events";
+
+message WorkflowMetadata {
+  string workflowOwner = 1;
+  string workflowName = 2;
+  string version = 3;
+  string workflowID = 4;
+  string workflowExecutionID = 5;
+  int32 donID = 6;
+  int32 donF = 7;
+  int32 donN = 8;
+  string p2pID = 9;
+  string workflowRegistryAddress = 10;
+  string workflowRegistryVersion = 11;
+  string workflowRegistryChain = 12;
+  string engineVersion = 13;
+}

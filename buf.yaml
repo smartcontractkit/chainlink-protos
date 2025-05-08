@@ -1,16 +1,13 @@
 # For details on buf.yaml configuration, visit https://buf.build/docs/configuration/v2/buf-yaml
 version: v2
 modules:
-  - path: workflows
-    lint:
-      except:
-        - FIELD_LOWER_SNAKE_CASE
-  - path: billing
+  - path: cre
     lint:
       use:
-        - BASIC
+        - BASIC # name errors on existing request and response entities
       except:
         - FIELD_LOWER_SNAKE_CASE
+        - PACKAGE_DIRECTORY_MATCH
   - path: rmn/v1.6/proto
     lint:
       except:

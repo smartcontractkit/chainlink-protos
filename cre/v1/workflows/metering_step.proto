@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package workflows.v1;
+
+import "v1/workflows/metering_detail.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/cre/go/workflows/events";
+
+// MeteringReportStep is consumed by MeteringReport.
+// It lives in a different file from MeteringReport due to a
+// current restriction in proto registration in Beholder.
+message MeteringReportStep {
+  repeated MeteringReportNodeDetail nodes = 1;
+}
