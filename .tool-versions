@@ -1,7 +1,7 @@
 golang 1.24.2
 task 3.39.0
-protoc 29.3
-protoc-gen-go-grpc 1.5.1
+protoc 30.2
+protoc-gen-go-grpc 1.53.0
 protoc-gen-go 1.36.6
 nodejs 20.13.1
 pnpm 9.10.0
