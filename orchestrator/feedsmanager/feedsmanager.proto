@@ -126,6 +126,8 @@ message UpdateNodeRequest {
 
   repeated ChainConfig chain_configs = 10;
   optional string workflow_key = 11;
+  repeated P2PKeyBundle p2p_key_bundles = 10;
+
 }
 message UpdateNodeResponse {
   map<string, ChainConfigError> chain_config_errors = 1;
@@ -187,4 +189,9 @@ message RevokeJobRequest {
 }
 message RevokeJobResponse {
   string id = 1;
+}
+
+message P2PKeyBundle {
+  string peer_id = 1;
+  string public_key = 2;
 }
