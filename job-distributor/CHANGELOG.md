@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.10.0
+
+### Minor Changes
+
+- [#71](https://github.com/smartcontractkit/chainlink-protos/pull/71) [`c16a8d5`](https://github.com/smartcontractkit/chainlink-protos/commit/c16a8d5880faf2d2cbd19e36ce06c20372439304) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add P2P bundle
+
 ## 0.9.0
 
 ### Minor Changes
