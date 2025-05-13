@@ -14,3 +14,14 @@ message TransmissionsScheduledEvent {
   // Map of peerID to transmission delay in milliseconds
   map<string, int64> peerTransmissionDelays = 7;
 }
+
+message TransmitScheduleEvent {
+  string timestamp = 1;
+  string scheduleType = 2;
+  string workflowExecutionID = 3;
+  string transmissionID = 4;
+  string capabilityID = 5;
+  string stepRef = 6;
+  // Map of peerID to transmission delay in milliseconds
+  map<string, int64> peerTransmissionDelays = 7;
+}
