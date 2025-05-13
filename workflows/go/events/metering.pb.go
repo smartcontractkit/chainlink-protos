@@ -74,18 +74,130 @@ func (x *MeteringReport) GetMetadata() *WorkflowMetadata {
 	return nil
 }
 
+type MeteringReportStep struct {
+	state         protoimpl.MessageState      `protogen:"open.v1"`
+	Nodes         []*MeteringReportNodeDetail `protobuf:"bytes,1,rep,name=nodes,proto3" json:"nodes,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MeteringReportStep) Reset() {
+	*x = MeteringReportStep{}
+	mi := &file_workflows_v1_metering_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MeteringReportStep) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MeteringReportStep) ProtoMessage() {}
+
+func (x *MeteringReportStep) ProtoReflect() protoreflect.Message {
+	mi := &file_workflows_v1_metering_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MeteringReportStep.ProtoReflect.Descriptor instead.
+func (*MeteringReportStep) Descriptor() ([]byte, []int) {
+	return file_workflows_v1_metering_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *MeteringReportStep) GetNodes() []*MeteringReportNodeDetail {
+	if x != nil {
+		return x.Nodes
+	}
+	return nil
+}
+
+type MeteringReportNodeDetail struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Peer_2PeerId  string                 `protobuf:"bytes,1,opt,name=peer_2_peer_id,json=peer2PeerId,proto3" json:"peer_2_peer_id,omitempty"`
+	SpendUnit     string                 `protobuf:"bytes,2,opt,name=spend_unit,json=spendUnit,proto3" json:"spend_unit,omitempty"`
+	SpendValue    string                 `protobuf:"bytes,3,opt,name=spend_value,json=spendValue,proto3" json:"spend_value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MeteringReportNodeDetail) Reset() {
+	*x = MeteringReportNodeDetail{}
+	mi := &file_workflows_v1_metering_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MeteringReportNodeDetail) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MeteringReportNodeDetail) ProtoMessage() {}
+
+func (x *MeteringReportNodeDetail) ProtoReflect() protoreflect.Message {
+	mi := &file_workflows_v1_metering_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MeteringReportNodeDetail.ProtoReflect.Descriptor instead.
+func (*MeteringReportNodeDetail) Descriptor() ([]byte, []int) {
+	return file_workflows_v1_metering_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *MeteringReportNodeDetail) GetPeer_2PeerId() string {
+	if x != nil {
+		return x.Peer_2PeerId
+	}
+	return ""
+}
+
+func (x *MeteringReportNodeDetail) GetSpendUnit() string {
+	if x != nil {
+		return x.SpendUnit
+	}
+	return ""
+}
+
+func (x *MeteringReportNodeDetail) GetSpendValue() string {
+	if x != nil {
+		return x.SpendValue
+	}
+	return ""
+}
+
 var File_workflows_v1_metering_proto protoreflect.FileDescriptor
 
 const file_workflows_v1_metering_proto_rawDesc = "" +
 	"\n" +
-	"\x1bworkflows/v1/metering.proto\x12\fworkflows.v1\x1a\x1bworkflows/v1/metadata.proto\x1a workflows/v1/metering_step.proto\"\xe7\x01\n" +
+	"\x1bworkflows/v1/metering.proto\x12\fworkflows.v1\x1a\x1bworkflows/v1/metadata.proto\"\xe7\x01\n" +
 	"\x0eMeteringReport\x12=\n" +
 	"\x05steps\x18\x01 \x03(\v2'.workflows.v1.MeteringReport.StepsEntryR\x05steps\x12:\n" +
 	"\bmetadata\x18\x02 \x01(\v2\x1e.workflows.v1.WorkflowMetadataR\bmetadata\x1aZ\n" +
 	"\n" +
 	"StepsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x126\n" +
-	"\x05value\x18\x02 \x01(\v2 .workflows.v1.MeteringReportStepR\x05value:\x028\x01BBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
+	"\x05value\x18\x02 \x01(\v2 .workflows.v1.MeteringReportStepR\x05value:\x028\x01\"R\n" +
+	"\x12MeteringReportStep\x12<\n" +
+	"\x05nodes\x18\x01 \x03(\v2&.workflows.v1.MeteringReportNodeDetailR\x05nodes\"\x7f\n" +
+	"\x18MeteringReportNodeDetail\x12#\n" +
+	"\x0epeer_2_peer_id\x18\x01 \x01(\tR\vpeer2PeerId\x12\x1d\n" +
+	"\n" +
+	"spend_unit\x18\x02 \x01(\tR\tspendUnit\x12\x1f\n" +
+	"\vspend_value\x18\x03 \x01(\tR\n" +
+	"spendValueBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
 
 var (
 	file_workflows_v1_metering_proto_rawDescOnce sync.Once
@@ -99,22 +211,24 @@ func file_workflows_v1_metering_proto_rawDescGZIP() []byte {
 	return file_workflows_v1_metering_proto_rawDescData
 }
 
-var file_workflows_v1_metering_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_workflows_v1_metering_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_workflows_v1_metering_proto_goTypes = []any{
-	(*MeteringReport)(nil),     // 0: workflows.v1.MeteringReport
-	nil,                        // 1: workflows.v1.MeteringReport.StepsEntry
-	(*WorkflowMetadata)(nil),   // 2: workflows.v1.WorkflowMetadata
-	(*MeteringReportStep)(nil), // 3: workflows.v1.MeteringReportStep
+	(*MeteringReport)(nil),           // 0: workflows.v1.MeteringReport
+	(*MeteringReportStep)(nil),       // 1: workflows.v1.MeteringReportStep
+	(*MeteringReportNodeDetail)(nil), // 2: workflows.v1.MeteringReportNodeDetail
+	nil,                              // 3: workflows.v1.MeteringReport.StepsEntry
+	(*WorkflowMetadata)(nil),         // 4: workflows.v1.WorkflowMetadata
 }
 var file_workflows_v1_metering_proto_depIdxs = []int32{
-	1, // 0: workflows.v1.MeteringReport.steps:type_name -> workflows.v1.MeteringReport.StepsEntry
-	2, // 1: workflows.v1.MeteringReport.metadata:type_name -> workflows.v1.WorkflowMetadata
-	3, // 2: workflows.v1.MeteringReport.StepsEntry.value:type_name -> workflows.v1.MeteringReportStep
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	3, // 0: workflows.v1.MeteringReport.steps:type_name -> workflows.v1.MeteringReport.StepsEntry
+	4, // 1: workflows.v1.MeteringReport.metadata:type_name -> workflows.v1.WorkflowMetadata
+	2, // 2: workflows.v1.MeteringReportStep.nodes:type_name -> workflows.v1.MeteringReportNodeDetail
+	1, // 3: workflows.v1.MeteringReport.StepsEntry.value:type_name -> workflows.v1.MeteringReportStep
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_workflows_v1_metering_proto_init() }
@@ -123,14 +237,13 @@ func file_workflows_v1_metering_proto_init() {
 		return
 	}
 	file_workflows_v1_metadata_proto_init()
-	file_workflows_v1_metering_step_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_workflows_v1_metering_proto_rawDesc), len(file_workflows_v1_metering_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

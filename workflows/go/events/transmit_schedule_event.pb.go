@@ -114,6 +114,99 @@ func (x *TransmissionsScheduledEvent) GetPeerTransmissionDelays() map[string]int
 	return nil
 }
 
+type TransmitScheduleEvent struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Timestamp           string                 `protobuf:"bytes,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	ScheduleType        string                 `protobuf:"bytes,2,opt,name=scheduleType,proto3" json:"scheduleType,omitempty"`
+	WorkflowExecutionID string                 `protobuf:"bytes,3,opt,name=workflowExecutionID,proto3" json:"workflowExecutionID,omitempty"`
+	TransmissionID      string                 `protobuf:"bytes,4,opt,name=transmissionID,proto3" json:"transmissionID,omitempty"`
+	CapabilityID        string                 `protobuf:"bytes,5,opt,name=capabilityID,proto3" json:"capabilityID,omitempty"`
+	StepRef             string                 `protobuf:"bytes,6,opt,name=stepRef,proto3" json:"stepRef,omitempty"`
+	// Map of peerID to transmission delay in milliseconds
+	PeerTransmissionDelays map[string]int64 `protobuf:"bytes,7,rep,name=peerTransmissionDelays,proto3" json:"peerTransmissionDelays,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *TransmitScheduleEvent) Reset() {
+	*x = TransmitScheduleEvent{}
+	mi := &file_workflows_v1_transmit_schedule_event_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TransmitScheduleEvent) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransmitScheduleEvent) ProtoMessage() {}
+
+func (x *TransmitScheduleEvent) ProtoReflect() protoreflect.Message {
+	mi := &file_workflows_v1_transmit_schedule_event_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransmitScheduleEvent.ProtoReflect.Descriptor instead.
+func (*TransmitScheduleEvent) Descriptor() ([]byte, []int) {
+	return file_workflows_v1_transmit_schedule_event_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *TransmitScheduleEvent) GetTimestamp() string {
+	if x != nil {
+		return x.Timestamp
+	}
+	return ""
+}
+
+func (x *TransmitScheduleEvent) GetScheduleType() string {
+	if x != nil {
+		return x.ScheduleType
+	}
+	return ""
+}
+
+func (x *TransmitScheduleEvent) GetWorkflowExecutionID() string {
+	if x != nil {
+		return x.WorkflowExecutionID
+	}
+	return ""
+}
+
+func (x *TransmitScheduleEvent) GetTransmissionID() string {
+	if x != nil {
+		return x.TransmissionID
+	}
+	return ""
+}
+
+func (x *TransmitScheduleEvent) GetCapabilityID() string {
+	if x != nil {
+		return x.CapabilityID
+	}
+	return ""
+}
+
+func (x *TransmitScheduleEvent) GetStepRef() string {
+	if x != nil {
+		return x.StepRef
+	}
+	return ""
+}
+
+func (x *TransmitScheduleEvent) GetPeerTransmissionDelays() map[string]int64 {
+	if x != nil {
+		return x.PeerTransmissionDelays
+	}
+	return nil
+}
+
 var File_workflows_v1_transmit_schedule_event_proto protoreflect.FileDescriptor
 
 const file_workflows_v1_transmit_schedule_event_proto_rawDesc = "" +
@@ -127,6 +220,17 @@ const file_workflows_v1_transmit_schedule_event_proto_rawDesc = "" +
 	"\fcapabilityID\x18\x05 \x01(\tR\fcapabilityID\x12\x18\n" +
 	"\astepRef\x18\x06 \x01(\tR\astepRef\x12}\n" +
 	"\x16peerTransmissionDelays\x18\a \x03(\v2E.workflows.v1.TransmissionsScheduledEvent.PeerTransmissionDelaysEntryR\x16peerTransmissionDelays\x1aI\n" +
+	"\x1bPeerTransmissionDelaysEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01\"\xb5\x03\n" +
+	"\x15TransmitScheduleEvent\x12\x1c\n" +
+	"\ttimestamp\x18\x01 \x01(\tR\ttimestamp\x12\"\n" +
+	"\fscheduleType\x18\x02 \x01(\tR\fscheduleType\x120\n" +
+	"\x13workflowExecutionID\x18\x03 \x01(\tR\x13workflowExecutionID\x12&\n" +
+	"\x0etransmissionID\x18\x04 \x01(\tR\x0etransmissionID\x12\"\n" +
+	"\fcapabilityID\x18\x05 \x01(\tR\fcapabilityID\x12\x18\n" +
+	"\astepRef\x18\x06 \x01(\tR\astepRef\x12w\n" +
+	"\x16peerTransmissionDelays\x18\a \x03(\v2?.workflows.v1.TransmitScheduleEvent.PeerTransmissionDelaysEntryR\x16peerTransmissionDelays\x1aI\n" +
 	"\x1bPeerTransmissionDelaysEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01BBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
@@ -143,18 +247,21 @@ func file_workflows_v1_transmit_schedule_event_proto_rawDescGZIP() []byte {
 	return file_workflows_v1_transmit_schedule_event_proto_rawDescData
 }
 
-var file_workflows_v1_transmit_schedule_event_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_workflows_v1_transmit_schedule_event_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_workflows_v1_transmit_schedule_event_proto_goTypes = []any{
 	(*TransmissionsScheduledEvent)(nil), // 0: workflows.v1.TransmissionsScheduledEvent
-	nil,                                 // 1: workflows.v1.TransmissionsScheduledEvent.PeerTransmissionDelaysEntry
+	(*TransmitScheduleEvent)(nil),       // 1: workflows.v1.TransmitScheduleEvent
+	nil,                                 // 2: workflows.v1.TransmissionsScheduledEvent.PeerTransmissionDelaysEntry
+	nil,                                 // 3: workflows.v1.TransmitScheduleEvent.PeerTransmissionDelaysEntry
 }
 var file_workflows_v1_transmit_schedule_event_proto_depIdxs = []int32{
-	1, // 0: workflows.v1.TransmissionsScheduledEvent.peerTransmissionDelays:type_name -> workflows.v1.TransmissionsScheduledEvent.PeerTransmissionDelaysEntry
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2, // 0: workflows.v1.TransmissionsScheduledEvent.peerTransmissionDelays:type_name -> workflows.v1.TransmissionsScheduledEvent.PeerTransmissionDelaysEntry
+	3, // 1: workflows.v1.TransmitScheduleEvent.peerTransmissionDelays:type_name -> workflows.v1.TransmitScheduleEvent.PeerTransmissionDelaysEntry
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_workflows_v1_transmit_schedule_event_proto_init() }
@@ -168,7 +275,7 @@ func file_workflows_v1_transmit_schedule_event_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_workflows_v1_transmit_schedule_event_proto_rawDesc), len(file_workflows_v1_transmit_schedule_event_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
