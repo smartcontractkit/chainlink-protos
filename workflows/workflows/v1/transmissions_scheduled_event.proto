@@ -4,9 +4,7 @@ package workflows.v1;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/events";
 
-// Old name for backwards compatibility
-// Copy of TransmissionsScheduledEvent
-message TransmitScheduleEvent {
+message TransmissionsScheduledEvent {
   string timestamp = 1;
   string scheduleType = 2;
   string workflowExecutionID = 3;

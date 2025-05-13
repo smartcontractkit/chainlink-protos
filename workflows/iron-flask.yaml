@@ -27,7 +27,7 @@ beholder:
           version: 1
 
     - entity: TransmissionsScheduledEvent
-      schema: "workflows/v1/transmit_schedule_event.proto"
+      schema: "workflows/v1/transmissions_scheduled_event.proto"
 
     - entity: TransmitScheduleEvent
       schema: "workflows/v1/transmit_schedule_event.proto"
