@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package workflows.v1;
+
+import "v1/workflows/metadata.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/cre/go/workflows/events";
+
+message WorkflowStatusChanged {
+  WorkflowMetadata m = 1;
+  string status = 2;
+  string details = 3;
+  TransactionInfo txInfo = 4;
+}
+
+message TransactionInfo {
+  string chainSelector = 1;
+  string txHash = 2;
+  string gasCost = 3;
+}

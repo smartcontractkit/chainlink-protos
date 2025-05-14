@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package workflows.v1;
+
+import "v1/workflows/metadata.proto";
+import "v1/workflows/metering_step.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/cre/go/workflows/events";
+
+// MeteringReport is consumed by the engine in core to emit the final Metering Report.
+message MeteringReport {
+  map<string, MeteringReportStep> steps = 1;
+  v1.WorkflowMetadata metadata = 2;
+}
