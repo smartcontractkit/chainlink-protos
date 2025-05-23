@@ -88,7 +88,7 @@ jobs:
       - name: Install grpc and wsrpc
         if: github.actor != 'app-token-issuer-engops[bot]' && steps.cache-deps.outputs.cache-hit != 'true'
         run: |
-          go install google.golang.org/protobuf/cmd/protoc-gen-go@${{ steps.tool-versions.outputs.protoc-gen-go_version }}
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@v${{ steps.tool-versions.outputs.protoc-gen-go_version }}
           go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.5.1
           go install github.com/smartcontractkit/wsrpc/cmd/protoc-gen-go-wsrpc@v0.8.2
 
