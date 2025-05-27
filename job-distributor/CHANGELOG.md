@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.11.0
+
+### Minor Changes
+
+- [#75](https://github.com/smartcontractkit/chainlink-protos/pull/75) [`1bd04c5`](https://github.com/smartcontractkit/chainlink-protos/commit/1bd04c5a9a4f045d99f129f60047ade3dc55d398) Thanks [@briansztamfater](https://github.com/briansztamfater)! - Add TON Chain Type
+
 ## 0.10.0
 
 ### Minor Changes
