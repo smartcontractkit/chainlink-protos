@@ -18,4 +18,5 @@ message WorkflowMetadata {
   string workflowRegistryVersion = 11;
   string workflowRegistryChain = 12;
   string engineVersion = 13;
+  string donVersion = 14;
 }
