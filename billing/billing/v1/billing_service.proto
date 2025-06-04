@@ -75,8 +75,15 @@ message ReserveCreditsRequest {
   string workflow_execution_id = 3;
   repeated AccountCreditsInput credits = 4;
 }
+
+message ResourceUnitRate {
+  string resource_unit = 1;
+  string conversion_rate = 2;
+}
+
 message ReserveCreditsResponse {
   bool success = 1;
+  repeated ResourceUnitRate rates = 2;
 }
 message ReleaseReservationRequest {
   string account_id = 1;
