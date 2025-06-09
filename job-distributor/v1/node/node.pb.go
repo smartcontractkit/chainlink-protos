@@ -33,6 +33,7 @@ const (
 	ChainType_CHAIN_TYPE_APTOS       ChainType = 4
 	ChainType_CHAIN_TYPE_TRON        ChainType = 5
 	ChainType_CHAIN_TYPE_TON         ChainType = 6
+	ChainType_CHAIN_TYPE_SUI         ChainType = 7
 )
 
 // Enum value maps for ChainType.
@@ -45,6 +46,7 @@ var (
 		4: "CHAIN_TYPE_APTOS",
 		5: "CHAIN_TYPE_TRON",
 		6: "CHAIN_TYPE_TON",
+		7: "CHAIN_TYPE_SUI",
 	}
 	ChainType_value = map[string]int32{
 		"CHAIN_TYPE_UNSPECIFIED": 0,
@@ -54,6 +56,7 @@ var (
 		"CHAIN_TYPE_APTOS":       4,
 		"CHAIN_TYPE_TRON":        5,
 		"CHAIN_TYPE_TON":         6,
+		"CHAIN_TYPE_SUI":         7,
 	}
 )
 
@@ -1921,7 +1924,7 @@ const file_job_distributor_v1_node_node_proto_rawDesc = "" +
 	"\fP2PKeyBundle\x12\x17\n" +
 	"\apeer_id\x18\x01 \x01(\tR\x06peerId\x12\x1d\n" +
 	"\n" +
-	"public_key\x18\x02 \x01(\tR\tpublicKey*\xaa\x01\n" +
+	"public_key\x18\x02 \x01(\tR\tpublicKey*\xbe\x01\n" +
 	"\tChainType\x12\x1a\n" +
 	"\x16CHAIN_TYPE_UNSPECIFIED\x10\x00\x12\x12\n" +
 	"\x0eCHAIN_TYPE_EVM\x10\x01\x12\x15\n" +
@@ -1929,7 +1932,8 @@ const file_job_distributor_v1_node_node_proto_rawDesc = "" +
 	"\x13CHAIN_TYPE_STARKNET\x10\x03\x12\x14\n" +
 	"\x10CHAIN_TYPE_APTOS\x10\x04\x12\x13\n" +
 	"\x0fCHAIN_TYPE_TRON\x10\x05\x12\x12\n" +
-	"\x0eCHAIN_TYPE_TON\x10\x06*`\n" +
+	"\x0eCHAIN_TYPE_TON\x10\x06\x12\x12\n" +
+	"\x0eCHAIN_TYPE_SUI\x10\a*`\n" +
 	"\vEnableState\x12\x1c\n" +
 	"\x18ENABLE_STATE_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14ENABLE_STATE_ENABLED\x10\x01\x12\x19\n" +
