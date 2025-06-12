@@ -73,7 +73,7 @@ message ReserveCreditsRequest {
   string account_id = 1;
   string workflow_id = 2;
   string workflow_execution_id = 3;
-  repeated AccountCreditsInput credits = 4;
+  float credits = 4;
 }
 
 message ResourceUnitRate {
@@ -83,7 +83,8 @@ message ResourceUnitRate {
 
 message ReserveCreditsResponse {
   bool success = 1;
-  repeated ResourceUnitRate rates = 2;
+  float credits = 2;
+  repeated ResourceUnitRate rates = 3;
 }
 message ReleaseReservationRequest {
   string account_id = 1;

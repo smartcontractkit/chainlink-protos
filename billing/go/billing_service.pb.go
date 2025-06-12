@@ -681,7 +681,7 @@ type ReserveCreditsRequest struct {
 	AccountId           string                 `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
 	WorkflowId          string                 `protobuf:"bytes,2,opt,name=workflow_id,json=workflowId,proto3" json:"workflow_id,omitempty"`
 	WorkflowExecutionId string                 `protobuf:"bytes,3,opt,name=workflow_execution_id,json=workflowExecutionId,proto3" json:"workflow_execution_id,omitempty"`
-	Credits             []*AccountCreditsInput `protobuf:"bytes,4,rep,name=credits,proto3" json:"credits,omitempty"`
+	Credits             float32                `protobuf:"fixed32,4,opt,name=credits,proto3" json:"credits,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -737,11 +737,11 @@ func (x *ReserveCreditsRequest) GetWorkflowExecutionId() string {
 	return ""
 }
 
-func (x *ReserveCreditsRequest) GetCredits() []*AccountCreditsInput {
+func (x *ReserveCreditsRequest) GetCredits() float32 {
 	if x != nil {
 		return x.Credits
 	}
-	return nil
+	return 0
 }
 
 type ResourceUnitRate struct {
@@ -799,7 +799,8 @@ func (x *ResourceUnitRate) GetConversionRate() string {
 type ReserveCreditsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
-	Rates         []*ResourceUnitRate    `protobuf:"bytes,2,rep,name=rates,proto3" json:"rates,omitempty"`
+	Credits       float32                `protobuf:"fixed32,2,opt,name=credits,proto3" json:"credits,omitempty"`
+	Rates         []*ResourceUnitRate    `protobuf:"bytes,3,rep,name=rates,proto3" json:"rates,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -839,6 +840,13 @@ func (x *ReserveCreditsResponse) GetSuccess() bool {
 		return x.Success
 	}
 	return false
+}
+
+func (x *ReserveCreditsResponse) GetCredits() float32 {
+	if x != nil {
+		return x.Credits
+	}
+	return 0
 }
 
 func (x *ReserveCreditsResponse) GetRates() []*ResourceUnitRate {
@@ -1323,20 +1331,21 @@ const file_billing_v1_billing_service_proto_rawDesc = "" +
 	"\x12AccountWithCredits\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x01 \x01(\tR\taccountId\x124\n" +
-	"\acredits\x18\x02 \x03(\v2\x1a.billing.v1.AccountCreditsR\acredits\"\xc6\x01\n" +
+	"\acredits\x18\x02 \x03(\v2\x1a.billing.v1.AccountCreditsR\acredits\"\xa5\x01\n" +
 	"\x15ReserveCreditsRequest\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x01 \x01(\tR\taccountId\x12\x1f\n" +
 	"\vworkflow_id\x18\x02 \x01(\tR\n" +
 	"workflowId\x122\n" +
-	"\x15workflow_execution_id\x18\x03 \x01(\tR\x13workflowExecutionId\x129\n" +
-	"\acredits\x18\x04 \x03(\v2\x1f.billing.v1.AccountCreditsInputR\acredits\"`\n" +
+	"\x15workflow_execution_id\x18\x03 \x01(\tR\x13workflowExecutionId\x12\x18\n" +
+	"\acredits\x18\x04 \x01(\x02R\acredits\"`\n" +
 	"\x10ResourceUnitRate\x12#\n" +
 	"\rresource_unit\x18\x01 \x01(\tR\fresourceUnit\x12'\n" +
-	"\x0fconversion_rate\x18\x02 \x01(\tR\x0econversionRate\"f\n" +
+	"\x0fconversion_rate\x18\x02 \x01(\tR\x0econversionRate\"\x80\x01\n" +
 	"\x16ReserveCreditsResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess\x122\n" +
-	"\x05rates\x18\x02 \x03(\v2\x1c.billing.v1.ResourceUnitRateR\x05rates\"\x8f\x01\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\x12\x18\n" +
+	"\acredits\x18\x02 \x01(\x02R\acredits\x122\n" +
+	"\x05rates\x18\x03 \x03(\v2\x1c.billing.v1.ResourceUnitRateR\x05rates\"\x8f\x01\n" +
 	"\x19ReleaseReservationRequest\x12\x1d\n" +
 	"\n" +
 	"account_id\x18\x01 \x01(\tR\taccountId\x12\x1f\n" +
@@ -1431,35 +1440,34 @@ var file_billing_v1_billing_service_proto_depIdxs = []int32{
 	24, // 3: billing.v1.AccountCredits.created_at:type_name -> google.protobuf.Timestamp
 	24, // 4: billing.v1.AccountCredits.updated_at:type_name -> google.protobuf.Timestamp
 	11, // 5: billing.v1.AccountWithCredits.credits:type_name -> billing.v1.AccountCredits
-	2,  // 6: billing.v1.ReserveCreditsRequest.credits:type_name -> billing.v1.AccountCreditsInput
-	14, // 7: billing.v1.ReserveCreditsResponse.rates:type_name -> billing.v1.ResourceUnitRate
-	2,  // 8: billing.v1.ConsumeCreditsRequest.credits:type_name -> billing.v1.AccountCreditsInput
-	25, // 9: billing.v1.SubmitWorkflowReceiptRequest.metering:type_name -> workflows.v1.MeteringReport
-	7,  // 10: billing.v1.SubscriptionService.GetAccountCredits:input_type -> billing.v1.GetAccountCreditsRequest
-	3,  // 11: billing.v1.SubscriptionService.AllocateCredits:input_type -> billing.v1.AllocateCreditsRequest
-	5,  // 12: billing.v1.SubscriptionService.BillAccount:input_type -> billing.v1.BillAccountRequest
-	7,  // 13: billing.v1.WorkflowService.GetAccountCredits:input_type -> billing.v1.GetAccountCreditsRequest
-	9,  // 14: billing.v1.WorkflowService.BatchGetCreditsForAccounts:input_type -> billing.v1.BatchGetCreditsForAccountsRequest
-	13, // 15: billing.v1.WorkflowService.ReserveCredits:input_type -> billing.v1.ReserveCreditsRequest
-	16, // 16: billing.v1.WorkflowService.ReleaseReservation:input_type -> billing.v1.ReleaseReservationRequest
-	18, // 17: billing.v1.WorkflowService.ConsumeCredits:input_type -> billing.v1.ConsumeCreditsRequest
-	20, // 18: billing.v1.WorkflowService.ConsumeReservation:input_type -> billing.v1.ConsumeReservationRequest
-	22, // 19: billing.v1.WorkflowService.WorkflowReceipt:input_type -> billing.v1.SubmitWorkflowReceiptRequest
-	8,  // 20: billing.v1.SubscriptionService.GetAccountCredits:output_type -> billing.v1.GetAccountCreditsResponse
-	4,  // 21: billing.v1.SubscriptionService.AllocateCredits:output_type -> billing.v1.AllocateCreditsResponse
-	6,  // 22: billing.v1.SubscriptionService.BillAccount:output_type -> billing.v1.BillAccountResponse
-	8,  // 23: billing.v1.WorkflowService.GetAccountCredits:output_type -> billing.v1.GetAccountCreditsResponse
-	10, // 24: billing.v1.WorkflowService.BatchGetCreditsForAccounts:output_type -> billing.v1.BatchGetCreditsForAccountsResponse
-	15, // 25: billing.v1.WorkflowService.ReserveCredits:output_type -> billing.v1.ReserveCreditsResponse
-	17, // 26: billing.v1.WorkflowService.ReleaseReservation:output_type -> billing.v1.ReleaseReservationResponse
-	19, // 27: billing.v1.WorkflowService.ConsumeCredits:output_type -> billing.v1.ConsumeCreditsResponse
-	21, // 28: billing.v1.WorkflowService.ConsumeReservation:output_type -> billing.v1.ConsumeReservationResponse
-	23, // 29: billing.v1.WorkflowService.WorkflowReceipt:output_type -> billing.v1.SubmitWorkflowReceiptResponse
-	20, // [20:30] is the sub-list for method output_type
-	10, // [10:20] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	14, // 6: billing.v1.ReserveCreditsResponse.rates:type_name -> billing.v1.ResourceUnitRate
+	2,  // 7: billing.v1.ConsumeCreditsRequest.credits:type_name -> billing.v1.AccountCreditsInput
+	25, // 8: billing.v1.SubmitWorkflowReceiptRequest.metering:type_name -> workflows.v1.MeteringReport
+	7,  // 9: billing.v1.SubscriptionService.GetAccountCredits:input_type -> billing.v1.GetAccountCreditsRequest
+	3,  // 10: billing.v1.SubscriptionService.AllocateCredits:input_type -> billing.v1.AllocateCreditsRequest
+	5,  // 11: billing.v1.SubscriptionService.BillAccount:input_type -> billing.v1.BillAccountRequest
+	7,  // 12: billing.v1.WorkflowService.GetAccountCredits:input_type -> billing.v1.GetAccountCreditsRequest
+	9,  // 13: billing.v1.WorkflowService.BatchGetCreditsForAccounts:input_type -> billing.v1.BatchGetCreditsForAccountsRequest
+	13, // 14: billing.v1.WorkflowService.ReserveCredits:input_type -> billing.v1.ReserveCreditsRequest
+	16, // 15: billing.v1.WorkflowService.ReleaseReservation:input_type -> billing.v1.ReleaseReservationRequest
+	18, // 16: billing.v1.WorkflowService.ConsumeCredits:input_type -> billing.v1.ConsumeCreditsRequest
+	20, // 17: billing.v1.WorkflowService.ConsumeReservation:input_type -> billing.v1.ConsumeReservationRequest
+	22, // 18: billing.v1.WorkflowService.WorkflowReceipt:input_type -> billing.v1.SubmitWorkflowReceiptRequest
+	8,  // 19: billing.v1.SubscriptionService.GetAccountCredits:output_type -> billing.v1.GetAccountCreditsResponse
+	4,  // 20: billing.v1.SubscriptionService.AllocateCredits:output_type -> billing.v1.AllocateCreditsResponse
+	6,  // 21: billing.v1.SubscriptionService.BillAccount:output_type -> billing.v1.BillAccountResponse
+	8,  // 22: billing.v1.WorkflowService.GetAccountCredits:output_type -> billing.v1.GetAccountCreditsResponse
+	10, // 23: billing.v1.WorkflowService.BatchGetCreditsForAccounts:output_type -> billing.v1.BatchGetCreditsForAccountsResponse
+	15, // 24: billing.v1.WorkflowService.ReserveCredits:output_type -> billing.v1.ReserveCreditsResponse
+	17, // 25: billing.v1.WorkflowService.ReleaseReservation:output_type -> billing.v1.ReleaseReservationResponse
+	19, // 26: billing.v1.WorkflowService.ConsumeCredits:output_type -> billing.v1.ConsumeCreditsResponse
+	21, // 27: billing.v1.WorkflowService.ConsumeReservation:output_type -> billing.v1.ConsumeReservationResponse
+	23, // 28: billing.v1.WorkflowService.WorkflowReceipt:output_type -> billing.v1.SubmitWorkflowReceiptResponse
+	19, // [19:29] is the sub-list for method output_type
+	9,  // [9:19] is the sub-list for method input_type
+	9,  // [9:9] is the sub-list for extension type_name
+	9,  // [9:9] is the sub-list for extension extendee
+	0,  // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_billing_v1_billing_service_proto_init() }
