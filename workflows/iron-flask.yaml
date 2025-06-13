@@ -52,3 +52,6 @@ beholder:
         - name: "workflows/v1/metadata.proto"
           subject: "beholder__platform__messages-workflows.v1.WorkflowMetadata"
           version: 1
+
+    - entity: BaseMessage
+      schema: "common/v1/base_message.proto"
