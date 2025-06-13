@@ -1438,13 +1438,14 @@ func (x *UpdateJobResponse) GetJob() *Job {
 }
 
 type ListJobsRequest_Filter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Ids           []string               `protobuf:"bytes,1,rep,name=ids,proto3" json:"ids,omitempty"`                        // Filter by job IDs.
-	NodeIds       []string               `protobuf:"bytes,2,rep,name=node_ids,json=nodeIds,proto3" json:"node_ids,omitempty"` // Filter by node IDs.
-	Selectors     []*ptypes.Selector     `protobuf:"bytes,3,rep,name=selectors,proto3" json:"selectors,omitempty"`            // Filter by selectors
-	Uuids         []string               `protobuf:"bytes,4,rep,name=uuids,proto3" json:"uuids,omitempty"`                    // Filter by job UUIDs.
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Ids            []string               `protobuf:"bytes,1,rep,name=ids,proto3" json:"ids,omitempty"`                                              // Filter by job IDs.
+	NodeIds        []string               `protobuf:"bytes,2,rep,name=node_ids,json=nodeIds,proto3" json:"node_ids,omitempty"`                       // Filter by node IDs.
+	Selectors      []*ptypes.Selector     `protobuf:"bytes,3,rep,name=selectors,proto3" json:"selectors,omitempty"`                                  // Filter by selectors
+	Uuids          []string               `protobuf:"bytes,4,rep,name=uuids,proto3" json:"uuids,omitempty"`                                          // Filter by job UUIDs.
+	IncludeDeleted bool                   `protobuf:"varint,5,opt,name=include_deleted,json=includeDeleted,proto3" json:"include_deleted,omitempty"` // Return deleted jobs
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ListJobsRequest_Filter) Reset() {
@@ -1503,6 +1504,13 @@ func (x *ListJobsRequest_Filter) GetUuids() []string {
 		return x.Uuids
 	}
 	return nil
+}
+
+func (x *ListJobsRequest_Filter) GetIncludeDeleted() bool {
+	if x != nil {
+		return x.IncludeDeleted
+	}
+	return false
 }
 
 type ListProposalsRequest_Filter struct {
@@ -1601,14 +1609,15 @@ const file_job_distributor_v1_job_job_proto_rawDesc = "" +
 	"\x12GetProposalRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"G\n" +
 	"\x13GetProposalResponse\x120\n" +
-	"\bproposal\x18\x01 \x01(\v2\x14.api.job.v1.ProposalR\bproposal\"\xcd\x01\n" +
+	"\bproposal\x18\x01 \x01(\v2\x14.api.job.v1.ProposalR\bproposal\"\xf7\x01\n" +
 	"\x0fListJobsRequest\x12:\n" +
-	"\x06filter\x18\x01 \x01(\v2\".api.job.v1.ListJobsRequest.FilterR\x06filter\x1a~\n" +
+	"\x06filter\x18\x01 \x01(\v2\".api.job.v1.ListJobsRequest.FilterR\x06filter\x1a\xa7\x01\n" +
 	"\x06Filter\x12\x10\n" +
 	"\x03ids\x18\x01 \x03(\tR\x03ids\x12\x19\n" +
 	"\bnode_ids\x18\x02 \x03(\tR\anodeIds\x121\n" +
 	"\tselectors\x18\x03 \x03(\v2\x13.api.label.SelectorR\tselectors\x12\x14\n" +
-	"\x05uuids\x18\x04 \x03(\tR\x05uuids\"7\n" +
+	"\x05uuids\x18\x04 \x03(\tR\x05uuids\x12'\n" +
+	"\x0finclude_deleted\x18\x05 \x01(\bR\x0eincludeDeleted\"7\n" +
 	"\x10ListJobsResponse\x12#\n" +
 	"\x04jobs\x18\x01 \x03(\v2\x0f.api.job.v1.JobR\x04jobs\"\x8c\x01\n" +
 	"\x14ListProposalsRequest\x12?\n" +
