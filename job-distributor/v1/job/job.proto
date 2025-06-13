@@ -115,6 +115,7 @@ message ListJobsRequest {
     repeated string node_ids = 2; // Filter by node IDs.
     repeated api.label.Selector selectors = 3; // Filter by selectors
     repeated string uuids = 4; // Filter by job UUIDs.
+    bool include_deleted = 5; // Return deleted jobs
   }
 
   Filter filter = 1; // Filters applied to the job listing.
