@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.12.0
+
+### Minor Changes
+
+- [#82](https://github.com/smartcontractkit/chainlink-protos/pull/82) [`fcda5d9`](https://github.com/smartcontractkit/chainlink-protos/commit/fcda5d91854fbaf4946c7086e21165bfead424a1) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add Deleted Jobs Filter to Jobs Proto
+
 ## 0.11.0
 
 ### Minor Changes
