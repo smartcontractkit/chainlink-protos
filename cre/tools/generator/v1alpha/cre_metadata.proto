@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package tools.generator.v1alpha;
+
+import "google/protobuf/descriptor.proto";
+
+import "sdk/v1alpha/sdk.proto";
+
+message CapabilityMetadata {
+    sdk.v1alpha.Mode mode = 1;
+    string capability_id = 2;
+}
+
+extend google.protobuf.ServiceOptions {
+    CapabilityMetadata capability = 50000; // 50000-99999 is the range for custom options.
+}
+
+message CapabilityMethodMetadata {
+    bool map_to_untyped_api = 1;
+}
+
+extend google.protobuf.MethodOptions {
+    CapabilityMethodMetadata method = 50001; // 50000-99999 is the range for custom options.
+}

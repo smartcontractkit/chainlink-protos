@@ -14,13 +14,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
+      - uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2
         id: tool-versions
-      - uses: bufbuild/buf-action@v1
+
+      - name: Set up Buf
+        uses: bufbuild/buf-setup-action@a47c93e0b1648d5651a065437926377d060baa99
         with:
-          breaking: ${{ github.event_name == 'pull_request' }}
           version: ${{ steps.tool-versions.outputs.buf_version }}
-          exclude_paths: node_modules
+
+      - name: Install task CLI
+        run: |
+          asdf install task
+
+      - name: Run Breaking Check for cre
+        run: task proto:check:cre
+
 
   regenerate-protobuf:
     runs-on: ubuntu-latest

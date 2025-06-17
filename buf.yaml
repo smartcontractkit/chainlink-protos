@@ -22,6 +22,8 @@ modules:
     lint:
       except:
         - PACKAGE_DIRECTORY_MATCH
+  - path: cre
+
 lint:
   use:
     - STANDARD

@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package sdk.v1alpha;
+
+
+import "google/protobuf/any.proto";
+import "values/v1/values.proto";
+import "google/protobuf/empty.proto";
+
+
+enum AggregationType {
+    AGGREGATION_TYPE_UNSPECIFIED = 0;
+    AGGREGATION_TYPE_MEDIAN = 1;
+    AGGREGATION_TYPE_IDENTICAL = 2;
+    AGGREGATION_TYPE_COMMON_PREFIX = 3;
+    AGGREGATION_TYPE_COMMON_SUFFIX = 4;
+}
+
+message SimpleConsensusInputs {
+    oneof  observation {
+        values.v1.Value value = 1;
+        string error = 2;
+    };
+    ConsensusDescriptor descriptors = 3;
+    values.v1.Value default = 4;
+}
+
+message FieldsMap {
+    map<string, ConsensusDescriptor> fields = 1;
+}
+
+message ConsensusDescriptor {
+    oneof descriptor{
+        AggregationType aggregation = 1;
+        FieldsMap fields_map = 2;
+    }
+}
+
+message CapabilityRequest {
+    string id = 1;
+    google.protobuf.Any payload = 2;
+    string method = 3;
+    int32 callback_id = 4;
+}
+
+message CapabilityResponse {
+    oneof response {
+        google.protobuf.Any payload = 1;
+        string error = 2;
+    }
+}
+
+enum Mode {
+    MODE_UNSPECIFIED = 0;
+    MODE_DON = 1;
+    MODE_NODE = 2;
+}
+
+message TriggerSubscription {
+    string id = 1;
+    google.protobuf.Any payload = 2;
+    string method = 3;
+}
+
+message TriggerSubscriptionRequest {
+    repeated TriggerSubscription subscriptions = 1;
+}
+
+message Trigger {
+    uint64 id = 1;
+    google.protobuf.Any payload = 2;
+}
+
+message AwaitCapabilitiesRequest {
+    repeated int32 ids = 1;
+}
+
+message AwaitCapabilitiesResponse {
+    map<int32, CapabilityResponse> responses = 1;
+}
+message ExecuteRequest {
+    bytes config = 1;
+    oneof request {
+        google.protobuf.Empty subscribe = 2;
+        Trigger trigger = 3;
+    }
+    uint64 max_response_size = 4;
+}
+
+message ExecutionResult {
+    oneof result {
+        values.v1.Value value = 1;
+        string error = 2;
+        TriggerSubscriptionRequest trigger_subscriptions = 3;
+    }
+}
