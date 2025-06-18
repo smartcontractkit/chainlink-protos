@@ -32,7 +32,3 @@ breaking:
     - FILE
   ignore:
     - node_modules
-    - "cre/**" # Will remove after initial commit
-    - "**/*alpha/**"
-    - "**/*beta/**"
-
