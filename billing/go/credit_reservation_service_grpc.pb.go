@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: billing/v1/credit_reservation_service.proto
+// source: creditreservation/v1/credit_reservation_service.proto
 
 package creditreservation
 
@@ -237,5 +237,5 @@ var CreditReservationService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "billing/v1/credit_reservation_service.proto",
+	Metadata: "creditreservation/v1/credit_reservation_service.proto",
 }

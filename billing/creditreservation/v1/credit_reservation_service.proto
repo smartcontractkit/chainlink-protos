@@ -1,7 +1,7 @@
 syntax = "proto3";
 package creditreservation.v1;
 
-import "billing/v1/credit_reservation_message_types.proto";
+import "creditreservation/v1/credit_reservation_message_types.proto";
 import "google/protobuf/empty.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/billing/go;creditreservation";
