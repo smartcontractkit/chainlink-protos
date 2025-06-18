@@ -22,6 +22,15 @@ jobs:
         with:
           version: ${{ steps.tool-versions.outputs.buf_version }}
 
+      - name: Install asdf and Plugins
+        uses: asdf-vm/actions/plugins-add@v1
+        with:
+          asdf_branch: v0.16.7
+
+      - name: Install task CLI
+        run: |
+          asdf install task
+
       - name: Install task CLI
         run: |
           asdf install task
