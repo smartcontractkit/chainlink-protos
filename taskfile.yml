@@ -1,3 +1,5 @@
+# https://taskfile.dev
+
 version: "3"
 
 tasks:
@@ -21,7 +23,6 @@ tasks:
       - task proto:gen:workflows
       - task proto:gen:billing
       - task go:mod:tidy
-      - task proto:check:cre
 
   proto:gen:job-distributor:
     desc: Generate all protobuf files for the job-distributor service
@@ -48,19 +49,19 @@ tasks:
           SERVICE_NAME: svr
 
   proto:gen:rmn:
-    desc: "Generate Go code from protobuf files for rmn"
-    cmds:
-      - find ./rmn/v1.6/go -name '*.pb.go' -delete
-      - |
-        proto_files=$(find ./rmn/v1.6/proto -name "*.proto")
-        protoc \
-          -I=./rmn/v1.6/proto \
-          --go_out=./rmn/v1.6/go \
-          --go_opt=paths=source_relative \
-          --go-grpc_out=./rmn/v1.6/go \
-          --go-grpc_opt=paths=source_relative \
-          $proto_files
-      - cd rmn/v1.6/rust && cargo build
+      desc: "Generate Go code from protobuf files for rmn"
+      cmds:
+        - find ./rmn/v1.6/go -name '*.pb.go' -delete
+        - |
+          proto_files=$(find ./rmn/v1.6/proto -name "*.proto")
+          protoc \
+            -I=./rmn/v1.6/proto \
+            --go_out=./rmn/v1.6/go \
+            --go_opt=paths=source_relative \
+            --go-grpc_out=./rmn/v1.6/go \
+            --go-grpc_opt=paths=source_relative \
+            $proto_files
+        - cd rmn/v1.6/rust && cargo build
 
   proto:gen:workflows:
       desc: "Generate Go code from protobuf files for workflows"
@@ -103,40 +104,3 @@ tasks:
       - |
         proto_files=$(find ./{{.SERVICE_NAME}} -name "*.proto")
         protoc --go_out=. --go_opt=paths=source_relative --go-wsrpc_out=. --go-wsrpc_opt=paths=source_relative $proto_files
-
-  proto:check:cre:
-    desc: "Lint and check for breaking changes in cre/, allowing breaking changes in v0"
-    cmds:
-      - buf lint cre
-      - |
-        echo "🔍 Finding all released proto paths for breaking check..."
-        proto_dirs=$(
-          find cre -type f -name '*.proto' |
-          grep -vi 'alpha' |
-          grep -vi 'beta' |
-          xargs -n1 dirname |
-          sort -u
-        )
-
-        if [ -z "$proto_dirs" ]; then
-          echo "✅ No .proto files found in current commit to check. Skipping."
-          exit 0
-        fi
-
-        TARGET_COMMIT=main
-        if git ls-tree -r --name-only "$TARGET_COMMIT" -- cre/ | grep -q '\.proto$'; then
-          echo "✅ Proto files found in target commit ($TARGET_COMMIT). Proceeding with breaking check."
-        else
-          echo "✅ No .proto files found in the 'cre/' path of the target commit. Skipping breaking check."
-          exit 0
-        fi
-
-        args=()
-        for dir in $proto_dirs; do
-          args+=(--path "$dir")
-        done
-
-        echo "🧪 Running buf breaking check on:"
-        printf '  - %s\n' "${args[@]//--path /}"
-
-        buf breaking "${args[@]}" --against ".git#branch=$TARGET_COMMIT"

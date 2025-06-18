@@ -32,3 +32,6 @@ breaking:
     - FILE
   ignore:
     - node_modules
+    - "**/*alpha/**"
+    - "**/*beta/**"
+

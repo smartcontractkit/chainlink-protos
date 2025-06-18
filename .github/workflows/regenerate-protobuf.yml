@@ -31,10 +31,6 @@ jobs:
         run: |
           asdf install task
 
-      - name: Install task CLI
-        run: |
-          asdf install task
-
       - name: Run Breaking Check for cre
         run: task proto:check:cre
 
