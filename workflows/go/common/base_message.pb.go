@@ -21,6 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Coppied from https://github.com/smartcontractkit/chainlink-common/blob/main/pkg/beholder/pb/base_message.proto
 // BaseMessage is a basic custom message, allowing the consumer to send
 // a string msg with some key-value pairs for labels. Consumers can consume
 // BaseMessage directly or extend it by adding use-case specific fields
