@@ -32,3 +32,4 @@ breaking:
     - FILE
   ignore:
     - node_modules
+  ignore_unstable_packages: true
