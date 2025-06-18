@@ -22,6 +22,8 @@ modules:
     lint:
       except:
         - PACKAGE_DIRECTORY_MATCH
+  - path: cre
+
 lint:
   use:
     - STANDARD
@@ -30,3 +32,4 @@ breaking:
     - FILE
   ignore:
     - node_modules
+  ignore_unstable_packages: true
