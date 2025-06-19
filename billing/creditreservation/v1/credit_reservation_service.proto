@@ -9,91 +9,91 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/billing/go;bil
 
 // UnitType corresponds to billing.unit_type in Postgres.
 enum UnitType {
-    // Unknown / unset.
-    UNIT_TYPE_UNSPECIFIED = 0;
+  // Unknown / unset.
+  UNIT_TYPE_UNSPECIFIED = 0;
 
-    // Workflow memory usage.
-    UNIT_TYPE_WF_MEMORY = 1;
-    // Consensus bandwidth.
-    UNIT_TYPE_CONSENSUS = 2;
-    // Compute time in milliseconds.
-    UNIT_TYPE_COMPUTE = 3;
-    // DON storage in megabyte-months.
-    UNIT_TYPE_DON_STORAGE = 4;
-    // Workflow storage in megabyte-months.
-    UNIT_TYPE_WF_STORAGE = 5;
-    // Alerts operations count.
-    UNIT_TYPE_ALERTS = 6;
-    // Gas cost.
-    UNIT_TYPE_GAS = 7;
-    // Event operations count.
-    UNIT_TYPE_EVENTS = 8;
-    // Chain call operations count.
-    UNIT_TYPE_CHAIN_CALLS = 9;
-    // Trigger operations count.
-    UNIT_TYPE_TRIGGERS = 10;
+  // Workflow memory usage.
+  UNIT_TYPE_WF_MEMORY = 1;
+  // Consensus bandwidth.
+  UNIT_TYPE_CONSENSUS = 2;
+  // Compute time in milliseconds.
+  UNIT_TYPE_COMPUTE = 3;
+  // DON storage in megabyte-months.
+  UNIT_TYPE_DON_STORAGE = 4;
+  // Workflow storage in megabyte-months.
+  UNIT_TYPE_WF_STORAGE = 5;
+  // Alerts operations count.
+  UNIT_TYPE_ALERTS = 6;
+  // Gas cost.
+  UNIT_TYPE_GAS = 7;
+  // Event operations count.
+  UNIT_TYPE_EVENTS = 8;
+  // Chain call operations count.
+  UNIT_TYPE_CHAIN_CALLS = 9;
+  // Trigger operations count.
+  UNIT_TYPE_TRIGGERS = 10;
 }
 
 // .MeasurementUnit_MEASUREMENT_UNIT corresponds to billing.measurement_unit in Postgres.
 enum MeasurementUnit {
-    // Unknown / unset.
-    MEASUREMENT_UNIT_UNSPECIFIED = 0;
+  // Unknown / unset.
+  MEASUREMENT_UNIT_UNSPECIFIED = 0;
 
-    // Megabyte-months (WF_MEMORY, DON_STORAGE, WF_STORAGE).
-    MEASUREMENT_UNIT_MEGABYTE_MONTHS = 1;
-    // Aggregate megabytes (CONSENSUS).
-    MEASUREMENT_UNIT_MEGABYTES_AGGREGATE = 2;
-    // Milliseconds (COMPUTE).
-    MEASUREMENT_UNIT_MILLISECONDS = 3;
-    // Operations count (ALERTS, EVENTS, CHAIN_CALLS, TRIGGERS).
-    MEASUREMENT_UNIT_OPERATIONS = 4;
-    // Cost (GAS).
-    MEASUREMENT_UNIT_COST = 5;
+  // Megabyte-months (WF_MEMORY, DON_STORAGE, WF_STORAGE).
+  MEASUREMENT_UNIT_MEGABYTE_MONTHS = 1;
+  // Aggregate megabytes (CONSENSUS).
+  MEASUREMENT_UNIT_MEGABYTES_AGGREGATE = 2;
+  // Milliseconds (COMPUTE).
+  MEASUREMENT_UNIT_MILLISECONDS = 3;
+  // Operations count (ALERTS, EVENTS, CHAIN_CALLS, TRIGGERS).
+  MEASUREMENT_UNIT_OPERATIONS = 4;
+  // Cost (GAS).
+  MEASUREMENT_UNIT_COST = 5;
 }
 
 // Organization’s credit balances.
 message OrganizationCredits {
-    float credits = 1;
-    float credits_reserved = 2;
-    google.protobuf.Timestamp created_at = 3;
-    google.protobuf.Timestamp updated_at = 4;
+  float credits = 1;
+  float credits_reserved = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
 }
 
 // Request by workflow to look up org credits.
 message GetOrganizationCreditsByWorkflowRequest {
-    string workflow_owner = 1;
-    string workflow_registry_address = 2;
-    uint64 chain_selector = 3;
+  string workflow_owner = 1;
+  string workflow_registry_address = 2;
+  uint64 chain_selector = 3;
 }
 
 // Response carrying org ID and credits.
 message GetOrganizationCreditsByWorkflowResponse {
-    string organization_id = 1;
-    OrganizationCredits credits = 2;
+  string organization_id = 1;
+  OrganizationCredits credits = 2;
 }
 
 // Reserve credits for a workflow execution.
 message ReserveCreditsRequest {
-    string workflow_owner = 1;
-    string workflow_registry_address = 2;
-    uint64 chain_selector = 3;
-    string workflow_id = 4;
-    string workflow_execution_id = 5;
-    float credits = 6;
+  string workflow_owner = 1;
+  string workflow_registry_address = 2;
+  uint64 chain_selector = 3;
+  string workflow_id = 4;
+  string workflow_execution_id = 5;
+  float credits = 6;
 }
 
 message ReserveCreditsResponse {
-    repeated RateCardEntry entries = 1;
+  repeated RateCardEntry entries = 1;
 }
 
 // Submit a workflow receipt.
 message SubmitWorkflowReceiptRequest {
-    string workflow_owner = 1;
-    string workflow_registry_address = 2;
-    uint64 chain_selector = 3;
-    string workflow_id = 4;
-    string workflow_execution_id = 5;
-    workflows.v1.MeteringReport metering = 6;
+  string workflow_owner = 1;
+  string workflow_registry_address = 2;
+  uint64 chain_selector = 3;
+  string workflow_id = 4;
+  string workflow_execution_id = 5;
+  workflows.v1.MeteringReport metering = 6;
 }
 
 // -----------------------------------------------------------------------------
@@ -102,31 +102,31 @@ message SubmitWorkflowReceiptRequest {
 
 // A single rate‐card entry.
 message RateCardEntry {
-    UnitType unit_type = 1;
-    MeasurementUnit measurement_unit = 2;
-    double units_per_credit = 3;
-    string changed_by = 4;
-    google.protobuf.Timestamp created_at = 5;
-    google.protobuf.Timestamp updated_at = 6;
+  UnitType unit_type = 1;
+  MeasurementUnit measurement_unit = 2;
+  double units_per_credit = 3;
+  string changed_by = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
 }
 
 // Get the default, global rate card (all unit types).
 message GetRateCardRequest {
-    string workflow_owner = 1;
-    string workflow_registry_address = 2;
-    uint64 chain_selector = 3;
+  string workflow_owner = 1;
+  string workflow_registry_address = 2;
+  uint64 chain_selector = 3;
 }
 message GetRateCardResponse {
-    repeated RateCardEntry entries = 1;
+  repeated RateCardEntry entries = 1;
 }
 
 // Service for reserving and querying credits.
 service CreditReservationService {
-    rpc GetOrganizationCreditsByWorkflow(GetOrganizationCreditsByWorkflowRequest) returns (GetOrganizationCreditsByWorkflowResponse);
+  rpc GetOrganizationCreditsByWorkflow(GetOrganizationCreditsByWorkflowRequest) returns (GetOrganizationCreditsByWorkflowResponse);
 
-    rpc ReserveCredits(ReserveCreditsRequest) returns (ReserveCreditsResponse);
+  rpc ReserveCredits(ReserveCreditsRequest) returns (ReserveCreditsResponse);
 
-    rpc SubmitWorkflowReceipt(SubmitWorkflowReceiptRequest) returns (google.protobuf.Empty);
+  rpc SubmitWorkflowReceipt(SubmitWorkflowReceiptRequest) returns (google.protobuf.Empty);
 
-    rpc GetRateCard(GetRateCardRequest) returns (GetRateCardResponse);
+  rpc GetRateCard(GetRateCardRequest) returns (GetRateCardResponse);
 }
