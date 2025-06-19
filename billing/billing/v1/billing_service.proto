@@ -8,132 +8,155 @@ import "workflows/v1/metering.proto";
 option go_package = "github.com/smartcontractkit/chainlink-protos/billing/go;billing";
 
 // ------------------------------------------
-// Shared messages
+// Shared messages (DEPRECATED)
 // ------------------------------------------
 
-message EmptyRequest {}
-message EmptyResponse {
-  string message = 1;
+message EmptyRequest {} // DEPRECATED
+message EmptyResponse { // DEPRECATED
+    string message = 1;
 }
 
-message AccountCreditsInput {
-  float credits = 1;
-  string credit_type = 2; // TODO make ENUM
+message AccountCreditsInput { // DEPRECATED
+    float credits = 1;
+    string credit_type = 2;
 }
 
-message AllocateCreditsRequest {
-  string account_id = 1;
-  repeated AccountCreditsInput credits = 2;
+message AllocateCreditsRequest { // DEPRECATED
+    string account_id = 1;
+    repeated AccountCreditsInput credits = 2;
 }
 
-message AllocateCreditsResponse {
-  bool Success = 1;
+message AllocateCreditsResponse { // DEPRECATED
+    bool Success = 1;
 }
 
-message BillAccountRequest {
-  string account_id = 1;
-  float amt = 2;
-  string currency = 3;
-  string idempotency_key = 4;
+message BillAccountRequest { // DEPRECATED
+    string account_id = 1;
+    float amt = 2;
+    string currency = 3;
+    string idempotency_key = 4;
 }
 
-message BillAccountResponse {
-  string bill_id = 1;
+message BillAccountResponse { // DEPRECATED
+    string bill_id = 1;
 }
 
-message GetAccountCreditsRequest {
-  string account_id = 1;
-}
-message GetAccountCreditsResponse {
-  string account_id = 1;
-  repeated AccountCredits credits = 2;
-}
-message BatchGetCreditsForAccountsRequest {
-  repeated string account_ids = 1;
-}
-message BatchGetCreditsForAccountsResponse {
-  repeated AccountWithCredits accounts = 1;
+message GetAccountCreditsRequest { // DEPRECATED
+    string account_id = 1;
 }
 
-message AccountCredits {
-  float credits = 1;
-  float credits_reserved = 2;
-  string credit_type = 3; // TODO make ENUM
-  google.protobuf.Timestamp created_at = 4;
-  google.protobuf.Timestamp updated_at = 5;
+message GetAccountCreditsResponse { // DEPRECATED
+    string account_id = 1;
+    repeated AccountCredits credits = 2;
 }
 
-message AccountWithCredits {
-  string account_id = 1;
-  repeated AccountCredits credits = 2;
+message BatchGetCreditsForAccountsRequest { // DEPRECATED
+    repeated string account_ids = 1;
 }
 
-// Reserve/Consume messages
-message ReserveCreditsRequest {
-  string account_id = 1;
-  string workflow_id = 2;
-  string workflow_execution_id = 3;
-  float credits = 4;
+message BatchGetCreditsForAccountsResponse { // DEPRECATED
+    repeated AccountWithCredits accounts = 1;
 }
 
-message ResourceUnitRate {
-  string resource_unit = 1;
-  string conversion_rate = 2;
+message AccountCredits { // DEPRECATED
+    float credits = 1;
+    float credits_reserved = 2;
+    string credit_type = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
 }
 
-message ReserveCreditsResponse {
-  bool success = 1;
-  float credits = 2;
-  repeated ResourceUnitRate rates = 3;
-}
-message ReleaseReservationRequest {
-  string account_id = 1;
-  string workflow_id = 2;
-  string workflow_execution_id = 3;
-}
-message ReleaseReservationResponse {
-  bool success = 1;
-}
-message ConsumeCreditsRequest {
-  string account_id = 1;
-  string workflow_id = 2;
-  repeated AccountCreditsInput credits = 3;
-}
-message ConsumeCreditsResponse {
-  bool success = 1;
-}
-message ConsumeReservationRequest {
-  string account_id = 1;
-  string workflow_id = 2;
-  string workflow_execution_id = 3;
-}
-message ConsumeReservationResponse {
-  bool success = 1;
-}
-message SubmitWorkflowReceiptRequest {
-  string account_id = 1;
-  string workflow_id = 2;
-  string workflow_execution_id = 3;
-  workflows.v1.MeteringReport metering = 4;
-}
-message SubmitWorkflowReceiptResponse {
-  bool success = 1;
+message AccountWithCredits { // DEPRECATED
+    string account_id = 1;
+    repeated AccountCredits credits = 2;
 }
 
-// SubscriptionService
+// Reserve/Consume messages (DEPRECATED)
+
+message ReserveCreditsRequest { // DEPRECATED
+    string account_id = 1;
+    string workflow_id = 2;
+    string workflow_execution_id = 3;
+    float credits = 4;
+}
+
+message ResourceUnitRate { // DEPRECATED
+    string resource_unit = 1;
+    string conversion_rate = 2;
+}
+
+message ReserveCreditsResponse { // DEPRECATED
+    bool success = 1;
+    float credits = 2;
+    repeated ResourceUnitRate rates = 3;
+}
+
+message ReleaseReservationRequest { // DEPRECATED
+    string account_id = 1;
+    string workflow_id = 2;
+    string workflow_execution_id = 3;
+}
+
+message ReleaseReservationResponse { // DEPRECATED
+    bool success = 1;
+}
+
+message ConsumeCreditsRequest { // DEPRECATED
+    string account_id = 1;
+    string workflow_id = 2;
+    repeated AccountCreditsInput credits = 3;
+}
+
+message ConsumeCreditsResponse { // DEPRECATED
+    bool success = 1;
+}
+
+message ConsumeReservationRequest { // DEPRECATED
+    string account_id = 1;
+    string workflow_id = 2;
+    string workflow_execution_id = 3;
+}
+
+message ConsumeReservationResponse { // DEPRECATED
+    bool success = 1;
+}
+
+message SubmitWorkflowReceiptRequest { // DEPRECATED
+    string account_id = 1;
+    string workflow_id = 2;
+    string workflow_execution_id = 3;
+    workflows.v1.MeteringReport metering = 4;
+}
+
+message SubmitWorkflowReceiptResponse { // DEPRECATED
+    bool success = 1;
+}
+
+// SubscriptionService (DEPRECATED)
 service SubscriptionService {
-  rpc GetAccountCredits(GetAccountCreditsRequest) returns (GetAccountCreditsResponse);
-  rpc AllocateCredits(AllocateCreditsRequest) returns (AllocateCreditsResponse);
-  rpc BillAccount(BillAccountRequest) returns (BillAccountResponse);
+    // DEPRECATED
+    rpc GetAccountCredits(GetAccountCreditsRequest) returns (GetAccountCreditsResponse);
+    // DEPRECATED
+    rpc AllocateCredits(AllocateCreditsRequest) returns (AllocateCreditsResponse);
+    // DEPRECATED
+    rpc BillAccount(BillAccountRequest) returns (BillAccountResponse);
 }
 
-// WorkflowService
+// WorkflowService (DEPRECATED)
 service WorkflowService {
-  rpc GetAccountCredits(GetAccountCreditsRequest) returns (GetAccountCreditsResponse);
-  rpc BatchGetCreditsForAccounts(BatchGetCreditsForAccountsRequest) returns (BatchGetCreditsForAccountsResponse);
-  rpc ReserveCredits(ReserveCreditsRequest) returns (ReserveCreditsResponse);
-  rpc ReleaseReservation(ReleaseReservationRequest) returns (ReleaseReservationResponse);
-  rpc ConsumeCredits(ConsumeCreditsRequest) returns (ConsumeCreditsResponse);
-  rpc ConsumeReservation(ConsumeReservationRequest) returns (ConsumeReservationResponse);
-  rpc WorkflowReceipt(SubmitWorkflowReceiptRequest) returns (SubmitWorkflowReceiptResponse);
+    // DEPRECATED
+    rpc GetAccountCredits(GetAccountCreditsRequest) returns (GetAccountCreditsResponse);
+    // DEPRECATED
+    rpc BatchGetCreditsForAccounts(BatchGetCreditsForAccountsRequest) returns (BatchGetCreditsForAccountsResponse);
+    // DEPRECATED
+    rpc ReserveCredits(ReserveCreditsRequest) returns (ReserveCreditsResponse);
+    // DEPRECATED
+    rpc ReleaseReservation(ReleaseReservationRequest) returns (ReleaseReservationResponse);
+    // DEPRECATED
+    rpc ConsumeCredits(ConsumeCreditsRequest) returns (ConsumeCreditsResponse);
+    // DEPRECATED
+    rpc ConsumeReservation(ConsumeReservationRequest) returns (ConsumeReservationResponse);
+    // DEPRECATED
+    rpc WorkflowReceipt(SubmitWorkflowReceiptRequest) returns (SubmitWorkflowReceiptResponse);
 }
+

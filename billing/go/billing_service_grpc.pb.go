@@ -28,10 +28,13 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// SubscriptionService
+// SubscriptionService (DEPRECATED)
 type SubscriptionServiceClient interface {
+	// DEPRECATED
 	GetAccountCredits(ctx context.Context, in *GetAccountCreditsRequest, opts ...grpc.CallOption) (*GetAccountCreditsResponse, error)
+	// DEPRECATED
 	AllocateCredits(ctx context.Context, in *AllocateCreditsRequest, opts ...grpc.CallOption) (*AllocateCreditsResponse, error)
+	// DEPRECATED
 	BillAccount(ctx context.Context, in *BillAccountRequest, opts ...grpc.CallOption) (*BillAccountResponse, error)
 }
 
@@ -77,10 +80,13 @@ func (c *subscriptionServiceClient) BillAccount(ctx context.Context, in *BillAcc
 // All implementations must embed UnimplementedSubscriptionServiceServer
 // for forward compatibility.
 //
-// SubscriptionService
+// SubscriptionService (DEPRECATED)
 type SubscriptionServiceServer interface {
+	// DEPRECATED
 	GetAccountCredits(context.Context, *GetAccountCreditsRequest) (*GetAccountCreditsResponse, error)
+	// DEPRECATED
 	AllocateCredits(context.Context, *AllocateCreditsRequest) (*AllocateCreditsResponse, error)
+	// DEPRECATED
 	BillAccount(context.Context, *BillAccountRequest) (*BillAccountResponse, error)
 	mustEmbedUnimplementedSubscriptionServiceServer()
 }
@@ -214,14 +220,21 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// WorkflowService
+// WorkflowService (DEPRECATED)
 type WorkflowServiceClient interface {
+	// DEPRECATED
 	GetAccountCredits(ctx context.Context, in *GetAccountCreditsRequest, opts ...grpc.CallOption) (*GetAccountCreditsResponse, error)
+	// DEPRECATED
 	BatchGetCreditsForAccounts(ctx context.Context, in *BatchGetCreditsForAccountsRequest, opts ...grpc.CallOption) (*BatchGetCreditsForAccountsResponse, error)
+	// DEPRECATED
 	ReserveCredits(ctx context.Context, in *ReserveCreditsRequest, opts ...grpc.CallOption) (*ReserveCreditsResponse, error)
+	// DEPRECATED
 	ReleaseReservation(ctx context.Context, in *ReleaseReservationRequest, opts ...grpc.CallOption) (*ReleaseReservationResponse, error)
+	// DEPRECATED
 	ConsumeCredits(ctx context.Context, in *ConsumeCreditsRequest, opts ...grpc.CallOption) (*ConsumeCreditsResponse, error)
+	// DEPRECATED
 	ConsumeReservation(ctx context.Context, in *ConsumeReservationRequest, opts ...grpc.CallOption) (*ConsumeReservationResponse, error)
+	// DEPRECATED
 	WorkflowReceipt(ctx context.Context, in *SubmitWorkflowReceiptRequest, opts ...grpc.CallOption) (*SubmitWorkflowReceiptResponse, error)
 }
 
@@ -307,14 +320,21 @@ func (c *workflowServiceClient) WorkflowReceipt(ctx context.Context, in *SubmitW
 // All implementations must embed UnimplementedWorkflowServiceServer
 // for forward compatibility.
 //
-// WorkflowService
+// WorkflowService (DEPRECATED)
 type WorkflowServiceServer interface {
+	// DEPRECATED
 	GetAccountCredits(context.Context, *GetAccountCreditsRequest) (*GetAccountCreditsResponse, error)
+	// DEPRECATED
 	BatchGetCreditsForAccounts(context.Context, *BatchGetCreditsForAccountsRequest) (*BatchGetCreditsForAccountsResponse, error)
+	// DEPRECATED
 	ReserveCredits(context.Context, *ReserveCreditsRequest) (*ReserveCreditsResponse, error)
+	// DEPRECATED
 	ReleaseReservation(context.Context, *ReleaseReservationRequest) (*ReleaseReservationResponse, error)
+	// DEPRECATED
 	ConsumeCredits(context.Context, *ConsumeCreditsRequest) (*ConsumeCreditsResponse, error)
+	// DEPRECATED
 	ConsumeReservation(context.Context, *ConsumeReservationRequest) (*ConsumeReservationResponse, error)
+	// DEPRECATED
 	WorkflowReceipt(context.Context, *SubmitWorkflowReceiptRequest) (*SubmitWorkflowReceiptResponse, error)
 	mustEmbedUnimplementedWorkflowServiceServer()
 }
