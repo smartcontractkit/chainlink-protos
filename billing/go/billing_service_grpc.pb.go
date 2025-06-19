@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,515 +20,220 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SubscriptionService_GetAccountCredits_FullMethodName = "/billing.v1.SubscriptionService/GetAccountCredits"
-	SubscriptionService_AllocateCredits_FullMethodName   = "/billing.v1.SubscriptionService/AllocateCredits"
-	SubscriptionService_BillAccount_FullMethodName       = "/billing.v1.SubscriptionService/BillAccount"
+	CreditReservationService_GetOrganizationCreditsByWorkflow_FullMethodName = "/billing.v1.CreditReservationService/GetOrganizationCreditsByWorkflow"
+	CreditReservationService_ReserveCredits_FullMethodName                   = "/billing.v1.CreditReservationService/ReserveCredits"
+	CreditReservationService_SubmitWorkflowReceipt_FullMethodName            = "/billing.v1.CreditReservationService/SubmitWorkflowReceipt"
+	CreditReservationService_GetRateCard_FullMethodName                      = "/billing.v1.CreditReservationService/GetRateCard"
 )
 
-// SubscriptionServiceClient is the client API for SubscriptionService service.
+// CreditReservationServiceClient is the client API for CreditReservationService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// SubscriptionService
-type SubscriptionServiceClient interface {
-	GetAccountCredits(ctx context.Context, in *GetAccountCreditsRequest, opts ...grpc.CallOption) (*GetAccountCreditsResponse, error)
-	AllocateCredits(ctx context.Context, in *AllocateCreditsRequest, opts ...grpc.CallOption) (*AllocateCreditsResponse, error)
-	BillAccount(ctx context.Context, in *BillAccountRequest, opts ...grpc.CallOption) (*BillAccountResponse, error)
-}
-
-type subscriptionServiceClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewSubscriptionServiceClient(cc grpc.ClientConnInterface) SubscriptionServiceClient {
-	return &subscriptionServiceClient{cc}
-}
-
-func (c *subscriptionServiceClient) GetAccountCredits(ctx context.Context, in *GetAccountCreditsRequest, opts ...grpc.CallOption) (*GetAccountCreditsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetAccountCreditsResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_GetAccountCredits_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *subscriptionServiceClient) AllocateCredits(ctx context.Context, in *AllocateCreditsRequest, opts ...grpc.CallOption) (*AllocateCreditsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AllocateCreditsResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_AllocateCredits_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *subscriptionServiceClient) BillAccount(ctx context.Context, in *BillAccountRequest, opts ...grpc.CallOption) (*BillAccountResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BillAccountResponse)
-	err := c.cc.Invoke(ctx, SubscriptionService_BillAccount_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// SubscriptionServiceServer is the server API for SubscriptionService service.
-// All implementations must embed UnimplementedSubscriptionServiceServer
-// for forward compatibility.
-//
-// SubscriptionService
-type SubscriptionServiceServer interface {
-	GetAccountCredits(context.Context, *GetAccountCreditsRequest) (*GetAccountCreditsResponse, error)
-	AllocateCredits(context.Context, *AllocateCreditsRequest) (*AllocateCreditsResponse, error)
-	BillAccount(context.Context, *BillAccountRequest) (*BillAccountResponse, error)
-	mustEmbedUnimplementedSubscriptionServiceServer()
-}
-
-// UnimplementedSubscriptionServiceServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedSubscriptionServiceServer struct{}
-
-func (UnimplementedSubscriptionServiceServer) GetAccountCredits(context.Context, *GetAccountCreditsRequest) (*GetAccountCreditsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAccountCredits not implemented")
-}
-func (UnimplementedSubscriptionServiceServer) AllocateCredits(context.Context, *AllocateCreditsRequest) (*AllocateCreditsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AllocateCredits not implemented")
-}
-func (UnimplementedSubscriptionServiceServer) BillAccount(context.Context, *BillAccountRequest) (*BillAccountResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BillAccount not implemented")
-}
-func (UnimplementedSubscriptionServiceServer) mustEmbedUnimplementedSubscriptionServiceServer() {}
-func (UnimplementedSubscriptionServiceServer) testEmbeddedByValue()                             {}
-
-// UnsafeSubscriptionServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to SubscriptionServiceServer will
-// result in compilation errors.
-type UnsafeSubscriptionServiceServer interface {
-	mustEmbedUnimplementedSubscriptionServiceServer()
-}
-
-func RegisterSubscriptionServiceServer(s grpc.ServiceRegistrar, srv SubscriptionServiceServer) {
-	// If the following call pancis, it indicates UnimplementedSubscriptionServiceServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&SubscriptionService_ServiceDesc, srv)
-}
-
-func _SubscriptionService_GetAccountCredits_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAccountCreditsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).GetAccountCredits(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SubscriptionService_GetAccountCredits_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).GetAccountCredits(ctx, req.(*GetAccountCreditsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SubscriptionService_AllocateCredits_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AllocateCreditsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).AllocateCredits(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SubscriptionService_AllocateCredits_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).AllocateCredits(ctx, req.(*AllocateCreditsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SubscriptionService_BillAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BillAccountRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SubscriptionServiceServer).BillAccount(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SubscriptionService_BillAccount_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SubscriptionServiceServer).BillAccount(ctx, req.(*BillAccountRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// SubscriptionService_ServiceDesc is the grpc.ServiceDesc for SubscriptionService service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var SubscriptionService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "billing.v1.SubscriptionService",
-	HandlerType: (*SubscriptionServiceServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GetAccountCredits",
-			Handler:    _SubscriptionService_GetAccountCredits_Handler,
-		},
-		{
-			MethodName: "AllocateCredits",
-			Handler:    _SubscriptionService_AllocateCredits_Handler,
-		},
-		{
-			MethodName: "BillAccount",
-			Handler:    _SubscriptionService_BillAccount_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "billing/v1/billing_service.proto",
-}
-
-const (
-	WorkflowService_GetAccountCredits_FullMethodName          = "/billing.v1.WorkflowService/GetAccountCredits"
-	WorkflowService_BatchGetCreditsForAccounts_FullMethodName = "/billing.v1.WorkflowService/BatchGetCreditsForAccounts"
-	WorkflowService_ReserveCredits_FullMethodName             = "/billing.v1.WorkflowService/ReserveCredits"
-	WorkflowService_ReleaseReservation_FullMethodName         = "/billing.v1.WorkflowService/ReleaseReservation"
-	WorkflowService_ConsumeCredits_FullMethodName             = "/billing.v1.WorkflowService/ConsumeCredits"
-	WorkflowService_ConsumeReservation_FullMethodName         = "/billing.v1.WorkflowService/ConsumeReservation"
-	WorkflowService_WorkflowReceipt_FullMethodName            = "/billing.v1.WorkflowService/WorkflowReceipt"
-)
-
-// WorkflowServiceClient is the client API for WorkflowService service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// WorkflowService
-type WorkflowServiceClient interface {
-	GetAccountCredits(ctx context.Context, in *GetAccountCreditsRequest, opts ...grpc.CallOption) (*GetAccountCreditsResponse, error)
-	BatchGetCreditsForAccounts(ctx context.Context, in *BatchGetCreditsForAccountsRequest, opts ...grpc.CallOption) (*BatchGetCreditsForAccountsResponse, error)
+// Service for reserving and querying credits.
+type CreditReservationServiceClient interface {
+	GetOrganizationCreditsByWorkflow(ctx context.Context, in *GetOrganizationCreditsByWorkflowRequest, opts ...grpc.CallOption) (*GetOrganizationCreditsByWorkflowResponse, error)
 	ReserveCredits(ctx context.Context, in *ReserveCreditsRequest, opts ...grpc.CallOption) (*ReserveCreditsResponse, error)
-	ReleaseReservation(ctx context.Context, in *ReleaseReservationRequest, opts ...grpc.CallOption) (*ReleaseReservationResponse, error)
-	ConsumeCredits(ctx context.Context, in *ConsumeCreditsRequest, opts ...grpc.CallOption) (*ConsumeCreditsResponse, error)
-	ConsumeReservation(ctx context.Context, in *ConsumeReservationRequest, opts ...grpc.CallOption) (*ConsumeReservationResponse, error)
-	WorkflowReceipt(ctx context.Context, in *SubmitWorkflowReceiptRequest, opts ...grpc.CallOption) (*SubmitWorkflowReceiptResponse, error)
+	SubmitWorkflowReceipt(ctx context.Context, in *SubmitWorkflowReceiptRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	GetRateCard(ctx context.Context, in *GetRateCardRequest, opts ...grpc.CallOption) (*GetRateCardResponse, error)
 }
 
-type workflowServiceClient struct {
+type creditReservationServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewWorkflowServiceClient(cc grpc.ClientConnInterface) WorkflowServiceClient {
-	return &workflowServiceClient{cc}
+func NewCreditReservationServiceClient(cc grpc.ClientConnInterface) CreditReservationServiceClient {
+	return &creditReservationServiceClient{cc}
 }
 
-func (c *workflowServiceClient) GetAccountCredits(ctx context.Context, in *GetAccountCreditsRequest, opts ...grpc.CallOption) (*GetAccountCreditsResponse, error) {
+func (c *creditReservationServiceClient) GetOrganizationCreditsByWorkflow(ctx context.Context, in *GetOrganizationCreditsByWorkflowRequest, opts ...grpc.CallOption) (*GetOrganizationCreditsByWorkflowResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetAccountCreditsResponse)
-	err := c.cc.Invoke(ctx, WorkflowService_GetAccountCredits_FullMethodName, in, out, cOpts...)
+	out := new(GetOrganizationCreditsByWorkflowResponse)
+	err := c.cc.Invoke(ctx, CreditReservationService_GetOrganizationCreditsByWorkflow_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *workflowServiceClient) BatchGetCreditsForAccounts(ctx context.Context, in *BatchGetCreditsForAccountsRequest, opts ...grpc.CallOption) (*BatchGetCreditsForAccountsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BatchGetCreditsForAccountsResponse)
-	err := c.cc.Invoke(ctx, WorkflowService_BatchGetCreditsForAccounts_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *workflowServiceClient) ReserveCredits(ctx context.Context, in *ReserveCreditsRequest, opts ...grpc.CallOption) (*ReserveCreditsResponse, error) {
+func (c *creditReservationServiceClient) ReserveCredits(ctx context.Context, in *ReserveCreditsRequest, opts ...grpc.CallOption) (*ReserveCreditsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ReserveCreditsResponse)
-	err := c.cc.Invoke(ctx, WorkflowService_ReserveCredits_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CreditReservationService_ReserveCredits_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *workflowServiceClient) ReleaseReservation(ctx context.Context, in *ReleaseReservationRequest, opts ...grpc.CallOption) (*ReleaseReservationResponse, error) {
+func (c *creditReservationServiceClient) SubmitWorkflowReceipt(ctx context.Context, in *SubmitWorkflowReceiptRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ReleaseReservationResponse)
-	err := c.cc.Invoke(ctx, WorkflowService_ReleaseReservation_FullMethodName, in, out, cOpts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, CreditReservationService_SubmitWorkflowReceipt_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *workflowServiceClient) ConsumeCredits(ctx context.Context, in *ConsumeCreditsRequest, opts ...grpc.CallOption) (*ConsumeCreditsResponse, error) {
+func (c *creditReservationServiceClient) GetRateCard(ctx context.Context, in *GetRateCardRequest, opts ...grpc.CallOption) (*GetRateCardResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ConsumeCreditsResponse)
-	err := c.cc.Invoke(ctx, WorkflowService_ConsumeCredits_FullMethodName, in, out, cOpts...)
+	out := new(GetRateCardResponse)
+	err := c.cc.Invoke(ctx, CreditReservationService_GetRateCard_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *workflowServiceClient) ConsumeReservation(ctx context.Context, in *ConsumeReservationRequest, opts ...grpc.CallOption) (*ConsumeReservationResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ConsumeReservationResponse)
-	err := c.cc.Invoke(ctx, WorkflowService_ConsumeReservation_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *workflowServiceClient) WorkflowReceipt(ctx context.Context, in *SubmitWorkflowReceiptRequest, opts ...grpc.CallOption) (*SubmitWorkflowReceiptResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(SubmitWorkflowReceiptResponse)
-	err := c.cc.Invoke(ctx, WorkflowService_WorkflowReceipt_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// WorkflowServiceServer is the server API for WorkflowService service.
-// All implementations must embed UnimplementedWorkflowServiceServer
+// CreditReservationServiceServer is the server API for CreditReservationService service.
+// All implementations must embed UnimplementedCreditReservationServiceServer
 // for forward compatibility.
 //
-// WorkflowService
-type WorkflowServiceServer interface {
-	GetAccountCredits(context.Context, *GetAccountCreditsRequest) (*GetAccountCreditsResponse, error)
-	BatchGetCreditsForAccounts(context.Context, *BatchGetCreditsForAccountsRequest) (*BatchGetCreditsForAccountsResponse, error)
+// Service for reserving and querying credits.
+type CreditReservationServiceServer interface {
+	GetOrganizationCreditsByWorkflow(context.Context, *GetOrganizationCreditsByWorkflowRequest) (*GetOrganizationCreditsByWorkflowResponse, error)
 	ReserveCredits(context.Context, *ReserveCreditsRequest) (*ReserveCreditsResponse, error)
-	ReleaseReservation(context.Context, *ReleaseReservationRequest) (*ReleaseReservationResponse, error)
-	ConsumeCredits(context.Context, *ConsumeCreditsRequest) (*ConsumeCreditsResponse, error)
-	ConsumeReservation(context.Context, *ConsumeReservationRequest) (*ConsumeReservationResponse, error)
-	WorkflowReceipt(context.Context, *SubmitWorkflowReceiptRequest) (*SubmitWorkflowReceiptResponse, error)
-	mustEmbedUnimplementedWorkflowServiceServer()
+	SubmitWorkflowReceipt(context.Context, *SubmitWorkflowReceiptRequest) (*emptypb.Empty, error)
+	GetRateCard(context.Context, *GetRateCardRequest) (*GetRateCardResponse, error)
+	mustEmbedUnimplementedCreditReservationServiceServer()
 }
 
-// UnimplementedWorkflowServiceServer must be embedded to have
+// UnimplementedCreditReservationServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedWorkflowServiceServer struct{}
+type UnimplementedCreditReservationServiceServer struct{}
 
-func (UnimplementedWorkflowServiceServer) GetAccountCredits(context.Context, *GetAccountCreditsRequest) (*GetAccountCreditsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAccountCredits not implemented")
+func (UnimplementedCreditReservationServiceServer) GetOrganizationCreditsByWorkflow(context.Context, *GetOrganizationCreditsByWorkflowRequest) (*GetOrganizationCreditsByWorkflowResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrganizationCreditsByWorkflow not implemented")
 }
-func (UnimplementedWorkflowServiceServer) BatchGetCreditsForAccounts(context.Context, *BatchGetCreditsForAccountsRequest) (*BatchGetCreditsForAccountsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BatchGetCreditsForAccounts not implemented")
-}
-func (UnimplementedWorkflowServiceServer) ReserveCredits(context.Context, *ReserveCreditsRequest) (*ReserveCreditsResponse, error) {
+func (UnimplementedCreditReservationServiceServer) ReserveCredits(context.Context, *ReserveCreditsRequest) (*ReserveCreditsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReserveCredits not implemented")
 }
-func (UnimplementedWorkflowServiceServer) ReleaseReservation(context.Context, *ReleaseReservationRequest) (*ReleaseReservationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ReleaseReservation not implemented")
+func (UnimplementedCreditReservationServiceServer) SubmitWorkflowReceipt(context.Context, *SubmitWorkflowReceiptRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SubmitWorkflowReceipt not implemented")
 }
-func (UnimplementedWorkflowServiceServer) ConsumeCredits(context.Context, *ConsumeCreditsRequest) (*ConsumeCreditsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ConsumeCredits not implemented")
+func (UnimplementedCreditReservationServiceServer) GetRateCard(context.Context, *GetRateCardRequest) (*GetRateCardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRateCard not implemented")
 }
-func (UnimplementedWorkflowServiceServer) ConsumeReservation(context.Context, *ConsumeReservationRequest) (*ConsumeReservationResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ConsumeReservation not implemented")
+func (UnimplementedCreditReservationServiceServer) mustEmbedUnimplementedCreditReservationServiceServer() {
 }
-func (UnimplementedWorkflowServiceServer) WorkflowReceipt(context.Context, *SubmitWorkflowReceiptRequest) (*SubmitWorkflowReceiptResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method WorkflowReceipt not implemented")
-}
-func (UnimplementedWorkflowServiceServer) mustEmbedUnimplementedWorkflowServiceServer() {}
-func (UnimplementedWorkflowServiceServer) testEmbeddedByValue()                         {}
+func (UnimplementedCreditReservationServiceServer) testEmbeddedByValue() {}
 
-// UnsafeWorkflowServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to WorkflowServiceServer will
+// UnsafeCreditReservationServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CreditReservationServiceServer will
 // result in compilation errors.
-type UnsafeWorkflowServiceServer interface {
-	mustEmbedUnimplementedWorkflowServiceServer()
+type UnsafeCreditReservationServiceServer interface {
+	mustEmbedUnimplementedCreditReservationServiceServer()
 }
 
-func RegisterWorkflowServiceServer(s grpc.ServiceRegistrar, srv WorkflowServiceServer) {
-	// If the following call pancis, it indicates UnimplementedWorkflowServiceServer was
+func RegisterCreditReservationServiceServer(s grpc.ServiceRegistrar, srv CreditReservationServiceServer) {
+	// If the following call pancis, it indicates UnimplementedCreditReservationServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&WorkflowService_ServiceDesc, srv)
+	s.RegisterService(&CreditReservationService_ServiceDesc, srv)
 }
 
-func _WorkflowService_GetAccountCredits_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAccountCreditsRequest)
+func _CreditReservationService_GetOrganizationCreditsByWorkflow_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOrganizationCreditsByWorkflowRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WorkflowServiceServer).GetAccountCredits(ctx, in)
+		return srv.(CreditReservationServiceServer).GetOrganizationCreditsByWorkflow(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WorkflowService_GetAccountCredits_FullMethodName,
+		FullMethod: CreditReservationService_GetOrganizationCreditsByWorkflow_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkflowServiceServer).GetAccountCredits(ctx, req.(*GetAccountCreditsRequest))
+		return srv.(CreditReservationServiceServer).GetOrganizationCreditsByWorkflow(ctx, req.(*GetOrganizationCreditsByWorkflowRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WorkflowService_BatchGetCreditsForAccounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BatchGetCreditsForAccountsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WorkflowServiceServer).BatchGetCreditsForAccounts(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WorkflowService_BatchGetCreditsForAccounts_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkflowServiceServer).BatchGetCreditsForAccounts(ctx, req.(*BatchGetCreditsForAccountsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _WorkflowService_ReserveCredits_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CreditReservationService_ReserveCredits_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ReserveCreditsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WorkflowServiceServer).ReserveCredits(ctx, in)
+		return srv.(CreditReservationServiceServer).ReserveCredits(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WorkflowService_ReserveCredits_FullMethodName,
+		FullMethod: CreditReservationService_ReserveCredits_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkflowServiceServer).ReserveCredits(ctx, req.(*ReserveCreditsRequest))
+		return srv.(CreditReservationServiceServer).ReserveCredits(ctx, req.(*ReserveCreditsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WorkflowService_ReleaseReservation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ReleaseReservationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WorkflowServiceServer).ReleaseReservation(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WorkflowService_ReleaseReservation_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkflowServiceServer).ReleaseReservation(ctx, req.(*ReleaseReservationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _WorkflowService_ConsumeCredits_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ConsumeCreditsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WorkflowServiceServer).ConsumeCredits(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WorkflowService_ConsumeCredits_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkflowServiceServer).ConsumeCredits(ctx, req.(*ConsumeCreditsRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _WorkflowService_ConsumeReservation_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ConsumeReservationRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WorkflowServiceServer).ConsumeReservation(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: WorkflowService_ConsumeReservation_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkflowServiceServer).ConsumeReservation(ctx, req.(*ConsumeReservationRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _WorkflowService_WorkflowReceipt_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CreditReservationService_SubmitWorkflowReceipt_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SubmitWorkflowReceiptRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(WorkflowServiceServer).WorkflowReceipt(ctx, in)
+		return srv.(CreditReservationServiceServer).SubmitWorkflowReceipt(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: WorkflowService_WorkflowReceipt_FullMethodName,
+		FullMethod: CreditReservationService_SubmitWorkflowReceipt_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WorkflowServiceServer).WorkflowReceipt(ctx, req.(*SubmitWorkflowReceiptRequest))
+		return srv.(CreditReservationServiceServer).SubmitWorkflowReceipt(ctx, req.(*SubmitWorkflowReceiptRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// WorkflowService_ServiceDesc is the grpc.ServiceDesc for WorkflowService service.
+func _CreditReservationService_GetRateCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRateCardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CreditReservationServiceServer).GetRateCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CreditReservationService_GetRateCard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CreditReservationServiceServer).GetRateCard(ctx, req.(*GetRateCardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// CreditReservationService_ServiceDesc is the grpc.ServiceDesc for CreditReservationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var WorkflowService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "billing.v1.WorkflowService",
-	HandlerType: (*WorkflowServiceServer)(nil),
+var CreditReservationService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "billing.v1.CreditReservationService",
+	HandlerType: (*CreditReservationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetAccountCredits",
-			Handler:    _WorkflowService_GetAccountCredits_Handler,
-		},
-		{
-			MethodName: "BatchGetCreditsForAccounts",
-			Handler:    _WorkflowService_BatchGetCreditsForAccounts_Handler,
+			MethodName: "GetOrganizationCreditsByWorkflow",
+			Handler:    _CreditReservationService_GetOrganizationCreditsByWorkflow_Handler,
 		},
 		{
 			MethodName: "ReserveCredits",
-			Handler:    _WorkflowService_ReserveCredits_Handler,
+			Handler:    _CreditReservationService_ReserveCredits_Handler,
 		},
 		{
-			MethodName: "ReleaseReservation",
-			Handler:    _WorkflowService_ReleaseReservation_Handler,
+			MethodName: "SubmitWorkflowReceipt",
+			Handler:    _CreditReservationService_SubmitWorkflowReceipt_Handler,
 		},
 		{
-			MethodName: "ConsumeCredits",
-			Handler:    _WorkflowService_ConsumeCredits_Handler,
-		},
-		{
-			MethodName: "ConsumeReservation",
-			Handler:    _WorkflowService_ConsumeReservation_Handler,
-		},
-		{
-			MethodName: "WorkflowReceipt",
-			Handler:    _WorkflowService_WorkflowReceipt_Handler,
+			MethodName: "GetRateCard",
+			Handler:    _CreditReservationService_GetRateCard_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
