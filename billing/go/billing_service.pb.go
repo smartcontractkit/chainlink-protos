@@ -106,7 +106,7 @@ func (x *EmptyResponse) GetMessage() string {
 type AccountCreditsInput struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Credits       float32                `protobuf:"fixed32,1,opt,name=credits,proto3" json:"credits,omitempty"`
-	CreditType    string                 `protobuf:"bytes,2,opt,name=credit_type,json=creditType,proto3" json:"credit_type,omitempty"` // TODO make ENUM
+	CreditType    string                 `protobuf:"bytes,2,opt,name=credit_type,json=creditType,proto3" json:"credit_type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -551,7 +551,7 @@ type AccountCredits struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	Credits         float32                `protobuf:"fixed32,1,opt,name=credits,proto3" json:"credits,omitempty"`
 	CreditsReserved float32                `protobuf:"fixed32,2,opt,name=credits_reserved,json=creditsReserved,proto3" json:"credits_reserved,omitempty"`
-	CreditType      string                 `protobuf:"bytes,3,opt,name=credit_type,json=creditType,proto3" json:"credit_type,omitempty"` // TODO make ENUM
+	CreditType      string                 `protobuf:"bytes,3,opt,name=credit_type,json=creditType,proto3" json:"credit_type,omitempty"`
 	CreatedAt       *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	UpdatedAt       *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields   protoimpl.UnknownFields
@@ -675,7 +675,6 @@ func (x *AccountWithCredits) GetCredits() []*AccountCredits {
 	return nil
 }
 
-// Reserve/Consume messages
 type ReserveCreditsRequest struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	AccountId           string                 `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
