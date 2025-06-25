@@ -6,3 +6,4 @@
 /rmn/ @smartcontractkit/RMN @smartcontractkit/ccip
 /billing/ @smartcontractkit/cre-business @smartcontractkit/core
 /workflows/ @smartcontractkit/foundations @smartcontractkit/core
+/cre/ @smartcontractkit/core
