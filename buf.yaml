@@ -2,6 +2,8 @@
 version: v2
 modules:
   - path: workflows
+    excludes:
+      - workflows/pb
     lint:
       except:
         - FIELD_LOWER_SNAKE_CASE
