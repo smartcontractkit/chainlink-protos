@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package capabilities.internal.importclash.p2.v1;
+
+message Outputs {
+  string adapted_thing = 1;
+}

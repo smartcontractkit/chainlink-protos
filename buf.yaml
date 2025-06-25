@@ -23,6 +23,13 @@ modules:
       except:
         - PACKAGE_DIRECTORY_MATCH
   - path: cre
+    lint:
+      except:
+        # We're not using standard grpc generators, so these rules don't make sense
+        - RPC_REQUEST_STANDARD_NAME
+        - RPC_RESPONSE_STANDARD_NAME
+        - RPC_REQUEST_RESPONSE_UNIQUE
+        - SERVICE_SUFFIX
 
 lint:
   use:

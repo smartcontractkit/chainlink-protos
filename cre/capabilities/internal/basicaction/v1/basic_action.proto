@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package capabilities.internal.basicaction.v1;
+
+import "tools/generator/v1alpha/cre_metadata.proto";
+
+message Inputs {
+  bool input_thing = 1;
+}
+
+message Outputs {
+  string adapted_thing = 1;
+}
+
+service BasicAction {
+  option (tools.generator.v1alpha.capability) = {
+    mode: MODE_DON
+    capability_id: "basic-test-action@1.0.0"
+  };
+  rpc PerformAction (Inputs) returns (Outputs);
+}
