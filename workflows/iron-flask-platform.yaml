@@ -55,3 +55,6 @@ beholder:
 
     - entity: BaseMessage
       schema: "common/v1/base_message.proto"
+    
+    - entity: BaseMessage
+      schema: "pb/base_message_legacy.proto"
