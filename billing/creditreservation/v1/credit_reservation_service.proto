@@ -52,8 +52,8 @@ enum MeasurementUnit {
 
 // Organization’s credit balances.
 message OrganizationCredits {
-  float credits = 1;
-  float credits_reserved = 2;
+  string credits = 1;
+  string credits_reserved = 2;
   google.protobuf.Timestamp created_at = 3;
   google.protobuf.Timestamp updated_at = 4;
 }
