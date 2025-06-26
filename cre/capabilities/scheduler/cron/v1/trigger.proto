@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package capabilities.scheduler.cron.v1;
 
-import "tools/generator/v1alpha/cre_metadata.proto";
 import "google/protobuf/timestamp.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Config {
   string schedule = 1; // Cron schedule string
@@ -27,9 +27,7 @@ service Cron {
   rpc Trigger(Config) returns (stream Payload);
 
   rpc LegacyTrigger(Config) returns (stream LegacyPayload) {
-    option (tools.generator.v1alpha.method) = {
-      map_to_untyped_api: true
-    };
+    option (tools.generator.v1alpha.method) = {map_to_untyped_api: true};
     option deprecated = true;
   }
 }

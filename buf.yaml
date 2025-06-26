@@ -30,6 +30,8 @@ modules:
         - RPC_RESPONSE_STANDARD_NAME
         - RPC_REQUEST_RESPONSE_UNIQUE
         - SERVICE_SUFFIX
+        # Some enums have a logical default value if not set
+        - ENUM_ZERO_VALUE_SUFFIX
 
 lint:
   use:

@@ -24,5 +24,5 @@ service Client {
     mode: MODE_NODE
     capability_id: "http-actions@1.0.0-alpha"
   };
-  rpc SendRequest (Request) returns (Response);
+  rpc SendRequest(Request) returns (Response);
 }

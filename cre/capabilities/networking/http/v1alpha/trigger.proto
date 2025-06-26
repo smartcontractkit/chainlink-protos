@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package capabilities.networking.http.v1alpha;
 
-import "tools/generator/v1alpha/cre_metadata.proto";
 import "google/protobuf/struct.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Config {
   // Public keys against which the signature of incoming requests are validated
@@ -36,8 +36,6 @@ service HTTP {
   };
 
   rpc Trigger(Config) returns (stream Payload) {
-    option (tools.generator.v1alpha.method) = {
-      map_to_untyped_api: true
-    };
+    option (tools.generator.v1alpha.method) = {map_to_untyped_api: true};
   }
 }

@@ -17,5 +17,5 @@ service BasicAction {
     mode: MODE_DON
     capability_id: "basic-test-action@1.0.0"
   };
-  rpc PerformAction (Inputs) returns (Outputs);
+  rpc PerformAction(Inputs) returns (Outputs);
 }

@@ -17,5 +17,5 @@ service BasicActionService {
     mode: MODE_NODE
     capability_id: "basic-test-node-action@1.0.0"
   };
-  rpc PerformAction (NodeInputs) returns (NodeOutputs);
+  rpc PerformAction(NodeInputs) returns (NodeOutputs);
 }
