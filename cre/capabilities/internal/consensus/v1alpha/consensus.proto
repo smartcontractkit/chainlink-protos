@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package capabilities.internal.consensus.v1;
+package capabilities.internal.consensus.v1alpha;
 
 import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
