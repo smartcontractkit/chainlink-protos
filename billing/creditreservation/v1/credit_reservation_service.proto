@@ -7,31 +7,30 @@ import "workflows/v1/metering.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/billing/go;billing";
 
-// UnitType corresponds to billing.unit_type in Postgres.
-enum UnitType {
+// ResourceType corresponds to billing.unit_type in Postgres.
+enum ResourceType {
   // Unknown / unset.
-  UNIT_TYPE_UNSPECIFIED = 0;
-
+  RESOURCE_TYPE_UNSPECIFIED = 0;
   // Workflow memory usage.
-  UNIT_TYPE_WF_MEMORY = 1;
+  RESOURCE_TYPE_WF_MEMORY = 1;
   // Consensus bandwidth.
-  UNIT_TYPE_CONSENSUS = 2;
+  RESOURCE_TYPE_CONSENSUS = 2;
   // Compute time in milliseconds.
-  UNIT_TYPE_COMPUTE = 3;
+  RESOURCE_TYPE_COMPUTE = 3;
   // DON storage in megabyte-months.
-  UNIT_TYPE_DON_STORAGE = 4;
+  RESOURCE_TYPE_DON_STORAGE = 4;
   // Workflow storage in megabyte-months.
-  UNIT_TYPE_WF_STORAGE = 5;
+  RESOURCE_TYPE_WF_STORAGE = 5;
   // Alerts operations count.
-  UNIT_TYPE_ALERTS = 6;
+  RESOURCE_TYPE_ALERTS = 6;
   // Gas cost.
-  UNIT_TYPE_GAS = 7;
+  RESOURCE_TYPE_GAS = 7;
   // Event operations count.
-  UNIT_TYPE_EVENTS = 8;
+  RESOURCE_TYPE_EVENTS = 8;
   // Chain call operations count.
-  UNIT_TYPE_CHAIN_CALLS = 9;
+  RESOURCE_TYPE_CHAIN_CALLS = 9;
   // Trigger operations count.
-  UNIT_TYPE_TRIGGERS = 10;
+  RESOURCE_TYPE_TRIGGERS = 10;
 }
 
 // .MeasurementUnit_MEASUREMENT_UNIT corresponds to billing.measurement_unit in Postgres.
@@ -102,15 +101,15 @@ message SubmitWorkflowReceiptRequest {
 
 // A single rate‐card entry.
 message RateCardEntry {
-  UnitType unit_type = 1;
+  ResourceType resource_type = 1;
   MeasurementUnit measurement_unit = 2;
-  double units_per_credit = 3;
+  string units_per_credit = 3;
   string changed_by = 4;
   google.protobuf.Timestamp created_at = 5;
   google.protobuf.Timestamp updated_at = 6;
 }
 
-// Get the default, global rate card (all unit types).
+// Get the default, global rate card (all resource types).
 message GetRateCardRequest {
   string workflow_owner = 1;
   string workflow_registry_address = 2;
