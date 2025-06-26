@@ -118,10 +118,17 @@ message Secret {
   string value = 4;
 }
 
+message SecretError {
+  string id = 1;
+  string namespace = 2;
+  string owner = 3;
+  string error = 4;
+}
+
 message SecretResponse {
   oneof response {
     Secret secret = 1;
-    string error = 2;
+    SecretError error = 2;
   }
 }
 
