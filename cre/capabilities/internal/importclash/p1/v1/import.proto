@@ -2,6 +2,6 @@ syntax = "proto3";
 
 package capabilities.internal.importclash.p1.v1;
 
-message Inputs {
+message Item {
   bool input_thing = 1;
 }

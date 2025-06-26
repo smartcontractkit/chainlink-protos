@@ -11,5 +11,5 @@ service BasicAction {
     mode: MODE_DON
     capability_id: "import-clash@1.0.0"
   };
-  rpc PerformAction(capabilities.internal.importclash.p1.v1.Inputs) returns (capabilities.internal.importclash.p2.v1.Outputs);
+  rpc PerformAction(capabilities.internal.importclash.p1.v1.Item) returns (capabilities.internal.importclash.p2.v1.Item);
 }
