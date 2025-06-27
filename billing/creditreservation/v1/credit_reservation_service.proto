@@ -52,7 +52,7 @@ message OrganizationCredits {
 message GetOrganizationCreditsByWorkflowRequest {
   string workflow_owner = 1;
   string workflow_registry_address = 2;
-  uint64 chain_selector = 3;
+  uint64 registry_chain_selector = 3;
 }
 
 // Response carrying org ID and credits.
@@ -65,21 +65,22 @@ message GetOrganizationCreditsByWorkflowResponse {
 message ReserveCreditsRequest {
   string workflow_owner = 1;
   string workflow_registry_address = 2;
-  uint64 chain_selector = 3;
+  uint64 registry_chain_selector = 3;
   string workflow_id = 4;
   string workflow_execution_id = 5;
   float credits = 6;
 }
 
 message ReserveCreditsResponse {
-  repeated RateCardEntry entries = 1;
+  string organization_id = 1;
+  repeated RateCardEntry entries = 2;
 }
 
 // Submit a workflow receipt.
 message SubmitWorkflowReceiptRequest {
   string workflow_owner = 1;
   string workflow_registry_address = 2;
-  uint64 chain_selector = 3;
+  uint64 registry_chain_selector = 3;
   string workflow_id = 4;
   string workflow_execution_id = 5;
   workflows.v1.MeteringReport metering = 6;
