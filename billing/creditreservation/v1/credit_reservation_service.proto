@@ -18,7 +18,7 @@ enum ResourceType {
   // Gas cost.
   RESOURCE_TYPE_GAS = 3;
   // HTTP bandwidth.
-  RESOURCE_TYPE_NETWORK=4;
+  RESOURCE_TYPE_NETWORK = 4;
   // Trigger operations count.
   RESOURCE_TYPE_TRIGGERS = 5;
 }
