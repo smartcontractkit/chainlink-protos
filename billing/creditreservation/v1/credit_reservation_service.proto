@@ -11,26 +11,16 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/billing/go;bil
 enum ResourceType {
   // Unknown / unset.
   RESOURCE_TYPE_UNSPECIFIED = 0;
-  // Workflow memory usage.
-  RESOURCE_TYPE_WF_MEMORY = 1;
   // Consensus bandwidth.
-  RESOURCE_TYPE_CONSENSUS = 2;
+  RESOURCE_TYPE_CONSENSUS = 1;
   // Compute time in milliseconds.
-  RESOURCE_TYPE_COMPUTE = 3;
-  // DON storage in megabyte-months.
-  RESOURCE_TYPE_DON_STORAGE = 4;
-  // Workflow storage in megabyte-months.
-  RESOURCE_TYPE_WF_STORAGE = 5;
-  // Alerts operations count.
-  RESOURCE_TYPE_ALERTS = 6;
+  RESOURCE_TYPE_COMPUTE = 2;
   // Gas cost.
-  RESOURCE_TYPE_GAS = 7;
-  // Event operations count.
-  RESOURCE_TYPE_EVENTS = 8;
-  // Chain call operations count.
-  RESOURCE_TYPE_CHAIN_CALLS = 9;
+  RESOURCE_TYPE_GAS = 3;
+  // HTTP bandwidth.
+  RESOURCE_TYPE_NETWORK=4;
   // Trigger operations count.
-  RESOURCE_TYPE_TRIGGERS = 10;
+  RESOURCE_TYPE_TRIGGERS = 5;
 }
 
 // .MeasurementUnit_MEASUREMENT_UNIT corresponds to billing.measurement_unit in Postgres.
