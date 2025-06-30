@@ -1,6 +1,6 @@
 ---
 beholder:
-  domain: platform
+  domain: cre
   schemas:
     - entity: WorkflowMetadata
       schema: "workflows/v1/metadata.proto"
@@ -9,21 +9,21 @@ beholder:
       schema: "workflows/v1/capability_finished.proto"
       references:
         - name: "workflows/v1/metadata.proto"
-          subject: "beholder__platform__messages-workflows.v1.WorkflowMetadata"
+          subject: "beholder__cre__messages-workflows.v1.WorkflowMetadata"
           version: 1
 
     - entity: CapabilityExecutionStarted
       schema: "workflows/v1/capability_started.proto"
       references:
         - name: "workflows/v1/metadata.proto"
-          subject: "beholder__platform__messages-workflows.v1.WorkflowMetadata"
+          subject: "beholder__cre__messages-workflows.v1.WorkflowMetadata"
           version: 1
 
     - entity: MeteringReport
       schema: "workflows/v1/metering.proto"
       references:
         - name: "workflows/v1/metadata.proto"
-          subject: "beholder__platform__messages-workflows.v1.WorkflowMetadata"
+          subject: "beholder__cre__messages-workflows.v1.WorkflowMetadata"
           version: 1
 
     - entity: TransmissionsScheduledEvent
@@ -36,22 +36,25 @@ beholder:
       schema: "workflows/v1/workflow_finished.proto"
       references:
         - name: "workflows/v1/metadata.proto"
-          subject: "beholder__platform__messages-workflows.v1.WorkflowMetadata"
+          subject: "beholder__cre__messages-workflows.v1.WorkflowMetadata"
           version: 1
 
     - entity: WorkflowExecutionStarted
       schema: "workflows/v1/workflow_started.proto"
       references:
         - name: "workflows/v1/metadata.proto"
-          subject: "beholder__platform__messages-workflows.v1.WorkflowMetadata"
+          subject: "beholder__cre__messages-workflows.v1.WorkflowMetadata"
           version: 1
 
     - entity: WorkflowStatusChanged
       schema: "workflows/v1/workflow_status_changed.proto"
       references:
         - name: "workflows/v1/metadata.proto"
-          subject: "beholder__platform__messages-workflows.v1.WorkflowMetadata"
+          subject: "beholder__cre__messages-workflows.v1.WorkflowMetadata"
           version: 1
 
     - entity: BaseMessage
       schema: "common/v1/base_message.proto"
+    
+    - entity: BaseMessage
+      schema: "pb/base_message_legacy.proto"
