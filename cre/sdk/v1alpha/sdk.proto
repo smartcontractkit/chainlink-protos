@@ -32,6 +32,22 @@ message ConsensusDescriptor {
     AggregationType aggregation = 1;
     FieldsMap fields_map = 2;
   }
+  string encoder_name = 3;
+  string signing_algo = 4;
+  string hashing_algo = 5;
+}
+
+message ConsensusOutputs {
+  bytes config_digest = 1;
+  uint64 seq_nr = 2;
+  bytes report_context = 3; // combination of seq_nr and config_digest
+  bytes raw_report = 4;
+  repeated AttributedSignature sigs = 5;
+}
+
+message AttributedSignature {
+  bytes signature = 1;
+  uint32 signer_id = 2;
 }
 
 message CapabilityRequest {
