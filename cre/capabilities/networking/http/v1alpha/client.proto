@@ -5,9 +5,9 @@ package capabilities.networking.http.v1alpha;
 import "tools/generator/v1alpha/cre_metadata.proto";
 
 message CacheSettings {
-  bool read_from_cache = 1;  // If true, attempt to read a cached response for the request.
+  bool read_from_cache = 1; // If true, attempt to read a cached response for the request.
   bool store_in_cache = 2; // If true, store the response in cache for the given TTL.
-  int32 ttl_ms = 3;  // Time-to-live for the cache entry in milliseconds.
+  int32 ttl_ms = 3; // Time-to-live for the cache entry in milliseconds.
 }
 
 message Request {
