@@ -425,7 +425,9 @@ func (x *ReserveCreditsRequest) GetCredits() float32 {
 type ReserveCreditsResponse struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	OrganizationId string                 `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
-	Entries        []*RateCardEntry       `protobuf:"bytes,2,rep,name=entries,proto3" json:"entries,omitempty"`
+	Success        bool                   `protobuf:"varint,2,opt,name=success,proto3" json:"success,omitempty"`
+	Credits        float32                `protobuf:"fixed32,3,opt,name=credits,proto3" json:"credits,omitempty"`
+	Entries        []*RateCardEntry       `protobuf:"bytes,4,rep,name=entries,proto3" json:"entries,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -465,6 +467,20 @@ func (x *ReserveCreditsResponse) GetOrganizationId() string {
 		return x.OrganizationId
 	}
 	return ""
+}
+
+func (x *ReserveCreditsResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
+func (x *ReserveCreditsResponse) GetCredits() float32 {
+	if x != nil {
+		return x.Credits
+	}
+	return 0
 }
 
 func (x *ReserveCreditsResponse) GetEntries() []*RateCardEntry {
@@ -775,10 +791,12 @@ const file_creditreservation_v1_credit_reservation_service_proto_rawDesc = "" +
 	"\vworkflow_id\x18\x04 \x01(\tR\n" +
 	"workflowId\x122\n" +
 	"\x15workflow_execution_id\x18\x05 \x01(\tR\x13workflowExecutionId\x12\x18\n" +
-	"\acredits\x18\x06 \x01(\x02R\acredits\"\x80\x01\n" +
+	"\acredits\x18\x06 \x01(\x02R\acredits\"\xb4\x01\n" +
 	"\x16ReserveCreditsResponse\x12'\n" +
-	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12=\n" +
-	"\aentries\x18\x02 \x03(\v2#.creditreservation.v1.RateCardEntryR\aentries\"\xc8\x02\n" +
+	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x18\n" +
+	"\asuccess\x18\x02 \x01(\bR\asuccess\x12\x18\n" +
+	"\acredits\x18\x03 \x01(\x02R\acredits\x12=\n" +
+	"\aentries\x18\x04 \x03(\v2#.creditreservation.v1.RateCardEntryR\aentries\"\xc8\x02\n" +
 	"\x1cSubmitWorkflowReceiptRequest\x12%\n" +
 	"\x0eworkflow_owner\x18\x01 \x01(\tR\rworkflowOwner\x12:\n" +
 	"\x19workflow_registry_address\x18\x02 \x01(\tR\x17workflowRegistryAddress\x126\n" +

@@ -73,7 +73,9 @@ message ReserveCreditsRequest {
 
 message ReserveCreditsResponse {
   string organization_id = 1;
-  repeated RateCardEntry entries = 2;
+  bool success = 2;
+  float credits = 3;
+  repeated RateCardEntry entries = 4;
 }
 
 // Submit a workflow receipt.
