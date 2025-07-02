@@ -356,6 +356,120 @@ func (x *Proposal) GetResponseReceivedAt() *timestamppb.Timestamp {
 	return nil
 }
 
+// TransferJobRequest initiates a job transfer by providing metadata to a node.
+type TransferJobRequest struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	RemoteJobUuid       string                 `protobuf:"bytes,1,opt,name=remote_job_uuid,json=remoteJobUuid,proto3" json:"remote_job_uuid,omitempty"`                     // UUID of the job to transfer from source JD.
+	SourceManagerPubKey string                 `protobuf:"bytes,2,opt,name=source_manager_pub_key,json=sourceManagerPubKey,proto3" json:"source_manager_pub_key,omitempty"` // Public key of the source JD manager.
+	NodePubKey          string                 `protobuf:"bytes,3,opt,name=node_pub_key,json=nodePubKey,proto3" json:"node_pub_key,omitempty"`                              // CSA key of the node that will handle the transfer.
+	Labels              []*ptypes.Label        `protobuf:"bytes,4,rep,name=labels,proto3" json:"labels,omitempty"`                                                          // Labels to associate with the job.
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *TransferJobRequest) Reset() {
+	*x = TransferJobRequest{}
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TransferJobRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransferJobRequest) ProtoMessage() {}
+
+func (x *TransferJobRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransferJobRequest.ProtoReflect.Descriptor instead.
+func (*TransferJobRequest) Descriptor() ([]byte, []int) {
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *TransferJobRequest) GetRemoteJobUuid() string {
+	if x != nil {
+		return x.RemoteJobUuid
+	}
+	return ""
+}
+
+func (x *TransferJobRequest) GetSourceManagerPubKey() string {
+	if x != nil {
+		return x.SourceManagerPubKey
+	}
+	return ""
+}
+
+func (x *TransferJobRequest) GetNodePubKey() string {
+	if x != nil {
+		return x.NodePubKey
+	}
+	return ""
+}
+
+func (x *TransferJobRequest) GetLabels() []*ptypes.Label {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
+}
+
+// TransferJobResponse indicates whether the transfer request was successfully sent to the node.
+type TransferJobResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Job           *Job                   `protobuf:"bytes,1,opt,name=job,proto3" json:"job,omitempty"` // Details of the transfered job.
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TransferJobResponse) Reset() {
+	*x = TransferJobResponse{}
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TransferJobResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransferJobResponse) ProtoMessage() {}
+
+func (x *TransferJobResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransferJobResponse.ProtoReflect.Descriptor instead.
+func (*TransferJobResponse) Descriptor() ([]byte, []int) {
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *TransferJobResponse) GetJob() *Job {
+	if x != nil {
+		return x.Job
+	}
+	return nil
+}
+
 // GetJobRequest specifies the criteria for retrieving a job.
 type GetJobRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -370,7 +484,7 @@ type GetJobRequest struct {
 
 func (x *GetJobRequest) Reset() {
 	*x = GetJobRequest{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[2]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -382,7 +496,7 @@ func (x *GetJobRequest) String() string {
 func (*GetJobRequest) ProtoMessage() {}
 
 func (x *GetJobRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[2]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -395,7 +509,7 @@ func (x *GetJobRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetJobRequest.ProtoReflect.Descriptor instead.
 func (*GetJobRequest) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{2}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetJobRequest) GetIdOneof() isGetJobRequest_IdOneof {
@@ -455,7 +569,7 @@ type GetJobResponse struct {
 
 func (x *GetJobResponse) Reset() {
 	*x = GetJobResponse{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[3]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -467,7 +581,7 @@ func (x *GetJobResponse) String() string {
 func (*GetJobResponse) ProtoMessage() {}
 
 func (x *GetJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[3]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -480,7 +594,7 @@ func (x *GetJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetJobResponse.ProtoReflect.Descriptor instead.
 func (*GetJobResponse) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{3}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetJobResponse) GetJob() *Job {
@@ -500,7 +614,7 @@ type GetProposalRequest struct {
 
 func (x *GetProposalRequest) Reset() {
 	*x = GetProposalRequest{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[4]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -512,7 +626,7 @@ func (x *GetProposalRequest) String() string {
 func (*GetProposalRequest) ProtoMessage() {}
 
 func (x *GetProposalRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[4]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -525,7 +639,7 @@ func (x *GetProposalRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProposalRequest.ProtoReflect.Descriptor instead.
 func (*GetProposalRequest) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{4}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GetProposalRequest) GetId() string {
@@ -545,7 +659,7 @@ type GetProposalResponse struct {
 
 func (x *GetProposalResponse) Reset() {
 	*x = GetProposalResponse{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[5]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -557,7 +671,7 @@ func (x *GetProposalResponse) String() string {
 func (*GetProposalResponse) ProtoMessage() {}
 
 func (x *GetProposalResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[5]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -570,7 +684,7 @@ func (x *GetProposalResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetProposalResponse.ProtoReflect.Descriptor instead.
 func (*GetProposalResponse) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{5}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *GetProposalResponse) GetProposal() *Proposal {
@@ -590,7 +704,7 @@ type ListJobsRequest struct {
 
 func (x *ListJobsRequest) Reset() {
 	*x = ListJobsRequest{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[6]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -602,7 +716,7 @@ func (x *ListJobsRequest) String() string {
 func (*ListJobsRequest) ProtoMessage() {}
 
 func (x *ListJobsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[6]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -615,7 +729,7 @@ func (x *ListJobsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListJobsRequest.ProtoReflect.Descriptor instead.
 func (*ListJobsRequest) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{6}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ListJobsRequest) GetFilter() *ListJobsRequest_Filter {
@@ -635,7 +749,7 @@ type ListJobsResponse struct {
 
 func (x *ListJobsResponse) Reset() {
 	*x = ListJobsResponse{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[7]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -647,7 +761,7 @@ func (x *ListJobsResponse) String() string {
 func (*ListJobsResponse) ProtoMessage() {}
 
 func (x *ListJobsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[7]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -660,7 +774,7 @@ func (x *ListJobsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListJobsResponse.ProtoReflect.Descriptor instead.
 func (*ListJobsResponse) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{7}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ListJobsResponse) GetJobs() []*Job {
@@ -680,7 +794,7 @@ type ListProposalsRequest struct {
 
 func (x *ListProposalsRequest) Reset() {
 	*x = ListProposalsRequest{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[8]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -692,7 +806,7 @@ func (x *ListProposalsRequest) String() string {
 func (*ListProposalsRequest) ProtoMessage() {}
 
 func (x *ListProposalsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[8]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -705,7 +819,7 @@ func (x *ListProposalsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProposalsRequest.ProtoReflect.Descriptor instead.
 func (*ListProposalsRequest) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{8}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ListProposalsRequest) GetFilter() *ListProposalsRequest_Filter {
@@ -725,7 +839,7 @@ type ListProposalsResponse struct {
 
 func (x *ListProposalsResponse) Reset() {
 	*x = ListProposalsResponse{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[9]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -737,7 +851,7 @@ func (x *ListProposalsResponse) String() string {
 func (*ListProposalsResponse) ProtoMessage() {}
 
 func (x *ListProposalsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[9]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -750,7 +864,7 @@ func (x *ListProposalsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProposalsResponse.ProtoReflect.Descriptor instead.
 func (*ListProposalsResponse) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{9}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ListProposalsResponse) GetProposals() []*Proposal {
@@ -772,7 +886,7 @@ type ProposeJobRequest struct {
 
 func (x *ProposeJobRequest) Reset() {
 	*x = ProposeJobRequest{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[10]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -784,7 +898,7 @@ func (x *ProposeJobRequest) String() string {
 func (*ProposeJobRequest) ProtoMessage() {}
 
 func (x *ProposeJobRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[10]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -797,7 +911,7 @@ func (x *ProposeJobRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProposeJobRequest.ProtoReflect.Descriptor instead.
 func (*ProposeJobRequest) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{10}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ProposeJobRequest) GetNodeId() string {
@@ -831,7 +945,7 @@ type ProposeJobResponse struct {
 
 func (x *ProposeJobResponse) Reset() {
 	*x = ProposeJobResponse{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[11]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -843,7 +957,7 @@ func (x *ProposeJobResponse) String() string {
 func (*ProposeJobResponse) ProtoMessage() {}
 
 func (x *ProposeJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[11]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -856,7 +970,7 @@ func (x *ProposeJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProposeJobResponse.ProtoReflect.Descriptor instead.
 func (*ProposeJobResponse) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{11}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ProposeJobResponse) GetProposal() *Proposal {
@@ -878,7 +992,7 @@ type BatchProposeJobRequest struct {
 
 func (x *BatchProposeJobRequest) Reset() {
 	*x = BatchProposeJobRequest{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[12]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -890,7 +1004,7 @@ func (x *BatchProposeJobRequest) String() string {
 func (*BatchProposeJobRequest) ProtoMessage() {}
 
 func (x *BatchProposeJobRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[12]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -903,7 +1017,7 @@ func (x *BatchProposeJobRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchProposeJobRequest.ProtoReflect.Descriptor instead.
 func (*BatchProposeJobRequest) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{12}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *BatchProposeJobRequest) GetNodeIds() []string {
@@ -937,7 +1051,7 @@ type ProposeJobFailure struct {
 
 func (x *ProposeJobFailure) Reset() {
 	*x = ProposeJobFailure{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[13]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -949,7 +1063,7 @@ func (x *ProposeJobFailure) String() string {
 func (*ProposeJobFailure) ProtoMessage() {}
 
 func (x *ProposeJobFailure) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[13]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -962,7 +1076,7 @@ func (x *ProposeJobFailure) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProposeJobFailure.ProtoReflect.Descriptor instead.
 func (*ProposeJobFailure) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{13}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *ProposeJobFailure) GetErrorMessage() string {
@@ -985,7 +1099,7 @@ type BatchProposeJobResponse struct {
 
 func (x *BatchProposeJobResponse) Reset() {
 	*x = BatchProposeJobResponse{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[14]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -997,7 +1111,7 @@ func (x *BatchProposeJobResponse) String() string {
 func (*BatchProposeJobResponse) ProtoMessage() {}
 
 func (x *BatchProposeJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[14]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1010,7 +1124,7 @@ func (x *BatchProposeJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BatchProposeJobResponse.ProtoReflect.Descriptor instead.
 func (*BatchProposeJobResponse) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{14}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *BatchProposeJobResponse) GetSuccessResponses() map[string]*ProposeJobResponse {
@@ -1041,7 +1155,7 @@ type RevokeJobRequest struct {
 
 func (x *RevokeJobRequest) Reset() {
 	*x = RevokeJobRequest{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[15]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1053,7 +1167,7 @@ func (x *RevokeJobRequest) String() string {
 func (*RevokeJobRequest) ProtoMessage() {}
 
 func (x *RevokeJobRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[15]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1066,7 +1180,7 @@ func (x *RevokeJobRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeJobRequest.ProtoReflect.Descriptor instead.
 func (*RevokeJobRequest) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{15}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *RevokeJobRequest) GetIdOneof() isRevokeJobRequest_IdOneof {
@@ -1126,7 +1240,7 @@ type RevokeJobResponse struct {
 
 func (x *RevokeJobResponse) Reset() {
 	*x = RevokeJobResponse{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[16]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1138,7 +1252,7 @@ func (x *RevokeJobResponse) String() string {
 func (*RevokeJobResponse) ProtoMessage() {}
 
 func (x *RevokeJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[16]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1151,7 +1265,7 @@ func (x *RevokeJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeJobResponse.ProtoReflect.Descriptor instead.
 func (*RevokeJobResponse) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{16}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *RevokeJobResponse) GetProposal() *Proposal {
@@ -1175,7 +1289,7 @@ type DeleteJobRequest struct {
 
 func (x *DeleteJobRequest) Reset() {
 	*x = DeleteJobRequest{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[17]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1187,7 +1301,7 @@ func (x *DeleteJobRequest) String() string {
 func (*DeleteJobRequest) ProtoMessage() {}
 
 func (x *DeleteJobRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[17]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1200,7 +1314,7 @@ func (x *DeleteJobRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteJobRequest.ProtoReflect.Descriptor instead.
 func (*DeleteJobRequest) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{17}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *DeleteJobRequest) GetIdOneof() isDeleteJobRequest_IdOneof {
@@ -1260,7 +1374,7 @@ type DeleteJobResponse struct {
 
 func (x *DeleteJobResponse) Reset() {
 	*x = DeleteJobResponse{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[18]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1272,7 +1386,7 @@ func (x *DeleteJobResponse) String() string {
 func (*DeleteJobResponse) ProtoMessage() {}
 
 func (x *DeleteJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[18]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1285,7 +1399,7 @@ func (x *DeleteJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteJobResponse.ProtoReflect.Descriptor instead.
 func (*DeleteJobResponse) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{18}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *DeleteJobResponse) GetJob() *Job {
@@ -1310,7 +1424,7 @@ type UpdateJobRequest struct {
 
 func (x *UpdateJobRequest) Reset() {
 	*x = UpdateJobRequest{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[19]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1322,7 +1436,7 @@ func (x *UpdateJobRequest) String() string {
 func (*UpdateJobRequest) ProtoMessage() {}
 
 func (x *UpdateJobRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[19]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1335,7 +1449,7 @@ func (x *UpdateJobRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateJobRequest.ProtoReflect.Descriptor instead.
 func (*UpdateJobRequest) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{19}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *UpdateJobRequest) GetIdOneof() isUpdateJobRequest_IdOneof {
@@ -1402,7 +1516,7 @@ type UpdateJobResponse struct {
 
 func (x *UpdateJobResponse) Reset() {
 	*x = UpdateJobResponse{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[20]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1414,7 +1528,7 @@ func (x *UpdateJobResponse) String() string {
 func (*UpdateJobResponse) ProtoMessage() {}
 
 func (x *UpdateJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[20]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1427,7 +1541,7 @@ func (x *UpdateJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateJobResponse.ProtoReflect.Descriptor instead.
 func (*UpdateJobResponse) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{20}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *UpdateJobResponse) GetJob() *Job {
@@ -1450,7 +1564,7 @@ type ListJobsRequest_Filter struct {
 
 func (x *ListJobsRequest_Filter) Reset() {
 	*x = ListJobsRequest_Filter{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[21]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1462,7 +1576,7 @@ func (x *ListJobsRequest_Filter) String() string {
 func (*ListJobsRequest_Filter) ProtoMessage() {}
 
 func (x *ListJobsRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[21]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1475,7 +1589,7 @@ func (x *ListJobsRequest_Filter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListJobsRequest_Filter.ProtoReflect.Descriptor instead.
 func (*ListJobsRequest_Filter) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{6, 0}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{8, 0}
 }
 
 func (x *ListJobsRequest_Filter) GetIds() []string {
@@ -1523,7 +1637,7 @@ type ListProposalsRequest_Filter struct {
 
 func (x *ListProposalsRequest_Filter) Reset() {
 	*x = ListProposalsRequest_Filter{}
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[22]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1535,7 +1649,7 @@ func (x *ListProposalsRequest_Filter) String() string {
 func (*ListProposalsRequest_Filter) ProtoMessage() {}
 
 func (x *ListProposalsRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_job_distributor_v1_job_job_proto_msgTypes[22]
+	mi := &file_job_distributor_v1_job_job_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1548,7 +1662,7 @@ func (x *ListProposalsRequest_Filter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListProposalsRequest_Filter.ProtoReflect.Descriptor instead.
 func (*ListProposalsRequest_Filter) Descriptor() ([]byte, []int) {
-	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{8, 0}
+	return file_job_distributor_v1_job_job_proto_rawDescGZIP(), []int{10, 0}
 }
 
 func (x *ListProposalsRequest_Filter) GetIds() []string {
@@ -1598,7 +1712,15 @@ const file_job_distributor_v1_job_job_proto_rawDesc = "" +
 	"\x14response_received_at\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampH\x01R\x12responseReceivedAt\x88\x01\x01B\v\n" +
 	"\t_acked_atB\x17\n" +
-	"\x15_response_received_at\"G\n" +
+	"\x15_response_received_at\"\xbd\x01\n" +
+	"\x12TransferJobRequest\x12&\n" +
+	"\x0fremote_job_uuid\x18\x01 \x01(\tR\rremoteJobUuid\x123\n" +
+	"\x16source_manager_pub_key\x18\x02 \x01(\tR\x13sourceManagerPubKey\x12 \n" +
+	"\fnode_pub_key\x18\x03 \x01(\tR\n" +
+	"nodePubKey\x12(\n" +
+	"\x06labels\x18\x04 \x03(\v2\x10.api.label.LabelR\x06labels\"8\n" +
+	"\x13TransferJobResponse\x12!\n" +
+	"\x03job\x18\x01 \x01(\v2\x0f.api.job.v1.JobR\x03job\"G\n" +
 	"\rGetJobRequest\x12\x10\n" +
 	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x12\x18\n" +
 	"\x04uuid\x18\x02 \x01(\tB\x02\x18\x01H\x00R\x04uuidB\n" +
@@ -1682,7 +1804,7 @@ const file_job_distributor_v1_job_job_proto_rawDesc = "" +
 	"$PROPOSAL_DELIVERY_STATUS_UNSPECIFIED\x10\x00\x12&\n" +
 	"\"PROPOSAL_DELIVERY_STATUS_DELIVERED\x10\x01\x12)\n" +
 	"%PROPOSAL_DELIVERY_STATUS_ACKNOWLEDGED\x10\x02\x12#\n" +
-	"\x1fPROPOSAL_DELIVERY_STATUS_FAILED\x10\x032\xd3\x05\n" +
+	"\x1fPROPOSAL_DELIVERY_STATUS_FAILED\x10\x032\xa5\x06\n" +
 	"\n" +
 	"JobService\x12A\n" +
 	"\x06GetJob\x12\x19.api.job.v1.GetJobRequest\x1a\x1a.api.job.v1.GetJobResponse\"\x00\x12P\n" +
@@ -1694,7 +1816,8 @@ const file_job_distributor_v1_job_job_proto_rawDesc = "" +
 	"\x0fBatchProposeJob\x12\".api.job.v1.BatchProposeJobRequest\x1a#.api.job.v1.BatchProposeJobResponse\"\x00\x12J\n" +
 	"\tRevokeJob\x12\x1c.api.job.v1.RevokeJobRequest\x1a\x1d.api.job.v1.RevokeJobResponse\"\x00\x12J\n" +
 	"\tDeleteJob\x12\x1c.api.job.v1.DeleteJobRequest\x1a\x1d.api.job.v1.DeleteJobResponse\"\x00\x12J\n" +
-	"\tUpdateJob\x12\x1c.api.job.v1.UpdateJobRequest\x1a\x1d.api.job.v1.UpdateJobResponse\"\x00BEZCgithub.com/smartcontractkit/chainlink-protos/job-distributor/v1/jobb\x06proto3"
+	"\tUpdateJob\x12\x1c.api.job.v1.UpdateJobRequest\x1a\x1d.api.job.v1.UpdateJobResponse\"\x00\x12P\n" +
+	"\vTransferJob\x12\x1e.api.job.v1.TransferJobRequest\x1a\x1f.api.job.v1.TransferJobResponse\"\x00BEZCgithub.com/smartcontractkit/chainlink-protos/job-distributor/v1/jobb\x06proto3"
 
 var (
 	file_job_distributor_v1_job_job_proto_rawDescOnce sync.Once
@@ -1709,91 +1832,97 @@ func file_job_distributor_v1_job_job_proto_rawDescGZIP() []byte {
 }
 
 var file_job_distributor_v1_job_job_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_job_distributor_v1_job_job_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_job_distributor_v1_job_job_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_job_distributor_v1_job_job_proto_goTypes = []any{
 	(ProposalStatus)(0),                 // 0: api.job.v1.ProposalStatus
 	(ProposalDeliveryStatus)(0),         // 1: api.job.v1.ProposalDeliveryStatus
 	(*Job)(nil),                         // 2: api.job.v1.Job
 	(*Proposal)(nil),                    // 3: api.job.v1.Proposal
-	(*GetJobRequest)(nil),               // 4: api.job.v1.GetJobRequest
-	(*GetJobResponse)(nil),              // 5: api.job.v1.GetJobResponse
-	(*GetProposalRequest)(nil),          // 6: api.job.v1.GetProposalRequest
-	(*GetProposalResponse)(nil),         // 7: api.job.v1.GetProposalResponse
-	(*ListJobsRequest)(nil),             // 8: api.job.v1.ListJobsRequest
-	(*ListJobsResponse)(nil),            // 9: api.job.v1.ListJobsResponse
-	(*ListProposalsRequest)(nil),        // 10: api.job.v1.ListProposalsRequest
-	(*ListProposalsResponse)(nil),       // 11: api.job.v1.ListProposalsResponse
-	(*ProposeJobRequest)(nil),           // 12: api.job.v1.ProposeJobRequest
-	(*ProposeJobResponse)(nil),          // 13: api.job.v1.ProposeJobResponse
-	(*BatchProposeJobRequest)(nil),      // 14: api.job.v1.BatchProposeJobRequest
-	(*ProposeJobFailure)(nil),           // 15: api.job.v1.ProposeJobFailure
-	(*BatchProposeJobResponse)(nil),     // 16: api.job.v1.BatchProposeJobResponse
-	(*RevokeJobRequest)(nil),            // 17: api.job.v1.RevokeJobRequest
-	(*RevokeJobResponse)(nil),           // 18: api.job.v1.RevokeJobResponse
-	(*DeleteJobRequest)(nil),            // 19: api.job.v1.DeleteJobRequest
-	(*DeleteJobResponse)(nil),           // 20: api.job.v1.DeleteJobResponse
-	(*UpdateJobRequest)(nil),            // 21: api.job.v1.UpdateJobRequest
-	(*UpdateJobResponse)(nil),           // 22: api.job.v1.UpdateJobResponse
-	(*ListJobsRequest_Filter)(nil),      // 23: api.job.v1.ListJobsRequest.Filter
-	(*ListProposalsRequest_Filter)(nil), // 24: api.job.v1.ListProposalsRequest.Filter
-	nil,                                 // 25: api.job.v1.BatchProposeJobResponse.SuccessResponsesEntry
-	nil,                                 // 26: api.job.v1.BatchProposeJobResponse.FailedResponsesEntry
-	(*timestamppb.Timestamp)(nil),       // 27: google.protobuf.Timestamp
-	(*ptypes.Label)(nil),                // 28: api.label.Label
-	(*ptypes.Selector)(nil),             // 29: api.label.Selector
+	(*TransferJobRequest)(nil),          // 4: api.job.v1.TransferJobRequest
+	(*TransferJobResponse)(nil),         // 5: api.job.v1.TransferJobResponse
+	(*GetJobRequest)(nil),               // 6: api.job.v1.GetJobRequest
+	(*GetJobResponse)(nil),              // 7: api.job.v1.GetJobResponse
+	(*GetProposalRequest)(nil),          // 8: api.job.v1.GetProposalRequest
+	(*GetProposalResponse)(nil),         // 9: api.job.v1.GetProposalResponse
+	(*ListJobsRequest)(nil),             // 10: api.job.v1.ListJobsRequest
+	(*ListJobsResponse)(nil),            // 11: api.job.v1.ListJobsResponse
+	(*ListProposalsRequest)(nil),        // 12: api.job.v1.ListProposalsRequest
+	(*ListProposalsResponse)(nil),       // 13: api.job.v1.ListProposalsResponse
+	(*ProposeJobRequest)(nil),           // 14: api.job.v1.ProposeJobRequest
+	(*ProposeJobResponse)(nil),          // 15: api.job.v1.ProposeJobResponse
+	(*BatchProposeJobRequest)(nil),      // 16: api.job.v1.BatchProposeJobRequest
+	(*ProposeJobFailure)(nil),           // 17: api.job.v1.ProposeJobFailure
+	(*BatchProposeJobResponse)(nil),     // 18: api.job.v1.BatchProposeJobResponse
+	(*RevokeJobRequest)(nil),            // 19: api.job.v1.RevokeJobRequest
+	(*RevokeJobResponse)(nil),           // 20: api.job.v1.RevokeJobResponse
+	(*DeleteJobRequest)(nil),            // 21: api.job.v1.DeleteJobRequest
+	(*DeleteJobResponse)(nil),           // 22: api.job.v1.DeleteJobResponse
+	(*UpdateJobRequest)(nil),            // 23: api.job.v1.UpdateJobRequest
+	(*UpdateJobResponse)(nil),           // 24: api.job.v1.UpdateJobResponse
+	(*ListJobsRequest_Filter)(nil),      // 25: api.job.v1.ListJobsRequest.Filter
+	(*ListProposalsRequest_Filter)(nil), // 26: api.job.v1.ListProposalsRequest.Filter
+	nil,                                 // 27: api.job.v1.BatchProposeJobResponse.SuccessResponsesEntry
+	nil,                                 // 28: api.job.v1.BatchProposeJobResponse.FailedResponsesEntry
+	(*timestamppb.Timestamp)(nil),       // 29: google.protobuf.Timestamp
+	(*ptypes.Label)(nil),                // 30: api.label.Label
+	(*ptypes.Selector)(nil),             // 31: api.label.Selector
 }
 var file_job_distributor_v1_job_job_proto_depIdxs = []int32{
-	27, // 0: api.job.v1.Job.created_at:type_name -> google.protobuf.Timestamp
-	27, // 1: api.job.v1.Job.updated_at:type_name -> google.protobuf.Timestamp
-	27, // 2: api.job.v1.Job.deleted_at:type_name -> google.protobuf.Timestamp
-	28, // 3: api.job.v1.Job.labels:type_name -> api.label.Label
+	29, // 0: api.job.v1.Job.created_at:type_name -> google.protobuf.Timestamp
+	29, // 1: api.job.v1.Job.updated_at:type_name -> google.protobuf.Timestamp
+	29, // 2: api.job.v1.Job.deleted_at:type_name -> google.protobuf.Timestamp
+	30, // 3: api.job.v1.Job.labels:type_name -> api.label.Label
 	0,  // 4: api.job.v1.Proposal.status:type_name -> api.job.v1.ProposalStatus
 	1,  // 5: api.job.v1.Proposal.delivery_status:type_name -> api.job.v1.ProposalDeliveryStatus
-	27, // 6: api.job.v1.Proposal.created_at:type_name -> google.protobuf.Timestamp
-	27, // 7: api.job.v1.Proposal.updated_at:type_name -> google.protobuf.Timestamp
-	27, // 8: api.job.v1.Proposal.acked_at:type_name -> google.protobuf.Timestamp
-	27, // 9: api.job.v1.Proposal.response_received_at:type_name -> google.protobuf.Timestamp
-	2,  // 10: api.job.v1.GetJobResponse.job:type_name -> api.job.v1.Job
-	3,  // 11: api.job.v1.GetProposalResponse.proposal:type_name -> api.job.v1.Proposal
-	23, // 12: api.job.v1.ListJobsRequest.filter:type_name -> api.job.v1.ListJobsRequest.Filter
-	2,  // 13: api.job.v1.ListJobsResponse.jobs:type_name -> api.job.v1.Job
-	24, // 14: api.job.v1.ListProposalsRequest.filter:type_name -> api.job.v1.ListProposalsRequest.Filter
-	3,  // 15: api.job.v1.ListProposalsResponse.proposals:type_name -> api.job.v1.Proposal
-	28, // 16: api.job.v1.ProposeJobRequest.labels:type_name -> api.label.Label
-	3,  // 17: api.job.v1.ProposeJobResponse.proposal:type_name -> api.job.v1.Proposal
-	28, // 18: api.job.v1.BatchProposeJobRequest.labels:type_name -> api.label.Label
-	25, // 19: api.job.v1.BatchProposeJobResponse.success_responses:type_name -> api.job.v1.BatchProposeJobResponse.SuccessResponsesEntry
-	26, // 20: api.job.v1.BatchProposeJobResponse.failed_responses:type_name -> api.job.v1.BatchProposeJobResponse.FailedResponsesEntry
-	3,  // 21: api.job.v1.RevokeJobResponse.proposal:type_name -> api.job.v1.Proposal
-	2,  // 22: api.job.v1.DeleteJobResponse.job:type_name -> api.job.v1.Job
-	28, // 23: api.job.v1.UpdateJobRequest.labels:type_name -> api.label.Label
-	2,  // 24: api.job.v1.UpdateJobResponse.job:type_name -> api.job.v1.Job
-	29, // 25: api.job.v1.ListJobsRequest.Filter.selectors:type_name -> api.label.Selector
-	13, // 26: api.job.v1.BatchProposeJobResponse.SuccessResponsesEntry.value:type_name -> api.job.v1.ProposeJobResponse
-	15, // 27: api.job.v1.BatchProposeJobResponse.FailedResponsesEntry.value:type_name -> api.job.v1.ProposeJobFailure
-	4,  // 28: api.job.v1.JobService.GetJob:input_type -> api.job.v1.GetJobRequest
-	6,  // 29: api.job.v1.JobService.GetProposal:input_type -> api.job.v1.GetProposalRequest
-	8,  // 30: api.job.v1.JobService.ListJobs:input_type -> api.job.v1.ListJobsRequest
-	10, // 31: api.job.v1.JobService.ListProposals:input_type -> api.job.v1.ListProposalsRequest
-	12, // 32: api.job.v1.JobService.ProposeJob:input_type -> api.job.v1.ProposeJobRequest
-	14, // 33: api.job.v1.JobService.BatchProposeJob:input_type -> api.job.v1.BatchProposeJobRequest
-	17, // 34: api.job.v1.JobService.RevokeJob:input_type -> api.job.v1.RevokeJobRequest
-	19, // 35: api.job.v1.JobService.DeleteJob:input_type -> api.job.v1.DeleteJobRequest
-	21, // 36: api.job.v1.JobService.UpdateJob:input_type -> api.job.v1.UpdateJobRequest
-	5,  // 37: api.job.v1.JobService.GetJob:output_type -> api.job.v1.GetJobResponse
-	7,  // 38: api.job.v1.JobService.GetProposal:output_type -> api.job.v1.GetProposalResponse
-	9,  // 39: api.job.v1.JobService.ListJobs:output_type -> api.job.v1.ListJobsResponse
-	11, // 40: api.job.v1.JobService.ListProposals:output_type -> api.job.v1.ListProposalsResponse
-	13, // 41: api.job.v1.JobService.ProposeJob:output_type -> api.job.v1.ProposeJobResponse
-	16, // 42: api.job.v1.JobService.BatchProposeJob:output_type -> api.job.v1.BatchProposeJobResponse
-	18, // 43: api.job.v1.JobService.RevokeJob:output_type -> api.job.v1.RevokeJobResponse
-	20, // 44: api.job.v1.JobService.DeleteJob:output_type -> api.job.v1.DeleteJobResponse
-	22, // 45: api.job.v1.JobService.UpdateJob:output_type -> api.job.v1.UpdateJobResponse
-	37, // [37:46] is the sub-list for method output_type
-	28, // [28:37] is the sub-list for method input_type
-	28, // [28:28] is the sub-list for extension type_name
-	28, // [28:28] is the sub-list for extension extendee
-	0,  // [0:28] is the sub-list for field type_name
+	29, // 6: api.job.v1.Proposal.created_at:type_name -> google.protobuf.Timestamp
+	29, // 7: api.job.v1.Proposal.updated_at:type_name -> google.protobuf.Timestamp
+	29, // 8: api.job.v1.Proposal.acked_at:type_name -> google.protobuf.Timestamp
+	29, // 9: api.job.v1.Proposal.response_received_at:type_name -> google.protobuf.Timestamp
+	30, // 10: api.job.v1.TransferJobRequest.labels:type_name -> api.label.Label
+	2,  // 11: api.job.v1.TransferJobResponse.job:type_name -> api.job.v1.Job
+	2,  // 12: api.job.v1.GetJobResponse.job:type_name -> api.job.v1.Job
+	3,  // 13: api.job.v1.GetProposalResponse.proposal:type_name -> api.job.v1.Proposal
+	25, // 14: api.job.v1.ListJobsRequest.filter:type_name -> api.job.v1.ListJobsRequest.Filter
+	2,  // 15: api.job.v1.ListJobsResponse.jobs:type_name -> api.job.v1.Job
+	26, // 16: api.job.v1.ListProposalsRequest.filter:type_name -> api.job.v1.ListProposalsRequest.Filter
+	3,  // 17: api.job.v1.ListProposalsResponse.proposals:type_name -> api.job.v1.Proposal
+	30, // 18: api.job.v1.ProposeJobRequest.labels:type_name -> api.label.Label
+	3,  // 19: api.job.v1.ProposeJobResponse.proposal:type_name -> api.job.v1.Proposal
+	30, // 20: api.job.v1.BatchProposeJobRequest.labels:type_name -> api.label.Label
+	27, // 21: api.job.v1.BatchProposeJobResponse.success_responses:type_name -> api.job.v1.BatchProposeJobResponse.SuccessResponsesEntry
+	28, // 22: api.job.v1.BatchProposeJobResponse.failed_responses:type_name -> api.job.v1.BatchProposeJobResponse.FailedResponsesEntry
+	3,  // 23: api.job.v1.RevokeJobResponse.proposal:type_name -> api.job.v1.Proposal
+	2,  // 24: api.job.v1.DeleteJobResponse.job:type_name -> api.job.v1.Job
+	30, // 25: api.job.v1.UpdateJobRequest.labels:type_name -> api.label.Label
+	2,  // 26: api.job.v1.UpdateJobResponse.job:type_name -> api.job.v1.Job
+	31, // 27: api.job.v1.ListJobsRequest.Filter.selectors:type_name -> api.label.Selector
+	15, // 28: api.job.v1.BatchProposeJobResponse.SuccessResponsesEntry.value:type_name -> api.job.v1.ProposeJobResponse
+	17, // 29: api.job.v1.BatchProposeJobResponse.FailedResponsesEntry.value:type_name -> api.job.v1.ProposeJobFailure
+	6,  // 30: api.job.v1.JobService.GetJob:input_type -> api.job.v1.GetJobRequest
+	8,  // 31: api.job.v1.JobService.GetProposal:input_type -> api.job.v1.GetProposalRequest
+	10, // 32: api.job.v1.JobService.ListJobs:input_type -> api.job.v1.ListJobsRequest
+	12, // 33: api.job.v1.JobService.ListProposals:input_type -> api.job.v1.ListProposalsRequest
+	14, // 34: api.job.v1.JobService.ProposeJob:input_type -> api.job.v1.ProposeJobRequest
+	16, // 35: api.job.v1.JobService.BatchProposeJob:input_type -> api.job.v1.BatchProposeJobRequest
+	19, // 36: api.job.v1.JobService.RevokeJob:input_type -> api.job.v1.RevokeJobRequest
+	21, // 37: api.job.v1.JobService.DeleteJob:input_type -> api.job.v1.DeleteJobRequest
+	23, // 38: api.job.v1.JobService.UpdateJob:input_type -> api.job.v1.UpdateJobRequest
+	4,  // 39: api.job.v1.JobService.TransferJob:input_type -> api.job.v1.TransferJobRequest
+	7,  // 40: api.job.v1.JobService.GetJob:output_type -> api.job.v1.GetJobResponse
+	9,  // 41: api.job.v1.JobService.GetProposal:output_type -> api.job.v1.GetProposalResponse
+	11, // 42: api.job.v1.JobService.ListJobs:output_type -> api.job.v1.ListJobsResponse
+	13, // 43: api.job.v1.JobService.ListProposals:output_type -> api.job.v1.ListProposalsResponse
+	15, // 44: api.job.v1.JobService.ProposeJob:output_type -> api.job.v1.ProposeJobResponse
+	18, // 45: api.job.v1.JobService.BatchProposeJob:output_type -> api.job.v1.BatchProposeJobResponse
+	20, // 46: api.job.v1.JobService.RevokeJob:output_type -> api.job.v1.RevokeJobResponse
+	22, // 47: api.job.v1.JobService.DeleteJob:output_type -> api.job.v1.DeleteJobResponse
+	24, // 48: api.job.v1.JobService.UpdateJob:output_type -> api.job.v1.UpdateJobResponse
+	5,  // 49: api.job.v1.JobService.TransferJob:output_type -> api.job.v1.TransferJobResponse
+	40, // [40:50] is the sub-list for method output_type
+	30, // [30:40] is the sub-list for method input_type
+	30, // [30:30] is the sub-list for extension type_name
+	30, // [30:30] is the sub-list for extension extendee
+	0,  // [0:30] is the sub-list for field type_name
 }
 
 func init() { file_job_distributor_v1_job_job_proto_init() }
@@ -1802,19 +1931,19 @@ func file_job_distributor_v1_job_job_proto_init() {
 		return
 	}
 	file_job_distributor_v1_job_job_proto_msgTypes[1].OneofWrappers = []any{}
-	file_job_distributor_v1_job_job_proto_msgTypes[2].OneofWrappers = []any{
+	file_job_distributor_v1_job_job_proto_msgTypes[4].OneofWrappers = []any{
 		(*GetJobRequest_Id)(nil),
 		(*GetJobRequest_Uuid)(nil),
 	}
-	file_job_distributor_v1_job_job_proto_msgTypes[15].OneofWrappers = []any{
+	file_job_distributor_v1_job_job_proto_msgTypes[17].OneofWrappers = []any{
 		(*RevokeJobRequest_Id)(nil),
 		(*RevokeJobRequest_Uuid)(nil),
 	}
-	file_job_distributor_v1_job_job_proto_msgTypes[17].OneofWrappers = []any{
+	file_job_distributor_v1_job_job_proto_msgTypes[19].OneofWrappers = []any{
 		(*DeleteJobRequest_Id)(nil),
 		(*DeleteJobRequest_Uuid)(nil),
 	}
-	file_job_distributor_v1_job_job_proto_msgTypes[19].OneofWrappers = []any{
+	file_job_distributor_v1_job_job_proto_msgTypes[21].OneofWrappers = []any{
 		(*UpdateJobRequest_Id)(nil),
 		(*UpdateJobRequest_Uuid)(nil),
 	}
@@ -1824,7 +1953,7 @@ func file_job_distributor_v1_job_job_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_job_distributor_v1_job_job_proto_rawDesc), len(file_job_distributor_v1_job_job_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   25,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

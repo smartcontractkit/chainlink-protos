@@ -4,6 +4,8 @@ package cfm;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/feedsmanager";
 
+import "google/protobuf/timestamp.proto";
+
 // RPC methods that the node will call on the JD.
 service FeedsManager {
   rpc ApprovedJob(ApprovedJobRequest) returns (ApprovedJobResponse);
@@ -11,6 +13,7 @@ service FeedsManager {
   rpc UpdateNode(UpdateNodeRequest) returns (UpdateNodeResponse);
   rpc RejectedJob(RejectedJobRequest) returns (RejectedJobResponse);
   rpc CancelledJob(CancelledJobRequest) returns (CancelledJobResponse);
+  rpc TransferedJob(TransferedJobRequest) returns (TransferedJobResponse);
 }
 
 // Defines the allowed job types
@@ -160,6 +163,19 @@ message CancelledJobRequest {
 }
 message CancelledJobResponse {}
 
+
+message TransferJobRequest {
+  string id = 1;                        // Remote UUID of the job to transfer
+  string source_manager_pub_key = 2;    // Public key of the source feeds manager
+  repeated Label labels = 3; // Set of labels associated with the job.
+
+}
+
+message TransferJobResponse {
+  string id = 1;
+}
+
+
 // RPC methods that the FMS will call on the node.
 service NodeService {
   // ProposeJob is called by the JD to propose a job to the node.
@@ -168,6 +184,8 @@ service NodeService {
   rpc DeleteJob(DeleteJobRequest) returns (DeleteJobResponse);
   // RevokeJob is called by the JD to revoke a job from the node.
   rpc RevokeJob(RevokeJobRequest) returns (RevokeJobResponse);
+
+  rpc TransferJob(TransferJobRequest) returns (TransferJobResponse);
 }
 
 message ProposeJobRequest {
@@ -198,3 +216,56 @@ message P2PKeyBundle {
   string peer_id = 1;
   string public_key = 2;
 }
+
+enum ProposalStatus {
+  PROPOSAL_STATUS_UNSPECIFIED = 0;
+  PROPOSAL_STATUS_PENDING = 1;
+  PROPOSAL_STATUS_APPROVED = 2;
+  PROPOSAL_STATUS_REJECTED = 3;
+  PROPOSAL_STATUS_CANCELLED = 4;
+  PROPOSAL_STATUS_REVOKED = 5;
+}
+
+enum ProposalDeliveryStatus {
+  PROPOSAL_DELIVERY_STATUS_UNSPECIFIED = 0;
+  PROPOSAL_DELIVERY_STATUS_PENDING = 1;
+  PROPOSAL_DELIVERY_STATUS_DELIVERED = 2;
+  PROPOSAL_DELIVERY_STATUS_ACKNOWLEDGED = 3;
+  PROPOSAL_DELIVERY_STATUS_FAILED = 4;
+}
+
+message Label {
+  string key = 1;
+  optional string value = 2;
+}
+
+message Job {
+  string uuid = 1;         // Job UUID
+  string original_id = 2; // Job original ID
+  repeated Label labels = 3; // Set of labels associated with the job.
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message Proposal {
+  string original_id = 1;                      // Proposal original reference ID
+  int64 revision = 2;                         // Proposal revision number
+  ProposalStatus status = 3;                  // Proposal status
+  ProposalDeliveryStatus delivery_status = 4; // Delivery status
+  string original_job_id = 5;                 // Job reference ID
+  string spec = 6;                            // Job spec
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+// Request message for transferring a complete job with all proposals
+message TransferedJobRequest {
+  // Job details to be transferred
+  Job job = 1;
+
+  // All job proposals
+  repeated Proposal proposals = 2;
+}
+
+// Response message for the transfer operation
+message TransferedJobResponse {}

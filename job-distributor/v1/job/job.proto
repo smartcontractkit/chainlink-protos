@@ -35,6 +35,8 @@ service JobService {
 
   // UpdateJob updates a job in the system.
   rpc UpdateJob(UpdateJobRequest) returns (UpdateJobResponse) {}
+
+  rpc TransferJob(TransferJobRequest) returns (TransferJobResponse) {}
 }
 
 // ProposalStatus defines the possible states of a job proposal.
@@ -80,6 +82,19 @@ message Proposal {
   google.protobuf.Timestamp updated_at = 8; // Timestamp when the proposal was last updated.
   optional google.protobuf.Timestamp acked_at = 9; // Timestamp when the proposal was acknowledged.
   optional google.protobuf.Timestamp response_received_at = 10; // Timestamp when a response was received.
+}
+
+// TransferJobRequest initiates a job transfer by providing metadata to a node.
+message TransferJobRequest {
+  string remote_job_uuid = 1; // UUID of the job to transfer from source JD.
+  string source_manager_pub_key = 2; // Public key of the source JD manager.
+  string node_pub_key = 3; // CSA key of the node that will handle the transfer.
+  repeated api.label.Label labels = 4; // Labels to associate with the job.
+}
+
+// TransferJobResponse indicates whether the transfer request was successfully sent to the node.
+message TransferJobResponse {
+  Job job = 1; // Details of the transfered job.
 }
 
 // GetJobRequest specifies the criteria for retrieving a job.

@@ -9,6 +9,7 @@ package feedsmanager
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -136,6 +137,119 @@ func (x ChainType) Number() protoreflect.EnumNumber {
 // Deprecated: Use ChainType.Descriptor instead.
 func (ChainType) EnumDescriptor() ([]byte, []int) {
 	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{1}
+}
+
+type ProposalStatus int32
+
+const (
+	ProposalStatus_PROPOSAL_STATUS_UNSPECIFIED ProposalStatus = 0
+	ProposalStatus_PROPOSAL_STATUS_PENDING     ProposalStatus = 1
+	ProposalStatus_PROPOSAL_STATUS_APPROVED    ProposalStatus = 2
+	ProposalStatus_PROPOSAL_STATUS_REJECTED    ProposalStatus = 3
+	ProposalStatus_PROPOSAL_STATUS_CANCELLED   ProposalStatus = 4
+	ProposalStatus_PROPOSAL_STATUS_REVOKED     ProposalStatus = 5
+)
+
+// Enum value maps for ProposalStatus.
+var (
+	ProposalStatus_name = map[int32]string{
+		0: "PROPOSAL_STATUS_UNSPECIFIED",
+		1: "PROPOSAL_STATUS_PENDING",
+		2: "PROPOSAL_STATUS_APPROVED",
+		3: "PROPOSAL_STATUS_REJECTED",
+		4: "PROPOSAL_STATUS_CANCELLED",
+		5: "PROPOSAL_STATUS_REVOKED",
+	}
+	ProposalStatus_value = map[string]int32{
+		"PROPOSAL_STATUS_UNSPECIFIED": 0,
+		"PROPOSAL_STATUS_PENDING":     1,
+		"PROPOSAL_STATUS_APPROVED":    2,
+		"PROPOSAL_STATUS_REJECTED":    3,
+		"PROPOSAL_STATUS_CANCELLED":   4,
+		"PROPOSAL_STATUS_REVOKED":     5,
+	}
+)
+
+func (x ProposalStatus) Enum() *ProposalStatus {
+	p := new(ProposalStatus)
+	*p = x
+	return p
+}
+
+func (x ProposalStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ProposalStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_enumTypes[2].Descriptor()
+}
+
+func (ProposalStatus) Type() protoreflect.EnumType {
+	return &file_orchestrator_feedsmanager_feedsmanager_proto_enumTypes[2]
+}
+
+func (x ProposalStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ProposalStatus.Descriptor instead.
+func (ProposalStatus) EnumDescriptor() ([]byte, []int) {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{2}
+}
+
+type ProposalDeliveryStatus int32
+
+const (
+	ProposalDeliveryStatus_PROPOSAL_DELIVERY_STATUS_UNSPECIFIED  ProposalDeliveryStatus = 0
+	ProposalDeliveryStatus_PROPOSAL_DELIVERY_STATUS_PENDING      ProposalDeliveryStatus = 1
+	ProposalDeliveryStatus_PROPOSAL_DELIVERY_STATUS_DELIVERED    ProposalDeliveryStatus = 2
+	ProposalDeliveryStatus_PROPOSAL_DELIVERY_STATUS_ACKNOWLEDGED ProposalDeliveryStatus = 3
+	ProposalDeliveryStatus_PROPOSAL_DELIVERY_STATUS_FAILED       ProposalDeliveryStatus = 4
+)
+
+// Enum value maps for ProposalDeliveryStatus.
+var (
+	ProposalDeliveryStatus_name = map[int32]string{
+		0: "PROPOSAL_DELIVERY_STATUS_UNSPECIFIED",
+		1: "PROPOSAL_DELIVERY_STATUS_PENDING",
+		2: "PROPOSAL_DELIVERY_STATUS_DELIVERED",
+		3: "PROPOSAL_DELIVERY_STATUS_ACKNOWLEDGED",
+		4: "PROPOSAL_DELIVERY_STATUS_FAILED",
+	}
+	ProposalDeliveryStatus_value = map[string]int32{
+		"PROPOSAL_DELIVERY_STATUS_UNSPECIFIED":  0,
+		"PROPOSAL_DELIVERY_STATUS_PENDING":      1,
+		"PROPOSAL_DELIVERY_STATUS_DELIVERED":    2,
+		"PROPOSAL_DELIVERY_STATUS_ACKNOWLEDGED": 3,
+		"PROPOSAL_DELIVERY_STATUS_FAILED":       4,
+	}
+)
+
+func (x ProposalDeliveryStatus) Enum() *ProposalDeliveryStatus {
+	p := new(ProposalDeliveryStatus)
+	*p = x
+	return p
+}
+
+func (x ProposalDeliveryStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ProposalDeliveryStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_enumTypes[3].Descriptor()
+}
+
+func (ProposalDeliveryStatus) Type() protoreflect.EnumType {
+	return &file_orchestrator_feedsmanager_feedsmanager_proto_enumTypes[3]
+}
+
+func (x ProposalDeliveryStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ProposalDeliveryStatus.Descriptor instead.
+func (ProposalDeliveryStatus) EnumDescriptor() ([]byte, []int) {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{3}
 }
 
 type Chain struct {
@@ -1126,6 +1240,110 @@ func (*CancelledJobResponse) Descriptor() ([]byte, []int) {
 	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{16}
 }
 
+type TransferJobRequest struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Id                  string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                                  // Remote UUID of the job to transfer
+	SourceManagerPubKey string                 `protobuf:"bytes,2,opt,name=source_manager_pub_key,json=sourceManagerPubKey,proto3" json:"source_manager_pub_key,omitempty"` // Public key of the source feeds manager
+	Labels              []*Label               `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty"`                                                          // Set of labels associated with the job.
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *TransferJobRequest) Reset() {
+	*x = TransferJobRequest{}
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TransferJobRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransferJobRequest) ProtoMessage() {}
+
+func (x *TransferJobRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransferJobRequest.ProtoReflect.Descriptor instead.
+func (*TransferJobRequest) Descriptor() ([]byte, []int) {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *TransferJobRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *TransferJobRequest) GetSourceManagerPubKey() string {
+	if x != nil {
+		return x.SourceManagerPubKey
+	}
+	return ""
+}
+
+func (x *TransferJobRequest) GetLabels() []*Label {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
+}
+
+type TransferJobResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TransferJobResponse) Reset() {
+	*x = TransferJobResponse{}
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TransferJobResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransferJobResponse) ProtoMessage() {}
+
+func (x *TransferJobResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransferJobResponse.ProtoReflect.Descriptor instead.
+func (*TransferJobResponse) Descriptor() ([]byte, []int) {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *TransferJobResponse) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
 type ProposeJobRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -1138,7 +1356,7 @@ type ProposeJobRequest struct {
 
 func (x *ProposeJobRequest) Reset() {
 	*x = ProposeJobRequest{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[17]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1150,7 +1368,7 @@ func (x *ProposeJobRequest) String() string {
 func (*ProposeJobRequest) ProtoMessage() {}
 
 func (x *ProposeJobRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[17]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1163,7 +1381,7 @@ func (x *ProposeJobRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProposeJobRequest.ProtoReflect.Descriptor instead.
 func (*ProposeJobRequest) Descriptor() ([]byte, []int) {
-	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{17}
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *ProposeJobRequest) GetId() string {
@@ -1203,7 +1421,7 @@ type ProposeJobResponse struct {
 
 func (x *ProposeJobResponse) Reset() {
 	*x = ProposeJobResponse{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[18]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1215,7 +1433,7 @@ func (x *ProposeJobResponse) String() string {
 func (*ProposeJobResponse) ProtoMessage() {}
 
 func (x *ProposeJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[18]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1228,7 +1446,7 @@ func (x *ProposeJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProposeJobResponse.ProtoReflect.Descriptor instead.
 func (*ProposeJobResponse) Descriptor() ([]byte, []int) {
-	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{18}
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *ProposeJobResponse) GetId() string {
@@ -1247,7 +1465,7 @@ type DeleteJobRequest struct {
 
 func (x *DeleteJobRequest) Reset() {
 	*x = DeleteJobRequest{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[19]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1259,7 +1477,7 @@ func (x *DeleteJobRequest) String() string {
 func (*DeleteJobRequest) ProtoMessage() {}
 
 func (x *DeleteJobRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[19]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1272,7 +1490,7 @@ func (x *DeleteJobRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteJobRequest.ProtoReflect.Descriptor instead.
 func (*DeleteJobRequest) Descriptor() ([]byte, []int) {
-	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{19}
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *DeleteJobRequest) GetId() string {
@@ -1291,7 +1509,7 @@ type DeleteJobResponse struct {
 
 func (x *DeleteJobResponse) Reset() {
 	*x = DeleteJobResponse{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[20]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1303,7 +1521,7 @@ func (x *DeleteJobResponse) String() string {
 func (*DeleteJobResponse) ProtoMessage() {}
 
 func (x *DeleteJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[20]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1316,7 +1534,7 @@ func (x *DeleteJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteJobResponse.ProtoReflect.Descriptor instead.
 func (*DeleteJobResponse) Descriptor() ([]byte, []int) {
-	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{20}
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *DeleteJobResponse) GetId() string {
@@ -1335,7 +1553,7 @@ type RevokeJobRequest struct {
 
 func (x *RevokeJobRequest) Reset() {
 	*x = RevokeJobRequest{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[21]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1347,7 +1565,7 @@ func (x *RevokeJobRequest) String() string {
 func (*RevokeJobRequest) ProtoMessage() {}
 
 func (x *RevokeJobRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[21]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1360,7 +1578,7 @@ func (x *RevokeJobRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeJobRequest.ProtoReflect.Descriptor instead.
 func (*RevokeJobRequest) Descriptor() ([]byte, []int) {
-	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{21}
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *RevokeJobRequest) GetId() string {
@@ -1379,7 +1597,7 @@ type RevokeJobResponse struct {
 
 func (x *RevokeJobResponse) Reset() {
 	*x = RevokeJobResponse{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[22]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1391,7 +1609,7 @@ func (x *RevokeJobResponse) String() string {
 func (*RevokeJobResponse) ProtoMessage() {}
 
 func (x *RevokeJobResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[22]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1404,7 +1622,7 @@ func (x *RevokeJobResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeJobResponse.ProtoReflect.Descriptor instead.
 func (*RevokeJobResponse) Descriptor() ([]byte, []int) {
-	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{22}
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *RevokeJobResponse) GetId() string {
@@ -1424,7 +1642,7 @@ type P2PKeyBundle struct {
 
 func (x *P2PKeyBundle) Reset() {
 	*x = P2PKeyBundle{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[23]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1436,7 +1654,7 @@ func (x *P2PKeyBundle) String() string {
 func (*P2PKeyBundle) ProtoMessage() {}
 
 func (x *P2PKeyBundle) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[23]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1449,7 +1667,7 @@ func (x *P2PKeyBundle) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use P2PKeyBundle.ProtoReflect.Descriptor instead.
 func (*P2PKeyBundle) Descriptor() ([]byte, []int) {
-	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{23}
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *P2PKeyBundle) GetPeerId() string {
@@ -1466,6 +1684,326 @@ func (x *P2PKeyBundle) GetPublicKey() string {
 	return ""
 }
 
+type Label struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Key           string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value         *string                `protobuf:"bytes,2,opt,name=value,proto3,oneof" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Label) Reset() {
+	*x = Label{}
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Label) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Label) ProtoMessage() {}
+
+func (x *Label) ProtoReflect() protoreflect.Message {
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Label.ProtoReflect.Descriptor instead.
+func (*Label) Descriptor() ([]byte, []int) {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *Label) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *Label) GetValue() string {
+	if x != nil && x.Value != nil {
+		return *x.Value
+	}
+	return ""
+}
+
+type Job struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Uuid          string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`                               // Job UUID
+	OriginalId    string                 `protobuf:"bytes,2,opt,name=original_id,json=originalId,proto3" json:"original_id,omitempty"` // Job original ID
+	Labels        []*Label               `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty"`                           // Set of labels associated with the job.
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Job) Reset() {
+	*x = Job{}
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Job) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Job) ProtoMessage() {}
+
+func (x *Job) ProtoReflect() protoreflect.Message {
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Job.ProtoReflect.Descriptor instead.
+func (*Job) Descriptor() ([]byte, []int) {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *Job) GetUuid() string {
+	if x != nil {
+		return x.Uuid
+	}
+	return ""
+}
+
+func (x *Job) GetOriginalId() string {
+	if x != nil {
+		return x.OriginalId
+	}
+	return ""
+}
+
+func (x *Job) GetLabels() []*Label {
+	if x != nil {
+		return x.Labels
+	}
+	return nil
+}
+
+func (x *Job) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *Job) GetUpdatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return nil
+}
+
+type Proposal struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	OriginalId     string                 `protobuf:"bytes,1,opt,name=original_id,json=originalId,proto3" json:"original_id,omitempty"`                                              // Proposal original reference ID
+	Revision       int64                  `protobuf:"varint,2,opt,name=revision,proto3" json:"revision,omitempty"`                                                                   // Proposal revision number
+	Status         ProposalStatus         `protobuf:"varint,3,opt,name=status,proto3,enum=cfm.ProposalStatus" json:"status,omitempty"`                                               // Proposal status
+	DeliveryStatus ProposalDeliveryStatus `protobuf:"varint,4,opt,name=delivery_status,json=deliveryStatus,proto3,enum=cfm.ProposalDeliveryStatus" json:"delivery_status,omitempty"` // Delivery status
+	OriginalJobId  string                 `protobuf:"bytes,5,opt,name=original_job_id,json=originalJobId,proto3" json:"original_job_id,omitempty"`                                   // Job reference ID
+	Spec           string                 `protobuf:"bytes,6,opt,name=spec,proto3" json:"spec,omitempty"`                                                                            // Job spec
+	CreatedAt      *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	UpdatedAt      *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *Proposal) Reset() {
+	*x = Proposal{}
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Proposal) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Proposal) ProtoMessage() {}
+
+func (x *Proposal) ProtoReflect() protoreflect.Message {
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Proposal.ProtoReflect.Descriptor instead.
+func (*Proposal) Descriptor() ([]byte, []int) {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *Proposal) GetOriginalId() string {
+	if x != nil {
+		return x.OriginalId
+	}
+	return ""
+}
+
+func (x *Proposal) GetRevision() int64 {
+	if x != nil {
+		return x.Revision
+	}
+	return 0
+}
+
+func (x *Proposal) GetStatus() ProposalStatus {
+	if x != nil {
+		return x.Status
+	}
+	return ProposalStatus_PROPOSAL_STATUS_UNSPECIFIED
+}
+
+func (x *Proposal) GetDeliveryStatus() ProposalDeliveryStatus {
+	if x != nil {
+		return x.DeliveryStatus
+	}
+	return ProposalDeliveryStatus_PROPOSAL_DELIVERY_STATUS_UNSPECIFIED
+}
+
+func (x *Proposal) GetOriginalJobId() string {
+	if x != nil {
+		return x.OriginalJobId
+	}
+	return ""
+}
+
+func (x *Proposal) GetSpec() string {
+	if x != nil {
+		return x.Spec
+	}
+	return ""
+}
+
+func (x *Proposal) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *Proposal) GetUpdatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return nil
+}
+
+// Request message for transferring a complete job with all proposals
+type TransferedJobRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Job details to be transferred
+	Job *Job `protobuf:"bytes,1,opt,name=job,proto3" json:"job,omitempty"`
+	// All job proposals
+	Proposals     []*Proposal `protobuf:"bytes,2,rep,name=proposals,proto3" json:"proposals,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TransferedJobRequest) Reset() {
+	*x = TransferedJobRequest{}
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TransferedJobRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransferedJobRequest) ProtoMessage() {}
+
+func (x *TransferedJobRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransferedJobRequest.ProtoReflect.Descriptor instead.
+func (*TransferedJobRequest) Descriptor() ([]byte, []int) {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *TransferedJobRequest) GetJob() *Job {
+	if x != nil {
+		return x.Job
+	}
+	return nil
+}
+
+func (x *TransferedJobRequest) GetProposals() []*Proposal {
+	if x != nil {
+		return x.Proposals
+	}
+	return nil
+}
+
+// Response message for the transfer operation
+type TransferedJobResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TransferedJobResponse) Reset() {
+	*x = TransferedJobResponse{}
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TransferedJobResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TransferedJobResponse) ProtoMessage() {}
+
+func (x *TransferedJobResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TransferedJobResponse.ProtoReflect.Descriptor instead.
+func (*TransferedJobResponse) Descriptor() ([]byte, []int) {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{30}
+}
+
 type OCR1Config_P2PKeyBundle struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	PeerId        string                 `protobuf:"bytes,1,opt,name=peer_id,json=peerId,proto3" json:"peer_id,omitempty"`
@@ -1476,7 +2014,7 @@ type OCR1Config_P2PKeyBundle struct {
 
 func (x *OCR1Config_P2PKeyBundle) Reset() {
 	*x = OCR1Config_P2PKeyBundle{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[24]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1488,7 +2026,7 @@ func (x *OCR1Config_P2PKeyBundle) String() string {
 func (*OCR1Config_P2PKeyBundle) ProtoMessage() {}
 
 func (x *OCR1Config_P2PKeyBundle) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[24]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1530,7 +2068,7 @@ type OCR1Config_OCRKeyBundle struct {
 
 func (x *OCR1Config_OCRKeyBundle) Reset() {
 	*x = OCR1Config_OCRKeyBundle{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[25]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1542,7 +2080,7 @@ func (x *OCR1Config_OCRKeyBundle) String() string {
 func (*OCR1Config_OCRKeyBundle) ProtoMessage() {}
 
 func (x *OCR1Config_OCRKeyBundle) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[25]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1596,7 +2134,7 @@ type OCR2Config_P2PKeyBundle struct {
 
 func (x *OCR2Config_P2PKeyBundle) Reset() {
 	*x = OCR2Config_P2PKeyBundle{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[26]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1608,7 +2146,7 @@ func (x *OCR2Config_P2PKeyBundle) String() string {
 func (*OCR2Config_P2PKeyBundle) ProtoMessage() {}
 
 func (x *OCR2Config_P2PKeyBundle) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[26]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1650,7 +2188,7 @@ type OCR2Config_OCRKeyBundle struct {
 
 func (x *OCR2Config_OCRKeyBundle) Reset() {
 	*x = OCR2Config_OCRKeyBundle{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[27]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1662,7 +2200,7 @@ func (x *OCR2Config_OCRKeyBundle) String() string {
 func (*OCR2Config_OCRKeyBundle) ProtoMessage() {}
 
 func (x *OCR2Config_OCRKeyBundle) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[27]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1719,7 +2257,7 @@ type OCR2Config_Plugins struct {
 
 func (x *OCR2Config_Plugins) Reset() {
 	*x = OCR2Config_Plugins{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[28]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1731,7 +2269,7 @@ func (x *OCR2Config_Plugins) String() string {
 func (*OCR2Config_Plugins) ProtoMessage() {}
 
 func (x *OCR2Config_Plugins) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[28]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1786,7 +2324,7 @@ var File_orchestrator_feedsmanager_feedsmanager_proto protoreflect.FileDescripto
 
 const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"\n" +
-	",orchestrator/feedsmanager/feedsmanager.proto\x12\x03cfm\";\n" +
+	",orchestrator/feedsmanager/feedsmanager.proto\x12\x03cfm\x1a\x1fgoogle/protobuf/timestamp.proto\";\n" +
 	"\x05Chain\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\"\n" +
 	"\x04type\x18\x02 \x01(\x0e2\x0e.cfm.ChainTypeR\x04type\"m\n" +
@@ -1889,7 +2427,14 @@ const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"\x13CancelledJobRequest\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x18\n" +
 	"\aversion\x18\x02 \x01(\x03R\aversion\"\x16\n" +
-	"\x14CancelledJobResponse\"q\n" +
+	"\x14CancelledJobResponse\"}\n" +
+	"\x12TransferJobRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x123\n" +
+	"\x16source_manager_pub_key\x18\x02 \x01(\tR\x13sourceManagerPubKey\x12\"\n" +
+	"\x06labels\x18\x03 \x03(\v2\n" +
+	".cfm.LabelR\x06labels\"%\n" +
+	"\x13TransferJobResponse\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"q\n" +
 	"\x11ProposeJobRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04spec\x18\x02 \x01(\tR\x04spec\x12\x1e\n" +
@@ -1910,7 +2455,37 @@ const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"\fP2PKeyBundle\x12\x17\n" +
 	"\apeer_id\x18\x01 \x01(\tR\x06peerId\x12\x1d\n" +
 	"\n" +
-	"public_key\x18\x02 \x01(\tR\tpublicKey*c\n" +
+	"public_key\x18\x02 \x01(\tR\tpublicKey\">\n" +
+	"\x05Label\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x19\n" +
+	"\x05value\x18\x02 \x01(\tH\x00R\x05value\x88\x01\x01B\b\n" +
+	"\x06_value\"\xd4\x01\n" +
+	"\x03Job\x12\x12\n" +
+	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x1f\n" +
+	"\voriginal_id\x18\x02 \x01(\tR\n" +
+	"originalId\x12\"\n" +
+	"\x06labels\x18\x03 \x03(\v2\n" +
+	".cfm.LabelR\x06labels\x129\n" +
+	"\n" +
+	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"\n" +
+	"updated_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\xec\x02\n" +
+	"\bProposal\x12\x1f\n" +
+	"\voriginal_id\x18\x01 \x01(\tR\n" +
+	"originalId\x12\x1a\n" +
+	"\brevision\x18\x02 \x01(\x03R\brevision\x12+\n" +
+	"\x06status\x18\x03 \x01(\x0e2\x13.cfm.ProposalStatusR\x06status\x12D\n" +
+	"\x0fdelivery_status\x18\x04 \x01(\x0e2\x1b.cfm.ProposalDeliveryStatusR\x0edeliveryStatus\x12&\n" +
+	"\x0foriginal_job_id\x18\x05 \x01(\tR\roriginalJobId\x12\x12\n" +
+	"\x04spec\x18\x06 \x01(\tR\x04spec\x129\n" +
+	"\n" +
+	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
+	"\n" +
+	"updated_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"_\n" +
+	"\x14TransferedJobRequest\x12\x1a\n" +
+	"\x03job\x18\x01 \x01(\v2\b.cfm.JobR\x03job\x12+\n" +
+	"\tproposals\x18\x02 \x03(\v2\r.cfm.ProposalR\tproposals\"\x17\n" +
+	"\x15TransferedJobResponse*c\n" +
 	"\aJobType\x12\x18\n" +
 	"\x14JOB_TYPE_UNSPECIFIED\x10\x00\x12\x19\n" +
 	"\x15JOB_TYPE_FLUX_MONITOR\x10\x01\x12\x10\n" +
@@ -1924,19 +2499,34 @@ const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"\x10CHAIN_TYPE_APTOS\x10\x04\x12\x13\n" +
 	"\x0fCHAIN_TYPE_TRON\x10\x05\x12\x12\n" +
 	"\x0eCHAIN_TYPE_TON\x10\x06\x12\x12\n" +
-	"\x0eCHAIN_TYPE_SUI\x10\a2\xd8\x02\n" +
+	"\x0eCHAIN_TYPE_SUI\x10\a*\xc6\x01\n" +
+	"\x0eProposalStatus\x12\x1f\n" +
+	"\x1bPROPOSAL_STATUS_UNSPECIFIED\x10\x00\x12\x1b\n" +
+	"\x17PROPOSAL_STATUS_PENDING\x10\x01\x12\x1c\n" +
+	"\x18PROPOSAL_STATUS_APPROVED\x10\x02\x12\x1c\n" +
+	"\x18PROPOSAL_STATUS_REJECTED\x10\x03\x12\x1d\n" +
+	"\x19PROPOSAL_STATUS_CANCELLED\x10\x04\x12\x1b\n" +
+	"\x17PROPOSAL_STATUS_REVOKED\x10\x05*\xe0\x01\n" +
+	"\x16ProposalDeliveryStatus\x12(\n" +
+	"$PROPOSAL_DELIVERY_STATUS_UNSPECIFIED\x10\x00\x12$\n" +
+	" PROPOSAL_DELIVERY_STATUS_PENDING\x10\x01\x12&\n" +
+	"\"PROPOSAL_DELIVERY_STATUS_DELIVERED\x10\x02\x12)\n" +
+	"%PROPOSAL_DELIVERY_STATUS_ACKNOWLEDGED\x10\x03\x12#\n" +
+	"\x1fPROPOSAL_DELIVERY_STATUS_FAILED\x10\x042\xa0\x03\n" +
 	"\fFeedsManager\x12@\n" +
 	"\vApprovedJob\x12\x17.cfm.ApprovedJobRequest\x1a\x18.cfm.ApprovedJobResponse\x12@\n" +
 	"\vHealthcheck\x12\x17.cfm.HealthcheckRequest\x1a\x18.cfm.HealthcheckResponse\x12=\n" +
 	"\n" +
 	"UpdateNode\x12\x16.cfm.UpdateNodeRequest\x1a\x17.cfm.UpdateNodeResponse\x12@\n" +
 	"\vRejectedJob\x12\x17.cfm.RejectedJobRequest\x1a\x18.cfm.RejectedJobResponse\x12C\n" +
-	"\fCancelledJob\x12\x18.cfm.CancelledJobRequest\x1a\x19.cfm.CancelledJobResponse2\xc4\x01\n" +
+	"\fCancelledJob\x12\x18.cfm.CancelledJobRequest\x1a\x19.cfm.CancelledJobResponse\x12F\n" +
+	"\rTransferedJob\x12\x19.cfm.TransferedJobRequest\x1a\x1a.cfm.TransferedJobResponse2\x86\x02\n" +
 	"\vNodeService\x12=\n" +
 	"\n" +
 	"ProposeJob\x12\x16.cfm.ProposeJobRequest\x1a\x17.cfm.ProposeJobResponse\x12:\n" +
 	"\tDeleteJob\x12\x15.cfm.DeleteJobRequest\x1a\x16.cfm.DeleteJobResponse\x12:\n" +
-	"\tRevokeJob\x12\x15.cfm.RevokeJobRequest\x1a\x16.cfm.RevokeJobResponseBHZFgithub.com/smartcontractkit/chainlink-protos/orchestrator/feedsmanagerb\x06proto3"
+	"\tRevokeJob\x12\x15.cfm.RevokeJobRequest\x1a\x16.cfm.RevokeJobResponse\x12@\n" +
+	"\vTransferJob\x12\x17.cfm.TransferJobRequest\x1a\x18.cfm.TransferJobResponseBHZFgithub.com/smartcontractkit/chainlink-protos/orchestrator/feedsmanagerb\x06proto3"
 
 var (
 	file_orchestrator_feedsmanager_feedsmanager_proto_rawDescOnce sync.Once
@@ -1950,82 +2540,106 @@ func file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP() []byte {
 	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescData
 }
 
-var file_orchestrator_feedsmanager_feedsmanager_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
+var file_orchestrator_feedsmanager_feedsmanager_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes = make([]protoimpl.MessageInfo, 37)
 var file_orchestrator_feedsmanager_feedsmanager_proto_goTypes = []any{
 	(JobType)(0),                    // 0: cfm.JobType
 	(ChainType)(0),                  // 1: cfm.ChainType
-	(*Chain)(nil),                   // 2: cfm.Chain
-	(*Account)(nil),                 // 3: cfm.Account
-	(*FluxMonitorConfig)(nil),       // 4: cfm.FluxMonitorConfig
-	(*OCR1Config)(nil),              // 5: cfm.OCR1Config
-	(*OCR2Config)(nil),              // 6: cfm.OCR2Config
-	(*ChainConfig)(nil),             // 7: cfm.ChainConfig
-	(*UpdateNodeRequest)(nil),       // 8: cfm.UpdateNodeRequest
-	(*UpdateNodeResponse)(nil),      // 9: cfm.UpdateNodeResponse
-	(*ChainConfigError)(nil),        // 10: cfm.ChainConfigError
-	(*ApprovedJobRequest)(nil),      // 11: cfm.ApprovedJobRequest
-	(*ApprovedJobResponse)(nil),     // 12: cfm.ApprovedJobResponse
-	(*HealthcheckRequest)(nil),      // 13: cfm.HealthcheckRequest
-	(*HealthcheckResponse)(nil),     // 14: cfm.HealthcheckResponse
-	(*RejectedJobRequest)(nil),      // 15: cfm.RejectedJobRequest
-	(*RejectedJobResponse)(nil),     // 16: cfm.RejectedJobResponse
-	(*CancelledJobRequest)(nil),     // 17: cfm.CancelledJobRequest
-	(*CancelledJobResponse)(nil),    // 18: cfm.CancelledJobResponse
-	(*ProposeJobRequest)(nil),       // 19: cfm.ProposeJobRequest
-	(*ProposeJobResponse)(nil),      // 20: cfm.ProposeJobResponse
-	(*DeleteJobRequest)(nil),        // 21: cfm.DeleteJobRequest
-	(*DeleteJobResponse)(nil),       // 22: cfm.DeleteJobResponse
-	(*RevokeJobRequest)(nil),        // 23: cfm.RevokeJobRequest
-	(*RevokeJobResponse)(nil),       // 24: cfm.RevokeJobResponse
-	(*P2PKeyBundle)(nil),            // 25: cfm.P2PKeyBundle
-	(*OCR1Config_P2PKeyBundle)(nil), // 26: cfm.OCR1Config.P2PKeyBundle
-	(*OCR1Config_OCRKeyBundle)(nil), // 27: cfm.OCR1Config.OCRKeyBundle
-	(*OCR2Config_P2PKeyBundle)(nil), // 28: cfm.OCR2Config.P2PKeyBundle
-	(*OCR2Config_OCRKeyBundle)(nil), // 29: cfm.OCR2Config.OCRKeyBundle
-	(*OCR2Config_Plugins)(nil),      // 30: cfm.OCR2Config.Plugins
-	nil,                             // 31: cfm.UpdateNodeResponse.ChainConfigErrorsEntry
+	(ProposalStatus)(0),             // 2: cfm.ProposalStatus
+	(ProposalDeliveryStatus)(0),     // 3: cfm.ProposalDeliveryStatus
+	(*Chain)(nil),                   // 4: cfm.Chain
+	(*Account)(nil),                 // 5: cfm.Account
+	(*FluxMonitorConfig)(nil),       // 6: cfm.FluxMonitorConfig
+	(*OCR1Config)(nil),              // 7: cfm.OCR1Config
+	(*OCR2Config)(nil),              // 8: cfm.OCR2Config
+	(*ChainConfig)(nil),             // 9: cfm.ChainConfig
+	(*UpdateNodeRequest)(nil),       // 10: cfm.UpdateNodeRequest
+	(*UpdateNodeResponse)(nil),      // 11: cfm.UpdateNodeResponse
+	(*ChainConfigError)(nil),        // 12: cfm.ChainConfigError
+	(*ApprovedJobRequest)(nil),      // 13: cfm.ApprovedJobRequest
+	(*ApprovedJobResponse)(nil),     // 14: cfm.ApprovedJobResponse
+	(*HealthcheckRequest)(nil),      // 15: cfm.HealthcheckRequest
+	(*HealthcheckResponse)(nil),     // 16: cfm.HealthcheckResponse
+	(*RejectedJobRequest)(nil),      // 17: cfm.RejectedJobRequest
+	(*RejectedJobResponse)(nil),     // 18: cfm.RejectedJobResponse
+	(*CancelledJobRequest)(nil),     // 19: cfm.CancelledJobRequest
+	(*CancelledJobResponse)(nil),    // 20: cfm.CancelledJobResponse
+	(*TransferJobRequest)(nil),      // 21: cfm.TransferJobRequest
+	(*TransferJobResponse)(nil),     // 22: cfm.TransferJobResponse
+	(*ProposeJobRequest)(nil),       // 23: cfm.ProposeJobRequest
+	(*ProposeJobResponse)(nil),      // 24: cfm.ProposeJobResponse
+	(*DeleteJobRequest)(nil),        // 25: cfm.DeleteJobRequest
+	(*DeleteJobResponse)(nil),       // 26: cfm.DeleteJobResponse
+	(*RevokeJobRequest)(nil),        // 27: cfm.RevokeJobRequest
+	(*RevokeJobResponse)(nil),       // 28: cfm.RevokeJobResponse
+	(*P2PKeyBundle)(nil),            // 29: cfm.P2PKeyBundle
+	(*Label)(nil),                   // 30: cfm.Label
+	(*Job)(nil),                     // 31: cfm.Job
+	(*Proposal)(nil),                // 32: cfm.Proposal
+	(*TransferedJobRequest)(nil),    // 33: cfm.TransferedJobRequest
+	(*TransferedJobResponse)(nil),   // 34: cfm.TransferedJobResponse
+	(*OCR1Config_P2PKeyBundle)(nil), // 35: cfm.OCR1Config.P2PKeyBundle
+	(*OCR1Config_OCRKeyBundle)(nil), // 36: cfm.OCR1Config.OCRKeyBundle
+	(*OCR2Config_P2PKeyBundle)(nil), // 37: cfm.OCR2Config.P2PKeyBundle
+	(*OCR2Config_OCRKeyBundle)(nil), // 38: cfm.OCR2Config.OCRKeyBundle
+	(*OCR2Config_Plugins)(nil),      // 39: cfm.OCR2Config.Plugins
+	nil,                             // 40: cfm.UpdateNodeResponse.ChainConfigErrorsEntry
+	(*timestamppb.Timestamp)(nil),   // 41: google.protobuf.Timestamp
 }
 var file_orchestrator_feedsmanager_feedsmanager_proto_depIdxs = []int32{
 	1,  // 0: cfm.Chain.type:type_name -> cfm.ChainType
 	1,  // 1: cfm.Account.chain_type:type_name -> cfm.ChainType
-	26, // 2: cfm.OCR1Config.p2p_key_bundle:type_name -> cfm.OCR1Config.P2PKeyBundle
-	27, // 3: cfm.OCR1Config.ocr_key_bundle:type_name -> cfm.OCR1Config.OCRKeyBundle
-	28, // 4: cfm.OCR2Config.p2p_key_bundle:type_name -> cfm.OCR2Config.P2PKeyBundle
-	29, // 5: cfm.OCR2Config.ocr_key_bundle:type_name -> cfm.OCR2Config.OCRKeyBundle
-	30, // 6: cfm.OCR2Config.plugins:type_name -> cfm.OCR2Config.Plugins
-	2,  // 7: cfm.ChainConfig.chain:type_name -> cfm.Chain
-	4,  // 8: cfm.ChainConfig.flux_monitor_config:type_name -> cfm.FluxMonitorConfig
-	5,  // 9: cfm.ChainConfig.ocr1_config:type_name -> cfm.OCR1Config
-	6,  // 10: cfm.ChainConfig.ocr2_config:type_name -> cfm.OCR2Config
+	35, // 2: cfm.OCR1Config.p2p_key_bundle:type_name -> cfm.OCR1Config.P2PKeyBundle
+	36, // 3: cfm.OCR1Config.ocr_key_bundle:type_name -> cfm.OCR1Config.OCRKeyBundle
+	37, // 4: cfm.OCR2Config.p2p_key_bundle:type_name -> cfm.OCR2Config.P2PKeyBundle
+	38, // 5: cfm.OCR2Config.ocr_key_bundle:type_name -> cfm.OCR2Config.OCRKeyBundle
+	39, // 6: cfm.OCR2Config.plugins:type_name -> cfm.OCR2Config.Plugins
+	4,  // 7: cfm.ChainConfig.chain:type_name -> cfm.Chain
+	6,  // 8: cfm.ChainConfig.flux_monitor_config:type_name -> cfm.FluxMonitorConfig
+	7,  // 9: cfm.ChainConfig.ocr1_config:type_name -> cfm.OCR1Config
+	8,  // 10: cfm.ChainConfig.ocr2_config:type_name -> cfm.OCR2Config
 	0,  // 11: cfm.UpdateNodeRequest.job_types:type_name -> cfm.JobType
-	3,  // 12: cfm.UpdateNodeRequest.accounts:type_name -> cfm.Account
-	2,  // 13: cfm.UpdateNodeRequest.chains:type_name -> cfm.Chain
-	7,  // 14: cfm.UpdateNodeRequest.chain_configs:type_name -> cfm.ChainConfig
-	25, // 15: cfm.UpdateNodeRequest.p2p_key_bundles:type_name -> cfm.P2PKeyBundle
-	31, // 16: cfm.UpdateNodeResponse.chain_config_errors:type_name -> cfm.UpdateNodeResponse.ChainConfigErrorsEntry
-	10, // 17: cfm.UpdateNodeResponse.ChainConfigErrorsEntry.value:type_name -> cfm.ChainConfigError
-	11, // 18: cfm.FeedsManager.ApprovedJob:input_type -> cfm.ApprovedJobRequest
-	13, // 19: cfm.FeedsManager.Healthcheck:input_type -> cfm.HealthcheckRequest
-	8,  // 20: cfm.FeedsManager.UpdateNode:input_type -> cfm.UpdateNodeRequest
-	15, // 21: cfm.FeedsManager.RejectedJob:input_type -> cfm.RejectedJobRequest
-	17, // 22: cfm.FeedsManager.CancelledJob:input_type -> cfm.CancelledJobRequest
-	19, // 23: cfm.NodeService.ProposeJob:input_type -> cfm.ProposeJobRequest
-	21, // 24: cfm.NodeService.DeleteJob:input_type -> cfm.DeleteJobRequest
-	23, // 25: cfm.NodeService.RevokeJob:input_type -> cfm.RevokeJobRequest
-	12, // 26: cfm.FeedsManager.ApprovedJob:output_type -> cfm.ApprovedJobResponse
-	14, // 27: cfm.FeedsManager.Healthcheck:output_type -> cfm.HealthcheckResponse
-	9,  // 28: cfm.FeedsManager.UpdateNode:output_type -> cfm.UpdateNodeResponse
-	16, // 29: cfm.FeedsManager.RejectedJob:output_type -> cfm.RejectedJobResponse
-	18, // 30: cfm.FeedsManager.CancelledJob:output_type -> cfm.CancelledJobResponse
-	20, // 31: cfm.NodeService.ProposeJob:output_type -> cfm.ProposeJobResponse
-	22, // 32: cfm.NodeService.DeleteJob:output_type -> cfm.DeleteJobResponse
-	24, // 33: cfm.NodeService.RevokeJob:output_type -> cfm.RevokeJobResponse
-	26, // [26:34] is the sub-list for method output_type
-	18, // [18:26] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	5,  // 12: cfm.UpdateNodeRequest.accounts:type_name -> cfm.Account
+	4,  // 13: cfm.UpdateNodeRequest.chains:type_name -> cfm.Chain
+	9,  // 14: cfm.UpdateNodeRequest.chain_configs:type_name -> cfm.ChainConfig
+	29, // 15: cfm.UpdateNodeRequest.p2p_key_bundles:type_name -> cfm.P2PKeyBundle
+	40, // 16: cfm.UpdateNodeResponse.chain_config_errors:type_name -> cfm.UpdateNodeResponse.ChainConfigErrorsEntry
+	30, // 17: cfm.TransferJobRequest.labels:type_name -> cfm.Label
+	30, // 18: cfm.Job.labels:type_name -> cfm.Label
+	41, // 19: cfm.Job.created_at:type_name -> google.protobuf.Timestamp
+	41, // 20: cfm.Job.updated_at:type_name -> google.protobuf.Timestamp
+	2,  // 21: cfm.Proposal.status:type_name -> cfm.ProposalStatus
+	3,  // 22: cfm.Proposal.delivery_status:type_name -> cfm.ProposalDeliveryStatus
+	41, // 23: cfm.Proposal.created_at:type_name -> google.protobuf.Timestamp
+	41, // 24: cfm.Proposal.updated_at:type_name -> google.protobuf.Timestamp
+	31, // 25: cfm.TransferedJobRequest.job:type_name -> cfm.Job
+	32, // 26: cfm.TransferedJobRequest.proposals:type_name -> cfm.Proposal
+	12, // 27: cfm.UpdateNodeResponse.ChainConfigErrorsEntry.value:type_name -> cfm.ChainConfigError
+	13, // 28: cfm.FeedsManager.ApprovedJob:input_type -> cfm.ApprovedJobRequest
+	15, // 29: cfm.FeedsManager.Healthcheck:input_type -> cfm.HealthcheckRequest
+	10, // 30: cfm.FeedsManager.UpdateNode:input_type -> cfm.UpdateNodeRequest
+	17, // 31: cfm.FeedsManager.RejectedJob:input_type -> cfm.RejectedJobRequest
+	19, // 32: cfm.FeedsManager.CancelledJob:input_type -> cfm.CancelledJobRequest
+	33, // 33: cfm.FeedsManager.TransferedJob:input_type -> cfm.TransferedJobRequest
+	23, // 34: cfm.NodeService.ProposeJob:input_type -> cfm.ProposeJobRequest
+	25, // 35: cfm.NodeService.DeleteJob:input_type -> cfm.DeleteJobRequest
+	27, // 36: cfm.NodeService.RevokeJob:input_type -> cfm.RevokeJobRequest
+	21, // 37: cfm.NodeService.TransferJob:input_type -> cfm.TransferJobRequest
+	14, // 38: cfm.FeedsManager.ApprovedJob:output_type -> cfm.ApprovedJobResponse
+	16, // 39: cfm.FeedsManager.Healthcheck:output_type -> cfm.HealthcheckResponse
+	11, // 40: cfm.FeedsManager.UpdateNode:output_type -> cfm.UpdateNodeResponse
+	18, // 41: cfm.FeedsManager.RejectedJob:output_type -> cfm.RejectedJobResponse
+	20, // 42: cfm.FeedsManager.CancelledJob:output_type -> cfm.CancelledJobResponse
+	34, // 43: cfm.FeedsManager.TransferedJob:output_type -> cfm.TransferedJobResponse
+	24, // 44: cfm.NodeService.ProposeJob:output_type -> cfm.ProposeJobResponse
+	26, // 45: cfm.NodeService.DeleteJob:output_type -> cfm.DeleteJobResponse
+	28, // 46: cfm.NodeService.RevokeJob:output_type -> cfm.RevokeJobResponse
+	22, // 47: cfm.NodeService.TransferJob:output_type -> cfm.TransferJobResponse
+	38, // [38:48] is the sub-list for method output_type
+	28, // [28:38] is the sub-list for method input_type
+	28, // [28:28] is the sub-list for extension type_name
+	28, // [28:28] is the sub-list for extension extendee
+	0,  // [0:28] is the sub-list for field type_name
 }
 
 func init() { file_orchestrator_feedsmanager_feedsmanager_proto_init() }
@@ -2036,13 +2650,14 @@ func file_orchestrator_feedsmanager_feedsmanager_proto_init() {
 	file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[4].OneofWrappers = []any{}
 	file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[5].OneofWrappers = []any{}
 	file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[6].OneofWrappers = []any{}
+	file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[26].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc), len(file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc)),
-			NumEnums:      2,
-			NumMessages:   30,
+			NumEnums:      4,
+			NumMessages:   37,
 			NumExtensions: 0,
 			NumServices:   2,
 		},
