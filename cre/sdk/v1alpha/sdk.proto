@@ -50,6 +50,13 @@ message AttributedSignature {
   uint32 signer_id = 2;
 }
 
+message GenerateReportRequest {
+  bytes encoded_payload = 1;
+  string encoder_name = 2;
+  string signing_algo = 3;
+  string hashing_algo = 4;
+}
+
 message CapabilityRequest {
   string id = 1;
   google.protobuf.Any payload = 2;
