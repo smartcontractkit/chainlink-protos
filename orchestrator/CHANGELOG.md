@@ -1,5 +1,11 @@
 # @chainlink/orchestrator
 
+## 0.8.0
+
+### Minor Changes
+
+- [#104](https://github.com/smartcontractkit/chainlink-protos/pull/104) [`9bb2e80`](https://github.com/smartcontractkit/chainlink-protos/commit/9bb2e80174448a27978b13f6583ad561de4ff47a) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add SUI
+
 ## 0.7.0
 
 ### Minor Changes
