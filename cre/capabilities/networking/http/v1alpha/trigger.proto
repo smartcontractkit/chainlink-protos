@@ -35,7 +35,5 @@ service HTTP {
     capability_id: "http-trigger@1.0.0-alpha"
   };
 
-  rpc Trigger(Config) returns (stream Payload) {
-    option (tools.generator.v1alpha.method) = {map_to_untyped_api: true};
-  }
+  rpc Trigger(Config) returns (stream Payload);
 }
