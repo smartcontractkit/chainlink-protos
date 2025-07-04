@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.13.0
+
+### Minor Changes
+
+- [#106](https://github.com/smartcontractkit/chainlink-protos/pull/106) [`b2c22a9`](https://github.com/smartcontractkit/chainlink-protos/commit/b2c22a951d3ed8c27da8026b447f80b7d2aafc84) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add SUI
+
 ## 0.12.0
 
 ### Minor Changes
