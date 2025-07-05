@@ -3,3 +3,4 @@ packages:
   - 'orchestrator'
   - 'svr'
   - 'rmn'
+  - 'storage-service'
