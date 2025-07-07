@@ -144,12 +144,14 @@ message Receipt {
 }
 
 // ----- Request/Reply Wrappers -----
-message LatestAndFinalizedHeadReply {
-  Head latest = 1;
-  Head finalized = 2;
+message HeaderByNumberRequest {
+  values.v1.BigInt block_number = 1;
+}
+message HeaderByNumberReply {
+  Header header = 1;
 }
 
-message Head {
+message Header {
   uint64 timestamp = 1; // unix timestamp
   values.v1.BigInt block_number = 2;
   bytes hash = 3; // in [32]byte fix-sized array format
@@ -187,7 +189,7 @@ service Client {
   rpc EstimateGas(EstimateGasRequest) returns (EstimateGasReply);
   rpc GetTransactionByHash(GetTransactionByHashRequest) returns (GetTransactionByHashReply);
   rpc GetTransactionReceipt(GetTransactionReceiptRequest) returns (GetTransactionReceiptReply);
-  rpc LatestAndFinalizedHead(google.protobuf.Empty) returns (LatestAndFinalizedHeadReply);
+  rpc HeaderByNumber(HeaderByNumberRequest) returns (HeaderByNumberReply);
   rpc RegisterLogTracking(RegisterLogTrackingRequest) returns (google.protobuf.Empty);
   rpc UnregisterLogTracking(UnregisterLogTrackingRequest) returns (google.protobuf.Empty);
   rpc LogTrigger(FilterLogTriggerRequest) returns (stream Log);
