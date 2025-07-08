@@ -1,7 +1,7 @@
-* @smartcontractkit/deployment-automation @smartcontractkit/devex-tooling
+* @smartcontractkit/devex-tooling
 
-/job-distributor/ @smartcontractkit/deployment-automation @smartcontractkit/devex-tooling
-/orchestrator/ @smartcontractkit/deployment-automation @smartcontractkit/devex-tooling
+/job-distributor/ @smartcontractkit/devex-tooling
+/orchestrator/ @smartcontractkit/devex-tooling
 /svr/ @smartcontractkit/oev
 /rmn/ @smartcontractkit/RMN @smartcontractkit/ccip
 /billing/ @smartcontractkit/cre-business @smartcontractkit/core
