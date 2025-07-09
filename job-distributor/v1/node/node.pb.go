@@ -139,19 +139,20 @@ func (EnableState) EnumDescriptor() ([]byte, []int) {
 
 // Node represents a node within the Job Distributor system.
 type Node struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                               // Unique identifier for the node.
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                           // Human-readable name for the node.
-	PublicKey     string                 `protobuf:"bytes,3,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`                // Public key used for secure communications.
-	IsEnabled     bool                   `protobuf:"varint,4,opt,name=is_enabled,json=isEnabled,proto3" json:"is_enabled,omitempty"`               // Indicates if the node is currently enabled.
-	IsConnected   bool                   `protobuf:"varint,5,opt,name=is_connected,json=isConnected,proto3" json:"is_connected,omitempty"`         // Indicates if the node is currently connected to the network.
-	Labels        []*ptypes.Label        `protobuf:"bytes,6,rep,name=labels,proto3" json:"labels,omitempty"`                                       // Set of labels associated with the node.
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`                // Timestamp when the node was created.
-	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`                // Timestamp when the node was last updated.
-	WorkflowKey   *string                `protobuf:"bytes,9,opt,name=workflow_key,json=workflowKey,proto3,oneof" json:"workflow_key,omitempty"`    // Workflow Public key
-	P2PKeyBundles []*P2PKeyBundle        `protobuf:"bytes,10,rep,name=p2p_key_bundles,json=p2pKeyBundles,proto3" json:"p2p_key_bundles,omitempty"` // List of P2P key bundles associated with the node.
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                     // Unique identifier for the node.
+	Name            string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`                                                 // Human-readable name for the node.
+	PublicKey       string                 `protobuf:"bytes,3,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`                      // Public key used for secure communications.
+	IsEnabled       bool                   `protobuf:"varint,4,opt,name=is_enabled,json=isEnabled,proto3" json:"is_enabled,omitempty"`                     // Indicates if the node is currently enabled.
+	IsConnected     bool                   `protobuf:"varint,5,opt,name=is_connected,json=isConnected,proto3" json:"is_connected,omitempty"`               // Indicates if the node is currently connected to the network.
+	Labels          []*ptypes.Label        `protobuf:"bytes,6,rep,name=labels,proto3" json:"labels,omitempty"`                                             // Set of labels associated with the node.
+	CreatedAt       *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`                      // Timestamp when the node was created.
+	UpdatedAt       *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`                      // Timestamp when the node was last updated.
+	WorkflowKey     *string                `protobuf:"bytes,9,opt,name=workflow_key,json=workflowKey,proto3,oneof" json:"workflow_key,omitempty"`          // Workflow Public key
+	P2PKeyBundles   []*P2PKeyBundle        `protobuf:"bytes,10,rep,name=p2p_key_bundles,json=p2pKeyBundles,proto3" json:"p2p_key_bundles,omitempty"`       // List of P2P key bundles associated with the node.
+	NopFriendlyName string                 `protobuf:"bytes,13,opt,name=nop_friendly_name,json=nopFriendlyName,proto3" json:"nop_friendly_name,omitempty"` // Friendly name defined by NOP
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *Node) Reset() {
@@ -252,6 +253,13 @@ func (x *Node) GetP2PKeyBundles() []*P2PKeyBundle {
 		return x.P2PKeyBundles
 	}
 	return nil
+}
+
+func (x *Node) GetNopFriendlyName() string {
+	if x != nil {
+		return x.NopFriendlyName
+	}
+	return ""
 }
 
 type Chain struct {
@@ -1797,7 +1805,7 @@ var File_job_distributor_v1_node_node_proto protoreflect.FileDescriptor
 
 const file_job_distributor_v1_node_node_proto_rawDesc = "" +
 	"\n" +
-	"\"job-distributor/v1/node/node.proto\x12\vapi.node.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,job-distributor/v1/shared/ptypes/label.proto\"\xa7\x03\n" +
+	"\"job-distributor/v1/node/node.proto\x12\vapi.node.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,job-distributor/v1/shared/ptypes/label.proto\"\xd3\x03\n" +
 	"\x04Node\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1d\n" +
@@ -1813,7 +1821,8 @@ const file_job_distributor_v1_node_node_proto_rawDesc = "" +
 	"updated_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12&\n" +
 	"\fworkflow_key\x18\t \x01(\tH\x00R\vworkflowKey\x88\x01\x01\x12A\n" +
 	"\x0fp2p_key_bundles\x18\n" +
-	" \x03(\v2\x19.api.node.v1.P2PKeyBundleR\rp2pKeyBundlesB\x0f\n" +
+	" \x03(\v2\x19.api.node.v1.P2PKeyBundleR\rp2pKeyBundles\x12*\n" +
+	"\x11nop_friendly_name\x18\r \x01(\tR\x0fnopFriendlyNameB\x0f\n" +
 	"\r_workflow_key\"C\n" +
 	"\x05Chain\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12*\n" +
