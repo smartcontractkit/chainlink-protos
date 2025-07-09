@@ -180,6 +180,69 @@ service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "evm@1.0.0"
+    labels: {
+      // from https://github.com/smartcontractkit/chain-selectors/blob/main/selectors.yml
+      // as a subset of the selectors supported on the CRE
+      key: "ChainSelector"
+      value: {
+        uint64_label: {
+          defaults: [
+            {
+              key: "ethereum-mainnet-arbitrum-1"
+              value: 4949039107694359620
+            },
+            {
+              key: "ethereum-mainnet"
+              value: 5009297550715157269
+            },
+            {
+              key: "polygon-mainnet"
+              value: 4051577828743386545
+            },
+            {
+              key: "binance_smart_chain-mainnet-opbnb-1"
+              value: 465944652040885897
+            },
+            {
+              key: "avalanche-mainnet"
+              value: 6433500567565415381
+            },
+            {
+              key: "ethereum-mainnet-optimism-1"
+              value: 3734403246176062136
+            },
+            {
+              key: "ethereum-testnet-sepolia-arbitrum-1"
+              value: 3478487238524512106
+            },
+            {
+              key: "ethereum-testnet-sepolia"
+              value: 16015286601757825753
+            },
+            {
+              key: "ethereum-testnet-sepolia-base-1"
+              value: 10344971235874465080
+            },
+            {
+              key: "polygon-testnet-amoy"
+              value: 16281711391670634445
+            },
+            {
+              key: "binance_smart_chain-testnet-opbnb-1"
+              value: 13274425992935471758
+            },
+            {
+              key: "avalanche-testnet-fuj"
+              value: 14767482510784806043
+            },
+            {
+              key: "ethereum-testnet-sepolia-optimism-1"
+              value: 5224473277236331295
+            }
+          ]
+        }
+      }
+    }
   };
   rpc CallContract(CallContractRequest) returns (CallContractReply);
   rpc FilterLogs(FilterLogsRequest) returns (FilterLogsReply);
