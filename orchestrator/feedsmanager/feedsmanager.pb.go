@@ -576,6 +576,7 @@ type UpdateNodeRequest struct {
 	ChainConfigs       []*ChainConfig         `protobuf:"bytes,10,rep,name=chain_configs,json=chainConfigs,proto3" json:"chain_configs,omitempty"`
 	WorkflowKey        *string                `protobuf:"bytes,11,opt,name=workflow_key,json=workflowKey,proto3,oneof" json:"workflow_key,omitempty"`
 	P2PKeyBundles      []*P2PKeyBundle        `protobuf:"bytes,12,rep,name=p2p_key_bundles,json=p2pKeyBundles,proto3" json:"p2p_key_bundles,omitempty"`
+	NopFriendlyName    string                 `protobuf:"bytes,13,opt,name=nop_friendly_name,json=nopFriendlyName,proto3" json:"nop_friendly_name,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -692,6 +693,13 @@ func (x *UpdateNodeRequest) GetP2PKeyBundles() []*P2PKeyBundle {
 		return x.P2PKeyBundles
 	}
 	return nil
+}
+
+func (x *UpdateNodeRequest) GetNopFriendlyName() string {
+	if x != nil {
+		return x.NopFriendlyName
+	}
+	return ""
 }
 
 type UpdateNodeResponse struct {
@@ -1843,7 +1851,7 @@ const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"\vocr2_config\x18\x06 \x01(\v2\x0f.cfm.OCR2ConfigR\n" +
 	"ocr2Config\x12@\n" +
 	"\x1aaccount_address_public_key\x18\a \x01(\tH\x00R\x17accountAddressPublicKey\x88\x01\x01B\x1d\n" +
-	"\x1b_account_address_public_key\"\x93\x04\n" +
+	"\x1b_account_address_public_key\"\xbf\x04\n" +
 	"\x11UpdateNodeRequest\x12)\n" +
 	"\tjob_types\x18\x01 \x03(\x0e2\f.cfm.JobTypeR\bjobTypes\x12\x19\n" +
 	"\bchain_id\x18\x02 \x01(\x03R\achainId\x12+\n" +
@@ -1858,7 +1866,8 @@ const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"\rchain_configs\x18\n" +
 	" \x03(\v2\x10.cfm.ChainConfigR\fchainConfigs\x12&\n" +
 	"\fworkflow_key\x18\v \x01(\tH\x00R\vworkflowKey\x88\x01\x01\x129\n" +
-	"\x0fp2p_key_bundles\x18\f \x03(\v2\x11.cfm.P2PKeyBundleR\rp2pKeyBundlesB\x0f\n" +
+	"\x0fp2p_key_bundles\x18\f \x03(\v2\x11.cfm.P2PKeyBundleR\rp2pKeyBundles\x12*\n" +
+	"\x11nop_friendly_name\x18\r \x01(\tR\x0fnopFriendlyNameB\x0f\n" +
 	"\r_workflow_key\"\xd1\x01\n" +
 	"\x12UpdateNodeResponse\x12^\n" +
 	"\x13chain_config_errors\x18\x01 \x03(\v2..cfm.UpdateNodeResponse.ChainConfigErrorsEntryR\x11chainConfigErrors\x1a[\n" +
