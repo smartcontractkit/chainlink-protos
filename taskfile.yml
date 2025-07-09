@@ -22,6 +22,7 @@ tasks:
       - task proto:gen:rmn
       - task proto:gen:workflows
       - task proto:gen:billing
+      - task proto:gen:storage-service
       - task go:mod:tidy
 
   proto:gen:job-distributor:
@@ -72,6 +73,11 @@ tasks:
       desc: "Generate Go code from protobuf files for billing"
       cmds:
         - cd billing && make generate
+
+  proto:gen:storage-service:
+    desc: "Generate Go code from protobuf files for storage-service"
+    cmds:
+      - cd storage-service && make generate
 
   proto:clean:
     desc: "Clean generated protobuf files for all services"
