@@ -32,12 +32,16 @@ message ConsensusDescriptor {
     AggregationType aggregation = 1;
     FieldsMap fields_map = 2;
   }
-  string encoder_name = 3;
-  string signing_algo = 4;
-  string hashing_algo = 5;
 }
 
-message ConsensusOutputs {
+message ReportRequest {
+  bytes encoded_payload = 1;
+  string encoder_name = 2;
+  string signing_algo = 3;
+  string hashing_algo = 4;
+}
+
+message ReportResponse {
   bytes config_digest = 1;
   uint64 seq_nr = 2;
   bytes report_context = 3; // combination of seq_nr and config_digest
