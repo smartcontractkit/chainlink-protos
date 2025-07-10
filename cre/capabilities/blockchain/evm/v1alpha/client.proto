@@ -232,7 +232,7 @@ service Client {
               value: 13274425992935471758
             },
             {
-              key: "avalanche-testnet-fuj"
+              key: "avalanche-testnet-fuji"
               value: 14767482510784806043
             },
             {
