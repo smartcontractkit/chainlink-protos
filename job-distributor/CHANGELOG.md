@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.13.1
+
+### Patch Changes
+
+- [#112](https://github.com/smartcontractkit/chainlink-protos/pull/112) [`8ca9bce`](https://github.com/smartcontractkit/chainlink-protos/commit/8ca9bce6758247f40809601e9fb8710efa12824b) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add nop friendly name to Node
+
 ## 0.13.0
 
 ### Minor Changes

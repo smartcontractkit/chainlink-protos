@@ -129,6 +129,7 @@ message UpdateNodeRequest {
   repeated ChainConfig chain_configs = 10;
   optional string workflow_key = 11;
   repeated P2PKeyBundle p2p_key_bundles = 12;
+  string nop_friendly_name = 13;
 
 }
 message UpdateNodeResponse {
