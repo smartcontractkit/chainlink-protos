@@ -10,6 +10,8 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/e
 message MeteringReport {
   map<string, MeteringReportStep> steps = 1;
   WorkflowMetadata metadata = 2;
+  bool meteringMode = 3;
+  string message = 4;
 }
 
 message MeteringReportStep {

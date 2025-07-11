@@ -26,6 +26,8 @@ type MeteringReport struct {
 	state         protoimpl.MessageState         `protogen:"open.v1"`
 	Steps         map[string]*MeteringReportStep `protobuf:"bytes,1,rep,name=steps,proto3" json:"steps,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	Metadata      *WorkflowMetadata              `protobuf:"bytes,2,opt,name=metadata,proto3" json:"metadata,omitempty"`
+	MeteringMode  bool                           `protobuf:"varint,3,opt,name=meteringMode,proto3" json:"meteringMode,omitempty"`
+	Message       string                         `protobuf:"bytes,4,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -72,6 +74,20 @@ func (x *MeteringReport) GetMetadata() *WorkflowMetadata {
 		return x.Metadata
 	}
 	return nil
+}
+
+func (x *MeteringReport) GetMeteringMode() bool {
+	if x != nil {
+		return x.MeteringMode
+	}
+	return false
+}
+
+func (x *MeteringReport) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
 }
 
 type MeteringReportStep struct {
@@ -182,10 +198,12 @@ var File_workflows_v1_metering_proto protoreflect.FileDescriptor
 
 const file_workflows_v1_metering_proto_rawDesc = "" +
 	"\n" +
-	"\x1bworkflows/v1/metering.proto\x12\fworkflows.v1\x1a\x1bworkflows/v1/metadata.proto\"\xe7\x01\n" +
+	"\x1bworkflows/v1/metering.proto\x12\fworkflows.v1\x1a\x1bworkflows/v1/metadata.proto\"\xa5\x02\n" +
 	"\x0eMeteringReport\x12=\n" +
 	"\x05steps\x18\x01 \x03(\v2'.workflows.v1.MeteringReport.StepsEntryR\x05steps\x12:\n" +
-	"\bmetadata\x18\x02 \x01(\v2\x1e.workflows.v1.WorkflowMetadataR\bmetadata\x1aZ\n" +
+	"\bmetadata\x18\x02 \x01(\v2\x1e.workflows.v1.WorkflowMetadataR\bmetadata\x12\"\n" +
+	"\fmeteringMode\x18\x03 \x01(\bR\fmeteringMode\x12\x18\n" +
+	"\amessage\x18\x04 \x01(\tR\amessage\x1aZ\n" +
 	"\n" +
 	"StepsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x126\n" +

@@ -1,5 +1,11 @@
 # @chainlink/orchestrator
 
+## 0.8.1
+
+### Patch Changes
+
+- [#111](https://github.com/smartcontractkit/chainlink-protos/pull/111) [`44311da`](https://github.com/smartcontractkit/chainlink-protos/commit/44311daeb1ae57c7f40bfdbffbe7a5b38b2ae62c) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add nop friendly name to UpdateNodeRequest
+
 ## 0.8.0
 
 ### Minor Changes
