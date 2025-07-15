@@ -1,5 +1,5 @@
 ---
-"@chainlink/storage-service": patch
+"@chainlink/cre-sdk": patch
 ---
 
 PLEX-1560 Replace LatestAndFinalizedHead with HeaderByNumber
