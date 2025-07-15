@@ -27,17 +27,14 @@ enum ResourceType {
 enum MeasurementUnit {
   // Unknown / unset.
   MEASUREMENT_UNIT_UNSPECIFIED = 0;
-
-  // Megabyte-months (WF_MEMORY, DON_STORAGE, WF_STORAGE).
-  MEASUREMENT_UNIT_MEGABYTE_MONTHS = 1;
-  // Aggregate megabytes (CONSENSUS).
-  MEASUREMENT_UNIT_MEGABYTES_AGGREGATE = 2;
+  // Bytes (CONSENSUS).
+  MEASUREMENT_UNIT_BYTES = 1;
   // Milliseconds (COMPUTE).
-  MEASUREMENT_UNIT_MILLISECONDS = 3;
+  MEASUREMENT_UNIT_MILLISECONDS = 2;
   // Operations count (ALERTS, EVENTS, CHAIN_CALLS, TRIGGERS).
-  MEASUREMENT_UNIT_OPERATIONS = 4;
+  MEASUREMENT_UNIT_OPERATIONS = 3;
   // Cost (GAS).
-  MEASUREMENT_UNIT_COST = 5;
+  MEASUREMENT_UNIT_COST = 4;
 }
 
 // Organization’s credit balances.
@@ -86,6 +83,8 @@ message SubmitWorkflowReceiptRequest {
   string workflow_id = 4;
   string workflow_execution_id = 5;
   workflows.v1.MeteringReport metering = 6;
+  boolean meteringMode = 7;
+  string meteringModeErr = 8;
 }
 
 // -----------------------------------------------------------------------------
