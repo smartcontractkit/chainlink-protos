@@ -83,7 +83,7 @@ message SubmitWorkflowReceiptRequest {
   string workflow_id = 4;
   string workflow_execution_id = 5;
   workflows.v1.MeteringReport metering = 6;
-  boolean meteringMode = 7;
+  bool meteringMode = 7;
   string meteringModeErr = 8;
 }
 
