@@ -3,6 +3,7 @@ syntax = "proto3";
 package capabilities.blockchain.evm.v1alpha;
 
 import "google/protobuf/empty.proto";
+import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 import "values/v1/values.proto";
 
@@ -259,13 +260,6 @@ service Client {
   rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
 }
 
-message SignedReport {
-  bytes raw_report = 1;
-  bytes report_context = 2;
-  repeated bytes signatures = 3;
-  bytes id = 4;
-}
-
 enum ReceiverContractExecutionStatus {
   RECEIVER_CONTRACT_EXECUTION_STATUS_SUCCESS = 0;
   RECEIVER_CONTRACT_EXECUTION_STATUS_REVERTED = 1;
@@ -273,7 +267,7 @@ enum ReceiverContractExecutionStatus {
 
 message WriteReportRequest {
   bytes receiver = 1;
-  SignedReport report = 2;
+  sdk.v1alpha.ReportResponse report = 2;
   optional GasConfig gas_config = 3;
 }
 
