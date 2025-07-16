@@ -3,6 +3,7 @@ syntax = "proto3";
 package capabilities.blockchain.evm.v1alpha;
 
 import "google/protobuf/empty.proto";
+import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 import "values/v1/values.proto";
 
@@ -179,7 +180,7 @@ message UnregisterLogTrackingRequest {
 service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
-    capability_id: "evm@1.0.0"
+    capability_id: "evm@1.0.0-alpha"
     labels: {
       // from https://github.com/smartcontractkit/chain-selectors/blob/main/selectors.yml
       // as a subset of the selectors supported on the CRE
@@ -254,7 +255,7 @@ service Client {
   rpc RegisterLogTracking(RegisterLogTrackingRequest) returns (google.protobuf.Empty);
   rpc UnregisterLogTracking(UnregisterLogTrackingRequest) returns (google.protobuf.Empty);
   rpc LogTrigger(FilterLogTriggerRequest) returns (stream Log);
-  rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
+  rpc WriteReport(WriteReportRequest) returns (sdk.v1alpha.ReportResponse);
 }
 
 message SignedReport {
