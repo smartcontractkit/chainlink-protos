@@ -21,58 +21,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type LogLine struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	NodeTimestamp string                 `protobuf:"bytes,1,opt,name=node_timestamp,json=nodeTimestamp,proto3" json:"node_timestamp,omitempty"`
-	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *LogLine) Reset() {
-	*x = LogLine{}
-	mi := &file_workflows_v1_user_logs_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *LogLine) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*LogLine) ProtoMessage() {}
-
-func (x *LogLine) ProtoReflect() protoreflect.Message {
-	mi := &file_workflows_v1_user_logs_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use LogLine.ProtoReflect.Descriptor instead.
-func (*LogLine) Descriptor() ([]byte, []int) {
-	return file_workflows_v1_user_logs_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *LogLine) GetNodeTimestamp() string {
-	if x != nil {
-		return x.NodeTimestamp
-	}
-	return ""
-}
-
-func (x *LogLine) GetMessage() string {
-	if x != nil {
-		return x.Message
-	}
-	return ""
-}
-
 type UserLogs struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	M             *WorkflowMetadata      `protobuf:"bytes,1,opt,name=m,proto3" json:"m,omitempty"`
@@ -83,7 +31,7 @@ type UserLogs struct {
 
 func (x *UserLogs) Reset() {
 	*x = UserLogs{}
-	mi := &file_workflows_v1_user_logs_proto_msgTypes[1]
+	mi := &file_workflows_v1_user_logs_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -95,7 +43,7 @@ func (x *UserLogs) String() string {
 func (*UserLogs) ProtoMessage() {}
 
 func (x *UserLogs) ProtoReflect() protoreflect.Message {
-	mi := &file_workflows_v1_user_logs_proto_msgTypes[1]
+	mi := &file_workflows_v1_user_logs_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -108,7 +56,7 @@ func (x *UserLogs) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserLogs.ProtoReflect.Descriptor instead.
 func (*UserLogs) Descriptor() ([]byte, []int) {
-	return file_workflows_v1_user_logs_proto_rawDescGZIP(), []int{1}
+	return file_workflows_v1_user_logs_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *UserLogs) GetM() *WorkflowMetadata {
@@ -125,17 +73,69 @@ func (x *UserLogs) GetLogLines() []*LogLine {
 	return nil
 }
 
+type LogLine struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	NodeTimestamp string                 `protobuf:"bytes,1,opt,name=node_timestamp,json=nodeTimestamp,proto3" json:"node_timestamp,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LogLine) Reset() {
+	*x = LogLine{}
+	mi := &file_workflows_v1_user_logs_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LogLine) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LogLine) ProtoMessage() {}
+
+func (x *LogLine) ProtoReflect() protoreflect.Message {
+	mi := &file_workflows_v1_user_logs_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LogLine.ProtoReflect.Descriptor instead.
+func (*LogLine) Descriptor() ([]byte, []int) {
+	return file_workflows_v1_user_logs_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *LogLine) GetNodeTimestamp() string {
+	if x != nil {
+		return x.NodeTimestamp
+	}
+	return ""
+}
+
+func (x *LogLine) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
 var File_workflows_v1_user_logs_proto protoreflect.FileDescriptor
 
 const file_workflows_v1_user_logs_proto_rawDesc = "" +
 	"\n" +
-	"\x1cworkflows/v1/user_logs.proto\x12\fworkflows.v1\x1a\x1bworkflows/v1/metadata.proto\"J\n" +
-	"\aLogLine\x12%\n" +
-	"\x0enode_timestamp\x18\x01 \x01(\tR\rnodeTimestamp\x12\x18\n" +
-	"\amessage\x18\x02 \x01(\tR\amessage\"l\n" +
+	"\x1cworkflows/v1/user_logs.proto\x12\fworkflows.v1\x1a\x1bworkflows/v1/metadata.proto\"l\n" +
 	"\bUserLogs\x12,\n" +
 	"\x01m\x18\x01 \x01(\v2\x1e.workflows.v1.WorkflowMetadataR\x01m\x122\n" +
-	"\tlog_lines\x18\x02 \x03(\v2\x15.workflows.v1.LogLineR\blogLinesBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
+	"\tlog_lines\x18\x02 \x03(\v2\x15.workflows.v1.LogLineR\blogLines\"J\n" +
+	"\aLogLine\x12%\n" +
+	"\x0enode_timestamp\x18\x01 \x01(\tR\rnodeTimestamp\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessageBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
 
 var (
 	file_workflows_v1_user_logs_proto_rawDescOnce sync.Once
@@ -151,13 +151,13 @@ func file_workflows_v1_user_logs_proto_rawDescGZIP() []byte {
 
 var file_workflows_v1_user_logs_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_workflows_v1_user_logs_proto_goTypes = []any{
-	(*LogLine)(nil),          // 0: workflows.v1.LogLine
-	(*UserLogs)(nil),         // 1: workflows.v1.UserLogs
+	(*UserLogs)(nil),         // 0: workflows.v1.UserLogs
+	(*LogLine)(nil),          // 1: workflows.v1.LogLine
 	(*WorkflowMetadata)(nil), // 2: workflows.v1.WorkflowMetadata
 }
 var file_workflows_v1_user_logs_proto_depIdxs = []int32{
 	2, // 0: workflows.v1.UserLogs.m:type_name -> workflows.v1.WorkflowMetadata
-	0, // 1: workflows.v1.UserLogs.log_lines:type_name -> workflows.v1.LogLine
+	1, // 1: workflows.v1.UserLogs.log_lines:type_name -> workflows.v1.LogLine
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name

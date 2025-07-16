@@ -6,12 +6,12 @@ import "workflows/v1/metadata.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/events";
 
-message LogLine {
-  string node_timestamp = 1;
-  string message = 2;
-}
-
 message UserLogs {
   WorkflowMetadata m = 1;
   repeated LogLine log_lines = 2;
+}
+
+message LogLine {
+  string node_timestamp = 1;
+  string message = 2;
 }
