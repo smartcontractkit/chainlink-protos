@@ -1,0 +1,49 @@
+name: Lint and breaking check for cre
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  buf-cre:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Check if cre/ files were modified
+        id: changes
+        run: |
+          if git diff --name-only origin/main...HEAD | grep '^cre/'; then
+            echo "cre_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "cre_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set tool versions
+        if: steps.changes.outputs.cre_changed == 'true'
+        id: tool-versions
+        uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 #v1.0.8
+
+      - name: Run buf lint for cre
+        if: steps.changes.outputs.cre_changed == 'true'
+        uses: bufbuild/buf-action@c231a1aa9281e5db706c970f468f0744a37561fd # v1
+        with:
+          input: cre
+          lint: true
+          version: ${{ steps.tool-versions.outputs.buf_version }}
+
+      - name: Run buf breaking for cre
+        if: steps.changes.outputs.cre_changed == 'true'
+        uses: bufbuild/buf-action@c231a1aa9281e5db706c970f468f0744a37561fd # v1
+        with:
+          input: cre
+          breaking: true
+          version: ${{ steps.tool-versions.outputs.buf_version }}
+          exclude_paths: node_modules
+
+      - name: Skip buf checks — no cre/ changes
+        if: steps.changes.outputs.cre_changed == 'false'
+        run: echo "No changes to cre/ — skipping buf lint and breaking checks."
