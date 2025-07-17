@@ -24,7 +24,7 @@ service Cron {
     capability_id: "cron-trigger@1.0.0"
   };
 
-  rpc Trigger(Config) returns (stream Payload);
+  rpc Triggerz(Config) returns (stream Payload);
 
   rpc LegacyTrigger(Config) returns (stream LegacyPayload) {
     option (tools.generator.v1alpha.method) = {map_to_untyped_api: true};
