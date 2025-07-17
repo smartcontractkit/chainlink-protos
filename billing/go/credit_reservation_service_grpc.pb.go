@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: creditreservation/v1/credit_reservation_service.proto
+// source: creditreservation/v1alpha/credit_reservation_service.proto
 
 package billing
 
@@ -20,17 +20,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CreditReservationService_GetOrganizationCreditsByWorkflow_FullMethodName = "/creditreservation.v1.CreditReservationService/GetOrganizationCreditsByWorkflow"
-	CreditReservationService_ReserveCredits_FullMethodName                   = "/creditreservation.v1.CreditReservationService/ReserveCredits"
-	CreditReservationService_SubmitWorkflowReceipt_FullMethodName            = "/creditreservation.v1.CreditReservationService/SubmitWorkflowReceipt"
-	CreditReservationService_GetRateCard_FullMethodName                      = "/creditreservation.v1.CreditReservationService/GetRateCard"
+	CreditReservationService_GetOrganizationCreditsByWorkflow_FullMethodName = "/creditreservation.v1alpha.CreditReservationService/GetOrganizationCreditsByWorkflow"
+	CreditReservationService_ReserveCredits_FullMethodName                   = "/creditreservation.v1alpha.CreditReservationService/ReserveCredits"
+	CreditReservationService_SubmitWorkflowReceipt_FullMethodName            = "/creditreservation.v1alpha.CreditReservationService/SubmitWorkflowReceipt"
+	CreditReservationService_GetRateCard_FullMethodName                      = "/creditreservation.v1alpha.CreditReservationService/GetRateCard"
 )
 
 // CreditReservationServiceClient is the client API for CreditReservationService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Service for reserving and querying credits.
 type CreditReservationServiceClient interface {
 	GetOrganizationCreditsByWorkflow(ctx context.Context, in *GetOrganizationCreditsByWorkflowRequest, opts ...grpc.CallOption) (*GetOrganizationCreditsByWorkflowResponse, error)
 	ReserveCredits(ctx context.Context, in *ReserveCreditsRequest, opts ...grpc.CallOption) (*ReserveCreditsResponse, error)
@@ -89,8 +87,6 @@ func (c *creditReservationServiceClient) GetRateCard(ctx context.Context, in *Ge
 // CreditReservationServiceServer is the server API for CreditReservationService service.
 // All implementations must embed UnimplementedCreditReservationServiceServer
 // for forward compatibility.
-//
-// Service for reserving and querying credits.
 type CreditReservationServiceServer interface {
 	GetOrganizationCreditsByWorkflow(context.Context, *GetOrganizationCreditsByWorkflowRequest) (*GetOrganizationCreditsByWorkflowResponse, error)
 	ReserveCredits(context.Context, *ReserveCreditsRequest) (*ReserveCreditsResponse, error)
@@ -216,7 +212,7 @@ func _CreditReservationService_GetRateCard_Handler(srv interface{}, ctx context.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var CreditReservationService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "creditreservation.v1.CreditReservationService",
+	ServiceName: "creditreservation.v1alpha.CreditReservationService",
 	HandlerType: (*CreditReservationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -237,5 +233,5 @@ var CreditReservationService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "creditreservation/v1/credit_reservation_service.proto",
+	Metadata: "creditreservation/v1alpha/credit_reservation_service.proto",
 }
