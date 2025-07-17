@@ -21,14 +21,14 @@ jobs:
         uses: smartcontractkit/tool-versions-to-env-action@v1.0.8
 
       - name: Run buf lint for cre
-        uses: bufbuild/buf-action@v1
+        uses: bufbuild/buf-action@c231a1aa9281e5db706c970f468f0744a37561fd #v1
         with:
           input: cre
           lint: true
           version: ${{ steps.tool-versions.outputs.buf_version }}
 
       - name: Run buf breaking for cre
-        uses: bufbuild/buf-action@v1
+        uses: bufbuild/buf-action@c231a1aa9281e5db706c970f468f0744a37561fd #v1
         with:
           input: cre
           breaking: true

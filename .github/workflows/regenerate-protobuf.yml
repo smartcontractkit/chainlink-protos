@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
         id: tool-versions
-      - uses: bufbuild/buf-action@v1
+      - uses: bufbuild/buf-action@c231a1aa9281e5db706c970f468f0744a37561fd #v1
         with:
           breaking: ${{ github.event_name == 'pull_request' }}
           version: ${{ steps.tool-versions.outputs.buf_version }}
