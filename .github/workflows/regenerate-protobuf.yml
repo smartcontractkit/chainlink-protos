@@ -3,6 +3,8 @@ name: Regenerate Protobuf Files
 on:
   pull_request:
     types: [opened, reopened, synchronize]
+    paths-ignore:
+      - 'cre/**'
 
 permissions:
   id-token: write

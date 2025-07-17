@@ -8,3 +8,4 @@
 /workflows/ @smartcontractkit/foundations @smartcontractkit/core
 /cre/ @smartcontractkit/keystone
 /storage-service/ @smartcontractkit/dev-services
+/.github/workflows/cre-validations.yml @smartcontractkit/keystone

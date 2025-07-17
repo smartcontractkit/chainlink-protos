@@ -1,0 +1,37 @@
+name: Lint and breaking check for cre
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    paths:
+      - 'cre/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  buf-cre:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set tool versions
+        id: tool-versions
+        uses: smartcontractkit/tool-versions-to-env-action@v1.0.8
+
+      - name: Run buf lint for cre
+        uses: bufbuild/buf-action@v1
+        with:
+          input: cre
+          lint: true
+          version: ${{ steps.tool-versions.outputs.buf_version }}
+
+      - name: Run buf breaking for cre
+        uses: bufbuild/buf-action@v1
+        with:
+          input: cre
+          breaking: true
+          version: ${{ steps.tool-versions.outputs.buf_version }}
+          exclude_paths: node_modules
+
