@@ -71,7 +71,7 @@ message ReserveCreditsResponse {
   string organization_id = 1;
   bool success = 2;
   string credits = 3;
-  repeated RateCardEntry entries = 4;
+  repeated RateCard rate_cards = 4;
 }
 
 // Submit a workflow receipt.
@@ -86,7 +86,7 @@ message SubmitWorkflowReceiptRequest {
 }
 
 // A single rate‐card entry.
-message RateCardEntry {
+message RateCard {
   ResourceType resource_type = 1;
   MeasurementUnit measurement_unit = 2;
   string units_per_credit = 3;
@@ -96,13 +96,14 @@ message RateCardEntry {
 }
 
 // Get the default, global rate card (all resource types).
-message GetRateCardRequest {
+message GetWorkflowExecutionRatesRequest {
   string workflow_owner = 1;
   string workflow_registry_address = 2;
   uint64 chain_selector = 3;
 }
-message GetRateCardResponse {
-  repeated RateCardEntry entries = 1;
+
+message GetWorkflowExecutionRatesResponse {
+  repeated RateCard rate_cards = 1;
   // chain selector -> gas tokens per credit
   map<uint64, string> gas_tokens_per_credit = 2;
 }
@@ -118,5 +119,5 @@ service CreditReservationService {
 
   rpc SubmitWorkflowReceipt(SubmitWorkflowReceiptRequest) returns (google.protobuf.Empty);
 
-  rpc GetRateCard(GetRateCardRequest) returns (GetRateCardResponse);
+  rpc GetWorkflowExecutionRates(GetWorkflowExecutionRatesRequest) returns (GetWorkflowExecutionRatesResponse);
 }
