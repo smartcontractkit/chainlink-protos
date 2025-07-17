@@ -29,8 +29,6 @@ const (
 // CreditReservationServiceClient is the client API for CreditReservationService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Service for reserving and querying credits.
 type CreditReservationServiceClient interface {
 	GetOrganizationCreditsByWorkflow(ctx context.Context, in *GetOrganizationCreditsByWorkflowRequest, opts ...grpc.CallOption) (*GetOrganizationCreditsByWorkflowResponse, error)
 	ReserveCredits(ctx context.Context, in *ReserveCreditsRequest, opts ...grpc.CallOption) (*ReserveCreditsResponse, error)
@@ -89,8 +87,6 @@ func (c *creditReservationServiceClient) GetRateCard(ctx context.Context, in *Ge
 // CreditReservationServiceServer is the server API for CreditReservationService service.
 // All implementations must embed UnimplementedCreditReservationServiceServer
 // for forward compatibility.
-//
-// Service for reserving and querying credits.
 type CreditReservationServiceServer interface {
 	GetOrganizationCreditsByWorkflow(context.Context, *GetOrganizationCreditsByWorkflowRequest) (*GetOrganizationCreditsByWorkflowResponse, error)
 	ReserveCredits(context.Context, *ReserveCreditsRequest) (*ReserveCreditsResponse, error)
