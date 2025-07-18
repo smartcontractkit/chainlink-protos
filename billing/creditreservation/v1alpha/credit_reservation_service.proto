@@ -1,0 +1,123 @@
+syntax = "proto3";
+package creditreservation.v1alpha;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "workflows/v1/metering.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/billing/go;billing";
+
+// ResourceType corresponds to billing.resource_type in Postgres.
+enum ResourceType {
+  // Unknown / unset.
+  RESOURCE_TYPE_UNSPECIFIED = 0;
+  // Consensus bandwidth.
+  RESOURCE_TYPE_CONSENSUS = 1;
+  // Compute time in milliseconds.
+  RESOURCE_TYPE_COMPUTE = 2;
+  // HTTP bandwidth.
+  RESOURCE_TYPE_NETWORK = 4;
+  // Trigger operations count.
+  RESOURCE_TYPE_TRIGGERS = 5;
+}
+
+// MeasurementUnit corresponds to billing.measurement_unit in Postgres.
+enum MeasurementUnit {
+  // Unknown / unset.
+  MEASUREMENT_UNIT_UNSPECIFIED = 0;
+  // Bytes (CONSENSUS).
+  MEASUREMENT_UNIT_BYTES = 2;
+  // Milliseconds (COMPUTE).
+  MEASUREMENT_UNIT_MILLISECONDS = 3;
+  // Operations count (ALERTS, EVENTS, CHAIN_CALLS, TRIGGERS).
+  MEASUREMENT_UNIT_OPERATIONS = 4;
+  // Cost (GAS).
+  MEASUREMENT_UNIT_COST = 5;
+}
+
+// Organization’s credit balances.
+message OrganizationCredits {
+  string credits = 1;
+  string credits_reserved = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+}
+
+// Request by workflow to look up org credits.
+message GetOrganizationCreditsByWorkflowRequest {
+  string workflow_owner = 1;
+  string workflow_registry_address = 2;
+  uint64 workflow_registry_chain_selector = 3;
+}
+
+// Response carrying org ID and credits.
+message GetOrganizationCreditsByWorkflowResponse {
+  string organization_id = 1;
+  OrganizationCredits credits = 2;
+}
+
+// Reserve credits for a workflow execution.
+message ReserveCreditsRequest {
+  string workflow_owner = 1;
+  string workflow_registry_address = 2;
+  uint64 workflow_registry_chain_selector = 3;
+  string workflow_id = 4;
+  string workflow_execution_id = 5;
+  optional string credits = 6;
+}
+
+message ReserveCreditsResponse {
+  string organization_id = 1;
+  bool success = 2;
+  string credits = 3;
+  repeated RateCard rate_cards = 4;
+}
+
+// Submit a workflow receipt.
+message SubmitWorkflowReceiptRequest {
+  string workflow_owner = 1;
+  string workflow_registry_address = 2;
+  uint64 workflow_registry_chain_selector = 3;
+  string workflow_id = 4;
+  string workflow_execution_id = 5;
+  workflows.v1.MeteringReport metering = 6;
+  string credits_consumed = 7;
+}
+
+// A single rate‐card entry.
+message RateCard {
+  ResourceType resource_type = 1;
+  MeasurementUnit measurement_unit = 2;
+  string units_per_credit = 3;
+  string changed_by = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+// Get the default, global rate card (all resource types).
+message GetWorkflowExecutionRatesRequest {
+  string workflow_owner = 1;
+  string workflow_registry_address = 2;
+  uint64 chain_selector = 3;
+}
+
+message GetWorkflowExecutionRatesResponse {
+  string organization_id = 1;
+  repeated RateCard rate_cards = 2;
+  // chain selector -> gas tokens per credit
+  map<uint64, string> gas_tokens_per_credit = 3;
+}
+
+// -----------------------------------------------------------------------------
+// SERVICES
+// -----------------------------------------------------------------------------
+
+service CreditReservationService {
+  rpc GetOrganizationCreditsByWorkflow(GetOrganizationCreditsByWorkflowRequest) returns (GetOrganizationCreditsByWorkflowResponse);
+
+  rpc ReserveCredits(ReserveCreditsRequest) returns (ReserveCreditsResponse);
+
+  rpc SubmitWorkflowReceipt(SubmitWorkflowReceiptRequest) returns (google.protobuf.Empty);
+
+  rpc GetWorkflowExecutionRates(GetWorkflowExecutionRatesRequest) returns (GetWorkflowExecutionRatesResponse);
+}

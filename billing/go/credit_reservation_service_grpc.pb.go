@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: creditreservation/v1/credit_reservation_service.proto
+// source: creditreservation/v1alpha/credit_reservation_service.proto
 
 package billing
 
@@ -20,22 +20,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CreditReservationService_GetOrganizationCreditsByWorkflow_FullMethodName = "/creditreservation.v1.CreditReservationService/GetOrganizationCreditsByWorkflow"
-	CreditReservationService_ReserveCredits_FullMethodName                   = "/creditreservation.v1.CreditReservationService/ReserveCredits"
-	CreditReservationService_SubmitWorkflowReceipt_FullMethodName            = "/creditreservation.v1.CreditReservationService/SubmitWorkflowReceipt"
-	CreditReservationService_GetRateCard_FullMethodName                      = "/creditreservation.v1.CreditReservationService/GetRateCard"
+	CreditReservationService_GetOrganizationCreditsByWorkflow_FullMethodName = "/creditreservation.v1alpha.CreditReservationService/GetOrganizationCreditsByWorkflow"
+	CreditReservationService_ReserveCredits_FullMethodName                   = "/creditreservation.v1alpha.CreditReservationService/ReserveCredits"
+	CreditReservationService_SubmitWorkflowReceipt_FullMethodName            = "/creditreservation.v1alpha.CreditReservationService/SubmitWorkflowReceipt"
+	CreditReservationService_GetWorkflowExecutionRates_FullMethodName        = "/creditreservation.v1alpha.CreditReservationService/GetWorkflowExecutionRates"
 )
 
 // CreditReservationServiceClient is the client API for CreditReservationService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// Service for reserving and querying credits.
 type CreditReservationServiceClient interface {
 	GetOrganizationCreditsByWorkflow(ctx context.Context, in *GetOrganizationCreditsByWorkflowRequest, opts ...grpc.CallOption) (*GetOrganizationCreditsByWorkflowResponse, error)
 	ReserveCredits(ctx context.Context, in *ReserveCreditsRequest, opts ...grpc.CallOption) (*ReserveCreditsResponse, error)
 	SubmitWorkflowReceipt(ctx context.Context, in *SubmitWorkflowReceiptRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	GetRateCard(ctx context.Context, in *GetRateCardRequest, opts ...grpc.CallOption) (*GetRateCardResponse, error)
+	GetWorkflowExecutionRates(ctx context.Context, in *GetWorkflowExecutionRatesRequest, opts ...grpc.CallOption) (*GetWorkflowExecutionRatesResponse, error)
 }
 
 type creditReservationServiceClient struct {
@@ -76,10 +74,10 @@ func (c *creditReservationServiceClient) SubmitWorkflowReceipt(ctx context.Conte
 	return out, nil
 }
 
-func (c *creditReservationServiceClient) GetRateCard(ctx context.Context, in *GetRateCardRequest, opts ...grpc.CallOption) (*GetRateCardResponse, error) {
+func (c *creditReservationServiceClient) GetWorkflowExecutionRates(ctx context.Context, in *GetWorkflowExecutionRatesRequest, opts ...grpc.CallOption) (*GetWorkflowExecutionRatesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetRateCardResponse)
-	err := c.cc.Invoke(ctx, CreditReservationService_GetRateCard_FullMethodName, in, out, cOpts...)
+	out := new(GetWorkflowExecutionRatesResponse)
+	err := c.cc.Invoke(ctx, CreditReservationService_GetWorkflowExecutionRates_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -89,13 +87,11 @@ func (c *creditReservationServiceClient) GetRateCard(ctx context.Context, in *Ge
 // CreditReservationServiceServer is the server API for CreditReservationService service.
 // All implementations must embed UnimplementedCreditReservationServiceServer
 // for forward compatibility.
-//
-// Service for reserving and querying credits.
 type CreditReservationServiceServer interface {
 	GetOrganizationCreditsByWorkflow(context.Context, *GetOrganizationCreditsByWorkflowRequest) (*GetOrganizationCreditsByWorkflowResponse, error)
 	ReserveCredits(context.Context, *ReserveCreditsRequest) (*ReserveCreditsResponse, error)
 	SubmitWorkflowReceipt(context.Context, *SubmitWorkflowReceiptRequest) (*emptypb.Empty, error)
-	GetRateCard(context.Context, *GetRateCardRequest) (*GetRateCardResponse, error)
+	GetWorkflowExecutionRates(context.Context, *GetWorkflowExecutionRatesRequest) (*GetWorkflowExecutionRatesResponse, error)
 	mustEmbedUnimplementedCreditReservationServiceServer()
 }
 
@@ -115,8 +111,8 @@ func (UnimplementedCreditReservationServiceServer) ReserveCredits(context.Contex
 func (UnimplementedCreditReservationServiceServer) SubmitWorkflowReceipt(context.Context, *SubmitWorkflowReceiptRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SubmitWorkflowReceipt not implemented")
 }
-func (UnimplementedCreditReservationServiceServer) GetRateCard(context.Context, *GetRateCardRequest) (*GetRateCardResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetRateCard not implemented")
+func (UnimplementedCreditReservationServiceServer) GetWorkflowExecutionRates(context.Context, *GetWorkflowExecutionRatesRequest) (*GetWorkflowExecutionRatesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWorkflowExecutionRates not implemented")
 }
 func (UnimplementedCreditReservationServiceServer) mustEmbedUnimplementedCreditReservationServiceServer() {
 }
@@ -194,20 +190,20 @@ func _CreditReservationService_SubmitWorkflowReceipt_Handler(srv interface{}, ct
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CreditReservationService_GetRateCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRateCardRequest)
+func _CreditReservationService_GetWorkflowExecutionRates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWorkflowExecutionRatesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CreditReservationServiceServer).GetRateCard(ctx, in)
+		return srv.(CreditReservationServiceServer).GetWorkflowExecutionRates(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CreditReservationService_GetRateCard_FullMethodName,
+		FullMethod: CreditReservationService_GetWorkflowExecutionRates_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CreditReservationServiceServer).GetRateCard(ctx, req.(*GetRateCardRequest))
+		return srv.(CreditReservationServiceServer).GetWorkflowExecutionRates(ctx, req.(*GetWorkflowExecutionRatesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -216,7 +212,7 @@ func _CreditReservationService_GetRateCard_Handler(srv interface{}, ctx context.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var CreditReservationService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "creditreservation.v1.CreditReservationService",
+	ServiceName: "creditreservation.v1alpha.CreditReservationService",
 	HandlerType: (*CreditReservationServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -232,10 +228,10 @@ var CreditReservationService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CreditReservationService_SubmitWorkflowReceipt_Handler,
 		},
 		{
-			MethodName: "GetRateCard",
-			Handler:    _CreditReservationService_GetRateCard_Handler,
+			MethodName: "GetWorkflowExecutionRates",
+			Handler:    _CreditReservationService_GetWorkflowExecutionRates_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "creditreservation/v1/credit_reservation_service.proto",
+	Metadata: "creditreservation/v1alpha/credit_reservation_service.proto",
 }

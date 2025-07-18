@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: creditreservation/v1/credit_reservation_service.proto
+// source: creditreservation/v1alpha/credit_reservation_service.proto
 
 package billing
 
@@ -24,7 +24,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// ResourceType corresponds to billing.unit_type in Postgres.
+// ResourceType corresponds to billing.resource_type in Postgres.
 type ResourceType int32
 
 const (
@@ -34,8 +34,6 @@ const (
 	ResourceType_RESOURCE_TYPE_CONSENSUS ResourceType = 1
 	// Compute time in milliseconds.
 	ResourceType_RESOURCE_TYPE_COMPUTE ResourceType = 2
-	// Gas cost.
-	ResourceType_RESOURCE_TYPE_GAS ResourceType = 3
 	// HTTP bandwidth.
 	ResourceType_RESOURCE_TYPE_NETWORK ResourceType = 4
 	// Trigger operations count.
@@ -48,7 +46,6 @@ var (
 		0: "RESOURCE_TYPE_UNSPECIFIED",
 		1: "RESOURCE_TYPE_CONSENSUS",
 		2: "RESOURCE_TYPE_COMPUTE",
-		3: "RESOURCE_TYPE_GAS",
 		4: "RESOURCE_TYPE_NETWORK",
 		5: "RESOURCE_TYPE_TRIGGERS",
 	}
@@ -56,7 +53,6 @@ var (
 		"RESOURCE_TYPE_UNSPECIFIED": 0,
 		"RESOURCE_TYPE_CONSENSUS":   1,
 		"RESOURCE_TYPE_COMPUTE":     2,
-		"RESOURCE_TYPE_GAS":         3,
 		"RESOURCE_TYPE_NETWORK":     4,
 		"RESOURCE_TYPE_TRIGGERS":    5,
 	}
@@ -73,11 +69,11 @@ func (x ResourceType) String() string {
 }
 
 func (ResourceType) Descriptor() protoreflect.EnumDescriptor {
-	return file_creditreservation_v1_credit_reservation_service_proto_enumTypes[0].Descriptor()
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes[0].Descriptor()
 }
 
 func (ResourceType) Type() protoreflect.EnumType {
-	return &file_creditreservation_v1_credit_reservation_service_proto_enumTypes[0]
+	return &file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes[0]
 }
 
 func (x ResourceType) Number() protoreflect.EnumNumber {
@@ -86,19 +82,17 @@ func (x ResourceType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ResourceType.Descriptor instead.
 func (ResourceType) EnumDescriptor() ([]byte, []int) {
-	return file_creditreservation_v1_credit_reservation_service_proto_rawDescGZIP(), []int{0}
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{0}
 }
 
-// .MeasurementUnit_MEASUREMENT_UNIT corresponds to billing.measurement_unit in Postgres.
+// MeasurementUnit corresponds to billing.measurement_unit in Postgres.
 type MeasurementUnit int32
 
 const (
 	// Unknown / unset.
 	MeasurementUnit_MEASUREMENT_UNIT_UNSPECIFIED MeasurementUnit = 0
-	// Megabyte-months (WF_MEMORY, DON_STORAGE, WF_STORAGE).
-	MeasurementUnit_MEASUREMENT_UNIT_MEGABYTE_MONTHS MeasurementUnit = 1
-	// Aggregate megabytes (CONSENSUS).
-	MeasurementUnit_MEASUREMENT_UNIT_MEGABYTES_AGGREGATE MeasurementUnit = 2
+	// Bytes (CONSENSUS).
+	MeasurementUnit_MEASUREMENT_UNIT_BYTES MeasurementUnit = 2
 	// Milliseconds (COMPUTE).
 	MeasurementUnit_MEASUREMENT_UNIT_MILLISECONDS MeasurementUnit = 3
 	// Operations count (ALERTS, EVENTS, CHAIN_CALLS, TRIGGERS).
@@ -111,19 +105,17 @@ const (
 var (
 	MeasurementUnit_name = map[int32]string{
 		0: "MEASUREMENT_UNIT_UNSPECIFIED",
-		1: "MEASUREMENT_UNIT_MEGABYTE_MONTHS",
-		2: "MEASUREMENT_UNIT_MEGABYTES_AGGREGATE",
+		2: "MEASUREMENT_UNIT_BYTES",
 		3: "MEASUREMENT_UNIT_MILLISECONDS",
 		4: "MEASUREMENT_UNIT_OPERATIONS",
 		5: "MEASUREMENT_UNIT_COST",
 	}
 	MeasurementUnit_value = map[string]int32{
-		"MEASUREMENT_UNIT_UNSPECIFIED":         0,
-		"MEASUREMENT_UNIT_MEGABYTE_MONTHS":     1,
-		"MEASUREMENT_UNIT_MEGABYTES_AGGREGATE": 2,
-		"MEASUREMENT_UNIT_MILLISECONDS":        3,
-		"MEASUREMENT_UNIT_OPERATIONS":          4,
-		"MEASUREMENT_UNIT_COST":                5,
+		"MEASUREMENT_UNIT_UNSPECIFIED":  0,
+		"MEASUREMENT_UNIT_BYTES":        2,
+		"MEASUREMENT_UNIT_MILLISECONDS": 3,
+		"MEASUREMENT_UNIT_OPERATIONS":   4,
+		"MEASUREMENT_UNIT_COST":         5,
 	}
 )
 
@@ -138,11 +130,11 @@ func (x MeasurementUnit) String() string {
 }
 
 func (MeasurementUnit) Descriptor() protoreflect.EnumDescriptor {
-	return file_creditreservation_v1_credit_reservation_service_proto_enumTypes[1].Descriptor()
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes[1].Descriptor()
 }
 
 func (MeasurementUnit) Type() protoreflect.EnumType {
-	return &file_creditreservation_v1_credit_reservation_service_proto_enumTypes[1]
+	return &file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes[1]
 }
 
 func (x MeasurementUnit) Number() protoreflect.EnumNumber {
@@ -151,7 +143,7 @@ func (x MeasurementUnit) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MeasurementUnit.Descriptor instead.
 func (MeasurementUnit) EnumDescriptor() ([]byte, []int) {
-	return file_creditreservation_v1_credit_reservation_service_proto_rawDescGZIP(), []int{1}
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{1}
 }
 
 // Organization’s credit balances.
@@ -167,7 +159,7 @@ type OrganizationCredits struct {
 
 func (x *OrganizationCredits) Reset() {
 	*x = OrganizationCredits{}
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[0]
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -179,7 +171,7 @@ func (x *OrganizationCredits) String() string {
 func (*OrganizationCredits) ProtoMessage() {}
 
 func (x *OrganizationCredits) ProtoReflect() protoreflect.Message {
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[0]
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -192,7 +184,7 @@ func (x *OrganizationCredits) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrganizationCredits.ProtoReflect.Descriptor instead.
 func (*OrganizationCredits) Descriptor() ([]byte, []int) {
-	return file_creditreservation_v1_credit_reservation_service_proto_rawDescGZIP(), []int{0}
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *OrganizationCredits) GetCredits() string {
@@ -225,17 +217,17 @@ func (x *OrganizationCredits) GetUpdatedAt() *timestamppb.Timestamp {
 
 // Request by workflow to look up org credits.
 type GetOrganizationCreditsByWorkflowRequest struct {
-	state                   protoimpl.MessageState `protogen:"open.v1"`
-	WorkflowOwner           string                 `protobuf:"bytes,1,opt,name=workflow_owner,json=workflowOwner,proto3" json:"workflow_owner,omitempty"`
-	WorkflowRegistryAddress string                 `protobuf:"bytes,2,opt,name=workflow_registry_address,json=workflowRegistryAddress,proto3" json:"workflow_registry_address,omitempty"`
-	RegistryChainSelector   uint64                 `protobuf:"varint,3,opt,name=registry_chain_selector,json=registryChainSelector,proto3" json:"registry_chain_selector,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	state                         protoimpl.MessageState `protogen:"open.v1"`
+	WorkflowOwner                 string                 `protobuf:"bytes,1,opt,name=workflow_owner,json=workflowOwner,proto3" json:"workflow_owner,omitempty"`
+	WorkflowRegistryAddress       string                 `protobuf:"bytes,2,opt,name=workflow_registry_address,json=workflowRegistryAddress,proto3" json:"workflow_registry_address,omitempty"`
+	WorkflowRegistryChainSelector uint64                 `protobuf:"varint,3,opt,name=workflow_registry_chain_selector,json=workflowRegistryChainSelector,proto3" json:"workflow_registry_chain_selector,omitempty"`
+	unknownFields                 protoimpl.UnknownFields
+	sizeCache                     protoimpl.SizeCache
 }
 
 func (x *GetOrganizationCreditsByWorkflowRequest) Reset() {
 	*x = GetOrganizationCreditsByWorkflowRequest{}
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[1]
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -247,7 +239,7 @@ func (x *GetOrganizationCreditsByWorkflowRequest) String() string {
 func (*GetOrganizationCreditsByWorkflowRequest) ProtoMessage() {}
 
 func (x *GetOrganizationCreditsByWorkflowRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[1]
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -260,7 +252,7 @@ func (x *GetOrganizationCreditsByWorkflowRequest) ProtoReflect() protoreflect.Me
 
 // Deprecated: Use GetOrganizationCreditsByWorkflowRequest.ProtoReflect.Descriptor instead.
 func (*GetOrganizationCreditsByWorkflowRequest) Descriptor() ([]byte, []int) {
-	return file_creditreservation_v1_credit_reservation_service_proto_rawDescGZIP(), []int{1}
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *GetOrganizationCreditsByWorkflowRequest) GetWorkflowOwner() string {
@@ -277,9 +269,9 @@ func (x *GetOrganizationCreditsByWorkflowRequest) GetWorkflowRegistryAddress() s
 	return ""
 }
 
-func (x *GetOrganizationCreditsByWorkflowRequest) GetRegistryChainSelector() uint64 {
+func (x *GetOrganizationCreditsByWorkflowRequest) GetWorkflowRegistryChainSelector() uint64 {
 	if x != nil {
-		return x.RegistryChainSelector
+		return x.WorkflowRegistryChainSelector
 	}
 	return 0
 }
@@ -295,7 +287,7 @@ type GetOrganizationCreditsByWorkflowResponse struct {
 
 func (x *GetOrganizationCreditsByWorkflowResponse) Reset() {
 	*x = GetOrganizationCreditsByWorkflowResponse{}
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[2]
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -307,7 +299,7 @@ func (x *GetOrganizationCreditsByWorkflowResponse) String() string {
 func (*GetOrganizationCreditsByWorkflowResponse) ProtoMessage() {}
 
 func (x *GetOrganizationCreditsByWorkflowResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[2]
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -320,7 +312,7 @@ func (x *GetOrganizationCreditsByWorkflowResponse) ProtoReflect() protoreflect.M
 
 // Deprecated: Use GetOrganizationCreditsByWorkflowResponse.ProtoReflect.Descriptor instead.
 func (*GetOrganizationCreditsByWorkflowResponse) Descriptor() ([]byte, []int) {
-	return file_creditreservation_v1_credit_reservation_service_proto_rawDescGZIP(), []int{2}
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetOrganizationCreditsByWorkflowResponse) GetOrganizationId() string {
@@ -339,20 +331,20 @@ func (x *GetOrganizationCreditsByWorkflowResponse) GetCredits() *OrganizationCre
 
 // Reserve credits for a workflow execution.
 type ReserveCreditsRequest struct {
-	state                   protoimpl.MessageState `protogen:"open.v1"`
-	WorkflowOwner           string                 `protobuf:"bytes,1,opt,name=workflow_owner,json=workflowOwner,proto3" json:"workflow_owner,omitempty"`
-	WorkflowRegistryAddress string                 `protobuf:"bytes,2,opt,name=workflow_registry_address,json=workflowRegistryAddress,proto3" json:"workflow_registry_address,omitempty"`
-	RegistryChainSelector   uint64                 `protobuf:"varint,3,opt,name=registry_chain_selector,json=registryChainSelector,proto3" json:"registry_chain_selector,omitempty"`
-	WorkflowId              string                 `protobuf:"bytes,4,opt,name=workflow_id,json=workflowId,proto3" json:"workflow_id,omitempty"`
-	WorkflowExecutionId     string                 `protobuf:"bytes,5,opt,name=workflow_execution_id,json=workflowExecutionId,proto3" json:"workflow_execution_id,omitempty"`
-	Credits                 float32                `protobuf:"fixed32,6,opt,name=credits,proto3" json:"credits,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	state                         protoimpl.MessageState `protogen:"open.v1"`
+	WorkflowOwner                 string                 `protobuf:"bytes,1,opt,name=workflow_owner,json=workflowOwner,proto3" json:"workflow_owner,omitempty"`
+	WorkflowRegistryAddress       string                 `protobuf:"bytes,2,opt,name=workflow_registry_address,json=workflowRegistryAddress,proto3" json:"workflow_registry_address,omitempty"`
+	WorkflowRegistryChainSelector uint64                 `protobuf:"varint,3,opt,name=workflow_registry_chain_selector,json=workflowRegistryChainSelector,proto3" json:"workflow_registry_chain_selector,omitempty"`
+	WorkflowId                    string                 `protobuf:"bytes,4,opt,name=workflow_id,json=workflowId,proto3" json:"workflow_id,omitempty"`
+	WorkflowExecutionId           string                 `protobuf:"bytes,5,opt,name=workflow_execution_id,json=workflowExecutionId,proto3" json:"workflow_execution_id,omitempty"`
+	Credits                       *string                `protobuf:"bytes,6,opt,name=credits,proto3,oneof" json:"credits,omitempty"`
+	unknownFields                 protoimpl.UnknownFields
+	sizeCache                     protoimpl.SizeCache
 }
 
 func (x *ReserveCreditsRequest) Reset() {
 	*x = ReserveCreditsRequest{}
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[3]
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -364,7 +356,7 @@ func (x *ReserveCreditsRequest) String() string {
 func (*ReserveCreditsRequest) ProtoMessage() {}
 
 func (x *ReserveCreditsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[3]
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -377,7 +369,7 @@ func (x *ReserveCreditsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReserveCreditsRequest.ProtoReflect.Descriptor instead.
 func (*ReserveCreditsRequest) Descriptor() ([]byte, []int) {
-	return file_creditreservation_v1_credit_reservation_service_proto_rawDescGZIP(), []int{3}
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ReserveCreditsRequest) GetWorkflowOwner() string {
@@ -394,9 +386,9 @@ func (x *ReserveCreditsRequest) GetWorkflowRegistryAddress() string {
 	return ""
 }
 
-func (x *ReserveCreditsRequest) GetRegistryChainSelector() uint64 {
+func (x *ReserveCreditsRequest) GetWorkflowRegistryChainSelector() uint64 {
 	if x != nil {
-		return x.RegistryChainSelector
+		return x.WorkflowRegistryChainSelector
 	}
 	return 0
 }
@@ -415,26 +407,26 @@ func (x *ReserveCreditsRequest) GetWorkflowExecutionId() string {
 	return ""
 }
 
-func (x *ReserveCreditsRequest) GetCredits() float32 {
-	if x != nil {
-		return x.Credits
+func (x *ReserveCreditsRequest) GetCredits() string {
+	if x != nil && x.Credits != nil {
+		return *x.Credits
 	}
-	return 0
+	return ""
 }
 
 type ReserveCreditsResponse struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	OrganizationId string                 `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
 	Success        bool                   `protobuf:"varint,2,opt,name=success,proto3" json:"success,omitempty"`
-	Credits        float32                `protobuf:"fixed32,3,opt,name=credits,proto3" json:"credits,omitempty"`
-	Entries        []*RateCardEntry       `protobuf:"bytes,4,rep,name=entries,proto3" json:"entries,omitempty"`
+	Credits        string                 `protobuf:"bytes,3,opt,name=credits,proto3" json:"credits,omitempty"`
+	RateCards      []*RateCard            `protobuf:"bytes,4,rep,name=rate_cards,json=rateCards,proto3" json:"rate_cards,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ReserveCreditsResponse) Reset() {
 	*x = ReserveCreditsResponse{}
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[4]
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -446,7 +438,7 @@ func (x *ReserveCreditsResponse) String() string {
 func (*ReserveCreditsResponse) ProtoMessage() {}
 
 func (x *ReserveCreditsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[4]
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -459,7 +451,7 @@ func (x *ReserveCreditsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReserveCreditsResponse.ProtoReflect.Descriptor instead.
 func (*ReserveCreditsResponse) Descriptor() ([]byte, []int) {
-	return file_creditreservation_v1_credit_reservation_service_proto_rawDescGZIP(), []int{4}
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ReserveCreditsResponse) GetOrganizationId() string {
@@ -476,36 +468,37 @@ func (x *ReserveCreditsResponse) GetSuccess() bool {
 	return false
 }
 
-func (x *ReserveCreditsResponse) GetCredits() float32 {
+func (x *ReserveCreditsResponse) GetCredits() string {
 	if x != nil {
 		return x.Credits
 	}
-	return 0
+	return ""
 }
 
-func (x *ReserveCreditsResponse) GetEntries() []*RateCardEntry {
+func (x *ReserveCreditsResponse) GetRateCards() []*RateCard {
 	if x != nil {
-		return x.Entries
+		return x.RateCards
 	}
 	return nil
 }
 
 // Submit a workflow receipt.
 type SubmitWorkflowReceiptRequest struct {
-	state                   protoimpl.MessageState `protogen:"open.v1"`
-	WorkflowOwner           string                 `protobuf:"bytes,1,opt,name=workflow_owner,json=workflowOwner,proto3" json:"workflow_owner,omitempty"`
-	WorkflowRegistryAddress string                 `protobuf:"bytes,2,opt,name=workflow_registry_address,json=workflowRegistryAddress,proto3" json:"workflow_registry_address,omitempty"`
-	RegistryChainSelector   uint64                 `protobuf:"varint,3,opt,name=registry_chain_selector,json=registryChainSelector,proto3" json:"registry_chain_selector,omitempty"`
-	WorkflowId              string                 `protobuf:"bytes,4,opt,name=workflow_id,json=workflowId,proto3" json:"workflow_id,omitempty"`
-	WorkflowExecutionId     string                 `protobuf:"bytes,5,opt,name=workflow_execution_id,json=workflowExecutionId,proto3" json:"workflow_execution_id,omitempty"`
-	Metering                *events.MeteringReport `protobuf:"bytes,6,opt,name=metering,proto3" json:"metering,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	state                         protoimpl.MessageState `protogen:"open.v1"`
+	WorkflowOwner                 string                 `protobuf:"bytes,1,opt,name=workflow_owner,json=workflowOwner,proto3" json:"workflow_owner,omitempty"`
+	WorkflowRegistryAddress       string                 `protobuf:"bytes,2,opt,name=workflow_registry_address,json=workflowRegistryAddress,proto3" json:"workflow_registry_address,omitempty"`
+	WorkflowRegistryChainSelector uint64                 `protobuf:"varint,3,opt,name=workflow_registry_chain_selector,json=workflowRegistryChainSelector,proto3" json:"workflow_registry_chain_selector,omitempty"`
+	WorkflowId                    string                 `protobuf:"bytes,4,opt,name=workflow_id,json=workflowId,proto3" json:"workflow_id,omitempty"`
+	WorkflowExecutionId           string                 `protobuf:"bytes,5,opt,name=workflow_execution_id,json=workflowExecutionId,proto3" json:"workflow_execution_id,omitempty"`
+	Metering                      *events.MeteringReport `protobuf:"bytes,6,opt,name=metering,proto3" json:"metering,omitempty"`
+	CreditsConsumed               string                 `protobuf:"bytes,7,opt,name=credits_consumed,json=creditsConsumed,proto3" json:"credits_consumed,omitempty"`
+	unknownFields                 protoimpl.UnknownFields
+	sizeCache                     protoimpl.SizeCache
 }
 
 func (x *SubmitWorkflowReceiptRequest) Reset() {
 	*x = SubmitWorkflowReceiptRequest{}
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[5]
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -517,7 +510,7 @@ func (x *SubmitWorkflowReceiptRequest) String() string {
 func (*SubmitWorkflowReceiptRequest) ProtoMessage() {}
 
 func (x *SubmitWorkflowReceiptRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[5]
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -530,7 +523,7 @@ func (x *SubmitWorkflowReceiptRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitWorkflowReceiptRequest.ProtoReflect.Descriptor instead.
 func (*SubmitWorkflowReceiptRequest) Descriptor() ([]byte, []int) {
-	return file_creditreservation_v1_credit_reservation_service_proto_rawDescGZIP(), []int{5}
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *SubmitWorkflowReceiptRequest) GetWorkflowOwner() string {
@@ -547,9 +540,9 @@ func (x *SubmitWorkflowReceiptRequest) GetWorkflowRegistryAddress() string {
 	return ""
 }
 
-func (x *SubmitWorkflowReceiptRequest) GetRegistryChainSelector() uint64 {
+func (x *SubmitWorkflowReceiptRequest) GetWorkflowRegistryChainSelector() uint64 {
 	if x != nil {
-		return x.RegistryChainSelector
+		return x.WorkflowRegistryChainSelector
 	}
 	return 0
 }
@@ -575,11 +568,18 @@ func (x *SubmitWorkflowReceiptRequest) GetMetering() *events.MeteringReport {
 	return nil
 }
 
+func (x *SubmitWorkflowReceiptRequest) GetCreditsConsumed() string {
+	if x != nil {
+		return x.CreditsConsumed
+	}
+	return ""
+}
+
 // A single rate‐card entry.
-type RateCardEntry struct {
+type RateCard struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
-	ResourceType    ResourceType           `protobuf:"varint,1,opt,name=resource_type,json=resourceType,proto3,enum=creditreservation.v1.ResourceType" json:"resource_type,omitempty"`
-	MeasurementUnit MeasurementUnit        `protobuf:"varint,2,opt,name=measurement_unit,json=measurementUnit,proto3,enum=creditreservation.v1.MeasurementUnit" json:"measurement_unit,omitempty"`
+	ResourceType    ResourceType           `protobuf:"varint,1,opt,name=resource_type,json=resourceType,proto3,enum=creditreservation.v1alpha.ResourceType" json:"resource_type,omitempty"`
+	MeasurementUnit MeasurementUnit        `protobuf:"varint,2,opt,name=measurement_unit,json=measurementUnit,proto3,enum=creditreservation.v1alpha.MeasurementUnit" json:"measurement_unit,omitempty"`
 	UnitsPerCredit  string                 `protobuf:"bytes,3,opt,name=units_per_credit,json=unitsPerCredit,proto3" json:"units_per_credit,omitempty"`
 	ChangedBy       string                 `protobuf:"bytes,4,opt,name=changed_by,json=changedBy,proto3" json:"changed_by,omitempty"`
 	CreatedAt       *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
@@ -588,21 +588,21 @@ type RateCardEntry struct {
 	sizeCache       protoimpl.SizeCache
 }
 
-func (x *RateCardEntry) Reset() {
-	*x = RateCardEntry{}
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[6]
+func (x *RateCard) Reset() {
+	*x = RateCard{}
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *RateCardEntry) String() string {
+func (x *RateCard) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*RateCardEntry) ProtoMessage() {}
+func (*RateCard) ProtoMessage() {}
 
-func (x *RateCardEntry) ProtoReflect() protoreflect.Message {
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[6]
+func (x *RateCard) ProtoReflect() protoreflect.Message {
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -613,47 +613,47 @@ func (x *RateCardEntry) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use RateCardEntry.ProtoReflect.Descriptor instead.
-func (*RateCardEntry) Descriptor() ([]byte, []int) {
-	return file_creditreservation_v1_credit_reservation_service_proto_rawDescGZIP(), []int{6}
+// Deprecated: Use RateCard.ProtoReflect.Descriptor instead.
+func (*RateCard) Descriptor() ([]byte, []int) {
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *RateCardEntry) GetResourceType() ResourceType {
+func (x *RateCard) GetResourceType() ResourceType {
 	if x != nil {
 		return x.ResourceType
 	}
 	return ResourceType_RESOURCE_TYPE_UNSPECIFIED
 }
 
-func (x *RateCardEntry) GetMeasurementUnit() MeasurementUnit {
+func (x *RateCard) GetMeasurementUnit() MeasurementUnit {
 	if x != nil {
 		return x.MeasurementUnit
 	}
 	return MeasurementUnit_MEASUREMENT_UNIT_UNSPECIFIED
 }
 
-func (x *RateCardEntry) GetUnitsPerCredit() string {
+func (x *RateCard) GetUnitsPerCredit() string {
 	if x != nil {
 		return x.UnitsPerCredit
 	}
 	return ""
 }
 
-func (x *RateCardEntry) GetChangedBy() string {
+func (x *RateCard) GetChangedBy() string {
 	if x != nil {
 		return x.ChangedBy
 	}
 	return ""
 }
 
-func (x *RateCardEntry) GetCreatedAt() *timestamppb.Timestamp {
+func (x *RateCard) GetCreatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreatedAt
 	}
 	return nil
 }
 
-func (x *RateCardEntry) GetUpdatedAt() *timestamppb.Timestamp {
+func (x *RateCard) GetUpdatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.UpdatedAt
 	}
@@ -661,7 +661,7 @@ func (x *RateCardEntry) GetUpdatedAt() *timestamppb.Timestamp {
 }
 
 // Get the default, global rate card (all resource types).
-type GetRateCardRequest struct {
+type GetWorkflowExecutionRatesRequest struct {
 	state                   protoimpl.MessageState `protogen:"open.v1"`
 	WorkflowOwner           string                 `protobuf:"bytes,1,opt,name=workflow_owner,json=workflowOwner,proto3" json:"workflow_owner,omitempty"`
 	WorkflowRegistryAddress string                 `protobuf:"bytes,2,opt,name=workflow_registry_address,json=workflowRegistryAddress,proto3" json:"workflow_registry_address,omitempty"`
@@ -670,21 +670,21 @@ type GetRateCardRequest struct {
 	sizeCache               protoimpl.SizeCache
 }
 
-func (x *GetRateCardRequest) Reset() {
-	*x = GetRateCardRequest{}
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[7]
+func (x *GetWorkflowExecutionRatesRequest) Reset() {
+	*x = GetWorkflowExecutionRatesRequest{}
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetRateCardRequest) String() string {
+func (x *GetWorkflowExecutionRatesRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetRateCardRequest) ProtoMessage() {}
+func (*GetWorkflowExecutionRatesRequest) ProtoMessage() {}
 
-func (x *GetRateCardRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[7]
+func (x *GetWorkflowExecutionRatesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -695,54 +695,57 @@ func (x *GetRateCardRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetRateCardRequest.ProtoReflect.Descriptor instead.
-func (*GetRateCardRequest) Descriptor() ([]byte, []int) {
-	return file_creditreservation_v1_credit_reservation_service_proto_rawDescGZIP(), []int{7}
+// Deprecated: Use GetWorkflowExecutionRatesRequest.ProtoReflect.Descriptor instead.
+func (*GetWorkflowExecutionRatesRequest) Descriptor() ([]byte, []int) {
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *GetRateCardRequest) GetWorkflowOwner() string {
+func (x *GetWorkflowExecutionRatesRequest) GetWorkflowOwner() string {
 	if x != nil {
 		return x.WorkflowOwner
 	}
 	return ""
 }
 
-func (x *GetRateCardRequest) GetWorkflowRegistryAddress() string {
+func (x *GetWorkflowExecutionRatesRequest) GetWorkflowRegistryAddress() string {
 	if x != nil {
 		return x.WorkflowRegistryAddress
 	}
 	return ""
 }
 
-func (x *GetRateCardRequest) GetChainSelector() uint64 {
+func (x *GetWorkflowExecutionRatesRequest) GetChainSelector() uint64 {
 	if x != nil {
 		return x.ChainSelector
 	}
 	return 0
 }
 
-type GetRateCardResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Entries       []*RateCardEntry       `protobuf:"bytes,1,rep,name=entries,proto3" json:"entries,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+type GetWorkflowExecutionRatesResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	OrganizationId string                 `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
+	RateCards      []*RateCard            `protobuf:"bytes,2,rep,name=rate_cards,json=rateCards,proto3" json:"rate_cards,omitempty"`
+	// chain selector -> gas tokens per credit
+	GasTokensPerCredit map[uint64]string `protobuf:"bytes,3,rep,name=gas_tokens_per_credit,json=gasTokensPerCredit,proto3" json:"gas_tokens_per_credit,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
-func (x *GetRateCardResponse) Reset() {
-	*x = GetRateCardResponse{}
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[8]
+func (x *GetWorkflowExecutionRatesResponse) Reset() {
+	*x = GetWorkflowExecutionRatesResponse{}
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetRateCardResponse) String() string {
+func (x *GetWorkflowExecutionRatesResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetRateCardResponse) ProtoMessage() {}
+func (*GetWorkflowExecutionRatesResponse) ProtoMessage() {}
 
-func (x *GetRateCardResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_creditreservation_v1_credit_reservation_service_proto_msgTypes[8]
+func (x *GetWorkflowExecutionRatesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -753,171 +756,196 @@ func (x *GetRateCardResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetRateCardResponse.ProtoReflect.Descriptor instead.
-func (*GetRateCardResponse) Descriptor() ([]byte, []int) {
-	return file_creditreservation_v1_credit_reservation_service_proto_rawDescGZIP(), []int{8}
+// Deprecated: Use GetWorkflowExecutionRatesResponse.ProtoReflect.Descriptor instead.
+func (*GetWorkflowExecutionRatesResponse) Descriptor() ([]byte, []int) {
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *GetRateCardResponse) GetEntries() []*RateCardEntry {
+func (x *GetWorkflowExecutionRatesResponse) GetOrganizationId() string {
 	if x != nil {
-		return x.Entries
+		return x.OrganizationId
+	}
+	return ""
+}
+
+func (x *GetWorkflowExecutionRatesResponse) GetRateCards() []*RateCard {
+	if x != nil {
+		return x.RateCards
 	}
 	return nil
 }
 
-var File_creditreservation_v1_credit_reservation_service_proto protoreflect.FileDescriptor
+func (x *GetWorkflowExecutionRatesResponse) GetGasTokensPerCredit() map[uint64]string {
+	if x != nil {
+		return x.GasTokensPerCredit
+	}
+	return nil
+}
 
-const file_creditreservation_v1_credit_reservation_service_proto_rawDesc = "" +
+var File_creditreservation_v1alpha_credit_reservation_service_proto protoreflect.FileDescriptor
+
+const file_creditreservation_v1alpha_credit_reservation_service_proto_rawDesc = "" +
 	"\n" +
-	"5creditreservation/v1/credit_reservation_service.proto\x12\x14creditreservation.v1\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bworkflows/v1/metering.proto\"\xd0\x01\n" +
+	":creditreservation/v1alpha/credit_reservation_service.proto\x12\x19creditreservation.v1alpha\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bworkflows/v1/metering.proto\"\xd0\x01\n" +
 	"\x13OrganizationCredits\x12\x18\n" +
 	"\acredits\x18\x01 \x01(\tR\acredits\x12)\n" +
 	"\x10credits_reserved\x18\x02 \x01(\tR\x0fcreditsReserved\x129\n" +
 	"\n" +
 	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\xc4\x01\n" +
+	"updated_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\xd5\x01\n" +
 	"'GetOrganizationCreditsByWorkflowRequest\x12%\n" +
 	"\x0eworkflow_owner\x18\x01 \x01(\tR\rworkflowOwner\x12:\n" +
-	"\x19workflow_registry_address\x18\x02 \x01(\tR\x17workflowRegistryAddress\x126\n" +
-	"\x17registry_chain_selector\x18\x03 \x01(\x04R\x15registryChainSelector\"\x98\x01\n" +
+	"\x19workflow_registry_address\x18\x02 \x01(\tR\x17workflowRegistryAddress\x12G\n" +
+	" workflow_registry_chain_selector\x18\x03 \x01(\x04R\x1dworkflowRegistryChainSelector\"\x9d\x01\n" +
 	"(GetOrganizationCreditsByWorkflowResponse\x12'\n" +
-	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12C\n" +
-	"\acredits\x18\x02 \x01(\v2).creditreservation.v1.OrganizationCreditsR\acredits\"\xa1\x02\n" +
+	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12H\n" +
+	"\acredits\x18\x02 \x01(\v2..creditreservation.v1alpha.OrganizationCreditsR\acredits\"\xc3\x02\n" +
 	"\x15ReserveCreditsRequest\x12%\n" +
 	"\x0eworkflow_owner\x18\x01 \x01(\tR\rworkflowOwner\x12:\n" +
-	"\x19workflow_registry_address\x18\x02 \x01(\tR\x17workflowRegistryAddress\x126\n" +
-	"\x17registry_chain_selector\x18\x03 \x01(\x04R\x15registryChainSelector\x12\x1f\n" +
+	"\x19workflow_registry_address\x18\x02 \x01(\tR\x17workflowRegistryAddress\x12G\n" +
+	" workflow_registry_chain_selector\x18\x03 \x01(\x04R\x1dworkflowRegistryChainSelector\x12\x1f\n" +
 	"\vworkflow_id\x18\x04 \x01(\tR\n" +
 	"workflowId\x122\n" +
-	"\x15workflow_execution_id\x18\x05 \x01(\tR\x13workflowExecutionId\x12\x18\n" +
-	"\acredits\x18\x06 \x01(\x02R\acredits\"\xb4\x01\n" +
+	"\x15workflow_execution_id\x18\x05 \x01(\tR\x13workflowExecutionId\x12\x1d\n" +
+	"\acredits\x18\x06 \x01(\tH\x00R\acredits\x88\x01\x01B\n" +
+	"\n" +
+	"\b_credits\"\xb9\x01\n" +
 	"\x16ReserveCreditsResponse\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12\x18\n" +
 	"\asuccess\x18\x02 \x01(\bR\asuccess\x12\x18\n" +
-	"\acredits\x18\x03 \x01(\x02R\acredits\x12=\n" +
-	"\aentries\x18\x04 \x03(\v2#.creditreservation.v1.RateCardEntryR\aentries\"\xc8\x02\n" +
+	"\acredits\x18\x03 \x01(\tR\acredits\x12B\n" +
+	"\n" +
+	"rate_cards\x18\x04 \x03(\v2#.creditreservation.v1alpha.RateCardR\trateCards\"\x84\x03\n" +
 	"\x1cSubmitWorkflowReceiptRequest\x12%\n" +
 	"\x0eworkflow_owner\x18\x01 \x01(\tR\rworkflowOwner\x12:\n" +
-	"\x19workflow_registry_address\x18\x02 \x01(\tR\x17workflowRegistryAddress\x126\n" +
-	"\x17registry_chain_selector\x18\x03 \x01(\x04R\x15registryChainSelector\x12\x1f\n" +
+	"\x19workflow_registry_address\x18\x02 \x01(\tR\x17workflowRegistryAddress\x12G\n" +
+	" workflow_registry_chain_selector\x18\x03 \x01(\x04R\x1dworkflowRegistryChainSelector\x12\x1f\n" +
 	"\vworkflow_id\x18\x04 \x01(\tR\n" +
 	"workflowId\x122\n" +
 	"\x15workflow_execution_id\x18\x05 \x01(\tR\x13workflowExecutionId\x128\n" +
-	"\bmetering\x18\x06 \x01(\v2\x1c.workflows.v1.MeteringReportR\bmetering\"\xe9\x02\n" +
-	"\rRateCardEntry\x12G\n" +
-	"\rresource_type\x18\x01 \x01(\x0e2\".creditreservation.v1.ResourceTypeR\fresourceType\x12P\n" +
-	"\x10measurement_unit\x18\x02 \x01(\x0e2%.creditreservation.v1.MeasurementUnitR\x0fmeasurementUnit\x12(\n" +
+	"\bmetering\x18\x06 \x01(\v2\x1c.workflows.v1.MeteringReportR\bmetering\x12)\n" +
+	"\x10credits_consumed\x18\a \x01(\tR\x0fcreditsConsumed\"\xee\x02\n" +
+	"\bRateCard\x12L\n" +
+	"\rresource_type\x18\x01 \x01(\x0e2'.creditreservation.v1alpha.ResourceTypeR\fresourceType\x12U\n" +
+	"\x10measurement_unit\x18\x02 \x01(\x0e2*.creditreservation.v1alpha.MeasurementUnitR\x0fmeasurementUnit\x12(\n" +
 	"\x10units_per_credit\x18\x03 \x01(\tR\x0eunitsPerCredit\x12\x1d\n" +
 	"\n" +
 	"changed_by\x18\x04 \x01(\tR\tchangedBy\x129\n" +
 	"\n" +
 	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\x9e\x01\n" +
-	"\x12GetRateCardRequest\x12%\n" +
+	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\xac\x01\n" +
+	" GetWorkflowExecutionRatesRequest\x12%\n" +
 	"\x0eworkflow_owner\x18\x01 \x01(\tR\rworkflowOwner\x12:\n" +
 	"\x19workflow_registry_address\x18\x02 \x01(\tR\x17workflowRegistryAddress\x12%\n" +
-	"\x0echain_selector\x18\x03 \x01(\x04R\rchainSelector\"T\n" +
-	"\x13GetRateCardResponse\x12=\n" +
-	"\aentries\x18\x01 \x03(\v2#.creditreservation.v1.RateCardEntryR\aentries*\xb3\x01\n" +
+	"\x0echain_selector\x18\x03 \x01(\x04R\rchainSelector\"\xe1\x02\n" +
+	"!GetWorkflowExecutionRatesResponse\x12'\n" +
+	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12B\n" +
+	"\n" +
+	"rate_cards\x18\x02 \x03(\v2#.creditreservation.v1alpha.RateCardR\trateCards\x12\x87\x01\n" +
+	"\x15gas_tokens_per_credit\x18\x03 \x03(\v2T.creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.GasTokensPerCreditEntryR\x12gasTokensPerCredit\x1aE\n" +
+	"\x17GasTokensPerCreditEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\x04R\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\x9c\x01\n" +
 	"\fResourceType\x12\x1d\n" +
 	"\x19RESOURCE_TYPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17RESOURCE_TYPE_CONSENSUS\x10\x01\x12\x19\n" +
-	"\x15RESOURCE_TYPE_COMPUTE\x10\x02\x12\x15\n" +
-	"\x11RESOURCE_TYPE_GAS\x10\x03\x12\x19\n" +
+	"\x15RESOURCE_TYPE_COMPUTE\x10\x02\x12\x19\n" +
 	"\x15RESOURCE_TYPE_NETWORK\x10\x04\x12\x1a\n" +
-	"\x16RESOURCE_TYPE_TRIGGERS\x10\x05*\xe2\x01\n" +
+	"\x16RESOURCE_TYPE_TRIGGERS\x10\x05*\xae\x01\n" +
 	"\x0fMeasurementUnit\x12 \n" +
-	"\x1cMEASUREMENT_UNIT_UNSPECIFIED\x10\x00\x12$\n" +
-	" MEASUREMENT_UNIT_MEGABYTE_MONTHS\x10\x01\x12(\n" +
-	"$MEASUREMENT_UNIT_MEGABYTES_AGGREGATE\x10\x02\x12!\n" +
+	"\x1cMEASUREMENT_UNIT_UNSPECIFIED\x10\x00\x12\x1a\n" +
+	"\x16MEASUREMENT_UNIT_BYTES\x10\x02\x12!\n" +
 	"\x1dMEASUREMENT_UNIT_MILLISECONDS\x10\x03\x12\x1f\n" +
 	"\x1bMEASUREMENT_UNIT_OPERATIONS\x10\x04\x12\x19\n" +
-	"\x15MEASUREMENT_UNIT_COST\x10\x052\xf4\x03\n" +
-	"\x18CreditReservationService\x12\xa1\x01\n" +
-	" GetOrganizationCreditsByWorkflow\x12=.creditreservation.v1.GetOrganizationCreditsByWorkflowRequest\x1a>.creditreservation.v1.GetOrganizationCreditsByWorkflowResponse\x12k\n" +
-	"\x0eReserveCredits\x12+.creditreservation.v1.ReserveCreditsRequest\x1a,.creditreservation.v1.ReserveCreditsResponse\x12c\n" +
-	"\x15SubmitWorkflowReceipt\x122.creditreservation.v1.SubmitWorkflowReceiptRequest\x1a\x16.google.protobuf.Empty\x12b\n" +
-	"\vGetRateCard\x12(.creditreservation.v1.GetRateCardRequest\x1a).creditreservation.v1.GetRateCardResponseBAZ?github.com/smartcontractkit/chainlink-protos/billing/go;billingb\x06proto3"
+	"\x15MEASUREMENT_UNIT_COST\x10\x052\xc2\x04\n" +
+	"\x18CreditReservationService\x12\xab\x01\n" +
+	" GetOrganizationCreditsByWorkflow\x12B.creditreservation.v1alpha.GetOrganizationCreditsByWorkflowRequest\x1aC.creditreservation.v1alpha.GetOrganizationCreditsByWorkflowResponse\x12u\n" +
+	"\x0eReserveCredits\x120.creditreservation.v1alpha.ReserveCreditsRequest\x1a1.creditreservation.v1alpha.ReserveCreditsResponse\x12h\n" +
+	"\x15SubmitWorkflowReceipt\x127.creditreservation.v1alpha.SubmitWorkflowReceiptRequest\x1a\x16.google.protobuf.Empty\x12\x96\x01\n" +
+	"\x19GetWorkflowExecutionRates\x12;.creditreservation.v1alpha.GetWorkflowExecutionRatesRequest\x1a<.creditreservation.v1alpha.GetWorkflowExecutionRatesResponseBAZ?github.com/smartcontractkit/chainlink-protos/billing/go;billingb\x06proto3"
 
 var (
-	file_creditreservation_v1_credit_reservation_service_proto_rawDescOnce sync.Once
-	file_creditreservation_v1_credit_reservation_service_proto_rawDescData []byte
+	file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescOnce sync.Once
+	file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescData []byte
 )
 
-func file_creditreservation_v1_credit_reservation_service_proto_rawDescGZIP() []byte {
-	file_creditreservation_v1_credit_reservation_service_proto_rawDescOnce.Do(func() {
-		file_creditreservation_v1_credit_reservation_service_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_creditreservation_v1_credit_reservation_service_proto_rawDesc), len(file_creditreservation_v1_credit_reservation_service_proto_rawDesc)))
+func file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP() []byte {
+	file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescOnce.Do(func() {
+		file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_creditreservation_v1alpha_credit_reservation_service_proto_rawDesc), len(file_creditreservation_v1alpha_credit_reservation_service_proto_rawDesc)))
 	})
-	return file_creditreservation_v1_credit_reservation_service_proto_rawDescData
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescData
 }
 
-var file_creditreservation_v1_credit_reservation_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_creditreservation_v1_credit_reservation_service_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
-var file_creditreservation_v1_credit_reservation_service_proto_goTypes = []any{
-	(ResourceType)(0),                                // 0: creditreservation.v1.ResourceType
-	(MeasurementUnit)(0),                             // 1: creditreservation.v1.MeasurementUnit
-	(*OrganizationCredits)(nil),                      // 2: creditreservation.v1.OrganizationCredits
-	(*GetOrganizationCreditsByWorkflowRequest)(nil),  // 3: creditreservation.v1.GetOrganizationCreditsByWorkflowRequest
-	(*GetOrganizationCreditsByWorkflowResponse)(nil), // 4: creditreservation.v1.GetOrganizationCreditsByWorkflowResponse
-	(*ReserveCreditsRequest)(nil),                    // 5: creditreservation.v1.ReserveCreditsRequest
-	(*ReserveCreditsResponse)(nil),                   // 6: creditreservation.v1.ReserveCreditsResponse
-	(*SubmitWorkflowReceiptRequest)(nil),             // 7: creditreservation.v1.SubmitWorkflowReceiptRequest
-	(*RateCardEntry)(nil),                            // 8: creditreservation.v1.RateCardEntry
-	(*GetRateCardRequest)(nil),                       // 9: creditreservation.v1.GetRateCardRequest
-	(*GetRateCardResponse)(nil),                      // 10: creditreservation.v1.GetRateCardResponse
-	(*timestamppb.Timestamp)(nil),                    // 11: google.protobuf.Timestamp
-	(*events.MeteringReport)(nil),                    // 12: workflows.v1.MeteringReport
-	(*emptypb.Empty)(nil),                            // 13: google.protobuf.Empty
+var file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_creditreservation_v1alpha_credit_reservation_service_proto_goTypes = []any{
+	(ResourceType)(0),                                // 0: creditreservation.v1alpha.ResourceType
+	(MeasurementUnit)(0),                             // 1: creditreservation.v1alpha.MeasurementUnit
+	(*OrganizationCredits)(nil),                      // 2: creditreservation.v1alpha.OrganizationCredits
+	(*GetOrganizationCreditsByWorkflowRequest)(nil),  // 3: creditreservation.v1alpha.GetOrganizationCreditsByWorkflowRequest
+	(*GetOrganizationCreditsByWorkflowResponse)(nil), // 4: creditreservation.v1alpha.GetOrganizationCreditsByWorkflowResponse
+	(*ReserveCreditsRequest)(nil),                    // 5: creditreservation.v1alpha.ReserveCreditsRequest
+	(*ReserveCreditsResponse)(nil),                   // 6: creditreservation.v1alpha.ReserveCreditsResponse
+	(*SubmitWorkflowReceiptRequest)(nil),             // 7: creditreservation.v1alpha.SubmitWorkflowReceiptRequest
+	(*RateCard)(nil),                                 // 8: creditreservation.v1alpha.RateCard
+	(*GetWorkflowExecutionRatesRequest)(nil),         // 9: creditreservation.v1alpha.GetWorkflowExecutionRatesRequest
+	(*GetWorkflowExecutionRatesResponse)(nil),        // 10: creditreservation.v1alpha.GetWorkflowExecutionRatesResponse
+	nil,                           // 11: creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.GasTokensPerCreditEntry
+	(*timestamppb.Timestamp)(nil), // 12: google.protobuf.Timestamp
+	(*events.MeteringReport)(nil), // 13: workflows.v1.MeteringReport
+	(*emptypb.Empty)(nil),         // 14: google.protobuf.Empty
 }
-var file_creditreservation_v1_credit_reservation_service_proto_depIdxs = []int32{
-	11, // 0: creditreservation.v1.OrganizationCredits.created_at:type_name -> google.protobuf.Timestamp
-	11, // 1: creditreservation.v1.OrganizationCredits.updated_at:type_name -> google.protobuf.Timestamp
-	2,  // 2: creditreservation.v1.GetOrganizationCreditsByWorkflowResponse.credits:type_name -> creditreservation.v1.OrganizationCredits
-	8,  // 3: creditreservation.v1.ReserveCreditsResponse.entries:type_name -> creditreservation.v1.RateCardEntry
-	12, // 4: creditreservation.v1.SubmitWorkflowReceiptRequest.metering:type_name -> workflows.v1.MeteringReport
-	0,  // 5: creditreservation.v1.RateCardEntry.resource_type:type_name -> creditreservation.v1.ResourceType
-	1,  // 6: creditreservation.v1.RateCardEntry.measurement_unit:type_name -> creditreservation.v1.MeasurementUnit
-	11, // 7: creditreservation.v1.RateCardEntry.created_at:type_name -> google.protobuf.Timestamp
-	11, // 8: creditreservation.v1.RateCardEntry.updated_at:type_name -> google.protobuf.Timestamp
-	8,  // 9: creditreservation.v1.GetRateCardResponse.entries:type_name -> creditreservation.v1.RateCardEntry
-	3,  // 10: creditreservation.v1.CreditReservationService.GetOrganizationCreditsByWorkflow:input_type -> creditreservation.v1.GetOrganizationCreditsByWorkflowRequest
-	5,  // 11: creditreservation.v1.CreditReservationService.ReserveCredits:input_type -> creditreservation.v1.ReserveCreditsRequest
-	7,  // 12: creditreservation.v1.CreditReservationService.SubmitWorkflowReceipt:input_type -> creditreservation.v1.SubmitWorkflowReceiptRequest
-	9,  // 13: creditreservation.v1.CreditReservationService.GetRateCard:input_type -> creditreservation.v1.GetRateCardRequest
-	4,  // 14: creditreservation.v1.CreditReservationService.GetOrganizationCreditsByWorkflow:output_type -> creditreservation.v1.GetOrganizationCreditsByWorkflowResponse
-	6,  // 15: creditreservation.v1.CreditReservationService.ReserveCredits:output_type -> creditreservation.v1.ReserveCreditsResponse
-	13, // 16: creditreservation.v1.CreditReservationService.SubmitWorkflowReceipt:output_type -> google.protobuf.Empty
-	10, // 17: creditreservation.v1.CreditReservationService.GetRateCard:output_type -> creditreservation.v1.GetRateCardResponse
-	14, // [14:18] is the sub-list for method output_type
-	10, // [10:14] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+var file_creditreservation_v1alpha_credit_reservation_service_proto_depIdxs = []int32{
+	12, // 0: creditreservation.v1alpha.OrganizationCredits.created_at:type_name -> google.protobuf.Timestamp
+	12, // 1: creditreservation.v1alpha.OrganizationCredits.updated_at:type_name -> google.protobuf.Timestamp
+	2,  // 2: creditreservation.v1alpha.GetOrganizationCreditsByWorkflowResponse.credits:type_name -> creditreservation.v1alpha.OrganizationCredits
+	8,  // 3: creditreservation.v1alpha.ReserveCreditsResponse.rate_cards:type_name -> creditreservation.v1alpha.RateCard
+	13, // 4: creditreservation.v1alpha.SubmitWorkflowReceiptRequest.metering:type_name -> workflows.v1.MeteringReport
+	0,  // 5: creditreservation.v1alpha.RateCard.resource_type:type_name -> creditreservation.v1alpha.ResourceType
+	1,  // 6: creditreservation.v1alpha.RateCard.measurement_unit:type_name -> creditreservation.v1alpha.MeasurementUnit
+	12, // 7: creditreservation.v1alpha.RateCard.created_at:type_name -> google.protobuf.Timestamp
+	12, // 8: creditreservation.v1alpha.RateCard.updated_at:type_name -> google.protobuf.Timestamp
+	8,  // 9: creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.rate_cards:type_name -> creditreservation.v1alpha.RateCard
+	11, // 10: creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.gas_tokens_per_credit:type_name -> creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.GasTokensPerCreditEntry
+	3,  // 11: creditreservation.v1alpha.CreditReservationService.GetOrganizationCreditsByWorkflow:input_type -> creditreservation.v1alpha.GetOrganizationCreditsByWorkflowRequest
+	5,  // 12: creditreservation.v1alpha.CreditReservationService.ReserveCredits:input_type -> creditreservation.v1alpha.ReserveCreditsRequest
+	7,  // 13: creditreservation.v1alpha.CreditReservationService.SubmitWorkflowReceipt:input_type -> creditreservation.v1alpha.SubmitWorkflowReceiptRequest
+	9,  // 14: creditreservation.v1alpha.CreditReservationService.GetWorkflowExecutionRates:input_type -> creditreservation.v1alpha.GetWorkflowExecutionRatesRequest
+	4,  // 15: creditreservation.v1alpha.CreditReservationService.GetOrganizationCreditsByWorkflow:output_type -> creditreservation.v1alpha.GetOrganizationCreditsByWorkflowResponse
+	6,  // 16: creditreservation.v1alpha.CreditReservationService.ReserveCredits:output_type -> creditreservation.v1alpha.ReserveCreditsResponse
+	14, // 17: creditreservation.v1alpha.CreditReservationService.SubmitWorkflowReceipt:output_type -> google.protobuf.Empty
+	10, // 18: creditreservation.v1alpha.CreditReservationService.GetWorkflowExecutionRates:output_type -> creditreservation.v1alpha.GetWorkflowExecutionRatesResponse
+	15, // [15:19] is the sub-list for method output_type
+	11, // [11:15] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
-func init() { file_creditreservation_v1_credit_reservation_service_proto_init() }
-func file_creditreservation_v1_credit_reservation_service_proto_init() {
-	if File_creditreservation_v1_credit_reservation_service_proto != nil {
+func init() { file_creditreservation_v1alpha_credit_reservation_service_proto_init() }
+func file_creditreservation_v1alpha_credit_reservation_service_proto_init() {
+	if File_creditreservation_v1alpha_credit_reservation_service_proto != nil {
 		return
 	}
+	file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[3].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_creditreservation_v1_credit_reservation_service_proto_rawDesc), len(file_creditreservation_v1_credit_reservation_service_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_creditreservation_v1alpha_credit_reservation_service_proto_rawDesc), len(file_creditreservation_v1alpha_credit_reservation_service_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   9,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_creditreservation_v1_credit_reservation_service_proto_goTypes,
-		DependencyIndexes: file_creditreservation_v1_credit_reservation_service_proto_depIdxs,
-		EnumInfos:         file_creditreservation_v1_credit_reservation_service_proto_enumTypes,
-		MessageInfos:      file_creditreservation_v1_credit_reservation_service_proto_msgTypes,
+		GoTypes:           file_creditreservation_v1alpha_credit_reservation_service_proto_goTypes,
+		DependencyIndexes: file_creditreservation_v1alpha_credit_reservation_service_proto_depIdxs,
+		EnumInfos:         file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes,
+		MessageInfos:      file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes,
 	}.Build()
-	File_creditreservation_v1_credit_reservation_service_proto = out.File
-	file_creditreservation_v1_credit_reservation_service_proto_goTypes = nil
-	file_creditreservation_v1_credit_reservation_service_proto_depIdxs = nil
+	File_creditreservation_v1alpha_credit_reservation_service_proto = out.File
+	file_creditreservation_v1alpha_credit_reservation_service_proto_goTypes = nil
+	file_creditreservation_v1alpha_credit_reservation_service_proto_depIdxs = nil
 }
