@@ -63,8 +63,7 @@ message ReserveCreditsRequest {
   uint64 workflow_registry_chain_selector = 3;
   string workflow_id = 4;
   string workflow_execution_id = 5;
-  string credits = 6;
-  string org_id = 7;
+  optional string credits = 6;
 }
 
 message ReserveCreditsResponse {
@@ -103,9 +102,10 @@ message GetWorkflowExecutionRatesRequest {
 }
 
 message GetWorkflowExecutionRatesResponse {
-  repeated RateCard rate_cards = 1;
+  string organization_id = 1;
+  repeated RateCard rate_cards = 2;
   // chain selector -> gas tokens per credit
-  map<uint64, string> gas_tokens_per_credit = 2;
+  map<uint64, string> gas_tokens_per_credit = 3;
 }
 
 // -----------------------------------------------------------------------------
