@@ -186,7 +186,7 @@ service Client {
     labels: {
       // from https://github.com/smartcontractkit/chain-selectors/blob/main/selectors.yml
       // as a subset of the selectors supported on the CRE
-      key: "chainselector"
+      key: "chain_selector"
       value: {
         uint64_label: {
           defaults: [
