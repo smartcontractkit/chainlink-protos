@@ -32,6 +32,13 @@ beholder:
     - entity: TransmitScheduleEvent
       schema: "workflows/v1/transmit_schedule_event.proto"
 
+    - entity: UserLogs
+      schema: "workflows/v1/user_logs.proto"
+      references:
+        - name: "workflows/v1/metadata.proto"
+          subject: "beholder__cre__messages-workflows.v1.WorkflowMetadata"
+          version: 1
+
     - entity: WorkflowExecutionFinished
       schema: "workflows/v1/workflow_finished.proto"
       references:
