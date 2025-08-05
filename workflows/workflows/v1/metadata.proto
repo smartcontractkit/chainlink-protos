@@ -19,4 +19,12 @@ message WorkflowMetadata {
   string workflowRegistryChain = 12;
   string engineVersion = 13;
   string donVersion = 14;
+  TriggerDetail trigger = 15;
+}
+
+message TriggerDetail {
+  string triggerID = 1;
+  string spend_value = 2;
+  string spend_unit = 3;
+  string cre_value = 4;
 }
