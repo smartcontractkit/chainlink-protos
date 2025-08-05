@@ -24,7 +24,4 @@ message WorkflowMetadata {
 
 message TriggerDetail {
   string triggerID = 1;
-  string spend_value = 2;
-  string spend_unit = 3;
-  string cre_value = 4;
 }

@@ -180,9 +180,6 @@ func (x *WorkflowMetadata) GetTrigger() *TriggerDetail {
 type TriggerDetail struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TriggerID     string                 `protobuf:"bytes,1,opt,name=triggerID,proto3" json:"triggerID,omitempty"`
-	SpendValue    string                 `protobuf:"bytes,2,opt,name=spend_value,json=spendValue,proto3" json:"spend_value,omitempty"`
-	SpendUnit     string                 `protobuf:"bytes,3,opt,name=spend_unit,json=spendUnit,proto3" json:"spend_unit,omitempty"`
-	CreValue      string                 `protobuf:"bytes,4,opt,name=cre_value,json=creValue,proto3" json:"cre_value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -224,27 +221,6 @@ func (x *TriggerDetail) GetTriggerID() string {
 	return ""
 }
 
-func (x *TriggerDetail) GetSpendValue() string {
-	if x != nil {
-		return x.SpendValue
-	}
-	return ""
-}
-
-func (x *TriggerDetail) GetSpendUnit() string {
-	if x != nil {
-		return x.SpendUnit
-	}
-	return ""
-}
-
-func (x *TriggerDetail) GetCreValue() string {
-	if x != nil {
-		return x.CreValue
-	}
-	return ""
-}
-
 var File_workflows_v1_metadata_proto protoreflect.FileDescriptor
 
 const file_workflows_v1_metadata_proto_rawDesc = "" +
@@ -270,14 +246,9 @@ const file_workflows_v1_metadata_proto_rawDesc = "" +
 	"\n" +
 	"donVersion\x18\x0e \x01(\tR\n" +
 	"donVersion\x125\n" +
-	"\atrigger\x18\x0f \x01(\v2\x1b.workflows.v1.TriggerDetailR\atrigger\"\x8a\x01\n" +
+	"\atrigger\x18\x0f \x01(\v2\x1b.workflows.v1.TriggerDetailR\atrigger\"-\n" +
 	"\rTriggerDetail\x12\x1c\n" +
-	"\ttriggerID\x18\x01 \x01(\tR\ttriggerID\x12\x1f\n" +
-	"\vspend_value\x18\x02 \x01(\tR\n" +
-	"spendValue\x12\x1d\n" +
-	"\n" +
-	"spend_unit\x18\x03 \x01(\tR\tspendUnit\x12\x1b\n" +
-	"\tcre_value\x18\x04 \x01(\tR\bcreValueBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
+	"\ttriggerID\x18\x01 \x01(\tR\ttriggerIDBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
 
 var (
 	file_workflows_v1_metadata_proto_rawDescOnce sync.Once
