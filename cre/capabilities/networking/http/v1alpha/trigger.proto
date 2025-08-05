@@ -20,7 +20,7 @@ message Payload {
 
 enum KeyType {
   KEY_TYPE_UNSPECIFIED = 0;
-  KEY_TYPE_ECDSA = 1;
+  KEY_TYPE_ECDSA_EVM = 1;
 }
 
 // Generic and extensible authorized signer abstraction
