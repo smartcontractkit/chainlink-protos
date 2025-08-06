@@ -8,7 +8,7 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v
 
 // METADATA
 
-message CreInfo {
+message CREInfo {
   int32 donID = 1;
   int32 donF = 2;
   int32 donN = 3;
@@ -45,7 +45,7 @@ message Workflow {
 }
 
 message WorkflowDeployed {
-  CreInfo         creInfo   = 1;
+  CREInfo         creInfo   = 1;
   string          timestamp = 2;
   TransactionInfo txInfo    = 3;
 
@@ -54,7 +54,7 @@ message WorkflowDeployed {
 }
 
 message WorkflowUpdated {
-  CreInfo         creInfo   = 1;
+  CREInfo         creInfo   = 1;
   string          timestamp = 2;
   TransactionInfo txInfo    = 3;
 
@@ -63,7 +63,7 @@ message WorkflowUpdated {
 }
 
 message WorkflowDeleted {
-  CreInfo         creInfo   = 1;
+  CREInfo         creInfo   = 1;
   string          timestamp = 2;
   TransactionInfo txInfo    = 3;
 
@@ -81,7 +81,7 @@ enum ExecutionStatus {
 }
 
 message TriggerExecutionStarted {
-  CreInfo creInfo = 1;
+  CREInfo creInfo = 1;
   WorkflowKey workflow = 2;
   string workflowExecutionID = 3;
   string timestamp = 4;
@@ -90,7 +90,7 @@ message TriggerExecutionStarted {
 }
 
 message WorkflowExecutionStarted {
-  CreInfo creInfo = 1;
+  CREInfo creInfo = 1;
   WorkflowKey workflow = 2;
   string workflowExecutionID = 3;
   string timestamp = 4;
@@ -99,7 +99,7 @@ message WorkflowExecutionStarted {
 }
 
 message WorkflowExecutionFinished {
-  CreInfo creInfo = 1;
+  CREInfo creInfo = 1;
   WorkflowKey workflow = 2;
   string workflowExecutionID = 3;
   string timestamp = 4;
@@ -108,7 +108,7 @@ message WorkflowExecutionFinished {
 }
 
 message CapabilityExecutionStarted {
-  CreInfo creInfo = 1;
+  CREInfo creInfo = 1;
   WorkflowKey workflow = 2;
   string workflowExecutionID = 3;
   string timestamp = 4;
@@ -118,7 +118,7 @@ message CapabilityExecutionStarted {
 }
 
 message CapabilityExecutionFinished {
-  CreInfo creInfo = 1;
+  CREInfo creInfo = 1;
   WorkflowKey workflow = 2;
   string workflowExecutionID = 3;
   string timestamp = 4;

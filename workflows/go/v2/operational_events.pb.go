@@ -71,7 +71,7 @@ func (ExecutionStatus) EnumDescriptor() ([]byte, []int) {
 	return file_workflows_v2_operational_events_proto_rawDescGZIP(), []int{0}
 }
 
-type CreInfo struct {
+type CREInfo struct {
 	state                       protoimpl.MessageState `protogen:"open.v1"`
 	DonID                       int32                  `protobuf:"varint,1,opt,name=donID,proto3" json:"donID,omitempty"`
 	DonF                        int32                  `protobuf:"varint,2,opt,name=donF,proto3" json:"donF,omitempty"`
@@ -87,20 +87,20 @@ type CreInfo struct {
 	sizeCache                   protoimpl.SizeCache
 }
 
-func (x *CreInfo) Reset() {
-	*x = CreInfo{}
+func (x *CREInfo) Reset() {
+	*x = CREInfo{}
 	mi := &file_workflows_v2_operational_events_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreInfo) String() string {
+func (x *CREInfo) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreInfo) ProtoMessage() {}
+func (*CREInfo) ProtoMessage() {}
 
-func (x *CreInfo) ProtoReflect() protoreflect.Message {
+func (x *CREInfo) ProtoReflect() protoreflect.Message {
 	mi := &file_workflows_v2_operational_events_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -112,75 +112,75 @@ func (x *CreInfo) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreInfo.ProtoReflect.Descriptor instead.
-func (*CreInfo) Descriptor() ([]byte, []int) {
+// Deprecated: Use CREInfo.ProtoReflect.Descriptor instead.
+func (*CREInfo) Descriptor() ([]byte, []int) {
 	return file_workflows_v2_operational_events_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *CreInfo) GetDonID() int32 {
+func (x *CREInfo) GetDonID() int32 {
 	if x != nil {
 		return x.DonID
 	}
 	return 0
 }
 
-func (x *CreInfo) GetDonF() int32 {
+func (x *CREInfo) GetDonF() int32 {
 	if x != nil {
 		return x.DonF
 	}
 	return 0
 }
 
-func (x *CreInfo) GetDonN() int32 {
+func (x *CREInfo) GetDonN() int32 {
 	if x != nil {
 		return x.DonN
 	}
 	return 0
 }
 
-func (x *CreInfo) GetP2PID() string {
+func (x *CREInfo) GetP2PID() string {
 	if x != nil {
 		return x.P2PID
 	}
 	return ""
 }
 
-func (x *CreInfo) GetWorkflowRegistryAddress() string {
+func (x *CREInfo) GetWorkflowRegistryAddress() string {
 	if x != nil {
 		return x.WorkflowRegistryAddress
 	}
 	return ""
 }
 
-func (x *CreInfo) GetWorkflowRegistryVersion() string {
+func (x *CREInfo) GetWorkflowRegistryVersion() string {
 	if x != nil {
 		return x.WorkflowRegistryVersion
 	}
 	return ""
 }
 
-func (x *CreInfo) GetWorkflowRegistryChain() string {
+func (x *CREInfo) GetWorkflowRegistryChain() string {
 	if x != nil {
 		return x.WorkflowRegistryChain
 	}
 	return ""
 }
 
-func (x *CreInfo) GetEngineVersion() string {
+func (x *CREInfo) GetEngineVersion() string {
 	if x != nil {
 		return x.EngineVersion
 	}
 	return ""
 }
 
-func (x *CreInfo) GetCapabilitiesRegistryVersion() string {
+func (x *CREInfo) GetCapabilitiesRegistryVersion() string {
 	if x != nil {
 		return x.CapabilitiesRegistryVersion
 	}
 	return ""
 }
 
-func (x *CreInfo) GetDonVersion() string {
+func (x *CREInfo) GetDonVersion() string {
 	if x != nil {
 		return x.DonVersion
 	}
@@ -385,7 +385,7 @@ func (x *Workflow) GetConfigURL() string {
 
 type WorkflowDeployed struct {
 	state         protoimpl.MessageState  `protogen:"open.v1"`
-	CreInfo       *CreInfo                `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
+	CreInfo       *CREInfo                `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
 	Timestamp     string                  `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	TxInfo        *TransactionInfo        `protobuf:"bytes,3,opt,name=txInfo,proto3" json:"txInfo,omitempty"`
 	Workflow      *Workflow               `protobuf:"bytes,4,opt,name=workflow,proto3" json:"workflow,omitempty"`
@@ -424,7 +424,7 @@ func (*WorkflowDeployed) Descriptor() ([]byte, []int) {
 	return file_workflows_v2_operational_events_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *WorkflowDeployed) GetCreInfo() *CreInfo {
+func (x *WorkflowDeployed) GetCreInfo() *CREInfo {
 	if x != nil {
 		return x.CreInfo
 	}
@@ -461,7 +461,7 @@ func (x *WorkflowDeployed) GetErrorMessage() *wrapperspb.StringValue {
 
 type WorkflowUpdated struct {
 	state         protoimpl.MessageState  `protogen:"open.v1"`
-	CreInfo       *CreInfo                `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
+	CreInfo       *CREInfo                `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
 	Timestamp     string                  `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	TxInfo        *TransactionInfo        `protobuf:"bytes,3,opt,name=txInfo,proto3" json:"txInfo,omitempty"`
 	Workflow      *Workflow               `protobuf:"bytes,4,opt,name=workflow,proto3" json:"workflow,omitempty"`
@@ -500,7 +500,7 @@ func (*WorkflowUpdated) Descriptor() ([]byte, []int) {
 	return file_workflows_v2_operational_events_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *WorkflowUpdated) GetCreInfo() *CreInfo {
+func (x *WorkflowUpdated) GetCreInfo() *CREInfo {
 	if x != nil {
 		return x.CreInfo
 	}
@@ -537,7 +537,7 @@ func (x *WorkflowUpdated) GetErrorMessage() *wrapperspb.StringValue {
 
 type WorkflowDeleted struct {
 	state         protoimpl.MessageState  `protogen:"open.v1"`
-	CreInfo       *CreInfo                `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
+	CreInfo       *CREInfo                `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
 	Timestamp     string                  `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	TxInfo        *TransactionInfo        `protobuf:"bytes,3,opt,name=txInfo,proto3" json:"txInfo,omitempty"`
 	Workflow      *Workflow               `protobuf:"bytes,4,opt,name=workflow,proto3" json:"workflow,omitempty"`
@@ -576,7 +576,7 @@ func (*WorkflowDeleted) Descriptor() ([]byte, []int) {
 	return file_workflows_v2_operational_events_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *WorkflowDeleted) GetCreInfo() *CreInfo {
+func (x *WorkflowDeleted) GetCreInfo() *CREInfo {
 	if x != nil {
 		return x.CreInfo
 	}
@@ -613,7 +613,7 @@ func (x *WorkflowDeleted) GetErrorMessage() *wrapperspb.StringValue {
 
 type TriggerExecutionStarted struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	CreInfo             *CreInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
+	CreInfo             *CREInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
 	Workflow            *WorkflowKey           `protobuf:"bytes,2,opt,name=workflow,proto3" json:"workflow,omitempty"`
 	WorkflowExecutionID string                 `protobuf:"bytes,3,opt,name=workflowExecutionID,proto3" json:"workflowExecutionID,omitempty"`
 	Timestamp           string                 `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
@@ -652,7 +652,7 @@ func (*TriggerExecutionStarted) Descriptor() ([]byte, []int) {
 	return file_workflows_v2_operational_events_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *TriggerExecutionStarted) GetCreInfo() *CreInfo {
+func (x *TriggerExecutionStarted) GetCreInfo() *CREInfo {
 	if x != nil {
 		return x.CreInfo
 	}
@@ -689,7 +689,7 @@ func (x *TriggerExecutionStarted) GetTriggerID() string {
 
 type WorkflowExecutionStarted struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	CreInfo             *CreInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
+	CreInfo             *CREInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
 	Workflow            *WorkflowKey           `protobuf:"bytes,2,opt,name=workflow,proto3" json:"workflow,omitempty"`
 	WorkflowExecutionID string                 `protobuf:"bytes,3,opt,name=workflowExecutionID,proto3" json:"workflowExecutionID,omitempty"`
 	Timestamp           string                 `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
@@ -728,7 +728,7 @@ func (*WorkflowExecutionStarted) Descriptor() ([]byte, []int) {
 	return file_workflows_v2_operational_events_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *WorkflowExecutionStarted) GetCreInfo() *CreInfo {
+func (x *WorkflowExecutionStarted) GetCreInfo() *CREInfo {
 	if x != nil {
 		return x.CreInfo
 	}
@@ -765,7 +765,7 @@ func (x *WorkflowExecutionStarted) GetTriggerID() string {
 
 type WorkflowExecutionFinished struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	CreInfo             *CreInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
+	CreInfo             *CREInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
 	Workflow            *WorkflowKey           `protobuf:"bytes,2,opt,name=workflow,proto3" json:"workflow,omitempty"`
 	WorkflowExecutionID string                 `protobuf:"bytes,3,opt,name=workflowExecutionID,proto3" json:"workflowExecutionID,omitempty"`
 	Timestamp           string                 `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
@@ -804,7 +804,7 @@ func (*WorkflowExecutionFinished) Descriptor() ([]byte, []int) {
 	return file_workflows_v2_operational_events_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *WorkflowExecutionFinished) GetCreInfo() *CreInfo {
+func (x *WorkflowExecutionFinished) GetCreInfo() *CREInfo {
 	if x != nil {
 		return x.CreInfo
 	}
@@ -841,7 +841,7 @@ func (x *WorkflowExecutionFinished) GetStatus() ExecutionStatus {
 
 type CapabilityExecutionStarted struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	CreInfo             *CreInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
+	CreInfo             *CREInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
 	Workflow            *WorkflowKey           `protobuf:"bytes,2,opt,name=workflow,proto3" json:"workflow,omitempty"`
 	WorkflowExecutionID string                 `protobuf:"bytes,3,opt,name=workflowExecutionID,proto3" json:"workflowExecutionID,omitempty"`
 	Timestamp           string                 `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
@@ -881,7 +881,7 @@ func (*CapabilityExecutionStarted) Descriptor() ([]byte, []int) {
 	return file_workflows_v2_operational_events_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *CapabilityExecutionStarted) GetCreInfo() *CreInfo {
+func (x *CapabilityExecutionStarted) GetCreInfo() *CREInfo {
 	if x != nil {
 		return x.CreInfo
 	}
@@ -925,7 +925,7 @@ func (x *CapabilityExecutionStarted) GetStepRef() int32 {
 
 type CapabilityExecutionFinished struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
-	CreInfo             *CreInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
+	CreInfo             *CREInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
 	Workflow            *WorkflowKey           `protobuf:"bytes,2,opt,name=workflow,proto3" json:"workflow,omitempty"`
 	WorkflowExecutionID string                 `protobuf:"bytes,3,opt,name=workflowExecutionID,proto3" json:"workflowExecutionID,omitempty"`
 	Timestamp           string                 `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
@@ -966,7 +966,7 @@ func (*CapabilityExecutionFinished) Descriptor() ([]byte, []int) {
 	return file_workflows_v2_operational_events_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *CapabilityExecutionFinished) GetCreInfo() *CreInfo {
+func (x *CapabilityExecutionFinished) GetCreInfo() *CREInfo {
 	if x != nil {
 		return x.CreInfo
 	}
@@ -1020,7 +1020,7 @@ var File_workflows_v2_operational_events_proto protoreflect.FileDescriptor
 const file_workflows_v2_operational_events_proto_rawDesc = "" +
 	"\n" +
 	"%workflows/v2/operational_events.proto\x12\fworkflows.v2\x1a\x1egoogle/protobuf/wrappers.proto\"\x8f\x03\n" +
-	"\aCreInfo\x12\x14\n" +
+	"\aCREInfo\x12\x14\n" +
 	"\x05donID\x18\x01 \x01(\x05R\x05donID\x12\x12\n" +
 	"\x04donF\x18\x02 \x01(\x05R\x04donF\x12\x12\n" +
 	"\x04donN\x18\x03 \x01(\x05R\x04donN\x12\x14\n" +
@@ -1051,50 +1051,50 @@ const file_workflows_v2_operational_events_proto_rawDesc = "" +
 	"\tbinaryURL\x18\x03 \x01(\tR\tbinaryURL\x12\x1c\n" +
 	"\tconfigURL\x18\x04 \x01(\tR\tconfigURL\"\x8e\x02\n" +
 	"\x10WorkflowDeployed\x12/\n" +
-	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x12\x1c\n" +
+	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CREInfoR\acreInfo\x12\x1c\n" +
 	"\ttimestamp\x18\x02 \x01(\tR\ttimestamp\x125\n" +
 	"\x06txInfo\x18\x03 \x01(\v2\x1d.workflows.v2.TransactionInfoR\x06txInfo\x122\n" +
 	"\bworkflow\x18\x04 \x01(\v2\x16.workflows.v2.WorkflowR\bworkflow\x12@\n" +
 	"\ferrorMessage\x18\x05 \x01(\v2\x1c.google.protobuf.StringValueR\ferrorMessage\"\x8d\x02\n" +
 	"\x0fWorkflowUpdated\x12/\n" +
-	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x12\x1c\n" +
+	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CREInfoR\acreInfo\x12\x1c\n" +
 	"\ttimestamp\x18\x02 \x01(\tR\ttimestamp\x125\n" +
 	"\x06txInfo\x18\x03 \x01(\v2\x1d.workflows.v2.TransactionInfoR\x06txInfo\x122\n" +
 	"\bworkflow\x18\x04 \x01(\v2\x16.workflows.v2.WorkflowR\bworkflow\x12@\n" +
 	"\ferrorMessage\x18\x05 \x01(\v2\x1c.google.protobuf.StringValueR\ferrorMessage\"\x8d\x02\n" +
 	"\x0fWorkflowDeleted\x12/\n" +
-	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x12\x1c\n" +
+	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CREInfoR\acreInfo\x12\x1c\n" +
 	"\ttimestamp\x18\x02 \x01(\tR\ttimestamp\x125\n" +
 	"\x06txInfo\x18\x03 \x01(\v2\x1d.workflows.v2.TransactionInfoR\x06txInfo\x122\n" +
 	"\bworkflow\x18\x04 \x01(\v2\x16.workflows.v2.WorkflowR\bworkflow\x12@\n" +
 	"\ferrorMessage\x18\x05 \x01(\v2\x1c.google.protobuf.StringValueR\ferrorMessage\"\xef\x01\n" +
 	"\x17TriggerExecutionStarted\x12/\n" +
-	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x125\n" +
+	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CREInfoR\acreInfo\x125\n" +
 	"\bworkflow\x18\x02 \x01(\v2\x19.workflows.v2.WorkflowKeyR\bworkflow\x120\n" +
 	"\x13workflowExecutionID\x18\x03 \x01(\tR\x13workflowExecutionID\x12\x1c\n" +
 	"\ttimestamp\x18\x04 \x01(\tR\ttimestamp\x12\x1c\n" +
 	"\ttriggerID\x18\x05 \x01(\tR\ttriggerID\"\xf0\x01\n" +
 	"\x18WorkflowExecutionStarted\x12/\n" +
-	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x125\n" +
+	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CREInfoR\acreInfo\x125\n" +
 	"\bworkflow\x18\x02 \x01(\v2\x19.workflows.v2.WorkflowKeyR\bworkflow\x120\n" +
 	"\x13workflowExecutionID\x18\x03 \x01(\tR\x13workflowExecutionID\x12\x1c\n" +
 	"\ttimestamp\x18\x04 \x01(\tR\ttimestamp\x12\x1c\n" +
 	"\ttriggerID\x18\x05 \x01(\tR\ttriggerID\"\x8a\x02\n" +
 	"\x19WorkflowExecutionFinished\x12/\n" +
-	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x125\n" +
+	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CREInfoR\acreInfo\x125\n" +
 	"\bworkflow\x18\x02 \x01(\v2\x19.workflows.v2.WorkflowKeyR\bworkflow\x120\n" +
 	"\x13workflowExecutionID\x18\x03 \x01(\tR\x13workflowExecutionID\x12\x1c\n" +
 	"\ttimestamp\x18\x04 \x01(\tR\ttimestamp\x125\n" +
 	"\x06status\x18\x05 \x01(\x0e2\x1d.workflows.v2.ExecutionStatusR\x06status\"\x92\x02\n" +
 	"\x1aCapabilityExecutionStarted\x12/\n" +
-	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x125\n" +
+	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CREInfoR\acreInfo\x125\n" +
 	"\bworkflow\x18\x02 \x01(\v2\x19.workflows.v2.WorkflowKeyR\bworkflow\x120\n" +
 	"\x13workflowExecutionID\x18\x03 \x01(\tR\x13workflowExecutionID\x12\x1c\n" +
 	"\ttimestamp\x18\x04 \x01(\tR\ttimestamp\x12\"\n" +
 	"\fcapabilityID\x18\x05 \x01(\tR\fcapabilityID\x12\x18\n" +
 	"\astepRef\x18\x06 \x01(\x05R\astepRef\"\xca\x02\n" +
 	"\x1bCapabilityExecutionFinished\x12/\n" +
-	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x125\n" +
+	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CREInfoR\acreInfo\x125\n" +
 	"\bworkflow\x18\x02 \x01(\v2\x19.workflows.v2.WorkflowKeyR\bworkflow\x120\n" +
 	"\x13workflowExecutionID\x18\x03 \x01(\tR\x13workflowExecutionID\x12\x1c\n" +
 	"\ttimestamp\x18\x04 \x01(\tR\ttimestamp\x12\"\n" +
@@ -1122,7 +1122,7 @@ var file_workflows_v2_operational_events_proto_enumTypes = make([]protoimpl.Enum
 var file_workflows_v2_operational_events_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_workflows_v2_operational_events_proto_goTypes = []any{
 	(ExecutionStatus)(0),                // 0: workflows.v2.ExecutionStatus
-	(*CreInfo)(nil),                     // 1: workflows.v2.CreInfo
+	(*CREInfo)(nil),                     // 1: workflows.v2.CREInfo
 	(*WorkflowKey)(nil),                 // 2: workflows.v2.WorkflowKey
 	(*TransactionInfo)(nil),             // 3: workflows.v2.TransactionInfo
 	(*Workflow)(nil),                    // 4: workflows.v2.Workflow
@@ -1138,28 +1138,28 @@ var file_workflows_v2_operational_events_proto_goTypes = []any{
 }
 var file_workflows_v2_operational_events_proto_depIdxs = []int32{
 	2,  // 0: workflows.v2.Workflow.workflowKey:type_name -> workflows.v2.WorkflowKey
-	1,  // 1: workflows.v2.WorkflowDeployed.creInfo:type_name -> workflows.v2.CreInfo
+	1,  // 1: workflows.v2.WorkflowDeployed.creInfo:type_name -> workflows.v2.CREInfo
 	3,  // 2: workflows.v2.WorkflowDeployed.txInfo:type_name -> workflows.v2.TransactionInfo
 	4,  // 3: workflows.v2.WorkflowDeployed.workflow:type_name -> workflows.v2.Workflow
 	13, // 4: workflows.v2.WorkflowDeployed.errorMessage:type_name -> google.protobuf.StringValue
-	1,  // 5: workflows.v2.WorkflowUpdated.creInfo:type_name -> workflows.v2.CreInfo
+	1,  // 5: workflows.v2.WorkflowUpdated.creInfo:type_name -> workflows.v2.CREInfo
 	3,  // 6: workflows.v2.WorkflowUpdated.txInfo:type_name -> workflows.v2.TransactionInfo
 	4,  // 7: workflows.v2.WorkflowUpdated.workflow:type_name -> workflows.v2.Workflow
 	13, // 8: workflows.v2.WorkflowUpdated.errorMessage:type_name -> google.protobuf.StringValue
-	1,  // 9: workflows.v2.WorkflowDeleted.creInfo:type_name -> workflows.v2.CreInfo
+	1,  // 9: workflows.v2.WorkflowDeleted.creInfo:type_name -> workflows.v2.CREInfo
 	3,  // 10: workflows.v2.WorkflowDeleted.txInfo:type_name -> workflows.v2.TransactionInfo
 	4,  // 11: workflows.v2.WorkflowDeleted.workflow:type_name -> workflows.v2.Workflow
 	13, // 12: workflows.v2.WorkflowDeleted.errorMessage:type_name -> google.protobuf.StringValue
-	1,  // 13: workflows.v2.TriggerExecutionStarted.creInfo:type_name -> workflows.v2.CreInfo
+	1,  // 13: workflows.v2.TriggerExecutionStarted.creInfo:type_name -> workflows.v2.CREInfo
 	2,  // 14: workflows.v2.TriggerExecutionStarted.workflow:type_name -> workflows.v2.WorkflowKey
-	1,  // 15: workflows.v2.WorkflowExecutionStarted.creInfo:type_name -> workflows.v2.CreInfo
+	1,  // 15: workflows.v2.WorkflowExecutionStarted.creInfo:type_name -> workflows.v2.CREInfo
 	2,  // 16: workflows.v2.WorkflowExecutionStarted.workflow:type_name -> workflows.v2.WorkflowKey
-	1,  // 17: workflows.v2.WorkflowExecutionFinished.creInfo:type_name -> workflows.v2.CreInfo
+	1,  // 17: workflows.v2.WorkflowExecutionFinished.creInfo:type_name -> workflows.v2.CREInfo
 	2,  // 18: workflows.v2.WorkflowExecutionFinished.workflow:type_name -> workflows.v2.WorkflowKey
 	0,  // 19: workflows.v2.WorkflowExecutionFinished.status:type_name -> workflows.v2.ExecutionStatus
-	1,  // 20: workflows.v2.CapabilityExecutionStarted.creInfo:type_name -> workflows.v2.CreInfo
+	1,  // 20: workflows.v2.CapabilityExecutionStarted.creInfo:type_name -> workflows.v2.CREInfo
 	2,  // 21: workflows.v2.CapabilityExecutionStarted.workflow:type_name -> workflows.v2.WorkflowKey
-	1,  // 22: workflows.v2.CapabilityExecutionFinished.creInfo:type_name -> workflows.v2.CreInfo
+	1,  // 22: workflows.v2.CapabilityExecutionFinished.creInfo:type_name -> workflows.v2.CREInfo
 	2,  // 23: workflows.v2.CapabilityExecutionFinished.workflow:type_name -> workflows.v2.WorkflowKey
 	0,  // 24: workflows.v2.CapabilityExecutionFinished.status:type_name -> workflows.v2.ExecutionStatus
 	25, // [25:25] is the sub-list for method output_type
