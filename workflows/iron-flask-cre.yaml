@@ -53,6 +53,9 @@ beholder:
           subject: "beholder__cre__messages-workflows.v1.WorkflowMetadata"
           version: 1
 
+    - entity: BridgeStatusEvent
+      schema: "bridge_status/v1/bridge_status.proto"
+
     - entity: BaseMessage
       schema: "common/v1/base_message.proto"
     
