@@ -25,19 +25,22 @@ const (
 type ExecutionStatus int32
 
 const (
-	ExecutionStatus_SUCCEEDED ExecutionStatus = 0
-	ExecutionStatus_FAILED    ExecutionStatus = 1
+	ExecutionStatus_EXECUTION_STATUS_UNSPECIFIED ExecutionStatus = 0
+	ExecutionStatus_EXECUTION_STATUS_SUCCEEDED   ExecutionStatus = 1
+	ExecutionStatus_EXECUTION_STATUS_FAILED      ExecutionStatus = 2
 )
 
 // Enum value maps for ExecutionStatus.
 var (
 	ExecutionStatus_name = map[int32]string{
-		0: "SUCCEEDED",
-		1: "FAILED",
+		0: "EXECUTION_STATUS_UNSPECIFIED",
+		1: "EXECUTION_STATUS_SUCCEEDED",
+		2: "EXECUTION_STATUS_FAILED",
 	}
 	ExecutionStatus_value = map[string]int32{
-		"SUCCEEDED": 0,
-		"FAILED":    1,
+		"EXECUTION_STATUS_UNSPECIFIED": 0,
+		"EXECUTION_STATUS_SUCCEEDED":   1,
+		"EXECUTION_STATUS_FAILED":      2,
 	}
 )
 
@@ -833,7 +836,7 @@ func (x *WorkflowExecutionFinished) GetStatus() ExecutionStatus {
 	if x != nil {
 		return x.Status
 	}
-	return ExecutionStatus_SUCCEEDED
+	return ExecutionStatus_EXECUTION_STATUS_UNSPECIFIED
 }
 
 type CapabilityExecutionStarted struct {
@@ -1009,7 +1012,7 @@ func (x *CapabilityExecutionFinished) GetStatus() ExecutionStatus {
 	if x != nil {
 		return x.Status
 	}
-	return ExecutionStatus_SUCCEEDED
+	return ExecutionStatus_EXECUTION_STATUS_UNSPECIFIED
 }
 
 var File_workflows_v2_operational_events_proto protoreflect.FileDescriptor
@@ -1097,11 +1100,11 @@ const file_workflows_v2_operational_events_proto_rawDesc = "" +
 	"\ttimestamp\x18\x04 \x01(\tR\ttimestamp\x12\"\n" +
 	"\fcapabilityID\x18\x05 \x01(\tR\fcapabilityID\x12\x18\n" +
 	"\astepRef\x18\x06 \x01(\x05R\astepRef\x125\n" +
-	"\x06status\x18\a \x01(\x0e2\x1d.workflows.v2.ExecutionStatusR\x06status*,\n" +
-	"\x0fExecutionStatus\x12\r\n" +
-	"\tSUCCEEDED\x10\x00\x12\n" +
-	"\n" +
-	"\x06FAILED\x10\x01B>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
+	"\x06status\x18\a \x01(\x0e2\x1d.workflows.v2.ExecutionStatusR\x06status*p\n" +
+	"\x0fExecutionStatus\x12 \n" +
+	"\x1cEXECUTION_STATUS_UNSPECIFIED\x10\x00\x12\x1e\n" +
+	"\x1aEXECUTION_STATUS_SUCCEEDED\x10\x01\x12\x1b\n" +
+	"\x17EXECUTION_STATUS_FAILED\x10\x02B>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
 
 var (
 	file_workflows_v2_operational_events_proto_rawDescOnce sync.Once

@@ -75,8 +75,9 @@ message WorkflowDeleted {
 // EXECUTION
 
 enum ExecutionStatus {
-  SUCCEEDED = 0;
-  FAILED = 1;
+  EXECUTION_STATUS_UNSPECIFIED = 0;
+  EXECUTION_STATUS_SUCCEEDED = 1;
+  EXECUTION_STATUS_FAILED = 2;
 }
 
 message TriggerExecutionStarted {
