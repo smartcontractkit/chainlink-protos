@@ -91,10 +91,13 @@ func (x *MeteringReport) GetMessage() string {
 }
 
 type MeteringReportStep struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	Nodes         []*MeteringReportNodeDetail `protobuf:"bytes,1,rep,name=nodes,proto3" json:"nodes,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state            protoimpl.MessageState      `protogen:"open.v1"`
+	Nodes            []*MeteringReportNodeDetail `protobuf:"bytes,1,rep,name=nodes,proto3" json:"nodes,omitempty"`
+	AggSpendValue    string                      `protobuf:"bytes,2,opt,name=agg_spend_value,json=aggSpendValue,proto3" json:"agg_spend_value,omitempty"`
+	AggSpendUnit     string                      `protobuf:"bytes,3,opt,name=agg_spend_unit,json=aggSpendUnit,proto3" json:"agg_spend_unit,omitempty"`
+	AggSpendValueCre string                      `protobuf:"bytes,4,opt,name=agg_spend_value_cre,json=aggSpendValueCre,proto3" json:"agg_spend_value_cre,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *MeteringReportStep) Reset() {
@@ -134,11 +137,33 @@ func (x *MeteringReportStep) GetNodes() []*MeteringReportNodeDetail {
 	return nil
 }
 
+func (x *MeteringReportStep) GetAggSpendValue() string {
+	if x != nil {
+		return x.AggSpendValue
+	}
+	return ""
+}
+
+func (x *MeteringReportStep) GetAggSpendUnit() string {
+	if x != nil {
+		return x.AggSpendUnit
+	}
+	return ""
+}
+
+func (x *MeteringReportStep) GetAggSpendValueCre() string {
+	if x != nil {
+		return x.AggSpendValueCre
+	}
+	return ""
+}
+
 type MeteringReportNodeDetail struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Peer_2PeerId  string                 `protobuf:"bytes,1,opt,name=peer_2_peer_id,json=peer2PeerId,proto3" json:"peer_2_peer_id,omitempty"`
 	SpendUnit     string                 `protobuf:"bytes,2,opt,name=spend_unit,json=spendUnit,proto3" json:"spend_unit,omitempty"`
 	SpendValue    string                 `protobuf:"bytes,3,opt,name=spend_value,json=spendValue,proto3" json:"spend_value,omitempty"`
+	SpendValueCre string                 `protobuf:"bytes,4,opt,name=spend_value_cre,json=spendValueCre,proto3" json:"spend_value_cre,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -194,6 +219,13 @@ func (x *MeteringReportNodeDetail) GetSpendValue() string {
 	return ""
 }
 
+func (x *MeteringReportNodeDetail) GetSpendValueCre() string {
+	if x != nil {
+		return x.SpendValueCre
+	}
+	return ""
+}
+
 var File_workflows_v1_metering_proto protoreflect.FileDescriptor
 
 const file_workflows_v1_metering_proto_rawDesc = "" +
@@ -207,15 +239,19 @@ const file_workflows_v1_metering_proto_rawDesc = "" +
 	"\n" +
 	"StepsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x126\n" +
-	"\x05value\x18\x02 \x01(\v2 .workflows.v1.MeteringReportStepR\x05value:\x028\x01\"R\n" +
+	"\x05value\x18\x02 \x01(\v2 .workflows.v1.MeteringReportStepR\x05value:\x028\x01\"\xcf\x01\n" +
 	"\x12MeteringReportStep\x12<\n" +
-	"\x05nodes\x18\x01 \x03(\v2&.workflows.v1.MeteringReportNodeDetailR\x05nodes\"\x7f\n" +
+	"\x05nodes\x18\x01 \x03(\v2&.workflows.v1.MeteringReportNodeDetailR\x05nodes\x12&\n" +
+	"\x0fagg_spend_value\x18\x02 \x01(\tR\raggSpendValue\x12$\n" +
+	"\x0eagg_spend_unit\x18\x03 \x01(\tR\faggSpendUnit\x12-\n" +
+	"\x13agg_spend_value_cre\x18\x04 \x01(\tR\x10aggSpendValueCre\"\xa7\x01\n" +
 	"\x18MeteringReportNodeDetail\x12#\n" +
 	"\x0epeer_2_peer_id\x18\x01 \x01(\tR\vpeer2PeerId\x12\x1d\n" +
 	"\n" +
 	"spend_unit\x18\x02 \x01(\tR\tspendUnit\x12\x1f\n" +
 	"\vspend_value\x18\x03 \x01(\tR\n" +
-	"spendValueBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
+	"spendValue\x12&\n" +
+	"\x0fspend_value_cre\x18\x04 \x01(\tR\rspendValueCreBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
 
 var (
 	file_workflows_v1_metering_proto_rawDescOnce sync.Once
