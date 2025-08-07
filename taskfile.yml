@@ -23,6 +23,7 @@ tasks:
       - task proto:gen:workflows
       - task proto:gen:billing
       - task proto:gen:storage-service
+      - task proto:gen:platform
       - task go:mod:tidy
 
   proto:gen:job-distributor:
@@ -79,6 +80,12 @@ tasks:
     cmds:
       - cd storage-service && make generate
 
+  proto:gen:platform:
+    desc: "Generate Go code from protobuf files for platform"
+    cmds:
+      - find ./platform/ -name '*.pb.go' -delete
+      - cd platform && go generate ./...
+
   proto:clean:
     desc: "Clean generated protobuf files for all services"
     cmds:
@@ -87,6 +94,7 @@ tasks:
       - find ./svr/ -name '*.pb.go' -delete
       - find ./billing/ -name '*.pb.go' -delete
       - find ./workflows/ -name '*.pb.go' -delete
+      - find ./platform/ -name '*.pb.go' -delete
 
   go:mod:tidy:
     desc: "Run go mod tidy in each service folder"
