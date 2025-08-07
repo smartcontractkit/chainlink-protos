@@ -55,6 +55,22 @@ beholder:
 
     - entity: BridgeStatusEvent
       schema: "bridge_status/v1/bridge_status.proto"
+      references:
+        - name: "bridge_status/v1/bridge_status.proto"
+          subject: "beholder__cre__messages-bridge_status.v1.JobInfo"
+          version: 1
+        - name: "bridge_status/v1/bridge_status.proto"
+          subject: "beholder__cre__messages-bridge_status.v1.RuntimeInfo"
+          version: 1
+        - name: "bridge_status/v1/bridge_status.proto"
+          subject: "beholder__cre__messages-bridge_status.v1.MetricsInfo"
+          version: 1
+        - name: "bridge_status/v1/bridge_status.proto"
+          subject: "beholder__cre__messages-bridge_status.v1.EndpointInfo"
+          version: 1
+        - name: "bridge_status/v1/bridge_status.proto"
+          subject: "beholder__cre__messages-bridge_status.v1.ConfigurationItem"
+          version: 1
 
     - entity: BaseMessage
       schema: "common/v1/base_message.proto"
