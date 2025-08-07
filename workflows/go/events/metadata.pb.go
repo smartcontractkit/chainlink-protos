@@ -37,6 +37,7 @@ type WorkflowMetadata struct {
 	WorkflowRegistryChain   string                 `protobuf:"bytes,12,opt,name=workflowRegistryChain,proto3" json:"workflowRegistryChain,omitempty"`
 	EngineVersion           string                 `protobuf:"bytes,13,opt,name=engineVersion,proto3" json:"engineVersion,omitempty"`
 	DonVersion              string                 `protobuf:"bytes,14,opt,name=donVersion,proto3" json:"donVersion,omitempty"`
+	Trigger                 *TriggerDetail         `protobuf:"bytes,15,opt,name=trigger,proto3" json:"trigger,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -169,11 +170,62 @@ func (x *WorkflowMetadata) GetDonVersion() string {
 	return ""
 }
 
+func (x *WorkflowMetadata) GetTrigger() *TriggerDetail {
+	if x != nil {
+		return x.Trigger
+	}
+	return nil
+}
+
+type TriggerDetail struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TriggerID     string                 `protobuf:"bytes,1,opt,name=triggerID,proto3" json:"triggerID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TriggerDetail) Reset() {
+	*x = TriggerDetail{}
+	mi := &file_workflows_v1_metadata_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TriggerDetail) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TriggerDetail) ProtoMessage() {}
+
+func (x *TriggerDetail) ProtoReflect() protoreflect.Message {
+	mi := &file_workflows_v1_metadata_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TriggerDetail.ProtoReflect.Descriptor instead.
+func (*TriggerDetail) Descriptor() ([]byte, []int) {
+	return file_workflows_v1_metadata_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *TriggerDetail) GetTriggerID() string {
+	if x != nil {
+		return x.TriggerID
+	}
+	return ""
+}
+
 var File_workflows_v1_metadata_proto protoreflect.FileDescriptor
 
 const file_workflows_v1_metadata_proto_rawDesc = "" +
 	"\n" +
-	"\x1bworkflows/v1/metadata.proto\x12\fworkflows.v1\"\x8c\x04\n" +
+	"\x1bworkflows/v1/metadata.proto\x12\fworkflows.v1\"\xc3\x04\n" +
 	"\x10WorkflowMetadata\x12$\n" +
 	"\rworkflowOwner\x18\x01 \x01(\tR\rworkflowOwner\x12\"\n" +
 	"\fworkflowName\x18\x02 \x01(\tR\fworkflowName\x12\x18\n" +
@@ -193,7 +245,10 @@ const file_workflows_v1_metadata_proto_rawDesc = "" +
 	"\rengineVersion\x18\r \x01(\tR\rengineVersion\x12\x1e\n" +
 	"\n" +
 	"donVersion\x18\x0e \x01(\tR\n" +
-	"donVersionBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
+	"donVersion\x125\n" +
+	"\atrigger\x18\x0f \x01(\v2\x1b.workflows.v1.TriggerDetailR\atrigger\"-\n" +
+	"\rTriggerDetail\x12\x1c\n" +
+	"\ttriggerID\x18\x01 \x01(\tR\ttriggerIDBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
 
 var (
 	file_workflows_v1_metadata_proto_rawDescOnce sync.Once
@@ -207,16 +262,18 @@ func file_workflows_v1_metadata_proto_rawDescGZIP() []byte {
 	return file_workflows_v1_metadata_proto_rawDescData
 }
 
-var file_workflows_v1_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_workflows_v1_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_workflows_v1_metadata_proto_goTypes = []any{
 	(*WorkflowMetadata)(nil), // 0: workflows.v1.WorkflowMetadata
+	(*TriggerDetail)(nil),    // 1: workflows.v1.TriggerDetail
 }
 var file_workflows_v1_metadata_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1, // 0: workflows.v1.WorkflowMetadata.trigger:type_name -> workflows.v1.TriggerDetail
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_workflows_v1_metadata_proto_init() }
@@ -230,7 +287,7 @@ func file_workflows_v1_metadata_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_workflows_v1_metadata_proto_rawDesc), len(file_workflows_v1_metadata_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

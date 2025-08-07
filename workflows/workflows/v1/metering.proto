@@ -16,10 +16,14 @@ message MeteringReport {
 
 message MeteringReportStep {
   repeated MeteringReportNodeDetail nodes = 1;
+  string agg_spend_value = 2;
+  string agg_spend_unit = 3;
+  string agg_spend_value_cre = 4;
 }
 
 message MeteringReportNodeDetail {
   string peer_2_peer_id = 1;
   string spend_unit = 2;
   string spend_value = 3;
+  string spend_value_cre = 4;
 }
