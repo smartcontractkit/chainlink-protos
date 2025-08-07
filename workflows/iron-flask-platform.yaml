@@ -53,6 +53,23 @@ beholder:
           subject: "beholder__platform__messages-workflows.v1.WorkflowMetadata"
           version: 1
 
+    # bridge_status/v1 - Nested message types
+    - entity: JobInfo
+      schema: "bridge_status/v1/bridge_status.proto"
+    
+    - entity: RuntimeInfo
+      schema: "bridge_status/v1/bridge_status.proto"
+    
+    - entity: MetricsInfo
+      schema: "bridge_status/v1/bridge_status.proto"
+    
+    - entity: EndpointInfo
+      schema: "bridge_status/v1/bridge_status.proto"
+    
+    - entity: ConfigurationItem
+      schema: "bridge_status/v1/bridge_status.proto"
+    
+    # bridge_status/v1 - Main event
     - entity: BridgeStatusEvent
       schema: "bridge_status/v1/bridge_status.proto"
       references:
