@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v5.29.3
-// source: node_service/v1/node_service.proto
+// source: node/v1/node_service.proto
 
 package storage_service
 
@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	NodeService_DownloadArtifact_FullMethodName = "/node_service.v1.NodeService/DownloadArtifact"
+	NodeService_DownloadArtifact_FullMethodName = "/node.v1.NodeService/DownloadArtifact"
 )
 
 // NodeServiceClient is the client API for NodeService service.
@@ -27,10 +27,11 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
 // NodeService defines the download-related storage service interface that is used by nodes.
-// Workflow nodes will directly connect via gRPC to the storage service to download artifacts.
+// Workflow nodes will directly connect via gRPC to the storage service to retrieve presigned URLs
+// which can be used to download workflow artifacts.
 type NodeServiceClient interface {
 	// DownloadArtifact streams a file from the storage service in chunks.
-	DownloadArtifact(ctx context.Context, in *DownloadArtifactRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[DownloadArtifactChunk], error)
+	DownloadArtifact(ctx context.Context, in *DownloadArtifactRequest, opts ...grpc.CallOption) (*DownloadArtifactResponse, error)
 }
 
 type nodeServiceClient struct {
@@ -41,34 +42,26 @@ func NewNodeServiceClient(cc grpc.ClientConnInterface) NodeServiceClient {
 	return &nodeServiceClient{cc}
 }
 
-func (c *nodeServiceClient) DownloadArtifact(ctx context.Context, in *DownloadArtifactRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[DownloadArtifactChunk], error) {
+func (c *nodeServiceClient) DownloadArtifact(ctx context.Context, in *DownloadArtifactRequest, opts ...grpc.CallOption) (*DownloadArtifactResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &NodeService_ServiceDesc.Streams[0], NodeService_DownloadArtifact_FullMethodName, cOpts...)
+	out := new(DownloadArtifactResponse)
+	err := c.cc.Invoke(ctx, NodeService_DownloadArtifact_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[DownloadArtifactRequest, DownloadArtifactChunk]{ClientStream: stream}
-	if err := x.ClientStream.SendMsg(in); err != nil {
-		return nil, err
-	}
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	return x, nil
+	return out, nil
 }
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type NodeService_DownloadArtifactClient = grpc.ServerStreamingClient[DownloadArtifactChunk]
 
 // NodeServiceServer is the server API for NodeService service.
 // All implementations must embed UnimplementedNodeServiceServer
 // for forward compatibility.
 //
 // NodeService defines the download-related storage service interface that is used by nodes.
-// Workflow nodes will directly connect via gRPC to the storage service to download artifacts.
+// Workflow nodes will directly connect via gRPC to the storage service to retrieve presigned URLs
+// which can be used to download workflow artifacts.
 type NodeServiceServer interface {
 	// DownloadArtifact streams a file from the storage service in chunks.
-	DownloadArtifact(*DownloadArtifactRequest, grpc.ServerStreamingServer[DownloadArtifactChunk]) error
+	DownloadArtifact(context.Context, *DownloadArtifactRequest) (*DownloadArtifactResponse, error)
 	mustEmbedUnimplementedNodeServiceServer()
 }
 
@@ -79,8 +72,8 @@ type NodeServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedNodeServiceServer struct{}
 
-func (UnimplementedNodeServiceServer) DownloadArtifact(*DownloadArtifactRequest, grpc.ServerStreamingServer[DownloadArtifactChunk]) error {
-	return status.Errorf(codes.Unimplemented, "method DownloadArtifact not implemented")
+func (UnimplementedNodeServiceServer) DownloadArtifact(context.Context, *DownloadArtifactRequest) (*DownloadArtifactResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DownloadArtifact not implemented")
 }
 func (UnimplementedNodeServiceServer) mustEmbedUnimplementedNodeServiceServer() {}
 func (UnimplementedNodeServiceServer) testEmbeddedByValue()                     {}
@@ -103,30 +96,36 @@ func RegisterNodeServiceServer(s grpc.ServiceRegistrar, srv NodeServiceServer) {
 	s.RegisterService(&NodeService_ServiceDesc, srv)
 }
 
-func _NodeService_DownloadArtifact_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(DownloadArtifactRequest)
-	if err := stream.RecvMsg(m); err != nil {
-		return err
+func _NodeService_DownloadArtifact_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownloadArtifactRequest)
+	if err := dec(in); err != nil {
+		return nil, err
 	}
-	return srv.(NodeServiceServer).DownloadArtifact(m, &grpc.GenericServerStream[DownloadArtifactRequest, DownloadArtifactChunk]{ServerStream: stream})
+	if interceptor == nil {
+		return srv.(NodeServiceServer).DownloadArtifact(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NodeService_DownloadArtifact_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NodeServiceServer).DownloadArtifact(ctx, req.(*DownloadArtifactRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
-
-// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type NodeService_DownloadArtifactServer = grpc.ServerStreamingServer[DownloadArtifactChunk]
 
 // NodeService_ServiceDesc is the grpc.ServiceDesc for NodeService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var NodeService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "node_service.v1.NodeService",
+	ServiceName: "node.v1.NodeService",
 	HandlerType: (*NodeServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
-	Streams: []grpc.StreamDesc{
+	Methods: []grpc.MethodDesc{
 		{
-			StreamName:    "DownloadArtifact",
-			Handler:       _NodeService_DownloadArtifact_Handler,
-			ServerStreams: true,
+			MethodName: "DownloadArtifact",
+			Handler:    _NodeService_DownloadArtifact_Handler,
 		},
 	},
-	Metadata: "node_service/v1/node_service.proto",
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "node/v1/node_service.proto",
 }
