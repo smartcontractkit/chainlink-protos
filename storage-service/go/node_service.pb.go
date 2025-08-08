@@ -9,6 +9,7 @@ package storage_service
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -122,10 +123,9 @@ func (EnvironmentName) EnumDescriptor() ([]byte, []int) {
 
 type DownloadArtifactRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                         // ID of the artifact to download
-	Type          ArtifactType           `protobuf:"varint,2,opt,name=type,proto3,enum=node_service.v1.ArtifactType" json:"type,omitempty"`                  // Type of the artifact to download
-	Environment   EnvironmentName        `protobuf:"varint,3,opt,name=environment,proto3,enum=node_service.v1.EnvironmentName" json:"environment,omitempty"` // Environment of the artifact to download
-	ChunkSize     int32                  `protobuf:"varint,4,opt,name=chunk_size,json=chunkSize,proto3" json:"chunk_size,omitempty"`                         // Optional: chunk size in bytes (default 1MB if not set)
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                        // ID of the artifact to download
+	Type          ArtifactType           `protobuf:"varint,2,opt,name=type,proto3,enum=storageservice.ArtifactType" json:"type,omitempty"`                  // Type of the artifact to download
+	Environment   EnvironmentName        `protobuf:"varint,3,opt,name=environment,proto3,enum=storageservice.EnvironmentName" json:"environment,omitempty"` // Environment of the artifact to download
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -181,37 +181,28 @@ func (x *DownloadArtifactRequest) GetEnvironment() EnvironmentName {
 	return EnvironmentName_ENVIRONMENT_NAME_UNSPECIFIED
 }
 
-func (x *DownloadArtifactRequest) GetChunkSize() int32 {
-	if x != nil {
-		return x.ChunkSize
-	}
-	return 0
-}
-
-type DownloadArtifactChunk struct {
+type DownloadArtifactResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Artifact      *WorkflowArtifact      `protobuf:"bytes,1,opt,name=artifact,proto3" json:"artifact,omitempty"`                             // Only sent in the first chunk
-	ContentChunk  []byte                 `protobuf:"bytes,2,opt,name=content_chunk,json=contentChunk,proto3" json:"content_chunk,omitempty"` // The chunk of file content
-	Offset        int64                  `protobuf:"varint,3,opt,name=offset,proto3" json:"offset,omitempty"`                                // Offset of this chunk in the file
-	LastChunk     bool                   `protobuf:"varint,4,opt,name=last_chunk,json=lastChunk,proto3" json:"last_chunk,omitempty"`         // True if this is the last chunk
+	Url           string                 `protobuf:"bytes,1,opt,name=url,proto3" json:"url,omitempty"`       // The presigned GET URL for downloading
+	Expiry        *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=expiry,proto3" json:"expiry,omitempty"` // Expiration time of the presigned URL
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *DownloadArtifactChunk) Reset() {
-	*x = DownloadArtifactChunk{}
+func (x *DownloadArtifactResponse) Reset() {
+	*x = DownloadArtifactResponse{}
 	mi := &file_node_service_v1_node_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *DownloadArtifactChunk) String() string {
+func (x *DownloadArtifactResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DownloadArtifactChunk) ProtoMessage() {}
+func (*DownloadArtifactResponse) ProtoMessage() {}
 
-func (x *DownloadArtifactChunk) ProtoReflect() protoreflect.Message {
+func (x *DownloadArtifactResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_node_service_v1_node_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -223,120 +214,37 @@ func (x *DownloadArtifactChunk) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DownloadArtifactChunk.ProtoReflect.Descriptor instead.
-func (*DownloadArtifactChunk) Descriptor() ([]byte, []int) {
+// Deprecated: Use DownloadArtifactResponse.ProtoReflect.Descriptor instead.
+func (*DownloadArtifactResponse) Descriptor() ([]byte, []int) {
 	return file_node_service_v1_node_service_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *DownloadArtifactChunk) GetArtifact() *WorkflowArtifact {
+func (x *DownloadArtifactResponse) GetUrl() string {
 	if x != nil {
-		return x.Artifact
-	}
-	return nil
-}
-
-func (x *DownloadArtifactChunk) GetContentChunk() []byte {
-	if x != nil {
-		return x.ContentChunk
-	}
-	return nil
-}
-
-func (x *DownloadArtifactChunk) GetOffset() int64 {
-	if x != nil {
-		return x.Offset
-	}
-	return 0
-}
-
-func (x *DownloadArtifactChunk) GetLastChunk() bool {
-	if x != nil {
-		return x.LastChunk
-	}
-	return false
-}
-
-type WorkflowArtifact struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                         // Unique workflow ID for the artifact
-	Type          ArtifactType           `protobuf:"varint,2,opt,name=type,proto3,enum=node_service.v1.ArtifactType" json:"type,omitempty"`                  // Type of the artifact
-	Environment   EnvironmentName        `protobuf:"varint,3,opt,name=environment,proto3,enum=node_service.v1.EnvironmentName" json:"environment,omitempty"` // Environment where the artifact is stored
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *WorkflowArtifact) Reset() {
-	*x = WorkflowArtifact{}
-	mi := &file_node_service_v1_node_service_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *WorkflowArtifact) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*WorkflowArtifact) ProtoMessage() {}
-
-func (x *WorkflowArtifact) ProtoReflect() protoreflect.Message {
-	mi := &file_node_service_v1_node_service_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use WorkflowArtifact.ProtoReflect.Descriptor instead.
-func (*WorkflowArtifact) Descriptor() ([]byte, []int) {
-	return file_node_service_v1_node_service_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *WorkflowArtifact) GetId() string {
-	if x != nil {
-		return x.Id
+		return x.Url
 	}
 	return ""
 }
 
-func (x *WorkflowArtifact) GetType() ArtifactType {
+func (x *DownloadArtifactResponse) GetExpiry() *timestamppb.Timestamp {
 	if x != nil {
-		return x.Type
+		return x.Expiry
 	}
-	return ArtifactType_ARTIFACT_TYPE_UNSPECIFIED
-}
-
-func (x *WorkflowArtifact) GetEnvironment() EnvironmentName {
-	if x != nil {
-		return x.Environment
-	}
-	return EnvironmentName_ENVIRONMENT_NAME_UNSPECIFIED
+	return nil
 }
 
 var File_node_service_v1_node_service_proto protoreflect.FileDescriptor
 
 const file_node_service_v1_node_service_proto_rawDesc = "" +
 	"\n" +
-	"\"node_service/v1/node_service.proto\x12\x0fnode_service.v1\"\xbf\x01\n" +
+	"\"node_service/v1/node_service.proto\x12\x0estorageservice\x1a\x1fgoogle/protobuf/timestamp.proto\"\x9e\x01\n" +
 	"\x17DownloadArtifactRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x121\n" +
-	"\x04type\x18\x02 \x01(\x0e2\x1d.node_service.v1.ArtifactTypeR\x04type\x12B\n" +
-	"\venvironment\x18\x03 \x01(\x0e2 .node_service.v1.EnvironmentNameR\venvironment\x12\x1d\n" +
-	"\n" +
-	"chunk_size\x18\x04 \x01(\x05R\tchunkSize\"\xb2\x01\n" +
-	"\x15DownloadArtifactChunk\x12=\n" +
-	"\bartifact\x18\x01 \x01(\v2!.node_service.v1.WorkflowArtifactR\bartifact\x12#\n" +
-	"\rcontent_chunk\x18\x02 \x01(\fR\fcontentChunk\x12\x16\n" +
-	"\x06offset\x18\x03 \x01(\x03R\x06offset\x12\x1d\n" +
-	"\n" +
-	"last_chunk\x18\x04 \x01(\bR\tlastChunk\"\x99\x01\n" +
-	"\x10WorkflowArtifact\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x121\n" +
-	"\x04type\x18\x02 \x01(\x0e2\x1d.node_service.v1.ArtifactTypeR\x04type\x12B\n" +
-	"\venvironment\x18\x03 \x01(\x0e2 .node_service.v1.EnvironmentNameR\venvironment*a\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x120\n" +
+	"\x04type\x18\x02 \x01(\x0e2\x1c.storageservice.ArtifactTypeR\x04type\x12A\n" +
+	"\venvironment\x18\x03 \x01(\x0e2\x1f.storageservice.EnvironmentNameR\venvironment\"`\n" +
+	"\x18DownloadArtifactResponse\x12\x10\n" +
+	"\x03url\x18\x01 \x01(\tR\x03url\x122\n" +
+	"\x06expiry\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x06expiry*a\n" +
 	"\fArtifactType\x12\x1d\n" +
 	"\x19ARTIFACT_TYPE_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14ARTIFACT_TYPE_BINARY\x10\x01\x12\x18\n" +
@@ -344,9 +252,9 @@ const file_node_service_v1_node_service_proto_rawDesc = "" +
 	"\x0fEnvironmentName\x12 \n" +
 	"\x1cENVIRONMENT_NAME_UNSPECIFIED\x10\x00\x12\x16\n" +
 	"\x12PRODUCTION_MAINNET\x10\x01\x12\x16\n" +
-	"\x12PRODUCTION_TESTNET\x10\x022u\n" +
-	"\vNodeService\x12f\n" +
-	"\x10DownloadArtifact\x12(.node_service.v1.DownloadArtifactRequest\x1a&.node_service.v1.DownloadArtifactChunk0\x01BQZOgithub.com/smartcontractkit/chainlink-protos/storage-service/go;storage_serviceb\x06proto3"
+	"\x12PRODUCTION_TESTNET\x10\x022t\n" +
+	"\vNodeService\x12e\n" +
+	"\x10DownloadArtifact\x12'.storageservice.DownloadArtifactRequest\x1a(.storageservice.DownloadArtifactResponseBQZOgithub.com/smartcontractkit/chainlink-protos/storage-service/go;storage_serviceb\x06proto3"
 
 var (
 	file_node_service_v1_node_service_proto_rawDescOnce sync.Once
@@ -361,27 +269,25 @@ func file_node_service_v1_node_service_proto_rawDescGZIP() []byte {
 }
 
 var file_node_service_v1_node_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_node_service_v1_node_service_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_node_service_v1_node_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_node_service_v1_node_service_proto_goTypes = []any{
-	(ArtifactType)(0),               // 0: node_service.v1.ArtifactType
-	(EnvironmentName)(0),            // 1: node_service.v1.EnvironmentName
-	(*DownloadArtifactRequest)(nil), // 2: node_service.v1.DownloadArtifactRequest
-	(*DownloadArtifactChunk)(nil),   // 3: node_service.v1.DownloadArtifactChunk
-	(*WorkflowArtifact)(nil),        // 4: node_service.v1.WorkflowArtifact
+	(ArtifactType)(0),                // 0: storageservice.ArtifactType
+	(EnvironmentName)(0),             // 1: storageservice.EnvironmentName
+	(*DownloadArtifactRequest)(nil),  // 2: storageservice.DownloadArtifactRequest
+	(*DownloadArtifactResponse)(nil), // 3: storageservice.DownloadArtifactResponse
+	(*timestamppb.Timestamp)(nil),    // 4: google.protobuf.Timestamp
 }
 var file_node_service_v1_node_service_proto_depIdxs = []int32{
-	0, // 0: node_service.v1.DownloadArtifactRequest.type:type_name -> node_service.v1.ArtifactType
-	1, // 1: node_service.v1.DownloadArtifactRequest.environment:type_name -> node_service.v1.EnvironmentName
-	4, // 2: node_service.v1.DownloadArtifactChunk.artifact:type_name -> node_service.v1.WorkflowArtifact
-	0, // 3: node_service.v1.WorkflowArtifact.type:type_name -> node_service.v1.ArtifactType
-	1, // 4: node_service.v1.WorkflowArtifact.environment:type_name -> node_service.v1.EnvironmentName
-	2, // 5: node_service.v1.NodeService.DownloadArtifact:input_type -> node_service.v1.DownloadArtifactRequest
-	3, // 6: node_service.v1.NodeService.DownloadArtifact:output_type -> node_service.v1.DownloadArtifactChunk
-	6, // [6:7] is the sub-list for method output_type
-	5, // [5:6] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	0, // 0: storageservice.DownloadArtifactRequest.type:type_name -> storageservice.ArtifactType
+	1, // 1: storageservice.DownloadArtifactRequest.environment:type_name -> storageservice.EnvironmentName
+	4, // 2: storageservice.DownloadArtifactResponse.expiry:type_name -> google.protobuf.Timestamp
+	2, // 3: storageservice.NodeService.DownloadArtifact:input_type -> storageservice.DownloadArtifactRequest
+	3, // 4: storageservice.NodeService.DownloadArtifact:output_type -> storageservice.DownloadArtifactResponse
+	4, // [4:5] is the sub-list for method output_type
+	3, // [3:4] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_node_service_v1_node_service_proto_init() }
@@ -395,7 +301,7 @@ func file_node_service_v1_node_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_node_service_v1_node_service_proto_rawDesc), len(file_node_service_v1_node_service_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   3,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
