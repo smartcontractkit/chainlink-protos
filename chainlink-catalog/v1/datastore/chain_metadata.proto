@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package api.datastore.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/chainlink-catalog/v1/datastore";
+
+import "google/protobuf/wrappers.proto";
+import "chainlink-catalog/v1/datastore/common.proto";
+
+message ChainMetadataKeyFilter {
+  google.protobuf.StringValue domain = 1;
+  google.protobuf.StringValue environment = 2;
+  google.protobuf.UInt64Value chain_selector = 3;
+}
+
+message ChainMetadataFindRequest {
+  ChainMetadataKeyFilter key_filter = 1;
+  bool ignore_transaction = 2;
+}
+
+message ChainMetadata {
+  string domain = 1;
+  string environment = 2;
+  uint64 chain_selector = 3;
+  string metadata = 4;
+  int32 row_version = 5;
+}
+
+message ChainMetadataFindResponse {
+  repeated ChainMetadata references = 1;
+}
+
+message ChainMetadataEditRequest {
+  ChainMetadata record = 1;
+  EditSemantics semantics = 2;
+}
+
+message ChainMetadataEditResponse {
+  ChainMetadata record = 1;
+}
