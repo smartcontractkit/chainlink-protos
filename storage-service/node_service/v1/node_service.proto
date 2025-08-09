@@ -1,28 +1,28 @@
 syntax = "proto3";
 
-package node_service.v1;
+package storageservice;
+
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/storage-service/go;storage_service";
 
 // NodeService defines the download-related storage service interface that is used by nodes.
-// Workflow nodes will directly connect via gRPC to the storage service to download artifacts.
+// Workflow nodes will directly connect via gRPC to the storage service to retrieve presigned URLs
+// which can be used to download workflow artifacts.
 service NodeService {
-  // DownloadArtifact streams a file from the storage service in chunks.
-  rpc DownloadArtifact(DownloadArtifactRequest) returns (stream DownloadArtifactChunk);
+    // DownloadArtifact streams a file from the storage service in chunks.
+    rpc DownloadArtifact(DownloadArtifactRequest) returns (DownloadArtifactResponse);
 }
 
 message DownloadArtifactRequest {
-  string id = 1; // ID of the artifact to download
-  ArtifactType type = 2; // Type of the artifact to download
-  EnvironmentName environment = 3; // Environment of the artifact to download
-  int32 chunk_size = 4; // Optional: chunk size in bytes (default 1MB if not set)
+    string id = 1; // ID of the artifact to download
+    ArtifactType type = 2; // Type of the artifact to download
+    EnvironmentName environment = 3; // Environment of the artifact to download
 }
 
-message DownloadArtifactChunk {
-  WorkflowArtifact artifact = 1; // Only sent in the first chunk
-  bytes content_chunk = 2; // The chunk of file content
-  int64 offset = 3; // Offset of this chunk in the file
-  bool last_chunk = 4; // True if this is the last chunk
+message DownloadArtifactResponse {
+    string url = 1; // The presigned GET URL for downloading
+    google.protobuf.Timestamp expiry = 2; // Expiration time of the presigned URL
 }
 
 enum ArtifactType {
@@ -36,10 +36,4 @@ enum EnvironmentName {
   ENVIRONMENT_NAME_UNSPECIFIED = 0; // Unspecified environment
   PRODUCTION_MAINNET = 1;
   PRODUCTION_TESTNET = 2;
-}
-
-message WorkflowArtifact {
-  string id = 1; // Unique workflow ID for the artifact
-  ArtifactType type = 2; // Type of the artifact
-  EnvironmentName environment = 3; // Environment where the artifact is stored
 }
