@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package workflows.v2;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
+
+import "workflows/v2/cre_info.proto";
+import "workflows/v2/workflow_key.proto";
+
+message WorkflowExecutionStarted {
+  CreInfo creInfo = 1;
+  WorkflowKey workflow = 2;
+  string workflowExecutionID = 3;
+  string timestamp = 4;
+
+  string triggerID = 5;
+} 

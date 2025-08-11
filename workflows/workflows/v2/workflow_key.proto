@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package workflows.v2;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
+
+message WorkflowKey {
+  string workflowOwner = 1;
+  string workflowName  = 2;
+  string workflowID    = 3;
+  string organizationID = 4;
+} 
