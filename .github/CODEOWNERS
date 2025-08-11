@@ -9,3 +9,6 @@
 /cre/ @smartcontractkit/keystone
 /storage-service/ @smartcontractkit/dev-services
 /.github/workflows/cre-validations.yml @smartcontractkit/keystone
+
+# Changesets do not have owners
+/.changeset/**
