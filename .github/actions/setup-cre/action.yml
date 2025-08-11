@@ -1,0 +1,132 @@
+name: 'Setup CRE Environment'
+description: 'Sets up tools and dependencies for CRE validation and fixing'
+inputs:
+  install-buf:
+    description: 'Whether to install buf CLI'
+    required: false
+    default: 'true'
+  install-go-tools:
+    description: 'Whether to install Go tools (asdf, task, protoc)'
+    required: false
+    default: 'true'
+
+outputs:
+  cre_changed:
+    description: 'Whether CRE files were modified'
+    value: ${{ steps.changes.outputs.cre_changed }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Fetch origin/main for comparison
+      shell: bash
+      run: |
+        git fetch origin main:main --depth=1
+
+    - name: Check if cre/ files were modified
+      id: changes
+      shell: bash
+      run: |
+        # Get the list of changed files
+        CHANGED_FILES=$(git diff --name-only origin/main)
+        
+        if [ $? -ne 0 ]; then
+          echo "::error::Failed to get diff against origin/main"
+          exit 1
+        fi
+        
+        echo "Changed files:"
+        echo "$CHANGED_FILES"
+        
+        # Check if any files are in the cre/ directory
+        if echo "$CHANGED_FILES" | grep -q '^cre/'; then
+            echo "cre_changed=true" >> $GITHUB_OUTPUT
+            echo "CRE files were modified"
+        else
+            echo "cre_changed=false" >> $GITHUB_OUTPUT
+            echo "No CRE files were modified"
+        fi
+
+    - name: Set tool versions for CRE
+      if: steps.changes.outputs.cre_changed == 'true'
+      id: tool-versions
+      uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
+
+    - name: Cache Dependencies for CRE
+      if: steps.changes.outputs.cre_changed == 'true'
+      id: cache-deps
+      uses: actions/cache@v4
+      with:
+        path: |
+          /usr/local/bin/buf
+          /usr/local/bin/task
+          ~/go/bin
+          ~/.asdf
+        key: ${{ runner.os }}-cre-deps-${{ steps.tool-versions.outputs.golang_version }}-${{ hashFiles('cre/**/go.mod', 'cre/**/go.sum') }}
+
+    - name: Install buf CLI (v1.45.0) for CRE
+      if: steps.changes.outputs.cre_changed == 'true' && inputs.install-buf == 'true'
+      shell: bash
+      run: |
+        echo "Installing buf CLI v1.45.0..."
+        curl -sSL https://github.com/bufbuild/buf/releases/download/v1.45.0/buf-$(uname -s)-$(uname -m) -o /usr/local/bin/buf
+        chmod +x /usr/local/bin/buf
+
+    - name: Set up Go for CRE
+      if: steps.changes.outputs.cre_changed == 'true' && inputs.install-go-tools == 'true'
+      uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.0.0
+      with:
+        go-version: ${{ steps.tool-versions.outputs.golang_version }}
+
+    - name: Install asdf and Plugins for CRE
+      if: steps.changes.outputs.cre_changed == 'true' && inputs.install-go-tools == 'true'
+      uses: asdf-vm/actions/plugins-add@05e0d2ed97b598bfce82fd30daf324ae0c4570e6 #v3.0.2
+      with:
+        asdf_branch: v0.16.7
+
+    - name: Setup asdf environment
+      if: steps.changes.outputs.cre_changed == 'true' && inputs.install-go-tools == 'true'
+      shell: bash
+      run: |
+        # Add asdf to PATH for this and subsequent steps
+        echo "$HOME/.asdf/bin" >> $GITHUB_PATH
+        echo "$HOME/.asdf/shims" >> $GITHUB_PATH
+        
+        # Debug: Check if asdf exists after cache/install
+        echo "Checking asdf installation..."
+        if [ -d "$HOME/.asdf" ]; then
+          echo "✓ $HOME/.asdf directory exists"
+          ls -la "$HOME/.asdf/"
+        else
+          echo "✗ $HOME/.asdf directory does not exist"
+        fi
+        
+        if [ -f "$HOME/.asdf/bin/asdf" ]; then
+          echo "✓ asdf binary exists"
+        else
+          echo "✗ asdf binary does not exist"
+        fi
+        
+        # Source asdf if it exists
+        if [ -f "$HOME/.asdf/asdf.sh" ]; then
+          echo "✓ Sourcing asdf.sh"
+          source "$HOME/.asdf/asdf.sh"
+        fi
+
+    - name: Install task CLI for CRE
+      if: steps.changes.outputs.cre_changed == 'true' && inputs.install-go-tools == 'true'
+      shell: bash
+      run: |
+        asdf install task
+
+    - name: Install protoc-gen-go for CRE
+      if: steps.changes.outputs.cre_changed == 'true' && inputs.install-go-tools == 'true'
+      shell: bash
+      run: |
+        go install google.golang.org/protobuf/cmd/protoc-gen-go@v${{ steps.tool-versions.outputs.protoc-gen-go_version }}
+
+    - name: Install protoc for CRE
+      if: steps.changes.outputs.cre_changed == 'true' && inputs.install-go-tools == 'true'
+      shell: bash
+      run: |
+        asdf install protoc
