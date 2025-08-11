@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package workflows.v2;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
+
+// DEPLOYMENT
+
+message TransactionInfo {
+  string chainSelector = 1;
+  string txHash = 2;
+  string gasCost = 3;
+} 
