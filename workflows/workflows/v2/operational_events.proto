@@ -23,11 +23,10 @@ message CREInfo {
 
 message WorkflowKey {
   string workflowOwner = 1;
-  string workflowName  = 2;
-  string workflowID    = 3;
+  string workflowName = 2;
+  string workflowID = 3;
   string organizationID = 4;
 }
-
 
 // DEPLOYMENT
 
@@ -40,37 +39,36 @@ message TransactionInfo {
 message Workflow {
   WorkflowKey workflowKey = 1;
   string version = 2;
-  string binaryURL     = 3;
-  string configURL     = 4;
+  string binaryURL = 3;
+  string configURL = 4;
 }
 
 message WorkflowDeployed {
-  CREInfo         creInfo   = 1;
-  string          timestamp = 2;
-  TransactionInfo txInfo    = 3;
+  CREInfo creInfo = 1;
+  string timestamp = 2;
+  TransactionInfo txInfo = 3;
 
-  Workflow                     workflow     = 4;
-  google.protobuf.StringValue  errorMessage = 5;  // present ⇔ failure
+  Workflow workflow = 4;
+  google.protobuf.StringValue errorMessage = 5; // present ⇔ failure
 }
 
 message WorkflowUpdated {
-  CREInfo         creInfo   = 1;
-  string          timestamp = 2;
-  TransactionInfo txInfo    = 3;
+  CREInfo creInfo = 1;
+  string timestamp = 2;
+  TransactionInfo txInfo = 3;
 
-  Workflow                     workflow     = 4;
-  google.protobuf.StringValue  errorMessage = 5;  // present ⇔ failure
+  Workflow workflow = 4;
+  google.protobuf.StringValue errorMessage = 5; // present ⇔ failure
 }
 
 message WorkflowDeleted {
-  CREInfo         creInfo   = 1;
-  string          timestamp = 2;
-  TransactionInfo txInfo    = 3;
+  CREInfo creInfo = 1;
+  string timestamp = 2;
+  TransactionInfo txInfo = 3;
 
-  Workflow                     workflow     = 4;
-  google.protobuf.StringValue  errorMessage = 5;  // present ⇔ failure
+  Workflow workflow = 4;
+  google.protobuf.StringValue errorMessage = 5; // present ⇔ failure
 }
-
 
 // EXECUTION
 
