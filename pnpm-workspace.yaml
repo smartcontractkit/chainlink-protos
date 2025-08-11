@@ -4,3 +4,4 @@ packages:
   - 'svr'
   - 'rmn'
   - 'storage-service'
+  - 'chainlink-catalog'
