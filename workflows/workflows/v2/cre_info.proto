@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package workflows.v2;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
+
+// METADATA
+
+message CreInfo {
+  int32 donID = 1;
+  int32 donF = 2;
+  int32 donN = 3;
+  string p2pID = 4;
+  string workflowRegistryAddress = 5;
+  string workflowRegistryVersion = 6;
+  string workflowRegistryChain = 7;
+  string engineVersion = 8;
+  string capabilitiesRegistryVersion = 9;
+  string donVersion = 10;
+} 

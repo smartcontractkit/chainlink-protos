@@ -23,6 +23,7 @@ tasks:
       - task proto:gen:workflows
       - task proto:gen:billing
       - task proto:gen:storage-service
+      - task proto:gen:chainlink-catalog
       - task proto:gen:platform
       - task go:mod:tidy
 
@@ -80,11 +81,22 @@ tasks:
     cmds:
       - cd storage-service && make generate
 
+<<<<<<< HEAD
   proto:gen:platform:
     desc: "Generate Go code from protobuf files for platform"
     cmds:
       - find ./platform/ -name '*.pb.go' -delete
       - cd platform && go generate ./...
+||||||| a2c0989
+=======
+  proto:gen:chainlink-catalog:
+    desc: "Generate Go code from protobuf files for chainlink-catalog"
+    cmds:
+      - find ./chainlink-catalog/ -name '*.pb.go' -delete
+      - task: proto:gen
+        vars:
+          SERVICE_NAME: chainlink-catalog
+>>>>>>> main
 
   proto:clean:
     desc: "Clean generated protobuf files for all services"
