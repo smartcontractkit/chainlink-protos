@@ -1,5 +1,11 @@
 # @chainlink/storage-service
 
+## 0.3.0
+
+### Minor Changes
+
+- [#146](https://github.com/smartcontractkit/chainlink-protos/pull/146) [`3fec8cf`](https://github.com/smartcontractkit/chainlink-protos/commit/3fec8cf3aee78e596842565c4baae7a993cc448e) Thanks [@anirudhwarrier](https://github.com/anirudhwarrier)! - Remove EnvironmentType
+
 ## 0.2.0
 
 ### Minor Changes
