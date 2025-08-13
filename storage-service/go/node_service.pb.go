@@ -71,61 +71,10 @@ func (ArtifactType) EnumDescriptor() ([]byte, []int) {
 	return file_node_v1_node_service_proto_rawDescGZIP(), []int{0}
 }
 
-// environment indicates which Workflow Registry to use
-type EnvironmentName int32
-
-const (
-	EnvironmentName_ENVIRONMENT_NAME_UNSPECIFIED EnvironmentName = 0 // Unspecified environment
-	EnvironmentName_PRODUCTION_MAINNET           EnvironmentName = 1
-	EnvironmentName_PRODUCTION_TESTNET           EnvironmentName = 2
-)
-
-// Enum value maps for EnvironmentName.
-var (
-	EnvironmentName_name = map[int32]string{
-		0: "ENVIRONMENT_NAME_UNSPECIFIED",
-		1: "PRODUCTION_MAINNET",
-		2: "PRODUCTION_TESTNET",
-	}
-	EnvironmentName_value = map[string]int32{
-		"ENVIRONMENT_NAME_UNSPECIFIED": 0,
-		"PRODUCTION_MAINNET":           1,
-		"PRODUCTION_TESTNET":           2,
-	}
-)
-
-func (x EnvironmentName) Enum() *EnvironmentName {
-	p := new(EnvironmentName)
-	*p = x
-	return p
-}
-
-func (x EnvironmentName) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (EnvironmentName) Descriptor() protoreflect.EnumDescriptor {
-	return file_node_v1_node_service_proto_enumTypes[1].Descriptor()
-}
-
-func (EnvironmentName) Type() protoreflect.EnumType {
-	return &file_node_v1_node_service_proto_enumTypes[1]
-}
-
-func (x EnvironmentName) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use EnvironmentName.Descriptor instead.
-func (EnvironmentName) EnumDescriptor() ([]byte, []int) {
-	return file_node_v1_node_service_proto_rawDescGZIP(), []int{1}
-}
-
 type DownloadArtifactRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                 // ID of the artifact to download
-	Type          ArtifactType           `protobuf:"varint,2,opt,name=type,proto3,enum=node.v1.ArtifactType" json:"type,omitempty"`                  // Type of the artifact to download
-	Environment   EnvironmentName        `protobuf:"varint,3,opt,name=environment,proto3,enum=node.v1.EnvironmentName" json:"environment,omitempty"` // Environment of the artifact to download
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                // ID of the artifact to download
+	Type          ArtifactType           `protobuf:"varint,2,opt,name=type,proto3,enum=node.v1.ArtifactType" json:"type,omitempty"` // Type of the artifact to download
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -172,13 +121,6 @@ func (x *DownloadArtifactRequest) GetType() ArtifactType {
 		return x.Type
 	}
 	return ArtifactType_ARTIFACT_TYPE_UNSPECIFIED
-}
-
-func (x *DownloadArtifactRequest) GetEnvironment() EnvironmentName {
-	if x != nil {
-		return x.Environment
-	}
-	return EnvironmentName_ENVIRONMENT_NAME_UNSPECIFIED
 }
 
 type DownloadArtifactResponse struct {
@@ -237,22 +179,17 @@ var File_node_v1_node_service_proto protoreflect.FileDescriptor
 
 const file_node_v1_node_service_proto_rawDesc = "" +
 	"\n" +
-	"\x1anode/v1/node_service.proto\x12\anode.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x90\x01\n" +
+	"\x1anode/v1/node_service.proto\x12\anode.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"T\n" +
 	"\x17DownloadArtifactRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12)\n" +
-	"\x04type\x18\x02 \x01(\x0e2\x15.node.v1.ArtifactTypeR\x04type\x12:\n" +
-	"\venvironment\x18\x03 \x01(\x0e2\x18.node.v1.EnvironmentNameR\venvironment\"`\n" +
+	"\x04type\x18\x02 \x01(\x0e2\x15.node.v1.ArtifactTypeR\x04type\"`\n" +
 	"\x18DownloadArtifactResponse\x12\x10\n" +
 	"\x03url\x18\x01 \x01(\tR\x03url\x122\n" +
 	"\x06expiry\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x06expiry*a\n" +
 	"\fArtifactType\x12\x1d\n" +
 	"\x19ARTIFACT_TYPE_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14ARTIFACT_TYPE_BINARY\x10\x01\x12\x18\n" +
-	"\x14ARTIFACT_TYPE_CONFIG\x10\x02*c\n" +
-	"\x0fEnvironmentName\x12 \n" +
-	"\x1cENVIRONMENT_NAME_UNSPECIFIED\x10\x00\x12\x16\n" +
-	"\x12PRODUCTION_MAINNET\x10\x01\x12\x16\n" +
-	"\x12PRODUCTION_TESTNET\x10\x022f\n" +
+	"\x14ARTIFACT_TYPE_CONFIG\x10\x022f\n" +
 	"\vNodeService\x12W\n" +
 	"\x10DownloadArtifact\x12 .node.v1.DownloadArtifactRequest\x1a!.node.v1.DownloadArtifactResponseBQZOgithub.com/smartcontractkit/chainlink-protos/storage-service/go;storage_serviceb\x06proto3"
 
@@ -268,26 +205,24 @@ func file_node_v1_node_service_proto_rawDescGZIP() []byte {
 	return file_node_v1_node_service_proto_rawDescData
 }
 
-var file_node_v1_node_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_node_v1_node_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_node_v1_node_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_node_v1_node_service_proto_goTypes = []any{
 	(ArtifactType)(0),                // 0: node.v1.ArtifactType
-	(EnvironmentName)(0),             // 1: node.v1.EnvironmentName
-	(*DownloadArtifactRequest)(nil),  // 2: node.v1.DownloadArtifactRequest
-	(*DownloadArtifactResponse)(nil), // 3: node.v1.DownloadArtifactResponse
-	(*timestamppb.Timestamp)(nil),    // 4: google.protobuf.Timestamp
+	(*DownloadArtifactRequest)(nil),  // 1: node.v1.DownloadArtifactRequest
+	(*DownloadArtifactResponse)(nil), // 2: node.v1.DownloadArtifactResponse
+	(*timestamppb.Timestamp)(nil),    // 3: google.protobuf.Timestamp
 }
 var file_node_v1_node_service_proto_depIdxs = []int32{
 	0, // 0: node.v1.DownloadArtifactRequest.type:type_name -> node.v1.ArtifactType
-	1, // 1: node.v1.DownloadArtifactRequest.environment:type_name -> node.v1.EnvironmentName
-	4, // 2: node.v1.DownloadArtifactResponse.expiry:type_name -> google.protobuf.Timestamp
-	2, // 3: node.v1.NodeService.DownloadArtifact:input_type -> node.v1.DownloadArtifactRequest
-	3, // 4: node.v1.NodeService.DownloadArtifact:output_type -> node.v1.DownloadArtifactResponse
-	4, // [4:5] is the sub-list for method output_type
-	3, // [3:4] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	3, // 1: node.v1.DownloadArtifactResponse.expiry:type_name -> google.protobuf.Timestamp
+	1, // 2: node.v1.NodeService.DownloadArtifact:input_type -> node.v1.DownloadArtifactRequest
+	2, // 3: node.v1.NodeService.DownloadArtifact:output_type -> node.v1.DownloadArtifactResponse
+	3, // [3:4] is the sub-list for method output_type
+	2, // [2:3] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_node_v1_node_service_proto_init() }
@@ -300,7 +235,7 @@ func file_node_v1_node_service_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_node_v1_node_service_proto_rawDesc), len(file_node_v1_node_service_proto_rawDesc)),
-			NumEnums:      2,
+			NumEnums:      1,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   1,

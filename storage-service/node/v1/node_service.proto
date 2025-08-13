@@ -20,17 +20,9 @@ enum ArtifactType {
     ARTIFACT_TYPE_CONFIG = 2; // Workflow configuration artifact
 }
 
-// environment indicates which Workflow Registry to use
-enum EnvironmentName {
-    ENVIRONMENT_NAME_UNSPECIFIED = 0; // Unspecified environment
-    PRODUCTION_MAINNET = 1;
-    PRODUCTION_TESTNET = 2;
-}
-
 message DownloadArtifactRequest {
     string id = 1; // ID of the artifact to download
     ArtifactType type = 2; // Type of the artifact to download
-    EnvironmentName environment = 3; // Environment of the artifact to download
 }
 
 message DownloadArtifactResponse {
