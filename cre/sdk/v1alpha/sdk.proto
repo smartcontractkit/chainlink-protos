@@ -7,7 +7,7 @@ import "google/protobuf/empty.proto";
 import "values/v1/values.proto";
 
 enum AggregationType {
-  AGGREGATION_TYPE_UNSPECIFIED = 0;
+              AGGREGATION_TYPE_UNSPECIFIED = 0;
   AGGREGATION_TYPE_MEDIAN = 1;
   AGGREGATION_TYPE_IDENTICAL = 2;
   AGGREGATION_TYPE_COMMON_PREFIX = 3;
