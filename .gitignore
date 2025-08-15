@@ -2,8 +2,8 @@
 *.log
 
 # Compiled binaries
-bin/
-dist/
+**/bin/
+**/dist/
 
 # Editor files
 .vscode

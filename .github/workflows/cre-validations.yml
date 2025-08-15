@@ -3,50 +3,167 @@ name: Lint and breaking check for cre
 on:
   pull_request:
     types: [opened, reopened, synchronize]
+  repository_dispatch:
+    types: [cre-recheck]
+  workflow_dispatch:
 
 permissions:
+  id-token: write
   contents: read
   pull-requests: write
 
 jobs:
+  cre-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        check:
+          - name: "lint"
+            cmd: "buf format -d --exit-code cre"
+            needs_buf: true
+            needs_go: false
+          - name: "breaking"
+            cmd: "buf breaking cre --against \".git#branch=main,subdir=cre\" --exclude-path node_modules"
+            needs_buf: true
+            needs_go: false
+          - name: "gofmt"
+            cmd: "UNFORMATTED=$(gofmt -l cre); echo \"$UNFORMATTED\"; test -z \"$UNFORMATTED\""
+            needs_buf: false
+            needs_go: true
+          - name: "go-test"
+            cmd: "cd cre/go && go test ./..."
+            needs_buf: false
+            needs_go: true
+          - name: "verify-run"
+            cmd: "cd cre/verify && go run ."
+            needs_buf: false
+            needs_go: true
+          - name: "verify-test"
+            cmd: "cd cre/verify && go test ./..."
+            needs_buf: false
+            needs_go: true
+
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          token: ${{ github.token }}
+          persist-credentials: true
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Setup CRE Environment
+        id: setup
+        uses: ./.github/actions/setup-cre
+        with:
+          install-buf: ${{ matrix.check.needs_buf }}
+          install-go-tools: ${{ matrix.check.needs_go }}
+
+      - name: Run ${{ matrix.check.name }} check
+        if: steps.setup.outputs.cre_changed == 'true'
+        run: ${{ matrix.check.cmd }}
+
+  fix-cre:
+    runs-on: ubuntu-latest
+    outputs:
+      commit_made: ${{ steps.auto-fix-completed.outputs.commit_made || steps.no-changes.outputs.commit_made }}
+    steps:
+      - name: Assume aws gati role
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+        with:
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN_GATI }}
+          role-duration-seconds: 900
+          aws-region: ${{ secrets.AWS_REGION }}
+          mask-aws-account-id: true
+
+      - name: Get github token from gati
+        id: get-gh-token
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        uses: smartcontractkit/chainlink-github-actions/github-app-token-issuer@main
+        with:
+          url: ${{ secrets.AWS_LAMBDA_URL_GATI }}
+
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          token: ${{ steps.get-gh-token.outputs.access-token }}
+          fetch-depth: 1
+
+      - name: Setup Environment
+        id: setup
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        uses: ./.github/actions/setup-cre
+        with:
+          install-buf: 'true'
+          install-go-tools: 'true'
+
+      - name: Auto-fix & regenerate
+        if: github.actor != 'app-token-issuer-engops[bot]' && steps.setup.outputs.cre_changed == 'true'
+        run: |
+          buf format -w cre
+          gofmt -w cre
+          
+          cd cre/go
+          go generate ./...
+          go mod tidy
+          cd -
+          cd cre/verify
+          go generate ./...
+          go mod tidy
+
+      - name: Commit auto-fix changes using ghcommit
+        if: github.actor != 'app-token-issuer-engops[bot]' && steps.setup.outputs.cre_changed == 'true'
+        uses: planetscale/ghcommit-action@v0.1.45
+        with:
+          commit_message: "Auto-fix: buf format, gofmt, go generate, go mod tidy"
+          repo: ${{ github.repository }}
+          branch: ${{ github.head_ref || github.ref_name }}
+          file_pattern: "."
+        env:
+          GITHUB_TOKEN: ${{ steps.get-gh-token.outputs.access-token }}
+
+      - name: Auto-fix completed
+        if: github.actor != 'app-token-issuer-engops[bot]' && steps.setup.outputs.cre_changed == 'true'
+        id: auto-fix-completed
+        run: |
+          # Check if ghcommit made changes
+          if [[ -n "$(git log --oneline -1 --grep="Auto-fix: buf format, gofmt, go generate, go mod tidy")" ]]; then
+            echo "commit_made=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::Auto-fix changes have been committed. The new commit will trigger a fresh workflow run with the fixes applied."
+          else
+            echo "commit_made=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::No formatting or generation changes needed."
+          fi
+
+      - name: No changes needed
+        if: github.actor == 'app-token-issuer-engops[bot]' || steps.setup.outputs.cre_changed == 'false'
+        id: no-changes
+        run: |
+          echo "commit_made=false" >> "$GITHUB_OUTPUT"
+          if [[ "${{ github.actor }}" == "app-token-issuer-engops[bot]" ]]; then
+            echo "::notice::Skipping auto-fix for bot actor to prevent loops."
+          else
+            echo "::notice::No CRE files were modified, skipping auto-fix."
+          fi
+
   buf-cre:
+    needs: [cre-tests, fix-cre]
+    if: always()
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4 # v4.1.7
-
-      - name: Install buf CLI (v1.45.0, SHA bee67191e0a207d52b6c7f0ac9d3d1210898d2f9)
+      - name: Check results
         run: |
-          if ! command -v buf >/dev/null; then
-            echo "Installing buf CLI v1.45.0..."
-            curl -sSL https://github.com/bufbuild/buf/releases/download/v1.45.0/buf-$(uname -s)-$(uname -m) -o /usr/local/bin/buf
-            chmod +x /usr/local/bin/buf
+          echo "cre-tests result: ${{ needs.cre-tests.result }}"
+          echo "fix-cre commit made: ${{ needs.fix-cre.outputs.commit_made }}"
+          
+          if [[ "${{ needs.cre-tests.result }}" == "success" ]]; then
+            echo "::notice::✅ All CRE tests passed successfully"
+            exit 0
+          elif [[ "${{ needs.fix-cre.outputs.commit_made }}" == "true" ]]; then
+            echo "::notice::🔧 Auto-fix commit was made - workflow will re-run automatically with fixes applied"
+            exit 1
           else
-            echo "buf CLI already available."
+            echo "::error::❌ CRE tests failed and no automatic fix is available"
+            exit 1
           fi
-
-      - name: Check if cre/ files were modified
-        id: changes
-        run: |
-          if git diff --name-only origin/main...HEAD | grep '^cre/'; then
-            echo "cre_changed=true" >> $GITHUB_OUTPUT
-          else
-            echo "cre_changed=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Set tool versions
-        if: steps.changes.outputs.cre_changed == 'true'
-        id: tool-versions
-        uses: smartcontractkit/tool-versions-to-env-action@v1.0.8
-
-      - name: Run buf lint for cre
-        if: steps.changes.outputs.cre_changed == 'true'
-        run: buf lint cre
-
-      - name: Run buf breaking for cre
-        if: steps.changes.outputs.cre_changed == 'true'
-        run: buf breaking cre --against ".git#branch=main,subdir=cre" --exclude-path node_modules
-
-      - name: Skip buf checks — no cre/ changes
-        if: steps.changes.outputs.cre_changed == 'false'
-        run: echo "No changes to cre/ — skipping buf lint and breaking checks."
-
