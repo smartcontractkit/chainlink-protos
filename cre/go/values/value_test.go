@@ -188,7 +188,7 @@ func Test_Value(t *testing.T) {
 				// This fails the equivalence check if uint32 is used for StreamID.
 				m := map[string]any{
 					"Payload":                         []any{map[string]any{"StreamID": int64(1), "Decimal": d1}, nil, map[string]any{"StreamID": int64(3), "Decimal": d3}},
-					"ObservationTimestampNanoseconds": int64(123456789),
+					"ObservationTimestampNanoseconds": uint64(123456789),
 				}
 				err := mapstructure.Decode(m, &v)
 				fmt.Printf("v %#v", v.Payload[0].StreamID)
