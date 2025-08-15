@@ -36,6 +36,7 @@ type Value struct {
 	//	*Value_BigintValue
 	//	*Value_TimeValue
 	//	*Value_Float64Value
+	//	*Value_Uint64Value
 	Value         isValue_Value `protobuf_oneof:"value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -168,6 +169,15 @@ func (x *Value) GetFloat64Value() float64 {
 	return 0
 }
 
+func (x *Value) GetUint64Value() uint64 {
+	if x != nil {
+		if x, ok := x.Value.(*Value_Uint64Value); ok {
+			return x.Uint64Value
+		}
+	}
+	return 0
+}
+
 type isValue_Value interface {
 	isValue_Value()
 }
@@ -212,6 +222,10 @@ type Value_Float64Value struct {
 	Float64Value float64 `protobuf:"fixed64,11,opt,name=float64_value,json=float64Value,proto3,oneof"`
 }
 
+type Value_Uint64Value struct {
+	Uint64Value uint64 `protobuf:"varint,12,opt,name=uint64_value,json=uint64Value,proto3,oneof"`
+}
+
 func (*Value_StringValue) isValue_Value() {}
 
 func (*Value_BoolValue) isValue_Value() {}
@@ -231,6 +245,8 @@ func (*Value_BigintValue) isValue_Value() {}
 func (*Value_TimeValue) isValue_Value() {}
 
 func (*Value_Float64Value) isValue_Value() {}
+
+func (*Value_Uint64Value) isValue_Value() {}
 
 type BigInt struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -428,7 +444,7 @@ var File_values_v1_values_proto protoreflect.FileDescriptor
 
 const file_values_v1_values_proto_rawDesc = "" +
 	"\n" +
-	"\x16values/v1/values.proto\x12\tvalues.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xda\x03\n" +
+	"\x16values/v1/values.proto\x12\tvalues.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xff\x03\n" +
 	"\x05Value\x12#\n" +
 	"\fstring_value\x18\x01 \x01(\tH\x00R\vstringValue\x12\x1f\n" +
 	"\n" +
@@ -445,7 +461,8 @@ const file_values_v1_values_proto_rawDesc = "" +
 	"\n" +
 	"time_value\x18\n" +
 	" \x01(\v2\x1a.google.protobuf.TimestampH\x00R\ttimeValue\x12%\n" +
-	"\rfloat64_value\x18\v \x01(\x01H\x00R\ffloat64ValueB\a\n" +
+	"\rfloat64_value\x18\v \x01(\x01H\x00R\ffloat64Value\x12#\n" +
+	"\fuint64_value\x18\f \x01(\x04H\x00R\vuint64ValueB\a\n" +
 	"\x05valueJ\x04\b\b\x10\t\"5\n" +
 	"\x06BigInt\x12\x17\n" +
 	"\aabs_val\x18\x01 \x01(\fR\x06absVal\x12\x12\n" +
@@ -516,6 +533,7 @@ func file_values_v1_values_proto_init() {
 		(*Value_BigintValue)(nil),
 		(*Value_TimeValue)(nil),
 		(*Value_Float64Value)(nil),
+		(*Value_Uint64Value)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

@@ -74,6 +74,14 @@ func NewInt64Value(i int64) *Value {
 	}
 }
 
+func NewUInt64Value(i uint64) *Value {
+	return &Value{
+		Value: &Value_Uint64Value{
+			Uint64Value: i,
+		},
+	}
+}
+
 func NewBigIntValue(sign int, bib []byte) *Value {
 	return &Value{
 		Value: &Value_BigintValue{
