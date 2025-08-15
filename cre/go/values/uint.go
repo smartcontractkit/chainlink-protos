@@ -9,33 +9,33 @@ import (
 	"github.com/smartcontractkit/chainlink-protos/cre/go/values/pb"
 )
 
-type Int64 struct {
-	Underlying int64
+type Uint64 struct {
+	Underlying uint64
 }
 
-func NewInt64(i int64) *Int64 {
-	return &Int64{Underlying: i}
+func NewUint64(i uint64) *Uint64 {
+	return &Uint64{Underlying: i}
 }
 
-func (i *Int64) proto() *pb.Value {
-	return pb.NewInt64Value(i.Underlying)
+func (i *Uint64) proto() *pb.Value {
+	return pb.NewUInt64Value(i.Underlying)
 }
 
-func (i *Int64) Unwrap() (any, error) {
-	var u int64
+func (i *Uint64) Unwrap() (any, error) {
+	var u uint64
 	return u, i.UnwrapTo(&u)
 }
 
-func (i *Int64) copy() Value {
+func (i *Uint64) copy() Value {
 	if i == nil {
 		return nil
 	}
-	return &Int64{Underlying: i.Underlying}
+	return &Uint64{Underlying: i.Underlying}
 }
 
-func (i *Int64) UnwrapTo(to any) error {
+func (i *Uint64) UnwrapTo(to any) error {
 	if i == nil {
-		return errors.New("cannot unwrap nil values.Int64")
+		return errors.New("cannot unwrap nil values.Uint64")
 	}
 
 	if to == nil {
@@ -44,69 +44,67 @@ func (i *Int64) UnwrapTo(to any) error {
 
 	switch tv := to.(type) {
 	case *int64:
-		*tv = i.Underlying
+		if err := verifyUnsignedBounds(math.MaxInt64, i.Underlying, "uint32"); err != nil {
+			return err
+		}
+
+		*tv = int64(i.Underlying)
 		return nil
 	case *int32:
-		if err := verifyBounds(math.MinInt32, math.MaxInt32, i.Underlying, "int32"); err != nil {
+		if err := verifyUnsignedBounds(math.MaxInt32, i.Underlying, "int32"); err != nil {
 			return err
 		}
 
 		*tv = int32(i.Underlying)
 		return nil
 	case *int16:
-		if err := verifyBounds(math.MinInt16, math.MaxInt16, i.Underlying, "int16"); err != nil {
+		if err := verifyUnsignedBounds(math.MaxInt16, i.Underlying, "int16"); err != nil {
 			return err
 		}
 
 		*tv = int16(i.Underlying)
 		return nil
 	case *int8:
-		if err := verifyBounds(math.MinInt8, math.MaxInt8, i.Underlying, "int8"); err != nil {
+		if err := verifyUnsignedBounds(math.MaxInt8, i.Underlying, "int8"); err != nil {
 			return err
 		}
 
 		*tv = int8(i.Underlying)
 		return nil
 	case *int:
-		if err := verifyBounds(math.MinInt, math.MaxInt, i.Underlying, "int"); err != nil {
+		if err := verifyUnsignedBounds(math.MaxInt, i.Underlying, "int"); err != nil {
 			return err
 		}
 
 		*tv = int(i.Underlying)
 		return nil
 	case *uint64:
-		if i.Underlying < 0 {
-			return fmt.Errorf("value %d is too small for uint64", i.Underlying)
-		}
-
-		*tv = uint64(i.Underlying)
+		*tv = i.Underlying
 		return nil
 	case *uint32:
-		if err := verifyBounds(0, math.MaxUint32, i.Underlying, "uint32"); err != nil {
+		if err := verifyUnsignedBounds(math.MaxUint32, i.Underlying, "uint32"); err != nil {
 			return err
 		}
 
 		*tv = uint32(i.Underlying)
 		return nil
 	case *uint16:
-		if err := verifyBounds(0, math.MaxUint16, i.Underlying, "uint16"); err != nil {
+		if err := verifyUnsignedBounds(math.MaxUint16, i.Underlying, "uint16"); err != nil {
 			return err
 		}
 
 		*tv = uint16(i.Underlying)
 		return nil
 	case *uint8:
-		if err := verifyBounds(0, math.MaxUint8, i.Underlying, "uint8"); err != nil {
+		if err := verifyUnsignedBounds(math.MaxUint8, i.Underlying, "uint8"); err != nil {
 			return err
 		}
 
 		*tv = uint8(i.Underlying)
 		return nil
 	case *uint:
-		if math.MaxUint == math.MaxUint64 {
-			if i.Underlying < 0 {
-				return fmt.Errorf("value %d is too small for uint64", i.Underlying)
-			}
+		if verifyUnsignedBounds(math.MaxUint, i.Underlying, "uint") != nil {
+			return fmt.Errorf("value %d is too large for uint", i.Underlying)
 		}
 
 		*tv = uint(i.Underlying)
@@ -147,10 +145,8 @@ func (i *Int64) UnwrapTo(to any) error {
 	return fmt.Errorf("cannot unwrap to type %T", to)
 }
 
-func verifyBounds(min, max, value int64, tpe string) error {
-	if value < min {
-		return fmt.Errorf("value %d is too small for %s", value, tpe)
-	} else if value > max {
+func verifyUnsignedBounds(max, value uint64, tpe string) error {
+	if value > max {
 		return fmt.Errorf("value %d is too large for %s", value, tpe)
 	}
 	return nil

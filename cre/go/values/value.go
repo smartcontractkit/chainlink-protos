@@ -3,7 +3,6 @@ package values
 import (
 	"errors"
 	"fmt"
-	"math"
 	"math/big"
 	"reflect"
 	"time"
@@ -58,10 +57,7 @@ func Wrap(v any) (Value, error) {
 	case int:
 		return NewInt64(int64(tv)), nil
 	case uint64:
-		if tv > math.MaxInt64 {
-			return NewBigInt(new(big.Int).SetUint64(tv)), nil
-		}
-		return NewInt64(int64(tv)), nil
+		return NewUint64(tv), nil
 	case uint32:
 		return NewInt64(int64(tv)), nil
 	case uint16:
