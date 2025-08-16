@@ -17,6 +17,7 @@ type FeedsManagerClient interface {
 	UpdateNode(ctx context.Context, in *UpdateNodeRequest) (*UpdateNodeResponse, error)
 	RejectedJob(ctx context.Context, in *RejectedJobRequest) (*RejectedJobResponse, error)
 	CancelledJob(ctx context.Context, in *CancelledJobRequest) (*CancelledJobResponse, error)
+	TransferedJob(ctx context.Context, in *TransferedJobRequest) (*TransferedJobResponse, error)
 }
 
 type feedsManagerClient struct {
@@ -72,6 +73,15 @@ func (c *feedsManagerClient) CancelledJob(ctx context.Context, in *CancelledJobR
 	return out, nil
 }
 
+func (c *feedsManagerClient) TransferedJob(ctx context.Context, in *TransferedJobRequest) (*TransferedJobResponse, error) {
+	out := new(TransferedJobResponse)
+	err := c.cc.Invoke(ctx, "TransferedJob", in, out)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // FeedsManagerServer is the server API for FeedsManager service.
 type FeedsManagerServer interface {
 	ApprovedJob(context.Context, *ApprovedJobRequest) (*ApprovedJobResponse, error)
@@ -79,6 +89,7 @@ type FeedsManagerServer interface {
 	UpdateNode(context.Context, *UpdateNodeRequest) (*UpdateNodeResponse, error)
 	RejectedJob(context.Context, *RejectedJobRequest) (*RejectedJobResponse, error)
 	CancelledJob(context.Context, *CancelledJobRequest) (*CancelledJobResponse, error)
+	TransferedJob(context.Context, *TransferedJobRequest) (*TransferedJobResponse, error)
 }
 
 func RegisterFeedsManagerServer(s wsrpc.ServiceRegistrar, srv FeedsManagerServer) {
@@ -125,6 +136,14 @@ func _FeedsManager_CancelledJob_Handler(srv interface{}, ctx context.Context, de
 	return srv.(FeedsManagerServer).CancelledJob(ctx, in)
 }
 
+func _FeedsManager_TransferedJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+	in := new(TransferedJobRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	return srv.(FeedsManagerServer).TransferedJob(ctx, in)
+}
+
 // FeedsManager_ServiceDesc is the wsrpc.ServiceDesc for FeedsManager service.
 // It's only intended for direct use with wsrpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +171,10 @@ var FeedsManager_ServiceDesc = wsrpc.ServiceDesc{
 			MethodName: "CancelledJob",
 			Handler:    _FeedsManager_CancelledJob_Handler,
 		},
+		{
+			MethodName: "TransferedJob",
+			Handler:    _FeedsManager_TransferedJob_Handler,
+		},
 	},
 }
 
@@ -163,6 +186,7 @@ type NodeServiceClient interface {
 	DeleteJob(ctx context.Context, in *DeleteJobRequest) (*DeleteJobResponse, error)
 	// RevokeJob is called by the JD to revoke a job from the node.
 	RevokeJob(ctx context.Context, in *RevokeJobRequest) (*RevokeJobResponse, error)
+	TransferJob(ctx context.Context, in *TransferJobRequest) (*TransferJobResponse, error)
 }
 
 type nodeServiceClient struct {
@@ -200,6 +224,15 @@ func (c *nodeServiceClient) RevokeJob(ctx context.Context, in *RevokeJobRequest)
 	return out, nil
 }
 
+func (c *nodeServiceClient) TransferJob(ctx context.Context, in *TransferJobRequest) (*TransferJobResponse, error) {
+	out := new(TransferJobResponse)
+	err := c.cc.Invoke(ctx, "TransferJob", in, out)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NodeServiceServer is the server API for NodeService service.
 type NodeServiceServer interface {
 	// ProposeJob is called by the JD to propose a job to the node.
@@ -208,6 +241,7 @@ type NodeServiceServer interface {
 	DeleteJob(context.Context, *DeleteJobRequest) (*DeleteJobResponse, error)
 	// RevokeJob is called by the JD to revoke a job from the node.
 	RevokeJob(context.Context, *RevokeJobRequest) (*RevokeJobResponse, error)
+	TransferJob(context.Context, *TransferJobRequest) (*TransferJobResponse, error)
 }
 
 func RegisterNodeServiceServer(s wsrpc.ServiceRegistrar, srv NodeServiceServer) {
@@ -238,6 +272,14 @@ func _NodeService_RevokeJob_Handler(srv interface{}, ctx context.Context, dec fu
 	return srv.(NodeServiceServer).RevokeJob(ctx, in)
 }
 
+func _NodeService_TransferJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+	in := new(TransferJobRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	return srv.(NodeServiceServer).TransferJob(ctx, in)
+}
+
 // NodeService_ServiceDesc is the wsrpc.ServiceDesc for NodeService service.
 // It's only intended for direct use with wsrpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -256,6 +298,10 @@ var NodeService_ServiceDesc = wsrpc.ServiceDesc{
 		{
 			MethodName: "RevokeJob",
 			Handler:    _NodeService_RevokeJob_Handler,
+		},
+		{
+			MethodName: "TransferJob",
+			Handler:    _NodeService_TransferJob_Handler,
 		},
 	},
 }
