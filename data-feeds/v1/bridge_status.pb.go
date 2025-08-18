@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: workflows/bridge_status/v1/bridge_status.proto
+// source: v1/bridge_status.proto
 
 package v1
 
@@ -48,7 +48,7 @@ type BridgeStatusEvent struct {
 
 func (x *BridgeStatusEvent) Reset() {
 	*x = BridgeStatusEvent{}
-	mi := &file_workflows_bridge_status_v1_bridge_status_proto_msgTypes[0]
+	mi := &file_v1_bridge_status_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -60,7 +60,7 @@ func (x *BridgeStatusEvent) String() string {
 func (*BridgeStatusEvent) ProtoMessage() {}
 
 func (x *BridgeStatusEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_workflows_bridge_status_v1_bridge_status_proto_msgTypes[0]
+	mi := &file_v1_bridge_status_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -73,7 +73,7 @@ func (x *BridgeStatusEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BridgeStatusEvent.ProtoReflect.Descriptor instead.
 func (*BridgeStatusEvent) Descriptor() ([]byte, []int) {
-	return file_workflows_bridge_status_v1_bridge_status_proto_rawDescGZIP(), []int{0}
+	return file_v1_bridge_status_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *BridgeStatusEvent) GetBridgeName() string {
@@ -164,7 +164,7 @@ type JobInfo struct {
 
 func (x *JobInfo) Reset() {
 	*x = JobInfo{}
-	mi := &file_workflows_bridge_status_v1_bridge_status_proto_msgTypes[1]
+	mi := &file_v1_bridge_status_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -176,7 +176,7 @@ func (x *JobInfo) String() string {
 func (*JobInfo) ProtoMessage() {}
 
 func (x *JobInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_workflows_bridge_status_v1_bridge_status_proto_msgTypes[1]
+	mi := &file_v1_bridge_status_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -189,7 +189,7 @@ func (x *JobInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JobInfo.ProtoReflect.Descriptor instead.
 func (*JobInfo) Descriptor() ([]byte, []int) {
-	return file_workflows_bridge_status_v1_bridge_status_proto_rawDescGZIP(), []int{1}
+	return file_v1_bridge_status_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *JobInfo) GetExternalJobId() string {
@@ -218,7 +218,7 @@ type RuntimeInfo struct {
 
 func (x *RuntimeInfo) Reset() {
 	*x = RuntimeInfo{}
-	mi := &file_workflows_bridge_status_v1_bridge_status_proto_msgTypes[2]
+	mi := &file_v1_bridge_status_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -230,7 +230,7 @@ func (x *RuntimeInfo) String() string {
 func (*RuntimeInfo) ProtoMessage() {}
 
 func (x *RuntimeInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_workflows_bridge_status_v1_bridge_status_proto_msgTypes[2]
+	mi := &file_v1_bridge_status_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -243,7 +243,7 @@ func (x *RuntimeInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RuntimeInfo.ProtoReflect.Descriptor instead.
 func (*RuntimeInfo) Descriptor() ([]byte, []int) {
-	return file_workflows_bridge_status_v1_bridge_status_proto_rawDescGZIP(), []int{2}
+	return file_v1_bridge_status_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *RuntimeInfo) GetNodeVersion() string {
@@ -283,7 +283,7 @@ type MetricsInfo struct {
 
 func (x *MetricsInfo) Reset() {
 	*x = MetricsInfo{}
-	mi := &file_workflows_bridge_status_v1_bridge_status_proto_msgTypes[3]
+	mi := &file_v1_bridge_status_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -295,7 +295,7 @@ func (x *MetricsInfo) String() string {
 func (*MetricsInfo) ProtoMessage() {}
 
 func (x *MetricsInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_workflows_bridge_status_v1_bridge_status_proto_msgTypes[3]
+	mi := &file_v1_bridge_status_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -308,7 +308,7 @@ func (x *MetricsInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MetricsInfo.ProtoReflect.Descriptor instead.
 func (*MetricsInfo) Descriptor() ([]byte, []int) {
-	return file_workflows_bridge_status_v1_bridge_status_proto_rawDescGZIP(), []int{3}
+	return file_v1_bridge_status_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *MetricsInfo) GetEnabled() bool {
@@ -329,7 +329,7 @@ type EndpointInfo struct {
 
 func (x *EndpointInfo) Reset() {
 	*x = EndpointInfo{}
-	mi := &file_workflows_bridge_status_v1_bridge_status_proto_msgTypes[4]
+	mi := &file_v1_bridge_status_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -341,7 +341,7 @@ func (x *EndpointInfo) String() string {
 func (*EndpointInfo) ProtoMessage() {}
 
 func (x *EndpointInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_workflows_bridge_status_v1_bridge_status_proto_msgTypes[4]
+	mi := &file_v1_bridge_status_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -354,7 +354,7 @@ func (x *EndpointInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EndpointInfo.ProtoReflect.Descriptor instead.
 func (*EndpointInfo) Descriptor() ([]byte, []int) {
-	return file_workflows_bridge_status_v1_bridge_status_proto_rawDescGZIP(), []int{4}
+	return file_v1_bridge_status_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *EndpointInfo) GetName() string {
@@ -394,7 +394,7 @@ type ConfigurationItem struct {
 
 func (x *ConfigurationItem) Reset() {
 	*x = ConfigurationItem{}
-	mi := &file_workflows_bridge_status_v1_bridge_status_proto_msgTypes[5]
+	mi := &file_v1_bridge_status_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -406,7 +406,7 @@ func (x *ConfigurationItem) String() string {
 func (*ConfigurationItem) ProtoMessage() {}
 
 func (x *ConfigurationItem) ProtoReflect() protoreflect.Message {
-	mi := &file_workflows_bridge_status_v1_bridge_status_proto_msgTypes[5]
+	mi := &file_v1_bridge_status_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -419,7 +419,7 @@ func (x *ConfigurationItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfigurationItem.ProtoReflect.Descriptor instead.
 func (*ConfigurationItem) Descriptor() ([]byte, []int) {
-	return file_workflows_bridge_status_v1_bridge_status_proto_rawDescGZIP(), []int{5}
+	return file_v1_bridge_status_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ConfigurationItem) GetName() string {
@@ -478,11 +478,11 @@ func (x *ConfigurationItem) GetEnvDefaultOverride() string {
 	return ""
 }
 
-var File_workflows_bridge_status_v1_bridge_status_proto protoreflect.FileDescriptor
+var File_v1_bridge_status_proto protoreflect.FileDescriptor
 
-const file_workflows_bridge_status_v1_bridge_status_proto_rawDesc = "" +
+const file_v1_bridge_status_proto_rawDesc = "" +
 	"\n" +
-	".workflows/bridge_status/v1/bridge_status.proto\x12\x10bridge_status.v1\"\xa9\x04\n" +
+	"\x16v1/bridge_status.proto\x12\x10bridge_status.v1\"\xa9\x04\n" +
 	"\x11BridgeStatusEvent\x12\x1f\n" +
 	"\vbridge_name\x18\x01 \x01(\tR\n" +
 	"bridgeName\x12!\n" +
@@ -521,22 +521,22 @@ const file_workflows_bridge_status_v1_bridge_status_proto_rawDesc = "" +
 	"\brequired\x18\x05 \x01(\bR\brequired\x12#\n" +
 	"\rdefault_value\x18\x06 \x01(\tR\fdefaultValue\x12%\n" +
 	"\x0ecustom_setting\x18\a \x01(\bR\rcustomSetting\x120\n" +
-	"\x14env_default_override\x18\b \x01(\tR\x12envDefaultOverrideBHZFgithub.com/smartcontractkit/chainlink-protos/platform/bridge_status/v1b\x06proto3"
+	"\x14env_default_override\x18\b \x01(\tR\x12envDefaultOverrideB<Z:github.com/smartcontractkit/chainlink-protos/data-feeds/v1b\x06proto3"
 
 var (
-	file_workflows_bridge_status_v1_bridge_status_proto_rawDescOnce sync.Once
-	file_workflows_bridge_status_v1_bridge_status_proto_rawDescData []byte
+	file_v1_bridge_status_proto_rawDescOnce sync.Once
+	file_v1_bridge_status_proto_rawDescData []byte
 )
 
-func file_workflows_bridge_status_v1_bridge_status_proto_rawDescGZIP() []byte {
-	file_workflows_bridge_status_v1_bridge_status_proto_rawDescOnce.Do(func() {
-		file_workflows_bridge_status_v1_bridge_status_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_workflows_bridge_status_v1_bridge_status_proto_rawDesc), len(file_workflows_bridge_status_v1_bridge_status_proto_rawDesc)))
+func file_v1_bridge_status_proto_rawDescGZIP() []byte {
+	file_v1_bridge_status_proto_rawDescOnce.Do(func() {
+		file_v1_bridge_status_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_v1_bridge_status_proto_rawDesc), len(file_v1_bridge_status_proto_rawDesc)))
 	})
-	return file_workflows_bridge_status_v1_bridge_status_proto_rawDescData
+	return file_v1_bridge_status_proto_rawDescData
 }
 
-var file_workflows_bridge_status_v1_bridge_status_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_workflows_bridge_status_v1_bridge_status_proto_goTypes = []any{
+var file_v1_bridge_status_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_v1_bridge_status_proto_goTypes = []any{
 	(*BridgeStatusEvent)(nil), // 0: bridge_status.v1.BridgeStatusEvent
 	(*JobInfo)(nil),           // 1: bridge_status.v1.JobInfo
 	(*RuntimeInfo)(nil),       // 2: bridge_status.v1.RuntimeInfo
@@ -544,7 +544,7 @@ var file_workflows_bridge_status_v1_bridge_status_proto_goTypes = []any{
 	(*EndpointInfo)(nil),      // 4: bridge_status.v1.EndpointInfo
 	(*ConfigurationItem)(nil), // 5: bridge_status.v1.ConfigurationItem
 }
-var file_workflows_bridge_status_v1_bridge_status_proto_depIdxs = []int32{
+var file_v1_bridge_status_proto_depIdxs = []int32{
 	2, // 0: bridge_status.v1.BridgeStatusEvent.runtime:type_name -> bridge_status.v1.RuntimeInfo
 	3, // 1: bridge_status.v1.BridgeStatusEvent.metrics:type_name -> bridge_status.v1.MetricsInfo
 	4, // 2: bridge_status.v1.BridgeStatusEvent.endpoints:type_name -> bridge_status.v1.EndpointInfo
@@ -557,26 +557,26 @@ var file_workflows_bridge_status_v1_bridge_status_proto_depIdxs = []int32{
 	0, // [0:5] is the sub-list for field type_name
 }
 
-func init() { file_workflows_bridge_status_v1_bridge_status_proto_init() }
-func file_workflows_bridge_status_v1_bridge_status_proto_init() {
-	if File_workflows_bridge_status_v1_bridge_status_proto != nil {
+func init() { file_v1_bridge_status_proto_init() }
+func file_v1_bridge_status_proto_init() {
+	if File_v1_bridge_status_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_workflows_bridge_status_v1_bridge_status_proto_rawDesc), len(file_workflows_bridge_status_v1_bridge_status_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_bridge_status_proto_rawDesc), len(file_v1_bridge_status_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_workflows_bridge_status_v1_bridge_status_proto_goTypes,
-		DependencyIndexes: file_workflows_bridge_status_v1_bridge_status_proto_depIdxs,
-		MessageInfos:      file_workflows_bridge_status_v1_bridge_status_proto_msgTypes,
+		GoTypes:           file_v1_bridge_status_proto_goTypes,
+		DependencyIndexes: file_v1_bridge_status_proto_depIdxs,
+		MessageInfos:      file_v1_bridge_status_proto_msgTypes,
 	}.Build()
-	File_workflows_bridge_status_v1_bridge_status_proto = out.File
-	file_workflows_bridge_status_v1_bridge_status_proto_goTypes = nil
-	file_workflows_bridge_status_v1_bridge_status_proto_depIdxs = nil
+	File_v1_bridge_status_proto = out.File
+	file_v1_bridge_status_proto_goTypes = nil
+	file_v1_bridge_status_proto_depIdxs = nil
 }

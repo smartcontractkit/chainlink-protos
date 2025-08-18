@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package bridge_status.v1;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/platform/bridge_status/v1";
+option go_package = "github.com/smartcontractkit/chainlink-protos/data-feeds/v1";
 
 // BridgeStatusEvent represents the status data from an External Adapter
 message BridgeStatusEvent {
