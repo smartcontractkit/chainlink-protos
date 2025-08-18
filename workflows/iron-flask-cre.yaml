@@ -58,3 +58,133 @@ beholder:
     
     - entity: BaseMessage
       schema: "pb/base_message_legacy.proto"
+
+    # workflows/v2
+
+    - entity: CreInfo
+      schema: "workflows/v2/cre_info.proto"
+
+    - entity: WorkflowKey
+      schema: "workflows/v2/workflow_key.proto"
+
+
+    - entity: TransactionInfo
+      schema: "workflows/v2/transaction_info.proto"
+
+    - entity: Workflow
+      schema: "workflows/v2/workflow.proto"
+
+    - entity: CapabilityExecutionFinished
+      schema: "workflows/v2/capability_execution_finished.proto"
+      references:
+        - name: "workflows/v2/cre_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.CreInfo"
+          version: 1
+        - name: "workflows/v2/workflow_key.proto"
+          subject: "beholder__cre__messages-workflows.v2.WorkflowKey"
+          version: 1
+
+    - entity: CapabilityExecutionStarted
+      schema: "workflows/v2/capability_execution_started.proto"
+      references:
+        - name: "workflows/v2/cre_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.CreInfo"
+          version: 1
+        - name: "workflows/v2/workflow_key.proto"
+          subject: "beholder__cre__messages-workflows.v2.WorkflowKey"
+          version: 1
+
+    - entity: TriggerExecutionStarted
+      schema: "workflows/v2/trigger_execution_started.proto"
+      references:
+        - name: "workflows/v2/cre_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.CreInfo"
+          version: 1
+        - name: "workflows/v2/workflow_key.proto"
+          subject: "beholder__cre__messages-workflows.v2.WorkflowKey"
+          version: 1
+
+    - entity: WorkflowExecutionFinished
+      schema: "workflows/v2/workflow_execution_finished.proto"
+      references:
+        - name: "workflows/v2/cre_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.CreInfo"
+          version: 1
+        - name: "workflows/v2/workflow_key.proto"
+          subject: "beholder__cre__messages-workflows.v2.WorkflowKey"
+          version: 1
+
+    - entity: WorkflowExecutionStarted
+      schema: "workflows/v2/workflow_execution_started.proto"
+      references:
+        - name: "workflows/v2/cre_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.CreInfo"
+          version: 1
+        - name: "workflows/v2/workflow_key.proto"
+          subject: "beholder__cre__messages-workflows.v2.WorkflowKey"
+          version: 1
+
+    - entity: WorkflowActivated
+      schema: "workflows/v2/workflow_activated.proto"
+      references:
+        - name: "workflows/v2/cre_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.CreInfo"
+          version: 1
+        - name: "workflows/v2/transaction_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.TransactionInfo"
+          version: 1
+        - name: "workflows/v2/workflow.proto"
+          subject: "beholder__cre__messages-workflows.v2.Workflow"
+          version: 1
+
+    - entity: WorkflowDeleted
+      schema: "workflows/v2/workflow_deleted.proto"
+      references:
+        - name: "workflows/v2/cre_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.CreInfo"
+          version: 1
+        - name: "workflows/v2/transaction_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.TransactionInfo"
+          version: 1
+        - name: "workflows/v2/workflow.proto"
+          subject: "beholder__cre__messages-workflows.v2.Workflow"
+          version: 1
+
+    - entity: WorkflowDeployed
+      schema: "workflows/v2/workflow_deployed.proto"
+      references:
+        - name: "workflows/v2/cre_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.CreInfo"
+          version: 1
+        - name: "workflows/v2/transaction_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.TransactionInfo"
+          version: 1
+        - name: "workflows/v2/workflow.proto"
+          subject: "beholder__cre__messages-workflows.v2.Workflow"
+          version: 1
+
+    - entity: WorkflowPaused
+      schema: "workflows/v2/workflow_paused.proto"
+      references:
+        - name: "workflows/v2/cre_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.CreInfo"
+          version: 1
+        - name: "workflows/v2/transaction_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.TransactionInfo"
+          version: 1
+        - name: "workflows/v2/workflow.proto"
+          subject: "beholder__cre__messages-workflows.v2.Workflow"
+          version: 1
+
+    - entity: WorkflowUpdated
+      schema: "workflows/v2/workflow_updated.proto"
+      references:
+        - name: "workflows/v2/cre_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.CreInfo"
+          version: 1
+        - name: "workflows/v2/transaction_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.TransactionInfo"
+          version: 1
+        - name: "workflows/v2/workflow.proto"
+          subject: "beholder__cre__messages-workflows.v2.Workflow"
+          version: 1
