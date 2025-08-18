@@ -21,6 +21,55 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type ExecutionStatus int32
+
+const (
+	ExecutionStatus_EXECUTION_STATUS_UNSPECIFIED ExecutionStatus = 0
+	ExecutionStatus_EXECUTION_STATUS_SUCCEEDED   ExecutionStatus = 1
+	ExecutionStatus_EXECUTION_STATUS_FAILED      ExecutionStatus = 2
+)
+
+// Enum value maps for ExecutionStatus.
+var (
+	ExecutionStatus_name = map[int32]string{
+		0: "EXECUTION_STATUS_UNSPECIFIED",
+		1: "EXECUTION_STATUS_SUCCEEDED",
+		2: "EXECUTION_STATUS_FAILED",
+	}
+	ExecutionStatus_value = map[string]int32{
+		"EXECUTION_STATUS_UNSPECIFIED": 0,
+		"EXECUTION_STATUS_SUCCEEDED":   1,
+		"EXECUTION_STATUS_FAILED":      2,
+	}
+)
+
+func (x ExecutionStatus) Enum() *ExecutionStatus {
+	p := new(ExecutionStatus)
+	*p = x
+	return p
+}
+
+func (x ExecutionStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ExecutionStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_workflows_v2_workflow_execution_finished_proto_enumTypes[0].Descriptor()
+}
+
+func (ExecutionStatus) Type() protoreflect.EnumType {
+	return &file_workflows_v2_workflow_execution_finished_proto_enumTypes[0]
+}
+
+func (x ExecutionStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ExecutionStatus.Descriptor instead.
+func (ExecutionStatus) EnumDescriptor() ([]byte, []int) {
+	return file_workflows_v2_workflow_execution_finished_proto_rawDescGZIP(), []int{0}
+}
+
 type WorkflowExecutionFinished struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	CreInfo             *CreInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
@@ -101,13 +150,17 @@ var File_workflows_v2_workflow_execution_finished_proto protoreflect.FileDescrip
 
 const file_workflows_v2_workflow_execution_finished_proto_rawDesc = "" +
 	"\n" +
-	".workflows/v2/workflow_execution_finished.proto\x12\fworkflows.v2\x1a\x1bworkflows/v2/cre_info.proto\x1a\x1fworkflows/v2/workflow_key.proto\x1a#workflows/v2/execution_status.proto\"\x8a\x02\n" +
+	".workflows/v2/workflow_execution_finished.proto\x12\fworkflows.v2\x1a\x1bworkflows/v2/cre_info.proto\x1a\x1fworkflows/v2/workflow_key.proto\"\x8a\x02\n" +
 	"\x19WorkflowExecutionFinished\x12/\n" +
 	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x125\n" +
 	"\bworkflow\x18\x02 \x01(\v2\x19.workflows.v2.WorkflowKeyR\bworkflow\x120\n" +
 	"\x13workflowExecutionID\x18\x03 \x01(\tR\x13workflowExecutionID\x12\x1c\n" +
 	"\ttimestamp\x18\x04 \x01(\tR\ttimestamp\x125\n" +
-	"\x06status\x18\x05 \x01(\x0e2\x1d.workflows.v2.ExecutionStatusR\x06statusB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
+	"\x06status\x18\x05 \x01(\x0e2\x1d.workflows.v2.ExecutionStatusR\x06status*p\n" +
+	"\x0fExecutionStatus\x12 \n" +
+	"\x1cEXECUTION_STATUS_UNSPECIFIED\x10\x00\x12\x1e\n" +
+	"\x1aEXECUTION_STATUS_SUCCEEDED\x10\x01\x12\x1b\n" +
+	"\x17EXECUTION_STATUS_FAILED\x10\x02B>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
 
 var (
 	file_workflows_v2_workflow_execution_finished_proto_rawDescOnce sync.Once
@@ -121,17 +174,18 @@ func file_workflows_v2_workflow_execution_finished_proto_rawDescGZIP() []byte {
 	return file_workflows_v2_workflow_execution_finished_proto_rawDescData
 }
 
+var file_workflows_v2_workflow_execution_finished_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_workflows_v2_workflow_execution_finished_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_workflows_v2_workflow_execution_finished_proto_goTypes = []any{
-	(*WorkflowExecutionFinished)(nil), // 0: workflows.v2.WorkflowExecutionFinished
-	(*CreInfo)(nil),                   // 1: workflows.v2.CreInfo
-	(*WorkflowKey)(nil),               // 2: workflows.v2.WorkflowKey
-	(ExecutionStatus)(0),              // 3: workflows.v2.ExecutionStatus
+	(ExecutionStatus)(0),              // 0: workflows.v2.ExecutionStatus
+	(*WorkflowExecutionFinished)(nil), // 1: workflows.v2.WorkflowExecutionFinished
+	(*CreInfo)(nil),                   // 2: workflows.v2.CreInfo
+	(*WorkflowKey)(nil),               // 3: workflows.v2.WorkflowKey
 }
 var file_workflows_v2_workflow_execution_finished_proto_depIdxs = []int32{
-	1, // 0: workflows.v2.WorkflowExecutionFinished.creInfo:type_name -> workflows.v2.CreInfo
-	2, // 1: workflows.v2.WorkflowExecutionFinished.workflow:type_name -> workflows.v2.WorkflowKey
-	3, // 2: workflows.v2.WorkflowExecutionFinished.status:type_name -> workflows.v2.ExecutionStatus
+	2, // 0: workflows.v2.WorkflowExecutionFinished.creInfo:type_name -> workflows.v2.CreInfo
+	3, // 1: workflows.v2.WorkflowExecutionFinished.workflow:type_name -> workflows.v2.WorkflowKey
+	0, // 2: workflows.v2.WorkflowExecutionFinished.status:type_name -> workflows.v2.ExecutionStatus
 	3, // [3:3] is the sub-list for method output_type
 	3, // [3:3] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
@@ -146,19 +200,19 @@ func file_workflows_v2_workflow_execution_finished_proto_init() {
 	}
 	file_workflows_v2_cre_info_proto_init()
 	file_workflows_v2_workflow_key_proto_init()
-	file_workflows_v2_execution_status_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_workflows_v2_workflow_execution_finished_proto_rawDesc), len(file_workflows_v2_workflow_execution_finished_proto_rawDesc)),
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_workflows_v2_workflow_execution_finished_proto_goTypes,
 		DependencyIndexes: file_workflows_v2_workflow_execution_finished_proto_depIdxs,
+		EnumInfos:         file_workflows_v2_workflow_execution_finished_proto_enumTypes,
 		MessageInfos:      file_workflows_v2_workflow_execution_finished_proto_msgTypes,
 	}.Build()
 	File_workflows_v2_workflow_execution_finished_proto = out.File
