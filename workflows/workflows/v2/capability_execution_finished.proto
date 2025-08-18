@@ -6,7 +6,6 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v
 
 import "workflows/v2/cre_info.proto";
 import "workflows/v2/workflow_key.proto";
-import "workflows/v2/execution_status.proto";
 
 message CapabilityExecutionFinished {
   CreInfo creInfo = 1;
@@ -17,4 +16,10 @@ message CapabilityExecutionFinished {
   string capabilityID = 5;
   int32 stepRef = 6;
   ExecutionStatus status = 7;
+} 
+
+enum ExecutionStatus {
+  EXECUTION_STATUS_UNSPECIFIED = 0;
+  EXECUTION_STATUS_SUCCEEDED = 1;
+  EXECUTION_STATUS_FAILED = 2;
 } 
