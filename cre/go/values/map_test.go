@@ -22,6 +22,9 @@ type testStruct struct {
 	Int64      int64
 	Int64Value *Int64
 
+	Uint64      uint64
+	Uint64Value *Uint64
+
 	Int int
 
 	Decimal      decimal.Decimal
@@ -76,6 +79,9 @@ func TestMap_UnwrapTo(t *testing.T) {
 		Int64:      int64(123),
 		Int64Value: NewInt64(123),
 
+		Uint64:      uint64(432),
+		Uint64Value: NewUint64(432),
+
 		Int: 456,
 
 		Decimal:      decimal.NewFromFloat(1.00),
@@ -100,6 +106,9 @@ func TestMap_UnwrapTo(t *testing.T) {
 
 		"int64":      int64(123),
 		"int64Value": int64(123),
+
+		"uint64":      uint64(432),
+		"uint64Value": uint64(432),
 
 		"int": 456,
 
