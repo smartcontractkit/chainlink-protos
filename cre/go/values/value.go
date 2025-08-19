@@ -91,6 +91,8 @@ func Wrap(v any) (Value, error) {
 		return tv, nil
 	case *Int64:
 		return tv, nil
+	case *Uint64:
+		return tv, nil
 	case *Float64:
 		return tv, nil
 	case *Bool:
