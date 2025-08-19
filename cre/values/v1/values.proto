@@ -17,6 +17,7 @@ message Value {
     BigInt bigint_value = 9;
     google.protobuf.Timestamp time_value = 10;
     double float64_value = 11;
+    uint64 uint64_value = 12;
   }
 }
 
