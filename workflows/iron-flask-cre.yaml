@@ -85,6 +85,10 @@ beholder:
         - name: "workflows/v2/workflow_key.proto"
           subject: "beholder__cre__messages-workflows.v2.WorkflowKey"
           version: 1
+        # This is a hack to add reference to ExecutionStatus enum
+        - name: "workflows/v2/xxx_no_send.proto"
+          subject: "beholder__cre__messages-workflows.v2.NeverSendThis"
+          version: 1
 
     - entity: CapabilityExecutionStarted
       schema: "workflows/v2/capability_execution_started.proto"
@@ -114,6 +118,10 @@ beholder:
           version: 1
         - name: "workflows/v2/workflow_key.proto"
           subject: "beholder__cre__messages-workflows.v2.WorkflowKey"
+          version: 1
+        # This is a hack to add reference to ExecutionStatus enum
+        - name: "workflows/v2/xxx_no_send.proto"
+          subject: "beholder__cre__messages-workflows.v2.NeverSendThis"
           version: 1
 
     - entity: WorkflowExecutionStarted
