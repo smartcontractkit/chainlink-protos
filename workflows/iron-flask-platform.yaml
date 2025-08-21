@@ -67,6 +67,8 @@ beholder:
     - entity: WorkflowKey
       schema: "workflows/v2/workflow_key.proto"
 
+    - entity: NeverSendThis
+      schema: "workflows/v2/xxx_no_send.proto"
 
     - entity: TransactionInfo
       schema: "workflows/v2/transaction_info.proto"
