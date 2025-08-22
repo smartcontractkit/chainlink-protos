@@ -31,7 +31,14 @@ jobs:
           BASE_REF="${{ github.base_ref || 'main' }}"
           echo "Base ref: ${BASE_REF}"
 
-          git fetch origin "${BASE_REF}" --depth=1
+          # Ensure the base ref exists as a local branch so buf can resolve branch=${BASE_REF}
+          git fetch --depth=1 origin "${BASE_REF}:${BASE_REF}"
+          # Sanity check
+          if ! git show-ref --verify --quiet "refs/heads/${BASE_REF}"; then
+            echo "::error::Local branch ${BASE_REF} not found after fetch"
+            git branch -a | cat
+            exit 1
+          fi
 
           # List module paths from current workspace
           modules=$(buf config ls-modules --format path)
@@ -46,7 +53,7 @@ jobs:
             [ -z "${module}" ] && continue
 
             # Check if the module directory exists on the base branch
-            if git ls-tree --name-only "origin/${BASE_REF}" "${module}" | grep -q .; then
+            if git ls-tree --name-only "${BASE_REF}" "${module}" | grep -q .; then
               echo "::group::buf breaking ${module}"
               if ! buf breaking "${module}" --against ".git#branch=${BASE_REF},subdir=${module}" --exclude-path node_modules --error-format github-actions; then
                 failures=$((failures+1))
