@@ -4,7 +4,6 @@ package workflows.v2;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
 
-import "google/protobuf/wrappers.proto";
 import "workflows/v2/cre_info.proto";
 import "workflows/v2/transaction_info.proto";
 import "workflows/v2/workflow.proto";
@@ -15,5 +14,5 @@ message WorkflowUpdated {
   TransactionInfo txInfo    = 3;
 
   Workflow                     workflow     = 4;
-  google.protobuf.StringValue  errorMessage = 5;  // present ⇔ failure
+  string  errorMessage = 5;  // present ⇔ failure
 } 

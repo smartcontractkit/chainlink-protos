@@ -4,6 +4,8 @@ package workflows.v1;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/events";
 
+import "workflows/v1/trigger_detail.proto";
+
 message WorkflowMetadata {
   string workflowOwner = 1;
   string workflowName = 2;
@@ -22,6 +24,3 @@ message WorkflowMetadata {
   TriggerDetail trigger = 15;
 }
 
-message TriggerDetail {
-  string triggerID = 1;
-}

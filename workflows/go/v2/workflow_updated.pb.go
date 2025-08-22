@@ -9,7 +9,6 @@ package v2
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -23,12 +22,12 @@ const (
 )
 
 type WorkflowUpdated struct {
-	state         protoimpl.MessageState  `protogen:"open.v1"`
-	CreInfo       *CreInfo                `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
-	Timestamp     string                  `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	TxInfo        *TransactionInfo        `protobuf:"bytes,3,opt,name=txInfo,proto3" json:"txInfo,omitempty"`
-	Workflow      *Workflow               `protobuf:"bytes,4,opt,name=workflow,proto3" json:"workflow,omitempty"`
-	ErrorMessage  *wrapperspb.StringValue `protobuf:"bytes,5,opt,name=errorMessage,proto3" json:"errorMessage,omitempty"` // present ⇔ failure
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CreInfo       *CreInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
+	Timestamp     string                 `protobuf:"bytes,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	TxInfo        *TransactionInfo       `protobuf:"bytes,3,opt,name=txInfo,proto3" json:"txInfo,omitempty"`
+	Workflow      *Workflow              `protobuf:"bytes,4,opt,name=workflow,proto3" json:"workflow,omitempty"`
+	ErrorMessage  string                 `protobuf:"bytes,5,opt,name=errorMessage,proto3" json:"errorMessage,omitempty"` // present ⇔ failure
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -91,24 +90,24 @@ func (x *WorkflowUpdated) GetWorkflow() *Workflow {
 	return nil
 }
 
-func (x *WorkflowUpdated) GetErrorMessage() *wrapperspb.StringValue {
+func (x *WorkflowUpdated) GetErrorMessage() string {
 	if x != nil {
 		return x.ErrorMessage
 	}
-	return nil
+	return ""
 }
 
 var File_workflows_v2_workflow_updated_proto protoreflect.FileDescriptor
 
 const file_workflows_v2_workflow_updated_proto_rawDesc = "" +
 	"\n" +
-	"#workflows/v2/workflow_updated.proto\x12\fworkflows.v2\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1bworkflows/v2/cre_info.proto\x1a#workflows/v2/transaction_info.proto\x1a\x1bworkflows/v2/workflow.proto\"\x8d\x02\n" +
+	"#workflows/v2/workflow_updated.proto\x12\fworkflows.v2\x1a\x1bworkflows/v2/cre_info.proto\x1a#workflows/v2/transaction_info.proto\x1a\x1bworkflows/v2/workflow.proto\"\xef\x01\n" +
 	"\x0fWorkflowUpdated\x12/\n" +
 	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x12\x1c\n" +
 	"\ttimestamp\x18\x02 \x01(\tR\ttimestamp\x125\n" +
 	"\x06txInfo\x18\x03 \x01(\v2\x1d.workflows.v2.TransactionInfoR\x06txInfo\x122\n" +
-	"\bworkflow\x18\x04 \x01(\v2\x16.workflows.v2.WorkflowR\bworkflow\x12@\n" +
-	"\ferrorMessage\x18\x05 \x01(\v2\x1c.google.protobuf.StringValueR\ferrorMessageB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
+	"\bworkflow\x18\x04 \x01(\v2\x16.workflows.v2.WorkflowR\bworkflow\x12\"\n" +
+	"\ferrorMessage\x18\x05 \x01(\tR\ferrorMessageB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
 
 var (
 	file_workflows_v2_workflow_updated_proto_rawDescOnce sync.Once
@@ -124,22 +123,20 @@ func file_workflows_v2_workflow_updated_proto_rawDescGZIP() []byte {
 
 var file_workflows_v2_workflow_updated_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_workflows_v2_workflow_updated_proto_goTypes = []any{
-	(*WorkflowUpdated)(nil),        // 0: workflows.v2.WorkflowUpdated
-	(*CreInfo)(nil),                // 1: workflows.v2.CreInfo
-	(*TransactionInfo)(nil),        // 2: workflows.v2.TransactionInfo
-	(*Workflow)(nil),               // 3: workflows.v2.Workflow
-	(*wrapperspb.StringValue)(nil), // 4: google.protobuf.StringValue
+	(*WorkflowUpdated)(nil), // 0: workflows.v2.WorkflowUpdated
+	(*CreInfo)(nil),         // 1: workflows.v2.CreInfo
+	(*TransactionInfo)(nil), // 2: workflows.v2.TransactionInfo
+	(*Workflow)(nil),        // 3: workflows.v2.Workflow
 }
 var file_workflows_v2_workflow_updated_proto_depIdxs = []int32{
 	1, // 0: workflows.v2.WorkflowUpdated.creInfo:type_name -> workflows.v2.CreInfo
 	2, // 1: workflows.v2.WorkflowUpdated.txInfo:type_name -> workflows.v2.TransactionInfo
 	3, // 2: workflows.v2.WorkflowUpdated.workflow:type_name -> workflows.v2.Workflow
-	4, // 3: workflows.v2.WorkflowUpdated.errorMessage:type_name -> google.protobuf.StringValue
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_workflows_v2_workflow_updated_proto_init() }

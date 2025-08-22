@@ -101,7 +101,7 @@ var File_workflows_v2_workflow_execution_finished_proto protoreflect.FileDescrip
 
 const file_workflows_v2_workflow_execution_finished_proto_rawDesc = "" +
 	"\n" +
-	".workflows/v2/workflow_execution_finished.proto\x12\fworkflows.v2\x1a\x1bworkflows/v2/cre_info.proto\x1a\x1fworkflows/v2/workflow_key.proto\x1a#workflows/v2/execution_status.proto\"\x8a\x02\n" +
+	".workflows/v2/workflow_execution_finished.proto\x12\fworkflows.v2\x1a\x1bworkflows/v2/cre_info.proto\x1a\x1fworkflows/v2/workflow_key.proto\x1a\x1eworkflows/v2/xxx_no_send.proto\"\x8a\x02\n" +
 	"\x19WorkflowExecutionFinished\x12/\n" +
 	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x125\n" +
 	"\bworkflow\x18\x02 \x01(\v2\x19.workflows.v2.WorkflowKeyR\bworkflow\x120\n" +
@@ -146,7 +146,7 @@ func file_workflows_v2_workflow_execution_finished_proto_init() {
 	}
 	file_workflows_v2_cre_info_proto_init()
 	file_workflows_v2_workflow_key_proto_init()
-	file_workflows_v2_execution_status_proto_init()
+	file_workflows_v2_xxx_no_send_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

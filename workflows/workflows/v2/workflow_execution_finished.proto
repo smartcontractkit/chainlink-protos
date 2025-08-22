@@ -6,7 +6,7 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v
 
 import "workflows/v2/cre_info.proto";
 import "workflows/v2/workflow_key.proto";
-import "workflows/v2/execution_status.proto";
+import "workflows/v2/xxx_no_send.proto";
 
 message WorkflowExecutionFinished {
   CreInfo creInfo = 1;
@@ -15,4 +15,4 @@ message WorkflowExecutionFinished {
   string timestamp = 4;
 
   ExecutionStatus status = 5;
-} 
+}

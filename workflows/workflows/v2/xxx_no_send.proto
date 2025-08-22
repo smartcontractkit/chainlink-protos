@@ -4,10 +4,15 @@ package workflows.v2;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
 
-// EXECUTION
+// NeverSendThis is a message that should never be sent.
+// By including a root level message in this file, we can make
+// iron-flask and the CTFv2 proto-processing work.
+message NeverSendThis {
+    string thisIsForToolingOnly = 1;
+}
 
 enum ExecutionStatus {
   EXECUTION_STATUS_UNSPECIFIED = 0;
   EXECUTION_STATUS_SUCCEEDED = 1;
   EXECUTION_STATUS_FAILED = 2;
-} 
+}
