@@ -2,13 +2,13 @@
 
 /job-distributor/ @smartcontractkit/devex-tooling
 /orchestrator/ @smartcontractkit/devex-tooling
-/svr/ @smartcontractkit/oev
-/rmn/ @smartcontractkit/RMN @smartcontractkit/ccip
-/billing/ @smartcontractkit/cre-business @smartcontractkit/core
-/workflows/ @smartcontractkit/foundations @smartcontractkit/core
-/cre/ @smartcontractkit/keystone
-/storage-service/ @smartcontractkit/dev-services
-/.github/workflows/cre-validations.yml @smartcontractkit/keystone
+/svr/ @smartcontractkit/oev @smartcontractkit/devex-tooling
+/rmn/ @smartcontractkit/RMN @smartcontractkit/ccip @smartcontractkit/devex-tooling
+/billing/ @smartcontractkit/cre-business @smartcontractkit/core @smartcontractkit/devex-tooling
+/workflows/ @smartcontractkit/foundations @smartcontractkit/core @smartcontractkit/devex-tooling
+/cre/ @smartcontractkit/keystone @smartcontractkit/devex-tooling
+/storage-service/ @smartcontractkit/dev-services @smartcontractkit/devex-tooling
+/.github/workflows/cre-validations.yml @smartcontractkit/keystone @smartcontractkit/devex-tooling
 
 # Changesets do not have owners
 /.changeset/**

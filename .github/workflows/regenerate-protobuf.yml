@@ -20,9 +20,52 @@ jobs:
         id: tool-versions
       - uses: bufbuild/buf-action@c231a1aa9281e5db706c970f468f0744a37561fd #v1
         with:
-          breaking: ${{ github.event_name == 'pull_request' }}
+          breaking: false
           version: ${{ steps.tool-versions.outputs.buf_version }}
           exclude_paths: node_modules
+
+      - name: Buf breaking per module (skip new modules)
+        run: |
+          set -euo pipefail
+
+          BASE_REF="${{ github.base_ref || 'main' }}"
+          echo "Base ref: ${BASE_REF}"
+
+          git fetch --depth=1 origin "${BASE_REF}:${BASE_REF}"
+          if ! git show-ref --verify --quiet "refs/heads/${BASE_REF}"; then
+            echo "::error::Local branch ${BASE_REF} not found after fetch"
+            git branch -a | cat
+            exit 1
+          fi
+
+          modules=$(buf config ls-modules --format path)
+          echo "Modules detected:"
+          echo "$modules"
+
+          failures=0
+          failed_list=""
+
+          while IFS= read -r module; do
+            # Skip empty lines
+            [ -z "${module}" ] && continue
+
+            # Check if the module directory exists on the base branch
+            if git ls-tree --name-only "${BASE_REF}" "${module}" | grep -q .; then
+              echo "::group::buf breaking ${module}"
+              if ! buf breaking "${module}" --against ".git#branch=${BASE_REF},subdir=${module}" --exclude-path node_modules --error-format github-actions; then
+                failures=$((failures+1))
+                failed_list="${failed_list} ${module}"
+              fi
+              echo "::endgroup::"
+            else
+              echo "::notice::Skipping breaking for new module '${module}' (not present on ${BASE_REF})."
+            fi
+          done <<< "${modules}"
+
+          if [ "${failures}" -gt 0 ]; then
+            echo "::error::buf breaking failed for modules:${failed_list}"
+            exit 1
+          fi
 
   regenerate-protobuf:
     runs-on: ubuntu-latest
@@ -55,7 +98,7 @@ jobs:
           token: ${{ steps.get-gh-token.outputs.access-token }}
           fetch-depth: 1
 
-      - name: Set tool versions to env vars 
+      - name: Set tool versions to env vars
         id: tool-versions
         if: github.actor != 'app-token-issuer-engops[bot]'
         uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
