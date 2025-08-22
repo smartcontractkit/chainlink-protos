@@ -8,7 +8,7 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v
 // By including a root level message in this file, we can make
 // iron-flask and the CTFv2 proto-processing work.
 message NeverSendThis {
-    string thisIsForToolingOnly = 1;
+  string thisIsForToolingOnly = 1;
 }
 
 enum ExecutionStatus {

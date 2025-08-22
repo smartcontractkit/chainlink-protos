@@ -17,4 +17,4 @@ message CreInfo {
   string engineVersion = 8;
   string capabilitiesRegistryVersion = 9;
   string donVersion = 10;
-} 
+}

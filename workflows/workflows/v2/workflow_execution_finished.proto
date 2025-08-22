@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package workflows.v2;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
-
 import "workflows/v2/cre_info.proto";
 import "workflows/v2/workflow_key.proto";
 import "workflows/v2/xxx_no_send.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
 
 message WorkflowExecutionFinished {
   CreInfo creInfo = 1;
