@@ -3,7 +3,7 @@ syntax = "proto3";
 package api.node.v1;
 
 import "google/protobuf/timestamp.proto";
-import "job-distributor/v1/shared/ptypes/label.proto";
+import "v1/shared/ptypes/label.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/v1/node";
 

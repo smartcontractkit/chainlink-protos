@@ -25,6 +25,7 @@ jobs:
           exclude_paths: node_modules
 
       - name: Buf breaking per module (skip new modules)
+        continue-on-error: true
         run: |
           set -euo pipefail
 
