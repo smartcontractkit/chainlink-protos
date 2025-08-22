@@ -10,4 +10,4 @@ message TransactionInfo {
   string chainSelector = 1;
   string txHash = 2;
   string gasCost = 3;
-} 
+}
