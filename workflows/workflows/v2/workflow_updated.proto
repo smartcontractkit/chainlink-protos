@@ -2,17 +2,17 @@ syntax = "proto3";
 
 package workflows.v2;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
-
 import "workflows/v2/cre_info.proto";
 import "workflows/v2/transaction_info.proto";
 import "workflows/v2/workflow.proto";
 
-message WorkflowUpdated {
-  CreInfo         creInfo   = 1;
-  string          timestamp = 2;
-  TransactionInfo txInfo    = 3;
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
 
-  Workflow                     workflow     = 4;
-  string  errorMessage = 5;  // present ⇔ failure
-} 
+message WorkflowUpdated {
+  CreInfo creInfo = 1;
+  string timestamp = 2;
+  TransactionInfo txInfo = 3;
+
+  Workflow workflow = 4;
+  string errorMessage = 5; // present ⇔ failure
+}

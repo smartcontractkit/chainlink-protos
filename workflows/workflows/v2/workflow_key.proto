@@ -6,7 +6,7 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v
 
 message WorkflowKey {
   string workflowOwner = 1;
-  string workflowName  = 2;
-  string workflowID    = 3;
+  string workflowName = 2;
+  string workflowID = 3;
   string organizationID = 4;
-} 
+}

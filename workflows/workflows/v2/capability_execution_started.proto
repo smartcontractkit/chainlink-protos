@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package workflows.v2;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
-
 import "workflows/v2/cre_info.proto";
 import "workflows/v2/workflow_key.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
 
 message CapabilityExecutionStarted {
   CreInfo creInfo = 1;
@@ -15,4 +15,4 @@ message CapabilityExecutionStarted {
 
   string capabilityID = 5;
   int32 stepRef = 6;
-} 
+}
