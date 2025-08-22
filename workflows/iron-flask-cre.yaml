@@ -4,6 +4,10 @@ beholder:
   schemas:
     - entity: WorkflowMetadata
       schema: "workflows/v1/metadata.proto"
+      references:
+        - name: "workflows/v1/trigger_detail.proto"
+          subject: "beholder__cre__messages-workflows.v1.TriggerDetail"
+          version: 1
 
     - entity: CapabilityExecutionFinished
       schema: "workflows/v1/capability_finished.proto"
@@ -59,6 +63,9 @@ beholder:
     - entity: BaseMessage
       schema: "pb/base_message_legacy.proto"
 
+    - entity: TriggerDetail
+      schema: "workflows/v1/trigger_detail.proto"
+
     # workflows/v2
 
     - entity: CreInfo
@@ -75,6 +82,10 @@ beholder:
 
     - entity: Workflow
       schema: "workflows/v2/workflow.proto"
+      references:
+        - name: "workflows/v2/workflow_key.proto"
+          subject: "beholder__cre__messages-workflows.v2.WorkflowKey"
+          version: 1
 
     - entity: CapabilityExecutionFinished
       schema: "workflows/v2/capability_execution_finished.proto"

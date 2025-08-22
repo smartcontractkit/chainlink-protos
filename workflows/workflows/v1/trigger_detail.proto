@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package workflows.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/events";
+
+// This message was carved out from metadata.proto file because of backward compatibility (FULL_TRANSITIVE) requirements of Confluent Schema Registry.
+message TriggerDetail {
+  string triggerID = 1;
+}
+
+
