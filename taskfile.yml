@@ -31,9 +31,7 @@ tasks:
     desc: Generate all protobuf files for the job-distributor service
     cmds:
       - find ./job-distributor/ -name '*.pb.go' -delete
-      - task: proto:gen
-        vars:
-          SERVICE_NAME: job-distributor
+      - cd job-distributor && buf generate
 
   proto:gen:orchestrator:
     desc: "Generate Go code from protobuf files for orchestrator"

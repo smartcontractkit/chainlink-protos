@@ -40,6 +40,12 @@ modules:
         - BASIC
       except:
         - FIELD_LOWER_SNAKE_CASE
+  - path: job-distributor
+    lint:
+      use:
+        - BASIC
+      except:
+        - FIELD_LOWER_SNAKE_CASE
 
 lint:
   use:
