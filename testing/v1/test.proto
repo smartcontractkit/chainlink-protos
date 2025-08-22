@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package api.testing.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/testing/v1";
+
+message TestMessage {
+  string id = 1;
+  string name = 2;
+  bool enabled = 3;
+}
+
+message TestRequest {
+  string query = 1;
+}
+
+message TestResponse {
+  string result = 1;
+  int32 count = 2;
+}
