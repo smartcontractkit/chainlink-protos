@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package workflows.v1;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/events";
-
 import "workflows/v1/trigger_detail.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/events";
 
 message WorkflowMetadata {
   string workflowOwner = 1;
@@ -23,4 +23,3 @@ message WorkflowMetadata {
   string donVersion = 14;
   TriggerDetail trigger = 15;
 }
-

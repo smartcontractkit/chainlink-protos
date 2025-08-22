@@ -15,17 +15,17 @@ service NodeService {
 }
 
 enum ArtifactType {
-    ARTIFACT_TYPE_UNSPECIFIED = 0; // Unspecified artifact type
-    ARTIFACT_TYPE_BINARY = 1; // Workflow binary artifact
-    ARTIFACT_TYPE_CONFIG = 2; // Workflow configuration artifact
+  ARTIFACT_TYPE_UNSPECIFIED = 0; // Unspecified artifact type
+  ARTIFACT_TYPE_BINARY = 1; // Workflow binary artifact
+  ARTIFACT_TYPE_CONFIG = 2; // Workflow configuration artifact
 }
 
 message DownloadArtifactRequest {
-    string id = 1; // ID of the artifact to download
-    ArtifactType type = 2; // Type of the artifact to download
+  string id = 1; // ID of the artifact to download
+  ArtifactType type = 2; // Type of the artifact to download
 }
 
 message DownloadArtifactResponse {
-    string url = 1; // The presigned GET URL for downloading
-    google.protobuf.Timestamp expiry = 2; // Expiration time of the presigned URL
+  string url = 1; // The presigned GET URL for downloading
+  google.protobuf.Timestamp expiry = 2; // Expiration time of the presigned URL
 }

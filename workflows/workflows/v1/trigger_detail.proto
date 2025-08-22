@@ -8,5 +8,3 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/e
 message TriggerDetail {
   string triggerID = 1;
 }
-
-

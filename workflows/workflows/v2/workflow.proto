@@ -2,13 +2,13 @@ syntax = "proto3";
 
 package workflows.v2;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
-
 import "workflows/v2/workflow_key.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
 
 message Workflow {
   WorkflowKey workflowKey = 1;
   string version = 2;
-  string binaryURL     = 3;
-  string configURL     = 4;
-} 
+  string binaryURL = 3;
+  string configURL = 4;
+}
