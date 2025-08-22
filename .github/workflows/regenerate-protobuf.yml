@@ -20,9 +20,48 @@ jobs:
         id: tool-versions
       - uses: bufbuild/buf-action@c231a1aa9281e5db706c970f468f0744a37561fd #v1
         with:
-          breaking: ${{ github.event_name == 'pull_request' }}
+          breaking: false
           version: ${{ steps.tool-versions.outputs.buf_version }}
           exclude_paths: node_modules
+
+      - name: Buf breaking per module (skip new modules)
+        run: |
+          set -euo pipefail
+
+          BASE_REF="${{ github.base_ref || 'main' }}"
+          echo "Base ref: ${BASE_REF}"
+
+          git fetch origin "${BASE_REF}" --depth=1
+
+          # List modules from current workspace
+          modules=$(buf config ls-modules --format name)
+          echo "Modules detected:" 
+          echo "$modules"
+
+          failures=0
+          failed_list=""
+
+          while IFS= read -r module; do
+            # Skip empty lines
+            [ -z "${module}" ] && continue
+
+            # Check if the module directory exists on the base branch
+            if git ls-tree --name-only "origin/${BASE_REF}" "${module}" | grep -q .; then
+              echo "::group::buf breaking ${module}"
+              if ! buf breaking "${module}" --against ".git#branch=${BASE_REF},subdir=${module}" --exclude-path node_modules --error-format github-actions; then
+                failures=$((failures+1))
+                failed_list="${failed_list} ${module}"
+              fi
+              echo "::endgroup::"
+            else
+              echo "::notice::Skipping breaking for new module '${module}' (not present on ${BASE_REF})."
+            fi
+          done <<< "${modules}"
+
+          if [ "${failures}" -gt 0 ]; then
+            echo "::error::buf breaking failed for modules:${failed_list}"
+            exit 1
+          fi
 
   regenerate-protobuf:
     runs-on: ubuntu-latest
