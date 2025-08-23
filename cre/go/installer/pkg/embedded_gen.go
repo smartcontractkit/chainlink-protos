@@ -491,7 +491,6 @@ const networkingHttpV1alphaTriggerEmbedded = `syntax = "proto3";
 
 package capabilities.networking.http.v1alpha;
 
-import "google/protobuf/struct.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Config {
@@ -500,8 +499,8 @@ message Config {
 }
 
 message Payload {
-  // JSON input in the HTTP trigger request
-  google.protobuf.Struct input = 1;
+  // JSON input in the HTTP trigger request (as bytes)
+  bytes input = 1;
 
   // Key used to sign the HTTP trigger request
   AuthorizedKey key = 2;
