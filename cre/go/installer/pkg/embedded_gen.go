@@ -491,6 +491,7 @@ const networkingHttpV1alphaTriggerEmbedded = `syntax = "proto3";
 
 package capabilities.networking.http.v1alpha;
 
+import "google/protobuf/struct.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Config {
