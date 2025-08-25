@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package rane.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/rane/v1";
+
+message RaneMetadata {
+  string node_version = 1;
+  string csa_public_key = 2;
+}

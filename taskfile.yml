@@ -25,6 +25,7 @@ tasks:
       - task proto:gen:storage-service
       - task proto:gen:chainlink-catalog
       - task proto:gen:data-feeds
+      - task proto:gen:rane
       - task go:mod:tidy
 
   proto:gen:job-distributor:
@@ -95,6 +96,14 @@ tasks:
       - find ./data-feeds/ -name '*.pb.go' -delete
       - cd data-feeds && go generate ./...
 
+  proto:gen:rane:
+    desc: "Generate Go code from protobuf files for rane"
+    cmds:
+      - find ./rane/ -name '*.pb.go' -delete
+      - task: proto:gen
+        vars:
+          SERVICE_NAME: rane
+
   proto:clean:
     desc: "Clean generated protobuf files for all services"
     cmds:
@@ -104,6 +113,7 @@ tasks:
       - find ./billing/ -name '*.pb.go' -delete
       - find ./workflows/ -name '*.pb.go' -delete
       - find ./data-feeds/ -name '*.pb.go' -delete
+      - find ./rane/ -name '*.pb.go' -delete
 
   go:mod:tidy:
     desc: "Run go mod tidy in each service folder"
