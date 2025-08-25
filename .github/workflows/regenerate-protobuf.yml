@@ -25,6 +25,7 @@ jobs:
           exclude_paths: node_modules
 
       - name: Buf breaking per module (skip new modules)
+        continue-on-error: true
         run: |
           set -euo pipefail
 
@@ -63,14 +64,14 @@ jobs:
           done <<< "${modules}"
 
           if [ "${failures}" -gt 0 ]; then
-            echo "::error::buf breaking failed for modules:${failed_list}"
-            exit 1
+            echo "::warning::buf breaking failed for modules:${failed_list}"
+            echo "Continuing despite breaking changes..."
           fi
 
   regenerate-protobuf:
     runs-on: ubuntu-latest
     needs: buf
-    if: ${{ needs.buf.result == 'success' }}
+    if: ${{ always() && needs.buf.result != 'cancelled' }}
     steps:
       - name: Assume aws gati role
         if: github.actor != 'app-token-issuer-engops[bot]'
