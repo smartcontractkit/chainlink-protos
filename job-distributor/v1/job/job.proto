@@ -101,6 +101,7 @@ message GetJobResponse {
 // GetProposalRequest specifies the criteria for retrieving a proposal.
 message GetProposalRequest {
   string id = 1; // Unique identifier of the proposal to retrieve.
+  string test = 2; // Unique identifier of the proposal to retrieve.
 }
 
 // GetProposalResponse contains the proposal details.
