@@ -459,8 +459,8 @@ import "tools/generator/v1alpha/cre_metadata.proto";
 
 // CacheSettings defines cache control options for outbound HTTP requests.
 message CacheSettings {
-  bool read_from_cache = 1; // If true, attempt to read a cached response for the request.
-  int32 max_age_ms = 2; // Maximum age of a cached response in milliseconds.
+  bool store = 1; // If true, cache the response.
+  int32 max_age_ms = 2; // Maximum age of a cached response in milliseconds. If zero, do not attempt to read from cache
 }
 
 message Request {
