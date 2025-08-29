@@ -67,7 +67,7 @@ func (x *PingRequest) GetMessage() string {
 
 type PingResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Messagea      string                 `protobuf:"bytes,1,opt,name=messagea,proto3" json:"messagea,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -102,9 +102,9 @@ func (*PingResponse) Descriptor() ([]byte, []int) {
 	return file_chainlink_catalog_v1_ping_ping_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *PingResponse) GetMessage() string {
+func (x *PingResponse) GetMessagea() string {
 	if x != nil {
-		return x.Message
+		return x.Messagea
 	}
 	return ""
 }
@@ -115,9 +115,9 @@ const file_chainlink_catalog_v1_ping_ping_proto_rawDesc = "" +
 	"\n" +
 	"$chainlink-catalog/v1/ping/ping.proto\x12\vapi.ping.v1\"'\n" +
 	"\vPingRequest\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"(\n" +
-	"\fPingResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2E\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"*\n" +
+	"\fPingResponse\x12\x1a\n" +
+	"\bmessagea\x18\x01 \x01(\tR\bmessagea2E\n" +
 	"\x04Ping\x12=\n" +
 	"\x04Ping\x12\x18.api.ping.v1.PingRequest\x1a\x19.api.ping.v1.PingResponse\"\x00BHZFgithub.com/smartcontractkit/chainlink-protos/chainlink-catalog/v1/pingb\x06proto3"
 
