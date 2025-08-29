@@ -13,5 +13,5 @@ message PingRequest {
 }
 
 message PingResponse {
-  string message = 1;
+  string messagea = 1;
 }
