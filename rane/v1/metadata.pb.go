@@ -24,7 +24,7 @@ const (
 type RaneMetadata struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	NodeVersion   string                 `protobuf:"bytes,1,opt,name=node_version,json=nodeVersion,proto3" json:"node_version,omitempty"`
-	CsaPublicKey  string                 `protobuf:"bytes,2,opt,name=csa_public_key,json=csaPublicKey,proto3" json:"csa_public_key,omitempty"`
+	CsaPublicKeys string                 `protobuf:"bytes,2,opt,name=csa_public_keys,json=csaPublicKeys,proto3" json:"csa_public_keys,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -66,9 +66,9 @@ func (x *RaneMetadata) GetNodeVersion() string {
 	return ""
 }
 
-func (x *RaneMetadata) GetCsaPublicKey() string {
+func (x *RaneMetadata) GetCsaPublicKeys() string {
 	if x != nil {
-		return x.CsaPublicKey
+		return x.CsaPublicKeys
 	}
 	return ""
 }
@@ -77,10 +77,10 @@ var File_rane_v1_metadata_proto protoreflect.FileDescriptor
 
 const file_rane_v1_metadata_proto_rawDesc = "" +
 	"\n" +
-	"\x16rane/v1/metadata.proto\x12\arane.v1\"W\n" +
+	"\x16rane/v1/metadata.proto\x12\arane.v1\"Y\n" +
 	"\fRaneMetadata\x12!\n" +
-	"\fnode_version\x18\x01 \x01(\tR\vnodeVersion\x12$\n" +
-	"\x0ecsa_public_key\x18\x02 \x01(\tR\fcsaPublicKeyB6Z4github.com/smartcontractkit/chainlink-protos/rane/v1b\x06proto3"
+	"\fnode_version\x18\x01 \x01(\tR\vnodeVersion\x12&\n" +
+	"\x0fcsa_public_keys\x18\x02 \x01(\tR\rcsaPublicKeysB6Z4github.com/smartcontractkit/chainlink-protos/rane/v1b\x06proto3"
 
 var (
 	file_rane_v1_metadata_proto_rawDescOnce sync.Once
