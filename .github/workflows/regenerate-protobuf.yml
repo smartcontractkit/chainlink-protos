@@ -3,8 +3,6 @@ name: Regenerate Protobuf Files
 on:
   pull_request:
     types: [opened, reopened, synchronize]
-    paths-ignore:
-      - 'cre/**'
 
 permissions:
   id-token: write
@@ -12,19 +10,45 @@ permissions:
   pull-requests: write
 
 jobs:
-  buf:
+  changes:
     runs-on: ubuntu-latest
+    outputs:
+      relevant: ${{ steps.filter.outputs.relevant }}
     steps:
       - uses: actions/checkout@v4
+      - id: filter
+        uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+        with:
+          filters: |
+            # "relevant" means *any* change outside cre/**
+            relevant:
+              - '**'
+              - '!cre/**'
+
+  buf:
+    runs-on: ubuntu-latest
+    needs: changes
+    steps:
+      - name: No-op when only cre/** changed
+        if: ${{ needs.changes.outputs.relevant != 'true' }}
+        run: echo "Only cre/** changed; skipping."
+
+      - uses: actions/checkout@v4
+        if: ${{ needs.changes.outputs.relevant == 'true' }}
+
       - uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
+        if: ${{ needs.changes.outputs.relevant == 'true' }}
         id: tool-versions
-      - uses: bufbuild/buf-action@c231a1aa9281e5db706c970f468f0744a37561fd #v1
+
+      - uses: bufbuild/buf-action@c231a1aa9281e5db706c970f468f0744a37561fd # v1
+        if: ${{ needs.changes.outputs.relevant == 'true' }}
         with:
           breaking: false
           version: ${{ steps.tool-versions.outputs.buf_version }}
           exclude_paths: node_modules
 
       - name: Buf breaking per module (skip new modules)
+        if: ${{ needs.changes.outputs.relevant == 'true' }}
         continue-on-error: true
         run: |
           set -euo pipefail
@@ -70,8 +94,8 @@ jobs:
 
   regenerate-protobuf:
     runs-on: ubuntu-latest
-    needs: buf
-    if: ${{ always() && needs.buf.result != 'cancelled' }}
+    needs: [buf, changes]
+    if: ${{ needs.changes.outputs.relevant == 'true' && always() && needs.buf.result != 'cancelled' }}
     steps:
       - name: Assume aws gati role
         if: github.actor != 'app-token-issuer-engops[bot]'
