@@ -473,7 +473,7 @@ message Request {
 }
 
 message Response {
-  uint32 status_code = 1;
+  uint32 status = 1;
   map<string, string> headers = 2;
   bytes body = 3;
 }
