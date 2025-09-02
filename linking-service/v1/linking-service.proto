@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package linking.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/linking-service/go/v1";
+
+import "v1/linking-types.proto";
+
+// subset of linking service grpc APIs to allow the wf engine node to associate a workflow with an org
+service LinkingService {
+  rpc GetOrganizationFromWorkflowID(GetOrganizationFromWorkflowIDRequest) returns (GetOrganizationFromWorkflowIDResponse);
+}
