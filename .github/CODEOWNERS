@@ -9,6 +9,7 @@
 /cre/ @smartcontractkit/keystone @smartcontractkit/devex-tooling
 /storage-service/ @smartcontractkit/dev-services @smartcontractkit/devex-tooling
 /.github/workflows/cre-validations.yml @smartcontractkit/keystone @smartcontractkit/devex-tooling
+/linking-service/ @smartcontractkit/cre-business @smartcontractkit/core @smartcontractkit/devex-tooling
 
 # Changesets do not have owners
 /.changeset/**
