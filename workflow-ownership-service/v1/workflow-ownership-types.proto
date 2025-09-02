@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package workflowownership.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflow-ownership-service/go/v1";
+
+import "google/protobuf/timestamp.proto";
+
+message GetOrganizationFromWorkflowIDRequest {
+  string workflow_id = 1;
+  string workflow_registry_address = 2;
+  uint64 chain_selector = 3;
+}
+
+message GetOrganizationFromWorkflowIDResponse {
+  string organization_id = 1;
+}

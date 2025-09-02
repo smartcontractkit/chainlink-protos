@@ -1,4 +1,4 @@
-module github.com/smartcontractkit/chainlink-protos/linking-service/go
+module github.com/smartcontractkit/chainlink-protos/workflow-ownership-service/go
 
 go 1.24.2
 

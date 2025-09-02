@@ -26,7 +26,7 @@ tasks:
       - task proto:gen:chainlink-catalog
       - task proto:gen:data-feeds
       - task proto:gen:rane
-      - task proto:gen:linking-service
+      - task proto:gen:workflow-ownership-service
       - task go:mod:tidy
 
   proto:gen:job-distributor:
@@ -105,11 +105,11 @@ tasks:
         vars:
           SERVICE_NAME: rane
 
-  proto:gen:linking-service:
-    desc: "Generate Go code from protobuf files for linking-service"
+  proto:gen:workflow-ownership-service:
+    desc: "Generate Go code from protobuf files for workflow-ownership-service"
     cmds:
-      - find ./linking-service/ -name '*.pb.go' -delete
-      - cd linking-service/go && go generate
+      - find ./workflow-ownership-service/ -name '*.pb.go' -delete
+      - cd workflow-ownership-service/go && go generate
 
   proto:clean:
     desc: "Clean generated protobuf files for all services"
@@ -121,7 +121,7 @@ tasks:
       - find ./workflows/ -name '*.pb.go' -delete
       - find ./data-feeds/ -name '*.pb.go' -delete
       - find ./rane/ -name '*.pb.go' -delete
-      - find ./linking-service/ -name '*.pb.go' -delete
+      - find ./workflow-ownership-service/ -name '*.pb.go' -delete
 
   go:mod:tidy:
     desc: "Run go mod tidy in each service folder"
