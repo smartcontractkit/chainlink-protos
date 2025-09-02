@@ -1,0 +1,206 @@
+syntax = "proto3";
+
+package linking.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/linking-service/go/v1";
+
+import "google/protobuf/timestamp.proto";
+
+// the process that the user selected for linking the owner address
+enum LinkRequestProcess {
+  LINK_REQUEST_PROCESS_UNSPECIFIED = 0;
+  LINK_REQUEST_PROCESS_EOA = 1;
+  LINK_REQUEST_PROCESS_MSIG = 2;
+  LINK_REQUEST_PROCESS_UNKNOWN = 3;
+}
+
+// used for filtering ListOwners result
+enum ListOwnersFilter {
+  LIST_OWNERS_FILTER_UNSPECIFIED = 0;
+  LIST_OWNERS_FILTER_LINKED_ONLY = 1;
+  LIST_OWNERS_FILTER_UNLINKED_ONLY = 2;
+  LIST_OWNERS_FILTER_NO_FILTER = 3;
+}
+
+// environment indicates which Workflow Registry to use
+enum EnvironmentName {
+  ENVIRONMENT_NAME_UNSPECIFIED = 0;
+  ENVIRONMENT_NAME_PRODUCTION_MAINNET = 1;
+  ENVIRONMENT_NAME_PRODUCTION_TESTNET = 2;
+}
+
+// after linking or unlinking request has been submitted, users will view pending requests on the UI side
+// request will not be completed until it has been verified that the proof has been submitted to the Workflow Registry
+enum VerificationStatus {
+  VERIFICATION_STATUS_UNSPECIFIED = 0;
+  VERIFICATION_STATUS_PENDING = 1;
+  VERIFICATION_STATUS_SUCCESSFULL = 2;
+  VERIFICATION_STATUS_EXPIRED = 3;
+  VERIFICATION_STATUS_FAILED = 4;
+}
+
+// each unlinking request will have to specify which action to take prior to unlinking in case there
+// any active workflows remaining on the Workflow Registry for that workflow owner
+enum PreUnlinkAction {
+  PRE_UNLINK_ACTION_UNSPECIFIED = 0;
+  PRE_UNLINK_ACTION_NONE = 1;
+  PRE_UNLINK_ACTION_REMOVE_WORKFLOWS = 2;
+  PRE_UNLINK_ACTION_PAUSE_WORKFLOWS = 3;
+}
+
+// information about linked owner, based on the data collected when link request was submitted via API
+// and if ownership proof has been found on the Workflow Registry side or not (if not, then it's a pending request)
+message LinkedOwner {
+  string workflow_owner = 1;
+  EnvironmentName environment = 2;
+  VerificationStatus status = 3;
+  string link_transaction_hash = 4;
+  google.protobuf.Timestamp link_verified_at = 5;
+  // chain information based on the environment
+  uint64 chain_selector = 6;
+  // Workflow Registry contract on that chain
+  string contract_address = 7;
+  // human-readable (memorable) name specified by the user for this owner address
+  string owner_name_label = 8; // optional
+  // which process did the user select to use: EOA or MSIG flow
+  LinkRequestProcess request_process = 9;
+}
+
+// information about unlinked owner, based on the data collected when unlink request was submitted via API
+// and if ownership proof has been found on the Workflow Registry side or not (if not, then it's a pending request)
+message UnlinkedOwner {
+  string workflow_owner = 1;
+  EnvironmentName environment = 2;
+  VerificationStatus status = 3;
+  string unlink_transaction_hash = 4;
+  google.protobuf.Timestamp unlink_verified_at = 5;
+  // chain information based on the environment
+  uint64 chain_selector = 6;
+  // Workflow Registry contract on that chain
+  string contract_address = 7;
+  // human-readable (memorable) name specified by the user for this owner address
+  string owner_name_label = 8; // optional
+  // which process did the user select to use: EOA or MSIG flow
+  LinkRequestProcess request_process = 9;
+}
+
+// ================================================================
+// │    request + response proto messages for LISTING OWNERS      │
+// ================================================================
+message ListOwnersRequest {
+  string organization_id = 1;
+  ListOwnersFilter filter = 2;
+}
+
+// we won't use pagination because the assumption is organizations will have only a few linked and unlinked owners
+message ListOwnersResponse {
+  repeated LinkedOwner linked_owners = 1;
+  repeated UnlinkedOwner unlinked_owners = 2;
+}
+
+// ================================================================
+// │    request + response proto messages for UPDATING OWNERS      │
+// ================================================================
+message UpdateOwnerMetadataRequest {
+  string organization_id = 1;
+  string workflow_owner = 2;
+  EnvironmentName environment = 3;
+  // human-readable (memorable) name specified by the user for this owner address
+  string owner_name_label = 4;
+}
+
+// success/failure will be indicated with gRPC status code
+message UpdateOwnerMetadataResponse {}
+
+// ================================================================
+// │      request + response proto messages for LINKING           │
+// ================================================================
+message InitiateLinkingRequest {
+  string organization_id = 1;
+  string workflow_owner = 2;
+  string idempotency_key = 3; // dedup requests
+  EnvironmentName environment = 4;
+  // human-readable (memorable) name specified by the user for this owner address
+  string owner_name_label = 5; // optional
+  // which process did the user select to use: EOA or MSIG flow
+  LinkRequestProcess request_process = 6;
+}
+
+message InitiateLinkingResponse {
+  // ownership proof is guaranteed to be unique per linking request
+  // this payload must be submitted to the Workflow Registry and transaction must be signed
+  // by the workflow owner before validity timestamp expires
+  string ownership_proof = 1;
+  string workflow_owner = 2;
+  google.protobuf.Timestamp valid_until = 3;
+  string signature = 4;
+  // chain information based on the selected environment
+  uint64 chain_selector = 5;
+  // Workflow Registry contract on that chain
+  string contract_address = 6;
+  // data to submit: ABI encoded function selector and parameters
+  string transaction_data = 7;
+  // based on the data below, user can reconstruct the transaction data:
+  // human readable function signature from the registry contract
+  string function_signature = 8;
+  // a list of human readable function arguments
+  repeated string functions_args = 9;
+}
+
+// ================================================================
+// │     request + response proto messages for UNLINKING          │
+// ================================================================
+message InitiateUnlinkingRequest {
+  string organization_id = 1;
+  string workflow_owner = 2;
+  string idempotency_key = 3; // dedup requests
+  EnvironmentName environment = 4;
+  PreUnlinkAction pre_unlink_action = 5;
+}
+
+message InitiateUnlinkingResponse {
+  // must use the same ownership proof as the one from used for linking
+  // this payload must be submitted to the Workflow Registry and transaction must be signed
+  // by the workflow owner before validity timestamp expires
+  string ownership_proof = 1;
+  string workflow_owner = 2;
+  google.protobuf.Timestamp valid_until = 3;
+  string signature = 4;
+  // chain information based on the selected environment
+  uint64 chain_selector = 5;
+  // Workflow Registry contract on that chain
+  string contract_address = 6;
+  // data to submit: ABI encoded function selector and parameters
+  string transaction_data = 7;
+  // based on the data below, user can reconstruct the transaction data:
+  // human readable function signature from the registry contract
+  string function_signature = 8;
+  // a list of human readable function arguments
+  repeated string functions_args = 9;
+}
+
+// ============================================================================
+// │ request + response proto messages to resolve org ID by workflow owner │
+// ============================================================================
+message GetOrganizationFromWorkflowOwnerRequest {
+  string workflow_owner = 1;
+  string workflow_registry_address = 2;
+  uint64 chain_selector = 3;
+}
+
+message GetOrganizationFromWorkflowOwnerResponse {
+  string organization_id = 1;
+}
+
+// ============================================================================
+// │ request + response proto messages to resolve org ID by workflow ID │
+// ============================================================================
+message GetOrganizationFromWorkflowIDRequest {
+  string workflow_id = 1;
+  string workflow_registry_address = 2;
+  uint64 chain_selector = 3;
+}
+
+message GetOrganizationFromWorkflowIDResponse {
+  string organization_id = 1;
+}

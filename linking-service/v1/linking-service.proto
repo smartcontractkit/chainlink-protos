@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package linking.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/linking-service/go/v1";
+
+import "google/protobuf/empty.proto";
+import "v1/linking-types.proto";
+
+// ================================================================
+// │  gRPC service interface for Workflow Ownership Proof Service  │
+// ================================================================
+// there are 2 ways to initiate and verify ownership proofs:
+// 1st: signing the transaction via wallet integration (useful for EOAs), wallet calls a proof submit function on the Workflow Registry contract
+// 2nd: signing a transaction via MSIG (using CRE CLI), execution transaction calls a proof submit function on the Workflow Registry contract
+service WorkflowOwnershipProofService {
+  rpc ExpireLinkingRequests(google.protobuf.Empty) returns (google.protobuf.Empty);
+  rpc ListOwners(ListOwnersRequest) returns (ListOwnersResponse);
+  rpc UpdateOwnerMetadata(UpdateOwnerMetadataRequest) returns (UpdateOwnerMetadataResponse);
+  rpc InitiateLinking(InitiateLinkingRequest) returns (InitiateLinkingResponse);
+  rpc InitiateUnlinking(InitiateUnlinkingRequest) returns (InitiateUnlinkingResponse);
+  rpc GetOrganizationFromWorkflowOwner(GetOrganizationFromWorkflowOwnerRequest) returns (GetOrganizationFromWorkflowOwnerResponse);
+  rpc GetOrganizationFromWorkflowID(GetOrganizationFromWorkflowIDRequest) returns (GetOrganizationFromWorkflowIDResponse);
+}
