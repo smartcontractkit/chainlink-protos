@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	LinkingService_GetOrganizationFromWorkflowID_FullMethodName = "/linking.v1.LinkingService/GetOrganizationFromWorkflowID"
+	LinkingService_GetOrganizationFromWorkflowOwner_FullMethodName = "/linking.v1.LinkingService/GetOrganizationFromWorkflowOwner"
 )
 
 // LinkingServiceClient is the client API for LinkingService service.
@@ -28,7 +28,7 @@ const (
 //
 // subset of linking service grpc APIs to allow the wf engine node to associate a workflow with an org
 type LinkingServiceClient interface {
-	GetOrganizationFromWorkflowID(ctx context.Context, in *GetOrganizationFromWorkflowIDRequest, opts ...grpc.CallOption) (*GetOrganizationFromWorkflowIDResponse, error)
+	GetOrganizationFromWorkflowOwner(ctx context.Context, in *GetOrganizationFromWorkflowOwnerRequest, opts ...grpc.CallOption) (*GetOrganizationFromWorkflowOwnerResponse, error)
 }
 
 type linkingServiceClient struct {
@@ -39,10 +39,10 @@ func NewLinkingServiceClient(cc grpc.ClientConnInterface) LinkingServiceClient {
 	return &linkingServiceClient{cc}
 }
 
-func (c *linkingServiceClient) GetOrganizationFromWorkflowID(ctx context.Context, in *GetOrganizationFromWorkflowIDRequest, opts ...grpc.CallOption) (*GetOrganizationFromWorkflowIDResponse, error) {
+func (c *linkingServiceClient) GetOrganizationFromWorkflowOwner(ctx context.Context, in *GetOrganizationFromWorkflowOwnerRequest, opts ...grpc.CallOption) (*GetOrganizationFromWorkflowOwnerResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetOrganizationFromWorkflowIDResponse)
-	err := c.cc.Invoke(ctx, LinkingService_GetOrganizationFromWorkflowID_FullMethodName, in, out, cOpts...)
+	out := new(GetOrganizationFromWorkflowOwnerResponse)
+	err := c.cc.Invoke(ctx, LinkingService_GetOrganizationFromWorkflowOwner_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func (c *linkingServiceClient) GetOrganizationFromWorkflowID(ctx context.Context
 //
 // subset of linking service grpc APIs to allow the wf engine node to associate a workflow with an org
 type LinkingServiceServer interface {
-	GetOrganizationFromWorkflowID(context.Context, *GetOrganizationFromWorkflowIDRequest) (*GetOrganizationFromWorkflowIDResponse, error)
+	GetOrganizationFromWorkflowOwner(context.Context, *GetOrganizationFromWorkflowOwnerRequest) (*GetOrganizationFromWorkflowOwnerResponse, error)
 	mustEmbedUnimplementedLinkingServiceServer()
 }
 
@@ -66,8 +66,8 @@ type LinkingServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedLinkingServiceServer struct{}
 
-func (UnimplementedLinkingServiceServer) GetOrganizationFromWorkflowID(context.Context, *GetOrganizationFromWorkflowIDRequest) (*GetOrganizationFromWorkflowIDResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetOrganizationFromWorkflowID not implemented")
+func (UnimplementedLinkingServiceServer) GetOrganizationFromWorkflowOwner(context.Context, *GetOrganizationFromWorkflowOwnerRequest) (*GetOrganizationFromWorkflowOwnerResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOrganizationFromWorkflowOwner not implemented")
 }
 func (UnimplementedLinkingServiceServer) mustEmbedUnimplementedLinkingServiceServer() {}
 func (UnimplementedLinkingServiceServer) testEmbeddedByValue()                        {}
@@ -90,20 +90,20 @@ func RegisterLinkingServiceServer(s grpc.ServiceRegistrar, srv LinkingServiceSer
 	s.RegisterService(&LinkingService_ServiceDesc, srv)
 }
 
-func _LinkingService_GetOrganizationFromWorkflowID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetOrganizationFromWorkflowIDRequest)
+func _LinkingService_GetOrganizationFromWorkflowOwner_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOrganizationFromWorkflowOwnerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LinkingServiceServer).GetOrganizationFromWorkflowID(ctx, in)
+		return srv.(LinkingServiceServer).GetOrganizationFromWorkflowOwner(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: LinkingService_GetOrganizationFromWorkflowID_FullMethodName,
+		FullMethod: LinkingService_GetOrganizationFromWorkflowOwner_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LinkingServiceServer).GetOrganizationFromWorkflowID(ctx, req.(*GetOrganizationFromWorkflowIDRequest))
+		return srv.(LinkingServiceServer).GetOrganizationFromWorkflowOwner(ctx, req.(*GetOrganizationFromWorkflowOwnerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -116,8 +116,8 @@ var LinkingService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*LinkingServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetOrganizationFromWorkflowID",
-			Handler:    _LinkingService_GetOrganizationFromWorkflowID_Handler,
+			MethodName: "GetOrganizationFromWorkflowOwner",
+			Handler:    _LinkingService_GetOrganizationFromWorkflowOwner_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -25,17 +25,17 @@ var File_v1_linking_service_proto protoreflect.FileDescriptor
 const file_v1_linking_service_proto_rawDesc = "" +
 	"\n" +
 	"\x18v1/linking-service.proto\x12\n" +
-	"linking.v1\x1a\x16v1/linking-types.proto2\x97\x01\n" +
-	"\x0eLinkingService\x12\x84\x01\n" +
-	"\x1dGetOrganizationFromWorkflowID\x120.linking.v1.GetOrganizationFromWorkflowIDRequest\x1a1.linking.v1.GetOrganizationFromWorkflowIDResponseBDZBgithub.com/smartcontractkit/chainlink-protos/linking-service/go/v1b\x06proto3"
+	"linking.v1\x1a\x16v1/linking-types.proto2\xa0\x01\n" +
+	"\x0eLinkingService\x12\x8d\x01\n" +
+	" GetOrganizationFromWorkflowOwner\x123.linking.v1.GetOrganizationFromWorkflowOwnerRequest\x1a4.linking.v1.GetOrganizationFromWorkflowOwnerResponseBDZBgithub.com/smartcontractkit/chainlink-protos/linking-service/go/v1b\x06proto3"
 
 var file_v1_linking_service_proto_goTypes = []any{
-	(*GetOrganizationFromWorkflowIDRequest)(nil),  // 0: linking.v1.GetOrganizationFromWorkflowIDRequest
-	(*GetOrganizationFromWorkflowIDResponse)(nil), // 1: linking.v1.GetOrganizationFromWorkflowIDResponse
+	(*GetOrganizationFromWorkflowOwnerRequest)(nil),  // 0: linking.v1.GetOrganizationFromWorkflowOwnerRequest
+	(*GetOrganizationFromWorkflowOwnerResponse)(nil), // 1: linking.v1.GetOrganizationFromWorkflowOwnerResponse
 }
 var file_v1_linking_service_proto_depIdxs = []int32{
-	0, // 0: linking.v1.LinkingService.GetOrganizationFromWorkflowID:input_type -> linking.v1.GetOrganizationFromWorkflowIDRequest
-	1, // 1: linking.v1.LinkingService.GetOrganizationFromWorkflowID:output_type -> linking.v1.GetOrganizationFromWorkflowIDResponse
+	0, // 0: linking.v1.LinkingService.GetOrganizationFromWorkflowOwner:input_type -> linking.v1.GetOrganizationFromWorkflowOwnerRequest
+	1, // 1: linking.v1.LinkingService.GetOrganizationFromWorkflowOwner:output_type -> linking.v1.GetOrganizationFromWorkflowOwnerResponse
 	1, // [1:2] is the sub-list for method output_type
 	0, // [0:1] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

@@ -21,29 +21,29 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type GetOrganizationFromWorkflowIDRequest struct {
+type GetOrganizationFromWorkflowOwnerRequest struct {
 	state                   protoimpl.MessageState `protogen:"open.v1"`
-	WorkflowId              string                 `protobuf:"bytes,1,opt,name=workflow_id,json=workflowId,proto3" json:"workflow_id,omitempty"`
+	WorkflowOwner           string                 `protobuf:"bytes,1,opt,name=workflow_owner,json=workflowOwner,proto3" json:"workflow_owner,omitempty"`
 	WorkflowRegistryAddress string                 `protobuf:"bytes,2,opt,name=workflow_registry_address,json=workflowRegistryAddress,proto3" json:"workflow_registry_address,omitempty"`
 	ChainSelector           uint64                 `protobuf:"varint,3,opt,name=chain_selector,json=chainSelector,proto3" json:"chain_selector,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
 
-func (x *GetOrganizationFromWorkflowIDRequest) Reset() {
-	*x = GetOrganizationFromWorkflowIDRequest{}
+func (x *GetOrganizationFromWorkflowOwnerRequest) Reset() {
+	*x = GetOrganizationFromWorkflowOwnerRequest{}
 	mi := &file_v1_linking_types_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetOrganizationFromWorkflowIDRequest) String() string {
+func (x *GetOrganizationFromWorkflowOwnerRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetOrganizationFromWorkflowIDRequest) ProtoMessage() {}
+func (*GetOrganizationFromWorkflowOwnerRequest) ProtoMessage() {}
 
-func (x *GetOrganizationFromWorkflowIDRequest) ProtoReflect() protoreflect.Message {
+func (x *GetOrganizationFromWorkflowOwnerRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_linking_types_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -55,53 +55,53 @@ func (x *GetOrganizationFromWorkflowIDRequest) ProtoReflect() protoreflect.Messa
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetOrganizationFromWorkflowIDRequest.ProtoReflect.Descriptor instead.
-func (*GetOrganizationFromWorkflowIDRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetOrganizationFromWorkflowOwnerRequest.ProtoReflect.Descriptor instead.
+func (*GetOrganizationFromWorkflowOwnerRequest) Descriptor() ([]byte, []int) {
 	return file_v1_linking_types_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GetOrganizationFromWorkflowIDRequest) GetWorkflowId() string {
+func (x *GetOrganizationFromWorkflowOwnerRequest) GetWorkflowOwner() string {
 	if x != nil {
-		return x.WorkflowId
+		return x.WorkflowOwner
 	}
 	return ""
 }
 
-func (x *GetOrganizationFromWorkflowIDRequest) GetWorkflowRegistryAddress() string {
+func (x *GetOrganizationFromWorkflowOwnerRequest) GetWorkflowRegistryAddress() string {
 	if x != nil {
 		return x.WorkflowRegistryAddress
 	}
 	return ""
 }
 
-func (x *GetOrganizationFromWorkflowIDRequest) GetChainSelector() uint64 {
+func (x *GetOrganizationFromWorkflowOwnerRequest) GetChainSelector() uint64 {
 	if x != nil {
 		return x.ChainSelector
 	}
 	return 0
 }
 
-type GetOrganizationFromWorkflowIDResponse struct {
+type GetOrganizationFromWorkflowOwnerResponse struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	OrganizationId string                 `protobuf:"bytes,1,opt,name=organization_id,json=organizationId,proto3" json:"organization_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
-func (x *GetOrganizationFromWorkflowIDResponse) Reset() {
-	*x = GetOrganizationFromWorkflowIDResponse{}
+func (x *GetOrganizationFromWorkflowOwnerResponse) Reset() {
+	*x = GetOrganizationFromWorkflowOwnerResponse{}
 	mi := &file_v1_linking_types_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetOrganizationFromWorkflowIDResponse) String() string {
+func (x *GetOrganizationFromWorkflowOwnerResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetOrganizationFromWorkflowIDResponse) ProtoMessage() {}
+func (*GetOrganizationFromWorkflowOwnerResponse) ProtoMessage() {}
 
-func (x *GetOrganizationFromWorkflowIDResponse) ProtoReflect() protoreflect.Message {
+func (x *GetOrganizationFromWorkflowOwnerResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_linking_types_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -113,12 +113,12 @@ func (x *GetOrganizationFromWorkflowIDResponse) ProtoReflect() protoreflect.Mess
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetOrganizationFromWorkflowIDResponse.ProtoReflect.Descriptor instead.
-func (*GetOrganizationFromWorkflowIDResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetOrganizationFromWorkflowOwnerResponse.ProtoReflect.Descriptor instead.
+func (*GetOrganizationFromWorkflowOwnerResponse) Descriptor() ([]byte, []int) {
 	return file_v1_linking_types_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetOrganizationFromWorkflowIDResponse) GetOrganizationId() string {
+func (x *GetOrganizationFromWorkflowOwnerResponse) GetOrganizationId() string {
 	if x != nil {
 		return x.OrganizationId
 	}
@@ -130,13 +130,12 @@ var File_v1_linking_types_proto protoreflect.FileDescriptor
 const file_v1_linking_types_proto_rawDesc = "" +
 	"\n" +
 	"\x16v1/linking-types.proto\x12\n" +
-	"linking.v1\"\xaa\x01\n" +
-	"$GetOrganizationFromWorkflowIDRequest\x12\x1f\n" +
-	"\vworkflow_id\x18\x01 \x01(\tR\n" +
-	"workflowId\x12:\n" +
+	"linking.v1\"\xb3\x01\n" +
+	"'GetOrganizationFromWorkflowOwnerRequest\x12%\n" +
+	"\x0eworkflow_owner\x18\x01 \x01(\tR\rworkflowOwner\x12:\n" +
 	"\x19workflow_registry_address\x18\x02 \x01(\tR\x17workflowRegistryAddress\x12%\n" +
-	"\x0echain_selector\x18\x03 \x01(\x04R\rchainSelector\"P\n" +
-	"%GetOrganizationFromWorkflowIDResponse\x12'\n" +
+	"\x0echain_selector\x18\x03 \x01(\x04R\rchainSelector\"S\n" +
+	"(GetOrganizationFromWorkflowOwnerResponse\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationIdBDZBgithub.com/smartcontractkit/chainlink-protos/linking-service/go/v1b\x06proto3"
 
 var (
@@ -153,8 +152,8 @@ func file_v1_linking_types_proto_rawDescGZIP() []byte {
 
 var file_v1_linking_types_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_v1_linking_types_proto_goTypes = []any{
-	(*GetOrganizationFromWorkflowIDRequest)(nil),  // 0: linking.v1.GetOrganizationFromWorkflowIDRequest
-	(*GetOrganizationFromWorkflowIDResponse)(nil), // 1: linking.v1.GetOrganizationFromWorkflowIDResponse
+	(*GetOrganizationFromWorkflowOwnerRequest)(nil),  // 0: linking.v1.GetOrganizationFromWorkflowOwnerRequest
+	(*GetOrganizationFromWorkflowOwnerResponse)(nil), // 1: linking.v1.GetOrganizationFromWorkflowOwnerResponse
 }
 var file_v1_linking_types_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
