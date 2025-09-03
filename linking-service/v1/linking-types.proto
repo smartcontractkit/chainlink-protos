@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package linking.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/linking-service/go/v1";
+
+message GetOrganizationFromWorkflowOwnerRequest {
+  string workflow_owner = 1;
+  string workflow_registry_address = 2;
+  uint64 chain_selector = 3;
+}
+
+message GetOrganizationFromWorkflowOwnerResponse {
+  string organization_id = 1;
+}
