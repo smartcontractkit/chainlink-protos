@@ -455,6 +455,7 @@ const networkingConfidentialhttpV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.networking.confidentialhttp.v1alpha;
 
+import "google/protobuf/struct.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
 message SecretIdentifier {
@@ -465,7 +466,7 @@ message SecretIdentifier {
 
 message Request {
   string body = 1;
-  bytes custom_root_ca_cert_pem = 2;
+  bytes custom_cert_bundle = 2;
   repeated string headers = 3;
   string method = 4;
   google.protobuf.Struct public_template_values = 5;
