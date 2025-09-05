@@ -451,6 +451,51 @@ service BasicAction {
 }
 `
 
+const networkingConfidentialhttpV1alphaClientEmbedded = `syntax = "proto3";
+
+package capabilities.networking.confidentialhttp.v1alpha;
+
+import "google/protobuf/struct.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
+
+message SecretIdentifier {
+  string key = 1;
+  string namespace = 2;
+  optional string owner = 3;
+}
+
+message Request {
+  string body = 1;
+  bytes custom_cert_bundle = 2;
+  repeated string headers = 3;
+  string method = 4;
+  google.protobuf.Struct public_template_values = 5;
+  string url = 6;
+}
+
+message Input {
+  repeated Request requests = 1;
+  repeated SecretIdentifier vault_don_secrets = 2;
+}
+
+message OutputResponsesElem {
+  bytes body = 1;
+  int64 status_code = 2;
+}
+
+message Output {
+  repeated OutputResponsesElem responses = 1;
+}
+
+service Client {
+  option (tools.generator.v1alpha.capability) = {
+    mode: MODE_NODE
+    capability_id: "confidential-http-actions@1.0.0-alpha"
+  };
+  rpc SendRequests(Input) returns (Output);
+}
+`
+
 const networkingHttpV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.networking.http.v1alpha;
@@ -855,6 +900,10 @@ var allFiles = []*embeddedFile{
 	{
 		name:    "capabilities/internal/nodeaction/v1/node_action.proto",
 		content: internalNodeactionV1NodeActionEmbedded,
+	},
+	{
+		name:    "capabilities/networking/confidentialhttp/v1alpha/client.proto",
+		content: networkingConfidentialhttpV1alphaClientEmbedded,
 	},
 	{
 		name:    "capabilities/networking/http/v1alpha/client.proto",
