@@ -1,5 +1,11 @@
 # @chainlink/orchestrator
 
+## 0.9.0
+
+### Minor Changes
+
+- [#172](https://github.com/smartcontractkit/chainlink-protos/pull/172) [`0b7e871`](https://github.com/smartcontractkit/chainlink-protos/commit/0b7e871beebdfcc710481c62b0dff639c9f0bf4a) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add GetJobRuns to NodeService
+
 ## 0.8.1
 
 ### Patch Changes
