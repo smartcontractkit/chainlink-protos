@@ -9,6 +9,7 @@ package feedsmanager
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -1466,6 +1467,186 @@ func (x *P2PKeyBundle) GetPublicKey() string {
 	return ""
 }
 
+type GetJobRunsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetJobRunsRequest) Reset() {
+	*x = GetJobRunsRequest{}
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetJobRunsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetJobRunsRequest) ProtoMessage() {}
+
+func (x *GetJobRunsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetJobRunsRequest.ProtoReflect.Descriptor instead.
+func (*GetJobRunsRequest) Descriptor() ([]byte, []int) {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *GetJobRunsRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *GetJobRunsRequest) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type JobRunSummary struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RunId         int64                  `protobuf:"varint,1,opt,name=run_id,json=runId,proto3" json:"run_id,omitempty"`
+	State         string                 `protobuf:"bytes,2,opt,name=state,proto3" json:"state,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	FinishedAt    *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=finished_at,json=finishedAt,proto3" json:"finished_at,omitempty"`
+	AllErrors     []string               `protobuf:"bytes,5,rep,name=all_errors,json=allErrors,proto3" json:"all_errors,omitempty"`
+	FatalErrors   []string               `protobuf:"bytes,6,rep,name=fatal_errors,json=fatalErrors,proto3" json:"fatal_errors,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *JobRunSummary) Reset() {
+	*x = JobRunSummary{}
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *JobRunSummary) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*JobRunSummary) ProtoMessage() {}
+
+func (x *JobRunSummary) ProtoReflect() protoreflect.Message {
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use JobRunSummary.ProtoReflect.Descriptor instead.
+func (*JobRunSummary) Descriptor() ([]byte, []int) {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *JobRunSummary) GetRunId() int64 {
+	if x != nil {
+		return x.RunId
+	}
+	return 0
+}
+
+func (x *JobRunSummary) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *JobRunSummary) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+func (x *JobRunSummary) GetFinishedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.FinishedAt
+	}
+	return nil
+}
+
+func (x *JobRunSummary) GetAllErrors() []string {
+	if x != nil {
+		return x.AllErrors
+	}
+	return nil
+}
+
+func (x *JobRunSummary) GetFatalErrors() []string {
+	if x != nil {
+		return x.FatalErrors
+	}
+	return nil
+}
+
+type GetJobRunsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Runs          []*JobRunSummary       `protobuf:"bytes,1,rep,name=runs,proto3" json:"runs,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetJobRunsResponse) Reset() {
+	*x = GetJobRunsResponse{}
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetJobRunsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetJobRunsResponse) ProtoMessage() {}
+
+func (x *GetJobRunsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetJobRunsResponse.ProtoReflect.Descriptor instead.
+func (*GetJobRunsResponse) Descriptor() ([]byte, []int) {
+	return file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *GetJobRunsResponse) GetRuns() []*JobRunSummary {
+	if x != nil {
+		return x.Runs
+	}
+	return nil
+}
+
 type OCR1Config_P2PKeyBundle struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	PeerId        string                 `protobuf:"bytes,1,opt,name=peer_id,json=peerId,proto3" json:"peer_id,omitempty"`
@@ -1476,7 +1657,7 @@ type OCR1Config_P2PKeyBundle struct {
 
 func (x *OCR1Config_P2PKeyBundle) Reset() {
 	*x = OCR1Config_P2PKeyBundle{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[24]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1488,7 +1669,7 @@ func (x *OCR1Config_P2PKeyBundle) String() string {
 func (*OCR1Config_P2PKeyBundle) ProtoMessage() {}
 
 func (x *OCR1Config_P2PKeyBundle) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[24]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1530,7 +1711,7 @@ type OCR1Config_OCRKeyBundle struct {
 
 func (x *OCR1Config_OCRKeyBundle) Reset() {
 	*x = OCR1Config_OCRKeyBundle{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[25]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1542,7 +1723,7 @@ func (x *OCR1Config_OCRKeyBundle) String() string {
 func (*OCR1Config_OCRKeyBundle) ProtoMessage() {}
 
 func (x *OCR1Config_OCRKeyBundle) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[25]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1596,7 +1777,7 @@ type OCR2Config_P2PKeyBundle struct {
 
 func (x *OCR2Config_P2PKeyBundle) Reset() {
 	*x = OCR2Config_P2PKeyBundle{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[26]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1608,7 +1789,7 @@ func (x *OCR2Config_P2PKeyBundle) String() string {
 func (*OCR2Config_P2PKeyBundle) ProtoMessage() {}
 
 func (x *OCR2Config_P2PKeyBundle) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[26]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1650,7 +1831,7 @@ type OCR2Config_OCRKeyBundle struct {
 
 func (x *OCR2Config_OCRKeyBundle) Reset() {
 	*x = OCR2Config_OCRKeyBundle{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[27]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1662,7 +1843,7 @@ func (x *OCR2Config_OCRKeyBundle) String() string {
 func (*OCR2Config_OCRKeyBundle) ProtoMessage() {}
 
 func (x *OCR2Config_OCRKeyBundle) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[27]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1719,7 +1900,7 @@ type OCR2Config_Plugins struct {
 
 func (x *OCR2Config_Plugins) Reset() {
 	*x = OCR2Config_Plugins{}
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[28]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1731,7 +1912,7 @@ func (x *OCR2Config_Plugins) String() string {
 func (*OCR2Config_Plugins) ProtoMessage() {}
 
 func (x *OCR2Config_Plugins) ProtoReflect() protoreflect.Message {
-	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[28]
+	mi := &file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1786,7 +1967,7 @@ var File_orchestrator_feedsmanager_feedsmanager_proto protoreflect.FileDescripto
 
 const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"\n" +
-	",orchestrator/feedsmanager/feedsmanager.proto\x12\x03cfm\";\n" +
+	",orchestrator/feedsmanager/feedsmanager.proto\x12\x03cfm\x1a\x1fgoogle/protobuf/timestamp.proto\";\n" +
 	"\x05Chain\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\"\n" +
 	"\x04type\x18\x02 \x01(\x0e2\x0e.cfm.ChainTypeR\x04type\"m\n" +
@@ -1910,7 +2091,22 @@ const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"\fP2PKeyBundle\x12\x17\n" +
 	"\apeer_id\x18\x01 \x01(\tR\x06peerId\x12\x1d\n" +
 	"\n" +
-	"public_key\x18\x02 \x01(\tR\tpublicKey*c\n" +
+	"public_key\x18\x02 \x01(\tR\tpublicKey\"9\n" +
+	"\x11GetJobRunsRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
+	"\x05limit\x18\x02 \x01(\x05R\x05limit\"\xf6\x01\n" +
+	"\rJobRunSummary\x12\x15\n" +
+	"\x06run_id\x18\x01 \x01(\x03R\x05runId\x12\x14\n" +
+	"\x05state\x18\x02 \x01(\tR\x05state\x129\n" +
+	"\n" +
+	"created_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12;\n" +
+	"\vfinished_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"finishedAt\x12\x1d\n" +
+	"\n" +
+	"all_errors\x18\x05 \x03(\tR\tallErrors\x12!\n" +
+	"\ffatal_errors\x18\x06 \x03(\tR\vfatalErrors\"<\n" +
+	"\x12GetJobRunsResponse\x12&\n" +
+	"\x04runs\x18\x01 \x03(\v2\x12.cfm.JobRunSummaryR\x04runs*c\n" +
 	"\aJobType\x12\x18\n" +
 	"\x14JOB_TYPE_UNSPECIFIED\x10\x00\x12\x19\n" +
 	"\x15JOB_TYPE_FLUX_MONITOR\x10\x01\x12\x10\n" +
@@ -1931,12 +2127,14 @@ const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"\n" +
 	"UpdateNode\x12\x16.cfm.UpdateNodeRequest\x1a\x17.cfm.UpdateNodeResponse\x12@\n" +
 	"\vRejectedJob\x12\x17.cfm.RejectedJobRequest\x1a\x18.cfm.RejectedJobResponse\x12C\n" +
-	"\fCancelledJob\x12\x18.cfm.CancelledJobRequest\x1a\x19.cfm.CancelledJobResponse2\xc4\x01\n" +
+	"\fCancelledJob\x12\x18.cfm.CancelledJobRequest\x1a\x19.cfm.CancelledJobResponse2\x83\x02\n" +
 	"\vNodeService\x12=\n" +
 	"\n" +
 	"ProposeJob\x12\x16.cfm.ProposeJobRequest\x1a\x17.cfm.ProposeJobResponse\x12:\n" +
 	"\tDeleteJob\x12\x15.cfm.DeleteJobRequest\x1a\x16.cfm.DeleteJobResponse\x12:\n" +
-	"\tRevokeJob\x12\x15.cfm.RevokeJobRequest\x1a\x16.cfm.RevokeJobResponseBHZFgithub.com/smartcontractkit/chainlink-protos/orchestrator/feedsmanagerb\x06proto3"
+	"\tRevokeJob\x12\x15.cfm.RevokeJobRequest\x1a\x16.cfm.RevokeJobResponse\x12=\n" +
+	"\n" +
+	"GetJobRuns\x12\x16.cfm.GetJobRunsRequest\x1a\x17.cfm.GetJobRunsResponseBHZFgithub.com/smartcontractkit/chainlink-protos/orchestrator/feedsmanagerb\x06proto3"
 
 var (
 	file_orchestrator_feedsmanager_feedsmanager_proto_rawDescOnce sync.Once
@@ -1951,7 +2149,7 @@ func file_orchestrator_feedsmanager_feedsmanager_proto_rawDescGZIP() []byte {
 }
 
 var file_orchestrator_feedsmanager_feedsmanager_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
+var file_orchestrator_feedsmanager_feedsmanager_proto_msgTypes = make([]protoimpl.MessageInfo, 33)
 var file_orchestrator_feedsmanager_feedsmanager_proto_goTypes = []any{
 	(JobType)(0),                    // 0: cfm.JobType
 	(ChainType)(0),                  // 1: cfm.ChainType
@@ -1979,21 +2177,25 @@ var file_orchestrator_feedsmanager_feedsmanager_proto_goTypes = []any{
 	(*RevokeJobRequest)(nil),        // 23: cfm.RevokeJobRequest
 	(*RevokeJobResponse)(nil),       // 24: cfm.RevokeJobResponse
 	(*P2PKeyBundle)(nil),            // 25: cfm.P2PKeyBundle
-	(*OCR1Config_P2PKeyBundle)(nil), // 26: cfm.OCR1Config.P2PKeyBundle
-	(*OCR1Config_OCRKeyBundle)(nil), // 27: cfm.OCR1Config.OCRKeyBundle
-	(*OCR2Config_P2PKeyBundle)(nil), // 28: cfm.OCR2Config.P2PKeyBundle
-	(*OCR2Config_OCRKeyBundle)(nil), // 29: cfm.OCR2Config.OCRKeyBundle
-	(*OCR2Config_Plugins)(nil),      // 30: cfm.OCR2Config.Plugins
-	nil,                             // 31: cfm.UpdateNodeResponse.ChainConfigErrorsEntry
+	(*GetJobRunsRequest)(nil),       // 26: cfm.GetJobRunsRequest
+	(*JobRunSummary)(nil),           // 27: cfm.JobRunSummary
+	(*GetJobRunsResponse)(nil),      // 28: cfm.GetJobRunsResponse
+	(*OCR1Config_P2PKeyBundle)(nil), // 29: cfm.OCR1Config.P2PKeyBundle
+	(*OCR1Config_OCRKeyBundle)(nil), // 30: cfm.OCR1Config.OCRKeyBundle
+	(*OCR2Config_P2PKeyBundle)(nil), // 31: cfm.OCR2Config.P2PKeyBundle
+	(*OCR2Config_OCRKeyBundle)(nil), // 32: cfm.OCR2Config.OCRKeyBundle
+	(*OCR2Config_Plugins)(nil),      // 33: cfm.OCR2Config.Plugins
+	nil,                             // 34: cfm.UpdateNodeResponse.ChainConfigErrorsEntry
+	(*timestamppb.Timestamp)(nil),   // 35: google.protobuf.Timestamp
 }
 var file_orchestrator_feedsmanager_feedsmanager_proto_depIdxs = []int32{
 	1,  // 0: cfm.Chain.type:type_name -> cfm.ChainType
 	1,  // 1: cfm.Account.chain_type:type_name -> cfm.ChainType
-	26, // 2: cfm.OCR1Config.p2p_key_bundle:type_name -> cfm.OCR1Config.P2PKeyBundle
-	27, // 3: cfm.OCR1Config.ocr_key_bundle:type_name -> cfm.OCR1Config.OCRKeyBundle
-	28, // 4: cfm.OCR2Config.p2p_key_bundle:type_name -> cfm.OCR2Config.P2PKeyBundle
-	29, // 5: cfm.OCR2Config.ocr_key_bundle:type_name -> cfm.OCR2Config.OCRKeyBundle
-	30, // 6: cfm.OCR2Config.plugins:type_name -> cfm.OCR2Config.Plugins
+	29, // 2: cfm.OCR1Config.p2p_key_bundle:type_name -> cfm.OCR1Config.P2PKeyBundle
+	30, // 3: cfm.OCR1Config.ocr_key_bundle:type_name -> cfm.OCR1Config.OCRKeyBundle
+	31, // 4: cfm.OCR2Config.p2p_key_bundle:type_name -> cfm.OCR2Config.P2PKeyBundle
+	32, // 5: cfm.OCR2Config.ocr_key_bundle:type_name -> cfm.OCR2Config.OCRKeyBundle
+	33, // 6: cfm.OCR2Config.plugins:type_name -> cfm.OCR2Config.Plugins
 	2,  // 7: cfm.ChainConfig.chain:type_name -> cfm.Chain
 	4,  // 8: cfm.ChainConfig.flux_monitor_config:type_name -> cfm.FluxMonitorConfig
 	5,  // 9: cfm.ChainConfig.ocr1_config:type_name -> cfm.OCR1Config
@@ -2003,29 +2205,34 @@ var file_orchestrator_feedsmanager_feedsmanager_proto_depIdxs = []int32{
 	2,  // 13: cfm.UpdateNodeRequest.chains:type_name -> cfm.Chain
 	7,  // 14: cfm.UpdateNodeRequest.chain_configs:type_name -> cfm.ChainConfig
 	25, // 15: cfm.UpdateNodeRequest.p2p_key_bundles:type_name -> cfm.P2PKeyBundle
-	31, // 16: cfm.UpdateNodeResponse.chain_config_errors:type_name -> cfm.UpdateNodeResponse.ChainConfigErrorsEntry
-	10, // 17: cfm.UpdateNodeResponse.ChainConfigErrorsEntry.value:type_name -> cfm.ChainConfigError
-	11, // 18: cfm.FeedsManager.ApprovedJob:input_type -> cfm.ApprovedJobRequest
-	13, // 19: cfm.FeedsManager.Healthcheck:input_type -> cfm.HealthcheckRequest
-	8,  // 20: cfm.FeedsManager.UpdateNode:input_type -> cfm.UpdateNodeRequest
-	15, // 21: cfm.FeedsManager.RejectedJob:input_type -> cfm.RejectedJobRequest
-	17, // 22: cfm.FeedsManager.CancelledJob:input_type -> cfm.CancelledJobRequest
-	19, // 23: cfm.NodeService.ProposeJob:input_type -> cfm.ProposeJobRequest
-	21, // 24: cfm.NodeService.DeleteJob:input_type -> cfm.DeleteJobRequest
-	23, // 25: cfm.NodeService.RevokeJob:input_type -> cfm.RevokeJobRequest
-	12, // 26: cfm.FeedsManager.ApprovedJob:output_type -> cfm.ApprovedJobResponse
-	14, // 27: cfm.FeedsManager.Healthcheck:output_type -> cfm.HealthcheckResponse
-	9,  // 28: cfm.FeedsManager.UpdateNode:output_type -> cfm.UpdateNodeResponse
-	16, // 29: cfm.FeedsManager.RejectedJob:output_type -> cfm.RejectedJobResponse
-	18, // 30: cfm.FeedsManager.CancelledJob:output_type -> cfm.CancelledJobResponse
-	20, // 31: cfm.NodeService.ProposeJob:output_type -> cfm.ProposeJobResponse
-	22, // 32: cfm.NodeService.DeleteJob:output_type -> cfm.DeleteJobResponse
-	24, // 33: cfm.NodeService.RevokeJob:output_type -> cfm.RevokeJobResponse
-	26, // [26:34] is the sub-list for method output_type
-	18, // [18:26] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	34, // 16: cfm.UpdateNodeResponse.chain_config_errors:type_name -> cfm.UpdateNodeResponse.ChainConfigErrorsEntry
+	35, // 17: cfm.JobRunSummary.created_at:type_name -> google.protobuf.Timestamp
+	35, // 18: cfm.JobRunSummary.finished_at:type_name -> google.protobuf.Timestamp
+	27, // 19: cfm.GetJobRunsResponse.runs:type_name -> cfm.JobRunSummary
+	10, // 20: cfm.UpdateNodeResponse.ChainConfigErrorsEntry.value:type_name -> cfm.ChainConfigError
+	11, // 21: cfm.FeedsManager.ApprovedJob:input_type -> cfm.ApprovedJobRequest
+	13, // 22: cfm.FeedsManager.Healthcheck:input_type -> cfm.HealthcheckRequest
+	8,  // 23: cfm.FeedsManager.UpdateNode:input_type -> cfm.UpdateNodeRequest
+	15, // 24: cfm.FeedsManager.RejectedJob:input_type -> cfm.RejectedJobRequest
+	17, // 25: cfm.FeedsManager.CancelledJob:input_type -> cfm.CancelledJobRequest
+	19, // 26: cfm.NodeService.ProposeJob:input_type -> cfm.ProposeJobRequest
+	21, // 27: cfm.NodeService.DeleteJob:input_type -> cfm.DeleteJobRequest
+	23, // 28: cfm.NodeService.RevokeJob:input_type -> cfm.RevokeJobRequest
+	26, // 29: cfm.NodeService.GetJobRuns:input_type -> cfm.GetJobRunsRequest
+	12, // 30: cfm.FeedsManager.ApprovedJob:output_type -> cfm.ApprovedJobResponse
+	14, // 31: cfm.FeedsManager.Healthcheck:output_type -> cfm.HealthcheckResponse
+	9,  // 32: cfm.FeedsManager.UpdateNode:output_type -> cfm.UpdateNodeResponse
+	16, // 33: cfm.FeedsManager.RejectedJob:output_type -> cfm.RejectedJobResponse
+	18, // 34: cfm.FeedsManager.CancelledJob:output_type -> cfm.CancelledJobResponse
+	20, // 35: cfm.NodeService.ProposeJob:output_type -> cfm.ProposeJobResponse
+	22, // 36: cfm.NodeService.DeleteJob:output_type -> cfm.DeleteJobResponse
+	24, // 37: cfm.NodeService.RevokeJob:output_type -> cfm.RevokeJobResponse
+	28, // 38: cfm.NodeService.GetJobRuns:output_type -> cfm.GetJobRunsResponse
+	30, // [30:39] is the sub-list for method output_type
+	21, // [21:30] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_orchestrator_feedsmanager_feedsmanager_proto_init() }
@@ -2042,7 +2249,7 @@ func file_orchestrator_feedsmanager_feedsmanager_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc), len(file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   30,
+			NumMessages:   33,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

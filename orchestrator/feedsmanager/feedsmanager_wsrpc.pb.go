@@ -163,6 +163,8 @@ type NodeServiceClient interface {
 	DeleteJob(ctx context.Context, in *DeleteJobRequest) (*DeleteJobResponse, error)
 	// RevokeJob is called by the JD to revoke a job from the node.
 	RevokeJob(ctx context.Context, in *RevokeJobRequest) (*RevokeJobResponse, error)
+	// GetJobRuns is called by the JD to get job run history
+	GetJobRuns(ctx context.Context, in *GetJobRunsRequest) (*GetJobRunsResponse, error)
 }
 
 type nodeServiceClient struct {
@@ -200,6 +202,15 @@ func (c *nodeServiceClient) RevokeJob(ctx context.Context, in *RevokeJobRequest)
 	return out, nil
 }
 
+func (c *nodeServiceClient) GetJobRuns(ctx context.Context, in *GetJobRunsRequest) (*GetJobRunsResponse, error) {
+	out := new(GetJobRunsResponse)
+	err := c.cc.Invoke(ctx, "GetJobRuns", in, out)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NodeServiceServer is the server API for NodeService service.
 type NodeServiceServer interface {
 	// ProposeJob is called by the JD to propose a job to the node.
@@ -208,6 +219,8 @@ type NodeServiceServer interface {
 	DeleteJob(context.Context, *DeleteJobRequest) (*DeleteJobResponse, error)
 	// RevokeJob is called by the JD to revoke a job from the node.
 	RevokeJob(context.Context, *RevokeJobRequest) (*RevokeJobResponse, error)
+	// GetJobRuns is called by the JD to get job run history
+	GetJobRuns(context.Context, *GetJobRunsRequest) (*GetJobRunsResponse, error)
 }
 
 func RegisterNodeServiceServer(s wsrpc.ServiceRegistrar, srv NodeServiceServer) {
@@ -238,6 +251,14 @@ func _NodeService_RevokeJob_Handler(srv interface{}, ctx context.Context, dec fu
 	return srv.(NodeServiceServer).RevokeJob(ctx, in)
 }
 
+func _NodeService_GetJobRuns_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error) (interface{}, error) {
+	in := new(GetJobRunsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	return srv.(NodeServiceServer).GetJobRuns(ctx, in)
+}
+
 // NodeService_ServiceDesc is the wsrpc.ServiceDesc for NodeService service.
 // It's only intended for direct use with wsrpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -256,6 +277,10 @@ var NodeService_ServiceDesc = wsrpc.ServiceDesc{
 		{
 			MethodName: "RevokeJob",
 			Handler:    _NodeService_RevokeJob_Handler,
+		},
+		{
+			MethodName: "GetJobRuns",
+			Handler:    _NodeService_GetJobRuns_Handler,
 		},
 	},
 }
