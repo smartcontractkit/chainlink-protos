@@ -1,5 +1,11 @@
 # @chainlink/orchestrator
 
+## 0.10.0
+
+### Minor Changes
+
+- [#174](https://github.com/smartcontractkit/chainlink-protos/pull/174) [`c6abd88`](https://github.com/smartcontractkit/chainlink-protos/commit/c6abd88c7fc508ff6328f8d8d9e0e750fc752bc2) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - change GetJobRunsRequest limit to uint32
+
 ## 0.9.0
 
 ### Minor Changes
