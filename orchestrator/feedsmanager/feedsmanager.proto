@@ -205,7 +205,7 @@ message P2PKeyBundle {
 
 message GetJobRunsRequest {
   string id = 1;
-  int32 limit = 2;
+  uint32 limit = 2;
 }
 
 message JobRunSummary {

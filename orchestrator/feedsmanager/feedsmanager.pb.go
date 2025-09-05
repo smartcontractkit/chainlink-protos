@@ -1470,7 +1470,7 @@ func (x *P2PKeyBundle) GetPublicKey() string {
 type GetJobRunsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
+	Limit         uint32                 `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1512,7 +1512,7 @@ func (x *GetJobRunsRequest) GetId() string {
 	return ""
 }
 
-func (x *GetJobRunsRequest) GetLimit() int32 {
+func (x *GetJobRunsRequest) GetLimit() uint32 {
 	if x != nil {
 		return x.Limit
 	}
@@ -2094,7 +2094,7 @@ const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"public_key\x18\x02 \x01(\tR\tpublicKey\"9\n" +
 	"\x11GetJobRunsRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
-	"\x05limit\x18\x02 \x01(\x05R\x05limit\"\xf6\x01\n" +
+	"\x05limit\x18\x02 \x01(\rR\x05limit\"\xf6\x01\n" +
 	"\rJobRunSummary\x12\x15\n" +
 	"\x06run_id\x18\x01 \x01(\x03R\x05runId\x12\x14\n" +
 	"\x05state\x18\x02 \x01(\tR\x05state\x129\n" +
