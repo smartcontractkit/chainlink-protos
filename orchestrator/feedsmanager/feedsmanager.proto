@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package cfm;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "github.com/smartcontractkit/chainlink-protos/orchestrator/feedsmanager";
 
 // RPC methods that the node will call on the JD.
@@ -168,6 +170,8 @@ service NodeService {
   rpc DeleteJob(DeleteJobRequest) returns (DeleteJobResponse);
   // RevokeJob is called by the JD to revoke a job from the node.
   rpc RevokeJob(RevokeJobRequest) returns (RevokeJobResponse);
+  // GetJobRuns is called by the JD to get job run history
+  rpc GetJobRuns(GetJobRunsRequest) returns (GetJobRunsResponse);
 }
 
 message ProposeJobRequest {
@@ -197,4 +201,22 @@ message RevokeJobResponse {
 message P2PKeyBundle {
   string peer_id = 1;
   string public_key = 2;
+}
+
+message GetJobRunsRequest {
+  string id = 1;
+  uint32 limit = 2;
+}
+
+message JobRunSummary {
+  int64 run_id = 1;
+  string state = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp finished_at = 4;
+  repeated string all_errors = 5;
+  repeated string fatal_errors = 6;
+}
+
+message GetJobRunsResponse {
+  repeated JobRunSummary runs = 1;
 }
