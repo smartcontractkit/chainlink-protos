@@ -254,8 +254,6 @@ service Client {
   rpc GetTransactionByHash(GetTransactionByHashRequest) returns (GetTransactionByHashReply);
   rpc GetTransactionReceipt(GetTransactionReceiptRequest) returns (GetTransactionReceiptReply);
   rpc HeaderByNumber(HeaderByNumberRequest) returns (HeaderByNumberReply);
-  rpc RegisterLogTracking(RegisterLogTrackingRequest) returns (google.protobuf.Empty);
-  rpc UnregisterLogTracking(UnregisterLogTrackingRequest) returns (google.protobuf.Empty);
   rpc LogTrigger(FilterLogTriggerRequest) returns (stream Log);
   rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
 }
