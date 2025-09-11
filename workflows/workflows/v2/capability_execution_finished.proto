@@ -17,4 +17,5 @@ message CapabilityExecutionFinished {
   string capabilityID = 5;
   int32 stepRef = 6;
   ExecutionStatus status = 7;
+  string error = 8;
 }
