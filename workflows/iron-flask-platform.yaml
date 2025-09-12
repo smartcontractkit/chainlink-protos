@@ -210,6 +210,16 @@ beholder:
           subject: "beholder__platform__messages-workflows.v2.Workflow"
           version: 1
 
+    - entity: WorkflowUserLog
+      schema: "workflows/v2/workflow_user_log.proto"
+      references:
+        - name: "workflows/v2/cre_info.proto"
+          subject: "beholder__platform__messages-workflows.v2.CreInfo"
+          version: 1
+        - name: "workflows/v2/workflow_key.proto"
+          subject: "beholder__platform__messages-workflows.v2.WorkflowKey"
+          version: 1
+
     # DATA-FEEDS
     - entity: JobInfo
       schema: "bridge_status/v1/job_info.proto"
