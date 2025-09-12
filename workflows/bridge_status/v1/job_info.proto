@@ -6,8 +6,6 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/data-feeds/bri
 
 // JobInfo represents job information associated with a bridge
 message JobInfo {
-	string external_job_id = 1;
-	string job_name = 2;
+  string external_job_id = 1;
+  string job_name = 2;
 }
-
-

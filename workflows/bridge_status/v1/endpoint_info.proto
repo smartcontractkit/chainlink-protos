@@ -5,9 +5,7 @@ package bridge_status.v1;
 option go_package = "github.com/smartcontractkit/chainlink-protos/data-feeds/bridge_status/v1";
 
 message EndpointInfo {
-	string name = 1;
-	repeated string aliases = 2;
-	repeated string transports = 3;
+  string name = 1;
+  repeated string aliases = 2;
+  repeated string transports = 3;
 }
-
-

@@ -5,7 +5,5 @@ package bridge_status.v1;
 option go_package = "github.com/smartcontractkit/chainlink-protos/data-feeds/bridge_status/v1";
 
 message MetricsInfo {
-	bool enabled = 1;
+  bool enabled = 1;
 }
-
-

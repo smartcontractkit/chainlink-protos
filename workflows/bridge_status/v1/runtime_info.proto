@@ -5,10 +5,8 @@ package bridge_status.v1;
 option go_package = "github.com/smartcontractkit/chainlink-protos/data-feeds/bridge_status/v1";
 
 message RuntimeInfo {
-	string node_version = 1;
-	string platform = 2;
-	string architecture = 3;
-	string hostname = 4;
+  string node_version = 1;
+  string platform = 2;
+  string architecture = 3;
+  string hostname = 4;
 }
-
-
