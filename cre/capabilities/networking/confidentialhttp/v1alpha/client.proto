@@ -3,7 +3,7 @@ syntax = "proto3";
 package capabilities.networking.confidentialhttp.v1alpha;
 
 import "google/protobuf/struct.proto";
-import "tools/generator/v1alpha/cre_metadata.proto";
+import "tools/generator/v1beta/cre_metadata.proto";
 
 message SecretIdentifier {
   string key = 1;
@@ -35,7 +35,7 @@ message Output {
 }
 
 service Client {
-  option (tools.generator.v1alpha.capability) = {
+  option (tools.generator.v1beta.capability) = {
     mode: MODE_NODE
     capability_id: "confidential-http-actions@1.0.0-alpha"
   };

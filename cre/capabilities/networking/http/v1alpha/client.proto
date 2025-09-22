@@ -3,7 +3,7 @@ syntax = "proto3";
 package capabilities.networking.http.v1alpha;
 
 import "google/protobuf/duration.proto";
-import "tools/generator/v1alpha/cre_metadata.proto";
+import "tools/generator/v1beta/cre_metadata.proto";
 
 // CacheSettings defines cache control options for outbound HTTP requests.
 message CacheSettings {
@@ -27,7 +27,7 @@ message Response {
 }
 
 service Client {
-  option (tools.generator.v1alpha.capability) = {
+  option (tools.generator.v1beta.capability) = {
     mode: MODE_NODE
     capability_id: "http-actions@1.0.0-alpha"
   };

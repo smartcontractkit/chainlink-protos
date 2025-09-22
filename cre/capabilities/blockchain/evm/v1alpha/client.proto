@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package capabilities.blockchain.evm.v1alpha;
 
-import "sdk/v1alpha/sdk.proto";
-import "tools/generator/v1alpha/cre_metadata.proto";
+import "sdk/v1beta/sdk.proto";
+import "tools/generator/v1beta/cre_metadata.proto";
 import "values/v1/values.proto";
 
 enum ConfidenceLevel {
@@ -159,7 +159,7 @@ message Header {
 }
 
 service Client {
-  option (tools.generator.v1alpha.capability) = {
+  option (tools.generator.v1beta.capability) = {
     mode: MODE_DON
     capability_id: "evm@1.0.0"
     labels: {
@@ -244,7 +244,7 @@ enum ReceiverContractExecutionStatus {
 
 message WriteReportRequest {
   bytes receiver = 1;
-  sdk.v1alpha.ReportResponse report = 2;
+  sdk.v1beta.ReportResponse report = 2;
   optional GasConfig gas_config = 3;
 }
 

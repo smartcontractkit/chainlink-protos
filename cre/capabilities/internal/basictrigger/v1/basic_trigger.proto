@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package capabilities.internal.basictrigger.v1;
 
-import "tools/generator/v1alpha/cre_metadata.proto";
+import "tools/generator/v1beta/cre_metadata.proto";
 
 message Config {
   string name = 1;
@@ -14,7 +14,7 @@ message Outputs {
 }
 
 service Basic {
-  option (tools.generator.v1alpha.capability) = {
+  option (tools.generator.v1beta.capability) = {
     mode: MODE_DON
     capability_id: "basic-test-trigger@1.0.0"
   };
