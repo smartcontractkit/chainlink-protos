@@ -365,8 +365,8 @@ service Consensus {
     mode: MODE_DON
     capability_id: "consensus@1.0.0-alpha"
   };
-  rpc Simple(sdk.v1.SimpleConsensusInputs) returns (values.v1.Value);
-  rpc Report(sdk.v1.ReportRequest) returns (sdk.v1.ReportResponse);
+  rpc Simple(sdk.v1alpha.SimpleConsensusInputs) returns (values.v1.Value);
+  rpc Report(sdk.v1alpha.ReportRequest) returns (sdk.v1alpha.ReportResponse);
 }
 `
 
@@ -579,7 +579,7 @@ service Cron {
   rpc Trigger(Config) returns (stream Payload);
 
   rpc LegacyTrigger(Config) returns (stream LegacyPayload) {
-    option (tools.generator.v1alpha.method) = {map_to_untyped_api: true};
+    option (tools.generator.v1.method) = {map_to_untyped_api: true};
     option deprecated = true;
   }
 }
@@ -1003,7 +1003,7 @@ message CapabilityMetadata {
 }
 
 extend google.protobuf.ServiceOptions {
-  CapabilityMetadata capability = 50000; // 50000-99999 is the range for custom options.
+  CapabilityMetadata capability = 50002; // 50000-99999 is the range for custom options.
 }
 
 message CapabilityMethodMetadata {
@@ -1011,7 +1011,7 @@ message CapabilityMethodMetadata {
 }
 
 extend google.protobuf.MethodOptions {
-  CapabilityMethodMetadata method = 50001; // 50000-99999 is the range for custom options.
+  CapabilityMethodMetadata method = 50003; // 50000-99999 is the range for custom options.
 }
 `
 
