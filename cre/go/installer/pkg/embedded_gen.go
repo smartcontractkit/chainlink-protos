@@ -356,7 +356,7 @@ const internalConsensusV1alphaConsensusEmbedded = `syntax = "proto3";
 
 package capabilities.internal.consensus.v1alpha;
 
-import "sdk/v1alpha/sdk.proto";
+import "sdk/v1beta/sdk.proto";
 import "tools/generator/v1beta/cre_metadata.proto";
 import "values/v1/values.proto";
 
