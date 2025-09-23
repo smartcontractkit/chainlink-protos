@@ -29,7 +29,7 @@ message AuthorizedKey {
 }
 
 service HTTP {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_DON
     capability_id: "http-trigger@1.0.0-alpha"
   };

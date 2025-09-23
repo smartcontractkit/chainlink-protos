@@ -341,7 +341,7 @@ type isConsensusDescriptor_Descriptor_ interface {
 }
 
 type ConsensusDescriptor_Aggregation struct {
-	Aggregation AggregationType `protobuf:"varint,1,opt,name=aggregation,proto3,enum=sdk.v1beta.AggregationType,oneof"`
+	Aggregation AggregationType `protobuf:"varint,1,opt,name=aggregation,proto3,enum=sdk.v1.AggregationType,oneof"`
 }
 
 type ConsensusDescriptor_FieldsMap struct {
@@ -1596,37 +1596,36 @@ var File_sdk_v1beta_sdk_proto protoreflect.FileDescriptor
 
 const file_sdk_v1beta_sdk_proto_rawDesc = "" +
 	"\n" +
-	"\x14sdk/v1beta/sdk.proto\x12\n" +
-	"sdk.v1beta\x1a\x19google/protobuf/any.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x16values/v1/values.proto\"\xd7\x01\n" +
+	"\x14sdk/v1beta/sdk.proto\x12\x06sdk.v1\x1a\x19google/protobuf/any.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x16values/v1/values.proto\"\xd3\x01\n" +
 	"\x15SimpleConsensusInputs\x12(\n" +
 	"\x05value\x18\x01 \x01(\v2\x10.values.v1.ValueH\x00R\x05value\x12\x16\n" +
-	"\x05error\x18\x02 \x01(\tH\x00R\x05error\x12A\n" +
-	"\vdescriptors\x18\x03 \x01(\v2\x1f.sdk.v1beta.ConsensusDescriptorR\vdescriptors\x12*\n" +
+	"\x05error\x18\x02 \x01(\tH\x00R\x05error\x12=\n" +
+	"\vdescriptors\x18\x03 \x01(\v2\x1b.sdk.v1.ConsensusDescriptorR\vdescriptors\x12*\n" +
 	"\adefault\x18\x04 \x01(\v2\x10.values.v1.ValueR\adefaultB\r\n" +
-	"\vobservation\"\xa2\x01\n" +
-	"\tFieldsMap\x129\n" +
-	"\x06fields\x18\x01 \x03(\v2!.sdk.v1beta.FieldsMap.FieldsEntryR\x06fields\x1aZ\n" +
+	"\vobservation\"\x9a\x01\n" +
+	"\tFieldsMap\x125\n" +
+	"\x06fields\x18\x01 \x03(\v2\x1d.sdk.v1.FieldsMap.FieldsEntryR\x06fields\x1aV\n" +
 	"\vFieldsEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x125\n" +
-	"\x05value\x18\x02 \x01(\v2\x1f.sdk.v1beta.ConsensusDescriptorR\x05value:\x028\x01\"\x9c\x01\n" +
-	"\x13ConsensusDescriptor\x12?\n" +
-	"\vaggregation\x18\x01 \x01(\x0e2\x1b.sdk.v1beta.AggregationTypeH\x00R\vaggregation\x126\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x121\n" +
+	"\x05value\x18\x02 \x01(\v2\x1b.sdk.v1.ConsensusDescriptorR\x05value:\x028\x01\"\x94\x01\n" +
+	"\x13ConsensusDescriptor\x12;\n" +
+	"\vaggregation\x18\x01 \x01(\x0e2\x17.sdk.v1.AggregationTypeH\x00R\vaggregation\x122\n" +
 	"\n" +
-	"fields_map\x18\x02 \x01(\v2\x15.sdk.v1beta.FieldsMapH\x00R\tfieldsMapB\f\n" +
+	"fields_map\x18\x02 \x01(\v2\x11.sdk.v1.FieldsMapH\x00R\tfieldsMapB\f\n" +
 	"\n" +
 	"descriptor\"\xa1\x01\n" +
 	"\rReportRequest\x12'\n" +
 	"\x0fencoded_payload\x18\x01 \x01(\fR\x0eencodedPayload\x12!\n" +
 	"\fencoder_name\x18\x02 \x01(\tR\vencoderName\x12!\n" +
 	"\fsigning_algo\x18\x03 \x01(\tR\vsigningAlgo\x12!\n" +
-	"\fhashing_algo\x18\x04 \x01(\tR\vhashingAlgo\"\xc7\x01\n" +
+	"\fhashing_algo\x18\x04 \x01(\tR\vhashingAlgo\"\xc3\x01\n" +
 	"\x0eReportResponse\x12#\n" +
 	"\rconfig_digest\x18\x01 \x01(\fR\fconfigDigest\x12\x15\n" +
 	"\x06seq_nr\x18\x02 \x01(\x04R\x05seqNr\x12%\n" +
 	"\x0ereport_context\x18\x03 \x01(\fR\rreportContext\x12\x1d\n" +
 	"\n" +
-	"raw_report\x18\x04 \x01(\fR\trawReport\x123\n" +
-	"\x04sigs\x18\x05 \x03(\v2\x1f.sdk.v1beta.AttributedSignatureR\x04sigs\"P\n" +
+	"raw_report\x18\x04 \x01(\fR\trawReport\x12/\n" +
+	"\x04sigs\x18\x05 \x03(\v2\x1b.sdk.v1.AttributedSignatureR\x04sigs\"P\n" +
 	"\x13AttributedSignature\x12\x1c\n" +
 	"\tsignature\x18\x01 \x01(\fR\tsignature\x12\x1b\n" +
 	"\tsigner_id\x18\x02 \x01(\rR\bsignerId\"\x8c\x01\n" +
@@ -1644,41 +1643,41 @@ const file_sdk_v1beta_sdk_proto_rawDesc = "" +
 	"\x13TriggerSubscription\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12.\n" +
 	"\apayload\x18\x02 \x01(\v2\x14.google.protobuf.AnyR\apayload\x12\x16\n" +
-	"\x06method\x18\x03 \x01(\tR\x06method\"c\n" +
-	"\x1aTriggerSubscriptionRequest\x12E\n" +
-	"\rsubscriptions\x18\x01 \x03(\v2\x1f.sdk.v1beta.TriggerSubscriptionR\rsubscriptions\"I\n" +
+	"\x06method\x18\x03 \x01(\tR\x06method\"_\n" +
+	"\x1aTriggerSubscriptionRequest\x12A\n" +
+	"\rsubscriptions\x18\x01 \x03(\v2\x1b.sdk.v1.TriggerSubscriptionR\rsubscriptions\"I\n" +
 	"\aTrigger\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12.\n" +
 	"\apayload\x18\x02 \x01(\v2\x14.google.protobuf.AnyR\apayload\",\n" +
 	"\x18AwaitCapabilitiesRequest\x12\x10\n" +
-	"\x03ids\x18\x01 \x03(\x05R\x03ids\"\xcd\x01\n" +
-	"\x19AwaitCapabilitiesResponse\x12R\n" +
-	"\tresponses\x18\x01 \x03(\v24.sdk.v1beta.AwaitCapabilitiesResponse.ResponsesEntryR\tresponses\x1a\\\n" +
+	"\x03ids\x18\x01 \x03(\x05R\x03ids\"\xc5\x01\n" +
+	"\x19AwaitCapabilitiesResponse\x12N\n" +
+	"\tresponses\x18\x01 \x03(\v20.sdk.v1.AwaitCapabilitiesResponse.ResponsesEntryR\tresponses\x1aX\n" +
 	"\x0eResponsesEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\x05R\x03key\x124\n" +
-	"\x05value\x18\x02 \x01(\v2\x1e.sdk.v1beta.CapabilityResponseR\x05value:\x028\x01\"\xc8\x01\n" +
+	"\x03key\x18\x01 \x01(\x05R\x03key\x120\n" +
+	"\x05value\x18\x02 \x01(\v2\x1a.sdk.v1.CapabilityResponseR\x05value:\x028\x01\"\xc4\x01\n" +
 	"\x0eExecuteRequest\x12\x16\n" +
 	"\x06config\x18\x01 \x01(\fR\x06config\x126\n" +
-	"\tsubscribe\x18\x02 \x01(\v2\x16.google.protobuf.EmptyH\x00R\tsubscribe\x12/\n" +
-	"\atrigger\x18\x03 \x01(\v2\x13.sdk.v1beta.TriggerH\x00R\atrigger\x12*\n" +
+	"\tsubscribe\x18\x02 \x01(\v2\x16.google.protobuf.EmptyH\x00R\tsubscribe\x12+\n" +
+	"\atrigger\x18\x03 \x01(\v2\x0f.sdk.v1.TriggerH\x00R\atrigger\x12*\n" +
 	"\x11max_response_size\x18\x04 \x01(\x04R\x0fmaxResponseSizeB\t\n" +
-	"\arequest\"\xbc\x01\n" +
+	"\arequest\"\xb8\x01\n" +
 	"\x0fExecutionResult\x12(\n" +
 	"\x05value\x18\x01 \x01(\v2\x10.values.v1.ValueH\x00R\x05value\x12\x16\n" +
-	"\x05error\x18\x02 \x01(\tH\x00R\x05error\x12]\n" +
-	"\x15trigger_subscriptions\x18\x03 \x01(\v2&.sdk.v1beta.TriggerSubscriptionRequestH\x00R\x14triggerSubscriptionsB\b\n" +
-	"\x06result\"k\n" +
-	"\x11GetSecretsRequest\x125\n" +
-	"\brequests\x18\x01 \x03(\v2\x19.sdk.v1beta.SecretRequestR\brequests\x12\x1f\n" +
+	"\x05error\x18\x02 \x01(\tH\x00R\x05error\x12Y\n" +
+	"\x15trigger_subscriptions\x18\x03 \x01(\v2\".sdk.v1.TriggerSubscriptionRequestH\x00R\x14triggerSubscriptionsB\b\n" +
+	"\x06result\"g\n" +
+	"\x11GetSecretsRequest\x121\n" +
+	"\brequests\x18\x01 \x03(\v2\x15.sdk.v1.SecretRequestR\brequests\x12\x1f\n" +
 	"\vcallback_id\x18\x02 \x01(\x05R\n" +
 	"callbackId\"'\n" +
 	"\x13AwaitSecretsRequest\x12\x10\n" +
-	"\x03ids\x18\x01 \x03(\x05R\x03ids\"\xc0\x01\n" +
-	"\x14AwaitSecretsResponse\x12M\n" +
-	"\tresponses\x18\x01 \x03(\v2/.sdk.v1beta.AwaitSecretsResponse.ResponsesEntryR\tresponses\x1aY\n" +
+	"\x03ids\x18\x01 \x03(\x05R\x03ids\"\xb8\x01\n" +
+	"\x14AwaitSecretsResponse\x12I\n" +
+	"\tresponses\x18\x01 \x03(\v2+.sdk.v1.AwaitSecretsResponse.ResponsesEntryR\tresponses\x1aU\n" +
 	"\x0eResponsesEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\x05R\x03key\x121\n" +
-	"\x05value\x18\x02 \x01(\v2\x1b.sdk.v1beta.SecretResponsesR\x05value:\x028\x01\"=\n" +
+	"\x03key\x18\x01 \x01(\x05R\x03key\x12-\n" +
+	"\x05value\x18\x02 \x01(\v2\x17.sdk.v1.SecretResponsesR\x05value:\x028\x01\"=\n" +
 	"\rSecretRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1c\n" +
 	"\tnamespace\x18\x02 \x01(\tR\tnamespace\"b\n" +
@@ -1691,14 +1690,14 @@ const file_sdk_v1beta_sdk_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1c\n" +
 	"\tnamespace\x18\x02 \x01(\tR\tnamespace\x12\x14\n" +
 	"\x05owner\x18\x03 \x01(\tR\x05owner\x12\x14\n" +
-	"\x05error\x18\x04 \x01(\tR\x05error\"{\n" +
-	"\x0eSecretResponse\x12,\n" +
-	"\x06secret\x18\x01 \x01(\v2\x12.sdk.v1beta.SecretH\x00R\x06secret\x12/\n" +
-	"\x05error\x18\x02 \x01(\v2\x17.sdk.v1beta.SecretErrorH\x00R\x05errorB\n" +
+	"\x05error\x18\x04 \x01(\tR\x05error\"s\n" +
+	"\x0eSecretResponse\x12(\n" +
+	"\x06secret\x18\x01 \x01(\v2\x0e.sdk.v1.SecretH\x00R\x06secret\x12+\n" +
+	"\x05error\x18\x02 \x01(\v2\x13.sdk.v1.SecretErrorH\x00R\x05errorB\n" +
 	"\n" +
-	"\bresponse\"K\n" +
-	"\x0fSecretResponses\x128\n" +
-	"\tresponses\x18\x01 \x03(\v2\x1a.sdk.v1beta.SecretResponseR\tresponses*\xb8\x01\n" +
+	"\bresponse\"G\n" +
+	"\x0fSecretResponses\x124\n" +
+	"\tresponses\x18\x01 \x03(\v2\x16.sdk.v1.SecretResponseR\tresponses*\xb8\x01\n" +
 	"\x0fAggregationType\x12 \n" +
 	"\x1cAGGREGATION_TYPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17AGGREGATION_TYPE_MEDIAN\x10\x01\x12\x1e\n" +
@@ -1725,64 +1724,64 @@ func file_sdk_v1beta_sdk_proto_rawDescGZIP() []byte {
 var file_sdk_v1beta_sdk_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_sdk_v1beta_sdk_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
 var file_sdk_v1beta_sdk_proto_goTypes = []any{
-	(AggregationType)(0),               // 0: sdk.v1beta.AggregationType
-	(Mode)(0),                          // 1: sdk.v1beta.Mode
-	(*SimpleConsensusInputs)(nil),      // 2: sdk.v1beta.SimpleConsensusInputs
-	(*FieldsMap)(nil),                  // 3: sdk.v1beta.FieldsMap
-	(*ConsensusDescriptor)(nil),        // 4: sdk.v1beta.ConsensusDescriptor
-	(*ReportRequest)(nil),              // 5: sdk.v1beta.ReportRequest
-	(*ReportResponse)(nil),             // 6: sdk.v1beta.ReportResponse
-	(*AttributedSignature)(nil),        // 7: sdk.v1beta.AttributedSignature
-	(*CapabilityRequest)(nil),          // 8: sdk.v1beta.CapabilityRequest
-	(*CapabilityResponse)(nil),         // 9: sdk.v1beta.CapabilityResponse
-	(*TriggerSubscription)(nil),        // 10: sdk.v1beta.TriggerSubscription
-	(*TriggerSubscriptionRequest)(nil), // 11: sdk.v1beta.TriggerSubscriptionRequest
-	(*Trigger)(nil),                    // 12: sdk.v1beta.Trigger
-	(*AwaitCapabilitiesRequest)(nil),   // 13: sdk.v1beta.AwaitCapabilitiesRequest
-	(*AwaitCapabilitiesResponse)(nil),  // 14: sdk.v1beta.AwaitCapabilitiesResponse
-	(*ExecuteRequest)(nil),             // 15: sdk.v1beta.ExecuteRequest
-	(*ExecutionResult)(nil),            // 16: sdk.v1beta.ExecutionResult
-	(*GetSecretsRequest)(nil),          // 17: sdk.v1beta.GetSecretsRequest
-	(*AwaitSecretsRequest)(nil),        // 18: sdk.v1beta.AwaitSecretsRequest
-	(*AwaitSecretsResponse)(nil),       // 19: sdk.v1beta.AwaitSecretsResponse
-	(*SecretRequest)(nil),              // 20: sdk.v1beta.SecretRequest
-	(*Secret)(nil),                     // 21: sdk.v1beta.Secret
-	(*SecretError)(nil),                // 22: sdk.v1beta.SecretError
-	(*SecretResponse)(nil),             // 23: sdk.v1beta.SecretResponse
-	(*SecretResponses)(nil),            // 24: sdk.v1beta.SecretResponses
-	nil,                                // 25: sdk.v1beta.FieldsMap.FieldsEntry
-	nil,                                // 26: sdk.v1beta.AwaitCapabilitiesResponse.ResponsesEntry
-	nil,                                // 27: sdk.v1beta.AwaitSecretsResponse.ResponsesEntry
+	(AggregationType)(0),               // 0: sdk.v1.AggregationType
+	(Mode)(0),                          // 1: sdk.v1.Mode
+	(*SimpleConsensusInputs)(nil),      // 2: sdk.v1.SimpleConsensusInputs
+	(*FieldsMap)(nil),                  // 3: sdk.v1.FieldsMap
+	(*ConsensusDescriptor)(nil),        // 4: sdk.v1.ConsensusDescriptor
+	(*ReportRequest)(nil),              // 5: sdk.v1.ReportRequest
+	(*ReportResponse)(nil),             // 6: sdk.v1.ReportResponse
+	(*AttributedSignature)(nil),        // 7: sdk.v1.AttributedSignature
+	(*CapabilityRequest)(nil),          // 8: sdk.v1.CapabilityRequest
+	(*CapabilityResponse)(nil),         // 9: sdk.v1.CapabilityResponse
+	(*TriggerSubscription)(nil),        // 10: sdk.v1.TriggerSubscription
+	(*TriggerSubscriptionRequest)(nil), // 11: sdk.v1.TriggerSubscriptionRequest
+	(*Trigger)(nil),                    // 12: sdk.v1.Trigger
+	(*AwaitCapabilitiesRequest)(nil),   // 13: sdk.v1.AwaitCapabilitiesRequest
+	(*AwaitCapabilitiesResponse)(nil),  // 14: sdk.v1.AwaitCapabilitiesResponse
+	(*ExecuteRequest)(nil),             // 15: sdk.v1.ExecuteRequest
+	(*ExecutionResult)(nil),            // 16: sdk.v1.ExecutionResult
+	(*GetSecretsRequest)(nil),          // 17: sdk.v1.GetSecretsRequest
+	(*AwaitSecretsRequest)(nil),        // 18: sdk.v1.AwaitSecretsRequest
+	(*AwaitSecretsResponse)(nil),       // 19: sdk.v1.AwaitSecretsResponse
+	(*SecretRequest)(nil),              // 20: sdk.v1.SecretRequest
+	(*Secret)(nil),                     // 21: sdk.v1.Secret
+	(*SecretError)(nil),                // 22: sdk.v1.SecretError
+	(*SecretResponse)(nil),             // 23: sdk.v1.SecretResponse
+	(*SecretResponses)(nil),            // 24: sdk.v1.SecretResponses
+	nil,                                // 25: sdk.v1.FieldsMap.FieldsEntry
+	nil,                                // 26: sdk.v1.AwaitCapabilitiesResponse.ResponsesEntry
+	nil,                                // 27: sdk.v1.AwaitSecretsResponse.ResponsesEntry
 	(*pb.Value)(nil),                   // 28: values.v1.Value
 	(*anypb.Any)(nil),                  // 29: google.protobuf.Any
 	(*emptypb.Empty)(nil),              // 30: google.protobuf.Empty
 }
 var file_sdk_v1beta_sdk_proto_depIdxs = []int32{
-	28, // 0: sdk.v1beta.SimpleConsensusInputs.value:type_name -> values.v1.Value
-	4,  // 1: sdk.v1beta.SimpleConsensusInputs.descriptors:type_name -> sdk.v1beta.ConsensusDescriptor
-	28, // 2: sdk.v1beta.SimpleConsensusInputs.default:type_name -> values.v1.Value
-	25, // 3: sdk.v1beta.FieldsMap.fields:type_name -> sdk.v1beta.FieldsMap.FieldsEntry
-	0,  // 4: sdk.v1beta.ConsensusDescriptor.aggregation:type_name -> sdk.v1beta.AggregationType
-	3,  // 5: sdk.v1beta.ConsensusDescriptor.fields_map:type_name -> sdk.v1beta.FieldsMap
-	7,  // 6: sdk.v1beta.ReportResponse.sigs:type_name -> sdk.v1beta.AttributedSignature
-	29, // 7: sdk.v1beta.CapabilityRequest.payload:type_name -> google.protobuf.Any
-	29, // 8: sdk.v1beta.CapabilityResponse.payload:type_name -> google.protobuf.Any
-	29, // 9: sdk.v1beta.TriggerSubscription.payload:type_name -> google.protobuf.Any
-	10, // 10: sdk.v1beta.TriggerSubscriptionRequest.subscriptions:type_name -> sdk.v1beta.TriggerSubscription
-	29, // 11: sdk.v1beta.Trigger.payload:type_name -> google.protobuf.Any
-	26, // 12: sdk.v1beta.AwaitCapabilitiesResponse.responses:type_name -> sdk.v1beta.AwaitCapabilitiesResponse.ResponsesEntry
-	30, // 13: sdk.v1beta.ExecuteRequest.subscribe:type_name -> google.protobuf.Empty
-	12, // 14: sdk.v1beta.ExecuteRequest.trigger:type_name -> sdk.v1beta.Trigger
-	28, // 15: sdk.v1beta.ExecutionResult.value:type_name -> values.v1.Value
-	11, // 16: sdk.v1beta.ExecutionResult.trigger_subscriptions:type_name -> sdk.v1beta.TriggerSubscriptionRequest
-	20, // 17: sdk.v1beta.GetSecretsRequest.requests:type_name -> sdk.v1beta.SecretRequest
-	27, // 18: sdk.v1beta.AwaitSecretsResponse.responses:type_name -> sdk.v1beta.AwaitSecretsResponse.ResponsesEntry
-	21, // 19: sdk.v1beta.SecretResponse.secret:type_name -> sdk.v1beta.Secret
-	22, // 20: sdk.v1beta.SecretResponse.error:type_name -> sdk.v1beta.SecretError
-	23, // 21: sdk.v1beta.SecretResponses.responses:type_name -> sdk.v1beta.SecretResponse
-	4,  // 22: sdk.v1beta.FieldsMap.FieldsEntry.value:type_name -> sdk.v1beta.ConsensusDescriptor
-	9,  // 23: sdk.v1beta.AwaitCapabilitiesResponse.ResponsesEntry.value:type_name -> sdk.v1beta.CapabilityResponse
-	24, // 24: sdk.v1beta.AwaitSecretsResponse.ResponsesEntry.value:type_name -> sdk.v1beta.SecretResponses
+	28, // 0: sdk.v1.SimpleConsensusInputs.value:type_name -> values.v1.Value
+	4,  // 1: sdk.v1.SimpleConsensusInputs.descriptors:type_name -> sdk.v1.ConsensusDescriptor
+	28, // 2: sdk.v1.SimpleConsensusInputs.default:type_name -> values.v1.Value
+	25, // 3: sdk.v1.FieldsMap.fields:type_name -> sdk.v1.FieldsMap.FieldsEntry
+	0,  // 4: sdk.v1.ConsensusDescriptor.aggregation:type_name -> sdk.v1.AggregationType
+	3,  // 5: sdk.v1.ConsensusDescriptor.fields_map:type_name -> sdk.v1.FieldsMap
+	7,  // 6: sdk.v1.ReportResponse.sigs:type_name -> sdk.v1.AttributedSignature
+	29, // 7: sdk.v1.CapabilityRequest.payload:type_name -> google.protobuf.Any
+	29, // 8: sdk.v1.CapabilityResponse.payload:type_name -> google.protobuf.Any
+	29, // 9: sdk.v1.TriggerSubscription.payload:type_name -> google.protobuf.Any
+	10, // 10: sdk.v1.TriggerSubscriptionRequest.subscriptions:type_name -> sdk.v1.TriggerSubscription
+	29, // 11: sdk.v1.Trigger.payload:type_name -> google.protobuf.Any
+	26, // 12: sdk.v1.AwaitCapabilitiesResponse.responses:type_name -> sdk.v1.AwaitCapabilitiesResponse.ResponsesEntry
+	30, // 13: sdk.v1.ExecuteRequest.subscribe:type_name -> google.protobuf.Empty
+	12, // 14: sdk.v1.ExecuteRequest.trigger:type_name -> sdk.v1.Trigger
+	28, // 15: sdk.v1.ExecutionResult.value:type_name -> values.v1.Value
+	11, // 16: sdk.v1.ExecutionResult.trigger_subscriptions:type_name -> sdk.v1.TriggerSubscriptionRequest
+	20, // 17: sdk.v1.GetSecretsRequest.requests:type_name -> sdk.v1.SecretRequest
+	27, // 18: sdk.v1.AwaitSecretsResponse.responses:type_name -> sdk.v1.AwaitSecretsResponse.ResponsesEntry
+	21, // 19: sdk.v1.SecretResponse.secret:type_name -> sdk.v1.Secret
+	22, // 20: sdk.v1.SecretResponse.error:type_name -> sdk.v1.SecretError
+	23, // 21: sdk.v1.SecretResponses.responses:type_name -> sdk.v1.SecretResponse
+	4,  // 22: sdk.v1.FieldsMap.FieldsEntry.value:type_name -> sdk.v1.ConsensusDescriptor
+	9,  // 23: sdk.v1.AwaitCapabilitiesResponse.ResponsesEntry.value:type_name -> sdk.v1.CapabilityResponse
+	24, // 24: sdk.v1.AwaitSecretsResponse.ResponsesEntry.value:type_name -> sdk.v1.SecretResponses
 	25, // [25:25] is the sub-list for method output_type
 	25, // [25:25] is the sub-list for method input_type
 	25, // [25:25] is the sub-list for extension type_name

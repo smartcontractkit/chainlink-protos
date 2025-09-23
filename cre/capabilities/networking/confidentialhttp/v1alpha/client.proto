@@ -35,7 +35,7 @@ message Output {
 }
 
 service Client {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_NODE
     capability_id: "confidential-http-actions@1.0.0-alpha"
   };

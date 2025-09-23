@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package tools.generator.v1beta;
+package tools.generator.v1;
 
 import "google/protobuf/descriptor.proto";
 import "sdk/v1beta/sdk.proto";
@@ -36,13 +36,13 @@ message Label {
 }
 
 message CapabilityMetadata {
-  sdk.v1beta.Mode mode = 1;
+  sdk.v1.Mode mode = 1;
   string capability_id = 2;
   map<string, Label> labels = 3;
 }
 
 extend google.protobuf.ServiceOptions {
-  CapabilityMetadata capability = 50000; // 50000-99999 is the range for custom options.
+  CapabilityMetadata capability = 50002; // 50000-99999 is the range for custom options.
 }
 
 message CapabilityMethodMetadata {
@@ -50,5 +50,5 @@ message CapabilityMethodMetadata {
 }
 
 extend google.protobuf.MethodOptions {
-  CapabilityMethodMetadata method = 50001; // 50000-99999 is the range for custom options.
+  CapabilityMethodMetadata method = 50003; // 50000-99999 is the range for custom options.
 }

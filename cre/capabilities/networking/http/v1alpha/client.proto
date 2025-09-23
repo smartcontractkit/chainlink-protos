@@ -27,7 +27,7 @@ message Response {
 }
 
 service Client {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_NODE
     capability_id: "http-actions@1.0.0-alpha"
   };

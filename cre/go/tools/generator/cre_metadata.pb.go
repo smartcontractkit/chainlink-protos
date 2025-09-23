@@ -375,7 +375,7 @@ func (*Label_Int32Label) isLabel_Kind() {}
 
 type CapabilityMetadata struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Mode          sdk.Mode               `protobuf:"varint,1,opt,name=mode,proto3,enum=sdk.v1beta.Mode" json:"mode,omitempty"`
+	Mode          sdk.Mode               `protobuf:"varint,1,opt,name=mode,proto3,enum=sdk.v1.Mode" json:"mode,omitempty"`
 	CapabilityId  string                 `protobuf:"bytes,2,opt,name=capability_id,json=capabilityId,proto3" json:"capability_id,omitempty"`
 	Labels        map[string]*Label      `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
@@ -482,7 +482,7 @@ var file_tools_generator_v1beta_cre_metadata_proto_extTypes = []protoimpl.Extens
 		ExtendedType:  (*descriptorpb.ServiceOptions)(nil),
 		ExtensionType: (*CapabilityMetadata)(nil),
 		Field:         50000,
-		Name:          "tools.generator.v1beta.capability",
+		Name:          "tools.generator.v1.capability",
 		Tag:           "bytes,50000,opt,name=capability",
 		Filename:      "tools/generator/v1beta/cre_metadata.proto",
 	},
@@ -490,7 +490,7 @@ var file_tools_generator_v1beta_cre_metadata_proto_extTypes = []protoimpl.Extens
 		ExtendedType:  (*descriptorpb.MethodOptions)(nil),
 		ExtensionType: (*CapabilityMethodMetadata)(nil),
 		Field:         50001,
-		Name:          "tools.generator.v1beta.method",
+		Name:          "tools.generator.v1.method",
 		Tag:           "bytes,50001,opt,name=method",
 		Filename:      "tools/generator/v1beta/cre_metadata.proto",
 	},
@@ -498,13 +498,13 @@ var file_tools_generator_v1beta_cre_metadata_proto_extTypes = []protoimpl.Extens
 
 // Extension fields to descriptorpb.ServiceOptions.
 var (
-	// optional tools.generator.v1beta.CapabilityMetadata capability = 50000;
+	// optional tools.generator.v1.CapabilityMetadata capability = 50000;
 	E_Capability = &file_tools_generator_v1beta_cre_metadata_proto_extTypes[0] // 50000-99999 is the range for custom options.
 )
 
 // Extension fields to descriptorpb.MethodOptions.
 var (
-	// optional tools.generator.v1beta.CapabilityMethodMetadata method = 50001;
+	// optional tools.generator.v1.CapabilityMethodMetadata method = 50001;
 	E_Method = &file_tools_generator_v1beta_cre_metadata_proto_extTypes[1] // 50000-99999 is the range for custom options.
 )
 
@@ -512,56 +512,56 @@ var File_tools_generator_v1beta_cre_metadata_proto protoreflect.FileDescriptor
 
 const file_tools_generator_v1beta_cre_metadata_proto_rawDesc = "" +
 	"\n" +
-	")tools/generator/v1beta/cre_metadata.proto\x12\x16tools.generator.v1beta\x1a google/protobuf/descriptor.proto\x1a\x14sdk/v1beta/sdk.proto\"\x99\x01\n" +
-	"\vStringLabel\x12M\n" +
-	"\bdefaults\x18\x01 \x03(\v21.tools.generator.v1beta.StringLabel.DefaultsEntryR\bdefaults\x1a;\n" +
+	")tools/generator/v1beta/cre_metadata.proto\x12\x12tools.generator.v1\x1a google/protobuf/descriptor.proto\x1a\x14sdk/v1beta/sdk.proto\"\x95\x01\n" +
+	"\vStringLabel\x12I\n" +
+	"\bdefaults\x18\x01 \x03(\v2-.tools.generator.v1.StringLabel.DefaultsEntryR\bdefaults\x1a;\n" +
 	"\rDefaultsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x99\x01\n" +
-	"\vUint64Label\x12M\n" +
-	"\bdefaults\x18\x01 \x03(\v21.tools.generator.v1beta.Uint64Label.DefaultsEntryR\bdefaults\x1a;\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x95\x01\n" +
+	"\vUint64Label\x12I\n" +
+	"\bdefaults\x18\x01 \x03(\v2-.tools.generator.v1.Uint64Label.DefaultsEntryR\bdefaults\x1a;\n" +
 	"\rDefaultsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x04R\x05value:\x028\x01\"\x99\x01\n" +
-	"\vUint32Label\x12M\n" +
-	"\bdefaults\x18\x01 \x03(\v21.tools.generator.v1beta.Uint32Label.DefaultsEntryR\bdefaults\x1a;\n" +
+	"\x05value\x18\x02 \x01(\x04R\x05value:\x028\x01\"\x95\x01\n" +
+	"\vUint32Label\x12I\n" +
+	"\bdefaults\x18\x01 \x03(\v2-.tools.generator.v1.Uint32Label.DefaultsEntryR\bdefaults\x1a;\n" +
 	"\rDefaultsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\rR\x05value:\x028\x01\"\x97\x01\n" +
+	"\x05value\x18\x02 \x01(\rR\x05value:\x028\x01\"\x93\x01\n" +
 	"\n" +
-	"Int64Label\x12L\n" +
-	"\bdefaults\x18\x01 \x03(\v20.tools.generator.v1beta.Int64Label.DefaultsEntryR\bdefaults\x1a;\n" +
+	"Int64Label\x12H\n" +
+	"\bdefaults\x18\x01 \x03(\v2,.tools.generator.v1.Int64Label.DefaultsEntryR\bdefaults\x1a;\n" +
 	"\rDefaultsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01\"\x97\x01\n" +
+	"\x05value\x18\x02 \x01(\x03R\x05value:\x028\x01\"\x93\x01\n" +
 	"\n" +
-	"Int32Label\x12L\n" +
-	"\bdefaults\x18\x01 \x03(\v20.tools.generator.v1beta.Int32Label.DefaultsEntryR\bdefaults\x1a;\n" +
+	"Int32Label\x12H\n" +
+	"\bdefaults\x18\x01 \x03(\v2,.tools.generator.v1.Int32Label.DefaultsEntryR\bdefaults\x1a;\n" +
 	"\rDefaultsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x01\"\xfb\x02\n" +
-	"\x05Label\x12H\n" +
-	"\fstring_label\x18\x01 \x01(\v2#.tools.generator.v1beta.StringLabelH\x00R\vstringLabel\x12H\n" +
-	"\fuint64_label\x18\x02 \x01(\v2#.tools.generator.v1beta.Uint64LabelH\x00R\vuint64Label\x12E\n" +
-	"\vint64_label\x18\x03 \x01(\v2\".tools.generator.v1beta.Int64LabelH\x00R\n" +
-	"int64Label\x12H\n" +
-	"\fuint32_label\x18\x04 \x01(\v2#.tools.generator.v1beta.Uint32LabelH\x00R\vuint32Label\x12E\n" +
-	"\vint32_label\x18\x05 \x01(\v2\".tools.generator.v1beta.Int32LabelH\x00R\n" +
+	"\x05value\x18\x02 \x01(\x05R\x05value:\x028\x01\"\xe7\x02\n" +
+	"\x05Label\x12D\n" +
+	"\fstring_label\x18\x01 \x01(\v2\x1f.tools.generator.v1.StringLabelH\x00R\vstringLabel\x12D\n" +
+	"\fuint64_label\x18\x02 \x01(\v2\x1f.tools.generator.v1.Uint64LabelH\x00R\vuint64Label\x12A\n" +
+	"\vint64_label\x18\x03 \x01(\v2\x1e.tools.generator.v1.Int64LabelH\x00R\n" +
+	"int64Label\x12D\n" +
+	"\fuint32_label\x18\x04 \x01(\v2\x1f.tools.generator.v1.Uint32LabelH\x00R\vuint32Label\x12A\n" +
+	"\vint32_label\x18\x05 \x01(\v2\x1e.tools.generator.v1.Int32LabelH\x00R\n" +
 	"int32LabelB\x06\n" +
-	"\x04kind\"\x89\x02\n" +
-	"\x12CapabilityMetadata\x12$\n" +
-	"\x04mode\x18\x01 \x01(\x0e2\x10.sdk.v1beta.ModeR\x04mode\x12#\n" +
-	"\rcapability_id\x18\x02 \x01(\tR\fcapabilityId\x12N\n" +
-	"\x06labels\x18\x03 \x03(\v26.tools.generator.v1beta.CapabilityMetadata.LabelsEntryR\x06labels\x1aX\n" +
+	"\x04kind\"\xfd\x01\n" +
+	"\x12CapabilityMetadata\x12 \n" +
+	"\x04mode\x18\x01 \x01(\x0e2\f.sdk.v1.ModeR\x04mode\x12#\n" +
+	"\rcapability_id\x18\x02 \x01(\tR\fcapabilityId\x12J\n" +
+	"\x06labels\x18\x03 \x03(\v22.tools.generator.v1.CapabilityMetadata.LabelsEntryR\x06labels\x1aT\n" +
 	"\vLabelsEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x123\n" +
-	"\x05value\x18\x02 \x01(\v2\x1d.tools.generator.v1beta.LabelR\x05value:\x028\x01\"G\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12/\n" +
+	"\x05value\x18\x02 \x01(\v2\x19.tools.generator.v1.LabelR\x05value:\x028\x01\"G\n" +
 	"\x18CapabilityMethodMetadata\x12+\n" +
-	"\x12map_to_untyped_api\x18\x01 \x01(\bR\x0fmapToUntypedApi:m\n" +
+	"\x12map_to_untyped_api\x18\x01 \x01(\bR\x0fmapToUntypedApi:i\n" +
 	"\n" +
-	"capability\x12\x1f.google.protobuf.ServiceOptions\x18І\x03 \x01(\v2*.tools.generator.v1beta.CapabilityMetadataR\n" +
-	"capability:j\n" +
-	"\x06method\x12\x1e.google.protobuf.MethodOptions\x18ц\x03 \x01(\v20.tools.generator.v1beta.CapabilityMethodMetadataR\x06methodb\x06proto3"
+	"capability\x12\x1f.google.protobuf.ServiceOptions\x18І\x03 \x01(\v2&.tools.generator.v1.CapabilityMetadataR\n" +
+	"capability:f\n" +
+	"\x06method\x12\x1e.google.protobuf.MethodOptions\x18ц\x03 \x01(\v2,.tools.generator.v1.CapabilityMethodMetadataR\x06methodb\x06proto3"
 
 var (
 	file_tools_generator_v1beta_cre_metadata_proto_rawDescOnce sync.Once
@@ -577,42 +577,42 @@ func file_tools_generator_v1beta_cre_metadata_proto_rawDescGZIP() []byte {
 
 var file_tools_generator_v1beta_cre_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_tools_generator_v1beta_cre_metadata_proto_goTypes = []any{
-	(*StringLabel)(nil),                 // 0: tools.generator.v1beta.StringLabel
-	(*Uint64Label)(nil),                 // 1: tools.generator.v1beta.Uint64Label
-	(*Uint32Label)(nil),                 // 2: tools.generator.v1beta.Uint32Label
-	(*Int64Label)(nil),                  // 3: tools.generator.v1beta.Int64Label
-	(*Int32Label)(nil),                  // 4: tools.generator.v1beta.Int32Label
-	(*Label)(nil),                       // 5: tools.generator.v1beta.Label
-	(*CapabilityMetadata)(nil),          // 6: tools.generator.v1beta.CapabilityMetadata
-	(*CapabilityMethodMetadata)(nil),    // 7: tools.generator.v1beta.CapabilityMethodMetadata
-	nil,                                 // 8: tools.generator.v1beta.StringLabel.DefaultsEntry
-	nil,                                 // 9: tools.generator.v1beta.Uint64Label.DefaultsEntry
-	nil,                                 // 10: tools.generator.v1beta.Uint32Label.DefaultsEntry
-	nil,                                 // 11: tools.generator.v1beta.Int64Label.DefaultsEntry
-	nil,                                 // 12: tools.generator.v1beta.Int32Label.DefaultsEntry
-	nil,                                 // 13: tools.generator.v1beta.CapabilityMetadata.LabelsEntry
-	(sdk.Mode)(0),                       // 14: sdk.v1beta.Mode
+	(*StringLabel)(nil),                 // 0: tools.generator.v1.StringLabel
+	(*Uint64Label)(nil),                 // 1: tools.generator.v1.Uint64Label
+	(*Uint32Label)(nil),                 // 2: tools.generator.v1.Uint32Label
+	(*Int64Label)(nil),                  // 3: tools.generator.v1.Int64Label
+	(*Int32Label)(nil),                  // 4: tools.generator.v1.Int32Label
+	(*Label)(nil),                       // 5: tools.generator.v1.Label
+	(*CapabilityMetadata)(nil),          // 6: tools.generator.v1.CapabilityMetadata
+	(*CapabilityMethodMetadata)(nil),    // 7: tools.generator.v1.CapabilityMethodMetadata
+	nil,                                 // 8: tools.generator.v1.StringLabel.DefaultsEntry
+	nil,                                 // 9: tools.generator.v1.Uint64Label.DefaultsEntry
+	nil,                                 // 10: tools.generator.v1.Uint32Label.DefaultsEntry
+	nil,                                 // 11: tools.generator.v1.Int64Label.DefaultsEntry
+	nil,                                 // 12: tools.generator.v1.Int32Label.DefaultsEntry
+	nil,                                 // 13: tools.generator.v1.CapabilityMetadata.LabelsEntry
+	(sdk.Mode)(0),                       // 14: sdk.v1.Mode
 	(*descriptorpb.ServiceOptions)(nil), // 15: google.protobuf.ServiceOptions
 	(*descriptorpb.MethodOptions)(nil),  // 16: google.protobuf.MethodOptions
 }
 var file_tools_generator_v1beta_cre_metadata_proto_depIdxs = []int32{
-	8,  // 0: tools.generator.v1beta.StringLabel.defaults:type_name -> tools.generator.v1beta.StringLabel.DefaultsEntry
-	9,  // 1: tools.generator.v1beta.Uint64Label.defaults:type_name -> tools.generator.v1beta.Uint64Label.DefaultsEntry
-	10, // 2: tools.generator.v1beta.Uint32Label.defaults:type_name -> tools.generator.v1beta.Uint32Label.DefaultsEntry
-	11, // 3: tools.generator.v1beta.Int64Label.defaults:type_name -> tools.generator.v1beta.Int64Label.DefaultsEntry
-	12, // 4: tools.generator.v1beta.Int32Label.defaults:type_name -> tools.generator.v1beta.Int32Label.DefaultsEntry
-	0,  // 5: tools.generator.v1beta.Label.string_label:type_name -> tools.generator.v1beta.StringLabel
-	1,  // 6: tools.generator.v1beta.Label.uint64_label:type_name -> tools.generator.v1beta.Uint64Label
-	3,  // 7: tools.generator.v1beta.Label.int64_label:type_name -> tools.generator.v1beta.Int64Label
-	2,  // 8: tools.generator.v1beta.Label.uint32_label:type_name -> tools.generator.v1beta.Uint32Label
-	4,  // 9: tools.generator.v1beta.Label.int32_label:type_name -> tools.generator.v1beta.Int32Label
-	14, // 10: tools.generator.v1beta.CapabilityMetadata.mode:type_name -> sdk.v1beta.Mode
-	13, // 11: tools.generator.v1beta.CapabilityMetadata.labels:type_name -> tools.generator.v1beta.CapabilityMetadata.LabelsEntry
-	5,  // 12: tools.generator.v1beta.CapabilityMetadata.LabelsEntry.value:type_name -> tools.generator.v1beta.Label
-	15, // 13: tools.generator.v1beta.capability:extendee -> google.protobuf.ServiceOptions
-	16, // 14: tools.generator.v1beta.method:extendee -> google.protobuf.MethodOptions
-	6,  // 15: tools.generator.v1beta.capability:type_name -> tools.generator.v1beta.CapabilityMetadata
-	7,  // 16: tools.generator.v1beta.method:type_name -> tools.generator.v1beta.CapabilityMethodMetadata
+	8,  // 0: tools.generator.v1.StringLabel.defaults:type_name -> tools.generator.v1.StringLabel.DefaultsEntry
+	9,  // 1: tools.generator.v1.Uint64Label.defaults:type_name -> tools.generator.v1.Uint64Label.DefaultsEntry
+	10, // 2: tools.generator.v1.Uint32Label.defaults:type_name -> tools.generator.v1.Uint32Label.DefaultsEntry
+	11, // 3: tools.generator.v1.Int64Label.defaults:type_name -> tools.generator.v1.Int64Label.DefaultsEntry
+	12, // 4: tools.generator.v1.Int32Label.defaults:type_name -> tools.generator.v1.Int32Label.DefaultsEntry
+	0,  // 5: tools.generator.v1.Label.string_label:type_name -> tools.generator.v1.StringLabel
+	1,  // 6: tools.generator.v1.Label.uint64_label:type_name -> tools.generator.v1.Uint64Label
+	3,  // 7: tools.generator.v1.Label.int64_label:type_name -> tools.generator.v1.Int64Label
+	2,  // 8: tools.generator.v1.Label.uint32_label:type_name -> tools.generator.v1.Uint32Label
+	4,  // 9: tools.generator.v1.Label.int32_label:type_name -> tools.generator.v1.Int32Label
+	14, // 10: tools.generator.v1.CapabilityMetadata.mode:type_name -> sdk.v1.Mode
+	13, // 11: tools.generator.v1.CapabilityMetadata.labels:type_name -> tools.generator.v1.CapabilityMetadata.LabelsEntry
+	5,  // 12: tools.generator.v1.CapabilityMetadata.LabelsEntry.value:type_name -> tools.generator.v1.Label
+	15, // 13: tools.generator.v1.capability:extendee -> google.protobuf.ServiceOptions
+	16, // 14: tools.generator.v1.method:extendee -> google.protobuf.MethodOptions
+	6,  // 15: tools.generator.v1.capability:type_name -> tools.generator.v1.CapabilityMetadata
+	7,  // 16: tools.generator.v1.method:type_name -> tools.generator.v1.CapabilityMethodMetadata
 	17, // [17:17] is the sub-list for method output_type
 	17, // [17:17] is the sub-list for method input_type
 	15, // [15:17] is the sub-list for extension type_name

@@ -14,7 +14,7 @@ message Outputs {
 
 // This action server for testing purposes only.
 service BasicAction { // This comment tests the generator's ability to handle comments.
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_DON
     capability_id: "basic-test-action@1.0.0"
   };

@@ -7,10 +7,10 @@ import "tools/generator/v1beta/cre_metadata.proto";
 import "values/v1/values.proto";
 
 service Consensus {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_DON
     capability_id: "consensus@1.0.0-alpha"
   };
-  rpc Simple(sdk.v1beta.SimpleConsensusInputs) returns (values.v1.Value);
-  rpc Report(sdk.v1beta.ReportRequest) returns (sdk.v1beta.ReportResponse);
+  rpc Simple(sdk.v1alpha.SimpleConsensusInputs) returns (values.v1.Value);
+  rpc Report(sdk.v1alpha.ReportRequest) returns (sdk.v1alpha.ReportResponse);
 }

@@ -162,7 +162,7 @@ message Header {
 }
 
 service Client {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_DON
     capability_id: "evm@1.0.0"
     labels: {
@@ -247,7 +247,7 @@ enum ReceiverContractExecutionStatus {
 
 message WriteReportRequest {
   bytes receiver = 1;
-  sdk.v1beta.ReportResponse report = 2;
+  sdk.v1.ReportResponse report = 2;
   optional GasConfig gas_config = 3;
 }
 
@@ -294,7 +294,7 @@ message Output {
 }
 
 service Basic {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_DON
     capability_id: "basic-test-action-trigger@1.0.0"
   };
@@ -319,7 +319,7 @@ message Outputs {
 
 // This action server for testing purposes only.
 service BasicAction { // This comment tests the generator's ability to handle comments.
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_DON
     capability_id: "basic-test-action@1.0.0"
   };
@@ -344,7 +344,7 @@ message Outputs {
 }
 
 service Basic {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_DON
     capability_id: "basic-test-trigger@1.0.0"
   };
@@ -361,12 +361,12 @@ import "tools/generator/v1beta/cre_metadata.proto";
 import "values/v1/values.proto";
 
 service Consensus {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_DON
     capability_id: "consensus@1.0.0-alpha"
   };
-  rpc Simple(sdk.v1beta.SimpleConsensusInputs) returns (values.v1.Value);
-  rpc Report(sdk.v1beta.ReportRequest) returns (sdk.v1beta.ReportResponse);
+  rpc Simple(sdk.v1.SimpleConsensusInputs) returns (values.v1.Value);
+  rpc Report(sdk.v1.ReportRequest) returns (sdk.v1.ReportResponse);
 }
 `
 
@@ -397,7 +397,7 @@ import "capabilities/internal/importclash/p2/v1/import.proto";
 import "tools/generator/v1beta/cre_metadata.proto";
 
 service BasicAction {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_DON
     capability_id: "import-clash@1.0.0"
   };
@@ -420,7 +420,7 @@ message NodeOutputs {
 }
 
 service BasicAction {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_NODE
     capability_id: "basic-test-node-action@1.0.0"
   };
@@ -465,7 +465,7 @@ message Output {
 }
 
 service Client {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_NODE
     capability_id: "confidential-http-actions@1.0.0-alpha"
   };
@@ -502,7 +502,7 @@ message Response {
 }
 
 service Client {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_NODE
     capability_id: "http-actions@1.0.0-alpha"
   };
@@ -541,7 +541,7 @@ message AuthorizedKey {
 }
 
 service HTTP {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_DON
     capability_id: "http-trigger@1.0.0-alpha"
   };
@@ -571,7 +571,7 @@ message LegacyPayload {
 }
 
 service Cron {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_DON
     capability_id: "cron-trigger@1.0.0"
   };
@@ -746,7 +746,7 @@ message SecretResponses {
 
 const v1betaSdkEmbedded = `syntax = "proto3";
 
-package sdk.v1beta;
+package sdk.v1;
 
 import "google/protobuf/any.proto";
 import "google/protobuf/empty.proto";
@@ -961,7 +961,7 @@ extend google.protobuf.MethodOptions {
 
 const generatorV1betaCreMetadataEmbedded = `syntax = "proto3";
 
-package tools.generator.v1beta;
+package tools.generator.v1;
 
 import "google/protobuf/descriptor.proto";
 import "sdk/v1beta/sdk.proto";
@@ -997,7 +997,7 @@ message Label {
 }
 
 message CapabilityMetadata {
-  sdk.v1beta.Mode mode = 1;
+  sdk.v1.Mode mode = 1;
   string capability_id = 2;
   map<string, Label> labels = 3;
 }

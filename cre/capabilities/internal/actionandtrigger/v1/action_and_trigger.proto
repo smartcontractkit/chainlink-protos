@@ -22,7 +22,7 @@ message Output {
 }
 
 service Basic {
-  option (tools.generator.v1beta.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_DON
     capability_id: "basic-test-action-trigger@1.0.0"
   };
