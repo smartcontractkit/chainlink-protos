@@ -365,8 +365,8 @@ service Consensus {
     mode: MODE_DON
     capability_id: "consensus@1.0.0-alpha"
   };
-  rpc Simple(sdk.v1alpha.SimpleConsensusInputs) returns (values.v1.Value);
-  rpc Report(sdk.v1alpha.ReportRequest) returns (sdk.v1alpha.ReportResponse);
+  rpc Simple(sdk.v1.SimpleConsensusInputs) returns (values.v1.Value);
+  rpc Report(sdk.v1.ReportRequest) returns (sdk.v1.ReportResponse);
 }
 `
 
