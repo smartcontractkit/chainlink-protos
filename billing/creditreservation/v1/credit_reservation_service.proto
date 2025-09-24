@@ -40,6 +40,24 @@ enum MeasurementUnit {
   MEASUREMENT_UNIT_COST = 5;
 }
 
+// CallType signifies the two billing service calls with aggregation
+enum CallType {
+    RESERVE_CREDITS = 0;
+    WORKFLOW_RECEIPT = 1;
+}
+
+// AggregationStatus reflects the two possible states of aggregation
+enum AggregationStatus {
+    COLLECTING = 0;
+    AGGREGATION_MET = 1;
+}
+
+// AggregationStatus reflects the two possible states of aggregation
+enum AggregationOutcome {
+    SUCCESS = 0;
+    FAILURE = 1;
+}
+
 // Organization’s credit balances.
 message OrganizationCredits {
   string credits = 1;
@@ -112,6 +130,22 @@ message GetRateCardResponse {
   repeated RateCardEntry entries = 1;
 }
 
+message CheckAggregationStatusRequest {
+    string WorkflowOwner = 1;
+    string WorkflowRegistryAddress = 2;
+    uint64 WorkflowRegistryChainSelector = 3;
+    CallType CallType = 4; // RESERVE_CREDITS, WORKFLOW_RECEIPT
+}
+
+message CheckAggregationStatusResponse {
+    uint64 NOracles = 1; // Number of oracles participating
+    uint64 FFault = 2; // 3*f + 1 <= n
+    uint64 QuorumThreshold = 3; // e.g. 2*f + 1
+    uint64 ReportsReceived = 4; // current number of submitted reserve and reports
+    AggregationStatus AggregationStatus = 5; // COLLECTING, AGGREGATION_MET
+    AggregationOutcome Outcome = 6; // SUCCESS, FAILURE
+}
+
 // Service for reserving and querying credits.
 service CreditReservationService {
   rpc GetOrganizationCreditsByWorkflow(GetOrganizationCreditsByWorkflowRequest) returns (GetOrganizationCreditsByWorkflowResponse);
@@ -121,4 +155,6 @@ service CreditReservationService {
   rpc SubmitWorkflowReceipt(SubmitWorkflowReceiptRequest) returns (google.protobuf.Empty);
 
   rpc GetRateCard(GetRateCardRequest) returns (GetRateCardResponse);
+
+  rpc CheckAggregationStatus(CheckAggregationStatusRequest) returns (CheckAggregationStatusResponse);
 }
