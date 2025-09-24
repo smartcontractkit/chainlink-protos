@@ -52,7 +52,7 @@ enum AggregationStatus {
     AGGREGATION_MET = 1;
 }
 
-// AggregationStatus reflects the two possible states of aggregation
+// AggregationOutcome reflects the two possible outcomes of aggregation
 enum AggregationOutcome {
     SUCCESS = 0;
     FAILURE = 1;
@@ -146,7 +146,7 @@ message CheckAggregationStatusResponse {
     AggregationOutcome Outcome = 6; // SUCCESS, FAILURE
 }
 
-// Service for reserving and querying credits.
+// Service for reserving and querying credits. As will as aggregation status.
 service CreditReservationService {
   rpc GetOrganizationCreditsByWorkflow(GetOrganizationCreditsByWorkflowRequest) returns (GetOrganizationCreditsByWorkflowResponse);
 
