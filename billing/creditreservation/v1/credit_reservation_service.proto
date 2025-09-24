@@ -131,8 +131,8 @@ message GetRateCardResponse {
 }
 
 message CheckAggregationStatusRequest {
-  string WorkflowOwner = 1;
-  string WorkflowRegistryAddress = 2;
+  string WorkflowId = 1;
+  string WorkflowExecutionId = 2;
   uint64 WorkflowRegistryChainSelector = 3;
   CallType CallType = 4; // RESERVE_CREDITS, WORKFLOW_RECEIPT
 }
