@@ -381,7 +381,7 @@ import "values/v1/values.proto";
 service Consensus {
   option (tools.generator.v1.capability) = {
     mode: MODE_DON
-    capability_id: "consensus@1.0.0-alpha"
+    capability_id: "consensus@1.0.0"
   };
   rpc Simple(sdk.v1.SimpleConsensusInputs) returns (values.v1.Value);
   rpc Report(sdk.v1.ReportRequest) returns (sdk.v1.ReportResponse);
