@@ -370,6 +370,24 @@ service Consensus {
 }
 `
 
+const internalConsensusV1betaConsensusEmbedded = `syntax = "proto3";
+
+package capabilities.internal.consensus.v1;
+
+import "sdk/v1beta/sdk.proto";
+import "tools/generator/v1beta/cre_metadata.proto";
+import "values/v1/values.proto";
+
+service Consensus {
+  option (tools.generator.v1.capability) = {
+    mode: MODE_DON
+    capability_id: "consensus@1.0.0-alpha"
+  };
+  rpc Simple(sdk.v1.SimpleConsensusInputs) returns (values.v1.Value);
+  rpc Report(sdk.v1.ReportRequest) returns (sdk.v1.ReportResponse);
+}
+`
+
 const internalImportclashP1V1ImportEmbedded = `syntax = "proto3";
 
 package capabilities.internal.importclash.p1.v1;
@@ -1077,6 +1095,10 @@ var allFiles = []*embeddedFile{
 	{
 		name:    "capabilities/internal/consensus/v1alpha/consensus.proto",
 		content: internalConsensusV1alphaConsensusEmbedded,
+	},
+	{
+		name:    "capabilities/internal/consensus/v1beta/consensus.proto",
+		content: internalConsensusV1betaConsensusEmbedded,
 	},
 	{
 		name:    "capabilities/internal/importclash/p1/v1/import.proto",
