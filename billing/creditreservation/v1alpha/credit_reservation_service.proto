@@ -37,20 +37,20 @@ enum MeasurementUnit {
 
 // CallType signifies the two billing service calls with aggregation
 enum CallType {
-    RESERVE_CREDITS = 0;
-    WORKFLOW_RECEIPT = 1;
+  RESERVE_CREDITS = 0;
+  WORKFLOW_RECEIPT = 1;
 }
 
 // AggregationStatus reflects the two possible states of aggregation
 enum AggregationStatus {
-    COLLECTING = 0;
-    AGGREGATION_MET = 1;
+  COLLECTING = 0;
+  AGGREGATION_MET = 1;
 }
 
 // AggregationOutcome reflects the two possible outcomes of aggregation
 enum AggregationOutcome {
-    SUCCESS = 0;
-    FAILURE = 1;
+  SUCCESS = 0;
+  FAILURE = 1;
 }
 
 // Organization’s credit balances.
@@ -127,19 +127,19 @@ message GetWorkflowExecutionRatesResponse {
 }
 
 message CheckAggregationStatusRequest {
-    string WorkflowId = 1;
-    string WorkflowExecutionId = 2;
-    uint64 WorkflowRegistryChainSelector = 3;
-    CallType CallType = 4; // RESERVE_CREDITS, WORKFLOW_RECEIPT
+  string WorkflowId = 1;
+  string WorkflowExecutionId = 2;
+  uint64 WorkflowRegistryChainSelector = 3;
+  CallType CallType = 4; // RESERVE_CREDITS, WORKFLOW_RECEIPT
 }
 
 message CheckAggregationStatusResponse {
-    uint64 NOracles = 1; // Number of oracles participating
-    uint64 FFault = 2; // 3*f + 1 <= n
-    uint64 QuorumThreshold = 3; // e.g. 2*f + 1
-    uint64 ReportsReceived = 4; // current number of submitted reserve and reports
-    AggregationStatus AggregationStatus = 5; // COLLECTING, AGGREGATION_MET
-    AggregationOutcome Outcome = 6; // SUCCESS, FAILURE
+  uint64 NOracles = 1; // Number of oracles participating
+  uint64 FFault = 2; // 3*f + 1 <= n
+  uint64 QuorumThreshold = 3; // e.g. 2*f + 1
+  uint64 ReportsReceived = 4; // current number of submitted reserve and reports
+  AggregationStatus AggregationStatus = 5; // COLLECTING, AGGREGATION_MET
+  AggregationOutcome Outcome = 6; // SUCCESS, FAILURE
 }
 
 // -----------------------------------------------------------------------------
