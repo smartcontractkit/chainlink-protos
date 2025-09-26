@@ -20,8 +20,8 @@ message Request {
 }
 
 message ResponseTemplate {
-  int64 status_code = 1;  
-  bytes body = 2;           
+  int64 status_code = 1;
+  bytes body = 2;
 }
 
 message HTTPEnclaveRequestData {
@@ -30,11 +30,11 @@ message HTTPEnclaveRequestData {
 
 message EnclaveActionInput {
   repeated SecretIdentifier vault_don_secrets = 1;
-  HTTPEnclaveRequestData input = 2;  
+  HTTPEnclaveRequestData input = 2;
 }
 
 message HTTPEnclaveResponseData {
-  repeated ResponseTemplate responses = 1;  
+  repeated ResponseTemplate responses = 1;
 }
 
 service Client {
