@@ -493,9 +493,8 @@ message HTTPEnclaveResponseData {
 service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
-    capability_id: "confidential-http-capability@1.0.0-alpha"
+    capability_id: "confidential-http@1.0.0-alpha"
   };
-  // CHANGED: Updated message types
   rpc SendRequests(EnclaveActionInput) returns (HTTPEnclaveResponseData);
 }
 `
