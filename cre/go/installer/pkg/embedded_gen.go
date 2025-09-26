@@ -464,7 +464,7 @@ message SecretIdentifier {
 }
 
 message Request {
-  string Url = 1;
+  string url = 1;
   string method = 2;
   string body = 3;
   repeated string headers = 4;
