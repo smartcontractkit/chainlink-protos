@@ -11,12 +11,12 @@ message SecretIdentifier {
 }
 
 message Request {
-  string url = 1;                                   
-  string method = 2;                                
-  string body = 3;                                   
-  repeated string headers = 4;                       
-  map<string, string> public_template_values = 5;   
-  bytes custom_cert_bundle = 6;                
+  string url = 1;
+  string method = 2;
+  string body = 3;
+  repeated string headers = 4;
+  map<string, string> public_template_values = 5;
+  bytes custom_cert_bundle = 6;
 }
 
 message ResponseTemplate {
