@@ -11,17 +11,17 @@ message SecretIdentifier {
 }
 
 message Request {
-  string URL = 1;                                   
-  string method = 2;                                
-  string body = 3;                                   
-  repeated string headers = 4;                       
-  map<string, string> public_template_values = 5;   
-  bytes custom_cert_bundle = 6;                
+  string URL = 1;
+  string method = 2;
+  string body = 3;
+  repeated string headers = 4;
+  map<string, string> public_template_values = 5;
+  bytes custom_cert_bundle = 6;
 }
 
 message ResponseTemplate {
-  int64 status_code = 1;  
-  bytes body = 2;           
+  int64 status_code = 1;
+  bytes body = 2;
 }
 
 message HTTPEnclaveRequestData {
@@ -30,11 +30,11 @@ message HTTPEnclaveRequestData {
 
 message EnclaveActionInput {
   repeated SecretIdentifier vault_don_secrets = 1;
-  HTTPEnclaveRequestData input = 2;  
+  HTTPEnclaveRequestData input = 2;
 }
 
 message HTTPEnclaveResponseData {
-  repeated ResponseTemplate responses = 1;  
+  repeated ResponseTemplate responses = 1;
 }
 
 service Client {

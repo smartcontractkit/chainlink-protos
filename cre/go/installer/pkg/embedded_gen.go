@@ -455,7 +455,6 @@ const networkingConfidentialhttpV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.networking.confidentialhttp.v1alpha;
 
-import "google/protobuf/struct.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
 message SecretIdentifier {
@@ -465,34 +464,39 @@ message SecretIdentifier {
 }
 
 message Request {
-  string body = 1;
-  bytes custom_cert_bundle = 2;
-  repeated string headers = 3;
-  string method = 4;
-  google.protobuf.Struct public_template_values = 5;
-  string url = 6;
+  string URL = 1;
+  string method = 2;
+  string body = 3;
+  repeated string headers = 4;
+  map<string, string> public_template_values = 5;
+  bytes custom_cert_bundle = 6;
 }
 
-message Input {
+message ResponseTemplate {
+  int64 status_code = 1;
+  bytes body = 2;
+}
+
+message HTTPEnclaveRequestData {
   repeated Request requests = 1;
-  repeated SecretIdentifier vault_don_secrets = 2;
 }
 
-message OutputResponsesElem {
-  bytes body = 1;
-  int64 status_code = 2;
+message EnclaveActionInput {
+  repeated SecretIdentifier vault_don_secrets = 1;
+  HTTPEnclaveRequestData input = 2;
 }
 
-message Output {
-  repeated OutputResponsesElem responses = 1;
+message HTTPEnclaveResponseData {
+  repeated ResponseTemplate responses = 1;
 }
 
 service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
-    capability_id: "confidential-http-actions@1.0.0-alpha"
+    capability_id: "confidential-http-capability@1.0.0-alpha"
   };
-  rpc SendRequests(Input) returns (Output);
+  // CHANGED: Updated message types
+  rpc SendRequests(EnclaveActionInput) returns (HTTPEnclaveResponseData);
 }
 `
 
