@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package tools.generator.v1;
+
+import "google/protobuf/descriptor.proto";
+import "sdk/v1beta/sdk.proto";
+
+message StringLabel {
+  map<string, string> defaults = 1;
+}
+
+message Uint64Label {
+  map<string, uint64> defaults = 1;
+}
+
+message Uint32Label {
+  map<string, uint32> defaults = 1;
+}
+
+message Int64Label {
+  map<string, int64> defaults = 1;
+}
+
+message Int32Label {
+  map<string, int32> defaults = 1;
+}
+
+message Label {
+  oneof kind {
+    StringLabel string_label = 1;
+    Uint64Label uint64_label = 2;
+    Int64Label int64_label = 3;
+    Uint32Label uint32_label = 4;
+    Int32Label int32_label = 5;
+  }
+}
+
+message CapabilityMetadata {
+  sdk.v1.Mode mode = 1;
+  string capability_id = 2;
+  map<string, Label> labels = 3;
+}
+
+extend google.protobuf.ServiceOptions {
+  CapabilityMetadata capability = 50002; // 50000-99999 is the range for custom options.
+}
+
+message CapabilityMethodMetadata {
+  bool map_to_untyped_api = 1;
+}
+
+extend google.protobuf.MethodOptions {
+  CapabilityMethodMetadata method = 50003; // 50000-99999 is the range for custom options.
+}

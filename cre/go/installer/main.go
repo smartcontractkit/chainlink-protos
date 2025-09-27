@@ -11,8 +11,8 @@ import (
 func main() {
 	gen := &pkg.ProtocGen{Plugins: []pkg.Plugin{pkg.GoPlugin}}
 	mustGenAndMove(gen, "values/v1/values.proto", "pb")
-	mustGenAndMove(gen, "sdk/v1alpha/sdk.proto", "")
-	mustGenAndMove(gen, "tools/generator/v1alpha/cre_metadata.proto", "")
+	mustGenAndMove(gen, "sdk/v1beta/sdk.proto", "")
+	mustGenAndMove(gen, "tools/generator/v1beta/cre_metadata.proto", "")
 }
 
 func mustGenAndMove(gen *pkg.ProtocGen, file, innerPkg string) {
@@ -29,7 +29,7 @@ func mustGenAndMove(gen *pkg.ProtocGen, file, innerPkg string) {
 		newLocation = filepath.Join(filepath.Dir(filepath.Dir(oldFile)), innerPkg, filepath.Base(oldFile))
 	}
 
-	if err := os.MkdirAll(filepath.Dir(newLocation), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(newLocation), 0o755); err != nil {
 		panic(err)
 	}
 
