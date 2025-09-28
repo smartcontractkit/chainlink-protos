@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package api.datastore.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/op-catalog/v1/datastore";
+
+
+import "google/protobuf/wrappers.proto";
+import "op-catalog/v1/datastore/common.proto";
+
+message AddressReferenceKeyFilter {
+  google.protobuf.StringValue domain = 1;
+  google.protobuf.StringValue environment = 2;
+  google.protobuf.UInt64Value chain_selector = 3;
+  google.protobuf.StringValue contract_type = 4;
+  google.protobuf.StringValue version = 5;
+  google.protobuf.StringValue qualifier = 6;
+}
+
+message AddressReferenceFindRequest {
+  AddressReferenceKeyFilter key_filter = 1;
+  bool ignore_transaction = 2;
+}
+
+message AddressReference {
+  string domain = 1;
+  string environment = 2;
+  uint64 chain_selector = 3;
+  string contract_type = 4;
+  string version = 5;
+  string qualifier = 6;
+  string address = 7;
+  repeated string label_set = 8;
+}
+
+message AddressReferenceFindResponse {
+  repeated AddressReference references = 1;
+}
+
+message AddressReferenceEditRequest {
+  AddressReference record = 1;
+  EditSemantics semantics = 2;
+}
+
+message AddressReferenceEditResponse {
+  AddressReference record = 1;
+}
