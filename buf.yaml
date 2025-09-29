@@ -34,6 +34,11 @@ modules:
         - SERVICE_SUFFIX
         # Some enums have a logical default value if not set
         - ENUM_ZERO_VALUE_SUFFIX
+    breaking:
+      use:
+        - FILE 
+      except:
+        - FILE_DELETED
   - path: storage-service
     lint:
       use:
