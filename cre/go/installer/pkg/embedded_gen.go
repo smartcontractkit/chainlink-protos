@@ -164,7 +164,7 @@ message Header {
 service Client {
   option (tools.generator.v1.capability) = {
     mode: MODE_DON
-    capability_id: "evm@1.0.0"
+    capability_id: "evm@1.0.0-alpha"
     labels: {
       // from https://github.com/smartcontractkit/chain-selectors/blob/main/selectors.yml
       // as a subset of the selectors supported on the CRE
