@@ -38,7 +38,7 @@ modules:
       use:
         - FILE 
       except:
-        - FILE_DELETED
+        - FILE_NO_DELETE
   - path: storage-service
     lint:
       use:
