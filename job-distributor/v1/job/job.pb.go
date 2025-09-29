@@ -140,17 +140,18 @@ func (ProposalDeliveryStatus) EnumDescriptor() ([]byte, []int) {
 
 // Job represents the structured data of a job within the system.
 type Job struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                      // Unique identifier for the job.
-	Uuid          string                 `protobuf:"bytes,2,opt,name=uuid,proto3" json:"uuid,omitempty"`                                  // Universally unique identifier for the job.
-	NodeId        string                 `protobuf:"bytes,3,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`                // ID of the node associated with this job.
-	ProposalIds   []string               `protobuf:"bytes,4,rep,name=proposal_ids,json=proposalIds,proto3" json:"proposal_ids,omitempty"` // List of proposal IDs associated with this job.
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`       // Timestamp when the job was created.
-	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`       // Timestamp when the job was last updated.
-	DeletedAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`       // Timestamp when the job was deleted, if applicable.
-	Labels        []*ptypes.Label        `protobuf:"bytes,8,rep,name=labels,proto3" json:"labels,omitempty"`                              // Set of labels associated with the job.
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Id               string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`                                                       // Unique identifier for the job.
+	Uuid             string                 `protobuf:"bytes,2,opt,name=uuid,proto3" json:"uuid,omitempty"`                                                   // Universally unique identifier for the job.
+	NodeId           string                 `protobuf:"bytes,3,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`                                 // ID of the node associated with this job.
+	ProposalIds      []string               `protobuf:"bytes,4,rep,name=proposal_ids,json=proposalIds,proto3" json:"proposal_ids,omitempty"`                  // List of proposal IDs associated with this job.
+	CreatedAt        *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`                        // Timestamp when the job was created.
+	UpdatedAt        *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`                        // Timestamp when the job was last updated.
+	DeletedAt        *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=deleted_at,json=deletedAt,proto3" json:"deleted_at,omitempty"`                        // Timestamp when the job was deleted, if applicable.
+	Labels           []*ptypes.Label        `protobuf:"bytes,8,rep,name=labels,proto3" json:"labels,omitempty"`                                               // Set of labels associated with the job.
+	RollbackPolicyId string                 `protobuf:"bytes,9,opt,name=rollback_policy_id,json=rollbackPolicyId,proto3" json:"rollback_policy_id,omitempty"` // ID of the rollback policy associated with this job.
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *Job) Reset() {
@@ -237,6 +238,13 @@ func (x *Job) GetLabels() []*ptypes.Label {
 		return x.Labels
 	}
 	return nil
+}
+
+func (x *Job) GetRollbackPolicyId() string {
+	if x != nil {
+		return x.RollbackPolicyId
+	}
+	return ""
 }
 
 // Proposal represents a job proposal.
@@ -1302,10 +1310,11 @@ type UpdateJobRequest struct {
 	//
 	//	*UpdateJobRequest_Id
 	//	*UpdateJobRequest_Uuid
-	IdOneof       isUpdateJobRequest_IdOneof `protobuf_oneof:"id_oneof"`
-	Labels        []*ptypes.Label            `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty"` // Set of labels associated with the job.
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	IdOneof          isUpdateJobRequest_IdOneof `protobuf_oneof:"id_oneof"`
+	Labels           []*ptypes.Label            `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty"`                                               // Set of labels associated with the job.
+	RollbackPolicyId string                     `protobuf:"bytes,4,opt,name=rollback_policy_id,json=rollbackPolicyId,proto3" json:"rollback_policy_id,omitempty"` // ID of the rollback policy.
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *UpdateJobRequest) Reset() {
@@ -1369,6 +1378,13 @@ func (x *UpdateJobRequest) GetLabels() []*ptypes.Label {
 		return x.Labels
 	}
 	return nil
+}
+
+func (x *UpdateJobRequest) GetRollbackPolicyId() string {
+	if x != nil {
+		return x.RollbackPolicyId
+	}
+	return ""
 }
 
 type isUpdateJobRequest_IdOneof interface {
@@ -1570,7 +1586,7 @@ var File_job_distributor_v1_job_job_proto protoreflect.FileDescriptor
 const file_job_distributor_v1_job_job_proto_rawDesc = "" +
 	"\n" +
 	" job-distributor/v1/job/job.proto\x12\n" +
-	"api.job.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,job-distributor/v1/shared/ptypes/label.proto\"\xc0\x02\n" +
+	"api.job.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,job-distributor/v1/shared/ptypes/label.proto\"\xee\x02\n" +
 	"\x03Job\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04uuid\x18\x02 \x01(\tR\x04uuid\x12\x17\n" +
@@ -1582,7 +1598,8 @@ const file_job_distributor_v1_job_job_proto_rawDesc = "" +
 	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x129\n" +
 	"\n" +
 	"deleted_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tdeletedAt\x12(\n" +
-	"\x06labels\x18\b \x03(\v2\x10.api.label.LabelR\x06labels\"\x8d\x04\n" +
+	"\x06labels\x18\b \x03(\v2\x10.api.label.LabelR\x06labels\x12,\n" +
+	"\x12rollback_policy_id\x18\t \x01(\tR\x10rollbackPolicyId\"\x8d\x04\n" +
 	"\bProposal\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1a\n" +
 	"\brevision\x18\x02 \x01(\x03R\brevision\x122\n" +
@@ -1661,11 +1678,12 @@ const file_job_distributor_v1_job_job_proto_rawDesc = "" +
 	"\n" +
 	"\bid_oneof\"6\n" +
 	"\x11DeleteJobResponse\x12!\n" +
-	"\x03job\x18\x01 \x01(\v2\x0f.api.job.v1.JobR\x03job\"t\n" +
+	"\x03job\x18\x01 \x01(\v2\x0f.api.job.v1.JobR\x03job\"\xa2\x01\n" +
 	"\x10UpdateJobRequest\x12\x10\n" +
 	"\x02id\x18\x01 \x01(\tH\x00R\x02id\x12\x18\n" +
 	"\x04uuid\x18\x02 \x01(\tB\x02\x18\x01H\x00R\x04uuid\x12(\n" +
-	"\x06labels\x18\x03 \x03(\v2\x10.api.label.LabelR\x06labelsB\n" +
+	"\x06labels\x18\x03 \x03(\v2\x10.api.label.LabelR\x06labels\x12,\n" +
+	"\x12rollback_policy_id\x18\x04 \x01(\tR\x10rollbackPolicyIdB\n" +
 	"\n" +
 	"\bid_oneof\"6\n" +
 	"\x11UpdateJobResponse\x12!\n" +
