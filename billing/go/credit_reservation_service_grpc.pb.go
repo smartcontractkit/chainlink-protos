@@ -24,6 +24,7 @@ const (
 	CreditReservationService_ReserveCredits_FullMethodName                   = "/creditreservation.v1alpha.CreditReservationService/ReserveCredits"
 	CreditReservationService_SubmitWorkflowReceipt_FullMethodName            = "/creditreservation.v1alpha.CreditReservationService/SubmitWorkflowReceipt"
 	CreditReservationService_GetWorkflowExecutionRates_FullMethodName        = "/creditreservation.v1alpha.CreditReservationService/GetWorkflowExecutionRates"
+	CreditReservationService_CheckAggregationStatus_FullMethodName           = "/creditreservation.v1alpha.CreditReservationService/CheckAggregationStatus"
 )
 
 // CreditReservationServiceClient is the client API for CreditReservationService service.
@@ -34,6 +35,7 @@ type CreditReservationServiceClient interface {
 	ReserveCredits(ctx context.Context, in *ReserveCreditsRequest, opts ...grpc.CallOption) (*ReserveCreditsResponse, error)
 	SubmitWorkflowReceipt(ctx context.Context, in *SubmitWorkflowReceiptRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetWorkflowExecutionRates(ctx context.Context, in *GetWorkflowExecutionRatesRequest, opts ...grpc.CallOption) (*GetWorkflowExecutionRatesResponse, error)
+	CheckAggregationStatus(ctx context.Context, in *CheckAggregationStatusRequest, opts ...grpc.CallOption) (*CheckAggregationStatusResponse, error)
 }
 
 type creditReservationServiceClient struct {
@@ -84,6 +86,16 @@ func (c *creditReservationServiceClient) GetWorkflowExecutionRates(ctx context.C
 	return out, nil
 }
 
+func (c *creditReservationServiceClient) CheckAggregationStatus(ctx context.Context, in *CheckAggregationStatusRequest, opts ...grpc.CallOption) (*CheckAggregationStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CheckAggregationStatusResponse)
+	err := c.cc.Invoke(ctx, CreditReservationService_CheckAggregationStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CreditReservationServiceServer is the server API for CreditReservationService service.
 // All implementations must embed UnimplementedCreditReservationServiceServer
 // for forward compatibility.
@@ -92,6 +104,7 @@ type CreditReservationServiceServer interface {
 	ReserveCredits(context.Context, *ReserveCreditsRequest) (*ReserveCreditsResponse, error)
 	SubmitWorkflowReceipt(context.Context, *SubmitWorkflowReceiptRequest) (*emptypb.Empty, error)
 	GetWorkflowExecutionRates(context.Context, *GetWorkflowExecutionRatesRequest) (*GetWorkflowExecutionRatesResponse, error)
+	CheckAggregationStatus(context.Context, *CheckAggregationStatusRequest) (*CheckAggregationStatusResponse, error)
 	mustEmbedUnimplementedCreditReservationServiceServer()
 }
 
@@ -113,6 +126,9 @@ func (UnimplementedCreditReservationServiceServer) SubmitWorkflowReceipt(context
 }
 func (UnimplementedCreditReservationServiceServer) GetWorkflowExecutionRates(context.Context, *GetWorkflowExecutionRatesRequest) (*GetWorkflowExecutionRatesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWorkflowExecutionRates not implemented")
+}
+func (UnimplementedCreditReservationServiceServer) CheckAggregationStatus(context.Context, *CheckAggregationStatusRequest) (*CheckAggregationStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckAggregationStatus not implemented")
 }
 func (UnimplementedCreditReservationServiceServer) mustEmbedUnimplementedCreditReservationServiceServer() {
 }
@@ -208,6 +224,24 @@ func _CreditReservationService_GetWorkflowExecutionRates_Handler(srv interface{}
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CreditReservationService_CheckAggregationStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckAggregationStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CreditReservationServiceServer).CheckAggregationStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CreditReservationService_CheckAggregationStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CreditReservationServiceServer).CheckAggregationStatus(ctx, req.(*CheckAggregationStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CreditReservationService_ServiceDesc is the grpc.ServiceDesc for CreditReservationService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -230,6 +264,10 @@ var CreditReservationService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetWorkflowExecutionRates",
 			Handler:    _CreditReservationService_GetWorkflowExecutionRates_Handler,
+		},
+		{
+			MethodName: "CheckAggregationStatus",
+			Handler:    _CreditReservationService_CheckAggregationStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -66,6 +66,13 @@ beholder:
     - entity: TriggerDetail
       schema: "workflows/v1/trigger_detail.proto"
 
+    - entity: UserLogs
+      schema: "workflows/v1/user_logs.proto"
+      references:
+        - name: "workflows/v1/metadata.proto"
+          subject: "beholder__platform__messages-workflows.v1.WorkflowMetadata"
+          version: 1
+
     # workflows/v2
 
     - entity: CreInfo
@@ -208,4 +215,50 @@ beholder:
           version: 1
         - name: "workflows/v2/workflow.proto"
           subject: "beholder__platform__messages-workflows.v2.Workflow"
+          version: 1
+
+    - entity: WorkflowUserLog
+      schema: "workflows/v2/workflow_user_log.proto"
+      references:
+        - name: "workflows/v2/cre_info.proto"
+          subject: "beholder__platform__messages-workflows.v2.CreInfo"
+          version: 1
+        - name: "workflows/v2/workflow_key.proto"
+          subject: "beholder__platform__messages-workflows.v2.WorkflowKey"
+          version: 1
+
+    # DATA-FEEDS
+    - entity: JobInfo
+      schema: "bridge_status/v1/job_info.proto"
+    
+    - entity: RuntimeInfo
+      schema: "bridge_status/v1/runtime_info.proto"
+    
+    - entity: MetricsInfo
+      schema: "bridge_status/v1/metrics_info.proto"
+    
+    - entity: EndpointInfo
+      schema: "bridge_status/v1/endpoint_info.proto"
+    
+    - entity: ConfigurationItem
+      schema: "bridge_status/v1/configuration_item.proto"
+    
+    # bridge_status/v1 - Main event
+    - entity: BridgeStatusEvent
+      schema: "bridge_status/v1/bridge_status_event.proto"
+      references:
+        - name: "bridge_status/v1/job_info.proto"
+          subject: "platform-bridge_status.v1.JobInfo"
+          version: 1
+        - name: "bridge_status/v1/runtime_info.proto"
+          subject: "platform-bridge_status.v1.RuntimeInfo"
+          version: 1
+        - name: "bridge_status/v1/metrics_info.proto"
+          subject: "platform-bridge_status.v1.MetricsInfo"
+          version: 1
+        - name: "bridge_status/v1/endpoint_info.proto"
+          subject: "platform-bridge_status.v1.EndpointInfo"
+          version: 1
+        - name: "bridge_status/v1/configuration_item.proto"
+          subject: "platform-bridge_status.v1.ConfigurationItem"
           version: 1
