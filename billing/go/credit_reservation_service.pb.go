@@ -146,6 +146,147 @@ func (MeasurementUnit) EnumDescriptor() ([]byte, []int) {
 	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{1}
 }
 
+// CallType signifies the two billing service calls with aggregation
+type CallType int32
+
+const (
+	CallType_RESERVE_CREDITS  CallType = 0
+	CallType_WORKFLOW_RECEIPT CallType = 1
+)
+
+// Enum value maps for CallType.
+var (
+	CallType_name = map[int32]string{
+		0: "RESERVE_CREDITS",
+		1: "WORKFLOW_RECEIPT",
+	}
+	CallType_value = map[string]int32{
+		"RESERVE_CREDITS":  0,
+		"WORKFLOW_RECEIPT": 1,
+	}
+)
+
+func (x CallType) Enum() *CallType {
+	p := new(CallType)
+	*p = x
+	return p
+}
+
+func (x CallType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CallType) Descriptor() protoreflect.EnumDescriptor {
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes[2].Descriptor()
+}
+
+func (CallType) Type() protoreflect.EnumType {
+	return &file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes[2]
+}
+
+func (x CallType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CallType.Descriptor instead.
+func (CallType) EnumDescriptor() ([]byte, []int) {
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{2}
+}
+
+// AggregationStatus reflects the two possible states of aggregation
+type AggregationStatus int32
+
+const (
+	AggregationStatus_COLLECTING      AggregationStatus = 0
+	AggregationStatus_AGGREGATION_MET AggregationStatus = 1
+)
+
+// Enum value maps for AggregationStatus.
+var (
+	AggregationStatus_name = map[int32]string{
+		0: "COLLECTING",
+		1: "AGGREGATION_MET",
+	}
+	AggregationStatus_value = map[string]int32{
+		"COLLECTING":      0,
+		"AGGREGATION_MET": 1,
+	}
+)
+
+func (x AggregationStatus) Enum() *AggregationStatus {
+	p := new(AggregationStatus)
+	*p = x
+	return p
+}
+
+func (x AggregationStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (AggregationStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes[3].Descriptor()
+}
+
+func (AggregationStatus) Type() protoreflect.EnumType {
+	return &file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes[3]
+}
+
+func (x AggregationStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use AggregationStatus.Descriptor instead.
+func (AggregationStatus) EnumDescriptor() ([]byte, []int) {
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{3}
+}
+
+// AggregationOutcome reflects the two possible outcomes of aggregation
+type AggregationOutcome int32
+
+const (
+	AggregationOutcome_SUCCESS AggregationOutcome = 0
+	AggregationOutcome_FAILURE AggregationOutcome = 1
+)
+
+// Enum value maps for AggregationOutcome.
+var (
+	AggregationOutcome_name = map[int32]string{
+		0: "SUCCESS",
+		1: "FAILURE",
+	}
+	AggregationOutcome_value = map[string]int32{
+		"SUCCESS": 0,
+		"FAILURE": 1,
+	}
+)
+
+func (x AggregationOutcome) Enum() *AggregationOutcome {
+	p := new(AggregationOutcome)
+	*p = x
+	return p
+}
+
+func (x AggregationOutcome) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (AggregationOutcome) Descriptor() protoreflect.EnumDescriptor {
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes[4].Descriptor()
+}
+
+func (AggregationOutcome) Type() protoreflect.EnumType {
+	return &file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes[4]
+}
+
+func (x AggregationOutcome) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use AggregationOutcome.Descriptor instead.
+func (AggregationOutcome) EnumDescriptor() ([]byte, []int) {
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{4}
+}
+
 // Organization’s credit balances.
 type OrganizationCredits struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
@@ -782,6 +923,158 @@ func (x *GetWorkflowExecutionRatesResponse) GetGasTokensPerCredit() map[uint64]s
 	return nil
 }
 
+type CheckAggregationStatusRequest struct {
+	state                         protoimpl.MessageState `protogen:"open.v1"`
+	WorkflowId                    string                 `protobuf:"bytes,1,opt,name=WorkflowId,proto3" json:"WorkflowId,omitempty"`
+	WorkflowExecutionId           string                 `protobuf:"bytes,2,opt,name=WorkflowExecutionId,proto3" json:"WorkflowExecutionId,omitempty"`
+	WorkflowRegistryChainSelector uint64                 `protobuf:"varint,3,opt,name=WorkflowRegistryChainSelector,proto3" json:"WorkflowRegistryChainSelector,omitempty"`
+	CallType                      CallType               `protobuf:"varint,4,opt,name=CallType,proto3,enum=creditreservation.v1alpha.CallType" json:"CallType,omitempty"` // RESERVE_CREDITS, WORKFLOW_RECEIPT
+	unknownFields                 protoimpl.UnknownFields
+	sizeCache                     protoimpl.SizeCache
+}
+
+func (x *CheckAggregationStatusRequest) Reset() {
+	*x = CheckAggregationStatusRequest{}
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckAggregationStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckAggregationStatusRequest) ProtoMessage() {}
+
+func (x *CheckAggregationStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckAggregationStatusRequest.ProtoReflect.Descriptor instead.
+func (*CheckAggregationStatusRequest) Descriptor() ([]byte, []int) {
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *CheckAggregationStatusRequest) GetWorkflowId() string {
+	if x != nil {
+		return x.WorkflowId
+	}
+	return ""
+}
+
+func (x *CheckAggregationStatusRequest) GetWorkflowExecutionId() string {
+	if x != nil {
+		return x.WorkflowExecutionId
+	}
+	return ""
+}
+
+func (x *CheckAggregationStatusRequest) GetWorkflowRegistryChainSelector() uint64 {
+	if x != nil {
+		return x.WorkflowRegistryChainSelector
+	}
+	return 0
+}
+
+func (x *CheckAggregationStatusRequest) GetCallType() CallType {
+	if x != nil {
+		return x.CallType
+	}
+	return CallType_RESERVE_CREDITS
+}
+
+type CheckAggregationStatusResponse struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	NOracles          uint64                 `protobuf:"varint,1,opt,name=NOracles,proto3" json:"NOracles,omitempty"`                                                                    // Number of oracles participating
+	FFault            uint64                 `protobuf:"varint,2,opt,name=FFault,proto3" json:"FFault,omitempty"`                                                                        // 3*f + 1 <= n
+	QuorumThreshold   uint64                 `protobuf:"varint,3,opt,name=QuorumThreshold,proto3" json:"QuorumThreshold,omitempty"`                                                      // e.g. 2*f + 1
+	ReportsReceived   uint64                 `protobuf:"varint,4,opt,name=ReportsReceived,proto3" json:"ReportsReceived,omitempty"`                                                      // current number of submitted reserve and reports
+	AggregationStatus AggregationStatus      `protobuf:"varint,5,opt,name=AggregationStatus,proto3,enum=creditreservation.v1alpha.AggregationStatus" json:"AggregationStatus,omitempty"` // COLLECTING, AGGREGATION_MET
+	Outcome           AggregationOutcome     `protobuf:"varint,6,opt,name=Outcome,proto3,enum=creditreservation.v1alpha.AggregationOutcome" json:"Outcome,omitempty"`                    // SUCCESS, FAILURE
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *CheckAggregationStatusResponse) Reset() {
+	*x = CheckAggregationStatusResponse{}
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckAggregationStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckAggregationStatusResponse) ProtoMessage() {}
+
+func (x *CheckAggregationStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckAggregationStatusResponse.ProtoReflect.Descriptor instead.
+func (*CheckAggregationStatusResponse) Descriptor() ([]byte, []int) {
+	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *CheckAggregationStatusResponse) GetNOracles() uint64 {
+	if x != nil {
+		return x.NOracles
+	}
+	return 0
+}
+
+func (x *CheckAggregationStatusResponse) GetFFault() uint64 {
+	if x != nil {
+		return x.FFault
+	}
+	return 0
+}
+
+func (x *CheckAggregationStatusResponse) GetQuorumThreshold() uint64 {
+	if x != nil {
+		return x.QuorumThreshold
+	}
+	return 0
+}
+
+func (x *CheckAggregationStatusResponse) GetReportsReceived() uint64 {
+	if x != nil {
+		return x.ReportsReceived
+	}
+	return 0
+}
+
+func (x *CheckAggregationStatusResponse) GetAggregationStatus() AggregationStatus {
+	if x != nil {
+		return x.AggregationStatus
+	}
+	return AggregationStatus_COLLECTING
+}
+
+func (x *CheckAggregationStatusResponse) GetOutcome() AggregationOutcome {
+	if x != nil {
+		return x.Outcome
+	}
+	return AggregationOutcome_SUCCESS
+}
+
 var File_creditreservation_v1alpha_credit_reservation_service_proto protoreflect.FileDescriptor
 
 const file_creditreservation_v1alpha_credit_reservation_service_proto_rawDesc = "" +
@@ -847,7 +1140,21 @@ const file_creditreservation_v1alpha_credit_reservation_service_proto_rawDesc = 
 	"\x15gas_tokens_per_credit\x18\x03 \x03(\v2T.creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.GasTokensPerCreditEntryR\x12gasTokensPerCredit\x1aE\n" +
 	"\x17GasTokensPerCreditEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\x04R\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\x9c\x01\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xf8\x01\n" +
+	"\x1dCheckAggregationStatusRequest\x12\x1e\n" +
+	"\n" +
+	"WorkflowId\x18\x01 \x01(\tR\n" +
+	"WorkflowId\x120\n" +
+	"\x13WorkflowExecutionId\x18\x02 \x01(\tR\x13WorkflowExecutionId\x12D\n" +
+	"\x1dWorkflowRegistryChainSelector\x18\x03 \x01(\x04R\x1dWorkflowRegistryChainSelector\x12?\n" +
+	"\bCallType\x18\x04 \x01(\x0e2#.creditreservation.v1alpha.CallTypeR\bCallType\"\xcd\x02\n" +
+	"\x1eCheckAggregationStatusResponse\x12\x1a\n" +
+	"\bNOracles\x18\x01 \x01(\x04R\bNOracles\x12\x16\n" +
+	"\x06FFault\x18\x02 \x01(\x04R\x06FFault\x12(\n" +
+	"\x0fQuorumThreshold\x18\x03 \x01(\x04R\x0fQuorumThreshold\x12(\n" +
+	"\x0fReportsReceived\x18\x04 \x01(\x04R\x0fReportsReceived\x12Z\n" +
+	"\x11AggregationStatus\x18\x05 \x01(\x0e2,.creditreservation.v1alpha.AggregationStatusR\x11AggregationStatus\x12G\n" +
+	"\aOutcome\x18\x06 \x01(\x0e2-.creditreservation.v1alpha.AggregationOutcomeR\aOutcome*\x9c\x01\n" +
 	"\fResourceType\x12\x1d\n" +
 	"\x19RESOURCE_TYPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17RESOURCE_TYPE_CONSENSUS\x10\x01\x12\x19\n" +
@@ -859,12 +1166,23 @@ const file_creditreservation_v1alpha_credit_reservation_service_proto_rawDesc = 
 	"\x16MEASUREMENT_UNIT_BYTES\x10\x02\x12!\n" +
 	"\x1dMEASUREMENT_UNIT_MILLISECONDS\x10\x03\x12\x1f\n" +
 	"\x1bMEASUREMENT_UNIT_OPERATIONS\x10\x04\x12\x19\n" +
-	"\x15MEASUREMENT_UNIT_COST\x10\x052\xc2\x04\n" +
+	"\x15MEASUREMENT_UNIT_COST\x10\x05*5\n" +
+	"\bCallType\x12\x13\n" +
+	"\x0fRESERVE_CREDITS\x10\x00\x12\x14\n" +
+	"\x10WORKFLOW_RECEIPT\x10\x01*8\n" +
+	"\x11AggregationStatus\x12\x0e\n" +
+	"\n" +
+	"COLLECTING\x10\x00\x12\x13\n" +
+	"\x0fAGGREGATION_MET\x10\x01*.\n" +
+	"\x12AggregationOutcome\x12\v\n" +
+	"\aSUCCESS\x10\x00\x12\v\n" +
+	"\aFAILURE\x10\x012\xd2\x05\n" +
 	"\x18CreditReservationService\x12\xab\x01\n" +
 	" GetOrganizationCreditsByWorkflow\x12B.creditreservation.v1alpha.GetOrganizationCreditsByWorkflowRequest\x1aC.creditreservation.v1alpha.GetOrganizationCreditsByWorkflowResponse\x12u\n" +
 	"\x0eReserveCredits\x120.creditreservation.v1alpha.ReserveCreditsRequest\x1a1.creditreservation.v1alpha.ReserveCreditsResponse\x12h\n" +
 	"\x15SubmitWorkflowReceipt\x127.creditreservation.v1alpha.SubmitWorkflowReceiptRequest\x1a\x16.google.protobuf.Empty\x12\x96\x01\n" +
-	"\x19GetWorkflowExecutionRates\x12;.creditreservation.v1alpha.GetWorkflowExecutionRatesRequest\x1a<.creditreservation.v1alpha.GetWorkflowExecutionRatesResponseBAZ?github.com/smartcontractkit/chainlink-protos/billing/go;billingb\x06proto3"
+	"\x19GetWorkflowExecutionRates\x12;.creditreservation.v1alpha.GetWorkflowExecutionRatesRequest\x1a<.creditreservation.v1alpha.GetWorkflowExecutionRatesResponse\x12\x8d\x01\n" +
+	"\x16CheckAggregationStatus\x128.creditreservation.v1alpha.CheckAggregationStatusRequest\x1a9.creditreservation.v1alpha.CheckAggregationStatusResponseBAZ?github.com/smartcontractkit/chainlink-protos/billing/go;billingb\x06proto3"
 
 var (
 	file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescOnce sync.Once
@@ -878,50 +1196,60 @@ func file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescGZIP
 	return file_creditreservation_v1alpha_credit_reservation_service_proto_rawDescData
 }
 
-var file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_creditreservation_v1alpha_credit_reservation_service_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
+var file_creditreservation_v1alpha_credit_reservation_service_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_creditreservation_v1alpha_credit_reservation_service_proto_goTypes = []any{
 	(ResourceType)(0),                                // 0: creditreservation.v1alpha.ResourceType
 	(MeasurementUnit)(0),                             // 1: creditreservation.v1alpha.MeasurementUnit
-	(*OrganizationCredits)(nil),                      // 2: creditreservation.v1alpha.OrganizationCredits
-	(*GetOrganizationCreditsByWorkflowRequest)(nil),  // 3: creditreservation.v1alpha.GetOrganizationCreditsByWorkflowRequest
-	(*GetOrganizationCreditsByWorkflowResponse)(nil), // 4: creditreservation.v1alpha.GetOrganizationCreditsByWorkflowResponse
-	(*ReserveCreditsRequest)(nil),                    // 5: creditreservation.v1alpha.ReserveCreditsRequest
-	(*ReserveCreditsResponse)(nil),                   // 6: creditreservation.v1alpha.ReserveCreditsResponse
-	(*SubmitWorkflowReceiptRequest)(nil),             // 7: creditreservation.v1alpha.SubmitWorkflowReceiptRequest
-	(*RateCard)(nil),                                 // 8: creditreservation.v1alpha.RateCard
-	(*GetWorkflowExecutionRatesRequest)(nil),         // 9: creditreservation.v1alpha.GetWorkflowExecutionRatesRequest
-	(*GetWorkflowExecutionRatesResponse)(nil),        // 10: creditreservation.v1alpha.GetWorkflowExecutionRatesResponse
-	nil,                           // 11: creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.GasTokensPerCreditEntry
-	(*timestamppb.Timestamp)(nil), // 12: google.protobuf.Timestamp
-	(*events.MeteringReport)(nil), // 13: workflows.v1.MeteringReport
-	(*emptypb.Empty)(nil),         // 14: google.protobuf.Empty
+	(CallType)(0),                                    // 2: creditreservation.v1alpha.CallType
+	(AggregationStatus)(0),                           // 3: creditreservation.v1alpha.AggregationStatus
+	(AggregationOutcome)(0),                          // 4: creditreservation.v1alpha.AggregationOutcome
+	(*OrganizationCredits)(nil),                      // 5: creditreservation.v1alpha.OrganizationCredits
+	(*GetOrganizationCreditsByWorkflowRequest)(nil),  // 6: creditreservation.v1alpha.GetOrganizationCreditsByWorkflowRequest
+	(*GetOrganizationCreditsByWorkflowResponse)(nil), // 7: creditreservation.v1alpha.GetOrganizationCreditsByWorkflowResponse
+	(*ReserveCreditsRequest)(nil),                    // 8: creditreservation.v1alpha.ReserveCreditsRequest
+	(*ReserveCreditsResponse)(nil),                   // 9: creditreservation.v1alpha.ReserveCreditsResponse
+	(*SubmitWorkflowReceiptRequest)(nil),             // 10: creditreservation.v1alpha.SubmitWorkflowReceiptRequest
+	(*RateCard)(nil),                                 // 11: creditreservation.v1alpha.RateCard
+	(*GetWorkflowExecutionRatesRequest)(nil),         // 12: creditreservation.v1alpha.GetWorkflowExecutionRatesRequest
+	(*GetWorkflowExecutionRatesResponse)(nil),        // 13: creditreservation.v1alpha.GetWorkflowExecutionRatesResponse
+	(*CheckAggregationStatusRequest)(nil),            // 14: creditreservation.v1alpha.CheckAggregationStatusRequest
+	(*CheckAggregationStatusResponse)(nil),           // 15: creditreservation.v1alpha.CheckAggregationStatusResponse
+	nil,                                              // 16: creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.GasTokensPerCreditEntry
+	(*timestamppb.Timestamp)(nil),                    // 17: google.protobuf.Timestamp
+	(*events.MeteringReport)(nil),                    // 18: workflows.v1.MeteringReport
+	(*emptypb.Empty)(nil),                            // 19: google.protobuf.Empty
 }
 var file_creditreservation_v1alpha_credit_reservation_service_proto_depIdxs = []int32{
-	12, // 0: creditreservation.v1alpha.OrganizationCredits.created_at:type_name -> google.protobuf.Timestamp
-	12, // 1: creditreservation.v1alpha.OrganizationCredits.updated_at:type_name -> google.protobuf.Timestamp
-	2,  // 2: creditreservation.v1alpha.GetOrganizationCreditsByWorkflowResponse.credits:type_name -> creditreservation.v1alpha.OrganizationCredits
-	8,  // 3: creditreservation.v1alpha.ReserveCreditsResponse.rate_cards:type_name -> creditreservation.v1alpha.RateCard
-	13, // 4: creditreservation.v1alpha.SubmitWorkflowReceiptRequest.metering:type_name -> workflows.v1.MeteringReport
+	17, // 0: creditreservation.v1alpha.OrganizationCredits.created_at:type_name -> google.protobuf.Timestamp
+	17, // 1: creditreservation.v1alpha.OrganizationCredits.updated_at:type_name -> google.protobuf.Timestamp
+	5,  // 2: creditreservation.v1alpha.GetOrganizationCreditsByWorkflowResponse.credits:type_name -> creditreservation.v1alpha.OrganizationCredits
+	11, // 3: creditreservation.v1alpha.ReserveCreditsResponse.rate_cards:type_name -> creditreservation.v1alpha.RateCard
+	18, // 4: creditreservation.v1alpha.SubmitWorkflowReceiptRequest.metering:type_name -> workflows.v1.MeteringReport
 	0,  // 5: creditreservation.v1alpha.RateCard.resource_type:type_name -> creditreservation.v1alpha.ResourceType
 	1,  // 6: creditreservation.v1alpha.RateCard.measurement_unit:type_name -> creditreservation.v1alpha.MeasurementUnit
-	12, // 7: creditreservation.v1alpha.RateCard.created_at:type_name -> google.protobuf.Timestamp
-	12, // 8: creditreservation.v1alpha.RateCard.updated_at:type_name -> google.protobuf.Timestamp
-	8,  // 9: creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.rate_cards:type_name -> creditreservation.v1alpha.RateCard
-	11, // 10: creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.gas_tokens_per_credit:type_name -> creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.GasTokensPerCreditEntry
-	3,  // 11: creditreservation.v1alpha.CreditReservationService.GetOrganizationCreditsByWorkflow:input_type -> creditreservation.v1alpha.GetOrganizationCreditsByWorkflowRequest
-	5,  // 12: creditreservation.v1alpha.CreditReservationService.ReserveCredits:input_type -> creditreservation.v1alpha.ReserveCreditsRequest
-	7,  // 13: creditreservation.v1alpha.CreditReservationService.SubmitWorkflowReceipt:input_type -> creditreservation.v1alpha.SubmitWorkflowReceiptRequest
-	9,  // 14: creditreservation.v1alpha.CreditReservationService.GetWorkflowExecutionRates:input_type -> creditreservation.v1alpha.GetWorkflowExecutionRatesRequest
-	4,  // 15: creditreservation.v1alpha.CreditReservationService.GetOrganizationCreditsByWorkflow:output_type -> creditreservation.v1alpha.GetOrganizationCreditsByWorkflowResponse
-	6,  // 16: creditreservation.v1alpha.CreditReservationService.ReserveCredits:output_type -> creditreservation.v1alpha.ReserveCreditsResponse
-	14, // 17: creditreservation.v1alpha.CreditReservationService.SubmitWorkflowReceipt:output_type -> google.protobuf.Empty
-	10, // 18: creditreservation.v1alpha.CreditReservationService.GetWorkflowExecutionRates:output_type -> creditreservation.v1alpha.GetWorkflowExecutionRatesResponse
-	15, // [15:19] is the sub-list for method output_type
-	11, // [11:15] is the sub-list for method input_type
-	11, // [11:11] is the sub-list for extension type_name
-	11, // [11:11] is the sub-list for extension extendee
-	0,  // [0:11] is the sub-list for field type_name
+	17, // 7: creditreservation.v1alpha.RateCard.created_at:type_name -> google.protobuf.Timestamp
+	17, // 8: creditreservation.v1alpha.RateCard.updated_at:type_name -> google.protobuf.Timestamp
+	11, // 9: creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.rate_cards:type_name -> creditreservation.v1alpha.RateCard
+	16, // 10: creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.gas_tokens_per_credit:type_name -> creditreservation.v1alpha.GetWorkflowExecutionRatesResponse.GasTokensPerCreditEntry
+	2,  // 11: creditreservation.v1alpha.CheckAggregationStatusRequest.CallType:type_name -> creditreservation.v1alpha.CallType
+	3,  // 12: creditreservation.v1alpha.CheckAggregationStatusResponse.AggregationStatus:type_name -> creditreservation.v1alpha.AggregationStatus
+	4,  // 13: creditreservation.v1alpha.CheckAggregationStatusResponse.Outcome:type_name -> creditreservation.v1alpha.AggregationOutcome
+	6,  // 14: creditreservation.v1alpha.CreditReservationService.GetOrganizationCreditsByWorkflow:input_type -> creditreservation.v1alpha.GetOrganizationCreditsByWorkflowRequest
+	8,  // 15: creditreservation.v1alpha.CreditReservationService.ReserveCredits:input_type -> creditreservation.v1alpha.ReserveCreditsRequest
+	10, // 16: creditreservation.v1alpha.CreditReservationService.SubmitWorkflowReceipt:input_type -> creditreservation.v1alpha.SubmitWorkflowReceiptRequest
+	12, // 17: creditreservation.v1alpha.CreditReservationService.GetWorkflowExecutionRates:input_type -> creditreservation.v1alpha.GetWorkflowExecutionRatesRequest
+	14, // 18: creditreservation.v1alpha.CreditReservationService.CheckAggregationStatus:input_type -> creditreservation.v1alpha.CheckAggregationStatusRequest
+	7,  // 19: creditreservation.v1alpha.CreditReservationService.GetOrganizationCreditsByWorkflow:output_type -> creditreservation.v1alpha.GetOrganizationCreditsByWorkflowResponse
+	9,  // 20: creditreservation.v1alpha.CreditReservationService.ReserveCredits:output_type -> creditreservation.v1alpha.ReserveCreditsResponse
+	19, // 21: creditreservation.v1alpha.CreditReservationService.SubmitWorkflowReceipt:output_type -> google.protobuf.Empty
+	13, // 22: creditreservation.v1alpha.CreditReservationService.GetWorkflowExecutionRates:output_type -> creditreservation.v1alpha.GetWorkflowExecutionRatesResponse
+	15, // 23: creditreservation.v1alpha.CreditReservationService.CheckAggregationStatus:output_type -> creditreservation.v1alpha.CheckAggregationStatusResponse
+	19, // [19:24] is the sub-list for method output_type
+	14, // [14:19] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_creditreservation_v1alpha_credit_reservation_service_proto_init() }
@@ -935,8 +1263,8 @@ func file_creditreservation_v1alpha_credit_reservation_service_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_creditreservation_v1alpha_credit_reservation_service_proto_rawDesc), len(file_creditreservation_v1alpha_credit_reservation_service_proto_rawDesc)),
-			NumEnums:      2,
-			NumMessages:   10,
+			NumEnums:      5,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
