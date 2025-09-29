@@ -5,7 +5,6 @@ const blockchainEvmV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.blockchain.evm.v1alpha;
 
-import "google/protobuf/empty.proto";
 import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 import "values/v1/values.proto";
@@ -162,26 +161,6 @@ message Header {
   bytes parent_hash = 4; // in [32]byte fix-sized array format
 }
 
-message RegisterLogTrackingRequest {
-  LPFilter filter = 1;
-}
-
-message LPFilter {
-  uint64 max_logs_kept = 1; // maximum number of logs to retain ( 0 = unlimited )
-  int64 retention_time = 2; // maximum amount of time to retain logs in seconds
-  uint64 logs_per_block = 3; // rate limit ( maximum # of logs per block, 0 = unlimited )
-  string name = 4; // filter name, has to persist for removing filter
-  repeated bytes addresses = 5; // list of addresses to include in evm address [20]byte fix-sized array format
-  repeated bytes event_sigs = 6; // list of possible signatures (aka topic1), in [32]byte fix-sized array format
-  repeated bytes topic2 = 7; // list of possible values for topic2, in [32]byte fix-sized array format
-  repeated bytes topic3 = 8; // list of possible values for topic3, in [32]byte fix-sized array format
-  repeated bytes topic4 = 9; // list of possible values for topic4, in [32]byte fix-sized array format
-}
-
-message UnregisterLogTrackingRequest {
-  string filter_name = 1;
-}
-
 service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
@@ -257,8 +236,6 @@ service Client {
   rpc GetTransactionByHash(GetTransactionByHashRequest) returns (GetTransactionByHashReply);
   rpc GetTransactionReceipt(GetTransactionReceiptRequest) returns (GetTransactionReceiptReply);
   rpc HeaderByNumber(HeaderByNumberRequest) returns (HeaderByNumberReply);
-  rpc RegisterLogTracking(RegisterLogTrackingRequest) returns (google.protobuf.Empty);
-  rpc UnregisterLogTracking(UnregisterLogTrackingRequest) returns (google.protobuf.Empty);
   rpc LogTrigger(FilterLogTriggerRequest) returns (stream Log);
   rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
 }
@@ -503,12 +480,13 @@ const networkingHttpV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.networking.http.v1alpha;
 
+import "google/protobuf/duration.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
 // CacheSettings defines cache control options for outbound HTTP requests.
 message CacheSettings {
-  bool read_from_cache = 1; // If true, attempt to read a cached response for the request.
-  int32 max_age_ms = 2; // Maximum age of a cached response in milliseconds.
+  bool store = 1; // If true, cache the response.
+  google.protobuf.Duration max_age = 2; // Maximum age of a cached response. If zero, do not attempt to read from cache
 }
 
 message Request {
@@ -516,7 +494,7 @@ message Request {
   string method = 2;
   map<string, string> headers = 3;
   bytes body = 4;
-  int32 timeout_ms = 5;
+  google.protobuf.Duration timeout = 5; // Request timeout duration
   CacheSettings cache_settings = 6;
 }
 

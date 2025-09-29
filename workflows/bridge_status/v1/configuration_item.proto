@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package bridge_status.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/data-feeds/bridge_status/v1";
+
+message ConfigurationItem {
+  string name = 1;
+  string value = 2;
+  string type = 3;
+  string description = 4;
+  bool required = 5;
+  string default_value = 6;
+  bool custom_setting = 7;
+  string env_default_override = 8;
+}

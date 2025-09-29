@@ -4,18 +4,15 @@ package workflows.v2;
 
 import "workflows/v2/cre_info.proto";
 import "workflows/v2/workflow_key.proto";
-import "workflows/v2/xxx_no_send.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
 
-message CapabilityExecutionFinished {
+message WorkflowUserLog {
   CreInfo creInfo = 1;
   WorkflowKey workflow = 2;
   string workflowExecutionID = 3;
   string timestamp = 4;
 
-  string capabilityID = 5;
-  int32 stepRef = 6;
-  ExecutionStatus status = 7;
-  string error = 8;
+  string msg = 5;
+  map<string, string> labels = 6;
 }
