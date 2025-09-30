@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package capabilities.networking.confidentialhttp.v1alpha;
 
-import "tools/generator/v1alpha/cre_metadata.proto";
+import "tools/generator/v1beta/cre_metadata.proto";
 
 message SecretIdentifier {
   string key = 1;
