@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.14.0
+
+### Minor Changes
+
+- [#197](https://github.com/smartcontractkit/chainlink-protos/pull/197) [`8cea139`](https://github.com/smartcontractkit/chainlink-protos/commit/8cea139ca9af677bb0ed347107d47f2027bce070) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add RollbackPolicy Create/Retrieve
+
 ## 0.13.2
 
 ### Patch Changes
