@@ -19,15 +19,17 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	JobService_GetJob_FullMethodName          = "/api.job.v1.JobService/GetJob"
-	JobService_GetProposal_FullMethodName     = "/api.job.v1.JobService/GetProposal"
-	JobService_ListJobs_FullMethodName        = "/api.job.v1.JobService/ListJobs"
-	JobService_ListProposals_FullMethodName   = "/api.job.v1.JobService/ListProposals"
-	JobService_ProposeJob_FullMethodName      = "/api.job.v1.JobService/ProposeJob"
-	JobService_BatchProposeJob_FullMethodName = "/api.job.v1.JobService/BatchProposeJob"
-	JobService_RevokeJob_FullMethodName       = "/api.job.v1.JobService/RevokeJob"
-	JobService_DeleteJob_FullMethodName       = "/api.job.v1.JobService/DeleteJob"
-	JobService_UpdateJob_FullMethodName       = "/api.job.v1.JobService/UpdateJob"
+	JobService_GetJob_FullMethodName               = "/api.job.v1.JobService/GetJob"
+	JobService_GetRollbackPolicy_FullMethodName    = "/api.job.v1.JobService/GetRollbackPolicy"
+	JobService_GetProposal_FullMethodName          = "/api.job.v1.JobService/GetProposal"
+	JobService_ListJobs_FullMethodName             = "/api.job.v1.JobService/ListJobs"
+	JobService_ListProposals_FullMethodName        = "/api.job.v1.JobService/ListProposals"
+	JobService_ProposeJob_FullMethodName           = "/api.job.v1.JobService/ProposeJob"
+	JobService_BatchProposeJob_FullMethodName      = "/api.job.v1.JobService/BatchProposeJob"
+	JobService_RevokeJob_FullMethodName            = "/api.job.v1.JobService/RevokeJob"
+	JobService_DeleteJob_FullMethodName            = "/api.job.v1.JobService/DeleteJob"
+	JobService_UpdateJob_FullMethodName            = "/api.job.v1.JobService/UpdateJob"
+	JobService_CreateRollbackPolicy_FullMethodName = "/api.job.v1.JobService/CreateRollbackPolicy"
 )
 
 // JobServiceClient is the client API for JobService service.
@@ -38,6 +40,8 @@ const (
 type JobServiceClient interface {
 	// GetJob retrieves the details of a specific job by its ID or UUID.
 	GetJob(ctx context.Context, in *GetJobRequest, opts ...grpc.CallOption) (*GetJobResponse, error)
+	// GetRollbackPolicy retrieves the details of a specific rollback policy by its ID.
+	GetRollbackPolicy(ctx context.Context, in *GetRollbackPolicyRequest, opts ...grpc.CallOption) (*GetRollbackPolicyResponse, error)
 	// GetProposal retrieves the details of a specific proposal by its ID.
 	GetProposal(ctx context.Context, in *GetProposalRequest, opts ...grpc.CallOption) (*GetProposalResponse, error)
 	// ListJobs returns a list of jobs, optionally filtered by IDs or node IDs.
@@ -54,6 +58,8 @@ type JobServiceClient interface {
 	DeleteJob(ctx context.Context, in *DeleteJobRequest, opts ...grpc.CallOption) (*DeleteJobResponse, error)
 	// UpdateJob updates a job in the system.
 	UpdateJob(ctx context.Context, in *UpdateJobRequest, opts ...grpc.CallOption) (*UpdateJobResponse, error)
+	// CreateRollbackPolicy creates a new rollback policy.
+	CreateRollbackPolicy(ctx context.Context, in *CreateRollbackPolicyRequest, opts ...grpc.CallOption) (*CreateRollbackPolicyResponse, error)
 }
 
 type jobServiceClient struct {
@@ -68,6 +74,16 @@ func (c *jobServiceClient) GetJob(ctx context.Context, in *GetJobRequest, opts .
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetJobResponse)
 	err := c.cc.Invoke(ctx, JobService_GetJob_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *jobServiceClient) GetRollbackPolicy(ctx context.Context, in *GetRollbackPolicyRequest, opts ...grpc.CallOption) (*GetRollbackPolicyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetRollbackPolicyResponse)
+	err := c.cc.Invoke(ctx, JobService_GetRollbackPolicy_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -154,6 +170,16 @@ func (c *jobServiceClient) UpdateJob(ctx context.Context, in *UpdateJobRequest, 
 	return out, nil
 }
 
+func (c *jobServiceClient) CreateRollbackPolicy(ctx context.Context, in *CreateRollbackPolicyRequest, opts ...grpc.CallOption) (*CreateRollbackPolicyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateRollbackPolicyResponse)
+	err := c.cc.Invoke(ctx, JobService_CreateRollbackPolicy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // JobServiceServer is the server API for JobService service.
 // All implementations must embed UnimplementedJobServiceServer
 // for forward compatibility.
@@ -162,6 +188,8 @@ func (c *jobServiceClient) UpdateJob(ctx context.Context, in *UpdateJobRequest, 
 type JobServiceServer interface {
 	// GetJob retrieves the details of a specific job by its ID or UUID.
 	GetJob(context.Context, *GetJobRequest) (*GetJobResponse, error)
+	// GetRollbackPolicy retrieves the details of a specific rollback policy by its ID.
+	GetRollbackPolicy(context.Context, *GetRollbackPolicyRequest) (*GetRollbackPolicyResponse, error)
 	// GetProposal retrieves the details of a specific proposal by its ID.
 	GetProposal(context.Context, *GetProposalRequest) (*GetProposalResponse, error)
 	// ListJobs returns a list of jobs, optionally filtered by IDs or node IDs.
@@ -178,6 +206,8 @@ type JobServiceServer interface {
 	DeleteJob(context.Context, *DeleteJobRequest) (*DeleteJobResponse, error)
 	// UpdateJob updates a job in the system.
 	UpdateJob(context.Context, *UpdateJobRequest) (*UpdateJobResponse, error)
+	// CreateRollbackPolicy creates a new rollback policy.
+	CreateRollbackPolicy(context.Context, *CreateRollbackPolicyRequest) (*CreateRollbackPolicyResponse, error)
 	mustEmbedUnimplementedJobServiceServer()
 }
 
@@ -190,6 +220,9 @@ type UnimplementedJobServiceServer struct{}
 
 func (UnimplementedJobServiceServer) GetJob(context.Context, *GetJobRequest) (*GetJobResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetJob not implemented")
+}
+func (UnimplementedJobServiceServer) GetRollbackPolicy(context.Context, *GetRollbackPolicyRequest) (*GetRollbackPolicyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRollbackPolicy not implemented")
 }
 func (UnimplementedJobServiceServer) GetProposal(context.Context, *GetProposalRequest) (*GetProposalResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProposal not implemented")
@@ -214,6 +247,9 @@ func (UnimplementedJobServiceServer) DeleteJob(context.Context, *DeleteJobReques
 }
 func (UnimplementedJobServiceServer) UpdateJob(context.Context, *UpdateJobRequest) (*UpdateJobResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateJob not implemented")
+}
+func (UnimplementedJobServiceServer) CreateRollbackPolicy(context.Context, *CreateRollbackPolicyRequest) (*CreateRollbackPolicyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateRollbackPolicy not implemented")
 }
 func (UnimplementedJobServiceServer) mustEmbedUnimplementedJobServiceServer() {}
 func (UnimplementedJobServiceServer) testEmbeddedByValue()                    {}
@@ -250,6 +286,24 @@ func _JobService_GetJob_Handler(srv interface{}, ctx context.Context, dec func(i
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).GetJob(ctx, req.(*GetJobRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _JobService_GetRollbackPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRollbackPolicyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobServiceServer).GetRollbackPolicy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: JobService_GetRollbackPolicy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobServiceServer).GetRollbackPolicy(ctx, req.(*GetRollbackPolicyRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -398,6 +452,24 @@ func _JobService_UpdateJob_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _JobService_CreateRollbackPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRollbackPolicyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobServiceServer).CreateRollbackPolicy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: JobService_CreateRollbackPolicy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobServiceServer).CreateRollbackPolicy(ctx, req.(*CreateRollbackPolicyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // JobService_ServiceDesc is the grpc.ServiceDesc for JobService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -408,6 +480,10 @@ var JobService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetJob",
 			Handler:    _JobService_GetJob_Handler,
+		},
+		{
+			MethodName: "GetRollbackPolicy",
+			Handler:    _JobService_GetRollbackPolicy_Handler,
 		},
 		{
 			MethodName: "GetProposal",
@@ -440,6 +516,10 @@ var JobService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateJob",
 			Handler:    _JobService_UpdateJob_Handler,
+		},
+		{
+			MethodName: "CreateRollbackPolicy",
+			Handler:    _JobService_CreateRollbackPolicy_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
