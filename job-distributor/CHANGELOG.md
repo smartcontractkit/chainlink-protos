@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.15.0
+
+### Minor Changes
+
+- [#200](https://github.com/smartcontractkit/chainlink-protos/pull/200) [`6887883`](https://github.com/smartcontractkit/chainlink-protos/commit/68878838041102947c6116f40a4e733cc3b8e3c2) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - JD Probation Package
+
 ## 0.14.0
 
 ### Minor Changes
