@@ -10,7 +10,7 @@ import "op-catalog/v1/datastore/chain_metadata.proto";
 import "op-catalog/v1/datastore/environment_metadata.proto";
 import "op-catalog/v1/datastore/transactions.proto";
 
-service DeploymentsDatastore {
+service Datastore {
   rpc DataAccess (stream DataAccessRequest) returns (stream DataAccessResponse) {}
 }
 

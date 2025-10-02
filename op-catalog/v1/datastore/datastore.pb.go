@@ -572,8 +572,8 @@ const file_op_catalog_v1_datastore_datastore_proto_rawDesc = "" +
 	"\x1bcommit_transaction_response\x18\v \x01(\v2+.api.datastore.v1.CommitTransactionResponseH\x00R\x19commitTransactionResponse\x12s\n" +
 	"\x1drollback_transaction_response\x18\f \x01(\v2-.api.datastore.v1.RollbackTransactionResponseH\x00R\x1brollbackTransactionResponseB\n" +
 	"\n" +
-	"\bresponse2u\n" +
-	"\x14DeploymentsDatastore\x12]\n" +
+	"\bresponse2j\n" +
+	"\tDatastore\x12]\n" +
 	"\n" +
 	"DataAccess\x12#.api.datastore.v1.DataAccessRequest\x1a$.api.datastore.v1.DataAccessResponse\"\x00(\x010\x01BFZDgithub.com/smartcontractkit/chainlink-protos/op-catalog/v1/datastoreb\x06proto3"
 
@@ -641,8 +641,8 @@ var file_op_catalog_v1_datastore_datastore_proto_depIdxs = []int32{
 	22, // 20: api.datastore.v1.DataAccessResponse.begin_transaction_response:type_name -> api.datastore.v1.BeginTransactionResponse
 	23, // 21: api.datastore.v1.DataAccessResponse.commit_transaction_response:type_name -> api.datastore.v1.CommitTransactionResponse
 	24, // 22: api.datastore.v1.DataAccessResponse.rollback_transaction_response:type_name -> api.datastore.v1.RollbackTransactionResponse
-	1,  // 23: api.datastore.v1.DeploymentsDatastore.DataAccess:input_type -> api.datastore.v1.DataAccessRequest
-	2,  // 24: api.datastore.v1.DeploymentsDatastore.DataAccess:output_type -> api.datastore.v1.DataAccessResponse
+	1,  // 23: api.datastore.v1.Datastore.DataAccess:input_type -> api.datastore.v1.DataAccessRequest
+	2,  // 24: api.datastore.v1.Datastore.DataAccess:output_type -> api.datastore.v1.DataAccessResponse
 	24, // [24:25] is the sub-list for method output_type
 	23, // [23:24] is the sub-list for method input_type
 	23, // [23:23] is the sub-list for extension type_name
