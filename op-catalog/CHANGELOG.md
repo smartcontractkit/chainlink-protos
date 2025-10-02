@@ -1,5 +1,11 @@
 # @chainlink/op-catalog
 
+## 0.0.3
+
+### Patch Changes
+
+- [#206](https://github.com/smartcontractkit/chainlink-protos/pull/206) [`370b26e`](https://github.com/smartcontractkit/chainlink-protos/commit/370b26e5a77e930b3131a72f47451f5d455e641f) Thanks [@giogam](https://github.com/giogam)! - chore: rename DeploymentsDatastore service to Datastore
+
 ## 0.0.2
 
 ### Patch Changes
