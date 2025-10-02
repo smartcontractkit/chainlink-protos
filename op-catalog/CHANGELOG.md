@@ -1,5 +1,11 @@
 # @chainlink/op-catalog
 
+## 0.0.2
+
+### Patch Changes
+
+- [#204](https://github.com/smartcontractkit/chainlink-protos/pull/204) [`3e2f6c8`](https://github.com/smartcontractkit/chainlink-protos/commit/3e2f6c8d7972d4d647b8e682d83ef8586e9ca498) Thanks [@giogam](https://github.com/giogam)! - Remove op-catalog/v1/ping protos
+
 ## 0.0.1
 
 ### Patch Changes
