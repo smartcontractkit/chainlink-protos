@@ -21,6 +21,8 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	RollbackPolicyService_GetRollbackPolicy_FullMethodName    = "/api.probation.v1.RollbackPolicyService/GetRollbackPolicy"
 	RollbackPolicyService_CreateRollbackPolicy_FullMethodName = "/api.probation.v1.RollbackPolicyService/CreateRollbackPolicy"
+	RollbackPolicyService_ListRollbackPolicies_FullMethodName = "/api.probation.v1.RollbackPolicyService/ListRollbackPolicies"
+	RollbackPolicyService_UpdateRollbackPolicy_FullMethodName = "/api.probation.v1.RollbackPolicyService/UpdateRollbackPolicy"
 )
 
 // RollbackPolicyServiceClient is the client API for RollbackPolicyService service.
@@ -33,6 +35,10 @@ type RollbackPolicyServiceClient interface {
 	GetRollbackPolicy(ctx context.Context, in *GetRollbackPolicyRequest, opts ...grpc.CallOption) (*GetRollbackPolicyResponse, error)
 	// CreateRollbackPolicy creates a new rollback policy.
 	CreateRollbackPolicy(ctx context.Context, in *CreateRollbackPolicyRequest, opts ...grpc.CallOption) (*CreateRollbackPolicyResponse, error)
+	// ListRollbackPolicies returns a list of rollback policies.
+	ListRollbackPolicies(ctx context.Context, in *ListRollbackPoliciesRequest, opts ...grpc.CallOption) (*ListRollbackPoliciesResponse, error)
+	// UpdateRollbackPolicy updates an existing rollback policy.
+	UpdateRollbackPolicy(ctx context.Context, in *UpdateRollbackPolicyRequest, opts ...grpc.CallOption) (*UpdateRollbackPolicyResponse, error)
 }
 
 type rollbackPolicyServiceClient struct {
@@ -63,6 +69,26 @@ func (c *rollbackPolicyServiceClient) CreateRollbackPolicy(ctx context.Context, 
 	return out, nil
 }
 
+func (c *rollbackPolicyServiceClient) ListRollbackPolicies(ctx context.Context, in *ListRollbackPoliciesRequest, opts ...grpc.CallOption) (*ListRollbackPoliciesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListRollbackPoliciesResponse)
+	err := c.cc.Invoke(ctx, RollbackPolicyService_ListRollbackPolicies_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *rollbackPolicyServiceClient) UpdateRollbackPolicy(ctx context.Context, in *UpdateRollbackPolicyRequest, opts ...grpc.CallOption) (*UpdateRollbackPolicyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateRollbackPolicyResponse)
+	err := c.cc.Invoke(ctx, RollbackPolicyService_UpdateRollbackPolicy_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RollbackPolicyServiceServer is the server API for RollbackPolicyService service.
 // All implementations must embed UnimplementedRollbackPolicyServiceServer
 // for forward compatibility.
@@ -73,6 +99,10 @@ type RollbackPolicyServiceServer interface {
 	GetRollbackPolicy(context.Context, *GetRollbackPolicyRequest) (*GetRollbackPolicyResponse, error)
 	// CreateRollbackPolicy creates a new rollback policy.
 	CreateRollbackPolicy(context.Context, *CreateRollbackPolicyRequest) (*CreateRollbackPolicyResponse, error)
+	// ListRollbackPolicies returns a list of rollback policies.
+	ListRollbackPolicies(context.Context, *ListRollbackPoliciesRequest) (*ListRollbackPoliciesResponse, error)
+	// UpdateRollbackPolicy updates an existing rollback policy.
+	UpdateRollbackPolicy(context.Context, *UpdateRollbackPolicyRequest) (*UpdateRollbackPolicyResponse, error)
 	mustEmbedUnimplementedRollbackPolicyServiceServer()
 }
 
@@ -88,6 +118,12 @@ func (UnimplementedRollbackPolicyServiceServer) GetRollbackPolicy(context.Contex
 }
 func (UnimplementedRollbackPolicyServiceServer) CreateRollbackPolicy(context.Context, *CreateRollbackPolicyRequest) (*CreateRollbackPolicyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateRollbackPolicy not implemented")
+}
+func (UnimplementedRollbackPolicyServiceServer) ListRollbackPolicies(context.Context, *ListRollbackPoliciesRequest) (*ListRollbackPoliciesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRollbackPolicies not implemented")
+}
+func (UnimplementedRollbackPolicyServiceServer) UpdateRollbackPolicy(context.Context, *UpdateRollbackPolicyRequest) (*UpdateRollbackPolicyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRollbackPolicy not implemented")
 }
 func (UnimplementedRollbackPolicyServiceServer) mustEmbedUnimplementedRollbackPolicyServiceServer() {}
 func (UnimplementedRollbackPolicyServiceServer) testEmbeddedByValue()                               {}
@@ -146,6 +182,42 @@ func _RollbackPolicyService_CreateRollbackPolicy_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RollbackPolicyService_ListRollbackPolicies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListRollbackPoliciesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RollbackPolicyServiceServer).ListRollbackPolicies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RollbackPolicyService_ListRollbackPolicies_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RollbackPolicyServiceServer).ListRollbackPolicies(ctx, req.(*ListRollbackPoliciesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RollbackPolicyService_UpdateRollbackPolicy_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRollbackPolicyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RollbackPolicyServiceServer).UpdateRollbackPolicy(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RollbackPolicyService_UpdateRollbackPolicy_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RollbackPolicyServiceServer).UpdateRollbackPolicy(ctx, req.(*UpdateRollbackPolicyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RollbackPolicyService_ServiceDesc is the grpc.ServiceDesc for RollbackPolicyService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -160,6 +232,14 @@ var RollbackPolicyService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateRollbackPolicy",
 			Handler:    _RollbackPolicyService_CreateRollbackPolicy_Handler,
+		},
+		{
+			MethodName: "ListRollbackPolicies",
+			Handler:    _RollbackPolicyService_ListRollbackPolicies_Handler,
+		},
+		{
+			MethodName: "UpdateRollbackPolicy",
+			Handler:    _RollbackPolicyService_UpdateRollbackPolicy_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

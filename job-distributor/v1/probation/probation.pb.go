@@ -272,6 +272,238 @@ func (x *CreateRollbackPolicyResponse) GetRollbackPolicy() *RollbackPolicy {
 	return nil
 }
 
+// ListRollbackPoliciesRequest specifies filters for listing rollback policies.
+type ListRollbackPoliciesRequest struct {
+	state         protoimpl.MessageState              `protogen:"open.v1"`
+	Filter        *ListRollbackPoliciesRequest_Filter `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"` // Filters applied to the rollback policy listing.
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListRollbackPoliciesRequest) Reset() {
+	*x = ListRollbackPoliciesRequest{}
+	mi := &file_job_distributor_v1_probation_probation_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListRollbackPoliciesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListRollbackPoliciesRequest) ProtoMessage() {}
+
+func (x *ListRollbackPoliciesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_job_distributor_v1_probation_probation_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListRollbackPoliciesRequest.ProtoReflect.Descriptor instead.
+func (*ListRollbackPoliciesRequest) Descriptor() ([]byte, []int) {
+	return file_job_distributor_v1_probation_probation_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ListRollbackPoliciesRequest) GetFilter() *ListRollbackPoliciesRequest_Filter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+// ListRollbackPoliciesResponse contains a list of rollback policies that match the filters.
+type ListRollbackPoliciesResponse struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	RollbackPolicies []*RollbackPolicy      `protobuf:"bytes,1,rep,name=rollback_policies,json=rollbackPolicies,proto3" json:"rollback_policies,omitempty"` // List of rollback policies.
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *ListRollbackPoliciesResponse) Reset() {
+	*x = ListRollbackPoliciesResponse{}
+	mi := &file_job_distributor_v1_probation_probation_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListRollbackPoliciesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListRollbackPoliciesResponse) ProtoMessage() {}
+
+func (x *ListRollbackPoliciesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_job_distributor_v1_probation_probation_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListRollbackPoliciesResponse.ProtoReflect.Descriptor instead.
+func (*ListRollbackPoliciesResponse) Descriptor() ([]byte, []int) {
+	return file_job_distributor_v1_probation_probation_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *ListRollbackPoliciesResponse) GetRollbackPolicies() []*RollbackPolicy {
+	if x != nil {
+		return x.RollbackPolicies
+	}
+	return nil
+}
+
+// UpdateRollbackPolicyRequest specifies the criteria for updating a rollback policy.
+type UpdateRollbackPolicyRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`         // Unique identifier of the rollback policy to update.
+	Policy        *structpb.Struct       `protobuf:"bytes,2,opt,name=policy,proto3" json:"policy,omitempty"` // Updated policy definition.
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateRollbackPolicyRequest) Reset() {
+	*x = UpdateRollbackPolicyRequest{}
+	mi := &file_job_distributor_v1_probation_probation_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateRollbackPolicyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateRollbackPolicyRequest) ProtoMessage() {}
+
+func (x *UpdateRollbackPolicyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_job_distributor_v1_probation_probation_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateRollbackPolicyRequest.ProtoReflect.Descriptor instead.
+func (*UpdateRollbackPolicyRequest) Descriptor() ([]byte, []int) {
+	return file_job_distributor_v1_probation_probation_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *UpdateRollbackPolicyRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateRollbackPolicyRequest) GetPolicy() *structpb.Struct {
+	if x != nil {
+		return x.Policy
+	}
+	return nil
+}
+
+// UpdateRollbackPolicyResponse returns details of the updated rollback policy.
+type UpdateRollbackPolicyResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	RollbackPolicy *RollbackPolicy        `protobuf:"bytes,1,opt,name=rollback_policy,json=rollbackPolicy,proto3" json:"rollback_policy,omitempty"` // Details of the updated rollback policy.
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *UpdateRollbackPolicyResponse) Reset() {
+	*x = UpdateRollbackPolicyResponse{}
+	mi := &file_job_distributor_v1_probation_probation_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateRollbackPolicyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateRollbackPolicyResponse) ProtoMessage() {}
+
+func (x *UpdateRollbackPolicyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_job_distributor_v1_probation_probation_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateRollbackPolicyResponse.ProtoReflect.Descriptor instead.
+func (*UpdateRollbackPolicyResponse) Descriptor() ([]byte, []int) {
+	return file_job_distributor_v1_probation_probation_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *UpdateRollbackPolicyResponse) GetRollbackPolicy() *RollbackPolicy {
+	if x != nil {
+		return x.RollbackPolicy
+	}
+	return nil
+}
+
+type ListRollbackPoliciesRequest_Filter struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Ids           []string               `protobuf:"bytes,1,rep,name=ids,proto3" json:"ids,omitempty"` // Filter by rollback policy IDs.
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListRollbackPoliciesRequest_Filter) Reset() {
+	*x = ListRollbackPoliciesRequest_Filter{}
+	mi := &file_job_distributor_v1_probation_probation_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListRollbackPoliciesRequest_Filter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListRollbackPoliciesRequest_Filter) ProtoMessage() {}
+
+func (x *ListRollbackPoliciesRequest_Filter) ProtoReflect() protoreflect.Message {
+	mi := &file_job_distributor_v1_probation_probation_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListRollbackPoliciesRequest_Filter.ProtoReflect.Descriptor instead.
+func (*ListRollbackPoliciesRequest_Filter) Descriptor() ([]byte, []int) {
+	return file_job_distributor_v1_probation_probation_proto_rawDescGZIP(), []int{5, 0}
+}
+
+func (x *ListRollbackPoliciesRequest_Filter) GetIds() []string {
+	if x != nil {
+		return x.Ids
+	}
+	return nil
+}
+
 var File_job_distributor_v1_probation_probation_proto protoreflect.FileDescriptor
 
 const file_job_distributor_v1_probation_probation_proto_rawDesc = "" +
@@ -291,10 +523,23 @@ const file_job_distributor_v1_probation_probation_proto_rawDesc = "" +
 	"\x1bCreateRollbackPolicyRequest\x12/\n" +
 	"\x06policy\x18\x01 \x01(\v2\x17.google.protobuf.StructR\x06policy\"i\n" +
 	"\x1cCreateRollbackPolicyResponse\x12I\n" +
-	"\x0frollback_policy\x18\x01 \x01(\v2 .api.probation.v1.RollbackPolicyR\x0erollbackPolicy2\x80\x02\n" +
+	"\x0frollback_policy\x18\x01 \x01(\v2 .api.probation.v1.RollbackPolicyR\x0erollbackPolicy\"\x87\x01\n" +
+	"\x1bListRollbackPoliciesRequest\x12L\n" +
+	"\x06filter\x18\x01 \x01(\v24.api.probation.v1.ListRollbackPoliciesRequest.FilterR\x06filter\x1a\x1a\n" +
+	"\x06Filter\x12\x10\n" +
+	"\x03ids\x18\x01 \x03(\tR\x03ids\"m\n" +
+	"\x1cListRollbackPoliciesResponse\x12M\n" +
+	"\x11rollback_policies\x18\x01 \x03(\v2 .api.probation.v1.RollbackPolicyR\x10rollbackPolicies\"^\n" +
+	"\x1bUpdateRollbackPolicyRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12/\n" +
+	"\x06policy\x18\x02 \x01(\v2\x17.google.protobuf.StructR\x06policy\"i\n" +
+	"\x1cUpdateRollbackPolicyResponse\x12I\n" +
+	"\x0frollback_policy\x18\x01 \x01(\v2 .api.probation.v1.RollbackPolicyR\x0erollbackPolicy2\xf2\x03\n" +
 	"\x15RollbackPolicyService\x12n\n" +
 	"\x11GetRollbackPolicy\x12*.api.probation.v1.GetRollbackPolicyRequest\x1a+.api.probation.v1.GetRollbackPolicyResponse\"\x00\x12w\n" +
-	"\x14CreateRollbackPolicy\x12-.api.probation.v1.CreateRollbackPolicyRequest\x1a..api.probation.v1.CreateRollbackPolicyResponse\"\x00BKZIgithub.com/smartcontractkit/chainlink-protos/job-distributor/v1/probationb\x06proto3"
+	"\x14CreateRollbackPolicy\x12-.api.probation.v1.CreateRollbackPolicyRequest\x1a..api.probation.v1.CreateRollbackPolicyResponse\"\x00\x12w\n" +
+	"\x14ListRollbackPolicies\x12-.api.probation.v1.ListRollbackPoliciesRequest\x1a..api.probation.v1.ListRollbackPoliciesResponse\"\x00\x12w\n" +
+	"\x14UpdateRollbackPolicy\x12-.api.probation.v1.UpdateRollbackPolicyRequest\x1a..api.probation.v1.UpdateRollbackPolicyResponse\"\x00BKZIgithub.com/smartcontractkit/chainlink-protos/job-distributor/v1/probationb\x06proto3"
 
 var (
 	file_job_distributor_v1_probation_probation_proto_rawDescOnce sync.Once
@@ -308,32 +553,45 @@ func file_job_distributor_v1_probation_probation_proto_rawDescGZIP() []byte {
 	return file_job_distributor_v1_probation_probation_proto_rawDescData
 }
 
-var file_job_distributor_v1_probation_probation_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_job_distributor_v1_probation_probation_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_job_distributor_v1_probation_probation_proto_goTypes = []any{
-	(*RollbackPolicy)(nil),               // 0: api.probation.v1.RollbackPolicy
-	(*GetRollbackPolicyRequest)(nil),     // 1: api.probation.v1.GetRollbackPolicyRequest
-	(*GetRollbackPolicyResponse)(nil),    // 2: api.probation.v1.GetRollbackPolicyResponse
-	(*CreateRollbackPolicyRequest)(nil),  // 3: api.probation.v1.CreateRollbackPolicyRequest
-	(*CreateRollbackPolicyResponse)(nil), // 4: api.probation.v1.CreateRollbackPolicyResponse
-	(*structpb.Struct)(nil),              // 5: google.protobuf.Struct
-	(*timestamppb.Timestamp)(nil),        // 6: google.protobuf.Timestamp
+	(*RollbackPolicy)(nil),                     // 0: api.probation.v1.RollbackPolicy
+	(*GetRollbackPolicyRequest)(nil),           // 1: api.probation.v1.GetRollbackPolicyRequest
+	(*GetRollbackPolicyResponse)(nil),          // 2: api.probation.v1.GetRollbackPolicyResponse
+	(*CreateRollbackPolicyRequest)(nil),        // 3: api.probation.v1.CreateRollbackPolicyRequest
+	(*CreateRollbackPolicyResponse)(nil),       // 4: api.probation.v1.CreateRollbackPolicyResponse
+	(*ListRollbackPoliciesRequest)(nil),        // 5: api.probation.v1.ListRollbackPoliciesRequest
+	(*ListRollbackPoliciesResponse)(nil),       // 6: api.probation.v1.ListRollbackPoliciesResponse
+	(*UpdateRollbackPolicyRequest)(nil),        // 7: api.probation.v1.UpdateRollbackPolicyRequest
+	(*UpdateRollbackPolicyResponse)(nil),       // 8: api.probation.v1.UpdateRollbackPolicyResponse
+	(*ListRollbackPoliciesRequest_Filter)(nil), // 9: api.probation.v1.ListRollbackPoliciesRequest.Filter
+	(*structpb.Struct)(nil),                    // 10: google.protobuf.Struct
+	(*timestamppb.Timestamp)(nil),              // 11: google.protobuf.Timestamp
 }
 var file_job_distributor_v1_probation_probation_proto_depIdxs = []int32{
-	5, // 0: api.probation.v1.RollbackPolicy.policy:type_name -> google.protobuf.Struct
-	6, // 1: api.probation.v1.RollbackPolicy.created_at:type_name -> google.protobuf.Timestamp
-	6, // 2: api.probation.v1.RollbackPolicy.updated_at:type_name -> google.protobuf.Timestamp
-	0, // 3: api.probation.v1.GetRollbackPolicyResponse.rollback_policy:type_name -> api.probation.v1.RollbackPolicy
-	5, // 4: api.probation.v1.CreateRollbackPolicyRequest.policy:type_name -> google.protobuf.Struct
-	0, // 5: api.probation.v1.CreateRollbackPolicyResponse.rollback_policy:type_name -> api.probation.v1.RollbackPolicy
-	1, // 6: api.probation.v1.RollbackPolicyService.GetRollbackPolicy:input_type -> api.probation.v1.GetRollbackPolicyRequest
-	3, // 7: api.probation.v1.RollbackPolicyService.CreateRollbackPolicy:input_type -> api.probation.v1.CreateRollbackPolicyRequest
-	2, // 8: api.probation.v1.RollbackPolicyService.GetRollbackPolicy:output_type -> api.probation.v1.GetRollbackPolicyResponse
-	4, // 9: api.probation.v1.RollbackPolicyService.CreateRollbackPolicy:output_type -> api.probation.v1.CreateRollbackPolicyResponse
-	8, // [8:10] is the sub-list for method output_type
-	6, // [6:8] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	10, // 0: api.probation.v1.RollbackPolicy.policy:type_name -> google.protobuf.Struct
+	11, // 1: api.probation.v1.RollbackPolicy.created_at:type_name -> google.protobuf.Timestamp
+	11, // 2: api.probation.v1.RollbackPolicy.updated_at:type_name -> google.protobuf.Timestamp
+	0,  // 3: api.probation.v1.GetRollbackPolicyResponse.rollback_policy:type_name -> api.probation.v1.RollbackPolicy
+	10, // 4: api.probation.v1.CreateRollbackPolicyRequest.policy:type_name -> google.protobuf.Struct
+	0,  // 5: api.probation.v1.CreateRollbackPolicyResponse.rollback_policy:type_name -> api.probation.v1.RollbackPolicy
+	9,  // 6: api.probation.v1.ListRollbackPoliciesRequest.filter:type_name -> api.probation.v1.ListRollbackPoliciesRequest.Filter
+	0,  // 7: api.probation.v1.ListRollbackPoliciesResponse.rollback_policies:type_name -> api.probation.v1.RollbackPolicy
+	10, // 8: api.probation.v1.UpdateRollbackPolicyRequest.policy:type_name -> google.protobuf.Struct
+	0,  // 9: api.probation.v1.UpdateRollbackPolicyResponse.rollback_policy:type_name -> api.probation.v1.RollbackPolicy
+	1,  // 10: api.probation.v1.RollbackPolicyService.GetRollbackPolicy:input_type -> api.probation.v1.GetRollbackPolicyRequest
+	3,  // 11: api.probation.v1.RollbackPolicyService.CreateRollbackPolicy:input_type -> api.probation.v1.CreateRollbackPolicyRequest
+	5,  // 12: api.probation.v1.RollbackPolicyService.ListRollbackPolicies:input_type -> api.probation.v1.ListRollbackPoliciesRequest
+	7,  // 13: api.probation.v1.RollbackPolicyService.UpdateRollbackPolicy:input_type -> api.probation.v1.UpdateRollbackPolicyRequest
+	2,  // 14: api.probation.v1.RollbackPolicyService.GetRollbackPolicy:output_type -> api.probation.v1.GetRollbackPolicyResponse
+	4,  // 15: api.probation.v1.RollbackPolicyService.CreateRollbackPolicy:output_type -> api.probation.v1.CreateRollbackPolicyResponse
+	6,  // 16: api.probation.v1.RollbackPolicyService.ListRollbackPolicies:output_type -> api.probation.v1.ListRollbackPoliciesResponse
+	8,  // 17: api.probation.v1.RollbackPolicyService.UpdateRollbackPolicy:output_type -> api.probation.v1.UpdateRollbackPolicyResponse
+	14, // [14:18] is the sub-list for method output_type
+	10, // [10:14] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_job_distributor_v1_probation_probation_proto_init() }
@@ -347,7 +605,7 @@ func file_job_distributor_v1_probation_probation_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_job_distributor_v1_probation_probation_proto_rawDesc), len(file_job_distributor_v1_probation_probation_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
