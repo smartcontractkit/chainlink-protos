@@ -14,6 +14,12 @@ service RollbackPolicyService {
 
   // CreateRollbackPolicy creates a new rollback policy.
   rpc CreateRollbackPolicy(CreateRollbackPolicyRequest) returns (CreateRollbackPolicyResponse) {}
+
+  // ListRollbackPolicies returns a list of rollback policies.
+  rpc ListRollbackPolicies(ListRollbackPoliciesRequest) returns (ListRollbackPoliciesResponse) {}
+
+  // UpdateRollbackPolicy updates an existing rollback policy.
+  rpc UpdateRollbackPolicy(UpdateRollbackPolicyRequest) returns (UpdateRollbackPolicyResponse) {}
 }
 
 // Rollback Policy
@@ -42,4 +48,29 @@ message CreateRollbackPolicyRequest {
 // CreateRollbackPolicyResponse returns the newly created rollback policy.
 message CreateRollbackPolicyResponse {
   RollbackPolicy rollback_policy = 1; // Details of the newly created rollback policy.
+}
+
+// ListRollbackPoliciesRequest specifies filters for listing rollback policies.
+message ListRollbackPoliciesRequest {
+  message Filter {
+    repeated string ids = 1; // Filter by rollback policy IDs.
+  }
+
+  Filter filter = 1; // Filters applied to the rollback policy listing.
+}
+
+// ListRollbackPoliciesResponse contains a list of rollback policies that match the filters.
+message ListRollbackPoliciesResponse {
+  repeated RollbackPolicy rollback_policies = 1; // List of rollback policies.
+}
+
+// UpdateRollbackPolicyRequest specifies the criteria for updating a rollback policy.
+message UpdateRollbackPolicyRequest {
+  string id = 1; // Unique identifier of the rollback policy to update.
+  google.protobuf.Struct policy = 2; // Updated policy definition.
+}
+
+// UpdateRollbackPolicyResponse returns details of the updated rollback policy.
+message UpdateRollbackPolicyResponse {
+  RollbackPolicy rollback_policy = 1; // Details of the updated rollback policy.
 }
