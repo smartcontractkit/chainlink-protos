@@ -96,7 +96,7 @@ type MeteringReportStep struct {
 	AggSpendValue    string                      `protobuf:"bytes,2,opt,name=agg_spend_value,json=aggSpendValue,proto3" json:"agg_spend_value,omitempty"`
 	AggSpendUnit     string                      `protobuf:"bytes,3,opt,name=agg_spend_unit,json=aggSpendUnit,proto3" json:"agg_spend_unit,omitempty"`
 	AggSpendValueCre string                      `protobuf:"bytes,4,opt,name=agg_spend_value_cre,json=aggSpendValueCre,proto3" json:"agg_spend_value_cre,omitempty"`
-	N                uint32                      `protobuf:"varint,5,opt,name=n,proto3" json:"n,omitempty"` // n provides the total node count for capability DONs
+	CapdonN          uint32                      `protobuf:"varint,5,opt,name=capdon_n,json=capdonN,proto3" json:"capdon_n,omitempty"` // capdon_n provides the total node count for capability DONs
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -159,9 +159,9 @@ func (x *MeteringReportStep) GetAggSpendValueCre() string {
 	return ""
 }
 
-func (x *MeteringReportStep) GetN() uint32 {
+func (x *MeteringReportStep) GetCapdonN() uint32 {
 	if x != nil {
-		return x.N
+		return x.CapdonN
 	}
 	return 0
 }
@@ -247,13 +247,13 @@ const file_workflows_v1_metering_proto_rawDesc = "" +
 	"\n" +
 	"StepsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x126\n" +
-	"\x05value\x18\x02 \x01(\v2 .workflows.v1.MeteringReportStepR\x05value:\x028\x01\"\xdd\x01\n" +
+	"\x05value\x18\x02 \x01(\v2 .workflows.v1.MeteringReportStepR\x05value:\x028\x01\"\xea\x01\n" +
 	"\x12MeteringReportStep\x12<\n" +
 	"\x05nodes\x18\x01 \x03(\v2&.workflows.v1.MeteringReportNodeDetailR\x05nodes\x12&\n" +
 	"\x0fagg_spend_value\x18\x02 \x01(\tR\raggSpendValue\x12$\n" +
 	"\x0eagg_spend_unit\x18\x03 \x01(\tR\faggSpendUnit\x12-\n" +
-	"\x13agg_spend_value_cre\x18\x04 \x01(\tR\x10aggSpendValueCre\x12\f\n" +
-	"\x01n\x18\x05 \x01(\rR\x01n\"\xa7\x01\n" +
+	"\x13agg_spend_value_cre\x18\x04 \x01(\tR\x10aggSpendValueCre\x12\x19\n" +
+	"\bcapdon_n\x18\x05 \x01(\rR\acapdonN\"\xa7\x01\n" +
 	"\x18MeteringReportNodeDetail\x12#\n" +
 	"\x0epeer_2_peer_id\x18\x01 \x01(\tR\vpeer2PeerId\x12\x1d\n" +
 	"\n" +
