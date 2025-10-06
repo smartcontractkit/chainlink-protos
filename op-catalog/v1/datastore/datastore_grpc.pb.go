@@ -19,27 +19,27 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DeploymentsDatastore_DataAccess_FullMethodName = "/api.datastore.v1.DeploymentsDatastore/DataAccess"
+	Datastore_DataAccess_FullMethodName = "/api.datastore.v1.Datastore/DataAccess"
 )
 
-// DeploymentsDatastoreClient is the client API for DeploymentsDatastore service.
+// DatastoreClient is the client API for Datastore service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type DeploymentsDatastoreClient interface {
+type DatastoreClient interface {
 	DataAccess(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[DataAccessRequest, DataAccessResponse], error)
 }
 
-type deploymentsDatastoreClient struct {
+type datastoreClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewDeploymentsDatastoreClient(cc grpc.ClientConnInterface) DeploymentsDatastoreClient {
-	return &deploymentsDatastoreClient{cc}
+func NewDatastoreClient(cc grpc.ClientConnInterface) DatastoreClient {
+	return &datastoreClient{cc}
 }
 
-func (c *deploymentsDatastoreClient) DataAccess(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[DataAccessRequest, DataAccessResponse], error) {
+func (c *datastoreClient) DataAccess(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[DataAccessRequest, DataAccessResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &DeploymentsDatastore_ServiceDesc.Streams[0], DeploymentsDatastore_DataAccess_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &Datastore_ServiceDesc.Streams[0], Datastore_DataAccess_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -48,65 +48,65 @@ func (c *deploymentsDatastoreClient) DataAccess(ctx context.Context, opts ...grp
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type DeploymentsDatastore_DataAccessClient = grpc.BidiStreamingClient[DataAccessRequest, DataAccessResponse]
+type Datastore_DataAccessClient = grpc.BidiStreamingClient[DataAccessRequest, DataAccessResponse]
 
-// DeploymentsDatastoreServer is the server API for DeploymentsDatastore service.
-// All implementations must embed UnimplementedDeploymentsDatastoreServer
+// DatastoreServer is the server API for Datastore service.
+// All implementations must embed UnimplementedDatastoreServer
 // for forward compatibility.
-type DeploymentsDatastoreServer interface {
+type DatastoreServer interface {
 	DataAccess(grpc.BidiStreamingServer[DataAccessRequest, DataAccessResponse]) error
-	mustEmbedUnimplementedDeploymentsDatastoreServer()
+	mustEmbedUnimplementedDatastoreServer()
 }
 
-// UnimplementedDeploymentsDatastoreServer must be embedded to have
+// UnimplementedDatastoreServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedDeploymentsDatastoreServer struct{}
+type UnimplementedDatastoreServer struct{}
 
-func (UnimplementedDeploymentsDatastoreServer) DataAccess(grpc.BidiStreamingServer[DataAccessRequest, DataAccessResponse]) error {
+func (UnimplementedDatastoreServer) DataAccess(grpc.BidiStreamingServer[DataAccessRequest, DataAccessResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method DataAccess not implemented")
 }
-func (UnimplementedDeploymentsDatastoreServer) mustEmbedUnimplementedDeploymentsDatastoreServer() {}
-func (UnimplementedDeploymentsDatastoreServer) testEmbeddedByValue()                              {}
+func (UnimplementedDatastoreServer) mustEmbedUnimplementedDatastoreServer() {}
+func (UnimplementedDatastoreServer) testEmbeddedByValue()                   {}
 
-// UnsafeDeploymentsDatastoreServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to DeploymentsDatastoreServer will
+// UnsafeDatastoreServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to DatastoreServer will
 // result in compilation errors.
-type UnsafeDeploymentsDatastoreServer interface {
-	mustEmbedUnimplementedDeploymentsDatastoreServer()
+type UnsafeDatastoreServer interface {
+	mustEmbedUnimplementedDatastoreServer()
 }
 
-func RegisterDeploymentsDatastoreServer(s grpc.ServiceRegistrar, srv DeploymentsDatastoreServer) {
-	// If the following call pancis, it indicates UnimplementedDeploymentsDatastoreServer was
+func RegisterDatastoreServer(s grpc.ServiceRegistrar, srv DatastoreServer) {
+	// If the following call pancis, it indicates UnimplementedDatastoreServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&DeploymentsDatastore_ServiceDesc, srv)
+	s.RegisterService(&Datastore_ServiceDesc, srv)
 }
 
-func _DeploymentsDatastore_DataAccess_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(DeploymentsDatastoreServer).DataAccess(&grpc.GenericServerStream[DataAccessRequest, DataAccessResponse]{ServerStream: stream})
+func _Datastore_DataAccess_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(DatastoreServer).DataAccess(&grpc.GenericServerStream[DataAccessRequest, DataAccessResponse]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type DeploymentsDatastore_DataAccessServer = grpc.BidiStreamingServer[DataAccessRequest, DataAccessResponse]
+type Datastore_DataAccessServer = grpc.BidiStreamingServer[DataAccessRequest, DataAccessResponse]
 
-// DeploymentsDatastore_ServiceDesc is the grpc.ServiceDesc for DeploymentsDatastore service.
+// Datastore_ServiceDesc is the grpc.ServiceDesc for Datastore service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var DeploymentsDatastore_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "api.datastore.v1.DeploymentsDatastore",
-	HandlerType: (*DeploymentsDatastoreServer)(nil),
+var Datastore_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "api.datastore.v1.Datastore",
+	HandlerType: (*DatastoreServer)(nil),
 	Methods:     []grpc.MethodDesc{},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "DataAccess",
-			Handler:       _DeploymentsDatastore_DataAccess_Handler,
+			Handler:       _Datastore_DataAccess_Handler,
 			ServerStreams: true,
 			ClientStreams: true,
 		},

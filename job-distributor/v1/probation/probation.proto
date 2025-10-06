@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package api.probation.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/v1/probation";
+
+// RollbackPolicyService provides RPCs for managing rollback policies.
+service RollbackPolicyService {
+  // GetRollbackPolicy retrieves the details of a specific rollback policy by its ID.
+  rpc GetRollbackPolicy(GetRollbackPolicyRequest) returns (GetRollbackPolicyResponse) {}
+
+  // CreateRollbackPolicy creates a new rollback policy.
+  rpc CreateRollbackPolicy(CreateRollbackPolicyRequest) returns (CreateRollbackPolicyResponse) {}
+
+  // ListRollbackPolicies returns a list of rollback policies.
+  rpc ListRollbackPolicies(ListRollbackPoliciesRequest) returns (ListRollbackPoliciesResponse) {}
+
+  // UpdateRollbackPolicy updates an existing rollback policy.
+  rpc UpdateRollbackPolicy(UpdateRollbackPolicyRequest) returns (UpdateRollbackPolicyResponse) {}
+}
+
+// Rollback Policy
+message RollbackPolicy {
+  string id = 1; // Unique identifier for the policy.
+  google.protobuf.Struct policy = 2; // Policy definition.
+  google.protobuf.Timestamp created_at = 3; // Timestamp when the policy was created.
+  google.protobuf.Timestamp updated_at = 4; // Timestamp when the policy was last updated.
+}
+
+// GetRollbackPolicyRequest specifies the criteria for retrieving a rollback policy.
+message GetRollbackPolicyRequest {
+  string id = 1; // Unique identifier of the rollback policy to retrieve.
+}
+
+// GetRollbackPolicyResponse contains the rollback policy details.
+message GetRollbackPolicyResponse {
+  RollbackPolicy rollback_policy = 1; // Details of the retrieved rollback policy.
+}
+
+// CreateRollbackPolicyRequest contains the information needed to create a new rollback policy.
+message CreateRollbackPolicyRequest {
+  google.protobuf.Struct policy = 1; // Policy definition to create.
+}
+
+// CreateRollbackPolicyResponse returns the newly created rollback policy.
+message CreateRollbackPolicyResponse {
+  RollbackPolicy rollback_policy = 1; // Details of the newly created rollback policy.
+}
+
+// ListRollbackPoliciesRequest specifies filters for listing rollback policies.
+message ListRollbackPoliciesRequest {
+  message Filter {
+    repeated string ids = 1; // Filter by rollback policy IDs.
+  }
+
+  Filter filter = 1; // Filters applied to the rollback policy listing.
+}
+
+// ListRollbackPoliciesResponse contains a list of rollback policies that match the filters.
+message ListRollbackPoliciesResponse {
+  repeated RollbackPolicy rollback_policies = 1; // List of rollback policies.
+}
+
+// UpdateRollbackPolicyRequest specifies the criteria for updating a rollback policy.
+message UpdateRollbackPolicyRequest {
+  string id = 1; // Unique identifier of the rollback policy to update.
+  google.protobuf.Struct policy = 2; // Updated policy definition.
+}
+
+// UpdateRollbackPolicyResponse returns details of the updated rollback policy.
+message UpdateRollbackPolicyResponse {
+  RollbackPolicy rollback_policy = 1; // Details of the updated rollback policy.
+}
