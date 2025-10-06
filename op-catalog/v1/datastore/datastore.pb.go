@@ -23,17 +23,15 @@ const (
 )
 
 // ResponseStatus provides per-message error information in streaming RPCs.
-// Compatible with google.rpc.Status - uses standard gRPC status codes.
-// Code 0 = OK/success, non-zero = error.
-// See: https://grpc.github.io/grpc/core/md_doc_statuscodes.html
+// Compatible with google.rpc.Status.
 type ResponseStatus struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The status code, which should be an enum value of google.rpc.Code.
 	Code int32 `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
-	// A developer-facing error message, which should be in English.
+	// A developer-facing error message.
 	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
-	// A list of messages that carry the error details. There is a common set of
-	// message types for APIs to use. Optional field for additional error context.
+	// A list of messages that carry the error details.
+	// Optional field for additional error context.
 	Details       []*anypb.Any `protobuf:"bytes,3,rep,name=details,proto3" json:"details,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
