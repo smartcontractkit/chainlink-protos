@@ -19,7 +19,7 @@ message MeteringReportStep {
   string agg_spend_value = 2;
   string agg_spend_unit = 3;
   string agg_spend_value_cre = 4;
-  uint32 n = 5; // n provides the total node count for capability DONs
+  uint32 capdon_n = 5; // capdon_n provides the total node count for capability DONs
 }
 
 message MeteringReportNodeDetail {
