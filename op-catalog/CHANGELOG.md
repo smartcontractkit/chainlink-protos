@@ -1,5 +1,11 @@
 # @chainlink/op-catalog
 
+## 0.0.4
+
+### Patch Changes
+
+- [#208](https://github.com/smartcontractkit/chainlink-protos/pull/208) [`215fb10`](https://github.com/smartcontractkit/chainlink-protos/commit/215fb100e43c29fef15c1200b3bee20dccdeacd9) Thanks [@DimitriosNaikopoulos](https://github.com/DimitriosNaikopoulos)! - Update ResponseStatus message to be compatible with the standard grpc status
+
 ## 0.0.3
 
 ### Patch Changes
