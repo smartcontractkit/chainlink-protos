@@ -13,3 +13,6 @@
 /linking-service/ @smartcontractkit/cre-business @smartcontractkit/core @smartcontractkit/devex-tooling
 # Changesets do not have owners
 /.changeset/**
+
+# Catalog owners
+/op-catalog/ @smartcontractkit/cld-team
