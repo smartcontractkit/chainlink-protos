@@ -97,6 +97,7 @@ type MeteringReportStep struct {
 	AggSpendUnit     string                      `protobuf:"bytes,3,opt,name=agg_spend_unit,json=aggSpendUnit,proto3" json:"agg_spend_unit,omitempty"`
 	AggSpendValueCre string                      `protobuf:"bytes,4,opt,name=agg_spend_value_cre,json=aggSpendValueCre,proto3" json:"agg_spend_value_cre,omitempty"`
 	CapdonN          uint32                      `protobuf:"varint,5,opt,name=capdon_n,json=capdonN,proto3" json:"capdon_n,omitempty"` // capdon_n provides the total node count for capability DONs
+	AggSpend         []*AggregatedSpendDetail    `protobuf:"bytes,6,rep,name=agg_spend,json=aggSpend,proto3" json:"agg_spend,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -164,6 +165,13 @@ func (x *MeteringReportStep) GetCapdonN() uint32 {
 		return x.CapdonN
 	}
 	return 0
+}
+
+func (x *MeteringReportStep) GetAggSpend() []*AggregatedSpendDetail {
+	if x != nil {
+		return x.AggSpend
+	}
+	return nil
 }
 
 type MeteringReportNodeDetail struct {
@@ -234,6 +242,66 @@ func (x *MeteringReportNodeDetail) GetSpendValueCre() string {
 	return ""
 }
 
+type AggregatedSpendDetail struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SpendUnit     string                 `protobuf:"bytes,2,opt,name=spend_unit,json=spendUnit,proto3" json:"spend_unit,omitempty"`
+	SpendValue    string                 `protobuf:"bytes,3,opt,name=spend_value,json=spendValue,proto3" json:"spend_value,omitempty"`
+	SpendValueCre string                 `protobuf:"bytes,4,opt,name=spend_value_cre,json=spendValueCre,proto3" json:"spend_value_cre,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AggregatedSpendDetail) Reset() {
+	*x = AggregatedSpendDetail{}
+	mi := &file_workflows_v1_metering_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AggregatedSpendDetail) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AggregatedSpendDetail) ProtoMessage() {}
+
+func (x *AggregatedSpendDetail) ProtoReflect() protoreflect.Message {
+	mi := &file_workflows_v1_metering_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AggregatedSpendDetail.ProtoReflect.Descriptor instead.
+func (*AggregatedSpendDetail) Descriptor() ([]byte, []int) {
+	return file_workflows_v1_metering_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *AggregatedSpendDetail) GetSpendUnit() string {
+	if x != nil {
+		return x.SpendUnit
+	}
+	return ""
+}
+
+func (x *AggregatedSpendDetail) GetSpendValue() string {
+	if x != nil {
+		return x.SpendValue
+	}
+	return ""
+}
+
+func (x *AggregatedSpendDetail) GetSpendValueCre() string {
+	if x != nil {
+		return x.SpendValueCre
+	}
+	return ""
+}
+
 var File_workflows_v1_metering_proto protoreflect.FileDescriptor
 
 const file_workflows_v1_metering_proto_rawDesc = "" +
@@ -247,15 +315,22 @@ const file_workflows_v1_metering_proto_rawDesc = "" +
 	"\n" +
 	"StepsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x126\n" +
-	"\x05value\x18\x02 \x01(\v2 .workflows.v1.MeteringReportStepR\x05value:\x028\x01\"\xea\x01\n" +
+	"\x05value\x18\x02 \x01(\v2 .workflows.v1.MeteringReportStepR\x05value:\x028\x01\"\xac\x02\n" +
 	"\x12MeteringReportStep\x12<\n" +
 	"\x05nodes\x18\x01 \x03(\v2&.workflows.v1.MeteringReportNodeDetailR\x05nodes\x12&\n" +
 	"\x0fagg_spend_value\x18\x02 \x01(\tR\raggSpendValue\x12$\n" +
 	"\x0eagg_spend_unit\x18\x03 \x01(\tR\faggSpendUnit\x12-\n" +
 	"\x13agg_spend_value_cre\x18\x04 \x01(\tR\x10aggSpendValueCre\x12\x19\n" +
-	"\bcapdon_n\x18\x05 \x01(\rR\acapdonN\"\xa7\x01\n" +
+	"\bcapdon_n\x18\x05 \x01(\rR\acapdonN\x12@\n" +
+	"\tagg_spend\x18\x06 \x03(\v2#.workflows.v1.AggregatedSpendDetailR\baggSpend\"\xa7\x01\n" +
 	"\x18MeteringReportNodeDetail\x12#\n" +
 	"\x0epeer_2_peer_id\x18\x01 \x01(\tR\vpeer2PeerId\x12\x1d\n" +
+	"\n" +
+	"spend_unit\x18\x02 \x01(\tR\tspendUnit\x12\x1f\n" +
+	"\vspend_value\x18\x03 \x01(\tR\n" +
+	"spendValue\x12&\n" +
+	"\x0fspend_value_cre\x18\x04 \x01(\tR\rspendValueCre\"\x7f\n" +
+	"\x15AggregatedSpendDetail\x12\x1d\n" +
 	"\n" +
 	"spend_unit\x18\x02 \x01(\tR\tspendUnit\x12\x1f\n" +
 	"\vspend_value\x18\x03 \x01(\tR\n" +
@@ -274,24 +349,26 @@ func file_workflows_v1_metering_proto_rawDescGZIP() []byte {
 	return file_workflows_v1_metering_proto_rawDescData
 }
 
-var file_workflows_v1_metering_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_workflows_v1_metering_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_workflows_v1_metering_proto_goTypes = []any{
 	(*MeteringReport)(nil),           // 0: workflows.v1.MeteringReport
 	(*MeteringReportStep)(nil),       // 1: workflows.v1.MeteringReportStep
 	(*MeteringReportNodeDetail)(nil), // 2: workflows.v1.MeteringReportNodeDetail
-	nil,                              // 3: workflows.v1.MeteringReport.StepsEntry
-	(*WorkflowMetadata)(nil),         // 4: workflows.v1.WorkflowMetadata
+	(*AggregatedSpendDetail)(nil),    // 3: workflows.v1.AggregatedSpendDetail
+	nil,                              // 4: workflows.v1.MeteringReport.StepsEntry
+	(*WorkflowMetadata)(nil),         // 5: workflows.v1.WorkflowMetadata
 }
 var file_workflows_v1_metering_proto_depIdxs = []int32{
-	3, // 0: workflows.v1.MeteringReport.steps:type_name -> workflows.v1.MeteringReport.StepsEntry
-	4, // 1: workflows.v1.MeteringReport.metadata:type_name -> workflows.v1.WorkflowMetadata
+	4, // 0: workflows.v1.MeteringReport.steps:type_name -> workflows.v1.MeteringReport.StepsEntry
+	5, // 1: workflows.v1.MeteringReport.metadata:type_name -> workflows.v1.WorkflowMetadata
 	2, // 2: workflows.v1.MeteringReportStep.nodes:type_name -> workflows.v1.MeteringReportNodeDetail
-	1, // 3: workflows.v1.MeteringReport.StepsEntry.value:type_name -> workflows.v1.MeteringReportStep
-	4, // [4:4] is the sub-list for method output_type
-	4, // [4:4] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	3, // 3: workflows.v1.MeteringReportStep.agg_spend:type_name -> workflows.v1.AggregatedSpendDetail
+	1, // 4: workflows.v1.MeteringReport.StepsEntry.value:type_name -> workflows.v1.MeteringReportStep
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_workflows_v1_metering_proto_init() }
@@ -306,7 +383,7 @@ func file_workflows_v1_metering_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_workflows_v1_metering_proto_rawDesc), len(file_workflows_v1_metering_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
