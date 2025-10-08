@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: chainlink-catalog/v1/datastore/transactions.proto
+// source: op-catalog/v1/datastore/transactions.proto
 
 package datastore
 
@@ -29,7 +29,7 @@ type BeginTransactionRequest struct {
 
 func (x *BeginTransactionRequest) Reset() {
 	*x = BeginTransactionRequest{}
-	mi := &file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes[0]
+	mi := &file_op_catalog_v1_datastore_transactions_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -41,7 +41,7 @@ func (x *BeginTransactionRequest) String() string {
 func (*BeginTransactionRequest) ProtoMessage() {}
 
 func (x *BeginTransactionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes[0]
+	mi := &file_op_catalog_v1_datastore_transactions_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -54,7 +54,7 @@ func (x *BeginTransactionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BeginTransactionRequest.ProtoReflect.Descriptor instead.
 func (*BeginTransactionRequest) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_transactions_proto_rawDescGZIP(), []int{0}
+	return file_op_catalog_v1_datastore_transactions_proto_rawDescGZIP(), []int{0}
 }
 
 type BeginTransactionResponse struct {
@@ -65,7 +65,7 @@ type BeginTransactionResponse struct {
 
 func (x *BeginTransactionResponse) Reset() {
 	*x = BeginTransactionResponse{}
-	mi := &file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes[1]
+	mi := &file_op_catalog_v1_datastore_transactions_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -77,7 +77,7 @@ func (x *BeginTransactionResponse) String() string {
 func (*BeginTransactionResponse) ProtoMessage() {}
 
 func (x *BeginTransactionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes[1]
+	mi := &file_op_catalog_v1_datastore_transactions_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -90,7 +90,7 @@ func (x *BeginTransactionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BeginTransactionResponse.ProtoReflect.Descriptor instead.
 func (*BeginTransactionResponse) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_transactions_proto_rawDescGZIP(), []int{1}
+	return file_op_catalog_v1_datastore_transactions_proto_rawDescGZIP(), []int{1}
 }
 
 type CommitTransactionRequest struct {
@@ -101,7 +101,7 @@ type CommitTransactionRequest struct {
 
 func (x *CommitTransactionRequest) Reset() {
 	*x = CommitTransactionRequest{}
-	mi := &file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes[2]
+	mi := &file_op_catalog_v1_datastore_transactions_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -113,7 +113,7 @@ func (x *CommitTransactionRequest) String() string {
 func (*CommitTransactionRequest) ProtoMessage() {}
 
 func (x *CommitTransactionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes[2]
+	mi := &file_op_catalog_v1_datastore_transactions_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -126,7 +126,7 @@ func (x *CommitTransactionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CommitTransactionRequest.ProtoReflect.Descriptor instead.
 func (*CommitTransactionRequest) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_transactions_proto_rawDescGZIP(), []int{2}
+	return file_op_catalog_v1_datastore_transactions_proto_rawDescGZIP(), []int{2}
 }
 
 type CommitTransactionResponse struct {
@@ -137,7 +137,7 @@ type CommitTransactionResponse struct {
 
 func (x *CommitTransactionResponse) Reset() {
 	*x = CommitTransactionResponse{}
-	mi := &file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes[3]
+	mi := &file_op_catalog_v1_datastore_transactions_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -149,7 +149,7 @@ func (x *CommitTransactionResponse) String() string {
 func (*CommitTransactionResponse) ProtoMessage() {}
 
 func (x *CommitTransactionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes[3]
+	mi := &file_op_catalog_v1_datastore_transactions_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -162,7 +162,7 @@ func (x *CommitTransactionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CommitTransactionResponse.ProtoReflect.Descriptor instead.
 func (*CommitTransactionResponse) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_transactions_proto_rawDescGZIP(), []int{3}
+	return file_op_catalog_v1_datastore_transactions_proto_rawDescGZIP(), []int{3}
 }
 
 type RollbackTransactionRequest struct {
@@ -173,7 +173,7 @@ type RollbackTransactionRequest struct {
 
 func (x *RollbackTransactionRequest) Reset() {
 	*x = RollbackTransactionRequest{}
-	mi := &file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes[4]
+	mi := &file_op_catalog_v1_datastore_transactions_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -185,7 +185,7 @@ func (x *RollbackTransactionRequest) String() string {
 func (*RollbackTransactionRequest) ProtoMessage() {}
 
 func (x *RollbackTransactionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes[4]
+	mi := &file_op_catalog_v1_datastore_transactions_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -198,7 +198,7 @@ func (x *RollbackTransactionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RollbackTransactionRequest.ProtoReflect.Descriptor instead.
 func (*RollbackTransactionRequest) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_transactions_proto_rawDescGZIP(), []int{4}
+	return file_op_catalog_v1_datastore_transactions_proto_rawDescGZIP(), []int{4}
 }
 
 type RollbackTransactionResponse struct {
@@ -209,7 +209,7 @@ type RollbackTransactionResponse struct {
 
 func (x *RollbackTransactionResponse) Reset() {
 	*x = RollbackTransactionResponse{}
-	mi := &file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes[5]
+	mi := &file_op_catalog_v1_datastore_transactions_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -221,7 +221,7 @@ func (x *RollbackTransactionResponse) String() string {
 func (*RollbackTransactionResponse) ProtoMessage() {}
 
 func (x *RollbackTransactionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes[5]
+	mi := &file_op_catalog_v1_datastore_transactions_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -234,35 +234,35 @@ func (x *RollbackTransactionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RollbackTransactionResponse.ProtoReflect.Descriptor instead.
 func (*RollbackTransactionResponse) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_transactions_proto_rawDescGZIP(), []int{5}
+	return file_op_catalog_v1_datastore_transactions_proto_rawDescGZIP(), []int{5}
 }
 
-var File_chainlink_catalog_v1_datastore_transactions_proto protoreflect.FileDescriptor
+var File_op_catalog_v1_datastore_transactions_proto protoreflect.FileDescriptor
 
-const file_chainlink_catalog_v1_datastore_transactions_proto_rawDesc = "" +
+const file_op_catalog_v1_datastore_transactions_proto_rawDesc = "" +
 	"\n" +
-	"1chainlink-catalog/v1/datastore/transactions.proto\x12\x10api.datastore.v1\"\x19\n" +
+	"*op-catalog/v1/datastore/transactions.proto\x12\x10api.datastore.v1\"\x19\n" +
 	"\x17BeginTransactionRequest\"\x1a\n" +
 	"\x18BeginTransactionResponse\"\x1a\n" +
 	"\x18CommitTransactionRequest\"\x1b\n" +
 	"\x19CommitTransactionResponse\"\x1c\n" +
 	"\x1aRollbackTransactionRequest\"\x1d\n" +
-	"\x1bRollbackTransactionResponseBMZKgithub.com/smartcontractkit/chainlink-protos/chainlink-catalog/v1/datastoreb\x06proto3"
+	"\x1bRollbackTransactionResponseBFZDgithub.com/smartcontractkit/chainlink-protos/op-catalog/v1/datastoreb\x06proto3"
 
 var (
-	file_chainlink_catalog_v1_datastore_transactions_proto_rawDescOnce sync.Once
-	file_chainlink_catalog_v1_datastore_transactions_proto_rawDescData []byte
+	file_op_catalog_v1_datastore_transactions_proto_rawDescOnce sync.Once
+	file_op_catalog_v1_datastore_transactions_proto_rawDescData []byte
 )
 
-func file_chainlink_catalog_v1_datastore_transactions_proto_rawDescGZIP() []byte {
-	file_chainlink_catalog_v1_datastore_transactions_proto_rawDescOnce.Do(func() {
-		file_chainlink_catalog_v1_datastore_transactions_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_chainlink_catalog_v1_datastore_transactions_proto_rawDesc), len(file_chainlink_catalog_v1_datastore_transactions_proto_rawDesc)))
+func file_op_catalog_v1_datastore_transactions_proto_rawDescGZIP() []byte {
+	file_op_catalog_v1_datastore_transactions_proto_rawDescOnce.Do(func() {
+		file_op_catalog_v1_datastore_transactions_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_op_catalog_v1_datastore_transactions_proto_rawDesc), len(file_op_catalog_v1_datastore_transactions_proto_rawDesc)))
 	})
-	return file_chainlink_catalog_v1_datastore_transactions_proto_rawDescData
+	return file_op_catalog_v1_datastore_transactions_proto_rawDescData
 }
 
-var file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_chainlink_catalog_v1_datastore_transactions_proto_goTypes = []any{
+var file_op_catalog_v1_datastore_transactions_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_op_catalog_v1_datastore_transactions_proto_goTypes = []any{
 	(*BeginTransactionRequest)(nil),     // 0: api.datastore.v1.BeginTransactionRequest
 	(*BeginTransactionResponse)(nil),    // 1: api.datastore.v1.BeginTransactionResponse
 	(*CommitTransactionRequest)(nil),    // 2: api.datastore.v1.CommitTransactionRequest
@@ -270,7 +270,7 @@ var file_chainlink_catalog_v1_datastore_transactions_proto_goTypes = []any{
 	(*RollbackTransactionRequest)(nil),  // 4: api.datastore.v1.RollbackTransactionRequest
 	(*RollbackTransactionResponse)(nil), // 5: api.datastore.v1.RollbackTransactionResponse
 }
-var file_chainlink_catalog_v1_datastore_transactions_proto_depIdxs = []int32{
+var file_op_catalog_v1_datastore_transactions_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
 	0, // [0:0] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -278,26 +278,26 @@ var file_chainlink_catalog_v1_datastore_transactions_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_chainlink_catalog_v1_datastore_transactions_proto_init() }
-func file_chainlink_catalog_v1_datastore_transactions_proto_init() {
-	if File_chainlink_catalog_v1_datastore_transactions_proto != nil {
+func init() { file_op_catalog_v1_datastore_transactions_proto_init() }
+func file_op_catalog_v1_datastore_transactions_proto_init() {
+	if File_op_catalog_v1_datastore_transactions_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_chainlink_catalog_v1_datastore_transactions_proto_rawDesc), len(file_chainlink_catalog_v1_datastore_transactions_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_op_catalog_v1_datastore_transactions_proto_rawDesc), len(file_op_catalog_v1_datastore_transactions_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_chainlink_catalog_v1_datastore_transactions_proto_goTypes,
-		DependencyIndexes: file_chainlink_catalog_v1_datastore_transactions_proto_depIdxs,
-		MessageInfos:      file_chainlink_catalog_v1_datastore_transactions_proto_msgTypes,
+		GoTypes:           file_op_catalog_v1_datastore_transactions_proto_goTypes,
+		DependencyIndexes: file_op_catalog_v1_datastore_transactions_proto_depIdxs,
+		MessageInfos:      file_op_catalog_v1_datastore_transactions_proto_msgTypes,
 	}.Build()
-	File_chainlink_catalog_v1_datastore_transactions_proto = out.File
-	file_chainlink_catalog_v1_datastore_transactions_proto_goTypes = nil
-	file_chainlink_catalog_v1_datastore_transactions_proto_depIdxs = nil
+	File_op_catalog_v1_datastore_transactions_proto = out.File
+	file_op_catalog_v1_datastore_transactions_proto_goTypes = nil
+	file_op_catalog_v1_datastore_transactions_proto_depIdxs = nil
 }

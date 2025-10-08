@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: chainlink-catalog/v1/datastore/environment_metadata.proto
+// source: op-catalog/v1/datastore/environment_metadata.proto
 
 package datastore
 
@@ -32,7 +32,7 @@ type EnvironmentMetadataKeyFilter struct {
 
 func (x *EnvironmentMetadataKeyFilter) Reset() {
 	*x = EnvironmentMetadataKeyFilter{}
-	mi := &file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes[0]
+	mi := &file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -44,7 +44,7 @@ func (x *EnvironmentMetadataKeyFilter) String() string {
 func (*EnvironmentMetadataKeyFilter) ProtoMessage() {}
 
 func (x *EnvironmentMetadataKeyFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes[0]
+	mi := &file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -57,7 +57,7 @@ func (x *EnvironmentMetadataKeyFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnvironmentMetadataKeyFilter.ProtoReflect.Descriptor instead.
 func (*EnvironmentMetadataKeyFilter) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP(), []int{0}
+	return file_op_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *EnvironmentMetadataKeyFilter) GetDomain() *wrapperspb.StringValue {
@@ -84,7 +84,7 @@ type EnvironmentMetadataFindRequest struct {
 
 func (x *EnvironmentMetadataFindRequest) Reset() {
 	*x = EnvironmentMetadataFindRequest{}
-	mi := &file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes[1]
+	mi := &file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -96,7 +96,7 @@ func (x *EnvironmentMetadataFindRequest) String() string {
 func (*EnvironmentMetadataFindRequest) ProtoMessage() {}
 
 func (x *EnvironmentMetadataFindRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes[1]
+	mi := &file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -109,7 +109,7 @@ func (x *EnvironmentMetadataFindRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnvironmentMetadataFindRequest.ProtoReflect.Descriptor instead.
 func (*EnvironmentMetadataFindRequest) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP(), []int{1}
+	return file_op_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *EnvironmentMetadataFindRequest) GetKeyFilter() *EnvironmentMetadataKeyFilter {
@@ -138,7 +138,7 @@ type EnvironmentMetadata struct {
 
 func (x *EnvironmentMetadata) Reset() {
 	*x = EnvironmentMetadata{}
-	mi := &file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes[2]
+	mi := &file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -150,7 +150,7 @@ func (x *EnvironmentMetadata) String() string {
 func (*EnvironmentMetadata) ProtoMessage() {}
 
 func (x *EnvironmentMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes[2]
+	mi := &file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -163,7 +163,7 @@ func (x *EnvironmentMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnvironmentMetadata.ProtoReflect.Descriptor instead.
 func (*EnvironmentMetadata) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP(), []int{2}
+	return file_op_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *EnvironmentMetadata) GetDomain() string {
@@ -203,7 +203,7 @@ type EnvironmentMetadataFindResponse struct {
 
 func (x *EnvironmentMetadataFindResponse) Reset() {
 	*x = EnvironmentMetadataFindResponse{}
-	mi := &file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes[3]
+	mi := &file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -215,7 +215,7 @@ func (x *EnvironmentMetadataFindResponse) String() string {
 func (*EnvironmentMetadataFindResponse) ProtoMessage() {}
 
 func (x *EnvironmentMetadataFindResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes[3]
+	mi := &file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -228,7 +228,7 @@ func (x *EnvironmentMetadataFindResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnvironmentMetadataFindResponse.ProtoReflect.Descriptor instead.
 func (*EnvironmentMetadataFindResponse) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP(), []int{3}
+	return file_op_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *EnvironmentMetadataFindResponse) GetReferences() []*EnvironmentMetadata {
@@ -248,7 +248,7 @@ type EnvironmentMetadataEditRequest struct {
 
 func (x *EnvironmentMetadataEditRequest) Reset() {
 	*x = EnvironmentMetadataEditRequest{}
-	mi := &file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes[4]
+	mi := &file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -260,7 +260,7 @@ func (x *EnvironmentMetadataEditRequest) String() string {
 func (*EnvironmentMetadataEditRequest) ProtoMessage() {}
 
 func (x *EnvironmentMetadataEditRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes[4]
+	mi := &file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -273,7 +273,7 @@ func (x *EnvironmentMetadataEditRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnvironmentMetadataEditRequest.ProtoReflect.Descriptor instead.
 func (*EnvironmentMetadataEditRequest) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP(), []int{4}
+	return file_op_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *EnvironmentMetadataEditRequest) GetRecord() *EnvironmentMetadata {
@@ -299,7 +299,7 @@ type EnvironmentMetadataEditResponse struct {
 
 func (x *EnvironmentMetadataEditResponse) Reset() {
 	*x = EnvironmentMetadataEditResponse{}
-	mi := &file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes[5]
+	mi := &file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -311,7 +311,7 @@ func (x *EnvironmentMetadataEditResponse) String() string {
 func (*EnvironmentMetadataEditResponse) ProtoMessage() {}
 
 func (x *EnvironmentMetadataEditResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes[5]
+	mi := &file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -324,7 +324,7 @@ func (x *EnvironmentMetadataEditResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EnvironmentMetadataEditResponse.ProtoReflect.Descriptor instead.
 func (*EnvironmentMetadataEditResponse) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP(), []int{5}
+	return file_op_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *EnvironmentMetadataEditResponse) GetRecord() *EnvironmentMetadata {
@@ -334,11 +334,11 @@ func (x *EnvironmentMetadataEditResponse) GetRecord() *EnvironmentMetadata {
 	return nil
 }
 
-var File_chainlink_catalog_v1_datastore_environment_metadata_proto protoreflect.FileDescriptor
+var File_op_catalog_v1_datastore_environment_metadata_proto protoreflect.FileDescriptor
 
-const file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDesc = "" +
+const file_op_catalog_v1_datastore_environment_metadata_proto_rawDesc = "" +
 	"\n" +
-	"9chainlink-catalog/v1/datastore/environment_metadata.proto\x12\x10api.datastore.v1\x1a\x1egoogle/protobuf/wrappers.proto\x1a+chainlink-catalog/v1/datastore/common.proto\"\x94\x01\n" +
+	"2op-catalog/v1/datastore/environment_metadata.proto\x12\x10api.datastore.v1\x1a\x1egoogle/protobuf/wrappers.proto\x1a$op-catalog/v1/datastore/common.proto\"\x94\x01\n" +
 	"\x1cEnvironmentMetadataKeyFilter\x124\n" +
 	"\x06domain\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x06domain\x12>\n" +
 	"\venvironment\x18\x02 \x01(\v2\x1c.google.protobuf.StringValueR\venvironment\"\x9e\x01\n" +
@@ -360,22 +360,22 @@ const file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDesc = "
 	"\x06record\x18\x01 \x01(\v2%.api.datastore.v1.EnvironmentMetadataR\x06record\x12=\n" +
 	"\tsemantics\x18\x02 \x01(\x0e2\x1f.api.datastore.v1.EditSemanticsR\tsemantics\"`\n" +
 	"\x1fEnvironmentMetadataEditResponse\x12=\n" +
-	"\x06record\x18\x01 \x01(\v2%.api.datastore.v1.EnvironmentMetadataR\x06recordBMZKgithub.com/smartcontractkit/chainlink-protos/chainlink-catalog/v1/datastoreb\x06proto3"
+	"\x06record\x18\x01 \x01(\v2%.api.datastore.v1.EnvironmentMetadataR\x06recordBFZDgithub.com/smartcontractkit/chainlink-protos/op-catalog/v1/datastoreb\x06proto3"
 
 var (
-	file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDescOnce sync.Once
-	file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDescData []byte
+	file_op_catalog_v1_datastore_environment_metadata_proto_rawDescOnce sync.Once
+	file_op_catalog_v1_datastore_environment_metadata_proto_rawDescData []byte
 )
 
-func file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP() []byte {
-	file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDescOnce.Do(func() {
-		file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDesc), len(file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDesc)))
+func file_op_catalog_v1_datastore_environment_metadata_proto_rawDescGZIP() []byte {
+	file_op_catalog_v1_datastore_environment_metadata_proto_rawDescOnce.Do(func() {
+		file_op_catalog_v1_datastore_environment_metadata_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_op_catalog_v1_datastore_environment_metadata_proto_rawDesc), len(file_op_catalog_v1_datastore_environment_metadata_proto_rawDesc)))
 	})
-	return file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDescData
+	return file_op_catalog_v1_datastore_environment_metadata_proto_rawDescData
 }
 
-var file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_chainlink_catalog_v1_datastore_environment_metadata_proto_goTypes = []any{
+var file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_op_catalog_v1_datastore_environment_metadata_proto_goTypes = []any{
 	(*EnvironmentMetadataKeyFilter)(nil),    // 0: api.datastore.v1.EnvironmentMetadataKeyFilter
 	(*EnvironmentMetadataFindRequest)(nil),  // 1: api.datastore.v1.EnvironmentMetadataFindRequest
 	(*EnvironmentMetadata)(nil),             // 2: api.datastore.v1.EnvironmentMetadata
@@ -385,7 +385,7 @@ var file_chainlink_catalog_v1_datastore_environment_metadata_proto_goTypes = []a
 	(*wrapperspb.StringValue)(nil),          // 6: google.protobuf.StringValue
 	(EditSemantics)(0),                      // 7: api.datastore.v1.EditSemantics
 }
-var file_chainlink_catalog_v1_datastore_environment_metadata_proto_depIdxs = []int32{
+var file_op_catalog_v1_datastore_environment_metadata_proto_depIdxs = []int32{
 	6, // 0: api.datastore.v1.EnvironmentMetadataKeyFilter.domain:type_name -> google.protobuf.StringValue
 	6, // 1: api.datastore.v1.EnvironmentMetadataKeyFilter.environment:type_name -> google.protobuf.StringValue
 	0, // 2: api.datastore.v1.EnvironmentMetadataFindRequest.key_filter:type_name -> api.datastore.v1.EnvironmentMetadataKeyFilter
@@ -400,27 +400,27 @@ var file_chainlink_catalog_v1_datastore_environment_metadata_proto_depIdxs = []i
 	0, // [0:7] is the sub-list for field type_name
 }
 
-func init() { file_chainlink_catalog_v1_datastore_environment_metadata_proto_init() }
-func file_chainlink_catalog_v1_datastore_environment_metadata_proto_init() {
-	if File_chainlink_catalog_v1_datastore_environment_metadata_proto != nil {
+func init() { file_op_catalog_v1_datastore_environment_metadata_proto_init() }
+func file_op_catalog_v1_datastore_environment_metadata_proto_init() {
+	if File_op_catalog_v1_datastore_environment_metadata_proto != nil {
 		return
 	}
-	file_chainlink_catalog_v1_datastore_common_proto_init()
+	file_op_catalog_v1_datastore_common_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDesc), len(file_chainlink_catalog_v1_datastore_environment_metadata_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_op_catalog_v1_datastore_environment_metadata_proto_rawDesc), len(file_op_catalog_v1_datastore_environment_metadata_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_chainlink_catalog_v1_datastore_environment_metadata_proto_goTypes,
-		DependencyIndexes: file_chainlink_catalog_v1_datastore_environment_metadata_proto_depIdxs,
-		MessageInfos:      file_chainlink_catalog_v1_datastore_environment_metadata_proto_msgTypes,
+		GoTypes:           file_op_catalog_v1_datastore_environment_metadata_proto_goTypes,
+		DependencyIndexes: file_op_catalog_v1_datastore_environment_metadata_proto_depIdxs,
+		MessageInfos:      file_op_catalog_v1_datastore_environment_metadata_proto_msgTypes,
 	}.Build()
-	File_chainlink_catalog_v1_datastore_environment_metadata_proto = out.File
-	file_chainlink_catalog_v1_datastore_environment_metadata_proto_goTypes = nil
-	file_chainlink_catalog_v1_datastore_environment_metadata_proto_depIdxs = nil
+	File_op_catalog_v1_datastore_environment_metadata_proto = out.File
+	file_op_catalog_v1_datastore_environment_metadata_proto_goTypes = nil
+	file_op_catalog_v1_datastore_environment_metadata_proto_depIdxs = nil
 }

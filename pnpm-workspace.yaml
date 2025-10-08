@@ -4,6 +4,6 @@ packages:
   - 'svr'
   - 'rmn'
   - 'storage-service'
-  - 'chainlink-catalog'
+  - 'op-catalog'
   - 'rane'
   - 'chainlink-ccv'

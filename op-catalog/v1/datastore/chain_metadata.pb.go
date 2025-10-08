@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: chainlink-catalog/v1/datastore/chain_metadata.proto
+// source: op-catalog/v1/datastore/chain_metadata.proto
 
 package datastore
 
@@ -33,7 +33,7 @@ type ChainMetadataKeyFilter struct {
 
 func (x *ChainMetadataKeyFilter) Reset() {
 	*x = ChainMetadataKeyFilter{}
-	mi := &file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes[0]
+	mi := &file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -45,7 +45,7 @@ func (x *ChainMetadataKeyFilter) String() string {
 func (*ChainMetadataKeyFilter) ProtoMessage() {}
 
 func (x *ChainMetadataKeyFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes[0]
+	mi := &file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58,7 +58,7 @@ func (x *ChainMetadataKeyFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChainMetadataKeyFilter.ProtoReflect.Descriptor instead.
 func (*ChainMetadataKeyFilter) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP(), []int{0}
+	return file_op_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *ChainMetadataKeyFilter) GetDomain() *wrapperspb.StringValue {
@@ -92,7 +92,7 @@ type ChainMetadataFindRequest struct {
 
 func (x *ChainMetadataFindRequest) Reset() {
 	*x = ChainMetadataFindRequest{}
-	mi := &file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes[1]
+	mi := &file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -104,7 +104,7 @@ func (x *ChainMetadataFindRequest) String() string {
 func (*ChainMetadataFindRequest) ProtoMessage() {}
 
 func (x *ChainMetadataFindRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes[1]
+	mi := &file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -117,7 +117,7 @@ func (x *ChainMetadataFindRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChainMetadataFindRequest.ProtoReflect.Descriptor instead.
 func (*ChainMetadataFindRequest) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP(), []int{1}
+	return file_op_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *ChainMetadataFindRequest) GetKeyFilter() *ChainMetadataKeyFilter {
@@ -147,7 +147,7 @@ type ChainMetadata struct {
 
 func (x *ChainMetadata) Reset() {
 	*x = ChainMetadata{}
-	mi := &file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes[2]
+	mi := &file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -159,7 +159,7 @@ func (x *ChainMetadata) String() string {
 func (*ChainMetadata) ProtoMessage() {}
 
 func (x *ChainMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes[2]
+	mi := &file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -172,7 +172,7 @@ func (x *ChainMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChainMetadata.ProtoReflect.Descriptor instead.
 func (*ChainMetadata) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP(), []int{2}
+	return file_op_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ChainMetadata) GetDomain() string {
@@ -219,7 +219,7 @@ type ChainMetadataFindResponse struct {
 
 func (x *ChainMetadataFindResponse) Reset() {
 	*x = ChainMetadataFindResponse{}
-	mi := &file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes[3]
+	mi := &file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -231,7 +231,7 @@ func (x *ChainMetadataFindResponse) String() string {
 func (*ChainMetadataFindResponse) ProtoMessage() {}
 
 func (x *ChainMetadataFindResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes[3]
+	mi := &file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -244,7 +244,7 @@ func (x *ChainMetadataFindResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChainMetadataFindResponse.ProtoReflect.Descriptor instead.
 func (*ChainMetadataFindResponse) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP(), []int{3}
+	return file_op_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ChainMetadataFindResponse) GetReferences() []*ChainMetadata {
@@ -264,7 +264,7 @@ type ChainMetadataEditRequest struct {
 
 func (x *ChainMetadataEditRequest) Reset() {
 	*x = ChainMetadataEditRequest{}
-	mi := &file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes[4]
+	mi := &file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -276,7 +276,7 @@ func (x *ChainMetadataEditRequest) String() string {
 func (*ChainMetadataEditRequest) ProtoMessage() {}
 
 func (x *ChainMetadataEditRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes[4]
+	mi := &file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -289,7 +289,7 @@ func (x *ChainMetadataEditRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChainMetadataEditRequest.ProtoReflect.Descriptor instead.
 func (*ChainMetadataEditRequest) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP(), []int{4}
+	return file_op_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ChainMetadataEditRequest) GetRecord() *ChainMetadata {
@@ -315,7 +315,7 @@ type ChainMetadataEditResponse struct {
 
 func (x *ChainMetadataEditResponse) Reset() {
 	*x = ChainMetadataEditResponse{}
-	mi := &file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes[5]
+	mi := &file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -327,7 +327,7 @@ func (x *ChainMetadataEditResponse) String() string {
 func (*ChainMetadataEditResponse) ProtoMessage() {}
 
 func (x *ChainMetadataEditResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes[5]
+	mi := &file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -340,7 +340,7 @@ func (x *ChainMetadataEditResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ChainMetadataEditResponse.ProtoReflect.Descriptor instead.
 func (*ChainMetadataEditResponse) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP(), []int{5}
+	return file_op_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ChainMetadataEditResponse) GetRecord() *ChainMetadata {
@@ -350,11 +350,11 @@ func (x *ChainMetadataEditResponse) GetRecord() *ChainMetadata {
 	return nil
 }
 
-var File_chainlink_catalog_v1_datastore_chain_metadata_proto protoreflect.FileDescriptor
+var File_op_catalog_v1_datastore_chain_metadata_proto protoreflect.FileDescriptor
 
-const file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDesc = "" +
+const file_op_catalog_v1_datastore_chain_metadata_proto_rawDesc = "" +
 	"\n" +
-	"3chainlink-catalog/v1/datastore/chain_metadata.proto\x12\x10api.datastore.v1\x1a\x1egoogle/protobuf/wrappers.proto\x1a+chainlink-catalog/v1/datastore/common.proto\"\xd3\x01\n" +
+	",op-catalog/v1/datastore/chain_metadata.proto\x12\x10api.datastore.v1\x1a\x1egoogle/protobuf/wrappers.proto\x1a$op-catalog/v1/datastore/common.proto\"\xd3\x01\n" +
 	"\x16ChainMetadataKeyFilter\x124\n" +
 	"\x06domain\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x06domain\x12>\n" +
 	"\venvironment\x18\x02 \x01(\v2\x1c.google.protobuf.StringValueR\venvironment\x12C\n" +
@@ -378,22 +378,22 @@ const file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDesc = "" +
 	"\x06record\x18\x01 \x01(\v2\x1f.api.datastore.v1.ChainMetadataR\x06record\x12=\n" +
 	"\tsemantics\x18\x02 \x01(\x0e2\x1f.api.datastore.v1.EditSemanticsR\tsemantics\"T\n" +
 	"\x19ChainMetadataEditResponse\x127\n" +
-	"\x06record\x18\x01 \x01(\v2\x1f.api.datastore.v1.ChainMetadataR\x06recordBMZKgithub.com/smartcontractkit/chainlink-protos/chainlink-catalog/v1/datastoreb\x06proto3"
+	"\x06record\x18\x01 \x01(\v2\x1f.api.datastore.v1.ChainMetadataR\x06recordBFZDgithub.com/smartcontractkit/chainlink-protos/op-catalog/v1/datastoreb\x06proto3"
 
 var (
-	file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDescOnce sync.Once
-	file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDescData []byte
+	file_op_catalog_v1_datastore_chain_metadata_proto_rawDescOnce sync.Once
+	file_op_catalog_v1_datastore_chain_metadata_proto_rawDescData []byte
 )
 
-func file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP() []byte {
-	file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDescOnce.Do(func() {
-		file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDesc), len(file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDesc)))
+func file_op_catalog_v1_datastore_chain_metadata_proto_rawDescGZIP() []byte {
+	file_op_catalog_v1_datastore_chain_metadata_proto_rawDescOnce.Do(func() {
+		file_op_catalog_v1_datastore_chain_metadata_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_op_catalog_v1_datastore_chain_metadata_proto_rawDesc), len(file_op_catalog_v1_datastore_chain_metadata_proto_rawDesc)))
 	})
-	return file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDescData
+	return file_op_catalog_v1_datastore_chain_metadata_proto_rawDescData
 }
 
-var file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_chainlink_catalog_v1_datastore_chain_metadata_proto_goTypes = []any{
+var file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_op_catalog_v1_datastore_chain_metadata_proto_goTypes = []any{
 	(*ChainMetadataKeyFilter)(nil),    // 0: api.datastore.v1.ChainMetadataKeyFilter
 	(*ChainMetadataFindRequest)(nil),  // 1: api.datastore.v1.ChainMetadataFindRequest
 	(*ChainMetadata)(nil),             // 2: api.datastore.v1.ChainMetadata
@@ -404,7 +404,7 @@ var file_chainlink_catalog_v1_datastore_chain_metadata_proto_goTypes = []any{
 	(*wrapperspb.UInt64Value)(nil),    // 7: google.protobuf.UInt64Value
 	(EditSemantics)(0),                // 8: api.datastore.v1.EditSemantics
 }
-var file_chainlink_catalog_v1_datastore_chain_metadata_proto_depIdxs = []int32{
+var file_op_catalog_v1_datastore_chain_metadata_proto_depIdxs = []int32{
 	6, // 0: api.datastore.v1.ChainMetadataKeyFilter.domain:type_name -> google.protobuf.StringValue
 	6, // 1: api.datastore.v1.ChainMetadataKeyFilter.environment:type_name -> google.protobuf.StringValue
 	7, // 2: api.datastore.v1.ChainMetadataKeyFilter.chain_selector:type_name -> google.protobuf.UInt64Value
@@ -420,27 +420,27 @@ var file_chainlink_catalog_v1_datastore_chain_metadata_proto_depIdxs = []int32{
 	0, // [0:8] is the sub-list for field type_name
 }
 
-func init() { file_chainlink_catalog_v1_datastore_chain_metadata_proto_init() }
-func file_chainlink_catalog_v1_datastore_chain_metadata_proto_init() {
-	if File_chainlink_catalog_v1_datastore_chain_metadata_proto != nil {
+func init() { file_op_catalog_v1_datastore_chain_metadata_proto_init() }
+func file_op_catalog_v1_datastore_chain_metadata_proto_init() {
+	if File_op_catalog_v1_datastore_chain_metadata_proto != nil {
 		return
 	}
-	file_chainlink_catalog_v1_datastore_common_proto_init()
+	file_op_catalog_v1_datastore_common_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDesc), len(file_chainlink_catalog_v1_datastore_chain_metadata_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_op_catalog_v1_datastore_chain_metadata_proto_rawDesc), len(file_op_catalog_v1_datastore_chain_metadata_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_chainlink_catalog_v1_datastore_chain_metadata_proto_goTypes,
-		DependencyIndexes: file_chainlink_catalog_v1_datastore_chain_metadata_proto_depIdxs,
-		MessageInfos:      file_chainlink_catalog_v1_datastore_chain_metadata_proto_msgTypes,
+		GoTypes:           file_op_catalog_v1_datastore_chain_metadata_proto_goTypes,
+		DependencyIndexes: file_op_catalog_v1_datastore_chain_metadata_proto_depIdxs,
+		MessageInfos:      file_op_catalog_v1_datastore_chain_metadata_proto_msgTypes,
 	}.Build()
-	File_chainlink_catalog_v1_datastore_chain_metadata_proto = out.File
-	file_chainlink_catalog_v1_datastore_chain_metadata_proto_goTypes = nil
-	file_chainlink_catalog_v1_datastore_chain_metadata_proto_depIdxs = nil
+	File_op_catalog_v1_datastore_chain_metadata_proto = out.File
+	file_op_catalog_v1_datastore_chain_metadata_proto_goTypes = nil
+	file_op_catalog_v1_datastore_chain_metadata_proto_depIdxs = nil
 }

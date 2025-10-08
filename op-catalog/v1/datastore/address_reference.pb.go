@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: chainlink-catalog/v1/datastore/address_reference.proto
+// source: op-catalog/v1/datastore/address_reference.proto
 
 package datastore
 
@@ -36,7 +36,7 @@ type AddressReferenceKeyFilter struct {
 
 func (x *AddressReferenceKeyFilter) Reset() {
 	*x = AddressReferenceKeyFilter{}
-	mi := &file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes[0]
+	mi := &file_op_catalog_v1_datastore_address_reference_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48,7 +48,7 @@ func (x *AddressReferenceKeyFilter) String() string {
 func (*AddressReferenceKeyFilter) ProtoMessage() {}
 
 func (x *AddressReferenceKeyFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes[0]
+	mi := &file_op_catalog_v1_datastore_address_reference_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61,7 +61,7 @@ func (x *AddressReferenceKeyFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddressReferenceKeyFilter.ProtoReflect.Descriptor instead.
 func (*AddressReferenceKeyFilter) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_address_reference_proto_rawDescGZIP(), []int{0}
+	return file_op_catalog_v1_datastore_address_reference_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *AddressReferenceKeyFilter) GetDomain() *wrapperspb.StringValue {
@@ -116,7 +116,7 @@ type AddressReferenceFindRequest struct {
 
 func (x *AddressReferenceFindRequest) Reset() {
 	*x = AddressReferenceFindRequest{}
-	mi := &file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes[1]
+	mi := &file_op_catalog_v1_datastore_address_reference_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -128,7 +128,7 @@ func (x *AddressReferenceFindRequest) String() string {
 func (*AddressReferenceFindRequest) ProtoMessage() {}
 
 func (x *AddressReferenceFindRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes[1]
+	mi := &file_op_catalog_v1_datastore_address_reference_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -141,7 +141,7 @@ func (x *AddressReferenceFindRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddressReferenceFindRequest.ProtoReflect.Descriptor instead.
 func (*AddressReferenceFindRequest) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_address_reference_proto_rawDescGZIP(), []int{1}
+	return file_op_catalog_v1_datastore_address_reference_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *AddressReferenceFindRequest) GetKeyFilter() *AddressReferenceKeyFilter {
@@ -174,7 +174,7 @@ type AddressReference struct {
 
 func (x *AddressReference) Reset() {
 	*x = AddressReference{}
-	mi := &file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes[2]
+	mi := &file_op_catalog_v1_datastore_address_reference_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -186,7 +186,7 @@ func (x *AddressReference) String() string {
 func (*AddressReference) ProtoMessage() {}
 
 func (x *AddressReference) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes[2]
+	mi := &file_op_catalog_v1_datastore_address_reference_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -199,7 +199,7 @@ func (x *AddressReference) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddressReference.ProtoReflect.Descriptor instead.
 func (*AddressReference) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_address_reference_proto_rawDescGZIP(), []int{2}
+	return file_op_catalog_v1_datastore_address_reference_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *AddressReference) GetDomain() string {
@@ -267,7 +267,7 @@ type AddressReferenceFindResponse struct {
 
 func (x *AddressReferenceFindResponse) Reset() {
 	*x = AddressReferenceFindResponse{}
-	mi := &file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes[3]
+	mi := &file_op_catalog_v1_datastore_address_reference_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -279,7 +279,7 @@ func (x *AddressReferenceFindResponse) String() string {
 func (*AddressReferenceFindResponse) ProtoMessage() {}
 
 func (x *AddressReferenceFindResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes[3]
+	mi := &file_op_catalog_v1_datastore_address_reference_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -292,7 +292,7 @@ func (x *AddressReferenceFindResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddressReferenceFindResponse.ProtoReflect.Descriptor instead.
 func (*AddressReferenceFindResponse) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_address_reference_proto_rawDescGZIP(), []int{3}
+	return file_op_catalog_v1_datastore_address_reference_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *AddressReferenceFindResponse) GetReferences() []*AddressReference {
@@ -312,7 +312,7 @@ type AddressReferenceEditRequest struct {
 
 func (x *AddressReferenceEditRequest) Reset() {
 	*x = AddressReferenceEditRequest{}
-	mi := &file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes[4]
+	mi := &file_op_catalog_v1_datastore_address_reference_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -324,7 +324,7 @@ func (x *AddressReferenceEditRequest) String() string {
 func (*AddressReferenceEditRequest) ProtoMessage() {}
 
 func (x *AddressReferenceEditRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes[4]
+	mi := &file_op_catalog_v1_datastore_address_reference_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -337,7 +337,7 @@ func (x *AddressReferenceEditRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddressReferenceEditRequest.ProtoReflect.Descriptor instead.
 func (*AddressReferenceEditRequest) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_address_reference_proto_rawDescGZIP(), []int{4}
+	return file_op_catalog_v1_datastore_address_reference_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *AddressReferenceEditRequest) GetRecord() *AddressReference {
@@ -363,7 +363,7 @@ type AddressReferenceEditResponse struct {
 
 func (x *AddressReferenceEditResponse) Reset() {
 	*x = AddressReferenceEditResponse{}
-	mi := &file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes[5]
+	mi := &file_op_catalog_v1_datastore_address_reference_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -375,7 +375,7 @@ func (x *AddressReferenceEditResponse) String() string {
 func (*AddressReferenceEditResponse) ProtoMessage() {}
 
 func (x *AddressReferenceEditResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes[5]
+	mi := &file_op_catalog_v1_datastore_address_reference_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -388,7 +388,7 @@ func (x *AddressReferenceEditResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddressReferenceEditResponse.ProtoReflect.Descriptor instead.
 func (*AddressReferenceEditResponse) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_address_reference_proto_rawDescGZIP(), []int{5}
+	return file_op_catalog_v1_datastore_address_reference_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *AddressReferenceEditResponse) GetRecord() *AddressReference {
@@ -398,11 +398,11 @@ func (x *AddressReferenceEditResponse) GetRecord() *AddressReference {
 	return nil
 }
 
-var File_chainlink_catalog_v1_datastore_address_reference_proto protoreflect.FileDescriptor
+var File_op_catalog_v1_datastore_address_reference_proto protoreflect.FileDescriptor
 
-const file_chainlink_catalog_v1_datastore_address_reference_proto_rawDesc = "" +
+const file_op_catalog_v1_datastore_address_reference_proto_rawDesc = "" +
 	"\n" +
-	"6chainlink-catalog/v1/datastore/address_reference.proto\x12\x10api.datastore.v1\x1a\x1egoogle/protobuf/wrappers.proto\x1a+chainlink-catalog/v1/datastore/common.proto\"\x8d\x03\n" +
+	"/op-catalog/v1/datastore/address_reference.proto\x12\x10api.datastore.v1\x1a\x1egoogle/protobuf/wrappers.proto\x1a$op-catalog/v1/datastore/common.proto\"\x8d\x03\n" +
 	"\x19AddressReferenceKeyFilter\x124\n" +
 	"\x06domain\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x06domain\x12>\n" +
 	"\venvironment\x18\x02 \x01(\v2\x1c.google.protobuf.StringValueR\venvironment\x12C\n" +
@@ -431,22 +431,22 @@ const file_chainlink_catalog_v1_datastore_address_reference_proto_rawDesc = "" +
 	"\x06record\x18\x01 \x01(\v2\".api.datastore.v1.AddressReferenceR\x06record\x12=\n" +
 	"\tsemantics\x18\x02 \x01(\x0e2\x1f.api.datastore.v1.EditSemanticsR\tsemantics\"Z\n" +
 	"\x1cAddressReferenceEditResponse\x12:\n" +
-	"\x06record\x18\x01 \x01(\v2\".api.datastore.v1.AddressReferenceR\x06recordBMZKgithub.com/smartcontractkit/chainlink-protos/chainlink-catalog/v1/datastoreb\x06proto3"
+	"\x06record\x18\x01 \x01(\v2\".api.datastore.v1.AddressReferenceR\x06recordBFZDgithub.com/smartcontractkit/chainlink-protos/op-catalog/v1/datastoreb\x06proto3"
 
 var (
-	file_chainlink_catalog_v1_datastore_address_reference_proto_rawDescOnce sync.Once
-	file_chainlink_catalog_v1_datastore_address_reference_proto_rawDescData []byte
+	file_op_catalog_v1_datastore_address_reference_proto_rawDescOnce sync.Once
+	file_op_catalog_v1_datastore_address_reference_proto_rawDescData []byte
 )
 
-func file_chainlink_catalog_v1_datastore_address_reference_proto_rawDescGZIP() []byte {
-	file_chainlink_catalog_v1_datastore_address_reference_proto_rawDescOnce.Do(func() {
-		file_chainlink_catalog_v1_datastore_address_reference_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_chainlink_catalog_v1_datastore_address_reference_proto_rawDesc), len(file_chainlink_catalog_v1_datastore_address_reference_proto_rawDesc)))
+func file_op_catalog_v1_datastore_address_reference_proto_rawDescGZIP() []byte {
+	file_op_catalog_v1_datastore_address_reference_proto_rawDescOnce.Do(func() {
+		file_op_catalog_v1_datastore_address_reference_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_op_catalog_v1_datastore_address_reference_proto_rawDesc), len(file_op_catalog_v1_datastore_address_reference_proto_rawDesc)))
 	})
-	return file_chainlink_catalog_v1_datastore_address_reference_proto_rawDescData
+	return file_op_catalog_v1_datastore_address_reference_proto_rawDescData
 }
 
-var file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_chainlink_catalog_v1_datastore_address_reference_proto_goTypes = []any{
+var file_op_catalog_v1_datastore_address_reference_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_op_catalog_v1_datastore_address_reference_proto_goTypes = []any{
 	(*AddressReferenceKeyFilter)(nil),    // 0: api.datastore.v1.AddressReferenceKeyFilter
 	(*AddressReferenceFindRequest)(nil),  // 1: api.datastore.v1.AddressReferenceFindRequest
 	(*AddressReference)(nil),             // 2: api.datastore.v1.AddressReference
@@ -457,7 +457,7 @@ var file_chainlink_catalog_v1_datastore_address_reference_proto_goTypes = []any{
 	(*wrapperspb.UInt64Value)(nil),       // 7: google.protobuf.UInt64Value
 	(EditSemantics)(0),                   // 8: api.datastore.v1.EditSemantics
 }
-var file_chainlink_catalog_v1_datastore_address_reference_proto_depIdxs = []int32{
+var file_op_catalog_v1_datastore_address_reference_proto_depIdxs = []int32{
 	6,  // 0: api.datastore.v1.AddressReferenceKeyFilter.domain:type_name -> google.protobuf.StringValue
 	6,  // 1: api.datastore.v1.AddressReferenceKeyFilter.environment:type_name -> google.protobuf.StringValue
 	7,  // 2: api.datastore.v1.AddressReferenceKeyFilter.chain_selector:type_name -> google.protobuf.UInt64Value
@@ -476,27 +476,27 @@ var file_chainlink_catalog_v1_datastore_address_reference_proto_depIdxs = []int3
 	0,  // [0:11] is the sub-list for field type_name
 }
 
-func init() { file_chainlink_catalog_v1_datastore_address_reference_proto_init() }
-func file_chainlink_catalog_v1_datastore_address_reference_proto_init() {
-	if File_chainlink_catalog_v1_datastore_address_reference_proto != nil {
+func init() { file_op_catalog_v1_datastore_address_reference_proto_init() }
+func file_op_catalog_v1_datastore_address_reference_proto_init() {
+	if File_op_catalog_v1_datastore_address_reference_proto != nil {
 		return
 	}
-	file_chainlink_catalog_v1_datastore_common_proto_init()
+	file_op_catalog_v1_datastore_common_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_chainlink_catalog_v1_datastore_address_reference_proto_rawDesc), len(file_chainlink_catalog_v1_datastore_address_reference_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_op_catalog_v1_datastore_address_reference_proto_rawDesc), len(file_op_catalog_v1_datastore_address_reference_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_chainlink_catalog_v1_datastore_address_reference_proto_goTypes,
-		DependencyIndexes: file_chainlink_catalog_v1_datastore_address_reference_proto_depIdxs,
-		MessageInfos:      file_chainlink_catalog_v1_datastore_address_reference_proto_msgTypes,
+		GoTypes:           file_op_catalog_v1_datastore_address_reference_proto_goTypes,
+		DependencyIndexes: file_op_catalog_v1_datastore_address_reference_proto_depIdxs,
+		MessageInfos:      file_op_catalog_v1_datastore_address_reference_proto_msgTypes,
 	}.Build()
-	File_chainlink_catalog_v1_datastore_address_reference_proto = out.File
-	file_chainlink_catalog_v1_datastore_address_reference_proto_goTypes = nil
-	file_chainlink_catalog_v1_datastore_address_reference_proto_depIdxs = nil
+	File_op_catalog_v1_datastore_address_reference_proto = out.File
+	file_op_catalog_v1_datastore_address_reference_proto_goTypes = nil
+	file_op_catalog_v1_datastore_address_reference_proto_depIdxs = nil
 }

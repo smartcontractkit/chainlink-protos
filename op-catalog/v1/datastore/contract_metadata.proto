@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package api.datastore.v1;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/chainlink-catalog/v1/datastore";
+option go_package = "github.com/smartcontractkit/chainlink-protos/op-catalog/v1/datastore";
 
 import "google/protobuf/wrappers.proto";
-import "chainlink-catalog/v1/datastore/common.proto";
+import "op-catalog/v1/datastore/common.proto";
 
 message ContractMetadataKeyFilter {
   google.protobuf.StringValue domain = 1;

@@ -1,5 +1,31 @@
 # @chainlink/job-distributor
 
+## 0.16.0
+
+### Minor Changes
+
+- [#203](https://github.com/smartcontractkit/chainlink-protos/pull/203) [`9d2c405`](https://github.com/smartcontractkit/chainlink-protos/commit/9d2c405bdb35e5a90b57e860e81715d6fc382fcb) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add List and Update to RollbackPolicyService
+
+- [#203](https://github.com/smartcontractkit/chainlink-protos/pull/203) [`9d2c405`](https://github.com/smartcontractkit/chainlink-protos/commit/9d2c405bdb35e5a90b57e860e81715d6fc382fcb) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add List and Update RPC to Rollback Policy
+
+## 0.15.0
+
+### Minor Changes
+
+- [#200](https://github.com/smartcontractkit/chainlink-protos/pull/200) [`6887883`](https://github.com/smartcontractkit/chainlink-protos/commit/68878838041102947c6116f40a4e733cc3b8e3c2) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - JD Probation Package
+
+## 0.14.0
+
+### Minor Changes
+
+- [#197](https://github.com/smartcontractkit/chainlink-protos/pull/197) [`8cea139`](https://github.com/smartcontractkit/chainlink-protos/commit/8cea139ca9af677bb0ed347107d47f2027bce070) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add RollbackPolicy Create/Retrieve
+
+## 0.13.2
+
+### Patch Changes
+
+- [#191](https://github.com/smartcontractkit/chainlink-protos/pull/191) [`c83f6d9`](https://github.com/smartcontractkit/chainlink-protos/commit/c83f6d9ec25414ab34391737ea417ec7d9bfd3b6) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add Rollback Policy to Job
+
 ## 0.13.1
 
 ### Patch Changes

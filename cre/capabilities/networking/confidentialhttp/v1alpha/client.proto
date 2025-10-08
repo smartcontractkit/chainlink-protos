@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package capabilities.networking.confidentialhttp.v1alpha;
 
-import "tools/generator/v1alpha/cre_metadata.proto";
+import "tools/generator/v1beta/cre_metadata.proto";
 
 message SecretIdentifier {
   string key = 1;
@@ -38,7 +38,7 @@ message HTTPEnclaveResponseData {
 }
 
 service Client {
-  option (tools.generator.v1alpha.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_NODE
     capability_id: "confidential-http@1.0.0-alpha"
   };

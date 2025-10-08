@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: chainlink-catalog/v1/datastore/contract_metadata.proto
+// source: op-catalog/v1/datastore/contract_metadata.proto
 
 package datastore
 
@@ -34,7 +34,7 @@ type ContractMetadataKeyFilter struct {
 
 func (x *ContractMetadataKeyFilter) Reset() {
 	*x = ContractMetadataKeyFilter{}
-	mi := &file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes[0]
+	mi := &file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46,7 +46,7 @@ func (x *ContractMetadataKeyFilter) String() string {
 func (*ContractMetadataKeyFilter) ProtoMessage() {}
 
 func (x *ContractMetadataKeyFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes[0]
+	mi := &file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59,7 +59,7 @@ func (x *ContractMetadataKeyFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ContractMetadataKeyFilter.ProtoReflect.Descriptor instead.
 func (*ContractMetadataKeyFilter) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP(), []int{0}
+	return file_op_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *ContractMetadataKeyFilter) GetDomain() *wrapperspb.StringValue {
@@ -100,7 +100,7 @@ type ContractMetadataFindRequest struct {
 
 func (x *ContractMetadataFindRequest) Reset() {
 	*x = ContractMetadataFindRequest{}
-	mi := &file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes[1]
+	mi := &file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -112,7 +112,7 @@ func (x *ContractMetadataFindRequest) String() string {
 func (*ContractMetadataFindRequest) ProtoMessage() {}
 
 func (x *ContractMetadataFindRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes[1]
+	mi := &file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -125,7 +125,7 @@ func (x *ContractMetadataFindRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ContractMetadataFindRequest.ProtoReflect.Descriptor instead.
 func (*ContractMetadataFindRequest) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP(), []int{1}
+	return file_op_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *ContractMetadataFindRequest) GetKeyFilter() *ContractMetadataKeyFilter {
@@ -156,7 +156,7 @@ type ContractMetadata struct {
 
 func (x *ContractMetadata) Reset() {
 	*x = ContractMetadata{}
-	mi := &file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes[2]
+	mi := &file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -168,7 +168,7 @@ func (x *ContractMetadata) String() string {
 func (*ContractMetadata) ProtoMessage() {}
 
 func (x *ContractMetadata) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes[2]
+	mi := &file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -181,7 +181,7 @@ func (x *ContractMetadata) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ContractMetadata.ProtoReflect.Descriptor instead.
 func (*ContractMetadata) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP(), []int{2}
+	return file_op_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ContractMetadata) GetDomain() string {
@@ -235,7 +235,7 @@ type ContractMetadataFindResponse struct {
 
 func (x *ContractMetadataFindResponse) Reset() {
 	*x = ContractMetadataFindResponse{}
-	mi := &file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes[3]
+	mi := &file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -247,7 +247,7 @@ func (x *ContractMetadataFindResponse) String() string {
 func (*ContractMetadataFindResponse) ProtoMessage() {}
 
 func (x *ContractMetadataFindResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes[3]
+	mi := &file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -260,7 +260,7 @@ func (x *ContractMetadataFindResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ContractMetadataFindResponse.ProtoReflect.Descriptor instead.
 func (*ContractMetadataFindResponse) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP(), []int{3}
+	return file_op_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ContractMetadataFindResponse) GetReferences() []*ContractMetadata {
@@ -280,7 +280,7 @@ type ContractMetadataEditRequest struct {
 
 func (x *ContractMetadataEditRequest) Reset() {
 	*x = ContractMetadataEditRequest{}
-	mi := &file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes[4]
+	mi := &file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -292,7 +292,7 @@ func (x *ContractMetadataEditRequest) String() string {
 func (*ContractMetadataEditRequest) ProtoMessage() {}
 
 func (x *ContractMetadataEditRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes[4]
+	mi := &file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -305,7 +305,7 @@ func (x *ContractMetadataEditRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ContractMetadataEditRequest.ProtoReflect.Descriptor instead.
 func (*ContractMetadataEditRequest) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP(), []int{4}
+	return file_op_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ContractMetadataEditRequest) GetRecord() *ContractMetadata {
@@ -331,7 +331,7 @@ type ContractMetadataEditResponse struct {
 
 func (x *ContractMetadataEditResponse) Reset() {
 	*x = ContractMetadataEditResponse{}
-	mi := &file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes[5]
+	mi := &file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -343,7 +343,7 @@ func (x *ContractMetadataEditResponse) String() string {
 func (*ContractMetadataEditResponse) ProtoMessage() {}
 
 func (x *ContractMetadataEditResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes[5]
+	mi := &file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -356,7 +356,7 @@ func (x *ContractMetadataEditResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ContractMetadataEditResponse.ProtoReflect.Descriptor instead.
 func (*ContractMetadataEditResponse) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP(), []int{5}
+	return file_op_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ContractMetadataEditResponse) GetRecord() *ContractMetadata {
@@ -366,11 +366,11 @@ func (x *ContractMetadataEditResponse) GetRecord() *ContractMetadata {
 	return nil
 }
 
-var File_chainlink_catalog_v1_datastore_contract_metadata_proto protoreflect.FileDescriptor
+var File_op_catalog_v1_datastore_contract_metadata_proto protoreflect.FileDescriptor
 
-const file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDesc = "" +
+const file_op_catalog_v1_datastore_contract_metadata_proto_rawDesc = "" +
 	"\n" +
-	"6chainlink-catalog/v1/datastore/contract_metadata.proto\x12\x10api.datastore.v1\x1a\x1egoogle/protobuf/wrappers.proto\x1a+chainlink-catalog/v1/datastore/common.proto\"\x8e\x02\n" +
+	"/op-catalog/v1/datastore/contract_metadata.proto\x12\x10api.datastore.v1\x1a\x1egoogle/protobuf/wrappers.proto\x1a$op-catalog/v1/datastore/common.proto\"\x8e\x02\n" +
 	"\x19ContractMetadataKeyFilter\x124\n" +
 	"\x06domain\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x06domain\x12>\n" +
 	"\venvironment\x18\x02 \x01(\v2\x1c.google.protobuf.StringValueR\venvironment\x12C\n" +
@@ -396,22 +396,22 @@ const file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDesc = "" +
 	"\x06record\x18\x01 \x01(\v2\".api.datastore.v1.ContractMetadataR\x06record\x12=\n" +
 	"\tsemantics\x18\x02 \x01(\x0e2\x1f.api.datastore.v1.EditSemanticsR\tsemantics\"Z\n" +
 	"\x1cContractMetadataEditResponse\x12:\n" +
-	"\x06record\x18\x01 \x01(\v2\".api.datastore.v1.ContractMetadataR\x06recordBMZKgithub.com/smartcontractkit/chainlink-protos/chainlink-catalog/v1/datastoreb\x06proto3"
+	"\x06record\x18\x01 \x01(\v2\".api.datastore.v1.ContractMetadataR\x06recordBFZDgithub.com/smartcontractkit/chainlink-protos/op-catalog/v1/datastoreb\x06proto3"
 
 var (
-	file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDescOnce sync.Once
-	file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDescData []byte
+	file_op_catalog_v1_datastore_contract_metadata_proto_rawDescOnce sync.Once
+	file_op_catalog_v1_datastore_contract_metadata_proto_rawDescData []byte
 )
 
-func file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP() []byte {
-	file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDescOnce.Do(func() {
-		file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDesc), len(file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDesc)))
+func file_op_catalog_v1_datastore_contract_metadata_proto_rawDescGZIP() []byte {
+	file_op_catalog_v1_datastore_contract_metadata_proto_rawDescOnce.Do(func() {
+		file_op_catalog_v1_datastore_contract_metadata_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_op_catalog_v1_datastore_contract_metadata_proto_rawDesc), len(file_op_catalog_v1_datastore_contract_metadata_proto_rawDesc)))
 	})
-	return file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDescData
+	return file_op_catalog_v1_datastore_contract_metadata_proto_rawDescData
 }
 
-var file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_chainlink_catalog_v1_datastore_contract_metadata_proto_goTypes = []any{
+var file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_op_catalog_v1_datastore_contract_metadata_proto_goTypes = []any{
 	(*ContractMetadataKeyFilter)(nil),    // 0: api.datastore.v1.ContractMetadataKeyFilter
 	(*ContractMetadataFindRequest)(nil),  // 1: api.datastore.v1.ContractMetadataFindRequest
 	(*ContractMetadata)(nil),             // 2: api.datastore.v1.ContractMetadata
@@ -422,7 +422,7 @@ var file_chainlink_catalog_v1_datastore_contract_metadata_proto_goTypes = []any{
 	(*wrapperspb.UInt64Value)(nil),       // 7: google.protobuf.UInt64Value
 	(EditSemantics)(0),                   // 8: api.datastore.v1.EditSemantics
 }
-var file_chainlink_catalog_v1_datastore_contract_metadata_proto_depIdxs = []int32{
+var file_op_catalog_v1_datastore_contract_metadata_proto_depIdxs = []int32{
 	6, // 0: api.datastore.v1.ContractMetadataKeyFilter.domain:type_name -> google.protobuf.StringValue
 	6, // 1: api.datastore.v1.ContractMetadataKeyFilter.environment:type_name -> google.protobuf.StringValue
 	7, // 2: api.datastore.v1.ContractMetadataKeyFilter.chain_selector:type_name -> google.protobuf.UInt64Value
@@ -439,27 +439,27 @@ var file_chainlink_catalog_v1_datastore_contract_metadata_proto_depIdxs = []int3
 	0, // [0:9] is the sub-list for field type_name
 }
 
-func init() { file_chainlink_catalog_v1_datastore_contract_metadata_proto_init() }
-func file_chainlink_catalog_v1_datastore_contract_metadata_proto_init() {
-	if File_chainlink_catalog_v1_datastore_contract_metadata_proto != nil {
+func init() { file_op_catalog_v1_datastore_contract_metadata_proto_init() }
+func file_op_catalog_v1_datastore_contract_metadata_proto_init() {
+	if File_op_catalog_v1_datastore_contract_metadata_proto != nil {
 		return
 	}
-	file_chainlink_catalog_v1_datastore_common_proto_init()
+	file_op_catalog_v1_datastore_common_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDesc), len(file_chainlink_catalog_v1_datastore_contract_metadata_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_op_catalog_v1_datastore_contract_metadata_proto_rawDesc), len(file_op_catalog_v1_datastore_contract_metadata_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_chainlink_catalog_v1_datastore_contract_metadata_proto_goTypes,
-		DependencyIndexes: file_chainlink_catalog_v1_datastore_contract_metadata_proto_depIdxs,
-		MessageInfos:      file_chainlink_catalog_v1_datastore_contract_metadata_proto_msgTypes,
+		GoTypes:           file_op_catalog_v1_datastore_contract_metadata_proto_goTypes,
+		DependencyIndexes: file_op_catalog_v1_datastore_contract_metadata_proto_depIdxs,
+		MessageInfos:      file_op_catalog_v1_datastore_contract_metadata_proto_msgTypes,
 	}.Build()
-	File_chainlink_catalog_v1_datastore_contract_metadata_proto = out.File
-	file_chainlink_catalog_v1_datastore_contract_metadata_proto_goTypes = nil
-	file_chainlink_catalog_v1_datastore_contract_metadata_proto_depIdxs = nil
+	File_op_catalog_v1_datastore_contract_metadata_proto = out.File
+	file_op_catalog_v1_datastore_contract_metadata_proto_goTypes = nil
+	file_op_catalog_v1_datastore_contract_metadata_proto_depIdxs = nil
 }

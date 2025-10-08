@@ -66,6 +66,7 @@ message Job {
   google.protobuf.Timestamp updated_at = 6; // Timestamp when the job was last updated.
   google.protobuf.Timestamp deleted_at = 7; // Timestamp when the job was deleted, if applicable.
   repeated api.label.Label labels = 8; // Set of labels associated with the job.
+  optional int64 rollback_policy_id = 9; // ID of the rollback policy associated with this job.
 }
 
 // Proposal represents a job proposal.
@@ -81,6 +82,7 @@ message Proposal {
   optional google.protobuf.Timestamp acked_at = 9; // Timestamp when the proposal was acknowledged.
   optional google.protobuf.Timestamp response_received_at = 10; // Timestamp when a response was received.
 }
+
 
 // GetJobRequest specifies the criteria for retrieving a job.
 message GetJobRequest {
@@ -216,6 +218,7 @@ message UpdateJobRequest {
     string uuid = 2 [deprecated = true];
   }
   repeated api.label.Label labels = 3; // Set of labels associated with the job.
+  optional int64 rollback_policy_id = 4; // ID of the rollback policy.
 }
 
 // UpdateJobResponse returns details of the updated job.

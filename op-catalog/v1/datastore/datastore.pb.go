@@ -2,13 +2,14 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: chainlink-catalog/v1/datastore/datastore.proto
+// source: op-catalog/v1/datastore/datastore.proto
 
 package datastore
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	anypb "google.golang.org/protobuf/types/known/anypb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -21,17 +22,24 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// ResponseStatus provides per-message error information in streaming RPCs.
+// Compatible with google.rpc.Status.
 type ResponseStatus struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Succeeded     bool                   `protobuf:"varint,1,opt,name=succeeded,proto3" json:"succeeded,omitempty"`
-	Error         string                 `protobuf:"bytes,2,opt,name=error,proto3" json:"error,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The status code, which should be an enum value of google.rpc.Code.
+	Code int32 `protobuf:"varint,1,opt,name=code,proto3" json:"code,omitempty"`
+	// A developer-facing error message.
+	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	// A list of messages that carry the error details.
+	// Optional field for additional error context.
+	Details       []*anypb.Any `protobuf:"bytes,3,rep,name=details,proto3" json:"details,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ResponseStatus) Reset() {
 	*x = ResponseStatus{}
-	mi := &file_chainlink_catalog_v1_datastore_datastore_proto_msgTypes[0]
+	mi := &file_op_catalog_v1_datastore_datastore_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +51,7 @@ func (x *ResponseStatus) String() string {
 func (*ResponseStatus) ProtoMessage() {}
 
 func (x *ResponseStatus) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_datastore_proto_msgTypes[0]
+	mi := &file_op_catalog_v1_datastore_datastore_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,21 +64,28 @@ func (x *ResponseStatus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResponseStatus.ProtoReflect.Descriptor instead.
 func (*ResponseStatus) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_datastore_proto_rawDescGZIP(), []int{0}
+	return file_op_catalog_v1_datastore_datastore_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ResponseStatus) GetSucceeded() bool {
+func (x *ResponseStatus) GetCode() int32 {
 	if x != nil {
-		return x.Succeeded
+		return x.Code
 	}
-	return false
+	return 0
 }
 
-func (x *ResponseStatus) GetError() string {
+func (x *ResponseStatus) GetMessage() string {
 	if x != nil {
-		return x.Error
+		return x.Message
 	}
 	return ""
+}
+
+func (x *ResponseStatus) GetDetails() []*anypb.Any {
+	if x != nil {
+		return x.Details
+	}
+	return nil
 }
 
 type DataAccessRequest struct {
@@ -95,7 +110,7 @@ type DataAccessRequest struct {
 
 func (x *DataAccessRequest) Reset() {
 	*x = DataAccessRequest{}
-	mi := &file_chainlink_catalog_v1_datastore_datastore_proto_msgTypes[1]
+	mi := &file_op_catalog_v1_datastore_datastore_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -107,7 +122,7 @@ func (x *DataAccessRequest) String() string {
 func (*DataAccessRequest) ProtoMessage() {}
 
 func (x *DataAccessRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_datastore_proto_msgTypes[1]
+	mi := &file_op_catalog_v1_datastore_datastore_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -120,7 +135,7 @@ func (x *DataAccessRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataAccessRequest.ProtoReflect.Descriptor instead.
 func (*DataAccessRequest) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_datastore_proto_rawDescGZIP(), []int{1}
+	return file_op_catalog_v1_datastore_datastore_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *DataAccessRequest) GetOperation() isDataAccessRequest_Operation {
@@ -322,7 +337,7 @@ type DataAccessResponse struct {
 
 func (x *DataAccessResponse) Reset() {
 	*x = DataAccessResponse{}
-	mi := &file_chainlink_catalog_v1_datastore_datastore_proto_msgTypes[2]
+	mi := &file_op_catalog_v1_datastore_datastore_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -334,7 +349,7 @@ func (x *DataAccessResponse) String() string {
 func (*DataAccessResponse) ProtoMessage() {}
 
 func (x *DataAccessResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_chainlink_catalog_v1_datastore_datastore_proto_msgTypes[2]
+	mi := &file_op_catalog_v1_datastore_datastore_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -347,7 +362,7 @@ func (x *DataAccessResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataAccessResponse.ProtoReflect.Descriptor instead.
 func (*DataAccessResponse) Descriptor() ([]byte, []int) {
-	return file_chainlink_catalog_v1_datastore_datastore_proto_rawDescGZIP(), []int{2}
+	return file_op_catalog_v1_datastore_datastore_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *DataAccessResponse) GetStatus() *ResponseStatus {
@@ -533,14 +548,15 @@ func (*DataAccessResponse_CommitTransactionResponse) isDataAccessResponse_Respon
 
 func (*DataAccessResponse_RollbackTransactionResponse) isDataAccessResponse_Response() {}
 
-var File_chainlink_catalog_v1_datastore_datastore_proto protoreflect.FileDescriptor
+var File_op_catalog_v1_datastore_datastore_proto protoreflect.FileDescriptor
 
-const file_chainlink_catalog_v1_datastore_datastore_proto_rawDesc = "" +
+const file_op_catalog_v1_datastore_datastore_proto_rawDesc = "" +
 	"\n" +
-	".chainlink-catalog/v1/datastore/datastore.proto\x12\x10api.datastore.v1\x1a6chainlink-catalog/v1/datastore/address_reference.proto\x1a6chainlink-catalog/v1/datastore/contract_metadata.proto\x1a3chainlink-catalog/v1/datastore/chain_metadata.proto\x1a9chainlink-catalog/v1/datastore/environment_metadata.proto\x1a1chainlink-catalog/v1/datastore/transactions.proto\"D\n" +
-	"\x0eResponseStatus\x12\x1c\n" +
-	"\tsucceeded\x18\x01 \x01(\bR\tsucceeded\x12\x14\n" +
-	"\x05error\x18\x02 \x01(\tR\x05error\"\x9d\n" +
+	"'op-catalog/v1/datastore/datastore.proto\x12\x10api.datastore.v1\x1a\x19google/protobuf/any.proto\x1a/op-catalog/v1/datastore/address_reference.proto\x1a/op-catalog/v1/datastore/contract_metadata.proto\x1a,op-catalog/v1/datastore/chain_metadata.proto\x1a2op-catalog/v1/datastore/environment_metadata.proto\x1a*op-catalog/v1/datastore/transactions.proto\"n\n" +
+	"\x0eResponseStatus\x12\x12\n" +
+	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12.\n" +
+	"\adetails\x18\x03 \x03(\v2\x14.google.protobuf.AnyR\adetails\"\x9d\n" +
 	"\n" +
 	"\x11DataAccessRequest\x12t\n" +
 	"\x1eaddress_reference_find_request\x18\x02 \x01(\v2-.api.datastore.v1.AddressReferenceFindRequestH\x00R\x1baddressReferenceFindRequest\x12t\n" +
@@ -572,95 +588,97 @@ const file_chainlink_catalog_v1_datastore_datastore_proto_rawDesc = "" +
 	"\x1bcommit_transaction_response\x18\v \x01(\v2+.api.datastore.v1.CommitTransactionResponseH\x00R\x19commitTransactionResponse\x12s\n" +
 	"\x1drollback_transaction_response\x18\f \x01(\v2-.api.datastore.v1.RollbackTransactionResponseH\x00R\x1brollbackTransactionResponseB\n" +
 	"\n" +
-	"\bresponse2u\n" +
-	"\x14DeploymentsDatastore\x12]\n" +
+	"\bresponse2j\n" +
+	"\tDatastore\x12]\n" +
 	"\n" +
-	"DataAccess\x12#.api.datastore.v1.DataAccessRequest\x1a$.api.datastore.v1.DataAccessResponse\"\x00(\x010\x01BMZKgithub.com/smartcontractkit/chainlink-protos/chainlink-catalog/v1/datastoreb\x06proto3"
+	"DataAccess\x12#.api.datastore.v1.DataAccessRequest\x1a$.api.datastore.v1.DataAccessResponse\"\x00(\x010\x01BFZDgithub.com/smartcontractkit/chainlink-protos/op-catalog/v1/datastoreb\x06proto3"
 
 var (
-	file_chainlink_catalog_v1_datastore_datastore_proto_rawDescOnce sync.Once
-	file_chainlink_catalog_v1_datastore_datastore_proto_rawDescData []byte
+	file_op_catalog_v1_datastore_datastore_proto_rawDescOnce sync.Once
+	file_op_catalog_v1_datastore_datastore_proto_rawDescData []byte
 )
 
-func file_chainlink_catalog_v1_datastore_datastore_proto_rawDescGZIP() []byte {
-	file_chainlink_catalog_v1_datastore_datastore_proto_rawDescOnce.Do(func() {
-		file_chainlink_catalog_v1_datastore_datastore_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_chainlink_catalog_v1_datastore_datastore_proto_rawDesc), len(file_chainlink_catalog_v1_datastore_datastore_proto_rawDesc)))
+func file_op_catalog_v1_datastore_datastore_proto_rawDescGZIP() []byte {
+	file_op_catalog_v1_datastore_datastore_proto_rawDescOnce.Do(func() {
+		file_op_catalog_v1_datastore_datastore_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_op_catalog_v1_datastore_datastore_proto_rawDesc), len(file_op_catalog_v1_datastore_datastore_proto_rawDesc)))
 	})
-	return file_chainlink_catalog_v1_datastore_datastore_proto_rawDescData
+	return file_op_catalog_v1_datastore_datastore_proto_rawDescData
 }
 
-var file_chainlink_catalog_v1_datastore_datastore_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
-var file_chainlink_catalog_v1_datastore_datastore_proto_goTypes = []any{
+var file_op_catalog_v1_datastore_datastore_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_op_catalog_v1_datastore_datastore_proto_goTypes = []any{
 	(*ResponseStatus)(nil),                  // 0: api.datastore.v1.ResponseStatus
 	(*DataAccessRequest)(nil),               // 1: api.datastore.v1.DataAccessRequest
 	(*DataAccessResponse)(nil),              // 2: api.datastore.v1.DataAccessResponse
-	(*AddressReferenceFindRequest)(nil),     // 3: api.datastore.v1.AddressReferenceFindRequest
-	(*AddressReferenceEditRequest)(nil),     // 4: api.datastore.v1.AddressReferenceEditRequest
-	(*ContractMetadataFindRequest)(nil),     // 5: api.datastore.v1.ContractMetadataFindRequest
-	(*ContractMetadataEditRequest)(nil),     // 6: api.datastore.v1.ContractMetadataEditRequest
-	(*ChainMetadataFindRequest)(nil),        // 7: api.datastore.v1.ChainMetadataFindRequest
-	(*ChainMetadataEditRequest)(nil),        // 8: api.datastore.v1.ChainMetadataEditRequest
-	(*EnvironmentMetadataFindRequest)(nil),  // 9: api.datastore.v1.EnvironmentMetadataFindRequest
-	(*EnvironmentMetadataEditRequest)(nil),  // 10: api.datastore.v1.EnvironmentMetadataEditRequest
-	(*BeginTransactionRequest)(nil),         // 11: api.datastore.v1.BeginTransactionRequest
-	(*CommitTransactionRequest)(nil),        // 12: api.datastore.v1.CommitTransactionRequest
-	(*RollbackTransactionRequest)(nil),      // 13: api.datastore.v1.RollbackTransactionRequest
-	(*AddressReferenceFindResponse)(nil),    // 14: api.datastore.v1.AddressReferenceFindResponse
-	(*AddressReferenceEditResponse)(nil),    // 15: api.datastore.v1.AddressReferenceEditResponse
-	(*ContractMetadataFindResponse)(nil),    // 16: api.datastore.v1.ContractMetadataFindResponse
-	(*ContractMetadataEditResponse)(nil),    // 17: api.datastore.v1.ContractMetadataEditResponse
-	(*ChainMetadataFindResponse)(nil),       // 18: api.datastore.v1.ChainMetadataFindResponse
-	(*ChainMetadataEditResponse)(nil),       // 19: api.datastore.v1.ChainMetadataEditResponse
-	(*EnvironmentMetadataFindResponse)(nil), // 20: api.datastore.v1.EnvironmentMetadataFindResponse
-	(*EnvironmentMetadataEditResponse)(nil), // 21: api.datastore.v1.EnvironmentMetadataEditResponse
-	(*BeginTransactionResponse)(nil),        // 22: api.datastore.v1.BeginTransactionResponse
-	(*CommitTransactionResponse)(nil),       // 23: api.datastore.v1.CommitTransactionResponse
-	(*RollbackTransactionResponse)(nil),     // 24: api.datastore.v1.RollbackTransactionResponse
+	(*anypb.Any)(nil),                       // 3: google.protobuf.Any
+	(*AddressReferenceFindRequest)(nil),     // 4: api.datastore.v1.AddressReferenceFindRequest
+	(*AddressReferenceEditRequest)(nil),     // 5: api.datastore.v1.AddressReferenceEditRequest
+	(*ContractMetadataFindRequest)(nil),     // 6: api.datastore.v1.ContractMetadataFindRequest
+	(*ContractMetadataEditRequest)(nil),     // 7: api.datastore.v1.ContractMetadataEditRequest
+	(*ChainMetadataFindRequest)(nil),        // 8: api.datastore.v1.ChainMetadataFindRequest
+	(*ChainMetadataEditRequest)(nil),        // 9: api.datastore.v1.ChainMetadataEditRequest
+	(*EnvironmentMetadataFindRequest)(nil),  // 10: api.datastore.v1.EnvironmentMetadataFindRequest
+	(*EnvironmentMetadataEditRequest)(nil),  // 11: api.datastore.v1.EnvironmentMetadataEditRequest
+	(*BeginTransactionRequest)(nil),         // 12: api.datastore.v1.BeginTransactionRequest
+	(*CommitTransactionRequest)(nil),        // 13: api.datastore.v1.CommitTransactionRequest
+	(*RollbackTransactionRequest)(nil),      // 14: api.datastore.v1.RollbackTransactionRequest
+	(*AddressReferenceFindResponse)(nil),    // 15: api.datastore.v1.AddressReferenceFindResponse
+	(*AddressReferenceEditResponse)(nil),    // 16: api.datastore.v1.AddressReferenceEditResponse
+	(*ContractMetadataFindResponse)(nil),    // 17: api.datastore.v1.ContractMetadataFindResponse
+	(*ContractMetadataEditResponse)(nil),    // 18: api.datastore.v1.ContractMetadataEditResponse
+	(*ChainMetadataFindResponse)(nil),       // 19: api.datastore.v1.ChainMetadataFindResponse
+	(*ChainMetadataEditResponse)(nil),       // 20: api.datastore.v1.ChainMetadataEditResponse
+	(*EnvironmentMetadataFindResponse)(nil), // 21: api.datastore.v1.EnvironmentMetadataFindResponse
+	(*EnvironmentMetadataEditResponse)(nil), // 22: api.datastore.v1.EnvironmentMetadataEditResponse
+	(*BeginTransactionResponse)(nil),        // 23: api.datastore.v1.BeginTransactionResponse
+	(*CommitTransactionResponse)(nil),       // 24: api.datastore.v1.CommitTransactionResponse
+	(*RollbackTransactionResponse)(nil),     // 25: api.datastore.v1.RollbackTransactionResponse
 }
-var file_chainlink_catalog_v1_datastore_datastore_proto_depIdxs = []int32{
-	3,  // 0: api.datastore.v1.DataAccessRequest.address_reference_find_request:type_name -> api.datastore.v1.AddressReferenceFindRequest
-	4,  // 1: api.datastore.v1.DataAccessRequest.address_reference_edit_request:type_name -> api.datastore.v1.AddressReferenceEditRequest
-	5,  // 2: api.datastore.v1.DataAccessRequest.contract_metadata_find_request:type_name -> api.datastore.v1.ContractMetadataFindRequest
-	6,  // 3: api.datastore.v1.DataAccessRequest.contract_metadata_edit_request:type_name -> api.datastore.v1.ContractMetadataEditRequest
-	7,  // 4: api.datastore.v1.DataAccessRequest.chain_metadata_find_request:type_name -> api.datastore.v1.ChainMetadataFindRequest
-	8,  // 5: api.datastore.v1.DataAccessRequest.chain_metadata_edit_request:type_name -> api.datastore.v1.ChainMetadataEditRequest
-	9,  // 6: api.datastore.v1.DataAccessRequest.environment_metadata_find_request:type_name -> api.datastore.v1.EnvironmentMetadataFindRequest
-	10, // 7: api.datastore.v1.DataAccessRequest.environment_metadata_edit_request:type_name -> api.datastore.v1.EnvironmentMetadataEditRequest
-	11, // 8: api.datastore.v1.DataAccessRequest.begin_transaction_request:type_name -> api.datastore.v1.BeginTransactionRequest
-	12, // 9: api.datastore.v1.DataAccessRequest.commit_transaction_request:type_name -> api.datastore.v1.CommitTransactionRequest
-	13, // 10: api.datastore.v1.DataAccessRequest.rollback_transaction_request:type_name -> api.datastore.v1.RollbackTransactionRequest
-	0,  // 11: api.datastore.v1.DataAccessResponse.status:type_name -> api.datastore.v1.ResponseStatus
-	14, // 12: api.datastore.v1.DataAccessResponse.address_reference_find_response:type_name -> api.datastore.v1.AddressReferenceFindResponse
-	15, // 13: api.datastore.v1.DataAccessResponse.address_reference_edit_response:type_name -> api.datastore.v1.AddressReferenceEditResponse
-	16, // 14: api.datastore.v1.DataAccessResponse.contract_metadata_find_response:type_name -> api.datastore.v1.ContractMetadataFindResponse
-	17, // 15: api.datastore.v1.DataAccessResponse.contract_metadata_edit_response:type_name -> api.datastore.v1.ContractMetadataEditResponse
-	18, // 16: api.datastore.v1.DataAccessResponse.chain_metadata_find_response:type_name -> api.datastore.v1.ChainMetadataFindResponse
-	19, // 17: api.datastore.v1.DataAccessResponse.chain_metadata_edit_response:type_name -> api.datastore.v1.ChainMetadataEditResponse
-	20, // 18: api.datastore.v1.DataAccessResponse.environment_metadata_find_response:type_name -> api.datastore.v1.EnvironmentMetadataFindResponse
-	21, // 19: api.datastore.v1.DataAccessResponse.environment_metadata_edit_response:type_name -> api.datastore.v1.EnvironmentMetadataEditResponse
-	22, // 20: api.datastore.v1.DataAccessResponse.begin_transaction_response:type_name -> api.datastore.v1.BeginTransactionResponse
-	23, // 21: api.datastore.v1.DataAccessResponse.commit_transaction_response:type_name -> api.datastore.v1.CommitTransactionResponse
-	24, // 22: api.datastore.v1.DataAccessResponse.rollback_transaction_response:type_name -> api.datastore.v1.RollbackTransactionResponse
-	1,  // 23: api.datastore.v1.DeploymentsDatastore.DataAccess:input_type -> api.datastore.v1.DataAccessRequest
-	2,  // 24: api.datastore.v1.DeploymentsDatastore.DataAccess:output_type -> api.datastore.v1.DataAccessResponse
-	24, // [24:25] is the sub-list for method output_type
-	23, // [23:24] is the sub-list for method input_type
-	23, // [23:23] is the sub-list for extension type_name
-	23, // [23:23] is the sub-list for extension extendee
-	0,  // [0:23] is the sub-list for field type_name
+var file_op_catalog_v1_datastore_datastore_proto_depIdxs = []int32{
+	3,  // 0: api.datastore.v1.ResponseStatus.details:type_name -> google.protobuf.Any
+	4,  // 1: api.datastore.v1.DataAccessRequest.address_reference_find_request:type_name -> api.datastore.v1.AddressReferenceFindRequest
+	5,  // 2: api.datastore.v1.DataAccessRequest.address_reference_edit_request:type_name -> api.datastore.v1.AddressReferenceEditRequest
+	6,  // 3: api.datastore.v1.DataAccessRequest.contract_metadata_find_request:type_name -> api.datastore.v1.ContractMetadataFindRequest
+	7,  // 4: api.datastore.v1.DataAccessRequest.contract_metadata_edit_request:type_name -> api.datastore.v1.ContractMetadataEditRequest
+	8,  // 5: api.datastore.v1.DataAccessRequest.chain_metadata_find_request:type_name -> api.datastore.v1.ChainMetadataFindRequest
+	9,  // 6: api.datastore.v1.DataAccessRequest.chain_metadata_edit_request:type_name -> api.datastore.v1.ChainMetadataEditRequest
+	10, // 7: api.datastore.v1.DataAccessRequest.environment_metadata_find_request:type_name -> api.datastore.v1.EnvironmentMetadataFindRequest
+	11, // 8: api.datastore.v1.DataAccessRequest.environment_metadata_edit_request:type_name -> api.datastore.v1.EnvironmentMetadataEditRequest
+	12, // 9: api.datastore.v1.DataAccessRequest.begin_transaction_request:type_name -> api.datastore.v1.BeginTransactionRequest
+	13, // 10: api.datastore.v1.DataAccessRequest.commit_transaction_request:type_name -> api.datastore.v1.CommitTransactionRequest
+	14, // 11: api.datastore.v1.DataAccessRequest.rollback_transaction_request:type_name -> api.datastore.v1.RollbackTransactionRequest
+	0,  // 12: api.datastore.v1.DataAccessResponse.status:type_name -> api.datastore.v1.ResponseStatus
+	15, // 13: api.datastore.v1.DataAccessResponse.address_reference_find_response:type_name -> api.datastore.v1.AddressReferenceFindResponse
+	16, // 14: api.datastore.v1.DataAccessResponse.address_reference_edit_response:type_name -> api.datastore.v1.AddressReferenceEditResponse
+	17, // 15: api.datastore.v1.DataAccessResponse.contract_metadata_find_response:type_name -> api.datastore.v1.ContractMetadataFindResponse
+	18, // 16: api.datastore.v1.DataAccessResponse.contract_metadata_edit_response:type_name -> api.datastore.v1.ContractMetadataEditResponse
+	19, // 17: api.datastore.v1.DataAccessResponse.chain_metadata_find_response:type_name -> api.datastore.v1.ChainMetadataFindResponse
+	20, // 18: api.datastore.v1.DataAccessResponse.chain_metadata_edit_response:type_name -> api.datastore.v1.ChainMetadataEditResponse
+	21, // 19: api.datastore.v1.DataAccessResponse.environment_metadata_find_response:type_name -> api.datastore.v1.EnvironmentMetadataFindResponse
+	22, // 20: api.datastore.v1.DataAccessResponse.environment_metadata_edit_response:type_name -> api.datastore.v1.EnvironmentMetadataEditResponse
+	23, // 21: api.datastore.v1.DataAccessResponse.begin_transaction_response:type_name -> api.datastore.v1.BeginTransactionResponse
+	24, // 22: api.datastore.v1.DataAccessResponse.commit_transaction_response:type_name -> api.datastore.v1.CommitTransactionResponse
+	25, // 23: api.datastore.v1.DataAccessResponse.rollback_transaction_response:type_name -> api.datastore.v1.RollbackTransactionResponse
+	1,  // 24: api.datastore.v1.Datastore.DataAccess:input_type -> api.datastore.v1.DataAccessRequest
+	2,  // 25: api.datastore.v1.Datastore.DataAccess:output_type -> api.datastore.v1.DataAccessResponse
+	25, // [25:26] is the sub-list for method output_type
+	24, // [24:25] is the sub-list for method input_type
+	24, // [24:24] is the sub-list for extension type_name
+	24, // [24:24] is the sub-list for extension extendee
+	0,  // [0:24] is the sub-list for field type_name
 }
 
-func init() { file_chainlink_catalog_v1_datastore_datastore_proto_init() }
-func file_chainlink_catalog_v1_datastore_datastore_proto_init() {
-	if File_chainlink_catalog_v1_datastore_datastore_proto != nil {
+func init() { file_op_catalog_v1_datastore_datastore_proto_init() }
+func file_op_catalog_v1_datastore_datastore_proto_init() {
+	if File_op_catalog_v1_datastore_datastore_proto != nil {
 		return
 	}
-	file_chainlink_catalog_v1_datastore_address_reference_proto_init()
-	file_chainlink_catalog_v1_datastore_contract_metadata_proto_init()
-	file_chainlink_catalog_v1_datastore_chain_metadata_proto_init()
-	file_chainlink_catalog_v1_datastore_environment_metadata_proto_init()
-	file_chainlink_catalog_v1_datastore_transactions_proto_init()
-	file_chainlink_catalog_v1_datastore_datastore_proto_msgTypes[1].OneofWrappers = []any{
+	file_op_catalog_v1_datastore_address_reference_proto_init()
+	file_op_catalog_v1_datastore_contract_metadata_proto_init()
+	file_op_catalog_v1_datastore_chain_metadata_proto_init()
+	file_op_catalog_v1_datastore_environment_metadata_proto_init()
+	file_op_catalog_v1_datastore_transactions_proto_init()
+	file_op_catalog_v1_datastore_datastore_proto_msgTypes[1].OneofWrappers = []any{
 		(*DataAccessRequest_AddressReferenceFindRequest)(nil),
 		(*DataAccessRequest_AddressReferenceEditRequest)(nil),
 		(*DataAccessRequest_ContractMetadataFindRequest)(nil),
@@ -673,7 +691,7 @@ func file_chainlink_catalog_v1_datastore_datastore_proto_init() {
 		(*DataAccessRequest_CommitTransactionRequest)(nil),
 		(*DataAccessRequest_RollbackTransactionRequest)(nil),
 	}
-	file_chainlink_catalog_v1_datastore_datastore_proto_msgTypes[2].OneofWrappers = []any{
+	file_op_catalog_v1_datastore_datastore_proto_msgTypes[2].OneofWrappers = []any{
 		(*DataAccessResponse_AddressReferenceFindResponse)(nil),
 		(*DataAccessResponse_AddressReferenceEditResponse)(nil),
 		(*DataAccessResponse_ContractMetadataFindResponse)(nil),
@@ -690,17 +708,17 @@ func file_chainlink_catalog_v1_datastore_datastore_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_chainlink_catalog_v1_datastore_datastore_proto_rawDesc), len(file_chainlink_catalog_v1_datastore_datastore_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_op_catalog_v1_datastore_datastore_proto_rawDesc), len(file_op_catalog_v1_datastore_datastore_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_chainlink_catalog_v1_datastore_datastore_proto_goTypes,
-		DependencyIndexes: file_chainlink_catalog_v1_datastore_datastore_proto_depIdxs,
-		MessageInfos:      file_chainlink_catalog_v1_datastore_datastore_proto_msgTypes,
+		GoTypes:           file_op_catalog_v1_datastore_datastore_proto_goTypes,
+		DependencyIndexes: file_op_catalog_v1_datastore_datastore_proto_depIdxs,
+		MessageInfos:      file_op_catalog_v1_datastore_datastore_proto_msgTypes,
 	}.Build()
-	File_chainlink_catalog_v1_datastore_datastore_proto = out.File
-	file_chainlink_catalog_v1_datastore_datastore_proto_goTypes = nil
-	file_chainlink_catalog_v1_datastore_datastore_proto_depIdxs = nil
+	File_op_catalog_v1_datastore_datastore_proto = out.File
+	file_op_catalog_v1_datastore_datastore_proto_goTypes = nil
+	file_op_catalog_v1_datastore_datastore_proto_depIdxs = nil
 }

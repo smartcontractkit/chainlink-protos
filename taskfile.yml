@@ -23,7 +23,7 @@ tasks:
       - task proto:gen:workflows
       - task proto:gen:billing
       - task proto:gen:storage-service
-      - task proto:gen:chainlink-catalog
+      - task proto:gen:op-catalog
       - task proto:gen:data-feeds
       - task proto:gen:rane
       - task proto:gen:linking-service
@@ -83,13 +83,13 @@ tasks:
     cmds:
       - cd storage-service && make generate
 
-  proto:gen:chainlink-catalog:
-    desc: "Generate Go code from protobuf files for chainlink-catalog"
+  proto:gen:op-catalog:
+    desc: "Generate Go code from protobuf files for op-catalog"
     cmds:
-      - find ./chainlink-catalog/ -name '*.pb.go' -delete
+      - find ./op-catalog/ -name '*.pb.go' -delete
       - task: proto:gen
         vars:
-          SERVICE_NAME: chainlink-catalog
+          SERVICE_NAME: op-catalog
 
   proto:gen:data-feeds:
     desc: "Generate Go code from protobuf files for data-feeds"
@@ -119,6 +119,7 @@ tasks:
       - find ./svr/ -name '*.pb.go' -delete
       - find ./billing/ -name '*.pb.go' -delete
       - find ./workflows/ -name '*.pb.go' -delete
+      - find ./op-catalog/ -name '*.pb.go' -delete
       - find ./data-feeds/ -name '*.pb.go' -delete
       - find ./rane/ -name '*.pb.go' -delete
       - find ./linking-service/ -name '*.pb.go' -delete
