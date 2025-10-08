@@ -16,14 +16,21 @@ message MeteringReport {
 
 message MeteringReportStep {
   repeated MeteringReportNodeDetail nodes = 1;
-  string agg_spend_value = 2;
-  string agg_spend_unit = 3;
-  string agg_spend_value_cre = 4;
+  string agg_spend_value = 2; // remove after ensuring no longer used
+  string agg_spend_unit = 3; // remove after ensuring no longer used
+  string agg_spend_value_cre = 4; // remove after ensuring no longer used
   uint32 capdon_n = 5; // capdon_n provides the total node count for capability DONs
+  repeated AggregatedSpendDetail agg_spend = 6;
 }
 
 message MeteringReportNodeDetail {
   string peer_2_peer_id = 1;
+  string spend_unit = 2;
+  string spend_value = 3;
+  string spend_value_cre = 4;
+}
+
+message AggregatedSpendDetail {
   string spend_unit = 2;
   string spend_value = 3;
   string spend_value_cre = 4;
