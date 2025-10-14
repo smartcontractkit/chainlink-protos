@@ -24,7 +24,7 @@ message Output {
 service Basic {
   option (tools.generator.v1.capability) = {
     mode: MODE_DON
-    capability_id: "basic-test-action-trigger@1.0.0"
+    capability_id: "basic-test-action-trigger@1.0"
   };
   rpc Action(Input) returns (Output);
   rpc Trigger(Config) returns (stream TriggerEvent);
