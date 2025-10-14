@@ -164,7 +164,7 @@ message Header {
 service Client {
   option (tools.generator.v1.capability) = {
     mode: MODE_DON
-    capability_id: "evm@1.0.0"
+    capability_id: "evm@1.0-alpha"
     labels: {
       // from https://github.com/smartcontractkit/chain-selectors/blob/main/selectors.yml
       // as a subset of the selectors supported on the CRE
@@ -296,7 +296,7 @@ message Output {
 service Basic {
   option (tools.generator.v1.capability) = {
     mode: MODE_DON
-    capability_id: "basic-test-action-trigger@1.0.0"
+    capability_id: "basic-test-action-trigger@1.0"
   };
   rpc Action(Input) returns (Output);
   rpc Trigger(Config) returns (stream TriggerEvent);
@@ -321,7 +321,7 @@ message Outputs {
 service BasicAction { // This comment tests the generator's ability to handle comments.
   option (tools.generator.v1.capability) = {
     mode: MODE_DON
-    capability_id: "basic-test-action@1.0.0"
+    capability_id: "basic-test-action@1.0"
   };
   // This comment tests the generator's ability to handle leading comments on methods.
   rpc PerformAction(Inputs) returns (Outputs); // This comment tests the generator's ability to handle trailing comments on methods.
@@ -346,7 +346,7 @@ message Outputs {
 service Basic {
   option (tools.generator.v1.capability) = {
     mode: MODE_DON
-    capability_id: "basic-test-trigger@1.0.0"
+    capability_id: "basic-test-trigger@1.0"
   };
   rpc Trigger(Config) returns (stream Outputs);
 }
@@ -381,7 +381,7 @@ import "values/v1/values.proto";
 service Consensus {
   option (tools.generator.v1.capability) = {
     mode: MODE_DON
-    capability_id: "consensus@1.0.0"
+    capability_id: "consensus@1.0-beta"
   };
   rpc Simple(sdk.v1.SimpleConsensusInputs) returns (values.v1.Value);
   rpc Report(sdk.v1.ReportRequest) returns (sdk.v1.ReportResponse);
@@ -488,7 +488,7 @@ message HTTPEnclaveResponseData {
 service Client {
   option (tools.generator.v1.capability) = {
     mode: MODE_NODE
-    capability_id: "confidential-http@1.0.0-alpha"
+    capability_id: "confidential-http@1.0-alpha"
   };
   rpc SendRequests(EnclaveActionInput) returns (HTTPEnclaveResponseData);
 }
@@ -525,7 +525,7 @@ message Response {
 service Client {
   option (tools.generator.v1.capability) = {
     mode: MODE_NODE
-    capability_id: "http-actions@1.0.0-alpha"
+    capability_id: "http-actions@1.0-alpha"
   };
   rpc SendRequest(Request) returns (Response);
 }
@@ -564,7 +564,7 @@ message AuthorizedKey {
 service HTTP {
   option (tools.generator.v1.capability) = {
     mode: MODE_DON
-    capability_id: "http-trigger@1.0.0-alpha"
+    capability_id: "http-trigger@1.0-alpha"
   };
 
   rpc Trigger(Config) returns (stream Payload);
@@ -594,7 +594,7 @@ message LegacyPayload {
 service Cron {
   option (tools.generator.v1.capability) = {
     mode: MODE_DON
-    capability_id: "cron-trigger@1.0.0"
+    capability_id: "cron-trigger@1.0"
   };
 
   rpc Trigger(Config) returns (stream Payload);
