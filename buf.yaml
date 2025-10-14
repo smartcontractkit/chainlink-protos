@@ -34,8 +34,6 @@ modules:
         - SERVICE_SUFFIX
         # Some enums have a logical default value if not set
         - ENUM_ZERO_VALUE_SUFFIX
-        # Allow hosting a v1 named package in v1beta directory
-        - PACKAGE_DIRECTORY_MATCH
   - path: storage-service
     lint:
       use:
