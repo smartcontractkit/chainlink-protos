@@ -29,7 +29,7 @@ message Response {
 service Client {
   option (tools.generator.v1.capability) = {
     mode: MODE_NODE
-    capability_id: "http-actions@1.0.0-alpha"
+    capability_id: "http-actions@1.0-alpha"
   };
   rpc SendRequest(Request) returns (Response);
 }
