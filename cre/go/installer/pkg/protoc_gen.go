@@ -18,12 +18,12 @@ var values = Packages{
 
 var sdk = Packages{
 	Go:    "github.com/smartcontractkit/chainlink-protos/cre/go/sdk",
-	Proto: "sdk/v1beta/sdk.proto",
+	Proto: "sdk/v1alpha/sdk.proto",
 }
 
 var creMetadata = Packages{
 	Go:    "github.com/smartcontractkit/chainlink-protos/cre/go/tools/generator",
-	Proto: "tools/generator/v1beta/cre_metadata.proto",
+	Proto: "tools/generator/v1alpha/cre_metadata.proto",
 }
 
 type ProtocGen struct {
