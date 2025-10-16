@@ -14,8 +14,8 @@ service Aggregator {
   rpc ReadBlockCheckpoint(ReadBlockCheckpointRequest) returns (ReadBlockCheckpointResponse);
 }
 
-service CCVData {
-  rpc GetCCVDataForMessage(GetCCVDataForMessageRequest) returns (MessageWithCCVData);
+service VerifierResultAPI {
+  rpc GetVerifierResultForMessage(GetVerifierResultForMessageRequest) returns (VerifierResult);
   rpc GetMessagesSince(GetMessagesSinceRequest) returns (GetMessagesSinceResponse);
 }
 
@@ -80,7 +80,7 @@ message MessageWithCCVNodeData {
   repeated ReceiptBlob receipt_blobs = 7;
 }
 
-message MessageWithCCVData {
+message VerifierResult {
   Message message = 1;
   bytes source_verifier_address = 2;
   bytes dest_verifier_address = 3;
@@ -119,7 +119,7 @@ message ReadCommitCCVNodeDataResponse {
   MessageWithCCVNodeData ccv_node_data = 1;
 }
 
-message GetCCVDataForMessageRequest {
+message GetVerifierResultForMessageRequest {
   bytes message_id = 1;
 }
 
@@ -129,6 +129,6 @@ message GetMessagesSinceRequest {
 }
 
 message GetMessagesSinceResponse {
-    repeated MessageWithCCVData results = 1;
+    repeated VerifierResult results = 1;
     string next_token = 2;
 }
