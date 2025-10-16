@@ -273,139 +273,139 @@ var Aggregator_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	CCVData_GetCCVDataForMessage_FullMethodName = "/chainlink_ccv.v1.CCVData/GetCCVDataForMessage"
-	CCVData_GetMessagesSince_FullMethodName     = "/chainlink_ccv.v1.CCVData/GetMessagesSince"
+	VerifierResultAPI_GetVerifierResultForMessage_FullMethodName = "/chainlink_ccv.v1.VerifierResultAPI/GetVerifierResultForMessage"
+	VerifierResultAPI_GetMessagesSince_FullMethodName            = "/chainlink_ccv.v1.VerifierResultAPI/GetMessagesSince"
 )
 
-// CCVDataClient is the client API for CCVData service.
+// VerifierResultAPIClient is the client API for VerifierResultAPI service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type CCVDataClient interface {
-	GetCCVDataForMessage(ctx context.Context, in *GetCCVDataForMessageRequest, opts ...grpc.CallOption) (*MessageWithCCVData, error)
+type VerifierResultAPIClient interface {
+	GetVerifierResultForMessage(ctx context.Context, in *GetVerifierResultForMessageRequest, opts ...grpc.CallOption) (*VerifierResult, error)
 	GetMessagesSince(ctx context.Context, in *GetMessagesSinceRequest, opts ...grpc.CallOption) (*GetMessagesSinceResponse, error)
 }
 
-type cCVDataClient struct {
+type verifierResultAPIClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewCCVDataClient(cc grpc.ClientConnInterface) CCVDataClient {
-	return &cCVDataClient{cc}
+func NewVerifierResultAPIClient(cc grpc.ClientConnInterface) VerifierResultAPIClient {
+	return &verifierResultAPIClient{cc}
 }
 
-func (c *cCVDataClient) GetCCVDataForMessage(ctx context.Context, in *GetCCVDataForMessageRequest, opts ...grpc.CallOption) (*MessageWithCCVData, error) {
+func (c *verifierResultAPIClient) GetVerifierResultForMessage(ctx context.Context, in *GetVerifierResultForMessageRequest, opts ...grpc.CallOption) (*VerifierResult, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(MessageWithCCVData)
-	err := c.cc.Invoke(ctx, CCVData_GetCCVDataForMessage_FullMethodName, in, out, cOpts...)
+	out := new(VerifierResult)
+	err := c.cc.Invoke(ctx, VerifierResultAPI_GetVerifierResultForMessage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *cCVDataClient) GetMessagesSince(ctx context.Context, in *GetMessagesSinceRequest, opts ...grpc.CallOption) (*GetMessagesSinceResponse, error) {
+func (c *verifierResultAPIClient) GetMessagesSince(ctx context.Context, in *GetMessagesSinceRequest, opts ...grpc.CallOption) (*GetMessagesSinceResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetMessagesSinceResponse)
-	err := c.cc.Invoke(ctx, CCVData_GetMessagesSince_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, VerifierResultAPI_GetMessagesSince_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CCVDataServer is the server API for CCVData service.
-// All implementations must embed UnimplementedCCVDataServer
+// VerifierResultAPIServer is the server API for VerifierResultAPI service.
+// All implementations must embed UnimplementedVerifierResultAPIServer
 // for forward compatibility.
-type CCVDataServer interface {
-	GetCCVDataForMessage(context.Context, *GetCCVDataForMessageRequest) (*MessageWithCCVData, error)
+type VerifierResultAPIServer interface {
+	GetVerifierResultForMessage(context.Context, *GetVerifierResultForMessageRequest) (*VerifierResult, error)
 	GetMessagesSince(context.Context, *GetMessagesSinceRequest) (*GetMessagesSinceResponse, error)
-	mustEmbedUnimplementedCCVDataServer()
+	mustEmbedUnimplementedVerifierResultAPIServer()
 }
 
-// UnimplementedCCVDataServer must be embedded to have
+// UnimplementedVerifierResultAPIServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedCCVDataServer struct{}
+type UnimplementedVerifierResultAPIServer struct{}
 
-func (UnimplementedCCVDataServer) GetCCVDataForMessage(context.Context, *GetCCVDataForMessageRequest) (*MessageWithCCVData, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetCCVDataForMessage not implemented")
+func (UnimplementedVerifierResultAPIServer) GetVerifierResultForMessage(context.Context, *GetVerifierResultForMessageRequest) (*VerifierResult, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVerifierResultForMessage not implemented")
 }
-func (UnimplementedCCVDataServer) GetMessagesSince(context.Context, *GetMessagesSinceRequest) (*GetMessagesSinceResponse, error) {
+func (UnimplementedVerifierResultAPIServer) GetMessagesSince(context.Context, *GetMessagesSinceRequest) (*GetMessagesSinceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMessagesSince not implemented")
 }
-func (UnimplementedCCVDataServer) mustEmbedUnimplementedCCVDataServer() {}
-func (UnimplementedCCVDataServer) testEmbeddedByValue()                 {}
+func (UnimplementedVerifierResultAPIServer) mustEmbedUnimplementedVerifierResultAPIServer() {}
+func (UnimplementedVerifierResultAPIServer) testEmbeddedByValue()                           {}
 
-// UnsafeCCVDataServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to CCVDataServer will
+// UnsafeVerifierResultAPIServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to VerifierResultAPIServer will
 // result in compilation errors.
-type UnsafeCCVDataServer interface {
-	mustEmbedUnimplementedCCVDataServer()
+type UnsafeVerifierResultAPIServer interface {
+	mustEmbedUnimplementedVerifierResultAPIServer()
 }
 
-func RegisterCCVDataServer(s grpc.ServiceRegistrar, srv CCVDataServer) {
-	// If the following call pancis, it indicates UnimplementedCCVDataServer was
+func RegisterVerifierResultAPIServer(s grpc.ServiceRegistrar, srv VerifierResultAPIServer) {
+	// If the following call pancis, it indicates UnimplementedVerifierResultAPIServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&CCVData_ServiceDesc, srv)
+	s.RegisterService(&VerifierResultAPI_ServiceDesc, srv)
 }
 
-func _CCVData_GetCCVDataForMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetCCVDataForMessageRequest)
+func _VerifierResultAPI_GetVerifierResultForMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVerifierResultForMessageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CCVDataServer).GetCCVDataForMessage(ctx, in)
+		return srv.(VerifierResultAPIServer).GetVerifierResultForMessage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CCVData_GetCCVDataForMessage_FullMethodName,
+		FullMethod: VerifierResultAPI_GetVerifierResultForMessage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CCVDataServer).GetCCVDataForMessage(ctx, req.(*GetCCVDataForMessageRequest))
+		return srv.(VerifierResultAPIServer).GetVerifierResultForMessage(ctx, req.(*GetVerifierResultForMessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CCVData_GetMessagesSince_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _VerifierResultAPI_GetMessagesSince_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetMessagesSinceRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CCVDataServer).GetMessagesSince(ctx, in)
+		return srv.(VerifierResultAPIServer).GetMessagesSince(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CCVData_GetMessagesSince_FullMethodName,
+		FullMethod: VerifierResultAPI_GetMessagesSince_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CCVDataServer).GetMessagesSince(ctx, req.(*GetMessagesSinceRequest))
+		return srv.(VerifierResultAPIServer).GetMessagesSince(ctx, req.(*GetMessagesSinceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// CCVData_ServiceDesc is the grpc.ServiceDesc for CCVData service.
+// VerifierResultAPI_ServiceDesc is the grpc.ServiceDesc for VerifierResultAPI service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var CCVData_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "chainlink_ccv.v1.CCVData",
-	HandlerType: (*CCVDataServer)(nil),
+var VerifierResultAPI_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "chainlink_ccv.v1.VerifierResultAPI",
+	HandlerType: (*VerifierResultAPIServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetCCVDataForMessage",
-			Handler:    _CCVData_GetCCVDataForMessage_Handler,
+			MethodName: "GetVerifierResultForMessage",
+			Handler:    _VerifierResultAPI_GetVerifierResultForMessage_Handler,
 		},
 		{
 			MethodName: "GetMessagesSince",
-			Handler:    _CCVData_GetMessagesSince_Handler,
+			Handler:    _VerifierResultAPI_GetMessagesSince_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
