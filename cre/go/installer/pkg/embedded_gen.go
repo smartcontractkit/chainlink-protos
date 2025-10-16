@@ -374,17 +374,17 @@ const internalConsensusV1betaConsensusEmbedded = `syntax = "proto3";
 
 package capabilities.internal.consensus.v1;
 
-import "sdk/v1alpha/sdk.proto";
-import "tools/generator/v1alpha/cre_metadata.proto";
+import "sdk/v1beta/sdk.proto";
+import "tools/generator/v1beta/cre_metadata.proto";
 import "values/v1/values.proto";
 
 service Consensus {
-  option (tools.generator.v1alpha.capability) = {
+  option (tools.generator.v1.capability) = {
     mode: MODE_DON
     capability_id: "consensus@1.0.0"
   };
-  rpc Simple(sdk.v1alpha.SimpleConsensusInputs) returns (values.v1.Value);
-  rpc Report(sdk.v1alpha.ReportRequest) returns (sdk.v1alpha.ReportResponse);
+  rpc Simple(sdk.v1.SimpleConsensusInputs) returns (values.v1.Value);
+  rpc Report(sdk.v1.ReportRequest) returns (sdk.v1.ReportResponse);
 }
 `
 
@@ -985,7 +985,7 @@ const generatorV1betaCreMetadataEmbedded = `syntax = "proto3";
 package tools.generator.v1;
 
 import "google/protobuf/descriptor.proto";
-import "sdk/v1alpha/sdk.proto";
+import "sdk/v1beta/sdk.proto";
 
 message StringLabel {
   map<string, string> defaults = 1;
@@ -1018,7 +1018,7 @@ message Label {
 }
 
 message CapabilityMetadata {
-  sdk.v1alpha.Mode mode = 1;
+  sdk.v1.Mode mode = 1;
   string capability_id = 2;
   map<string, Label> labels = 3;
 }
