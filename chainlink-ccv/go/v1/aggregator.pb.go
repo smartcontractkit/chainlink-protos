@@ -652,7 +652,8 @@ type VerifierResult struct {
 	SourceVerifierAddress []byte                 `protobuf:"bytes,2,opt,name=source_verifier_address,json=sourceVerifierAddress,proto3" json:"source_verifier_address,omitempty"`
 	DestVerifierAddress   []byte                 `protobuf:"bytes,3,opt,name=dest_verifier_address,json=destVerifierAddress,proto3" json:"dest_verifier_address,omitempty"`
 	CcvData               []byte                 `protobuf:"bytes,4,opt,name=ccv_data,json=ccvData,proto3" json:"ccv_data,omitempty"`
-	Sequence              int64                  `protobuf:"varint,5,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	Timestamp             int64                  `protobuf:"varint,5,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Sequence              int64                  `protobuf:"varint,6,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	unknownFields         protoimpl.UnknownFields
 	sizeCache             protoimpl.SizeCache
 }
@@ -713,6 +714,13 @@ func (x *VerifierResult) GetCcvData() []byte {
 		return x.CcvData
 	}
 	return nil
+}
+
+func (x *VerifierResult) GetTimestamp() int64 {
+	if x != nil {
+		return x.Timestamp
+	}
+	return 0
 }
 
 func (x *VerifierResult) GetSequence() int64 {
@@ -1202,13 +1210,14 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\tblob_data\x18\x04 \x01(\fR\bblobData\x12\x1c\n" +
 	"\ttimestamp\x18\x05 \x01(\x03R\ttimestamp\x123\n" +
 	"\amessage\x18\x06 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x12B\n" +
-	"\rreceipt_blobs\x18\a \x03(\v2\x1d.chainlink_ccv.v1.ReceiptBlobR\freceiptBlobs\"\xe8\x01\n" +
+	"\rreceipt_blobs\x18\a \x03(\v2\x1d.chainlink_ccv.v1.ReceiptBlobR\freceiptBlobs\"\x86\x02\n" +
 	"\x0eVerifierResult\x123\n" +
 	"\amessage\x18\x01 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x126\n" +
 	"\x17source_verifier_address\x18\x02 \x01(\fR\x15sourceVerifierAddress\x122\n" +
 	"\x15dest_verifier_address\x18\x03 \x01(\fR\x13destVerifierAddress\x12\x19\n" +
-	"\bccv_data\x18\x04 \x01(\fR\accvData\x12\x1a\n" +
-	"\bsequence\x18\x05 \x01(\x03R\bsequence\"q\n" +
+	"\bccv_data\x18\x04 \x01(\fR\accvData\x12\x1c\n" +
+	"\ttimestamp\x18\x05 \x01(\x03R\ttimestamp\x12\x1a\n" +
+	"\bsequence\x18\x06 \x01(\x03R\bsequence\"q\n" +
 	"\"BatchWriteCommitCCVNodeDataRequest\x12K\n" +
 	"\brequests\x18\x01 \x03(\v2/.chainlink_ccv.v1.WriteCommitCCVNodeDataRequestR\brequests\"\xa1\x01\n" +
 	"#BatchWriteCommitCCVNodeDataResponse\x12N\n" +
