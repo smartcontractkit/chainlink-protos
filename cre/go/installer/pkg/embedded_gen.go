@@ -5,8 +5,8 @@ const blockchainEvmV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.blockchain.evm.v1alpha;
 
-import "sdk/v1beta/sdk.proto";
-import "tools/generator/v1beta/cre_metadata.proto";
+import "sdk/v1alpha/sdk.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 import "values/v1/values.proto";
 
 enum ConfidenceLevel {
@@ -162,7 +162,7 @@ message Header {
 }
 
 service Client {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "evm@1.0.0"
     labels: {
@@ -247,7 +247,7 @@ enum ReceiverContractExecutionStatus {
 
 message WriteReportRequest {
   bytes receiver = 1;
-  sdk.v1.ReportResponse report = 2;
+  sdk.v1alpha.ReportResponse report = 2;
   optional GasConfig gas_config = 3;
 }
 
@@ -274,7 +274,7 @@ const internalActionandtriggerV1ActionAndTriggerEmbedded = `syntax = "proto3";
 
 package capabilities.internal.actionandtrigger.v1;
 
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Config {
   string name = 1;
@@ -294,7 +294,7 @@ message Output {
 }
 
 service Basic {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "basic-test-action-trigger@1.0.0"
   };
@@ -307,7 +307,7 @@ const internalBasicactionV1BasicActionEmbedded = `syntax = "proto3";
 
 package capabilities.internal.basicaction.v1;
 
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Inputs {
   bool input_thing = 1;
@@ -319,7 +319,7 @@ message Outputs {
 
 // This action server for testing purposes only.
 service BasicAction { // This comment tests the generator's ability to handle comments.
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "basic-test-action@1.0.0"
   };
@@ -332,7 +332,7 @@ const internalBasictriggerV1BasicTriggerEmbedded = `syntax = "proto3";
 
 package capabilities.internal.basictrigger.v1;
 
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Config {
   string name = 1;
@@ -344,7 +344,7 @@ message Outputs {
 }
 
 service Basic {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "basic-test-trigger@1.0.0"
   };
@@ -356,17 +356,17 @@ const internalConsensusV1alphaConsensusEmbedded = `syntax = "proto3";
 
 package capabilities.internal.consensus.v1alpha;
 
-import "sdk/v1beta/sdk.proto";
-import "tools/generator/v1beta/cre_metadata.proto";
+import "sdk/v1alpha/sdk.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 import "values/v1/values.proto";
 
 service Consensus {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "consensus@1.0.0-alpha"
   };
-  rpc Simple(sdk.v1.SimpleConsensusInputs) returns (values.v1.Value);
-  rpc Report(sdk.v1.ReportRequest) returns (sdk.v1.ReportResponse);
+  rpc Simple(sdk.v1alpha.SimpleConsensusInputs) returns (values.v1.Value);
+  rpc Report(sdk.v1alpha.ReportRequest) returns (sdk.v1alpha.ReportResponse);
 }
 `
 
@@ -412,10 +412,10 @@ package capabilities.internal.importclash.v1;
 
 import "capabilities/internal/importclash/p1/v1/import.proto";
 import "capabilities/internal/importclash/p2/v1/import.proto";
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 service BasicAction {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "import-clash@1.0.0"
   };
@@ -427,7 +427,7 @@ const internalNodeactionV1NodeActionEmbedded = `syntax = "proto3";
 
 package capabilities.internal.nodeaction.v1;
 
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message NodeInputs {
   bool input_thing = 1;
@@ -438,7 +438,7 @@ message NodeOutputs {
 }
 
 service BasicAction {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "basic-test-node-action@1.0.0"
   };
@@ -450,7 +450,7 @@ const networkingConfidentialhttpV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.networking.confidentialhttp.v1alpha;
 
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message SecretIdentifier {
   string key = 1;
@@ -486,7 +486,7 @@ message HTTPEnclaveResponseData {
 }
 
 service Client {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "confidential-http@1.0.0-alpha"
   };
@@ -499,7 +499,7 @@ const networkingHttpV1alphaClientEmbedded = `syntax = "proto3";
 package capabilities.networking.http.v1alpha;
 
 import "google/protobuf/duration.proto";
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 // CacheSettings defines cache control options for outbound HTTP requests.
 message CacheSettings {
@@ -523,7 +523,7 @@ message Response {
 }
 
 service Client {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "http-actions@1.0.0-alpha"
   };
@@ -535,7 +535,7 @@ const networkingHttpV1alphaTriggerEmbedded = `syntax = "proto3";
 
 package capabilities.networking.http.v1alpha;
 
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Config {
   // Public keys against which the signature of incoming requests are validated
@@ -562,7 +562,7 @@ message AuthorizedKey {
 }
 
 service HTTP {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "http-trigger@1.0.0-alpha"
   };
@@ -576,7 +576,7 @@ const schedulerCronV1TriggerEmbedded = `syntax = "proto3";
 package capabilities.scheduler.cron.v1;
 
 import "google/protobuf/timestamp.proto";
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Config {
   string schedule = 1; // Cron schedule string
@@ -592,7 +592,7 @@ message LegacyPayload {
 }
 
 service Cron {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "cron-trigger@1.0.0"
   };
@@ -600,7 +600,7 @@ service Cron {
   rpc Trigger(Config) returns (stream Payload);
 
   rpc LegacyTrigger(Config) returns (stream LegacyPayload) {
-    option (tools.generator.v1.method) = {map_to_untyped_api: true};
+    option (tools.generator.v1alpha.method) = {map_to_untyped_api: true};
     option deprecated = true;
   }
 }

@@ -4,10 +4,10 @@ package capabilities.internal.importclash.v1;
 
 import "capabilities/internal/importclash/p1/v1/import.proto";
 import "capabilities/internal/importclash/p2/v1/import.proto";
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 service BasicAction {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "import-clash@1.0.0"
   };
