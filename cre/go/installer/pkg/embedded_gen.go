@@ -5,8 +5,8 @@ const blockchainEvmV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.blockchain.evm.v1alpha;
 
-import "sdk/v1beta/sdk.proto";
-import "tools/generator/v1beta/cre_metadata.proto";
+import "sdk/v1alpha/sdk.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 import "values/v1/values.proto";
 
 enum ConfidenceLevel {
@@ -162,7 +162,7 @@ message Header {
 }
 
 service Client {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "evm@1.0.0"
     labels: {
@@ -247,7 +247,7 @@ enum ReceiverContractExecutionStatus {
 
 message WriteReportRequest {
   bytes receiver = 1;
-  sdk.v1.ReportResponse report = 2;
+  sdk.v1alpha.ReportResponse report = 2;
   optional GasConfig gas_config = 3;
 }
 
@@ -274,7 +274,7 @@ const internalActionandtriggerV1ActionAndTriggerEmbedded = `syntax = "proto3";
 
 package capabilities.internal.actionandtrigger.v1;
 
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Config {
   string name = 1;
@@ -294,7 +294,7 @@ message Output {
 }
 
 service Basic {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "basic-test-action-trigger@1.0.0"
   };
@@ -307,7 +307,7 @@ const internalBasicactionV1BasicActionEmbedded = `syntax = "proto3";
 
 package capabilities.internal.basicaction.v1;
 
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Inputs {
   bool input_thing = 1;
@@ -319,7 +319,7 @@ message Outputs {
 
 // This action server for testing purposes only.
 service BasicAction { // This comment tests the generator's ability to handle comments.
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "basic-test-action@1.0.0"
   };
@@ -332,7 +332,7 @@ const internalBasictriggerV1BasicTriggerEmbedded = `syntax = "proto3";
 
 package capabilities.internal.basictrigger.v1;
 
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Config {
   string name = 1;
@@ -344,7 +344,7 @@ message Outputs {
 }
 
 service Basic {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "basic-test-trigger@1.0.0"
   };
@@ -356,35 +356,17 @@ const internalConsensusV1alphaConsensusEmbedded = `syntax = "proto3";
 
 package capabilities.internal.consensus.v1alpha;
 
-import "sdk/v1beta/sdk.proto";
-import "tools/generator/v1beta/cre_metadata.proto";
+import "sdk/v1alpha/sdk.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 import "values/v1/values.proto";
 
 service Consensus {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "consensus@1.0.0-alpha"
   };
-  rpc Simple(sdk.v1.SimpleConsensusInputs) returns (values.v1.Value);
-  rpc Report(sdk.v1.ReportRequest) returns (sdk.v1.ReportResponse);
-}
-`
-
-const internalConsensusV1betaConsensusEmbedded = `syntax = "proto3";
-
-package capabilities.internal.consensus.v1;
-
-import "sdk/v1beta/sdk.proto";
-import "tools/generator/v1beta/cre_metadata.proto";
-import "values/v1/values.proto";
-
-service Consensus {
-  option (tools.generator.v1.capability) = {
-    mode: MODE_DON
-    capability_id: "consensus@1.0.0"
-  };
-  rpc Simple(sdk.v1.SimpleConsensusInputs) returns (values.v1.Value);
-  rpc Report(sdk.v1.ReportRequest) returns (sdk.v1.ReportResponse);
+  rpc Simple(sdk.v1alpha.SimpleConsensusInputs) returns (values.v1.Value);
+  rpc Report(sdk.v1alpha.ReportRequest) returns (sdk.v1alpha.ReportResponse);
 }
 `
 
@@ -412,10 +394,10 @@ package capabilities.internal.importclash.v1;
 
 import "capabilities/internal/importclash/p1/v1/import.proto";
 import "capabilities/internal/importclash/p2/v1/import.proto";
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 service BasicAction {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "import-clash@1.0.0"
   };
@@ -427,7 +409,7 @@ const internalNodeactionV1NodeActionEmbedded = `syntax = "proto3";
 
 package capabilities.internal.nodeaction.v1;
 
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message NodeInputs {
   bool input_thing = 1;
@@ -438,7 +420,7 @@ message NodeOutputs {
 }
 
 service BasicAction {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "basic-test-node-action@1.0.0"
   };
@@ -450,7 +432,7 @@ const networkingConfidentialhttpV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.networking.confidentialhttp.v1alpha;
 
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message SecretIdentifier {
   string key = 1;
@@ -486,7 +468,7 @@ message HTTPEnclaveResponseData {
 }
 
 service Client {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "confidential-http@1.0.0-alpha"
   };
@@ -499,7 +481,7 @@ const networkingHttpV1alphaClientEmbedded = `syntax = "proto3";
 package capabilities.networking.http.v1alpha;
 
 import "google/protobuf/duration.proto";
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 // CacheSettings defines cache control options for outbound HTTP requests.
 message CacheSettings {
@@ -523,7 +505,7 @@ message Response {
 }
 
 service Client {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "http-actions@1.0.0-alpha"
   };
@@ -535,7 +517,7 @@ const networkingHttpV1alphaTriggerEmbedded = `syntax = "proto3";
 
 package capabilities.networking.http.v1alpha;
 
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Config {
   // Public keys against which the signature of incoming requests are validated
@@ -562,7 +544,7 @@ message AuthorizedKey {
 }
 
 service HTTP {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "http-trigger@1.0.0-alpha"
   };
@@ -576,7 +558,7 @@ const schedulerCronV1TriggerEmbedded = `syntax = "proto3";
 package capabilities.scheduler.cron.v1;
 
 import "google/protobuf/timestamp.proto";
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Config {
   string schedule = 1; // Cron schedule string
@@ -592,7 +574,7 @@ message LegacyPayload {
 }
 
 service Cron {
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "cron-trigger@1.0.0"
   };
@@ -600,7 +582,7 @@ service Cron {
   rpc Trigger(Config) returns (stream Payload);
 
   rpc LegacyTrigger(Config) returns (stream LegacyPayload) {
-    option (tools.generator.v1.method) = {map_to_untyped_api: true};
+    option (tools.generator.v1alpha.method) = {map_to_untyped_api: true};
     option deprecated = true;
   }
 }
@@ -609,165 +591,6 @@ service Cron {
 const v1alphaSdkEmbedded = `syntax = "proto3";
 
 package sdk.v1alpha;
-
-import "google/protobuf/any.proto";
-import "google/protobuf/empty.proto";
-import "values/v1/values.proto";
-
-enum AggregationType {
-  AGGREGATION_TYPE_UNSPECIFIED = 0;
-  AGGREGATION_TYPE_MEDIAN = 1;
-  AGGREGATION_TYPE_IDENTICAL = 2;
-  AGGREGATION_TYPE_COMMON_PREFIX = 3;
-  AGGREGATION_TYPE_COMMON_SUFFIX = 4;
-}
-
-message SimpleConsensusInputs {
-  oneof observation {
-    values.v1.Value value = 1;
-    string error = 2;
-  }
-  ConsensusDescriptor descriptors = 3;
-  values.v1.Value default = 4;
-}
-
-message FieldsMap {
-  map<string, ConsensusDescriptor> fields = 1;
-}
-
-message ConsensusDescriptor {
-  oneof descriptor {
-    AggregationType aggregation = 1;
-    FieldsMap fields_map = 2;
-  }
-}
-
-message ReportRequest {
-  bytes encoded_payload = 1;
-  string encoder_name = 2;
-  string signing_algo = 3;
-  string hashing_algo = 4;
-}
-
-message ReportResponse {
-  bytes config_digest = 1;
-  uint64 seq_nr = 2;
-  bytes report_context = 3; // combination of seq_nr and config_digest
-  bytes raw_report = 4;
-  repeated AttributedSignature sigs = 5;
-}
-
-message AttributedSignature {
-  bytes signature = 1;
-  uint32 signer_id = 2;
-}
-
-message CapabilityRequest {
-  string id = 1;
-  google.protobuf.Any payload = 2;
-  string method = 3;
-  int32 callback_id = 4;
-}
-
-message CapabilityResponse {
-  oneof response {
-    google.protobuf.Any payload = 1;
-    string error = 2;
-  }
-}
-
-enum Mode {
-  MODE_UNSPECIFIED = 0;
-  MODE_DON = 1;
-  MODE_NODE = 2;
-}
-
-message TriggerSubscription {
-  string id = 1;
-  google.protobuf.Any payload = 2;
-  string method = 3;
-}
-
-message TriggerSubscriptionRequest {
-  repeated TriggerSubscription subscriptions = 1;
-}
-
-message Trigger {
-  uint64 id = 1;
-  google.protobuf.Any payload = 2;
-}
-
-message AwaitCapabilitiesRequest {
-  repeated int32 ids = 1;
-}
-
-message AwaitCapabilitiesResponse {
-  map<int32, CapabilityResponse> responses = 1;
-}
-message ExecuteRequest {
-  bytes config = 1;
-  oneof request {
-    google.protobuf.Empty subscribe = 2;
-    Trigger trigger = 3;
-  }
-  uint64 max_response_size = 4;
-}
-
-message ExecutionResult {
-  oneof result {
-    values.v1.Value value = 1;
-    string error = 2;
-    TriggerSubscriptionRequest trigger_subscriptions = 3;
-  }
-}
-
-message GetSecretsRequest {
-  repeated SecretRequest requests = 1;
-  int32 callback_id = 2;
-}
-
-message AwaitSecretsRequest {
-  repeated int32 ids = 1;
-}
-
-message AwaitSecretsResponse {
-  map<int32, SecretResponses> responses = 1;
-}
-
-message SecretRequest {
-  string id = 1;
-  string namespace = 2;
-}
-
-message Secret {
-  string id = 1;
-  string namespace = 2;
-  string owner = 3;
-  string value = 4;
-}
-
-message SecretError {
-  string id = 1;
-  string namespace = 2;
-  string owner = 3;
-  string error = 4;
-}
-
-message SecretResponse {
-  oneof response {
-    Secret secret = 1;
-    SecretError error = 2;
-  }
-}
-
-message SecretResponses {
-  repeated SecretResponse responses = 1;
-}
-`
-
-const v1betaSdkEmbedded = `syntax = "proto3";
-
-package sdk.v1;
 
 import "google/protobuf/any.proto";
 import "google/protobuf/empty.proto";
@@ -980,62 +803,6 @@ extend google.protobuf.MethodOptions {
 }
 `
 
-const generatorV1betaCreMetadataEmbedded = `syntax = "proto3";
-
-package tools.generator.v1;
-
-import "google/protobuf/descriptor.proto";
-import "sdk/v1beta/sdk.proto";
-
-message StringLabel {
-  map<string, string> defaults = 1;
-}
-
-message Uint64Label {
-  map<string, uint64> defaults = 1;
-}
-
-message Uint32Label {
-  map<string, uint32> defaults = 1;
-}
-
-message Int64Label {
-  map<string, int64> defaults = 1;
-}
-
-message Int32Label {
-  map<string, int32> defaults = 1;
-}
-
-message Label {
-  oneof kind {
-    StringLabel string_label = 1;
-    Uint64Label uint64_label = 2;
-    Int64Label int64_label = 3;
-    Uint32Label uint32_label = 4;
-    Int32Label int32_label = 5;
-  }
-}
-
-message CapabilityMetadata {
-  sdk.v1.Mode mode = 1;
-  string capability_id = 2;
-  map<string, Label> labels = 3;
-}
-
-extend google.protobuf.ServiceOptions {
-  CapabilityMetadata capability = 50002; // 50000-99999 is the range for custom options.
-}
-
-message CapabilityMethodMetadata {
-  bool map_to_untyped_api = 1;
-}
-
-extend google.protobuf.MethodOptions {
-  CapabilityMethodMetadata method = 50003; // 50000-99999 is the range for custom options.
-}
-`
-
 const v1ValuesEmbedded = `syntax = "proto3";
 
 package values.v1;
@@ -1100,10 +867,6 @@ var allFiles = []*embeddedFile{
 		content: internalConsensusV1alphaConsensusEmbedded,
 	},
 	{
-		name:    "capabilities/internal/consensus/v1beta/consensus.proto",
-		content: internalConsensusV1betaConsensusEmbedded,
-	},
-	{
 		name:    "capabilities/internal/importclash/p1/v1/import.proto",
 		content: internalImportclashP1V1ImportEmbedded,
 	},
@@ -1140,16 +903,8 @@ var allFiles = []*embeddedFile{
 		content: v1alphaSdkEmbedded,
 	},
 	{
-		name:    "sdk/v1beta/sdk.proto",
-		content: v1betaSdkEmbedded,
-	},
-	{
 		name:    "tools/generator/v1alpha/cre_metadata.proto",
 		content: generatorV1alphaCreMetadataEmbedded,
-	},
-	{
-		name:    "tools/generator/v1beta/cre_metadata.proto",
-		content: generatorV1betaCreMetadataEmbedded,
 	},
 	{
 		name:    "values/v1/values.proto",

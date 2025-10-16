@@ -29,7 +29,7 @@ func mustGenAndMove(gen *pkg.ProtocGen, file, innerPkg string) {
 		newLocation = filepath.Join(filepath.Dir(filepath.Dir(oldFile)), innerPkg, filepath.Base(oldFile))
 	}
 
-	if err := os.MkdirAll(filepath.Dir(newLocation), 0o755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(newLocation), 0755); err != nil {
 		panic(err)
 	}
 
