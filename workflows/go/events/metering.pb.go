@@ -93,10 +93,10 @@ func (x *MeteringReport) GetMessage() string {
 type MeteringReportStep struct {
 	state            protoimpl.MessageState      `protogen:"open.v1"`
 	Nodes            []*MeteringReportNodeDetail `protobuf:"bytes,1,rep,name=nodes,proto3" json:"nodes,omitempty"`
-	AggSpendValue    string                      `protobuf:"bytes,2,opt,name=agg_spend_value,json=aggSpendValue,proto3" json:"agg_spend_value,omitempty"`            // remove after ensuring no longer used
-	AggSpendUnit     string                      `protobuf:"bytes,3,opt,name=agg_spend_unit,json=aggSpendUnit,proto3" json:"agg_spend_unit,omitempty"`               // remove after ensuring no longer used
-	AggSpendValueCre string                      `protobuf:"bytes,4,opt,name=agg_spend_value_cre,json=aggSpendValueCre,proto3" json:"agg_spend_value_cre,omitempty"` // remove after ensuring no longer used
-	CapdonN          uint32                      `protobuf:"varint,5,opt,name=capdon_n,json=capdonN,proto3" json:"capdon_n,omitempty"`                               // capdon_n provides the total node count for capability DONs
+	AggSpendValue    string                      `protobuf:"bytes,2,opt,name=agg_spend_value,json=aggSpendValue,proto3" json:"agg_spend_value,omitempty"`
+	AggSpendUnit     string                      `protobuf:"bytes,3,opt,name=agg_spend_unit,json=aggSpendUnit,proto3" json:"agg_spend_unit,omitempty"`
+	AggSpendValueCre string                      `protobuf:"bytes,4,opt,name=agg_spend_value_cre,json=aggSpendValueCre,proto3" json:"agg_spend_value_cre,omitempty"`
+	CapdonN          uint32                      `protobuf:"varint,5,opt,name=capdon_n,json=capdonN,proto3" json:"capdon_n,omitempty"` // capdon_n provides the total node count for capability DONs
 	AggSpend         []*AggregatedSpendDetail    `protobuf:"bytes,6,rep,name=agg_spend,json=aggSpend,proto3" json:"agg_spend,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
