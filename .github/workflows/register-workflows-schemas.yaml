@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - main
     paths:
       - ".github/workflows/register-workflows-schemas.yaml"
       - "workflows/**/*.proto"
@@ -13,13 +13,9 @@ on:
       - ".github/workflows/register-workflows-schemas.yaml"
       - "workflows/**/*.proto"
 
-env:
-  DIR_PATH: workflows
-
 jobs:
   register-schemas:
     runs-on: ubuntu-latest
-    environment: publish
     permissions:
       id-token: write
       contents: read
@@ -38,8 +34,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
         with:
           mask-aws-account-id: true
-          role-to-assume: ${{ secrets.AWS_OIDC_IAM_ROLE_PROD_PUBLISH_ARN }}
-          role-duration-seconds: ${{ secrets.AWS_ROLE_DURATION_SECONDS }}
+          role-to-assume: ${{ secrets.AWS_ARN_ROLE }}
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Register Workflows Schemas for ${{ matrix.config.name }} domain
@@ -47,8 +42,8 @@ jobs:
         with:
           aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
           aws-region: us-west-2
-          chip-schema-dir: "./workflows"
-          chip-config-file-path: "./workflows/${{ matrix.config.file }}"
+          chip-schema-dir: "workflows"
+          chip-config-file-path: "workflows/${{ matrix.config.file }}"
           chip-config-host: ${{ github.ref_name == 'master' && secrets.chip_config_host_prod || secrets.chip_config_host_staging }}
           chip-config-user: ${{ secrets.chip_config_gha_user }}
           chip-config-password: ${{ github.ref_name == 'master' && secrets.chip_config_gha_password_prod || secrets.chip_config_gha_password_staging }}
