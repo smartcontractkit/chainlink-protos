@@ -40,7 +40,7 @@ message HTTPEnclaveResponseData {
 service Client {
   option (tools.generator.v1.capability) = {
     mode: MODE_NODE
-    capability_id: "confidential-http@1.0.0-alpha"
+    capability_id: "confidential-http@1.0-alpha"
   };
   rpc SendRequests(EnclaveActionInput) returns (HTTPEnclaveResponseData);
 }
