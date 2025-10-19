@@ -22,4 +22,5 @@ message WorkflowMetadata {
   string engineVersion = 13;
   string donVersion = 14;
   TriggerDetail trigger = 15;
+  string orgID = 16;
 }
