@@ -43,6 +43,7 @@ message Node {
   optional string workflow_key = 9; // Workflow Public key
   repeated P2PKeyBundle p2p_key_bundles = 10; // List of P2P key bundles associated with the node.
   string nop_friendly_name = 13; // Friendly name defined by NOP
+  string version = 14; // Friendly name defined by NOP
 }
 
 enum ChainType {

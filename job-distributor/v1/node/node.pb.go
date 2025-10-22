@@ -151,6 +151,7 @@ type Node struct {
 	WorkflowKey     *string                `protobuf:"bytes,9,opt,name=workflow_key,json=workflowKey,proto3,oneof" json:"workflow_key,omitempty"`          // Workflow Public key
 	P2PKeyBundles   []*P2PKeyBundle        `protobuf:"bytes,10,rep,name=p2p_key_bundles,json=p2pKeyBundles,proto3" json:"p2p_key_bundles,omitempty"`       // List of P2P key bundles associated with the node.
 	NopFriendlyName string                 `protobuf:"bytes,13,opt,name=nop_friendly_name,json=nopFriendlyName,proto3" json:"nop_friendly_name,omitempty"` // Friendly name defined by NOP
+	Version         string                 `protobuf:"bytes,14,opt,name=version,proto3" json:"version,omitempty"`                                          // Friendly name defined by NOP
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -258,6 +259,13 @@ func (x *Node) GetP2PKeyBundles() []*P2PKeyBundle {
 func (x *Node) GetNopFriendlyName() string {
 	if x != nil {
 		return x.NopFriendlyName
+	}
+	return ""
+}
+
+func (x *Node) GetVersion() string {
+	if x != nil {
+		return x.Version
 	}
 	return ""
 }
@@ -1805,7 +1813,7 @@ var File_job_distributor_v1_node_node_proto protoreflect.FileDescriptor
 
 const file_job_distributor_v1_node_node_proto_rawDesc = "" +
 	"\n" +
-	"\"job-distributor/v1/node/node.proto\x12\vapi.node.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,job-distributor/v1/shared/ptypes/label.proto\"\xd3\x03\n" +
+	"\"job-distributor/v1/node/node.proto\x12\vapi.node.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a,job-distributor/v1/shared/ptypes/label.proto\"\xed\x03\n" +
 	"\x04Node\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1d\n" +
@@ -1822,7 +1830,8 @@ const file_job_distributor_v1_node_node_proto_rawDesc = "" +
 	"\fworkflow_key\x18\t \x01(\tH\x00R\vworkflowKey\x88\x01\x01\x12A\n" +
 	"\x0fp2p_key_bundles\x18\n" +
 	" \x03(\v2\x19.api.node.v1.P2PKeyBundleR\rp2pKeyBundles\x12*\n" +
-	"\x11nop_friendly_name\x18\r \x01(\tR\x0fnopFriendlyNameB\x0f\n" +
+	"\x11nop_friendly_name\x18\r \x01(\tR\x0fnopFriendlyName\x12\x18\n" +
+	"\aversion\x18\x0e \x01(\tR\aversionB\x0f\n" +
 	"\r_workflow_key\"C\n" +
 	"\x05Chain\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12*\n" +
