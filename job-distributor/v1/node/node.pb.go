@@ -151,7 +151,7 @@ type Node struct {
 	WorkflowKey     *string                `protobuf:"bytes,9,opt,name=workflow_key,json=workflowKey,proto3,oneof" json:"workflow_key,omitempty"`          // Workflow Public key
 	P2PKeyBundles   []*P2PKeyBundle        `protobuf:"bytes,10,rep,name=p2p_key_bundles,json=p2pKeyBundles,proto3" json:"p2p_key_bundles,omitempty"`       // List of P2P key bundles associated with the node.
 	NopFriendlyName string                 `protobuf:"bytes,13,opt,name=nop_friendly_name,json=nopFriendlyName,proto3" json:"nop_friendly_name,omitempty"` // Friendly name defined by NOP
-	Version         string                 `protobuf:"bytes,14,opt,name=version,proto3" json:"version,omitempty"`                                          // Friendly name defined by NOP
+	Version         string                 `protobuf:"bytes,14,opt,name=version,proto3" json:"version,omitempty"`                                          // Node Version
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
