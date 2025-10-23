@@ -35,11 +35,11 @@ jobs:
         uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
         with:
           mask-aws-account-id: true
-          role-to-assume: ${{ secrets.AWS_ARN_ROLE }}
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_PUBLISH_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Register Workflows Schemas for ${{ matrix.config.name }} domain
-        uses: smartcontractkit/.github/actions/chip-schema-registration@6fcf464d30c3678d46f775dc97e71704ead79184  # v1.0.2
+        uses: smartcontractkit/.github/actions/chip-schema-registration@b1bec0ae729606681897cbf7fad5d7c1d572173e  # v1.1.0
         with:
           aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
           aws-region: us-west-2
