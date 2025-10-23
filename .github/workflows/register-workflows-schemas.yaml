@@ -41,7 +41,7 @@ jobs:
       - name: Register Workflows Schemas for ${{ matrix.config.name }} domain
         uses: smartcontractkit/.github/actions/chip-schema-registration@b1bec0ae729606681897cbf7fad5d7c1d572173e  # v1.1.0
         with:
-          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID }}
+          aws-account-id: ${{ secrets.ACCOUNT_ID }}
           aws-region: us-west-2
           chip-schema-dir: "workflows"
           chip-config-file-path: "workflows/${{ matrix.config.file }}"
