@@ -113,11 +113,12 @@ message RateCard {
   google.protobuf.Timestamp updated_at = 6;
 }
 
-// Get the default, global rate card (all resource types).
+// Get the rate card for an execution
 message GetWorkflowExecutionRatesRequest {
   string workflow_owner = 1;
   string workflow_registry_address = 2;
   uint64 chain_selector = 3;
+  string workflow_execution_id = 4;
 }
 
 message GetWorkflowExecutionRatesResponse {

@@ -804,12 +804,13 @@ func (x *RateCard) GetUpdatedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-// Get the default, global rate card (all resource types).
+// Get the rate card for an execution
 type GetWorkflowExecutionRatesRequest struct {
 	state                   protoimpl.MessageState `protogen:"open.v1"`
 	WorkflowOwner           string                 `protobuf:"bytes,1,opt,name=workflow_owner,json=workflowOwner,proto3" json:"workflow_owner,omitempty"`
 	WorkflowRegistryAddress string                 `protobuf:"bytes,2,opt,name=workflow_registry_address,json=workflowRegistryAddress,proto3" json:"workflow_registry_address,omitempty"`
 	ChainSelector           uint64                 `protobuf:"varint,3,opt,name=chain_selector,json=chainSelector,proto3" json:"chain_selector,omitempty"`
+	WorkflowExecutionId     string                 `protobuf:"bytes,4,opt,name=workflow_execution_id,json=workflowExecutionId,proto3" json:"workflow_execution_id,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -863,6 +864,13 @@ func (x *GetWorkflowExecutionRatesRequest) GetChainSelector() uint64 {
 		return x.ChainSelector
 	}
 	return 0
+}
+
+func (x *GetWorkflowExecutionRatesRequest) GetWorkflowExecutionId() string {
+	if x != nil {
+		return x.WorkflowExecutionId
+	}
+	return ""
 }
 
 type GetWorkflowExecutionRatesResponse struct {
@@ -1131,11 +1139,12 @@ const file_creditreservation_v1alpha_credit_reservation_service_proto_rawDesc = 
 	"\n" +
 	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\xac\x01\n" +
+	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\xe0\x01\n" +
 	" GetWorkflowExecutionRatesRequest\x12%\n" +
 	"\x0eworkflow_owner\x18\x01 \x01(\tR\rworkflowOwner\x12:\n" +
 	"\x19workflow_registry_address\x18\x02 \x01(\tR\x17workflowRegistryAddress\x12%\n" +
-	"\x0echain_selector\x18\x03 \x01(\x04R\rchainSelector\"\xe1\x02\n" +
+	"\x0echain_selector\x18\x03 \x01(\x04R\rchainSelector\x122\n" +
+	"\x15workflow_execution_id\x18\x04 \x01(\tR\x13workflowExecutionId\"\xe1\x02\n" +
 	"!GetWorkflowExecutionRatesResponse\x12'\n" +
 	"\x0forganization_id\x18\x01 \x01(\tR\x0eorganizationId\x12B\n" +
 	"\n" +
