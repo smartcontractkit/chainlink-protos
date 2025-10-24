@@ -38,6 +38,7 @@ const (
 	ResourceType_RESOURCE_TYPE_NETWORK ResourceType = 4
 	// Trigger operations count.
 	ResourceType_RESOURCE_TYPE_TRIGGERS ResourceType = 5
+	ResourceType_RESOURCE_TYPE_RPC_EVM  ResourceType = 6
 )
 
 // Enum value maps for ResourceType.
@@ -48,6 +49,7 @@ var (
 		2: "RESOURCE_TYPE_COMPUTE",
 		4: "RESOURCE_TYPE_NETWORK",
 		5: "RESOURCE_TYPE_TRIGGERS",
+		6: "RESOURCE_TYPE_RPC_EVM",
 	}
 	ResourceType_value = map[string]int32{
 		"RESOURCE_TYPE_UNSPECIFIED": 0,
@@ -55,6 +57,7 @@ var (
 		"RESOURCE_TYPE_COMPUTE":     2,
 		"RESOURCE_TYPE_NETWORK":     4,
 		"RESOURCE_TYPE_TRIGGERS":    5,
+		"RESOURCE_TYPE_RPC_EVM":     6,
 	}
 )
 
@@ -1163,13 +1166,14 @@ const file_creditreservation_v1alpha_credit_reservation_service_proto_rawDesc = 
 	"\x0fQuorumThreshold\x18\x03 \x01(\x04R\x0fQuorumThreshold\x12(\n" +
 	"\x0fReportsReceived\x18\x04 \x01(\x04R\x0fReportsReceived\x12Z\n" +
 	"\x11AggregationStatus\x18\x05 \x01(\x0e2,.creditreservation.v1alpha.AggregationStatusR\x11AggregationStatus\x12G\n" +
-	"\aOutcome\x18\x06 \x01(\x0e2-.creditreservation.v1alpha.AggregationOutcomeR\aOutcome*\x9c\x01\n" +
+	"\aOutcome\x18\x06 \x01(\x0e2-.creditreservation.v1alpha.AggregationOutcomeR\aOutcome*\xb7\x01\n" +
 	"\fResourceType\x12\x1d\n" +
 	"\x19RESOURCE_TYPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17RESOURCE_TYPE_CONSENSUS\x10\x01\x12\x19\n" +
 	"\x15RESOURCE_TYPE_COMPUTE\x10\x02\x12\x19\n" +
 	"\x15RESOURCE_TYPE_NETWORK\x10\x04\x12\x1a\n" +
-	"\x16RESOURCE_TYPE_TRIGGERS\x10\x05*\xae\x01\n" +
+	"\x16RESOURCE_TYPE_TRIGGERS\x10\x05\x12\x19\n" +
+	"\x15RESOURCE_TYPE_RPC_EVM\x10\x06*\xae\x01\n" +
 	"\x0fMeasurementUnit\x12 \n" +
 	"\x1cMEASUREMENT_UNIT_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16MEASUREMENT_UNIT_BYTES\x10\x02\x12!\n" +
