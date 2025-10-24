@@ -7,7 +7,7 @@
       "references": [
         {
           "name": "workflows/v1/trigger_detail.proto",
-          "entity": "cre-workflows.v1.TriggerDetail",
+          "entity": "workflows.v1.TriggerDetail",
           "path": "workflows/v1/trigger_detail.proto"
         }
       ]
@@ -18,7 +18,7 @@
       "references": [
         {
           "name": "workflows/v1/metadata.proto",
-          "entity": "cre-workflows.v1.WorkflowMetadata",
+          "entity": "workflows.v1.WorkflowMetadata",
           "path": "workflows/v1/metadata.proto"
         }
       ]
