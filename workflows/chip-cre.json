@@ -2,6 +2,32 @@
   "domain": "cre",
   "schemas": [
     {
+      "entity": "workflows.v1.WorkflowMetadata",
+      "path": "workflows/v1/metadata.proto",
+      "references": [
+        {
+          "name": "workflows/v1/trigger_detail.proto",
+          "entity": "cre-workflows.v1.TriggerDetail",
+          "path": "workflows/v1/trigger_detail.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v1.CapabilityExecutionFinished",
+      "path": "workflows/v1/capability_finished.proto",
+      "references": [
+        {
+          "name": "workflows/v1/metadata.proto",
+          "entity": "cre-workflows.v1.WorkflowMetadata",
+          "path": "workflows/v1/metadata.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v1.TriggerDetail",
+      "path": "workflows/v1/trigger_detail.proto"
+    },
+    {
       "entity": "bridge_status.v1.JobInfo",
       "path": "bridge_status/v1/job_info.proto"
     },
