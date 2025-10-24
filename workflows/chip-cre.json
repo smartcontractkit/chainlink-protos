@@ -24,8 +24,328 @@
       ]
     },
     {
+      "entity": "workflows.v1.CapabilityExecutionStarted",
+      "path": "workflows/v1/capability_started.proto",
+      "references": [
+        {
+          "name": "workflows/v1/metadata.proto",
+          "entity": "workflows.v1.WorkflowMetadata",
+          "path": "workflows/v1/metadata.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v1.MeteringReport",
+      "path": "workflows/v1/metering.proto",
+      "references": [
+        {
+          "name": "workflows/v1/metadata.proto",
+          "entity": "workflows.v1.WorkflowMetadata",
+          "path": "workflows/v1/metadata.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v1.TransmissionsScheduledEvent",
+      "path": "workflows/v1/transmissions_scheduled_event.proto"
+    },
+    {
+      "entity": "workflows.v1.TransmitScheduleEvent",
+      "path": "workflows/v1/transmit_schedule_event.proto"
+    },
+    {
+      "entity": "workflows.v1.WorkflowExecutionFinished",
+      "path": "workflows/v1/workflow_finished.proto",
+      "references": [
+        {
+          "name": "workflows/v1/metadata.proto",
+          "entity": "workflows.v1.WorkflowMetadata",
+          "path": "workflows/v1/metadata.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v1.WorkflowExecutionStarted",
+      "path": "workflows/v1/workflow_started.proto",
+      "references": [
+        {
+          "name": "workflows/v1/metadata.proto",
+          "entity": "workflows.v1.WorkflowMetadata",
+          "path": "workflows/v1/metadata.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v1.WorkflowStatusChanged",
+      "path": "workflows/v1/workflow_status_changed.proto",
+      "references": [
+        {
+          "name": "workflows/v1/metadata.proto",
+          "entity": "workflows.v1.WorkflowMetadata",
+          "path": "workflows/v1/metadata.proto"
+        }
+      ]
+    },
+    {
+      "entity": "common.v1.BaseMessage",
+      "path": "common/v1/base_message.proto"
+    },
+    {
+      "entity": "pb.BaseMessage",
+      "path": "pb/base_message_legacy.proto"
+    },
+    {
       "entity": "workflows.v1.TriggerDetail",
       "path": "workflows/v1/trigger_detail.proto"
+    },
+    {
+      "entity": "workflows.v1.UserLogs",
+      "path": "workflows/v1/user_logs.proto",
+      "references": [
+        {
+          "name": "workflows/v1/metadata.proto",
+          "entity": "workflows.v1.WorkflowMetadata",
+          "path": "workflows/v1/metadata.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v2.CreInfo",
+      "path": "workflows/v2/cre_info.proto"
+    },
+    {
+      "entity": "workflows.v2.WorkflowKey",
+      "path": "workflows/v2/workflow_key.proto"
+    },
+    {
+      "entity": "workflows.v2.NeverSendThis",
+      "path": "workflows/v2/xxx_no_send.proto"
+    },
+    {
+      "entity": "workflows.v2.TransactionInfo",
+      "path": "workflows/v2/transaction_info.proto"
+    },
+    {
+      "entity": "workflows.v2.Workflow",
+      "path": "workflows/v2/workflow.proto",
+      "references": [
+        {
+          "name": "workflows/v2/workflow_key.proto",
+          "entity": "workflows.v2.WorkflowKey",
+          "path": "workflows/v2/workflow_key.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v2.CapabilityExecutionFinished",
+      "path": "workflows/v2/capability_execution_finished.proto",
+      "references": [
+        {
+          "name": "workflows/v2/cre_info.proto",
+          "entity": "workflows.v2.CreInfo",
+          "path": "workflows/v2/cre_info.proto"
+        },
+        {
+          "name": "workflows/v2/workflow_key.proto",
+          "entity": "workflows.v2.WorkflowKey",
+          "path": "workflows/v2/workflow_key.proto"
+        },
+        {
+          "name": "workflows/v2/xxx_no_send.proto",
+          "entity": "workflows.v2.NeverSendThis",
+          "path": "workflows/v2/xxx_no_send.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v2.CapabilityExecutionStarted",
+      "path": "workflows/v2/capability_execution_started.proto",
+      "references": [
+        {
+          "name": "workflows/v2/cre_info.proto",
+          "entity": "workflows.v2.CreInfo",
+          "path": "workflows/v2/cre_info.proto"
+        },
+        {
+          "name": "workflows/v2/workflow_key.proto",
+          "entity": "workflows.v2.WorkflowKey",
+          "path": "workflows/v2/workflow_key.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v2.TriggerExecutionStarted",
+      "path": "workflows/v2/trigger_execution_started.proto",
+      "references": [
+        {
+          "name": "workflows/v2/cre_info.proto",
+          "entity": "workflows.v2.CreInfo",
+          "path": "workflows/v2/cre_info.proto"
+        },
+        {
+          "name": "workflows/v2/workflow_key.proto",
+          "entity": "workflows.v2.WorkflowKey",
+          "path": "workflows/v2/workflow_key.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v2.WorkflowExecutionFinished",
+      "path": "workflows/v2/workflow_execution_finished.proto",
+      "references": [
+        {
+          "name": "workflows/v2/cre_info.proto",
+          "entity": "workflows.v2.CreInfo",
+          "path": "workflows/v2/cre_info.proto"
+        },
+        {
+          "name": "workflows/v2/workflow_key.proto",
+          "entity": "workflows.v2.WorkflowKey",
+          "path": "workflows/v2/workflow_key.proto"
+        },
+        {
+          "name": "workflows/v2/xxx_no_send.proto",
+          "entity": "workflows.v2.NeverSendThis",
+          "path": "workflows/v2/xxx_no_send.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v2.WorkflowExecutionStarted",
+      "path": "workflows/v2/workflow_execution_started.proto",
+      "references": [
+        {
+          "name": "workflows/v2/cre_info.proto",
+          "entity": "workflows.v2.CreInfo",
+          "path": "workflows/v2/cre_info.proto"
+        },
+        {
+          "name": "workflows/v2/workflow_key.proto",
+          "entity": "workflows.v2.WorkflowKey",
+          "path": "workflows/v2/workflow_key.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v2.WorkflowActivated",
+      "path": "workflows/v2/workflow_activated.proto",
+      "references": [
+        {
+          "name": "workflows/v2/cre_info.proto",
+          "entity": "workflows.v2.CreInfo",
+          "path": "workflows/v2/cre_info.proto"
+        },
+        {
+          "name": "workflows/v2/transaction_info.proto",
+          "entity": "workflows.v2.TransactionInfo",
+          "path": "workflows/v2/transaction_info.proto"
+        },
+        {
+          "name": "workflows/v2/workflow.proto",
+          "entity": "workflows.v2.Workflow",
+          "path": "workflows/v2/workflow.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v2.WorkflowDeleted",
+      "path": "workflows/v2/workflow_deleted.proto",
+      "references": [
+        {
+          "name": "workflows/v2/cre_info.proto",
+          "entity": "workflows.v2.CreInfo",
+          "path": "workflows/v2/cre_info.proto"
+        },
+        {
+          "name": "workflows/v2/transaction_info.proto",
+          "entity": "workflows.v2.TransactionInfo",
+          "path": "workflows/v2/transaction_info.proto"
+        },
+        {
+          "name": "workflows/v2/workflow.proto",
+          "entity": "workflows.v2.Workflow",
+          "path": "workflows/v2/workflow.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v2.WorkflowDeployed",
+      "path": "workflows/v2/workflow_deployed.proto",
+      "references": [
+        {
+          "name": "workflows/v2/cre_info.proto",
+          "entity": "workflows.v2.CreInfo",
+          "path": "workflows/v2/cre_info.proto"
+        },
+        {
+          "name": "workflows/v2/transaction_info.proto",
+          "entity": "workflows.v2.TransactionInfo",
+          "path": "workflows/v2/transaction_info.proto"
+        },
+        {
+          "name": "workflows/v2/workflow.proto",
+          "entity": "workflows.v2.Workflow",
+          "path": "workflows/v2/workflow.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v2.WorkflowPaused",
+      "path": "workflows/v2/workflow_paused.proto",
+      "references": [
+        {
+          "name": "workflows/v2/cre_info.proto",
+          "entity": "workflows.v2.CreInfo",
+          "path": "workflows/v2/cre_info.proto"
+        },
+        {
+          "name": "workflows/v2/transaction_info.proto",
+          "entity": "workflows.v2.TransactionInfo",
+          "path": "workflows/v2/transaction_info.proto"
+        },
+        {
+          "name": "workflows/v2/workflow.proto",
+          "entity": "workflows.v2.Workflow",
+          "path": "workflows/v2/workflow.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v2.WorkflowUpdated",
+      "path": "workflows/v2/workflow_updated.proto",
+      "references": [
+        {
+          "name": "workflows/v2/cre_info.proto",
+          "entity": "workflows.v2.CreInfo",
+          "path": "workflows/v2/cre_info.proto"
+        },
+        {
+          "name": "workflows/v2/transaction_info.proto",
+          "entity": "workflows.v2.TransactionInfo",
+          "path": "workflows/v2/transaction_info.proto"
+        },
+        {
+          "name": "workflows/v2/workflow.proto",
+          "entity": "workflows.v2.Workflow",
+          "path": "workflows/v2/workflow.proto"
+        }
+      ]
+    },
+    {
+      "entity": "workflows.v2.WorkflowUserLog",
+      "path": "workflows/v2/workflow_user_log.proto",
+      "references": [
+        {
+          "name": "workflows/v2/cre_info.proto",
+          "entity": "workflows.v2.CreInfo",
+          "path": "workflows/v2/cre_info.proto"
+        },
+        {
+          "name": "workflows/v2/workflow_key.proto",
+          "entity": "workflows.v2.WorkflowKey",
+          "path": "workflows/v2/workflow_key.proto"
+        }
+      ]
     },
     {
       "entity": "bridge_status.v1.JobInfo",
