@@ -19,6 +19,7 @@ enum ResourceType {
   RESOURCE_TYPE_NETWORK = 4;
   // Trigger operations count.
   RESOURCE_TYPE_TRIGGERS = 5;
+  RESOURCE_TYPE_RPC_EVM = 6;
 }
 
 // MeasurementUnit corresponds to billing.measurement_unit in Postgres.
