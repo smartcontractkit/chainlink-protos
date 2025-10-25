@@ -15,4 +15,5 @@ message CapabilityExecutionStarted {
 
   string capabilityID = 5;
   int32 stepRef = 6;
+  string method = 7;
 }
