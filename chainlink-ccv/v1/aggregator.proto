@@ -10,8 +10,8 @@ service Aggregator {
   rpc WriteCommitCCVNodeData(WriteCommitCCVNodeDataRequest) returns (WriteCommitCCVNodeDataResponse);
   rpc BatchWriteCommitCCVNodeData(BatchWriteCommitCCVNodeDataRequest) returns (BatchWriteCommitCCVNodeDataResponse);
   rpc ReadCommitCCVNodeData(ReadCommitCCVNodeDataRequest) returns (ReadCommitCCVNodeDataResponse);
-  rpc WriteBlockCheckpoint(WriteBlockCheckpointRequest) returns (WriteBlockCheckpointResponse);
-  rpc ReadBlockCheckpoint(ReadBlockCheckpointRequest) returns (ReadBlockCheckpointResponse);
+  rpc WriteChainStatus(WriteChainStatusRequest) returns (WriteChainStatusResponse);
+  rpc ReadChainStatus(ReadChainStatusRequest) returns (ReadChainStatusResponse);
 }
 
 service VerifierResultAPI {
@@ -19,23 +19,24 @@ service VerifierResultAPI {
   rpc GetMessagesSince(GetMessagesSinceRequest) returns (GetMessagesSinceResponse);
 }
 
-message BlockCheckpoint {
+message ChainStatus {
   uint64 chain_selector = 1;
   uint64 finalized_block_height = 2;
+  bool enabled = 3;
 }
 
-message WriteBlockCheckpointRequest {
-  repeated BlockCheckpoint checkpoints = 1;
+message WriteChainStatusRequest {
+  repeated ChainStatus checkpoints = 1;
 }
 
-message WriteBlockCheckpointResponse {
+message WriteChainStatusResponse {
   WriteStatus status = 1;
 }
 
-message ReadBlockCheckpointRequest {}
+message ReadChainStatusRequest {}
 
-message ReadBlockCheckpointResponse {
-  repeated BlockCheckpoint checkpoints = 1;
+message ReadChainStatusResponse {
+  repeated ChainStatus checkpoints = 1;
 }
 
 message Message {
