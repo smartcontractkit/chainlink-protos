@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package capabilities.internal.basicaction.v1;
 
-import "tools/generator/v1beta/cre_metadata.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message Inputs {
   bool input_thing = 1;
@@ -14,7 +14,7 @@ message Outputs {
 
 // This action server for testing purposes only.
 service BasicAction { // This comment tests the generator's ability to handle comments.
-  option (tools.generator.v1.capability) = {
+  option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "basic-test-action@1.0.0"
   };

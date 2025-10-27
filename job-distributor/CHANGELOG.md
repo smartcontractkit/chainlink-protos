@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.17.0
+
+### Minor Changes
+
+- [#222](https://github.com/smartcontractkit/chainlink-protos/pull/222) [`280dee8`](https://github.com/smartcontractkit/chainlink-protos/commit/280dee89e67a8c66dbe043a6e6e5eb01f1665098) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add version no Node message
+
 ## 0.16.0
 
 ### Minor Changes

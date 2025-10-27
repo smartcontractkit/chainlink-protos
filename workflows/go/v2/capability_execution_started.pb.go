@@ -29,6 +29,7 @@ type CapabilityExecutionStarted struct {
 	Timestamp           string                 `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	CapabilityID        string                 `protobuf:"bytes,5,opt,name=capabilityID,proto3" json:"capabilityID,omitempty"`
 	StepRef             int32                  `protobuf:"varint,6,opt,name=stepRef,proto3" json:"stepRef,omitempty"`
+	Method              string                 `protobuf:"bytes,7,opt,name=method,proto3" json:"method,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -105,18 +106,26 @@ func (x *CapabilityExecutionStarted) GetStepRef() int32 {
 	return 0
 }
 
+func (x *CapabilityExecutionStarted) GetMethod() string {
+	if x != nil {
+		return x.Method
+	}
+	return ""
+}
+
 var File_workflows_v2_capability_execution_started_proto protoreflect.FileDescriptor
 
 const file_workflows_v2_capability_execution_started_proto_rawDesc = "" +
 	"\n" +
-	"/workflows/v2/capability_execution_started.proto\x12\fworkflows.v2\x1a\x1bworkflows/v2/cre_info.proto\x1a\x1fworkflows/v2/workflow_key.proto\"\x92\x02\n" +
+	"/workflows/v2/capability_execution_started.proto\x12\fworkflows.v2\x1a\x1bworkflows/v2/cre_info.proto\x1a\x1fworkflows/v2/workflow_key.proto\"\xaa\x02\n" +
 	"\x1aCapabilityExecutionStarted\x12/\n" +
 	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x125\n" +
 	"\bworkflow\x18\x02 \x01(\v2\x19.workflows.v2.WorkflowKeyR\bworkflow\x120\n" +
 	"\x13workflowExecutionID\x18\x03 \x01(\tR\x13workflowExecutionID\x12\x1c\n" +
 	"\ttimestamp\x18\x04 \x01(\tR\ttimestamp\x12\"\n" +
 	"\fcapabilityID\x18\x05 \x01(\tR\fcapabilityID\x12\x18\n" +
-	"\astepRef\x18\x06 \x01(\x05R\astepRefB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
+	"\astepRef\x18\x06 \x01(\x05R\astepRef\x12\x16\n" +
+	"\x06method\x18\a \x01(\tR\x06methodB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
 
 var (
 	file_workflows_v2_capability_execution_started_proto_rawDescOnce sync.Once

@@ -38,6 +38,7 @@ type WorkflowMetadata struct {
 	EngineVersion           string                 `protobuf:"bytes,13,opt,name=engineVersion,proto3" json:"engineVersion,omitempty"`
 	DonVersion              string                 `protobuf:"bytes,14,opt,name=donVersion,proto3" json:"donVersion,omitempty"`
 	Trigger                 *TriggerDetail         `protobuf:"bytes,15,opt,name=trigger,proto3" json:"trigger,omitempty"`
+	OrgID                   string                 `protobuf:"bytes,16,opt,name=orgID,proto3" json:"orgID,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -177,11 +178,18 @@ func (x *WorkflowMetadata) GetTrigger() *TriggerDetail {
 	return nil
 }
 
+func (x *WorkflowMetadata) GetOrgID() string {
+	if x != nil {
+		return x.OrgID
+	}
+	return ""
+}
+
 var File_workflows_v1_metadata_proto protoreflect.FileDescriptor
 
 const file_workflows_v1_metadata_proto_rawDesc = "" +
 	"\n" +
-	"\x1bworkflows/v1/metadata.proto\x12\fworkflows.v1\x1a!workflows/v1/trigger_detail.proto\"\xc3\x04\n" +
+	"\x1bworkflows/v1/metadata.proto\x12\fworkflows.v1\x1a!workflows/v1/trigger_detail.proto\"\xd9\x04\n" +
 	"\x10WorkflowMetadata\x12$\n" +
 	"\rworkflowOwner\x18\x01 \x01(\tR\rworkflowOwner\x12\"\n" +
 	"\fworkflowName\x18\x02 \x01(\tR\fworkflowName\x12\x18\n" +
@@ -202,7 +210,8 @@ const file_workflows_v1_metadata_proto_rawDesc = "" +
 	"\n" +
 	"donVersion\x18\x0e \x01(\tR\n" +
 	"donVersion\x125\n" +
-	"\atrigger\x18\x0f \x01(\v2\x1b.workflows.v1.TriggerDetailR\atriggerBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
+	"\atrigger\x18\x0f \x01(\v2\x1b.workflows.v1.TriggerDetailR\atrigger\x12\x14\n" +
+	"\x05orgID\x18\x10 \x01(\tR\x05orgIDBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
 
 var (
 	file_workflows_v1_metadata_proto_rawDescOnce sync.Once
