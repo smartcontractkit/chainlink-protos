@@ -28,6 +28,7 @@ type CapabilityExecutionFinished struct {
 	CapabilityID  string                 `protobuf:"bytes,3,opt,name=capabilityID,proto3" json:"capabilityID,omitempty"`
 	StepRef       string                 `protobuf:"bytes,4,opt,name=stepRef,proto3" json:"stepRef,omitempty"`
 	Status        string                 `protobuf:"bytes,5,opt,name=status,proto3" json:"status,omitempty"`
+	Method        string                 `protobuf:"bytes,6,opt,name=method,proto3" json:"method,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -97,17 +98,25 @@ func (x *CapabilityExecutionFinished) GetStatus() string {
 	return ""
 }
 
+func (x *CapabilityExecutionFinished) GetMethod() string {
+	if x != nil {
+		return x.Method
+	}
+	return ""
+}
+
 var File_workflows_v1_capability_finished_proto protoreflect.FileDescriptor
 
 const file_workflows_v1_capability_finished_proto_rawDesc = "" +
 	"\n" +
-	"&workflows/v1/capability_finished.proto\x12\fworkflows.v1\x1a\x1bworkflows/v1/metadata.proto\"\xbf\x01\n" +
+	"&workflows/v1/capability_finished.proto\x12\fworkflows.v1\x1a\x1bworkflows/v1/metadata.proto\"\xd7\x01\n" +
 	"\x1bCapabilityExecutionFinished\x12,\n" +
 	"\x01m\x18\x01 \x01(\v2\x1e.workflows.v1.WorkflowMetadataR\x01m\x12\x1c\n" +
 	"\ttimestamp\x18\x02 \x01(\tR\ttimestamp\x12\"\n" +
 	"\fcapabilityID\x18\x03 \x01(\tR\fcapabilityID\x12\x18\n" +
 	"\astepRef\x18\x04 \x01(\tR\astepRef\x12\x16\n" +
-	"\x06status\x18\x05 \x01(\tR\x06statusBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
+	"\x06status\x18\x05 \x01(\tR\x06status\x12\x16\n" +
+	"\x06method\x18\x06 \x01(\tR\x06methodBBZ@github.com/smartcontractkit/chainlink-protos/workflows/go/eventsb\x06proto3"
 
 var (
 	file_workflows_v1_capability_finished_proto_rawDescOnce sync.Once
