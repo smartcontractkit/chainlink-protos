@@ -22,7 +22,7 @@ service VerifierResultAPI {
 message ChainStatus {
   uint64 chain_selector = 1;
   uint64 finalized_block_height = 2;
-  bool enabled = 3;
+  bool disabled = 3;
 }
 
 message WriteChainStatusRequest {

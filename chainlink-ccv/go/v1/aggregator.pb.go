@@ -72,7 +72,7 @@ type ChainStatus struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	ChainSelector        uint64                 `protobuf:"varint,1,opt,name=chain_selector,json=chainSelector,proto3" json:"chain_selector,omitempty"`
 	FinalizedBlockHeight uint64                 `protobuf:"varint,2,opt,name=finalized_block_height,json=finalizedBlockHeight,proto3" json:"finalized_block_height,omitempty"`
-	Enabled              bool                   `protobuf:"varint,3,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Disabled             bool                   `protobuf:"varint,3,opt,name=disabled,proto3" json:"disabled,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -121,9 +121,9 @@ func (x *ChainStatus) GetFinalizedBlockHeight() uint64 {
 	return 0
 }
 
-func (x *ChainStatus) GetEnabled() bool {
+func (x *ChainStatus) GetDisabled() bool {
 	if x != nil {
-		return x.Enabled
+		return x.Disabled
 	}
 	return false
 }
@@ -1170,11 +1170,11 @@ var File_v1_aggregator_proto protoreflect.FileDescriptor
 
 const file_v1_aggregator_proto_rawDesc = "" +
 	"\n" +
-	"\x13v1/aggregator.proto\x12\x10chainlink_ccv.v1\x1a\x17google/rpc/status.proto\"\x84\x01\n" +
+	"\x13v1/aggregator.proto\x12\x10chainlink_ccv.v1\x1a\x17google/rpc/status.proto\"\x86\x01\n" +
 	"\vChainStatus\x12%\n" +
 	"\x0echain_selector\x18\x01 \x01(\x04R\rchainSelector\x124\n" +
-	"\x16finalized_block_height\x18\x02 \x01(\x04R\x14finalizedBlockHeight\x12\x18\n" +
-	"\aenabled\x18\x03 \x01(\bR\aenabled\"Z\n" +
+	"\x16finalized_block_height\x18\x02 \x01(\x04R\x14finalizedBlockHeight\x12\x1a\n" +
+	"\bdisabled\x18\x03 \x01(\bR\bdisabled\"Z\n" +
 	"\x17WriteChainStatusRequest\x12?\n" +
 	"\vcheckpoints\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\vcheckpoints\"Q\n" +
 	"\x18WriteChainStatusResponse\x125\n" +
