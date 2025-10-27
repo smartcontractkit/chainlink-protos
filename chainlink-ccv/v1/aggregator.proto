@@ -26,7 +26,7 @@ message ChainStatus {
 }
 
 message WriteChainStatusRequest {
-  repeated ChainStatus checkpoints = 1;
+  repeated ChainStatus statuses = 1;
 }
 
 message WriteChainStatusResponse {
@@ -36,7 +36,7 @@ message WriteChainStatusResponse {
 message ReadChainStatusRequest {}
 
 message ReadChainStatusResponse {
-  repeated ChainStatus checkpoints = 1;
+  repeated ChainStatus statuses = 1;
 }
 
 message Message {

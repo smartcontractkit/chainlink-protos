@@ -130,7 +130,7 @@ func (x *ChainStatus) GetDisabled() bool {
 
 type WriteChainStatusRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Checkpoints   []*ChainStatus         `protobuf:"bytes,1,rep,name=checkpoints,proto3" json:"checkpoints,omitempty"`
+	Statuses      []*ChainStatus         `protobuf:"bytes,1,rep,name=statuses,proto3" json:"statuses,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -165,9 +165,9 @@ func (*WriteChainStatusRequest) Descriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *WriteChainStatusRequest) GetCheckpoints() []*ChainStatus {
+func (x *WriteChainStatusRequest) GetStatuses() []*ChainStatus {
 	if x != nil {
-		return x.Checkpoints
+		return x.Statuses
 	}
 	return nil
 }
@@ -254,7 +254,7 @@ func (*ReadChainStatusRequest) Descriptor() ([]byte, []int) {
 
 type ReadChainStatusResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Checkpoints   []*ChainStatus         `protobuf:"bytes,1,rep,name=checkpoints,proto3" json:"checkpoints,omitempty"`
+	Statuses      []*ChainStatus         `protobuf:"bytes,1,rep,name=statuses,proto3" json:"statuses,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -289,9 +289,9 @@ func (*ReadChainStatusResponse) Descriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *ReadChainStatusResponse) GetCheckpoints() []*ChainStatus {
+func (x *ReadChainStatusResponse) GetStatuses() []*ChainStatus {
 	if x != nil {
-		return x.Checkpoints
+		return x.Statuses
 	}
 	return nil
 }
@@ -1174,14 +1174,14 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\vChainStatus\x12%\n" +
 	"\x0echain_selector\x18\x01 \x01(\x04R\rchainSelector\x124\n" +
 	"\x16finalized_block_height\x18\x02 \x01(\x04R\x14finalizedBlockHeight\x12\x1a\n" +
-	"\bdisabled\x18\x03 \x01(\bR\bdisabled\"Z\n" +
-	"\x17WriteChainStatusRequest\x12?\n" +
-	"\vcheckpoints\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\vcheckpoints\"Q\n" +
+	"\bdisabled\x18\x03 \x01(\bR\bdisabled\"T\n" +
+	"\x17WriteChainStatusRequest\x129\n" +
+	"\bstatuses\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\bstatuses\"Q\n" +
 	"\x18WriteChainStatusResponse\x125\n" +
 	"\x06status\x18\x01 \x01(\x0e2\x1d.chainlink_ccv.v1.WriteStatusR\x06status\"\x18\n" +
-	"\x16ReadChainStatusRequest\"Z\n" +
-	"\x17ReadChainStatusResponse\x12?\n" +
-	"\vcheckpoints\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\vcheckpoints\"\xd0\x05\n" +
+	"\x16ReadChainStatusRequest\"T\n" +
+	"\x17ReadChainStatusResponse\x129\n" +
+	"\bstatuses\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\bstatuses\"\xd0\x05\n" +
 	"\aMessage\x12\x18\n" +
 	"\aversion\x18\x01 \x01(\rR\aversion\x122\n" +
 	"\x15source_chain_selector\x18\x02 \x01(\x04R\x13sourceChainSelector\x12.\n" +
@@ -1305,9 +1305,9 @@ var file_v1_aggregator_proto_goTypes = []any{
 	(*status.Status)(nil),                       // 19: google.rpc.Status
 }
 var file_v1_aggregator_proto_depIdxs = []int32{
-	1,  // 0: chainlink_ccv.v1.WriteChainStatusRequest.checkpoints:type_name -> chainlink_ccv.v1.ChainStatus
+	1,  // 0: chainlink_ccv.v1.WriteChainStatusRequest.statuses:type_name -> chainlink_ccv.v1.ChainStatus
 	0,  // 1: chainlink_ccv.v1.WriteChainStatusResponse.status:type_name -> chainlink_ccv.v1.WriteStatus
-	1,  // 2: chainlink_ccv.v1.ReadChainStatusResponse.checkpoints:type_name -> chainlink_ccv.v1.ChainStatus
+	1,  // 2: chainlink_ccv.v1.ReadChainStatusResponse.statuses:type_name -> chainlink_ccv.v1.ChainStatus
 	6,  // 3: chainlink_ccv.v1.MessageWithCCVNodeData.message:type_name -> chainlink_ccv.v1.Message
 	7,  // 4: chainlink_ccv.v1.MessageWithCCVNodeData.receipt_blobs:type_name -> chainlink_ccv.v1.ReceiptBlob
 	6,  // 5: chainlink_ccv.v1.VerifierResult.message:type_name -> chainlink_ccv.v1.Message
