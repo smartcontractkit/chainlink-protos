@@ -90,6 +90,16 @@ message VerifierResult {
   int64 sequence = 6;
 }
 
+message MessageWithVerifierResult {
+  Message message = 1;
+  bytes source_verifier_address = 2;
+  bytes dest_verifier_address = 3;
+  bytes ccv_data = 4;
+  int64 timestamp = 5;
+  int64 sequence = 6;
+  repeated ReceiptBlob receipt_blobs_from_majority = 7;
+}
+
 message BatchWriteCommitCCVNodeDataRequest {
   repeated WriteCommitCCVNodeDataRequest requests = 1;
 }
@@ -131,6 +141,6 @@ message GetMessagesSinceRequest {
 }
 
 message GetMessagesSinceResponse {
-    repeated VerifierResult results = 1;
+    repeated MessageWithVerifierResult results = 1;
     string next_token = 2;
 }
