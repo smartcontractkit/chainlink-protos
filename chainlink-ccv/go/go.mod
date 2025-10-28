@@ -9,7 +9,7 @@ require (
 )
 
 require (
-	github.com/googleapis/googleapis v0.0.0-20251016065115-4591295cdf3e // indirect
+	github.com/googleapis/googleapis v0.0.0-20251027162246-ec4e78790482 // indirect
 	golang.org/x/net v0.41.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/text v0.26.0 // indirect

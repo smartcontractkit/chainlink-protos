@@ -22,8 +22,8 @@ const (
 	Aggregator_WriteCommitCCVNodeData_FullMethodName      = "/chainlink_ccv.v1.Aggregator/WriteCommitCCVNodeData"
 	Aggregator_BatchWriteCommitCCVNodeData_FullMethodName = "/chainlink_ccv.v1.Aggregator/BatchWriteCommitCCVNodeData"
 	Aggregator_ReadCommitCCVNodeData_FullMethodName       = "/chainlink_ccv.v1.Aggregator/ReadCommitCCVNodeData"
-	Aggregator_WriteBlockCheckpoint_FullMethodName        = "/chainlink_ccv.v1.Aggregator/WriteBlockCheckpoint"
-	Aggregator_ReadBlockCheckpoint_FullMethodName         = "/chainlink_ccv.v1.Aggregator/ReadBlockCheckpoint"
+	Aggregator_WriteChainStatus_FullMethodName            = "/chainlink_ccv.v1.Aggregator/WriteChainStatus"
+	Aggregator_ReadChainStatus_FullMethodName             = "/chainlink_ccv.v1.Aggregator/ReadChainStatus"
 )
 
 // AggregatorClient is the client API for Aggregator service.
@@ -33,8 +33,8 @@ type AggregatorClient interface {
 	WriteCommitCCVNodeData(ctx context.Context, in *WriteCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*WriteCommitCCVNodeDataResponse, error)
 	BatchWriteCommitCCVNodeData(ctx context.Context, in *BatchWriteCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*BatchWriteCommitCCVNodeDataResponse, error)
 	ReadCommitCCVNodeData(ctx context.Context, in *ReadCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*ReadCommitCCVNodeDataResponse, error)
-	WriteBlockCheckpoint(ctx context.Context, in *WriteBlockCheckpointRequest, opts ...grpc.CallOption) (*WriteBlockCheckpointResponse, error)
-	ReadBlockCheckpoint(ctx context.Context, in *ReadBlockCheckpointRequest, opts ...grpc.CallOption) (*ReadBlockCheckpointResponse, error)
+	WriteChainStatus(ctx context.Context, in *WriteChainStatusRequest, opts ...grpc.CallOption) (*WriteChainStatusResponse, error)
+	ReadChainStatus(ctx context.Context, in *ReadChainStatusRequest, opts ...grpc.CallOption) (*ReadChainStatusResponse, error)
 }
 
 type aggregatorClient struct {
@@ -75,20 +75,20 @@ func (c *aggregatorClient) ReadCommitCCVNodeData(ctx context.Context, in *ReadCo
 	return out, nil
 }
 
-func (c *aggregatorClient) WriteBlockCheckpoint(ctx context.Context, in *WriteBlockCheckpointRequest, opts ...grpc.CallOption) (*WriteBlockCheckpointResponse, error) {
+func (c *aggregatorClient) WriteChainStatus(ctx context.Context, in *WriteChainStatusRequest, opts ...grpc.CallOption) (*WriteChainStatusResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(WriteBlockCheckpointResponse)
-	err := c.cc.Invoke(ctx, Aggregator_WriteBlockCheckpoint_FullMethodName, in, out, cOpts...)
+	out := new(WriteChainStatusResponse)
+	err := c.cc.Invoke(ctx, Aggregator_WriteChainStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aggregatorClient) ReadBlockCheckpoint(ctx context.Context, in *ReadBlockCheckpointRequest, opts ...grpc.CallOption) (*ReadBlockCheckpointResponse, error) {
+func (c *aggregatorClient) ReadChainStatus(ctx context.Context, in *ReadChainStatusRequest, opts ...grpc.CallOption) (*ReadChainStatusResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ReadBlockCheckpointResponse)
-	err := c.cc.Invoke(ctx, Aggregator_ReadBlockCheckpoint_FullMethodName, in, out, cOpts...)
+	out := new(ReadChainStatusResponse)
+	err := c.cc.Invoke(ctx, Aggregator_ReadChainStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -102,8 +102,8 @@ type AggregatorServer interface {
 	WriteCommitCCVNodeData(context.Context, *WriteCommitCCVNodeDataRequest) (*WriteCommitCCVNodeDataResponse, error)
 	BatchWriteCommitCCVNodeData(context.Context, *BatchWriteCommitCCVNodeDataRequest) (*BatchWriteCommitCCVNodeDataResponse, error)
 	ReadCommitCCVNodeData(context.Context, *ReadCommitCCVNodeDataRequest) (*ReadCommitCCVNodeDataResponse, error)
-	WriteBlockCheckpoint(context.Context, *WriteBlockCheckpointRequest) (*WriteBlockCheckpointResponse, error)
-	ReadBlockCheckpoint(context.Context, *ReadBlockCheckpointRequest) (*ReadBlockCheckpointResponse, error)
+	WriteChainStatus(context.Context, *WriteChainStatusRequest) (*WriteChainStatusResponse, error)
+	ReadChainStatus(context.Context, *ReadChainStatusRequest) (*ReadChainStatusResponse, error)
 	mustEmbedUnimplementedAggregatorServer()
 }
 
@@ -123,11 +123,11 @@ func (UnimplementedAggregatorServer) BatchWriteCommitCCVNodeData(context.Context
 func (UnimplementedAggregatorServer) ReadCommitCCVNodeData(context.Context, *ReadCommitCCVNodeDataRequest) (*ReadCommitCCVNodeDataResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReadCommitCCVNodeData not implemented")
 }
-func (UnimplementedAggregatorServer) WriteBlockCheckpoint(context.Context, *WriteBlockCheckpointRequest) (*WriteBlockCheckpointResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method WriteBlockCheckpoint not implemented")
+func (UnimplementedAggregatorServer) WriteChainStatus(context.Context, *WriteChainStatusRequest) (*WriteChainStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WriteChainStatus not implemented")
 }
-func (UnimplementedAggregatorServer) ReadBlockCheckpoint(context.Context, *ReadBlockCheckpointRequest) (*ReadBlockCheckpointResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ReadBlockCheckpoint not implemented")
+func (UnimplementedAggregatorServer) ReadChainStatus(context.Context, *ReadChainStatusRequest) (*ReadChainStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReadChainStatus not implemented")
 }
 func (UnimplementedAggregatorServer) mustEmbedUnimplementedAggregatorServer() {}
 func (UnimplementedAggregatorServer) testEmbeddedByValue()                    {}
@@ -204,38 +204,38 @@ func _Aggregator_ReadCommitCCVNodeData_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Aggregator_WriteBlockCheckpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WriteBlockCheckpointRequest)
+func _Aggregator_WriteChainStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WriteChainStatusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AggregatorServer).WriteBlockCheckpoint(ctx, in)
+		return srv.(AggregatorServer).WriteChainStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Aggregator_WriteBlockCheckpoint_FullMethodName,
+		FullMethod: Aggregator_WriteChainStatus_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AggregatorServer).WriteBlockCheckpoint(ctx, req.(*WriteBlockCheckpointRequest))
+		return srv.(AggregatorServer).WriteChainStatus(ctx, req.(*WriteChainStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Aggregator_ReadBlockCheckpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ReadBlockCheckpointRequest)
+func _Aggregator_ReadChainStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReadChainStatusRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AggregatorServer).ReadBlockCheckpoint(ctx, in)
+		return srv.(AggregatorServer).ReadChainStatus(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Aggregator_ReadBlockCheckpoint_FullMethodName,
+		FullMethod: Aggregator_ReadChainStatus_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AggregatorServer).ReadBlockCheckpoint(ctx, req.(*ReadBlockCheckpointRequest))
+		return srv.(AggregatorServer).ReadChainStatus(ctx, req.(*ReadChainStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -260,12 +260,12 @@ var Aggregator_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Aggregator_ReadCommitCCVNodeData_Handler,
 		},
 		{
-			MethodName: "WriteBlockCheckpoint",
-			Handler:    _Aggregator_WriteBlockCheckpoint_Handler,
+			MethodName: "WriteChainStatus",
+			Handler:    _Aggregator_WriteChainStatus_Handler,
 		},
 		{
-			MethodName: "ReadBlockCheckpoint",
-			Handler:    _Aggregator_ReadBlockCheckpoint_Handler,
+			MethodName: "ReadChainStatus",
+			Handler:    _Aggregator_ReadChainStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

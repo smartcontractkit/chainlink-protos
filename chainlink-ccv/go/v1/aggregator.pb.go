@@ -68,28 +68,29 @@ func (WriteStatus) EnumDescriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{0}
 }
 
-type BlockCheckpoint struct {
+type ChainStatus struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
 	ChainSelector        uint64                 `protobuf:"varint,1,opt,name=chain_selector,json=chainSelector,proto3" json:"chain_selector,omitempty"`
 	FinalizedBlockHeight uint64                 `protobuf:"varint,2,opt,name=finalized_block_height,json=finalizedBlockHeight,proto3" json:"finalized_block_height,omitempty"`
+	Disabled             bool                   `protobuf:"varint,3,opt,name=disabled,proto3" json:"disabled,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
 
-func (x *BlockCheckpoint) Reset() {
-	*x = BlockCheckpoint{}
+func (x *ChainStatus) Reset() {
+	*x = ChainStatus{}
 	mi := &file_v1_aggregator_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *BlockCheckpoint) String() string {
+func (x *ChainStatus) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*BlockCheckpoint) ProtoMessage() {}
+func (*ChainStatus) ProtoMessage() {}
 
-func (x *BlockCheckpoint) ProtoReflect() protoreflect.Message {
+func (x *ChainStatus) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_aggregator_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -101,46 +102,53 @@ func (x *BlockCheckpoint) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use BlockCheckpoint.ProtoReflect.Descriptor instead.
-func (*BlockCheckpoint) Descriptor() ([]byte, []int) {
+// Deprecated: Use ChainStatus.ProtoReflect.Descriptor instead.
+func (*ChainStatus) Descriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *BlockCheckpoint) GetChainSelector() uint64 {
+func (x *ChainStatus) GetChainSelector() uint64 {
 	if x != nil {
 		return x.ChainSelector
 	}
 	return 0
 }
 
-func (x *BlockCheckpoint) GetFinalizedBlockHeight() uint64 {
+func (x *ChainStatus) GetFinalizedBlockHeight() uint64 {
 	if x != nil {
 		return x.FinalizedBlockHeight
 	}
 	return 0
 }
 
-type WriteBlockCheckpointRequest struct {
+func (x *ChainStatus) GetDisabled() bool {
+	if x != nil {
+		return x.Disabled
+	}
+	return false
+}
+
+type WriteChainStatusRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Checkpoints   []*BlockCheckpoint     `protobuf:"bytes,1,rep,name=checkpoints,proto3" json:"checkpoints,omitempty"`
+	Statuses      []*ChainStatus         `protobuf:"bytes,1,rep,name=statuses,proto3" json:"statuses,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *WriteBlockCheckpointRequest) Reset() {
-	*x = WriteBlockCheckpointRequest{}
+func (x *WriteChainStatusRequest) Reset() {
+	*x = WriteChainStatusRequest{}
 	mi := &file_v1_aggregator_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *WriteBlockCheckpointRequest) String() string {
+func (x *WriteChainStatusRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*WriteBlockCheckpointRequest) ProtoMessage() {}
+func (*WriteChainStatusRequest) ProtoMessage() {}
 
-func (x *WriteBlockCheckpointRequest) ProtoReflect() protoreflect.Message {
+func (x *WriteChainStatusRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_aggregator_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -152,39 +160,39 @@ func (x *WriteBlockCheckpointRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use WriteBlockCheckpointRequest.ProtoReflect.Descriptor instead.
-func (*WriteBlockCheckpointRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use WriteChainStatusRequest.ProtoReflect.Descriptor instead.
+func (*WriteChainStatusRequest) Descriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *WriteBlockCheckpointRequest) GetCheckpoints() []*BlockCheckpoint {
+func (x *WriteChainStatusRequest) GetStatuses() []*ChainStatus {
 	if x != nil {
-		return x.Checkpoints
+		return x.Statuses
 	}
 	return nil
 }
 
-type WriteBlockCheckpointResponse struct {
+type WriteChainStatusResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Status        WriteStatus            `protobuf:"varint,1,opt,name=status,proto3,enum=chainlink_ccv.v1.WriteStatus" json:"status,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *WriteBlockCheckpointResponse) Reset() {
-	*x = WriteBlockCheckpointResponse{}
+func (x *WriteChainStatusResponse) Reset() {
+	*x = WriteChainStatusResponse{}
 	mi := &file_v1_aggregator_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *WriteBlockCheckpointResponse) String() string {
+func (x *WriteChainStatusResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*WriteBlockCheckpointResponse) ProtoMessage() {}
+func (*WriteChainStatusResponse) ProtoMessage() {}
 
-func (x *WriteBlockCheckpointResponse) ProtoReflect() protoreflect.Message {
+func (x *WriteChainStatusResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_aggregator_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -196,38 +204,38 @@ func (x *WriteBlockCheckpointResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use WriteBlockCheckpointResponse.ProtoReflect.Descriptor instead.
-func (*WriteBlockCheckpointResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use WriteChainStatusResponse.ProtoReflect.Descriptor instead.
+func (*WriteChainStatusResponse) Descriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *WriteBlockCheckpointResponse) GetStatus() WriteStatus {
+func (x *WriteChainStatusResponse) GetStatus() WriteStatus {
 	if x != nil {
 		return x.Status
 	}
 	return WriteStatus_SUCCESS
 }
 
-type ReadBlockCheckpointRequest struct {
+type ReadChainStatusRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ReadBlockCheckpointRequest) Reset() {
-	*x = ReadBlockCheckpointRequest{}
+func (x *ReadChainStatusRequest) Reset() {
+	*x = ReadChainStatusRequest{}
 	mi := &file_v1_aggregator_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ReadBlockCheckpointRequest) String() string {
+func (x *ReadChainStatusRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ReadBlockCheckpointRequest) ProtoMessage() {}
+func (*ReadChainStatusRequest) ProtoMessage() {}
 
-func (x *ReadBlockCheckpointRequest) ProtoReflect() protoreflect.Message {
+func (x *ReadChainStatusRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_aggregator_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -239,32 +247,32 @@ func (x *ReadBlockCheckpointRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ReadBlockCheckpointRequest.ProtoReflect.Descriptor instead.
-func (*ReadBlockCheckpointRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ReadChainStatusRequest.ProtoReflect.Descriptor instead.
+func (*ReadChainStatusRequest) Descriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{3}
 }
 
-type ReadBlockCheckpointResponse struct {
+type ReadChainStatusResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Checkpoints   []*BlockCheckpoint     `protobuf:"bytes,1,rep,name=checkpoints,proto3" json:"checkpoints,omitempty"`
+	Statuses      []*ChainStatus         `protobuf:"bytes,1,rep,name=statuses,proto3" json:"statuses,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ReadBlockCheckpointResponse) Reset() {
-	*x = ReadBlockCheckpointResponse{}
+func (x *ReadChainStatusResponse) Reset() {
+	*x = ReadChainStatusResponse{}
 	mi := &file_v1_aggregator_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ReadBlockCheckpointResponse) String() string {
+func (x *ReadChainStatusResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ReadBlockCheckpointResponse) ProtoMessage() {}
+func (*ReadChainStatusResponse) ProtoMessage() {}
 
-func (x *ReadBlockCheckpointResponse) ProtoReflect() protoreflect.Message {
+func (x *ReadChainStatusResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_aggregator_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -276,14 +284,14 @@ func (x *ReadBlockCheckpointResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ReadBlockCheckpointResponse.ProtoReflect.Descriptor instead.
-func (*ReadBlockCheckpointResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ReadChainStatusResponse.ProtoReflect.Descriptor instead.
+func (*ReadChainStatusResponse) Descriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *ReadBlockCheckpointResponse) GetCheckpoints() []*BlockCheckpoint {
+func (x *ReadChainStatusResponse) GetStatuses() []*ChainStatus {
 	if x != nil {
-		return x.Checkpoints
+		return x.Statuses
 	}
 	return nil
 }
@@ -1162,17 +1170,18 @@ var File_v1_aggregator_proto protoreflect.FileDescriptor
 
 const file_v1_aggregator_proto_rawDesc = "" +
 	"\n" +
-	"\x13v1/aggregator.proto\x12\x10chainlink_ccv.v1\x1a\x17google/rpc/status.proto\"n\n" +
-	"\x0fBlockCheckpoint\x12%\n" +
+	"\x13v1/aggregator.proto\x12\x10chainlink_ccv.v1\x1a\x17google/rpc/status.proto\"\x86\x01\n" +
+	"\vChainStatus\x12%\n" +
 	"\x0echain_selector\x18\x01 \x01(\x04R\rchainSelector\x124\n" +
-	"\x16finalized_block_height\x18\x02 \x01(\x04R\x14finalizedBlockHeight\"b\n" +
-	"\x1bWriteBlockCheckpointRequest\x12C\n" +
-	"\vcheckpoints\x18\x01 \x03(\v2!.chainlink_ccv.v1.BlockCheckpointR\vcheckpoints\"U\n" +
-	"\x1cWriteBlockCheckpointResponse\x125\n" +
-	"\x06status\x18\x01 \x01(\x0e2\x1d.chainlink_ccv.v1.WriteStatusR\x06status\"\x1c\n" +
-	"\x1aReadBlockCheckpointRequest\"b\n" +
-	"\x1bReadBlockCheckpointResponse\x12C\n" +
-	"\vcheckpoints\x18\x01 \x03(\v2!.chainlink_ccv.v1.BlockCheckpointR\vcheckpoints\"\xd0\x05\n" +
+	"\x16finalized_block_height\x18\x02 \x01(\x04R\x14finalizedBlockHeight\x12\x1a\n" +
+	"\bdisabled\x18\x03 \x01(\bR\bdisabled\"T\n" +
+	"\x17WriteChainStatusRequest\x129\n" +
+	"\bstatuses\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\bstatuses\"Q\n" +
+	"\x18WriteChainStatusResponse\x125\n" +
+	"\x06status\x18\x01 \x01(\x0e2\x1d.chainlink_ccv.v1.WriteStatusR\x06status\"\x18\n" +
+	"\x16ReadChainStatusRequest\"T\n" +
+	"\x17ReadChainStatusResponse\x129\n" +
+	"\bstatuses\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\bstatuses\"\xd0\x05\n" +
 	"\aMessage\x12\x18\n" +
 	"\aversion\x18\x01 \x01(\rR\aversion\x122\n" +
 	"\x15source_chain_selector\x18\x02 \x01(\x04R\x13sourceChainSelector\x12.\n" +
@@ -1247,14 +1256,14 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\vWriteStatus\x12\v\n" +
 	"\aSUCCESS\x10\x00\x12\n" +
 	"\n" +
-	"\x06FAILED\x10\x012\xfb\x04\n" +
+	"\x06FAILED\x10\x012\xe3\x04\n" +
 	"\n" +
 	"Aggregator\x12{\n" +
 	"\x16WriteCommitCCVNodeData\x12/.chainlink_ccv.v1.WriteCommitCCVNodeDataRequest\x1a0.chainlink_ccv.v1.WriteCommitCCVNodeDataResponse\x12\x8a\x01\n" +
 	"\x1bBatchWriteCommitCCVNodeData\x124.chainlink_ccv.v1.BatchWriteCommitCCVNodeDataRequest\x1a5.chainlink_ccv.v1.BatchWriteCommitCCVNodeDataResponse\x12x\n" +
-	"\x15ReadCommitCCVNodeData\x12..chainlink_ccv.v1.ReadCommitCCVNodeDataRequest\x1a/.chainlink_ccv.v1.ReadCommitCCVNodeDataResponse\x12u\n" +
-	"\x14WriteBlockCheckpoint\x12-.chainlink_ccv.v1.WriteBlockCheckpointRequest\x1a..chainlink_ccv.v1.WriteBlockCheckpointResponse\x12r\n" +
-	"\x13ReadBlockCheckpoint\x12,.chainlink_ccv.v1.ReadBlockCheckpointRequest\x1a-.chainlink_ccv.v1.ReadBlockCheckpointResponse2\xf5\x01\n" +
+	"\x15ReadCommitCCVNodeData\x12..chainlink_ccv.v1.ReadCommitCCVNodeDataRequest\x1a/.chainlink_ccv.v1.ReadCommitCCVNodeDataResponse\x12i\n" +
+	"\x10WriteChainStatus\x12).chainlink_ccv.v1.WriteChainStatusRequest\x1a*.chainlink_ccv.v1.WriteChainStatusResponse\x12f\n" +
+	"\x0fReadChainStatus\x12(.chainlink_ccv.v1.ReadChainStatusRequest\x1a).chainlink_ccv.v1.ReadChainStatusResponse2\xf5\x01\n" +
 	"\x11VerifierResultAPI\x12u\n" +
 	"\x1bGetVerifierResultForMessage\x124.chainlink_ccv.v1.GetVerifierResultForMessageRequest\x1a .chainlink_ccv.v1.VerifierResult\x12i\n" +
 	"\x10GetMessagesSince\x12).chainlink_ccv.v1.GetMessagesSinceRequest\x1a*.chainlink_ccv.v1.GetMessagesSinceResponseBBZ@github.com/smartcontractkit/chainlink-protos/chainlink-ccv/go/v1b\x06proto3"
@@ -1275,11 +1284,11 @@ var file_v1_aggregator_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_v1_aggregator_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_v1_aggregator_proto_goTypes = []any{
 	(WriteStatus)(0),                            // 0: chainlink_ccv.v1.WriteStatus
-	(*BlockCheckpoint)(nil),                     // 1: chainlink_ccv.v1.BlockCheckpoint
-	(*WriteBlockCheckpointRequest)(nil),         // 2: chainlink_ccv.v1.WriteBlockCheckpointRequest
-	(*WriteBlockCheckpointResponse)(nil),        // 3: chainlink_ccv.v1.WriteBlockCheckpointResponse
-	(*ReadBlockCheckpointRequest)(nil),          // 4: chainlink_ccv.v1.ReadBlockCheckpointRequest
-	(*ReadBlockCheckpointResponse)(nil),         // 5: chainlink_ccv.v1.ReadBlockCheckpointResponse
+	(*ChainStatus)(nil),                         // 1: chainlink_ccv.v1.ChainStatus
+	(*WriteChainStatusRequest)(nil),             // 2: chainlink_ccv.v1.WriteChainStatusRequest
+	(*WriteChainStatusResponse)(nil),            // 3: chainlink_ccv.v1.WriteChainStatusResponse
+	(*ReadChainStatusRequest)(nil),              // 4: chainlink_ccv.v1.ReadChainStatusRequest
+	(*ReadChainStatusResponse)(nil),             // 5: chainlink_ccv.v1.ReadChainStatusResponse
 	(*Message)(nil),                             // 6: chainlink_ccv.v1.Message
 	(*ReceiptBlob)(nil),                         // 7: chainlink_ccv.v1.ReceiptBlob
 	(*MessageWithCCVNodeData)(nil),              // 8: chainlink_ccv.v1.MessageWithCCVNodeData
@@ -1296,9 +1305,9 @@ var file_v1_aggregator_proto_goTypes = []any{
 	(*status.Status)(nil),                       // 19: google.rpc.Status
 }
 var file_v1_aggregator_proto_depIdxs = []int32{
-	1,  // 0: chainlink_ccv.v1.WriteBlockCheckpointRequest.checkpoints:type_name -> chainlink_ccv.v1.BlockCheckpoint
-	0,  // 1: chainlink_ccv.v1.WriteBlockCheckpointResponse.status:type_name -> chainlink_ccv.v1.WriteStatus
-	1,  // 2: chainlink_ccv.v1.ReadBlockCheckpointResponse.checkpoints:type_name -> chainlink_ccv.v1.BlockCheckpoint
+	1,  // 0: chainlink_ccv.v1.WriteChainStatusRequest.statuses:type_name -> chainlink_ccv.v1.ChainStatus
+	0,  // 1: chainlink_ccv.v1.WriteChainStatusResponse.status:type_name -> chainlink_ccv.v1.WriteStatus
+	1,  // 2: chainlink_ccv.v1.ReadChainStatusResponse.statuses:type_name -> chainlink_ccv.v1.ChainStatus
 	6,  // 3: chainlink_ccv.v1.MessageWithCCVNodeData.message:type_name -> chainlink_ccv.v1.Message
 	7,  // 4: chainlink_ccv.v1.MessageWithCCVNodeData.receipt_blobs:type_name -> chainlink_ccv.v1.ReceiptBlob
 	6,  // 5: chainlink_ccv.v1.VerifierResult.message:type_name -> chainlink_ccv.v1.Message
@@ -1312,15 +1321,15 @@ var file_v1_aggregator_proto_depIdxs = []int32{
 	12, // 13: chainlink_ccv.v1.Aggregator.WriteCommitCCVNodeData:input_type -> chainlink_ccv.v1.WriteCommitCCVNodeDataRequest
 	10, // 14: chainlink_ccv.v1.Aggregator.BatchWriteCommitCCVNodeData:input_type -> chainlink_ccv.v1.BatchWriteCommitCCVNodeDataRequest
 	14, // 15: chainlink_ccv.v1.Aggregator.ReadCommitCCVNodeData:input_type -> chainlink_ccv.v1.ReadCommitCCVNodeDataRequest
-	2,  // 16: chainlink_ccv.v1.Aggregator.WriteBlockCheckpoint:input_type -> chainlink_ccv.v1.WriteBlockCheckpointRequest
-	4,  // 17: chainlink_ccv.v1.Aggregator.ReadBlockCheckpoint:input_type -> chainlink_ccv.v1.ReadBlockCheckpointRequest
+	2,  // 16: chainlink_ccv.v1.Aggregator.WriteChainStatus:input_type -> chainlink_ccv.v1.WriteChainStatusRequest
+	4,  // 17: chainlink_ccv.v1.Aggregator.ReadChainStatus:input_type -> chainlink_ccv.v1.ReadChainStatusRequest
 	16, // 18: chainlink_ccv.v1.VerifierResultAPI.GetVerifierResultForMessage:input_type -> chainlink_ccv.v1.GetVerifierResultForMessageRequest
 	17, // 19: chainlink_ccv.v1.VerifierResultAPI.GetMessagesSince:input_type -> chainlink_ccv.v1.GetMessagesSinceRequest
 	13, // 20: chainlink_ccv.v1.Aggregator.WriteCommitCCVNodeData:output_type -> chainlink_ccv.v1.WriteCommitCCVNodeDataResponse
 	11, // 21: chainlink_ccv.v1.Aggregator.BatchWriteCommitCCVNodeData:output_type -> chainlink_ccv.v1.BatchWriteCommitCCVNodeDataResponse
 	15, // 22: chainlink_ccv.v1.Aggregator.ReadCommitCCVNodeData:output_type -> chainlink_ccv.v1.ReadCommitCCVNodeDataResponse
-	3,  // 23: chainlink_ccv.v1.Aggregator.WriteBlockCheckpoint:output_type -> chainlink_ccv.v1.WriteBlockCheckpointResponse
-	5,  // 24: chainlink_ccv.v1.Aggregator.ReadBlockCheckpoint:output_type -> chainlink_ccv.v1.ReadBlockCheckpointResponse
+	3,  // 23: chainlink_ccv.v1.Aggregator.WriteChainStatus:output_type -> chainlink_ccv.v1.WriteChainStatusResponse
+	5,  // 24: chainlink_ccv.v1.Aggregator.ReadChainStatus:output_type -> chainlink_ccv.v1.ReadChainStatusResponse
 	9,  // 25: chainlink_ccv.v1.VerifierResultAPI.GetVerifierResultForMessage:output_type -> chainlink_ccv.v1.VerifierResult
 	18, // 26: chainlink_ccv.v1.VerifierResultAPI.GetMessagesSince:output_type -> chainlink_ccv.v1.GetMessagesSinceResponse
 	20, // [20:27] is the sub-list for method output_type
