@@ -927,10 +927,11 @@ func (x *BatchWriteCommitCCVNodeDataResponse) GetErrors() []*status.Status {
 }
 
 type WriteCommitCCVNodeDataRequest struct {
-	state         protoimpl.MessageState  `protogen:"open.v1"`
-	CcvNodeData   *MessageWithCCVNodeData `protobuf:"bytes,1,opt,name=ccv_node_data,json=ccvNodeData,proto3" json:"ccv_node_data,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState  `protogen:"open.v1"`
+	CcvNodeData    *MessageWithCCVNodeData `protobuf:"bytes,1,opt,name=ccv_node_data,json=ccvNodeData,proto3" json:"ccv_node_data,omitempty"`
+	IdempotencyKey string                  `protobuf:"bytes,2,opt,name=idempotency_key,json=idempotencyKey,proto3" json:"idempotency_key,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *WriteCommitCCVNodeDataRequest) Reset() {
@@ -968,6 +969,13 @@ func (x *WriteCommitCCVNodeDataRequest) GetCcvNodeData() *MessageWithCCVNodeData
 		return x.CcvNodeData
 	}
 	return nil
+}
+
+func (x *WriteCommitCCVNodeDataRequest) GetIdempotencyKey() string {
+	if x != nil {
+		return x.IdempotencyKey
+	}
+	return ""
 }
 
 type WriteCommitCCVNodeDataResponse struct {
@@ -1331,9 +1339,10 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\brequests\x18\x01 \x03(\v2/.chainlink_ccv.v1.WriteCommitCCVNodeDataRequestR\brequests\"\xa1\x01\n" +
 	"#BatchWriteCommitCCVNodeDataResponse\x12N\n" +
 	"\tresponses\x18\x01 \x03(\v20.chainlink_ccv.v1.WriteCommitCCVNodeDataResponseR\tresponses\x12*\n" +
-	"\x06errors\x18\x02 \x03(\v2\x12.google.rpc.StatusR\x06errors\"m\n" +
+	"\x06errors\x18\x02 \x03(\v2\x12.google.rpc.StatusR\x06errors\"\x96\x01\n" +
 	"\x1dWriteCommitCCVNodeDataRequest\x12L\n" +
-	"\rccv_node_data\x18\x01 \x01(\v2(.chainlink_ccv.v1.MessageWithCCVNodeDataR\vccvNodeData\"W\n" +
+	"\rccv_node_data\x18\x01 \x01(\v2(.chainlink_ccv.v1.MessageWithCCVNodeDataR\vccvNodeData\x12'\n" +
+	"\x0fidempotency_key\x18\x02 \x01(\tR\x0eidempotencyKey\"W\n" +
 	"\x1eWriteCommitCCVNodeDataResponse\x125\n" +
 	"\x06status\x18\x01 \x01(\x0e2\x1d.chainlink_ccv.v1.WriteStatusR\x06status\"W\n" +
 	"\x1cReadCommitCCVNodeDataRequest\x12\x1d\n" +

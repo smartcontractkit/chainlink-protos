@@ -111,6 +111,7 @@ message BatchWriteCommitCCVNodeDataResponse {
 
 message WriteCommitCCVNodeDataRequest {
   MessageWithCCVNodeData ccv_node_data = 1;
+  string idempotency_key = 2;
 }
 
 enum WriteStatus {
