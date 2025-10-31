@@ -16,6 +16,7 @@ service Aggregator {
 
 service VerifierResultAPI {
   rpc GetVerifierResultForMessage(GetVerifierResultForMessageRequest) returns (VerifierResult);
+  rpc BatchGetVerifierResultForMessage(BatchGetVerifierResultForMessageRequest) returns (BatchGetVerifierResultForMessageResponse);
   rpc GetMessagesSince(GetMessagesSinceRequest) returns (GetMessagesSinceResponse);
 }
 
@@ -134,6 +135,15 @@ message ReadCommitCCVNodeDataResponse {
 
 message GetVerifierResultForMessageRequest {
   bytes message_id = 1;
+}
+
+message BatchGetVerifierResultForMessageRequest {
+  repeated GetVerifierResultForMessageRequest requests = 1;
+}
+
+message BatchGetVerifierResultForMessageResponse {
+  repeated VerifierResult results = 1;
+  repeated google.rpc.Status errors = 2;
 }
 
 message GetMessagesSinceRequest {
