@@ -317,6 +317,7 @@ type Message struct {
 	TokenTransfer        []byte                 `protobuf:"bytes,17,opt,name=token_transfer,json=tokenTransfer,proto3" json:"token_transfer,omitempty"`
 	DataLength           uint32                 `protobuf:"varint,18,opt,name=data_length,json=dataLength,proto3" json:"data_length,omitempty"`
 	Data                 []byte                 `protobuf:"bytes,19,opt,name=data,proto3" json:"data,omitempty"`
+	GasLimit             uint32                 `protobuf:"varint,20,opt,name=gas_limit,json=gasLimit,proto3" json:"gas_limit,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -482,6 +483,13 @@ func (x *Message) GetData() []byte {
 		return x.Data
 	}
 	return nil
+}
+
+func (x *Message) GetGasLimit() uint32 {
+	if x != nil {
+		return x.GasLimit
+	}
+	return 0
 }
 
 type ReceiptBlob struct {
@@ -1281,7 +1289,7 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\x06status\x18\x01 \x01(\x0e2\x1d.chainlink_ccv.v1.WriteStatusR\x06status\"\x18\n" +
 	"\x16ReadChainStatusRequest\"T\n" +
 	"\x17ReadChainStatusResponse\x129\n" +
-	"\bstatuses\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\bstatuses\"\xd0\x05\n" +
+	"\bstatuses\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\bstatuses\"\xed\x05\n" +
 	"\aMessage\x12\x18\n" +
 	"\aversion\x18\x01 \x01(\rR\aversion\x122\n" +
 	"\x15source_chain_selector\x18\x02 \x01(\x04R\x13sourceChainSelector\x12.\n" +
@@ -1303,7 +1311,8 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\x0etoken_transfer\x18\x11 \x01(\fR\rtokenTransfer\x12\x1f\n" +
 	"\vdata_length\x18\x12 \x01(\rR\n" +
 	"dataLength\x12\x12\n" +
-	"\x04data\x18\x13 \x01(\fR\x04data\"\xae\x01\n" +
+	"\x04data\x18\x13 \x01(\fR\x04data\x12\x1b\n" +
+	"\tgas_limit\x18\x14 \x01(\rR\bgasLimit\"\xae\x01\n" +
 	"\vReceiptBlob\x12\x16\n" +
 	"\x06issuer\x18\x01 \x01(\fR\x06issuer\x12$\n" +
 	"\x0edest_gas_limit\x18\x02 \x01(\x04R\fdestGasLimit\x12.\n" +

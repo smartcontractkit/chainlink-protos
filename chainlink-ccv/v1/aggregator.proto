@@ -59,6 +59,7 @@ message Message {
   bytes token_transfer = 17;
   uint32 data_length = 18;
   bytes data = 19;
+  uint32 gas_limit = 20;
 }
 
 message ReceiptBlob {
