@@ -16,6 +16,7 @@ service Aggregator {
 
 service VerifierResultAPI {
   rpc GetVerifierResultForMessage(GetVerifierResultForMessageRequest) returns (VerifierResult);
+  rpc BatchGetVerifierResultForMessage(BatchGetVerifierResultForMessageRequest) returns (BatchGetVerifierResultForMessageResponse);
   rpc GetMessagesSince(GetMessagesSinceRequest) returns (GetMessagesSinceResponse);
 }
 
@@ -59,6 +60,7 @@ message Message {
   bytes token_transfer = 17;
   uint32 data_length = 18;
   bytes data = 19;
+  uint32 gas_limit = 20;
 }
 
 message ReceiptBlob {
@@ -111,6 +113,7 @@ message BatchWriteCommitCCVNodeDataResponse {
 
 message WriteCommitCCVNodeDataRequest {
   MessageWithCCVNodeData ccv_node_data = 1;
+  string idempotency_key = 2;
 }
 
 enum WriteStatus {
@@ -133,6 +136,15 @@ message ReadCommitCCVNodeDataResponse {
 
 message GetVerifierResultForMessageRequest {
   bytes message_id = 1;
+}
+
+message BatchGetVerifierResultForMessageRequest {
+  repeated GetVerifierResultForMessageRequest requests = 1;
+}
+
+message BatchGetVerifierResultForMessageResponse {
+  repeated VerifierResult results = 1;
+  repeated google.rpc.Status errors = 2;
 }
 
 message GetMessagesSinceRequest {
