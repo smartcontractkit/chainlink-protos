@@ -63,24 +63,16 @@ message Message {
   uint32 gas_limit = 20;
 }
 
-message ReceiptBlob {
-  bytes issuer = 1;
-  uint64 dest_gas_limit = 2;
-  uint32 dest_bytes_overhead = 3;
-  bytes blob = 4;
-  bytes extra_args = 5;
-}
-
 message MessageWithCCVNodeData {
   bytes message_id = 1;
   bytes source_verifier_address = 2;
-  // ccv_data is the signature from the commit verifier node of the message id and the blob data
-  bytes ccv_data = 3;
-  // blob_data is the verifier specific data like the ccv version
-  bytes blob_data = 4;
+  // signature from the commit verifier node of the message id and the blob data
+  bytes signature = 3;
+  bytes ccvVersion = 4;
   int64 timestamp = 5;
   Message message = 6;
-  repeated ReceiptBlob receipt_blobs = 7;
+  repeated bytes ccvAddresses = 7;
+  bytes executorAddress = 8;
 }
 
 message VerifierResult {
@@ -99,7 +91,8 @@ message MessageWithVerifierResult {
   bytes ccv_data = 4;
   int64 timestamp = 5;
   int64 sequence = 6;
-  repeated ReceiptBlob receipt_blobs_from_majority = 7;
+  repeated bytes ccvAddresses = 7;
+  bytes executorAddress = 8;
 }
 
 message BatchWriteCommitCCVNodeDataRequest {
