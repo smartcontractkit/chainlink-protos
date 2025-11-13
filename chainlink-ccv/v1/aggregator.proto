@@ -34,7 +34,9 @@ message WriteChainStatusResponse {
   WriteStatus status = 1;
 }
 
-message ReadChainStatusRequest {}
+message ReadChainStatusRequest {
+  repeated uint64 chain_selectors = 1;
+}
 
 message ReadChainStatusResponse {
   repeated ChainStatus statuses = 1;
