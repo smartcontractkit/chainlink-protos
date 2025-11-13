@@ -273,17 +273,15 @@ var Aggregator_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	VerifierResultAPI_GetVerifierResultForMessage_FullMethodName      = "/chainlink_ccv.v1.VerifierResultAPI/GetVerifierResultForMessage"
-	VerifierResultAPI_BatchGetVerifierResultForMessage_FullMethodName = "/chainlink_ccv.v1.VerifierResultAPI/BatchGetVerifierResultForMessage"
-	VerifierResultAPI_GetMessagesSince_FullMethodName                 = "/chainlink_ccv.v1.VerifierResultAPI/GetMessagesSince"
+	VerifierResultAPI_GetVerifierResultsForMessage_FullMethodName = "/chainlink_ccv.v1.VerifierResultAPI/GetVerifierResultsForMessage"
+	VerifierResultAPI_GetMessagesSince_FullMethodName             = "/chainlink_ccv.v1.VerifierResultAPI/GetMessagesSince"
 )
 
 // VerifierResultAPIClient is the client API for VerifierResultAPI service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VerifierResultAPIClient interface {
-	GetVerifierResultForMessage(ctx context.Context, in *GetVerifierResultForMessageRequest, opts ...grpc.CallOption) (*VerifierResult, error)
-	BatchGetVerifierResultForMessage(ctx context.Context, in *BatchGetVerifierResultForMessageRequest, opts ...grpc.CallOption) (*BatchGetVerifierResultForMessageResponse, error)
+	GetVerifierResultsForMessage(ctx context.Context, in *GetVerifierResultsForMessageRequest, opts ...grpc.CallOption) (*GetVerifierResultsForMessageResponse, error)
 	GetMessagesSince(ctx context.Context, in *GetMessagesSinceRequest, opts ...grpc.CallOption) (*GetMessagesSinceResponse, error)
 }
 
@@ -295,20 +293,10 @@ func NewVerifierResultAPIClient(cc grpc.ClientConnInterface) VerifierResultAPICl
 	return &verifierResultAPIClient{cc}
 }
 
-func (c *verifierResultAPIClient) GetVerifierResultForMessage(ctx context.Context, in *GetVerifierResultForMessageRequest, opts ...grpc.CallOption) (*VerifierResult, error) {
+func (c *verifierResultAPIClient) GetVerifierResultsForMessage(ctx context.Context, in *GetVerifierResultsForMessageRequest, opts ...grpc.CallOption) (*GetVerifierResultsForMessageResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(VerifierResult)
-	err := c.cc.Invoke(ctx, VerifierResultAPI_GetVerifierResultForMessage_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *verifierResultAPIClient) BatchGetVerifierResultForMessage(ctx context.Context, in *BatchGetVerifierResultForMessageRequest, opts ...grpc.CallOption) (*BatchGetVerifierResultForMessageResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BatchGetVerifierResultForMessageResponse)
-	err := c.cc.Invoke(ctx, VerifierResultAPI_BatchGetVerifierResultForMessage_FullMethodName, in, out, cOpts...)
+	out := new(GetVerifierResultsForMessageResponse)
+	err := c.cc.Invoke(ctx, VerifierResultAPI_GetVerifierResultsForMessage_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -329,8 +317,7 @@ func (c *verifierResultAPIClient) GetMessagesSince(ctx context.Context, in *GetM
 // All implementations must embed UnimplementedVerifierResultAPIServer
 // for forward compatibility.
 type VerifierResultAPIServer interface {
-	GetVerifierResultForMessage(context.Context, *GetVerifierResultForMessageRequest) (*VerifierResult, error)
-	BatchGetVerifierResultForMessage(context.Context, *BatchGetVerifierResultForMessageRequest) (*BatchGetVerifierResultForMessageResponse, error)
+	GetVerifierResultsForMessage(context.Context, *GetVerifierResultsForMessageRequest) (*GetVerifierResultsForMessageResponse, error)
 	GetMessagesSince(context.Context, *GetMessagesSinceRequest) (*GetMessagesSinceResponse, error)
 	mustEmbedUnimplementedVerifierResultAPIServer()
 }
@@ -342,11 +329,8 @@ type VerifierResultAPIServer interface {
 // pointer dereference when methods are called.
 type UnimplementedVerifierResultAPIServer struct{}
 
-func (UnimplementedVerifierResultAPIServer) GetVerifierResultForMessage(context.Context, *GetVerifierResultForMessageRequest) (*VerifierResult, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetVerifierResultForMessage not implemented")
-}
-func (UnimplementedVerifierResultAPIServer) BatchGetVerifierResultForMessage(context.Context, *BatchGetVerifierResultForMessageRequest) (*BatchGetVerifierResultForMessageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BatchGetVerifierResultForMessage not implemented")
+func (UnimplementedVerifierResultAPIServer) GetVerifierResultsForMessage(context.Context, *GetVerifierResultsForMessageRequest) (*GetVerifierResultsForMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVerifierResultsForMessage not implemented")
 }
 func (UnimplementedVerifierResultAPIServer) GetMessagesSince(context.Context, *GetMessagesSinceRequest) (*GetMessagesSinceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMessagesSince not implemented")
@@ -372,38 +356,20 @@ func RegisterVerifierResultAPIServer(s grpc.ServiceRegistrar, srv VerifierResult
 	s.RegisterService(&VerifierResultAPI_ServiceDesc, srv)
 }
 
-func _VerifierResultAPI_GetVerifierResultForMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetVerifierResultForMessageRequest)
+func _VerifierResultAPI_GetVerifierResultsForMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVerifierResultsForMessageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VerifierResultAPIServer).GetVerifierResultForMessage(ctx, in)
+		return srv.(VerifierResultAPIServer).GetVerifierResultsForMessage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: VerifierResultAPI_GetVerifierResultForMessage_FullMethodName,
+		FullMethod: VerifierResultAPI_GetVerifierResultsForMessage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VerifierResultAPIServer).GetVerifierResultForMessage(ctx, req.(*GetVerifierResultForMessageRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _VerifierResultAPI_BatchGetVerifierResultForMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BatchGetVerifierResultForMessageRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(VerifierResultAPIServer).BatchGetVerifierResultForMessage(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: VerifierResultAPI_BatchGetVerifierResultForMessage_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VerifierResultAPIServer).BatchGetVerifierResultForMessage(ctx, req.(*BatchGetVerifierResultForMessageRequest))
+		return srv.(VerifierResultAPIServer).GetVerifierResultsForMessage(ctx, req.(*GetVerifierResultsForMessageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -434,12 +400,8 @@ var VerifierResultAPI_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*VerifierResultAPIServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetVerifierResultForMessage",
-			Handler:    _VerifierResultAPI_GetVerifierResultForMessage_Handler,
-		},
-		{
-			MethodName: "BatchGetVerifierResultForMessage",
-			Handler:    _VerifierResultAPI_BatchGetVerifierResultForMessage_Handler,
+			MethodName: "GetVerifierResultsForMessage",
+			Handler:    _VerifierResultAPI_GetVerifierResultsForMessage_Handler,
 		},
 		{
 			MethodName: "GetMessagesSince",

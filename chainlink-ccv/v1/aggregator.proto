@@ -15,8 +15,7 @@ service Aggregator {
 }
 
 service VerifierResultAPI {
-  rpc GetVerifierResultForMessage(GetVerifierResultForMessageRequest) returns (VerifierResult);
-  rpc BatchGetVerifierResultForMessage(BatchGetVerifierResultForMessageRequest) returns (BatchGetVerifierResultForMessageResponse);
+  rpc GetVerifierResultsForMessage(GetVerifierResultsForMessageRequest) returns (GetVerifierResultsForMessageResponse);
   rpc GetMessagesSince(GetMessagesSinceRequest) returns (GetMessagesSinceResponse);
 }
 
@@ -65,14 +64,13 @@ message Message {
 
 message MessageWithCCVNodeData {
   bytes message_id = 1;
-  bytes source_verifier_address = 2;
   // signature from the commit verifier node of the message id and the ccv version field
-  bytes signature = 3;
-  bytes ccv_version = 4;
-  int64 timestamp = 5;
-  Message message = 6;
-  repeated bytes ccv_addresses = 7;
-  bytes executor_address = 8;
+  bytes signature = 2;
+  bytes ccv_version = 3;
+  int64 timestamp = 4;
+  Message message = 5;
+  repeated bytes ccv_addresses = 6;
+  bytes executor_address = 7;
 }
 
 message VerifierResult {
@@ -80,8 +78,6 @@ message VerifierResult {
   bytes source_verifier_address = 2;
   bytes dest_verifier_address = 3;
   bytes ccv_data = 4;
-  int64 timestamp = 5;
-  int64 sequence = 6;
 }
 
 message MessageWithVerifierResult {
@@ -106,7 +102,6 @@ message BatchWriteCommitCCVNodeDataResponse {
 
 message WriteCommitCCVNodeDataRequest {
   MessageWithCCVNodeData ccv_node_data = 1;
-  string idempotency_key = 2;
 }
 
 enum WriteStatus {
@@ -127,25 +122,19 @@ message ReadCommitCCVNodeDataResponse {
   MessageWithCCVNodeData ccv_node_data = 1;
 }
 
-message GetVerifierResultForMessageRequest {
-  bytes message_id = 1;
+message GetVerifierResultsForMessageRequest {
+  repeated bytes message_ids = 1;
 }
 
-message BatchGetVerifierResultForMessageRequest {
-  repeated GetVerifierResultForMessageRequest requests = 1;
-}
-
-message BatchGetVerifierResultForMessageResponse {
+message GetVerifierResultsForMessageResponse {
   repeated VerifierResult results = 1;
   repeated google.rpc.Status errors = 2;
 }
 
 message GetMessagesSinceRequest {
     int64 sinceSequence = 1;
-    string next_token = 2;
 }
 
 message GetMessagesSinceResponse {
     repeated MessageWithVerifierResult results = 1;
-    string next_token = 2;
 }
