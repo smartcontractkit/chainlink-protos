@@ -217,9 +217,10 @@ func (x *WriteChainStatusResponse) GetStatus() WriteStatus {
 }
 
 type ReadChainStatusRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	ChainSelectors []uint64               `protobuf:"varint,1,rep,packed,name=chain_selectors,json=chainSelectors,proto3" json:"chain_selectors,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ReadChainStatusRequest) Reset() {
@@ -250,6 +251,13 @@ func (x *ReadChainStatusRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use ReadChainStatusRequest.ProtoReflect.Descriptor instead.
 func (*ReadChainStatusRequest) Descriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ReadChainStatusRequest) GetChainSelectors() []uint64 {
+	if x != nil {
+		return x.ChainSelectors
+	}
+	return nil
 }
 
 type ReadChainStatusResponse struct {
@@ -1229,8 +1237,9 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\x17WriteChainStatusRequest\x129\n" +
 	"\bstatuses\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\bstatuses\"Q\n" +
 	"\x18WriteChainStatusResponse\x125\n" +
-	"\x06status\x18\x01 \x01(\x0e2\x1d.chainlink_ccv.v1.WriteStatusR\x06status\"\x18\n" +
-	"\x16ReadChainStatusRequest\"T\n" +
+	"\x06status\x18\x01 \x01(\x0e2\x1d.chainlink_ccv.v1.WriteStatusR\x06status\"A\n" +
+	"\x16ReadChainStatusRequest\x12'\n" +
+	"\x0fchain_selectors\x18\x01 \x03(\x04R\x0echainSelectors\"T\n" +
 	"\x17ReadChainStatusResponse\x129\n" +
 	"\bstatuses\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\bstatuses\"\xed\x05\n" +
 	"\aMessage\x12\x18\n" +
