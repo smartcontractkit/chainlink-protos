@@ -501,17 +501,19 @@ func (x *Message) GetGasLimit() uint32 {
 }
 
 type MessageWithCCVNodeData struct {
-	state     protoimpl.MessageState `protogen:"open.v1"`
-	MessageId []byte                 `protobuf:"bytes,1,opt,name=message_id,json=messageId,proto3" json:"message_id,omitempty"`
-	// signature from the commit verifier node of the message id and the ccv version field
-	Signature       []byte   `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
-	CcvVersion      []byte   `protobuf:"bytes,3,opt,name=ccv_version,json=ccvVersion,proto3" json:"ccv_version,omitempty"`
-	Timestamp       int64    `protobuf:"varint,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	Message         *Message `protobuf:"bytes,5,opt,name=message,proto3" json:"message,omitempty"`
-	CcvAddresses    [][]byte `protobuf:"bytes,6,rep,name=ccv_addresses,json=ccvAddresses,proto3" json:"ccv_addresses,omitempty"`
-	ExecutorAddress []byte   `protobuf:"bytes,7,opt,name=executor_address,json=executorAddress,proto3" json:"executor_address,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Message data that the CCV node attests to
+	Message *Message `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	// Version of the CCV found from the receipt blob on the source chain
+	CcvVersion []byte `protobuf:"bytes,2,opt,name=ccv_version,json=ccvVersion,proto3" json:"ccv_version,omitempty"`
+	// Addresses of the CCV specified for this message
+	CcvAddresses [][]byte `protobuf:"bytes,3,rep,name=ccv_addresses,json=ccvAddresses,proto3" json:"ccv_addresses,omitempty"`
+	// Address of the preferred executor
+	ExecutorAddress []byte `protobuf:"bytes,4,opt,name=executor_address,json=executorAddress,proto3" json:"executor_address,omitempty"`
+	// Node signature. Will be combined with other node signatures to reach quorum and for the final verifer result
+	Signature     []byte `protobuf:"bytes,5,opt,name=signature,proto3" json:"signature,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *MessageWithCCVNodeData) Reset() {
@@ -544,16 +546,9 @@ func (*MessageWithCCVNodeData) Descriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *MessageWithCCVNodeData) GetMessageId() []byte {
+func (x *MessageWithCCVNodeData) GetMessage() *Message {
 	if x != nil {
-		return x.MessageId
-	}
-	return nil
-}
-
-func (x *MessageWithCCVNodeData) GetSignature() []byte {
-	if x != nil {
-		return x.Signature
+		return x.Message
 	}
 	return nil
 }
@@ -561,20 +556,6 @@ func (x *MessageWithCCVNodeData) GetSignature() []byte {
 func (x *MessageWithCCVNodeData) GetCcvVersion() []byte {
 	if x != nil {
 		return x.CcvVersion
-	}
-	return nil
-}
-
-func (x *MessageWithCCVNodeData) GetTimestamp() int64 {
-	if x != nil {
-		return x.Timestamp
-	}
-	return 0
-}
-
-func (x *MessageWithCCVNodeData) GetMessage() *Message {
-	if x != nil {
-		return x.Message
 	}
 	return nil
 }
@@ -593,14 +574,25 @@ func (x *MessageWithCCVNodeData) GetExecutorAddress() []byte {
 	return nil
 }
 
+func (x *MessageWithCCVNodeData) GetSignature() []byte {
+	if x != nil {
+		return x.Signature
+	}
+	return nil
+}
+
 type VerifierResult struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Message         *Message               `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	CcvData         []byte                 `protobuf:"bytes,2,opt,name=ccv_data,json=ccvData,proto3" json:"ccv_data,omitempty"`
-	CcvAddresses    [][]byte               `protobuf:"bytes,3,rep,name=ccv_addresses,json=ccvAddresses,proto3" json:"ccv_addresses,omitempty"`
-	ExecutorAddress []byte                 `protobuf:"bytes,4,opt,name=executor_address,json=executorAddress,proto3" json:"executor_address,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Message data
+	Message *Message `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	// Addresses of the CCV specified for this message
+	CcvAddresses [][]byte `protobuf:"bytes,2,rep,name=ccv_addresses,json=ccvAddresses,proto3" json:"ccv_addresses,omitempty"`
+	// Address of the preferred executor
+	ExecutorAddress []byte `protobuf:"bytes,3,opt,name=executor_address,json=executorAddress,proto3" json:"executor_address,omitempty"`
+	// Verification data required to execute the message on the destination
+	CcvData       []byte `protobuf:"bytes,4,opt,name=ccv_data,json=ccvData,proto3" json:"ccv_data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *VerifierResult) Reset() {
@@ -640,13 +632,6 @@ func (x *VerifierResult) GetMessage() *Message {
 	return nil
 }
 
-func (x *VerifierResult) GetCcvData() []byte {
-	if x != nil {
-		return x.CcvData
-	}
-	return nil
-}
-
 func (x *VerifierResult) GetCcvAddresses() [][]byte {
 	if x != nil {
 		return x.CcvAddresses
@@ -661,32 +646,39 @@ func (x *VerifierResult) GetExecutorAddress() []byte {
 	return nil
 }
 
-type MessageWithVerifierResult struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Message         *Message               `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	CcvData         []byte                 `protobuf:"bytes,2,opt,name=ccv_data,json=ccvData,proto3" json:"ccv_data,omitempty"`
-	Timestamp       int64                  `protobuf:"varint,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	Sequence        int64                  `protobuf:"varint,4,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	CcvAddresses    [][]byte               `protobuf:"bytes,5,rep,name=ccv_addresses,json=ccvAddresses,proto3" json:"ccv_addresses,omitempty"`
-	ExecutorAddress []byte                 `protobuf:"bytes,6,opt,name=executor_address,json=executorAddress,proto3" json:"executor_address,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+func (x *VerifierResult) GetCcvData() []byte {
+	if x != nil {
+		return x.CcvData
+	}
+	return nil
 }
 
-func (x *MessageWithVerifierResult) Reset() {
-	*x = MessageWithVerifierResult{}
+type VerifierResultWithMetadata struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Verifier result contains the message data and required verification data from the committee verifier
+	VerifierResult *VerifierResult `protobuf:"bytes,1,opt,name=verifierResult,proto3" json:"verifierResult,omitempty"`
+	// Monotonic sequence number assigned by the verifier result API. Can be used to query for new messages since a given sequence.
+	Sequence int64 `protobuf:"varint,2,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	// Timestamp when the verifier result was created. Only informational
+	Timestamp     int64 `protobuf:"varint,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VerifierResultWithMetadata) Reset() {
+	*x = VerifierResultWithMetadata{}
 	mi := &file_v1_aggregator_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *MessageWithVerifierResult) String() string {
+func (x *VerifierResultWithMetadata) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*MessageWithVerifierResult) ProtoMessage() {}
+func (*VerifierResultWithMetadata) ProtoMessage() {}
 
-func (x *MessageWithVerifierResult) ProtoReflect() protoreflect.Message {
+func (x *VerifierResultWithMetadata) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_aggregator_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -698,51 +690,30 @@ func (x *MessageWithVerifierResult) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use MessageWithVerifierResult.ProtoReflect.Descriptor instead.
-func (*MessageWithVerifierResult) Descriptor() ([]byte, []int) {
+// Deprecated: Use VerifierResultWithMetadata.ProtoReflect.Descriptor instead.
+func (*VerifierResultWithMetadata) Descriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *MessageWithVerifierResult) GetMessage() *Message {
+func (x *VerifierResultWithMetadata) GetVerifierResult() *VerifierResult {
 	if x != nil {
-		return x.Message
+		return x.VerifierResult
 	}
 	return nil
 }
 
-func (x *MessageWithVerifierResult) GetCcvData() []byte {
-	if x != nil {
-		return x.CcvData
-	}
-	return nil
-}
-
-func (x *MessageWithVerifierResult) GetTimestamp() int64 {
-	if x != nil {
-		return x.Timestamp
-	}
-	return 0
-}
-
-func (x *MessageWithVerifierResult) GetSequence() int64 {
+func (x *VerifierResultWithMetadata) GetSequence() int64 {
 	if x != nil {
 		return x.Sequence
 	}
 	return 0
 }
 
-func (x *MessageWithVerifierResult) GetCcvAddresses() [][]byte {
+func (x *VerifierResultWithMetadata) GetTimestamp() int64 {
 	if x != nil {
-		return x.CcvAddresses
+		return x.Timestamp
 	}
-	return nil
-}
-
-func (x *MessageWithVerifierResult) GetExecutorAddress() []byte {
-	if x != nil {
-		return x.ExecutorAddress
-	}
-	return nil
+	return 0
 }
 
 type BatchWriteCommitCCVNodeDataRequest struct {
@@ -1166,8 +1137,8 @@ func (x *GetMessagesSinceRequest) GetSinceSequence() int64 {
 }
 
 type GetMessagesSinceResponse struct {
-	state         protoimpl.MessageState       `protogen:"open.v1"`
-	Results       []*MessageWithVerifierResult `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
+	state         protoimpl.MessageState        `protogen:"open.v1"`
+	Results       []*VerifierResultWithMetadata `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1202,7 +1173,7 @@ func (*GetMessagesSinceResponse) Descriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *GetMessagesSinceResponse) GetResults() []*MessageWithVerifierResult {
+func (x *GetMessagesSinceResponse) GetResults() []*VerifierResultWithMetadata {
 	if x != nil {
 		return x.Results
 	}
@@ -1248,29 +1219,23 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\vdata_length\x18\x12 \x01(\rR\n" +
 	"dataLength\x12\x12\n" +
 	"\x04data\x18\x13 \x01(\fR\x04data\x12\x1b\n" +
-	"\tgas_limit\x18\x14 \x01(\rR\bgasLimit\"\x99\x02\n" +
-	"\x16MessageWithCCVNodeData\x12\x1d\n" +
-	"\n" +
-	"message_id\x18\x01 \x01(\fR\tmessageId\x12\x1c\n" +
-	"\tsignature\x18\x02 \x01(\fR\tsignature\x12\x1f\n" +
-	"\vccv_version\x18\x03 \x01(\fR\n" +
-	"ccvVersion\x12\x1c\n" +
-	"\ttimestamp\x18\x04 \x01(\x03R\ttimestamp\x123\n" +
-	"\amessage\x18\x05 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x12#\n" +
-	"\rccv_addresses\x18\x06 \x03(\fR\fccvAddresses\x12)\n" +
-	"\x10executor_address\x18\a \x01(\fR\x0fexecutorAddress\"\xb0\x01\n" +
-	"\x0eVerifierResult\x123\n" +
-	"\amessage\x18\x01 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x12\x19\n" +
-	"\bccv_data\x18\x02 \x01(\fR\accvData\x12#\n" +
+	"\tgas_limit\x18\x14 \x01(\rR\bgasLimit\"\xdc\x01\n" +
+	"\x16MessageWithCCVNodeData\x123\n" +
+	"\amessage\x18\x01 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x12\x1f\n" +
+	"\vccv_version\x18\x02 \x01(\fR\n" +
+	"ccvVersion\x12#\n" +
 	"\rccv_addresses\x18\x03 \x03(\fR\fccvAddresses\x12)\n" +
-	"\x10executor_address\x18\x04 \x01(\fR\x0fexecutorAddress\"\xf5\x01\n" +
-	"\x19MessageWithVerifierResult\x123\n" +
-	"\amessage\x18\x01 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x12\x19\n" +
-	"\bccv_data\x18\x02 \x01(\fR\accvData\x12\x1c\n" +
-	"\ttimestamp\x18\x03 \x01(\x03R\ttimestamp\x12\x1a\n" +
-	"\bsequence\x18\x04 \x01(\x03R\bsequence\x12#\n" +
-	"\rccv_addresses\x18\x05 \x03(\fR\fccvAddresses\x12)\n" +
-	"\x10executor_address\x18\x06 \x01(\fR\x0fexecutorAddress\"q\n" +
+	"\x10executor_address\x18\x04 \x01(\fR\x0fexecutorAddress\x12\x1c\n" +
+	"\tsignature\x18\x05 \x01(\fR\tsignature\"\xb0\x01\n" +
+	"\x0eVerifierResult\x123\n" +
+	"\amessage\x18\x01 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x12#\n" +
+	"\rccv_addresses\x18\x02 \x03(\fR\fccvAddresses\x12)\n" +
+	"\x10executor_address\x18\x03 \x01(\fR\x0fexecutorAddress\x12\x19\n" +
+	"\bccv_data\x18\x04 \x01(\fR\accvData\"\xa0\x01\n" +
+	"\x1aVerifierResultWithMetadata\x12H\n" +
+	"\x0everifierResult\x18\x01 \x01(\v2 .chainlink_ccv.v1.VerifierResultR\x0everifierResult\x12\x1a\n" +
+	"\bsequence\x18\x02 \x01(\x03R\bsequence\x12\x1c\n" +
+	"\ttimestamp\x18\x03 \x01(\x03R\ttimestamp\"q\n" +
 	"\"BatchWriteCommitCCVNodeDataRequest\x12K\n" +
 	"\brequests\x18\x01 \x03(\v2/.chainlink_ccv.v1.WriteCommitCCVNodeDataRequestR\brequests\"\xa1\x01\n" +
 	"#BatchWriteCommitCCVNodeDataResponse\x12N\n" +
@@ -1293,9 +1258,9 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\aresults\x18\x01 \x03(\v2 .chainlink_ccv.v1.VerifierResultR\aresults\x12*\n" +
 	"\x06errors\x18\x02 \x03(\v2\x12.google.rpc.StatusR\x06errors\"?\n" +
 	"\x17GetMessagesSinceRequest\x12$\n" +
-	"\rsinceSequence\x18\x01 \x01(\x03R\rsinceSequence\"a\n" +
-	"\x18GetMessagesSinceResponse\x12E\n" +
-	"\aresults\x18\x01 \x03(\v2+.chainlink_ccv.v1.MessageWithVerifierResultR\aresults*&\n" +
+	"\rsinceSequence\x18\x01 \x01(\x03R\rsinceSequence\"b\n" +
+	"\x18GetMessagesSinceResponse\x12F\n" +
+	"\aresults\x18\x01 \x03(\v2,.chainlink_ccv.v1.VerifierResultWithMetadataR\aresults*&\n" +
 	"\vWriteStatus\x12\v\n" +
 	"\aSUCCESS\x10\x00\x12\n" +
 	"\n" +
@@ -1306,10 +1271,11 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\x1bBatchWriteCommitCCVNodeData\x124.chainlink_ccv.v1.BatchWriteCommitCCVNodeDataRequest\x1a5.chainlink_ccv.v1.BatchWriteCommitCCVNodeDataResponse\x12x\n" +
 	"\x15ReadCommitCCVNodeData\x12..chainlink_ccv.v1.ReadCommitCCVNodeDataRequest\x1a/.chainlink_ccv.v1.ReadCommitCCVNodeDataResponse\x12i\n" +
 	"\x10WriteChainStatus\x12).chainlink_ccv.v1.WriteChainStatusRequest\x1a*.chainlink_ccv.v1.WriteChainStatusResponse\x12f\n" +
-	"\x0fReadChainStatus\x12(.chainlink_ccv.v1.ReadChainStatusRequest\x1a).chainlink_ccv.v1.ReadChainStatusResponse2\x8e\x02\n" +
+	"\x0fReadChainStatus\x12(.chainlink_ccv.v1.ReadChainStatusRequest\x1a).chainlink_ccv.v1.ReadChainStatusResponse2}\n" +
+	"\x10MessageDiscovery\x12i\n" +
+	"\x10GetMessagesSince\x12).chainlink_ccv.v1.GetMessagesSinceRequest\x1a*.chainlink_ccv.v1.GetMessagesSinceResponse2\xa3\x01\n" +
 	"\x11VerifierResultAPI\x12\x8d\x01\n" +
-	"\x1cGetVerifierResultsForMessage\x125.chainlink_ccv.v1.GetVerifierResultsForMessageRequest\x1a6.chainlink_ccv.v1.GetVerifierResultsForMessageResponse\x12i\n" +
-	"\x10GetMessagesSince\x12).chainlink_ccv.v1.GetMessagesSinceRequest\x1a*.chainlink_ccv.v1.GetMessagesSinceResponseBBZ@github.com/smartcontractkit/chainlink-protos/chainlink-ccv/go/v1b\x06proto3"
+	"\x1cGetVerifierResultsForMessage\x125.chainlink_ccv.v1.GetVerifierResultsForMessageRequest\x1a6.chainlink_ccv.v1.GetVerifierResultsForMessageResponseBBZ@github.com/smartcontractkit/chainlink-protos/chainlink-ccv/go/v1b\x06proto3"
 
 var (
 	file_v1_aggregator_proto_rawDescOnce sync.Once
@@ -1335,7 +1301,7 @@ var file_v1_aggregator_proto_goTypes = []any{
 	(*Message)(nil),                              // 6: chainlink_ccv.v1.Message
 	(*MessageWithCCVNodeData)(nil),               // 7: chainlink_ccv.v1.MessageWithCCVNodeData
 	(*VerifierResult)(nil),                       // 8: chainlink_ccv.v1.VerifierResult
-	(*MessageWithVerifierResult)(nil),            // 9: chainlink_ccv.v1.MessageWithVerifierResult
+	(*VerifierResultWithMetadata)(nil),           // 9: chainlink_ccv.v1.VerifierResultWithMetadata
 	(*BatchWriteCommitCCVNodeDataRequest)(nil),   // 10: chainlink_ccv.v1.BatchWriteCommitCCVNodeDataRequest
 	(*BatchWriteCommitCCVNodeDataResponse)(nil),  // 11: chainlink_ccv.v1.BatchWriteCommitCCVNodeDataResponse
 	(*WriteCommitCCVNodeDataRequest)(nil),        // 12: chainlink_ccv.v1.WriteCommitCCVNodeDataRequest
@@ -1354,7 +1320,7 @@ var file_v1_aggregator_proto_depIdxs = []int32{
 	1,  // 2: chainlink_ccv.v1.ReadChainStatusResponse.statuses:type_name -> chainlink_ccv.v1.ChainStatus
 	6,  // 3: chainlink_ccv.v1.MessageWithCCVNodeData.message:type_name -> chainlink_ccv.v1.Message
 	6,  // 4: chainlink_ccv.v1.VerifierResult.message:type_name -> chainlink_ccv.v1.Message
-	6,  // 5: chainlink_ccv.v1.MessageWithVerifierResult.message:type_name -> chainlink_ccv.v1.Message
+	8,  // 5: chainlink_ccv.v1.VerifierResultWithMetadata.verifierResult:type_name -> chainlink_ccv.v1.VerifierResult
 	12, // 6: chainlink_ccv.v1.BatchWriteCommitCCVNodeDataRequest.requests:type_name -> chainlink_ccv.v1.WriteCommitCCVNodeDataRequest
 	13, // 7: chainlink_ccv.v1.BatchWriteCommitCCVNodeDataResponse.responses:type_name -> chainlink_ccv.v1.WriteCommitCCVNodeDataResponse
 	20, // 8: chainlink_ccv.v1.BatchWriteCommitCCVNodeDataResponse.errors:type_name -> google.rpc.Status
@@ -1363,21 +1329,21 @@ var file_v1_aggregator_proto_depIdxs = []int32{
 	7,  // 11: chainlink_ccv.v1.ReadCommitCCVNodeDataResponse.ccv_node_data:type_name -> chainlink_ccv.v1.MessageWithCCVNodeData
 	8,  // 12: chainlink_ccv.v1.GetVerifierResultsForMessageResponse.results:type_name -> chainlink_ccv.v1.VerifierResult
 	20, // 13: chainlink_ccv.v1.GetVerifierResultsForMessageResponse.errors:type_name -> google.rpc.Status
-	9,  // 14: chainlink_ccv.v1.GetMessagesSinceResponse.results:type_name -> chainlink_ccv.v1.MessageWithVerifierResult
+	9,  // 14: chainlink_ccv.v1.GetMessagesSinceResponse.results:type_name -> chainlink_ccv.v1.VerifierResultWithMetadata
 	12, // 15: chainlink_ccv.v1.Aggregator.WriteCommitCCVNodeData:input_type -> chainlink_ccv.v1.WriteCommitCCVNodeDataRequest
 	10, // 16: chainlink_ccv.v1.Aggregator.BatchWriteCommitCCVNodeData:input_type -> chainlink_ccv.v1.BatchWriteCommitCCVNodeDataRequest
 	14, // 17: chainlink_ccv.v1.Aggregator.ReadCommitCCVNodeData:input_type -> chainlink_ccv.v1.ReadCommitCCVNodeDataRequest
 	2,  // 18: chainlink_ccv.v1.Aggregator.WriteChainStatus:input_type -> chainlink_ccv.v1.WriteChainStatusRequest
 	4,  // 19: chainlink_ccv.v1.Aggregator.ReadChainStatus:input_type -> chainlink_ccv.v1.ReadChainStatusRequest
-	16, // 20: chainlink_ccv.v1.VerifierResultAPI.GetVerifierResultsForMessage:input_type -> chainlink_ccv.v1.GetVerifierResultsForMessageRequest
-	18, // 21: chainlink_ccv.v1.VerifierResultAPI.GetMessagesSince:input_type -> chainlink_ccv.v1.GetMessagesSinceRequest
+	18, // 20: chainlink_ccv.v1.MessageDiscovery.GetMessagesSince:input_type -> chainlink_ccv.v1.GetMessagesSinceRequest
+	16, // 21: chainlink_ccv.v1.VerifierResultAPI.GetVerifierResultsForMessage:input_type -> chainlink_ccv.v1.GetVerifierResultsForMessageRequest
 	13, // 22: chainlink_ccv.v1.Aggregator.WriteCommitCCVNodeData:output_type -> chainlink_ccv.v1.WriteCommitCCVNodeDataResponse
 	11, // 23: chainlink_ccv.v1.Aggregator.BatchWriteCommitCCVNodeData:output_type -> chainlink_ccv.v1.BatchWriteCommitCCVNodeDataResponse
 	15, // 24: chainlink_ccv.v1.Aggregator.ReadCommitCCVNodeData:output_type -> chainlink_ccv.v1.ReadCommitCCVNodeDataResponse
 	3,  // 25: chainlink_ccv.v1.Aggregator.WriteChainStatus:output_type -> chainlink_ccv.v1.WriteChainStatusResponse
 	5,  // 26: chainlink_ccv.v1.Aggregator.ReadChainStatus:output_type -> chainlink_ccv.v1.ReadChainStatusResponse
-	17, // 27: chainlink_ccv.v1.VerifierResultAPI.GetVerifierResultsForMessage:output_type -> chainlink_ccv.v1.GetVerifierResultsForMessageResponse
-	19, // 28: chainlink_ccv.v1.VerifierResultAPI.GetMessagesSince:output_type -> chainlink_ccv.v1.GetMessagesSinceResponse
+	19, // 27: chainlink_ccv.v1.MessageDiscovery.GetMessagesSince:output_type -> chainlink_ccv.v1.GetMessagesSinceResponse
+	17, // 28: chainlink_ccv.v1.VerifierResultAPI.GetVerifierResultsForMessage:output_type -> chainlink_ccv.v1.GetVerifierResultsForMessageResponse
 	22, // [22:29] is the sub-list for method output_type
 	15, // [15:22] is the sub-list for method input_type
 	15, // [15:15] is the sub-list for extension type_name
@@ -1398,7 +1364,7 @@ func file_v1_aggregator_proto_init() {
 			NumEnums:      1,
 			NumMessages:   19,
 			NumExtensions: 0,
-			NumServices:   2,
+			NumServices:   3,
 		},
 		GoTypes:           file_v1_aggregator_proto_goTypes,
 		DependencyIndexes: file_v1_aggregator_proto_depIdxs,
