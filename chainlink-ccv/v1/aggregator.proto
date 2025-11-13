@@ -66,13 +66,13 @@ message Message {
 message MessageWithCCVNodeData {
   bytes message_id = 1;
   bytes source_verifier_address = 2;
-  // signature from the commit verifier node of the message id and the blob data
+  // signature from the commit verifier node of the message id and the ccv version field
   bytes signature = 3;
-  bytes ccvVersion = 4;
+  bytes ccv_version = 4;
   int64 timestamp = 5;
   Message message = 6;
-  repeated bytes ccvAddresses = 7;
-  bytes executorAddress = 8;
+  repeated bytes ccv_addresses = 7;
+  bytes executor_address = 8;
 }
 
 message VerifierResult {
@@ -91,8 +91,8 @@ message MessageWithVerifierResult {
   bytes ccv_data = 4;
   int64 timestamp = 5;
   int64 sequence = 6;
-  repeated bytes ccvAddresses = 7;
-  bytes executorAddress = 8;
+  repeated bytes ccv_addresses = 7;
+  bytes executor_address = 8;
 }
 
 message BatchWriteCommitCCVNodeDataRequest {
