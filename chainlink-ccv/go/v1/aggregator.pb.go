@@ -586,13 +586,13 @@ func (x *MessageWithCCVNodeData) GetExecutorAddress() []byte {
 }
 
 type VerifierResult struct {
-	state                 protoimpl.MessageState `protogen:"open.v1"`
-	Message               *Message               `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	SourceVerifierAddress []byte                 `protobuf:"bytes,2,opt,name=source_verifier_address,json=sourceVerifierAddress,proto3" json:"source_verifier_address,omitempty"`
-	DestVerifierAddress   []byte                 `protobuf:"bytes,3,opt,name=dest_verifier_address,json=destVerifierAddress,proto3" json:"dest_verifier_address,omitempty"`
-	CcvData               []byte                 `protobuf:"bytes,4,opt,name=ccv_data,json=ccvData,proto3" json:"ccv_data,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Message         *Message               `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	CcvData         []byte                 `protobuf:"bytes,2,opt,name=ccv_data,json=ccvData,proto3" json:"ccv_data,omitempty"`
+	CcvAddresses    [][]byte               `protobuf:"bytes,3,rep,name=ccv_addresses,json=ccvAddresses,proto3" json:"ccv_addresses,omitempty"`
+	ExecutorAddress []byte                 `protobuf:"bytes,4,opt,name=executor_address,json=executorAddress,proto3" json:"executor_address,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *VerifierResult) Reset() {
@@ -632,20 +632,6 @@ func (x *VerifierResult) GetMessage() *Message {
 	return nil
 }
 
-func (x *VerifierResult) GetSourceVerifierAddress() []byte {
-	if x != nil {
-		return x.SourceVerifierAddress
-	}
-	return nil
-}
-
-func (x *VerifierResult) GetDestVerifierAddress() []byte {
-	if x != nil {
-		return x.DestVerifierAddress
-	}
-	return nil
-}
-
 func (x *VerifierResult) GetCcvData() []byte {
 	if x != nil {
 		return x.CcvData
@@ -653,18 +639,30 @@ func (x *VerifierResult) GetCcvData() []byte {
 	return nil
 }
 
+func (x *VerifierResult) GetCcvAddresses() [][]byte {
+	if x != nil {
+		return x.CcvAddresses
+	}
+	return nil
+}
+
+func (x *VerifierResult) GetExecutorAddress() []byte {
+	if x != nil {
+		return x.ExecutorAddress
+	}
+	return nil
+}
+
 type MessageWithVerifierResult struct {
-	state                 protoimpl.MessageState `protogen:"open.v1"`
-	Message               *Message               `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	SourceVerifierAddress []byte                 `protobuf:"bytes,2,opt,name=source_verifier_address,json=sourceVerifierAddress,proto3" json:"source_verifier_address,omitempty"`
-	DestVerifierAddress   []byte                 `protobuf:"bytes,3,opt,name=dest_verifier_address,json=destVerifierAddress,proto3" json:"dest_verifier_address,omitempty"`
-	CcvData               []byte                 `protobuf:"bytes,4,opt,name=ccv_data,json=ccvData,proto3" json:"ccv_data,omitempty"`
-	Timestamp             int64                  `protobuf:"varint,5,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	Sequence              int64                  `protobuf:"varint,6,opt,name=sequence,proto3" json:"sequence,omitempty"`
-	CcvAddresses          [][]byte               `protobuf:"bytes,7,rep,name=ccv_addresses,json=ccvAddresses,proto3" json:"ccv_addresses,omitempty"`
-	ExecutorAddress       []byte                 `protobuf:"bytes,8,opt,name=executor_address,json=executorAddress,proto3" json:"executor_address,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+	state           protoimpl.MessageState `protogen:"open.v1"`
+	Message         *Message               `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	CcvData         []byte                 `protobuf:"bytes,2,opt,name=ccv_data,json=ccvData,proto3" json:"ccv_data,omitempty"`
+	Timestamp       int64                  `protobuf:"varint,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Sequence        int64                  `protobuf:"varint,4,opt,name=sequence,proto3" json:"sequence,omitempty"`
+	CcvAddresses    [][]byte               `protobuf:"bytes,5,rep,name=ccv_addresses,json=ccvAddresses,proto3" json:"ccv_addresses,omitempty"`
+	ExecutorAddress []byte                 `protobuf:"bytes,6,opt,name=executor_address,json=executorAddress,proto3" json:"executor_address,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *MessageWithVerifierResult) Reset() {
@@ -700,20 +698,6 @@ func (*MessageWithVerifierResult) Descriptor() ([]byte, []int) {
 func (x *MessageWithVerifierResult) GetMessage() *Message {
 	if x != nil {
 		return x.Message
-	}
-	return nil
-}
-
-func (x *MessageWithVerifierResult) GetSourceVerifierAddress() []byte {
-	if x != nil {
-		return x.SourceVerifierAddress
-	}
-	return nil
-}
-
-func (x *MessageWithVerifierResult) GetDestVerifierAddress() []byte {
-	if x != nil {
-		return x.DestVerifierAddress
 	}
 	return nil
 }
@@ -1265,21 +1249,19 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\ttimestamp\x18\x04 \x01(\x03R\ttimestamp\x123\n" +
 	"\amessage\x18\x05 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x12#\n" +
 	"\rccv_addresses\x18\x06 \x03(\fR\fccvAddresses\x12)\n" +
-	"\x10executor_address\x18\a \x01(\fR\x0fexecutorAddress\"\xcc\x01\n" +
+	"\x10executor_address\x18\a \x01(\fR\x0fexecutorAddress\"\xb0\x01\n" +
 	"\x0eVerifierResult\x123\n" +
-	"\amessage\x18\x01 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x126\n" +
-	"\x17source_verifier_address\x18\x02 \x01(\fR\x15sourceVerifierAddress\x122\n" +
-	"\x15dest_verifier_address\x18\x03 \x01(\fR\x13destVerifierAddress\x12\x19\n" +
-	"\bccv_data\x18\x04 \x01(\fR\accvData\"\xe1\x02\n" +
+	"\amessage\x18\x01 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x12\x19\n" +
+	"\bccv_data\x18\x02 \x01(\fR\accvData\x12#\n" +
+	"\rccv_addresses\x18\x03 \x03(\fR\fccvAddresses\x12)\n" +
+	"\x10executor_address\x18\x04 \x01(\fR\x0fexecutorAddress\"\xf5\x01\n" +
 	"\x19MessageWithVerifierResult\x123\n" +
-	"\amessage\x18\x01 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x126\n" +
-	"\x17source_verifier_address\x18\x02 \x01(\fR\x15sourceVerifierAddress\x122\n" +
-	"\x15dest_verifier_address\x18\x03 \x01(\fR\x13destVerifierAddress\x12\x19\n" +
-	"\bccv_data\x18\x04 \x01(\fR\accvData\x12\x1c\n" +
-	"\ttimestamp\x18\x05 \x01(\x03R\ttimestamp\x12\x1a\n" +
-	"\bsequence\x18\x06 \x01(\x03R\bsequence\x12#\n" +
-	"\rccv_addresses\x18\a \x03(\fR\fccvAddresses\x12)\n" +
-	"\x10executor_address\x18\b \x01(\fR\x0fexecutorAddress\"q\n" +
+	"\amessage\x18\x01 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x12\x19\n" +
+	"\bccv_data\x18\x02 \x01(\fR\accvData\x12\x1c\n" +
+	"\ttimestamp\x18\x03 \x01(\x03R\ttimestamp\x12\x1a\n" +
+	"\bsequence\x18\x04 \x01(\x03R\bsequence\x12#\n" +
+	"\rccv_addresses\x18\x05 \x03(\fR\fccvAddresses\x12)\n" +
+	"\x10executor_address\x18\x06 \x01(\fR\x0fexecutorAddress\"q\n" +
 	"\"BatchWriteCommitCCVNodeDataRequest\x12K\n" +
 	"\brequests\x18\x01 \x03(\v2/.chainlink_ccv.v1.WriteCommitCCVNodeDataRequestR\brequests\"\xa1\x01\n" +
 	"#BatchWriteCommitCCVNodeDataResponse\x12N\n" +

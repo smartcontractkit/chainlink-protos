@@ -75,20 +75,18 @@ message MessageWithCCVNodeData {
 
 message VerifierResult {
   Message message = 1;
-  bytes source_verifier_address = 2;
-  bytes dest_verifier_address = 3;
-  bytes ccv_data = 4;
+  bytes ccv_data = 2;
+  repeated bytes ccv_addresses = 3;
+  bytes executor_address = 4;
 }
 
 message MessageWithVerifierResult {
   Message message = 1;
-  bytes source_verifier_address = 2;
-  bytes dest_verifier_address = 3;
-  bytes ccv_data = 4;
-  int64 timestamp = 5;
-  int64 sequence = 6;
-  repeated bytes ccv_addresses = 7;
-  bytes executor_address = 8;
+  bytes ccv_data = 2;
+  int64 timestamp = 3;
+  int64 sequence = 4;
+  repeated bytes ccv_addresses = 5;
+  bytes executor_address = 6;
 }
 
 message BatchWriteCommitCCVNodeDataRequest {
