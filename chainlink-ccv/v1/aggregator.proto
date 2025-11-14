@@ -14,10 +14,12 @@ service Aggregator {
   rpc ReadChainStatus(ReadChainStatusRequest) returns (ReadChainStatusResponse);
 }
 
-service VerifierResultAPI {
-  rpc GetVerifierResultForMessage(GetVerifierResultForMessageRequest) returns (VerifierResult);
-  rpc BatchGetVerifierResultForMessage(BatchGetVerifierResultForMessageRequest) returns (BatchGetVerifierResultForMessageResponse);
+service MessageDiscovery {
   rpc GetMessagesSince(GetMessagesSinceRequest) returns (GetMessagesSinceResponse);
+}
+
+service VerifierResultAPI {
+  rpc GetVerifierResultsForMessage(GetVerifierResultsForMessageRequest) returns (GetVerifierResultsForMessageResponse);
 }
 
 message ChainStatus {
@@ -65,43 +67,37 @@ message Message {
   uint32 gas_limit = 20;
 }
 
-message ReceiptBlob {
-  bytes issuer = 1;
-  uint64 dest_gas_limit = 2;
-  uint32 dest_bytes_overhead = 3;
-  bytes blob = 4;
-  bytes extra_args = 5;
-}
-
 message MessageWithCCVNodeData {
-  bytes message_id = 1;
-  bytes source_verifier_address = 2;
-  // ccv_data is the signature from the commit verifier node of the message id and the blob data
-  bytes ccv_data = 3;
-  // blob_data is the verifier specific data like the ccv version
-  bytes blob_data = 4;
-  int64 timestamp = 5;
-  Message message = 6;
-  repeated ReceiptBlob receipt_blobs = 7;
+  // Message data that the CCV node attests to
+  Message message = 1;
+  // Version of the CCV found from the receipt blob on the source chain
+  bytes ccv_version = 2;
+  // Addresses of the CCV specified for this message
+  repeated bytes ccv_addresses = 3;
+  // Address of the preferred executor
+  bytes executor_address = 4; 
+  // Node signature. Will be combined with other node signatures to reach quorum and for the final verifer result
+  bytes signature = 5;
 }
 
 message VerifierResult {
+  // Message data 
   Message message = 1;
-  bytes source_verifier_address = 2;
-  bytes dest_verifier_address = 3;
+  // Addresses of the CCV specified for this message
+  repeated bytes ccv_addresses = 2;
+  // Address of the preferred executor
+  bytes executor_address = 3;
+  // Verification data required to execute the message on the destination
   bytes ccv_data = 4;
-  int64 timestamp = 5;
-  int64 sequence = 6;
 }
 
-message MessageWithVerifierResult {
-  Message message = 1;
-  bytes source_verifier_address = 2;
-  bytes dest_verifier_address = 3;
-  bytes ccv_data = 4;
-  int64 timestamp = 5;
-  int64 sequence = 6;
-  repeated ReceiptBlob receipt_blobs_from_majority = 7;
+message VerifierResultWithMetadata {
+  // Verifier result contains the message data and required verification data from the committee verifier
+  VerifierResult verifierResult = 1;
+  // Monotonic sequence number assigned by the verifier result API. Can be used to query for new messages since a given sequence.
+  int64 sequence = 2;
+  // Timestamp when the verifier result was created. Only informational
+  int64 timestamp = 3;
 }
 
 message BatchWriteCommitCCVNodeDataRequest {
@@ -135,15 +131,11 @@ message ReadCommitCCVNodeDataResponse {
   MessageWithCCVNodeData ccv_node_data = 1;
 }
 
-message GetVerifierResultForMessageRequest {
-  bytes message_id = 1;
+message GetVerifierResultsForMessageRequest {
+  repeated bytes message_ids = 1;
 }
 
-message BatchGetVerifierResultForMessageRequest {
-  repeated GetVerifierResultForMessageRequest requests = 1;
-}
-
-message BatchGetVerifierResultForMessageResponse {
+message GetVerifierResultsForMessageResponse {
   repeated VerifierResult results = 1;
   repeated google.rpc.Status errors = 2;
 }
@@ -153,5 +145,5 @@ message GetMessagesSinceRequest {
 }
 
 message GetMessagesSinceResponse {
-    repeated MessageWithVerifierResult results = 1;
+    repeated VerifierResultWithMetadata results = 1;
 }
