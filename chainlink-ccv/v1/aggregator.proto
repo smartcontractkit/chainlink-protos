@@ -115,7 +115,6 @@ message BatchWriteCommitCCVNodeDataResponse {
 
 message WriteCommitCCVNodeDataRequest {
   MessageWithCCVNodeData ccv_node_data = 1;
-  string idempotency_key = 2;
 }
 
 enum WriteStatus {
@@ -151,10 +150,8 @@ message BatchGetVerifierResultForMessageResponse {
 
 message GetMessagesSinceRequest {
     int64 sinceSequence = 1;
-    string next_token = 2;
 }
 
 message GetMessagesSinceResponse {
     repeated MessageWithVerifierResult results = 1;
-    string next_token = 2;
 }
