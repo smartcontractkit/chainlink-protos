@@ -19,20 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Aggregator_WriteCommitCCVNodeData_FullMethodName      = "/chainlink_ccv.v1.Aggregator/WriteCommitCCVNodeData"
-	Aggregator_BatchWriteCommitCCVNodeData_FullMethodName = "/chainlink_ccv.v1.Aggregator/BatchWriteCommitCCVNodeData"
-	Aggregator_ReadCommitCCVNodeData_FullMethodName       = "/chainlink_ccv.v1.Aggregator/ReadCommitCCVNodeData"
-	Aggregator_WriteChainStatus_FullMethodName            = "/chainlink_ccv.v1.Aggregator/WriteChainStatus"
-	Aggregator_ReadChainStatus_FullMethodName             = "/chainlink_ccv.v1.Aggregator/ReadChainStatus"
+	Aggregator_WriteCommitteeVerifierNodeResult_FullMethodName      = "/chainlink_ccv.v1.Aggregator/WriteCommitteeVerifierNodeResult"
+	Aggregator_BatchWriteCommitteeVerifierNodeResult_FullMethodName = "/chainlink_ccv.v1.Aggregator/BatchWriteCommitteeVerifierNodeResult"
+	Aggregator_ReadCommitteeVerifierNodeResult_FullMethodName       = "/chainlink_ccv.v1.Aggregator/ReadCommitteeVerifierNodeResult"
+	Aggregator_WriteChainStatus_FullMethodName                      = "/chainlink_ccv.v1.Aggregator/WriteChainStatus"
+	Aggregator_ReadChainStatus_FullMethodName                       = "/chainlink_ccv.v1.Aggregator/ReadChainStatus"
 )
 
 // AggregatorClient is the client API for Aggregator service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AggregatorClient interface {
-	WriteCommitCCVNodeData(ctx context.Context, in *WriteCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*WriteCommitCCVNodeDataResponse, error)
-	BatchWriteCommitCCVNodeData(ctx context.Context, in *BatchWriteCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*BatchWriteCommitCCVNodeDataResponse, error)
-	ReadCommitCCVNodeData(ctx context.Context, in *ReadCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*ReadCommitCCVNodeDataResponse, error)
+	WriteCommitteeVerifierNodeResult(ctx context.Context, in *WriteCommitteeVerifierNodeResultRequest, opts ...grpc.CallOption) (*WriteCommitteeVerifierNodeResultResponse, error)
+	BatchWriteCommitteeVerifierNodeResult(ctx context.Context, in *BatchWriteCommitteeVerifierNodeResultRequest, opts ...grpc.CallOption) (*BatchWriteCommitteeVerifierNodeResultResponse, error)
+	ReadCommitteeVerifierNodeResult(ctx context.Context, in *ReadCommitteeVerifierNodeResultRequest, opts ...grpc.CallOption) (*ReadCommitteeVerifierNodeResultResponse, error)
 	WriteChainStatus(ctx context.Context, in *WriteChainStatusRequest, opts ...grpc.CallOption) (*WriteChainStatusResponse, error)
 	ReadChainStatus(ctx context.Context, in *ReadChainStatusRequest, opts ...grpc.CallOption) (*ReadChainStatusResponse, error)
 }
@@ -45,30 +45,30 @@ func NewAggregatorClient(cc grpc.ClientConnInterface) AggregatorClient {
 	return &aggregatorClient{cc}
 }
 
-func (c *aggregatorClient) WriteCommitCCVNodeData(ctx context.Context, in *WriteCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*WriteCommitCCVNodeDataResponse, error) {
+func (c *aggregatorClient) WriteCommitteeVerifierNodeResult(ctx context.Context, in *WriteCommitteeVerifierNodeResultRequest, opts ...grpc.CallOption) (*WriteCommitteeVerifierNodeResultResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(WriteCommitCCVNodeDataResponse)
-	err := c.cc.Invoke(ctx, Aggregator_WriteCommitCCVNodeData_FullMethodName, in, out, cOpts...)
+	out := new(WriteCommitteeVerifierNodeResultResponse)
+	err := c.cc.Invoke(ctx, Aggregator_WriteCommitteeVerifierNodeResult_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aggregatorClient) BatchWriteCommitCCVNodeData(ctx context.Context, in *BatchWriteCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*BatchWriteCommitCCVNodeDataResponse, error) {
+func (c *aggregatorClient) BatchWriteCommitteeVerifierNodeResult(ctx context.Context, in *BatchWriteCommitteeVerifierNodeResultRequest, opts ...grpc.CallOption) (*BatchWriteCommitteeVerifierNodeResultResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BatchWriteCommitCCVNodeDataResponse)
-	err := c.cc.Invoke(ctx, Aggregator_BatchWriteCommitCCVNodeData_FullMethodName, in, out, cOpts...)
+	out := new(BatchWriteCommitteeVerifierNodeResultResponse)
+	err := c.cc.Invoke(ctx, Aggregator_BatchWriteCommitteeVerifierNodeResult_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aggregatorClient) ReadCommitCCVNodeData(ctx context.Context, in *ReadCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*ReadCommitCCVNodeDataResponse, error) {
+func (c *aggregatorClient) ReadCommitteeVerifierNodeResult(ctx context.Context, in *ReadCommitteeVerifierNodeResultRequest, opts ...grpc.CallOption) (*ReadCommitteeVerifierNodeResultResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ReadCommitCCVNodeDataResponse)
-	err := c.cc.Invoke(ctx, Aggregator_ReadCommitCCVNodeData_FullMethodName, in, out, cOpts...)
+	out := new(ReadCommitteeVerifierNodeResultResponse)
+	err := c.cc.Invoke(ctx, Aggregator_ReadCommitteeVerifierNodeResult_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -99,9 +99,9 @@ func (c *aggregatorClient) ReadChainStatus(ctx context.Context, in *ReadChainSta
 // All implementations must embed UnimplementedAggregatorServer
 // for forward compatibility.
 type AggregatorServer interface {
-	WriteCommitCCVNodeData(context.Context, *WriteCommitCCVNodeDataRequest) (*WriteCommitCCVNodeDataResponse, error)
-	BatchWriteCommitCCVNodeData(context.Context, *BatchWriteCommitCCVNodeDataRequest) (*BatchWriteCommitCCVNodeDataResponse, error)
-	ReadCommitCCVNodeData(context.Context, *ReadCommitCCVNodeDataRequest) (*ReadCommitCCVNodeDataResponse, error)
+	WriteCommitteeVerifierNodeResult(context.Context, *WriteCommitteeVerifierNodeResultRequest) (*WriteCommitteeVerifierNodeResultResponse, error)
+	BatchWriteCommitteeVerifierNodeResult(context.Context, *BatchWriteCommitteeVerifierNodeResultRequest) (*BatchWriteCommitteeVerifierNodeResultResponse, error)
+	ReadCommitteeVerifierNodeResult(context.Context, *ReadCommitteeVerifierNodeResultRequest) (*ReadCommitteeVerifierNodeResultResponse, error)
 	WriteChainStatus(context.Context, *WriteChainStatusRequest) (*WriteChainStatusResponse, error)
 	ReadChainStatus(context.Context, *ReadChainStatusRequest) (*ReadChainStatusResponse, error)
 	mustEmbedUnimplementedAggregatorServer()
@@ -114,14 +114,14 @@ type AggregatorServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAggregatorServer struct{}
 
-func (UnimplementedAggregatorServer) WriteCommitCCVNodeData(context.Context, *WriteCommitCCVNodeDataRequest) (*WriteCommitCCVNodeDataResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method WriteCommitCCVNodeData not implemented")
+func (UnimplementedAggregatorServer) WriteCommitteeVerifierNodeResult(context.Context, *WriteCommitteeVerifierNodeResultRequest) (*WriteCommitteeVerifierNodeResultResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WriteCommitteeVerifierNodeResult not implemented")
 }
-func (UnimplementedAggregatorServer) BatchWriteCommitCCVNodeData(context.Context, *BatchWriteCommitCCVNodeDataRequest) (*BatchWriteCommitCCVNodeDataResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BatchWriteCommitCCVNodeData not implemented")
+func (UnimplementedAggregatorServer) BatchWriteCommitteeVerifierNodeResult(context.Context, *BatchWriteCommitteeVerifierNodeResultRequest) (*BatchWriteCommitteeVerifierNodeResultResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchWriteCommitteeVerifierNodeResult not implemented")
 }
-func (UnimplementedAggregatorServer) ReadCommitCCVNodeData(context.Context, *ReadCommitCCVNodeDataRequest) (*ReadCommitCCVNodeDataResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ReadCommitCCVNodeData not implemented")
+func (UnimplementedAggregatorServer) ReadCommitteeVerifierNodeResult(context.Context, *ReadCommitteeVerifierNodeResultRequest) (*ReadCommitteeVerifierNodeResultResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReadCommitteeVerifierNodeResult not implemented")
 }
 func (UnimplementedAggregatorServer) WriteChainStatus(context.Context, *WriteChainStatusRequest) (*WriteChainStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WriteChainStatus not implemented")
@@ -150,56 +150,56 @@ func RegisterAggregatorServer(s grpc.ServiceRegistrar, srv AggregatorServer) {
 	s.RegisterService(&Aggregator_ServiceDesc, srv)
 }
 
-func _Aggregator_WriteCommitCCVNodeData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WriteCommitCCVNodeDataRequest)
+func _Aggregator_WriteCommitteeVerifierNodeResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WriteCommitteeVerifierNodeResultRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AggregatorServer).WriteCommitCCVNodeData(ctx, in)
+		return srv.(AggregatorServer).WriteCommitteeVerifierNodeResult(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Aggregator_WriteCommitCCVNodeData_FullMethodName,
+		FullMethod: Aggregator_WriteCommitteeVerifierNodeResult_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AggregatorServer).WriteCommitCCVNodeData(ctx, req.(*WriteCommitCCVNodeDataRequest))
+		return srv.(AggregatorServer).WriteCommitteeVerifierNodeResult(ctx, req.(*WriteCommitteeVerifierNodeResultRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Aggregator_BatchWriteCommitCCVNodeData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BatchWriteCommitCCVNodeDataRequest)
+func _Aggregator_BatchWriteCommitteeVerifierNodeResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchWriteCommitteeVerifierNodeResultRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AggregatorServer).BatchWriteCommitCCVNodeData(ctx, in)
+		return srv.(AggregatorServer).BatchWriteCommitteeVerifierNodeResult(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Aggregator_BatchWriteCommitCCVNodeData_FullMethodName,
+		FullMethod: Aggregator_BatchWriteCommitteeVerifierNodeResult_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AggregatorServer).BatchWriteCommitCCVNodeData(ctx, req.(*BatchWriteCommitCCVNodeDataRequest))
+		return srv.(AggregatorServer).BatchWriteCommitteeVerifierNodeResult(ctx, req.(*BatchWriteCommitteeVerifierNodeResultRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Aggregator_ReadCommitCCVNodeData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ReadCommitCCVNodeDataRequest)
+func _Aggregator_ReadCommitteeVerifierNodeResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReadCommitteeVerifierNodeResultRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AggregatorServer).ReadCommitCCVNodeData(ctx, in)
+		return srv.(AggregatorServer).ReadCommitteeVerifierNodeResult(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Aggregator_ReadCommitCCVNodeData_FullMethodName,
+		FullMethod: Aggregator_ReadCommitteeVerifierNodeResult_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AggregatorServer).ReadCommitCCVNodeData(ctx, req.(*ReadCommitCCVNodeDataRequest))
+		return srv.(AggregatorServer).ReadCommitteeVerifierNodeResult(ctx, req.(*ReadCommitteeVerifierNodeResultRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -248,16 +248,16 @@ var Aggregator_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AggregatorServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "WriteCommitCCVNodeData",
-			Handler:    _Aggregator_WriteCommitCCVNodeData_Handler,
+			MethodName: "WriteCommitteeVerifierNodeResult",
+			Handler:    _Aggregator_WriteCommitteeVerifierNodeResult_Handler,
 		},
 		{
-			MethodName: "BatchWriteCommitCCVNodeData",
-			Handler:    _Aggregator_BatchWriteCommitCCVNodeData_Handler,
+			MethodName: "BatchWriteCommitteeVerifierNodeResult",
+			Handler:    _Aggregator_BatchWriteCommitteeVerifierNodeResult_Handler,
 		},
 		{
-			MethodName: "ReadCommitCCVNodeData",
-			Handler:    _Aggregator_ReadCommitCCVNodeData_Handler,
+			MethodName: "ReadCommitteeVerifierNodeResult",
+			Handler:    _Aggregator_ReadCommitteeVerifierNodeResult_Handler,
 		},
 		{
 			MethodName: "WriteChainStatus",

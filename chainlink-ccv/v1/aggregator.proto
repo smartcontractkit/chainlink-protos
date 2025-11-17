@@ -7,9 +7,9 @@ import "google/rpc/status.proto";
 option go_package = "github.com/smartcontractkit/chainlink-protos/chainlink-ccv/go/v1";
 
 service Aggregator {
-  rpc WriteCommitCCVNodeData(WriteCommitCCVNodeDataRequest) returns (WriteCommitCCVNodeDataResponse);
-  rpc BatchWriteCommitCCVNodeData(BatchWriteCommitCCVNodeDataRequest) returns (BatchWriteCommitCCVNodeDataResponse);
-  rpc ReadCommitCCVNodeData(ReadCommitCCVNodeDataRequest) returns (ReadCommitCCVNodeDataResponse);
+  rpc WriteCommitteeVerifierNodeResult(WriteCommitteeVerifierNodeResultRequest) returns (WriteCommitteeVerifierNodeResultResponse);
+  rpc BatchWriteCommitteeVerifierNodeResult(BatchWriteCommitteeVerifierNodeResultRequest) returns (BatchWriteCommitteeVerifierNodeResultResponse);
+  rpc ReadCommitteeVerifierNodeResult(ReadCommitteeVerifierNodeResultRequest) returns (ReadCommitteeVerifierNodeResultResponse);
   rpc WriteChainStatus(WriteChainStatusRequest) returns (WriteChainStatusResponse);
   rpc ReadChainStatus(ReadChainStatusRequest) returns (ReadChainStatusResponse);
 }
@@ -73,7 +73,7 @@ message ReceiptBlob {
   bytes extra_args = 5;
 }
 
-message MessageWithCCVNodeData {
+message CommitteeVerifierNodeResult {
   bytes message_id = 1;
   bytes source_verifier_address = 2;
   // ccv_data is the signature from the commit verifier node of the message id and the blob data
@@ -104,17 +104,17 @@ message MessageWithVerifierResult {
   repeated ReceiptBlob receipt_blobs_from_majority = 7;
 }
 
-message BatchWriteCommitCCVNodeDataRequest {
-  repeated WriteCommitCCVNodeDataRequest requests = 1;
+message BatchWriteCommitteeVerifierNodeResultRequest {
+  repeated WriteCommitteeVerifierNodeResultRequest requests = 1;
 }
 
-message BatchWriteCommitCCVNodeDataResponse {
-  repeated WriteCommitCCVNodeDataResponse responses = 1;
+message BatchWriteCommitteeVerifierNodeResultResponse {
+  repeated WriteCommitteeVerifierNodeResultResponse responses = 1;
   repeated google.rpc.Status errors = 2;
 }
 
-message WriteCommitCCVNodeDataRequest {
-  MessageWithCCVNodeData ccv_node_data = 1;
+message WriteCommitteeVerifierNodeResultRequest {
+  CommitteeVerifierNodeResult ccv_node_data = 1;
 }
 
 enum WriteStatus {
@@ -122,17 +122,17 @@ enum WriteStatus {
   FAILED = 1;
 }
 
-message WriteCommitCCVNodeDataResponse {
+message WriteCommitteeVerifierNodeResultResponse {
   WriteStatus status = 1;
 }
 
-message ReadCommitCCVNodeDataRequest {
+message ReadCommitteeVerifierNodeResultRequest {
   bytes message_id = 1;
   bytes address = 2;
 }
 
-message ReadCommitCCVNodeDataResponse {
-  MessageWithCCVNodeData ccv_node_data = 1;
+message ReadCommitteeVerifierNodeResultResponse {
+  CommitteeVerifierNodeResult ccv_node_data = 1;
 }
 
 message GetVerifierResultForMessageRequest {
