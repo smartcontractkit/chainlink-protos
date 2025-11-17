@@ -7,9 +7,9 @@ import "google/rpc/status.proto";
 option go_package = "github.com/smartcontractkit/chainlink-protos/chainlink-ccv/go/v1";
 
 service Aggregator {
-  rpc WriteCommitCCVNodeData(WriteCommitCCVNodeDataRequest) returns (WriteCommitCCVNodeDataResponse);
-  rpc BatchWriteCommitCCVNodeData(BatchWriteCommitCCVNodeDataRequest) returns (BatchWriteCommitCCVNodeDataResponse);
-  rpc ReadCommitCCVNodeData(ReadCommitCCVNodeDataRequest) returns (ReadCommitCCVNodeDataResponse);
+  rpc WriteCommitteeVerifierNodeResult(WriteCommitteeVerifierNodeResultRequest) returns (WriteCommitteeVerifierNodeResultResponse);
+  rpc BatchWriteCommitteeVerifierNodeResult(BatchWriteCommitteeVerifierNodeResultRequest) returns (BatchWriteCommitteeVerifierNodeResultResponse);
+  rpc ReadCommitteeVerifierNodeResult(ReadCommitteeVerifierNodeResultRequest) returns (ReadCommitteeVerifierNodeResultResponse);
   rpc WriteChainStatus(WriteChainStatusRequest) returns (WriteChainStatusResponse);
   rpc ReadChainStatus(ReadChainStatusRequest) returns (ReadChainStatusResponse);
 }
@@ -67,7 +67,7 @@ message Message {
   uint32 gas_limit = 20;
 }
 
-message MessageWithCCVNodeData {
+message CommitteeVerifierNodeResult {
   // Message data that the CCV node attests to
   Message message = 1;
   // Version of the CCV found from the receipt blob on the source chain
@@ -84,33 +84,40 @@ message VerifierResult {
   // Message data 
   Message message = 1;
   // Addresses of the CCV specified for this message
-  repeated bytes ccv_addresses = 2;
+  repeated bytes message_ccv_addresses = 2;
   // Address of the preferred executor
-  bytes executor_address = 3;
-  // Verification data required to execute the message on the destination
+  bytes message_executor_address = 3;
+  // Verification data required to execute the message on the destination (e.g. signatures)
   bytes ccv_data = 4;
+  VerifierResultMetadata metadata = 5;  
 }
 
-message VerifierResultWithMetadata {
-  // Verifier result contains the message data and required verification data from the committee verifier
-  VerifierResult verifierResult = 1;
-  // Monotonic sequence number assigned by the verifier result API. Can be used to query for new messages since a given sequence.
-  int64 sequence = 2;
-  // Timestamp when the verifier result was created. Only informational
-  int64 timestamp = 3;
+message VerifierResultMetadata {  
+  // Timestamp when the verifier result was created  
+  int64 timestamp = 1;  
+  // Execution hint so that executors can easily verify before writing on chain 
+  bytes verifier_dest_address = 2;  
+} 
+
+
+message VerifierResultWithSequence {  
+  // Verifier result contains the message data and required verification data from the committee verifier  
+  VerifierResultMetadata verifierResultMetadata = 1;  
+  // Monotonic sequence number assigned by the verifier result API. Can be used to query for new messages since a given sequence.  
+  int64 sequence = 2;  
 }
 
-message BatchWriteCommitCCVNodeDataRequest {
-  repeated WriteCommitCCVNodeDataRequest requests = 1;
+message BatchWriteCommitteeVerifierNodeResultRequest {
+  repeated WriteCommitteeVerifierNodeResultRequest requests = 1;
 }
 
-message BatchWriteCommitCCVNodeDataResponse {
-  repeated WriteCommitCCVNodeDataResponse responses = 1;
+message BatchWriteCommitteeVerifierNodeResultResponse {
+  repeated WriteCommitteeVerifierNodeResultResponse responses = 1;
   repeated google.rpc.Status errors = 2;
 }
 
-message WriteCommitCCVNodeDataRequest {
-  MessageWithCCVNodeData ccv_node_data = 1;
+message WriteCommitteeVerifierNodeResultRequest {
+  CommitteeVerifierNodeResult committee_verifier_node_result = 1;
 }
 
 enum WriteStatus {
@@ -118,17 +125,17 @@ enum WriteStatus {
   FAILED = 1;
 }
 
-message WriteCommitCCVNodeDataResponse {
+message WriteCommitteeVerifierNodeResultResponse {
   WriteStatus status = 1;
 }
 
-message ReadCommitCCVNodeDataRequest {
+message ReadCommitteeVerifierNodeResultRequest {
   bytes message_id = 1;
   bytes address = 2;
 }
 
-message ReadCommitCCVNodeDataResponse {
-  MessageWithCCVNodeData ccv_node_data = 1;
+message ReadCommitteeVerifierNodeResultResponse {
+  CommitteeVerifierNodeResult committee_verifier_node_result = 1;
 }
 
 message GetVerifierResultsForMessageRequest {
@@ -145,5 +152,5 @@ message GetMessagesSinceRequest {
 }
 
 message GetMessagesSinceResponse {
-    repeated VerifierResultWithMetadata results = 1;
+    repeated VerifierResultWithSequence results = 1;
 }
