@@ -1126,27 +1126,27 @@ func (x *ReadCommitteeVerifierNodeResultResponse) GetCcvNodeData() *CommitteeVer
 	return nil
 }
 
-type GetVerifierResultForMessageRequest struct {
+type GetVerifierResultsForMessageRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	MessageId     []byte                 `protobuf:"bytes,1,opt,name=message_id,json=messageId,proto3" json:"message_id,omitempty"`
+	MessageIds    [][]byte               `protobuf:"bytes,1,rep,name=message_ids,json=messageIds,proto3" json:"message_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetVerifierResultForMessageRequest) Reset() {
-	*x = GetVerifierResultForMessageRequest{}
+func (x *GetVerifierResultsForMessageRequest) Reset() {
+	*x = GetVerifierResultsForMessageRequest{}
 	mi := &file_v1_aggregator_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetVerifierResultForMessageRequest) String() string {
+func (x *GetVerifierResultsForMessageRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetVerifierResultForMessageRequest) ProtoMessage() {}
+func (*GetVerifierResultsForMessageRequest) ProtoMessage() {}
 
-func (x *GetVerifierResultForMessageRequest) ProtoReflect() protoreflect.Message {
+func (x *GetVerifierResultsForMessageRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_v1_aggregator_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1158,63 +1158,19 @@ func (x *GetVerifierResultForMessageRequest) ProtoReflect() protoreflect.Message
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetVerifierResultForMessageRequest.ProtoReflect.Descriptor instead.
-func (*GetVerifierResultForMessageRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GetVerifierResultsForMessageRequest.ProtoReflect.Descriptor instead.
+func (*GetVerifierResultsForMessageRequest) Descriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *GetVerifierResultForMessageRequest) GetMessageId() []byte {
+func (x *GetVerifierResultsForMessageRequest) GetMessageIds() [][]byte {
 	if x != nil {
-		return x.MessageId
+		return x.MessageIds
 	}
 	return nil
 }
 
-type BatchGetVerifierResultForMessageRequest struct {
-	state         protoimpl.MessageState                `protogen:"open.v1"`
-	Requests      []*GetVerifierResultForMessageRequest `protobuf:"bytes,1,rep,name=requests,proto3" json:"requests,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *BatchGetVerifierResultForMessageRequest) Reset() {
-	*x = BatchGetVerifierResultForMessageRequest{}
-	mi := &file_v1_aggregator_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *BatchGetVerifierResultForMessageRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*BatchGetVerifierResultForMessageRequest) ProtoMessage() {}
-
-func (x *BatchGetVerifierResultForMessageRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_aggregator_proto_msgTypes[17]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use BatchGetVerifierResultForMessageRequest.ProtoReflect.Descriptor instead.
-func (*BatchGetVerifierResultForMessageRequest) Descriptor() ([]byte, []int) {
-	return file_v1_aggregator_proto_rawDescGZIP(), []int{17}
-}
-
-func (x *BatchGetVerifierResultForMessageRequest) GetRequests() []*GetVerifierResultForMessageRequest {
-	if x != nil {
-		return x.Requests
-	}
-	return nil
-}
-
-type BatchGetVerifierResultForMessageResponse struct {
+type GetVerifierResultsForMessageResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Results       []*VerifierResult      `protobuf:"bytes,1,rep,name=results,proto3" json:"results,omitempty"`
 	Errors        []*status.Status       `protobuf:"bytes,2,rep,name=errors,proto3" json:"errors,omitempty"`
@@ -1222,21 +1178,21 @@ type BatchGetVerifierResultForMessageResponse struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *BatchGetVerifierResultForMessageResponse) Reset() {
-	*x = BatchGetVerifierResultForMessageResponse{}
-	mi := &file_v1_aggregator_proto_msgTypes[18]
+func (x *GetVerifierResultsForMessageResponse) Reset() {
+	*x = GetVerifierResultsForMessageResponse{}
+	mi := &file_v1_aggregator_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *BatchGetVerifierResultForMessageResponse) String() string {
+func (x *GetVerifierResultsForMessageResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*BatchGetVerifierResultForMessageResponse) ProtoMessage() {}
+func (*GetVerifierResultsForMessageResponse) ProtoMessage() {}
 
-func (x *BatchGetVerifierResultForMessageResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_aggregator_proto_msgTypes[18]
+func (x *GetVerifierResultsForMessageResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_v1_aggregator_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1247,19 +1203,19 @@ func (x *BatchGetVerifierResultForMessageResponse) ProtoReflect() protoreflect.M
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use BatchGetVerifierResultForMessageResponse.ProtoReflect.Descriptor instead.
-func (*BatchGetVerifierResultForMessageResponse) Descriptor() ([]byte, []int) {
-	return file_v1_aggregator_proto_rawDescGZIP(), []int{18}
+// Deprecated: Use GetVerifierResultsForMessageResponse.ProtoReflect.Descriptor instead.
+func (*GetVerifierResultsForMessageResponse) Descriptor() ([]byte, []int) {
+	return file_v1_aggregator_proto_rawDescGZIP(), []int{17}
 }
 
-func (x *BatchGetVerifierResultForMessageResponse) GetResults() []*VerifierResult {
+func (x *GetVerifierResultsForMessageResponse) GetResults() []*VerifierResult {
 	if x != nil {
 		return x.Results
 	}
 	return nil
 }
 
-func (x *BatchGetVerifierResultForMessageResponse) GetErrors() []*status.Status {
+func (x *GetVerifierResultsForMessageResponse) GetErrors() []*status.Status {
 	if x != nil {
 		return x.Errors
 	}
@@ -1275,7 +1231,7 @@ type GetMessagesSinceRequest struct {
 
 func (x *GetMessagesSinceRequest) Reset() {
 	*x = GetMessagesSinceRequest{}
-	mi := &file_v1_aggregator_proto_msgTypes[19]
+	mi := &file_v1_aggregator_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1287,7 +1243,7 @@ func (x *GetMessagesSinceRequest) String() string {
 func (*GetMessagesSinceRequest) ProtoMessage() {}
 
 func (x *GetMessagesSinceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_aggregator_proto_msgTypes[19]
+	mi := &file_v1_aggregator_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1300,7 +1256,7 @@ func (x *GetMessagesSinceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetMessagesSinceRequest.ProtoReflect.Descriptor instead.
 func (*GetMessagesSinceRequest) Descriptor() ([]byte, []int) {
-	return file_v1_aggregator_proto_rawDescGZIP(), []int{19}
+	return file_v1_aggregator_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *GetMessagesSinceRequest) GetSinceSequence() int64 {
@@ -1319,7 +1275,7 @@ type GetMessagesSinceResponse struct {
 
 func (x *GetMessagesSinceResponse) Reset() {
 	*x = GetMessagesSinceResponse{}
-	mi := &file_v1_aggregator_proto_msgTypes[20]
+	mi := &file_v1_aggregator_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1331,7 +1287,7 @@ func (x *GetMessagesSinceResponse) String() string {
 func (*GetMessagesSinceResponse) ProtoMessage() {}
 
 func (x *GetMessagesSinceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_v1_aggregator_proto_msgTypes[20]
+	mi := &file_v1_aggregator_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1344,7 +1300,7 @@ func (x *GetMessagesSinceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetMessagesSinceResponse.ProtoReflect.Descriptor instead.
 func (*GetMessagesSinceResponse) Descriptor() ([]byte, []int) {
-	return file_v1_aggregator_proto_rawDescGZIP(), []int{20}
+	return file_v1_aggregator_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *GetMessagesSinceResponse) GetResults() []*MessageWithVerifierResult {
@@ -1439,13 +1395,11 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"message_id\x18\x01 \x01(\fR\tmessageId\x12\x18\n" +
 	"\aaddress\x18\x02 \x01(\fR\aaddress\"|\n" +
 	"'ReadCommitteeVerifierNodeResultResponse\x12Q\n" +
-	"\rccv_node_data\x18\x01 \x01(\v2-.chainlink_ccv.v1.CommitteeVerifierNodeResultR\vccvNodeData\"C\n" +
-	"\"GetVerifierResultForMessageRequest\x12\x1d\n" +
-	"\n" +
-	"message_id\x18\x01 \x01(\fR\tmessageId\"{\n" +
-	"'BatchGetVerifierResultForMessageRequest\x12P\n" +
-	"\brequests\x18\x01 \x03(\v24.chainlink_ccv.v1.GetVerifierResultForMessageRequestR\brequests\"\x92\x01\n" +
-	"(BatchGetVerifierResultForMessageResponse\x12:\n" +
+	"\rccv_node_data\x18\x01 \x01(\v2-.chainlink_ccv.v1.CommitteeVerifierNodeResultR\vccvNodeData\"F\n" +
+	"#GetVerifierResultsForMessageRequest\x12\x1f\n" +
+	"\vmessage_ids\x18\x01 \x03(\fR\n" +
+	"messageIds\"\x8e\x01\n" +
+	"$GetVerifierResultsForMessageResponse\x12:\n" +
 	"\aresults\x18\x01 \x03(\v2 .chainlink_ccv.v1.VerifierResultR\aresults\x12*\n" +
 	"\x06errors\x18\x02 \x03(\v2\x12.google.rpc.StatusR\x06errors\"?\n" +
 	"\x17GetMessagesSinceRequest\x12$\n" +
@@ -1462,11 +1416,11 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"%BatchWriteCommitteeVerifierNodeResult\x12>.chainlink_ccv.v1.BatchWriteCommitteeVerifierNodeResultRequest\x1a?.chainlink_ccv.v1.BatchWriteCommitteeVerifierNodeResultResponse\x12\x96\x01\n" +
 	"\x1fReadCommitteeVerifierNodeResult\x128.chainlink_ccv.v1.ReadCommitteeVerifierNodeResultRequest\x1a9.chainlink_ccv.v1.ReadCommitteeVerifierNodeResultResponse\x12i\n" +
 	"\x10WriteChainStatus\x12).chainlink_ccv.v1.WriteChainStatusRequest\x1a*.chainlink_ccv.v1.WriteChainStatusResponse\x12f\n" +
-	"\x0fReadChainStatus\x12(.chainlink_ccv.v1.ReadChainStatusRequest\x1a).chainlink_ccv.v1.ReadChainStatusResponse2\x91\x03\n" +
-	"\x11VerifierResultAPI\x12u\n" +
-	"\x1bGetVerifierResultForMessage\x124.chainlink_ccv.v1.GetVerifierResultForMessageRequest\x1a .chainlink_ccv.v1.VerifierResult\x12\x99\x01\n" +
-	" BatchGetVerifierResultForMessage\x129.chainlink_ccv.v1.BatchGetVerifierResultForMessageRequest\x1a:.chainlink_ccv.v1.BatchGetVerifierResultForMessageResponse\x12i\n" +
-	"\x10GetMessagesSince\x12).chainlink_ccv.v1.GetMessagesSinceRequest\x1a*.chainlink_ccv.v1.GetMessagesSinceResponseBBZ@github.com/smartcontractkit/chainlink-protos/chainlink-ccv/go/v1b\x06proto3"
+	"\x0fReadChainStatus\x12(.chainlink_ccv.v1.ReadChainStatusRequest\x1a).chainlink_ccv.v1.ReadChainStatusResponse2}\n" +
+	"\x10MessageDiscovery\x12i\n" +
+	"\x10GetMessagesSince\x12).chainlink_ccv.v1.GetMessagesSinceRequest\x1a*.chainlink_ccv.v1.GetMessagesSinceResponse2\xa3\x01\n" +
+	"\x11VerifierResultAPI\x12\x8d\x01\n" +
+	"\x1cGetVerifierResultsForMessage\x125.chainlink_ccv.v1.GetVerifierResultsForMessageRequest\x1a6.chainlink_ccv.v1.GetVerifierResultsForMessageResponseBBZ@github.com/smartcontractkit/chainlink-protos/chainlink-ccv/go/v1b\x06proto3"
 
 var (
 	file_v1_aggregator_proto_rawDescOnce sync.Once
@@ -1481,7 +1435,7 @@ func file_v1_aggregator_proto_rawDescGZIP() []byte {
 }
 
 var file_v1_aggregator_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_v1_aggregator_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
+var file_v1_aggregator_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_v1_aggregator_proto_goTypes = []any{
 	(WriteStatus)(0),                                      // 0: chainlink_ccv.v1.WriteStatus
 	(*ChainStatus)(nil),                                   // 1: chainlink_ccv.v1.ChainStatus
@@ -1500,12 +1454,11 @@ var file_v1_aggregator_proto_goTypes = []any{
 	(*WriteCommitteeVerifierNodeResultResponse)(nil),      // 14: chainlink_ccv.v1.WriteCommitteeVerifierNodeResultResponse
 	(*ReadCommitteeVerifierNodeResultRequest)(nil),        // 15: chainlink_ccv.v1.ReadCommitteeVerifierNodeResultRequest
 	(*ReadCommitteeVerifierNodeResultResponse)(nil),       // 16: chainlink_ccv.v1.ReadCommitteeVerifierNodeResultResponse
-	(*GetVerifierResultForMessageRequest)(nil),            // 17: chainlink_ccv.v1.GetVerifierResultForMessageRequest
-	(*BatchGetVerifierResultForMessageRequest)(nil),       // 18: chainlink_ccv.v1.BatchGetVerifierResultForMessageRequest
-	(*BatchGetVerifierResultForMessageResponse)(nil),      // 19: chainlink_ccv.v1.BatchGetVerifierResultForMessageResponse
-	(*GetMessagesSinceRequest)(nil),                       // 20: chainlink_ccv.v1.GetMessagesSinceRequest
-	(*GetMessagesSinceResponse)(nil),                      // 21: chainlink_ccv.v1.GetMessagesSinceResponse
-	(*status.Status)(nil),                                 // 22: google.rpc.Status
+	(*GetVerifierResultsForMessageRequest)(nil),           // 17: chainlink_ccv.v1.GetVerifierResultsForMessageRequest
+	(*GetVerifierResultsForMessageResponse)(nil),          // 18: chainlink_ccv.v1.GetVerifierResultsForMessageResponse
+	(*GetMessagesSinceRequest)(nil),                       // 19: chainlink_ccv.v1.GetMessagesSinceRequest
+	(*GetMessagesSinceResponse)(nil),                      // 20: chainlink_ccv.v1.GetMessagesSinceResponse
+	(*status.Status)(nil),                                 // 21: google.rpc.Status
 }
 var file_v1_aggregator_proto_depIdxs = []int32{
 	1,  // 0: chainlink_ccv.v1.WriteChainStatusRequest.statuses:type_name -> chainlink_ccv.v1.ChainStatus
@@ -1518,35 +1471,32 @@ var file_v1_aggregator_proto_depIdxs = []int32{
 	7,  // 7: chainlink_ccv.v1.MessageWithVerifierResult.receipt_blobs_from_majority:type_name -> chainlink_ccv.v1.ReceiptBlob
 	13, // 8: chainlink_ccv.v1.BatchWriteCommitteeVerifierNodeResultRequest.requests:type_name -> chainlink_ccv.v1.WriteCommitteeVerifierNodeResultRequest
 	14, // 9: chainlink_ccv.v1.BatchWriteCommitteeVerifierNodeResultResponse.responses:type_name -> chainlink_ccv.v1.WriteCommitteeVerifierNodeResultResponse
-	22, // 10: chainlink_ccv.v1.BatchWriteCommitteeVerifierNodeResultResponse.errors:type_name -> google.rpc.Status
+	21, // 10: chainlink_ccv.v1.BatchWriteCommitteeVerifierNodeResultResponse.errors:type_name -> google.rpc.Status
 	8,  // 11: chainlink_ccv.v1.WriteCommitteeVerifierNodeResultRequest.ccv_node_data:type_name -> chainlink_ccv.v1.CommitteeVerifierNodeResult
 	0,  // 12: chainlink_ccv.v1.WriteCommitteeVerifierNodeResultResponse.status:type_name -> chainlink_ccv.v1.WriteStatus
 	8,  // 13: chainlink_ccv.v1.ReadCommitteeVerifierNodeResultResponse.ccv_node_data:type_name -> chainlink_ccv.v1.CommitteeVerifierNodeResult
-	17, // 14: chainlink_ccv.v1.BatchGetVerifierResultForMessageRequest.requests:type_name -> chainlink_ccv.v1.GetVerifierResultForMessageRequest
-	9,  // 15: chainlink_ccv.v1.BatchGetVerifierResultForMessageResponse.results:type_name -> chainlink_ccv.v1.VerifierResult
-	22, // 16: chainlink_ccv.v1.BatchGetVerifierResultForMessageResponse.errors:type_name -> google.rpc.Status
-	10, // 17: chainlink_ccv.v1.GetMessagesSinceResponse.results:type_name -> chainlink_ccv.v1.MessageWithVerifierResult
-	13, // 18: chainlink_ccv.v1.Aggregator.WriteCommitteeVerifierNodeResult:input_type -> chainlink_ccv.v1.WriteCommitteeVerifierNodeResultRequest
-	11, // 19: chainlink_ccv.v1.Aggregator.BatchWriteCommitteeVerifierNodeResult:input_type -> chainlink_ccv.v1.BatchWriteCommitteeVerifierNodeResultRequest
-	15, // 20: chainlink_ccv.v1.Aggregator.ReadCommitteeVerifierNodeResult:input_type -> chainlink_ccv.v1.ReadCommitteeVerifierNodeResultRequest
-	2,  // 21: chainlink_ccv.v1.Aggregator.WriteChainStatus:input_type -> chainlink_ccv.v1.WriteChainStatusRequest
-	4,  // 22: chainlink_ccv.v1.Aggregator.ReadChainStatus:input_type -> chainlink_ccv.v1.ReadChainStatusRequest
-	17, // 23: chainlink_ccv.v1.VerifierResultAPI.GetVerifierResultForMessage:input_type -> chainlink_ccv.v1.GetVerifierResultForMessageRequest
-	18, // 24: chainlink_ccv.v1.VerifierResultAPI.BatchGetVerifierResultForMessage:input_type -> chainlink_ccv.v1.BatchGetVerifierResultForMessageRequest
-	20, // 25: chainlink_ccv.v1.VerifierResultAPI.GetMessagesSince:input_type -> chainlink_ccv.v1.GetMessagesSinceRequest
-	14, // 26: chainlink_ccv.v1.Aggregator.WriteCommitteeVerifierNodeResult:output_type -> chainlink_ccv.v1.WriteCommitteeVerifierNodeResultResponse
-	12, // 27: chainlink_ccv.v1.Aggregator.BatchWriteCommitteeVerifierNodeResult:output_type -> chainlink_ccv.v1.BatchWriteCommitteeVerifierNodeResultResponse
-	16, // 28: chainlink_ccv.v1.Aggregator.ReadCommitteeVerifierNodeResult:output_type -> chainlink_ccv.v1.ReadCommitteeVerifierNodeResultResponse
-	3,  // 29: chainlink_ccv.v1.Aggregator.WriteChainStatus:output_type -> chainlink_ccv.v1.WriteChainStatusResponse
-	5,  // 30: chainlink_ccv.v1.Aggregator.ReadChainStatus:output_type -> chainlink_ccv.v1.ReadChainStatusResponse
-	9,  // 31: chainlink_ccv.v1.VerifierResultAPI.GetVerifierResultForMessage:output_type -> chainlink_ccv.v1.VerifierResult
-	19, // 32: chainlink_ccv.v1.VerifierResultAPI.BatchGetVerifierResultForMessage:output_type -> chainlink_ccv.v1.BatchGetVerifierResultForMessageResponse
-	21, // 33: chainlink_ccv.v1.VerifierResultAPI.GetMessagesSince:output_type -> chainlink_ccv.v1.GetMessagesSinceResponse
-	26, // [26:34] is the sub-list for method output_type
-	18, // [18:26] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	9,  // 14: chainlink_ccv.v1.GetVerifierResultsForMessageResponse.results:type_name -> chainlink_ccv.v1.VerifierResult
+	21, // 15: chainlink_ccv.v1.GetVerifierResultsForMessageResponse.errors:type_name -> google.rpc.Status
+	10, // 16: chainlink_ccv.v1.GetMessagesSinceResponse.results:type_name -> chainlink_ccv.v1.MessageWithVerifierResult
+	13, // 17: chainlink_ccv.v1.Aggregator.WriteCommitteeVerifierNodeResult:input_type -> chainlink_ccv.v1.WriteCommitteeVerifierNodeResultRequest
+	11, // 18: chainlink_ccv.v1.Aggregator.BatchWriteCommitteeVerifierNodeResult:input_type -> chainlink_ccv.v1.BatchWriteCommitteeVerifierNodeResultRequest
+	15, // 19: chainlink_ccv.v1.Aggregator.ReadCommitteeVerifierNodeResult:input_type -> chainlink_ccv.v1.ReadCommitteeVerifierNodeResultRequest
+	2,  // 20: chainlink_ccv.v1.Aggregator.WriteChainStatus:input_type -> chainlink_ccv.v1.WriteChainStatusRequest
+	4,  // 21: chainlink_ccv.v1.Aggregator.ReadChainStatus:input_type -> chainlink_ccv.v1.ReadChainStatusRequest
+	19, // 22: chainlink_ccv.v1.MessageDiscovery.GetMessagesSince:input_type -> chainlink_ccv.v1.GetMessagesSinceRequest
+	17, // 23: chainlink_ccv.v1.VerifierResultAPI.GetVerifierResultsForMessage:input_type -> chainlink_ccv.v1.GetVerifierResultsForMessageRequest
+	14, // 24: chainlink_ccv.v1.Aggregator.WriteCommitteeVerifierNodeResult:output_type -> chainlink_ccv.v1.WriteCommitteeVerifierNodeResultResponse
+	12, // 25: chainlink_ccv.v1.Aggregator.BatchWriteCommitteeVerifierNodeResult:output_type -> chainlink_ccv.v1.BatchWriteCommitteeVerifierNodeResultResponse
+	16, // 26: chainlink_ccv.v1.Aggregator.ReadCommitteeVerifierNodeResult:output_type -> chainlink_ccv.v1.ReadCommitteeVerifierNodeResultResponse
+	3,  // 27: chainlink_ccv.v1.Aggregator.WriteChainStatus:output_type -> chainlink_ccv.v1.WriteChainStatusResponse
+	5,  // 28: chainlink_ccv.v1.Aggregator.ReadChainStatus:output_type -> chainlink_ccv.v1.ReadChainStatusResponse
+	20, // 29: chainlink_ccv.v1.MessageDiscovery.GetMessagesSince:output_type -> chainlink_ccv.v1.GetMessagesSinceResponse
+	18, // 30: chainlink_ccv.v1.VerifierResultAPI.GetVerifierResultsForMessage:output_type -> chainlink_ccv.v1.GetVerifierResultsForMessageResponse
+	24, // [24:31] is the sub-list for method output_type
+	17, // [17:24] is the sub-list for method input_type
+	17, // [17:17] is the sub-list for extension type_name
+	17, // [17:17] is the sub-list for extension extendee
+	0,  // [0:17] is the sub-list for field type_name
 }
 
 func init() { file_v1_aggregator_proto_init() }
@@ -1560,9 +1510,9 @@ func file_v1_aggregator_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_v1_aggregator_proto_rawDesc), len(file_v1_aggregator_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   21,
+			NumMessages:   20,
 			NumExtensions: 0,
-			NumServices:   2,
+			NumServices:   3,
 		},
 		GoTypes:           file_v1_aggregator_proto_goTypes,
 		DependencyIndexes: file_v1_aggregator_proto_depIdxs,

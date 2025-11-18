@@ -14,10 +14,12 @@ service Aggregator {
   rpc ReadChainStatus(ReadChainStatusRequest) returns (ReadChainStatusResponse);
 }
 
-service VerifierResultAPI {
-  rpc GetVerifierResultForMessage(GetVerifierResultForMessageRequest) returns (VerifierResult);
-  rpc BatchGetVerifierResultForMessage(BatchGetVerifierResultForMessageRequest) returns (BatchGetVerifierResultForMessageResponse);
+service MessageDiscovery {
   rpc GetMessagesSince(GetMessagesSinceRequest) returns (GetMessagesSinceResponse);
+}
+
+service VerifierResultAPI {
+  rpc GetVerifierResultsForMessage(GetVerifierResultsForMessageRequest) returns (GetVerifierResultsForMessageResponse);
 }
 
 message ChainStatus {
@@ -135,15 +137,11 @@ message ReadCommitteeVerifierNodeResultResponse {
   CommitteeVerifierNodeResult ccv_node_data = 1;
 }
 
-message GetVerifierResultForMessageRequest {
-  bytes message_id = 1;
+message GetVerifierResultsForMessageRequest {
+  repeated bytes message_ids = 1;
 }
 
-message BatchGetVerifierResultForMessageRequest {
-  repeated GetVerifierResultForMessageRequest requests = 1;
-}
-
-message BatchGetVerifierResultForMessageResponse {
+message GetVerifierResultsForMessageResponse {
   repeated VerifierResult results = 1;
   repeated google.rpc.Status errors = 2;
 }
