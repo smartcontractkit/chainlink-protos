@@ -102,7 +102,7 @@ message VerifierResultMetadata {
 
 message VerifierResultWithSequence {  
   // Verifier result contains the message data and required verification data from the committee verifier  
-  VerifierResultMetadata verifierResultMetadata = 1;  
+  VerifierResult verifierResult = 1;  
   // Monotonic sequence number assigned by the verifier result API. Can be used to query for new messages since a given sequence.  
   int64 sequence = 2;  
 }

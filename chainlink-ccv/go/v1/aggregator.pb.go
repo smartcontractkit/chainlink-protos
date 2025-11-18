@@ -718,7 +718,7 @@ func (x *VerifierResultMetadata) GetVerifierDestAddress() []byte {
 type VerifierResultWithSequence struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Verifier result contains the message data and required verification data from the committee verifier
-	VerifierResultMetadata *VerifierResultMetadata `protobuf:"bytes,1,opt,name=verifierResultMetadata,proto3" json:"verifierResultMetadata,omitempty"`
+	VerifierResult *VerifierResult `protobuf:"bytes,1,opt,name=verifierResult,proto3" json:"verifierResult,omitempty"`
 	// Monotonic sequence number assigned by the verifier result API. Can be used to query for new messages since a given sequence.
 	Sequence      int64 `protobuf:"varint,2,opt,name=sequence,proto3" json:"sequence,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -755,9 +755,9 @@ func (*VerifierResultWithSequence) Descriptor() ([]byte, []int) {
 	return file_v1_aggregator_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *VerifierResultWithSequence) GetVerifierResultMetadata() *VerifierResultMetadata {
+func (x *VerifierResultWithSequence) GetVerifierResult() *VerifierResult {
 	if x != nil {
-		return x.VerifierResultMetadata
+		return x.VerifierResult
 	}
 	return nil
 }
@@ -1288,9 +1288,9 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\bmetadata\x18\x05 \x01(\v2(.chainlink_ccv.v1.VerifierResultMetadataR\bmetadata\"j\n" +
 	"\x16VerifierResultMetadata\x12\x1c\n" +
 	"\ttimestamp\x18\x01 \x01(\x03R\ttimestamp\x122\n" +
-	"\x15verifier_dest_address\x18\x02 \x01(\fR\x13verifierDestAddress\"\x9a\x01\n" +
-	"\x1aVerifierResultWithSequence\x12`\n" +
-	"\x16verifierResultMetadata\x18\x01 \x01(\v2(.chainlink_ccv.v1.VerifierResultMetadataR\x16verifierResultMetadata\x12\x1a\n" +
+	"\x15verifier_dest_address\x18\x02 \x01(\fR\x13verifierDestAddress\"\x82\x01\n" +
+	"\x1aVerifierResultWithSequence\x12H\n" +
+	"\x0everifierResult\x18\x01 \x01(\v2 .chainlink_ccv.v1.VerifierResultR\x0everifierResult\x12\x1a\n" +
 	"\bsequence\x18\x02 \x01(\x03R\bsequence\"\x85\x01\n" +
 	",BatchWriteCommitteeVerifierNodeResultRequest\x12U\n" +
 	"\brequests\x18\x01 \x03(\v29.chainlink_ccv.v1.WriteCommitteeVerifierNodeResultRequestR\brequests\"\xb5\x01\n" +
@@ -1378,7 +1378,7 @@ var file_v1_aggregator_proto_depIdxs = []int32{
 	6,  // 3: chainlink_ccv.v1.CommitteeVerifierNodeResult.message:type_name -> chainlink_ccv.v1.Message
 	6,  // 4: chainlink_ccv.v1.VerifierResult.message:type_name -> chainlink_ccv.v1.Message
 	9,  // 5: chainlink_ccv.v1.VerifierResult.metadata:type_name -> chainlink_ccv.v1.VerifierResultMetadata
-	9,  // 6: chainlink_ccv.v1.VerifierResultWithSequence.verifierResultMetadata:type_name -> chainlink_ccv.v1.VerifierResultMetadata
+	8,  // 6: chainlink_ccv.v1.VerifierResultWithSequence.verifierResult:type_name -> chainlink_ccv.v1.VerifierResult
 	13, // 7: chainlink_ccv.v1.BatchWriteCommitteeVerifierNodeResultRequest.requests:type_name -> chainlink_ccv.v1.WriteCommitteeVerifierNodeResultRequest
 	14, // 8: chainlink_ccv.v1.BatchWriteCommitteeVerifierNodeResultResponse.responses:type_name -> chainlink_ccv.v1.WriteCommitteeVerifierNodeResultResponse
 	21, // 9: chainlink_ccv.v1.BatchWriteCommitteeVerifierNodeResultResponse.errors:type_name -> google.rpc.Status
