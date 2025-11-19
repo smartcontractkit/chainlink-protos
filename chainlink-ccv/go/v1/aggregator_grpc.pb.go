@@ -19,20 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Aggregator_WriteCommitteeVerifierNodeResult_FullMethodName      = "/chainlink_ccv.v1.Aggregator/WriteCommitteeVerifierNodeResult"
-	Aggregator_BatchWriteCommitteeVerifierNodeResult_FullMethodName = "/chainlink_ccv.v1.Aggregator/BatchWriteCommitteeVerifierNodeResult"
-	Aggregator_ReadCommitteeVerifierNodeResult_FullMethodName       = "/chainlink_ccv.v1.Aggregator/ReadCommitteeVerifierNodeResult"
-	Aggregator_WriteChainStatus_FullMethodName                      = "/chainlink_ccv.v1.Aggregator/WriteChainStatus"
-	Aggregator_ReadChainStatus_FullMethodName                       = "/chainlink_ccv.v1.Aggregator/ReadChainStatus"
+	Aggregator_WriteCommitCCVNodeData_FullMethodName      = "/chainlink_ccv.v1.Aggregator/WriteCommitCCVNodeData"
+	Aggregator_BatchWriteCommitCCVNodeData_FullMethodName = "/chainlink_ccv.v1.Aggregator/BatchWriteCommitCCVNodeData"
+	Aggregator_ReadCommitCCVNodeData_FullMethodName       = "/chainlink_ccv.v1.Aggregator/ReadCommitCCVNodeData"
+	Aggregator_WriteChainStatus_FullMethodName            = "/chainlink_ccv.v1.Aggregator/WriteChainStatus"
+	Aggregator_ReadChainStatus_FullMethodName             = "/chainlink_ccv.v1.Aggregator/ReadChainStatus"
 )
 
 // AggregatorClient is the client API for Aggregator service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AggregatorClient interface {
-	WriteCommitteeVerifierNodeResult(ctx context.Context, in *WriteCommitteeVerifierNodeResultRequest, opts ...grpc.CallOption) (*WriteCommitteeVerifierNodeResultResponse, error)
-	BatchWriteCommitteeVerifierNodeResult(ctx context.Context, in *BatchWriteCommitteeVerifierNodeResultRequest, opts ...grpc.CallOption) (*BatchWriteCommitteeVerifierNodeResultResponse, error)
-	ReadCommitteeVerifierNodeResult(ctx context.Context, in *ReadCommitteeVerifierNodeResultRequest, opts ...grpc.CallOption) (*ReadCommitteeVerifierNodeResultResponse, error)
+	WriteCommitCCVNodeData(ctx context.Context, in *WriteCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*WriteCommitCCVNodeDataResponse, error)
+	BatchWriteCommitCCVNodeData(ctx context.Context, in *BatchWriteCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*BatchWriteCommitCCVNodeDataResponse, error)
+	ReadCommitCCVNodeData(ctx context.Context, in *ReadCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*ReadCommitCCVNodeDataResponse, error)
 	WriteChainStatus(ctx context.Context, in *WriteChainStatusRequest, opts ...grpc.CallOption) (*WriteChainStatusResponse, error)
 	ReadChainStatus(ctx context.Context, in *ReadChainStatusRequest, opts ...grpc.CallOption) (*ReadChainStatusResponse, error)
 }
@@ -45,30 +45,30 @@ func NewAggregatorClient(cc grpc.ClientConnInterface) AggregatorClient {
 	return &aggregatorClient{cc}
 }
 
-func (c *aggregatorClient) WriteCommitteeVerifierNodeResult(ctx context.Context, in *WriteCommitteeVerifierNodeResultRequest, opts ...grpc.CallOption) (*WriteCommitteeVerifierNodeResultResponse, error) {
+func (c *aggregatorClient) WriteCommitCCVNodeData(ctx context.Context, in *WriteCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*WriteCommitCCVNodeDataResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(WriteCommitteeVerifierNodeResultResponse)
-	err := c.cc.Invoke(ctx, Aggregator_WriteCommitteeVerifierNodeResult_FullMethodName, in, out, cOpts...)
+	out := new(WriteCommitCCVNodeDataResponse)
+	err := c.cc.Invoke(ctx, Aggregator_WriteCommitCCVNodeData_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aggregatorClient) BatchWriteCommitteeVerifierNodeResult(ctx context.Context, in *BatchWriteCommitteeVerifierNodeResultRequest, opts ...grpc.CallOption) (*BatchWriteCommitteeVerifierNodeResultResponse, error) {
+func (c *aggregatorClient) BatchWriteCommitCCVNodeData(ctx context.Context, in *BatchWriteCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*BatchWriteCommitCCVNodeDataResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(BatchWriteCommitteeVerifierNodeResultResponse)
-	err := c.cc.Invoke(ctx, Aggregator_BatchWriteCommitteeVerifierNodeResult_FullMethodName, in, out, cOpts...)
+	out := new(BatchWriteCommitCCVNodeDataResponse)
+	err := c.cc.Invoke(ctx, Aggregator_BatchWriteCommitCCVNodeData_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *aggregatorClient) ReadCommitteeVerifierNodeResult(ctx context.Context, in *ReadCommitteeVerifierNodeResultRequest, opts ...grpc.CallOption) (*ReadCommitteeVerifierNodeResultResponse, error) {
+func (c *aggregatorClient) ReadCommitCCVNodeData(ctx context.Context, in *ReadCommitCCVNodeDataRequest, opts ...grpc.CallOption) (*ReadCommitCCVNodeDataResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ReadCommitteeVerifierNodeResultResponse)
-	err := c.cc.Invoke(ctx, Aggregator_ReadCommitteeVerifierNodeResult_FullMethodName, in, out, cOpts...)
+	out := new(ReadCommitCCVNodeDataResponse)
+	err := c.cc.Invoke(ctx, Aggregator_ReadCommitCCVNodeData_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -99,9 +99,9 @@ func (c *aggregatorClient) ReadChainStatus(ctx context.Context, in *ReadChainSta
 // All implementations must embed UnimplementedAggregatorServer
 // for forward compatibility.
 type AggregatorServer interface {
-	WriteCommitteeVerifierNodeResult(context.Context, *WriteCommitteeVerifierNodeResultRequest) (*WriteCommitteeVerifierNodeResultResponse, error)
-	BatchWriteCommitteeVerifierNodeResult(context.Context, *BatchWriteCommitteeVerifierNodeResultRequest) (*BatchWriteCommitteeVerifierNodeResultResponse, error)
-	ReadCommitteeVerifierNodeResult(context.Context, *ReadCommitteeVerifierNodeResultRequest) (*ReadCommitteeVerifierNodeResultResponse, error)
+	WriteCommitCCVNodeData(context.Context, *WriteCommitCCVNodeDataRequest) (*WriteCommitCCVNodeDataResponse, error)
+	BatchWriteCommitCCVNodeData(context.Context, *BatchWriteCommitCCVNodeDataRequest) (*BatchWriteCommitCCVNodeDataResponse, error)
+	ReadCommitCCVNodeData(context.Context, *ReadCommitCCVNodeDataRequest) (*ReadCommitCCVNodeDataResponse, error)
 	WriteChainStatus(context.Context, *WriteChainStatusRequest) (*WriteChainStatusResponse, error)
 	ReadChainStatus(context.Context, *ReadChainStatusRequest) (*ReadChainStatusResponse, error)
 	mustEmbedUnimplementedAggregatorServer()
@@ -114,14 +114,14 @@ type AggregatorServer interface {
 // pointer dereference when methods are called.
 type UnimplementedAggregatorServer struct{}
 
-func (UnimplementedAggregatorServer) WriteCommitteeVerifierNodeResult(context.Context, *WriteCommitteeVerifierNodeResultRequest) (*WriteCommitteeVerifierNodeResultResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method WriteCommitteeVerifierNodeResult not implemented")
+func (UnimplementedAggregatorServer) WriteCommitCCVNodeData(context.Context, *WriteCommitCCVNodeDataRequest) (*WriteCommitCCVNodeDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method WriteCommitCCVNodeData not implemented")
 }
-func (UnimplementedAggregatorServer) BatchWriteCommitteeVerifierNodeResult(context.Context, *BatchWriteCommitteeVerifierNodeResultRequest) (*BatchWriteCommitteeVerifierNodeResultResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method BatchWriteCommitteeVerifierNodeResult not implemented")
+func (UnimplementedAggregatorServer) BatchWriteCommitCCVNodeData(context.Context, *BatchWriteCommitCCVNodeDataRequest) (*BatchWriteCommitCCVNodeDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchWriteCommitCCVNodeData not implemented")
 }
-func (UnimplementedAggregatorServer) ReadCommitteeVerifierNodeResult(context.Context, *ReadCommitteeVerifierNodeResultRequest) (*ReadCommitteeVerifierNodeResultResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ReadCommitteeVerifierNodeResult not implemented")
+func (UnimplementedAggregatorServer) ReadCommitCCVNodeData(context.Context, *ReadCommitCCVNodeDataRequest) (*ReadCommitCCVNodeDataResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReadCommitCCVNodeData not implemented")
 }
 func (UnimplementedAggregatorServer) WriteChainStatus(context.Context, *WriteChainStatusRequest) (*WriteChainStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method WriteChainStatus not implemented")
@@ -150,56 +150,56 @@ func RegisterAggregatorServer(s grpc.ServiceRegistrar, srv AggregatorServer) {
 	s.RegisterService(&Aggregator_ServiceDesc, srv)
 }
 
-func _Aggregator_WriteCommitteeVerifierNodeResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(WriteCommitteeVerifierNodeResultRequest)
+func _Aggregator_WriteCommitCCVNodeData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WriteCommitCCVNodeDataRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AggregatorServer).WriteCommitteeVerifierNodeResult(ctx, in)
+		return srv.(AggregatorServer).WriteCommitCCVNodeData(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Aggregator_WriteCommitteeVerifierNodeResult_FullMethodName,
+		FullMethod: Aggregator_WriteCommitCCVNodeData_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AggregatorServer).WriteCommitteeVerifierNodeResult(ctx, req.(*WriteCommitteeVerifierNodeResultRequest))
+		return srv.(AggregatorServer).WriteCommitCCVNodeData(ctx, req.(*WriteCommitCCVNodeDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Aggregator_BatchWriteCommitteeVerifierNodeResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BatchWriteCommitteeVerifierNodeResultRequest)
+func _Aggregator_BatchWriteCommitCCVNodeData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchWriteCommitCCVNodeDataRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AggregatorServer).BatchWriteCommitteeVerifierNodeResult(ctx, in)
+		return srv.(AggregatorServer).BatchWriteCommitCCVNodeData(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Aggregator_BatchWriteCommitteeVerifierNodeResult_FullMethodName,
+		FullMethod: Aggregator_BatchWriteCommitCCVNodeData_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AggregatorServer).BatchWriteCommitteeVerifierNodeResult(ctx, req.(*BatchWriteCommitteeVerifierNodeResultRequest))
+		return srv.(AggregatorServer).BatchWriteCommitCCVNodeData(ctx, req.(*BatchWriteCommitCCVNodeDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Aggregator_ReadCommitteeVerifierNodeResult_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ReadCommitteeVerifierNodeResultRequest)
+func _Aggregator_ReadCommitCCVNodeData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReadCommitCCVNodeDataRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AggregatorServer).ReadCommitteeVerifierNodeResult(ctx, in)
+		return srv.(AggregatorServer).ReadCommitCCVNodeData(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Aggregator_ReadCommitteeVerifierNodeResult_FullMethodName,
+		FullMethod: Aggregator_ReadCommitCCVNodeData_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AggregatorServer).ReadCommitteeVerifierNodeResult(ctx, req.(*ReadCommitteeVerifierNodeResultRequest))
+		return srv.(AggregatorServer).ReadCommitCCVNodeData(ctx, req.(*ReadCommitCCVNodeDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -248,16 +248,16 @@ var Aggregator_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AggregatorServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "WriteCommitteeVerifierNodeResult",
-			Handler:    _Aggregator_WriteCommitteeVerifierNodeResult_Handler,
+			MethodName: "WriteCommitCCVNodeData",
+			Handler:    _Aggregator_WriteCommitCCVNodeData_Handler,
 		},
 		{
-			MethodName: "BatchWriteCommitteeVerifierNodeResult",
-			Handler:    _Aggregator_BatchWriteCommitteeVerifierNodeResult_Handler,
+			MethodName: "BatchWriteCommitCCVNodeData",
+			Handler:    _Aggregator_BatchWriteCommitCCVNodeData_Handler,
 		},
 		{
-			MethodName: "ReadCommitteeVerifierNodeResult",
-			Handler:    _Aggregator_ReadCommitteeVerifierNodeResult_Handler,
+			MethodName: "ReadCommitCCVNodeData",
+			Handler:    _Aggregator_ReadCommitCCVNodeData_Handler,
 		},
 		{
 			MethodName: "WriteChainStatus",
@@ -273,116 +273,18 @@ var Aggregator_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	MessageDiscovery_GetMessagesSince_FullMethodName = "/chainlink_ccv.v1.MessageDiscovery/GetMessagesSince"
-)
-
-// MessageDiscoveryClient is the client API for MessageDiscovery service.
-//
-// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type MessageDiscoveryClient interface {
-	GetMessagesSince(ctx context.Context, in *GetMessagesSinceRequest, opts ...grpc.CallOption) (*GetMessagesSinceResponse, error)
-}
-
-type messageDiscoveryClient struct {
-	cc grpc.ClientConnInterface
-}
-
-func NewMessageDiscoveryClient(cc grpc.ClientConnInterface) MessageDiscoveryClient {
-	return &messageDiscoveryClient{cc}
-}
-
-func (c *messageDiscoveryClient) GetMessagesSince(ctx context.Context, in *GetMessagesSinceRequest, opts ...grpc.CallOption) (*GetMessagesSinceResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetMessagesSinceResponse)
-	err := c.cc.Invoke(ctx, MessageDiscovery_GetMessagesSince_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-// MessageDiscoveryServer is the server API for MessageDiscovery service.
-// All implementations must embed UnimplementedMessageDiscoveryServer
-// for forward compatibility.
-type MessageDiscoveryServer interface {
-	GetMessagesSince(context.Context, *GetMessagesSinceRequest) (*GetMessagesSinceResponse, error)
-	mustEmbedUnimplementedMessageDiscoveryServer()
-}
-
-// UnimplementedMessageDiscoveryServer must be embedded to have
-// forward compatible implementations.
-//
-// NOTE: this should be embedded by value instead of pointer to avoid a nil
-// pointer dereference when methods are called.
-type UnimplementedMessageDiscoveryServer struct{}
-
-func (UnimplementedMessageDiscoveryServer) GetMessagesSince(context.Context, *GetMessagesSinceRequest) (*GetMessagesSinceResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetMessagesSince not implemented")
-}
-func (UnimplementedMessageDiscoveryServer) mustEmbedUnimplementedMessageDiscoveryServer() {}
-func (UnimplementedMessageDiscoveryServer) testEmbeddedByValue()                          {}
-
-// UnsafeMessageDiscoveryServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to MessageDiscoveryServer will
-// result in compilation errors.
-type UnsafeMessageDiscoveryServer interface {
-	mustEmbedUnimplementedMessageDiscoveryServer()
-}
-
-func RegisterMessageDiscoveryServer(s grpc.ServiceRegistrar, srv MessageDiscoveryServer) {
-	// If the following call pancis, it indicates UnimplementedMessageDiscoveryServer was
-	// embedded by pointer and is nil.  This will cause panics if an
-	// unimplemented method is ever invoked, so we test this at initialization
-	// time to prevent it from happening at runtime later due to I/O.
-	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
-		t.testEmbeddedByValue()
-	}
-	s.RegisterService(&MessageDiscovery_ServiceDesc, srv)
-}
-
-func _MessageDiscovery_GetMessagesSince_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetMessagesSinceRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MessageDiscoveryServer).GetMessagesSince(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: MessageDiscovery_GetMessagesSince_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MessageDiscoveryServer).GetMessagesSince(ctx, req.(*GetMessagesSinceRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-// MessageDiscovery_ServiceDesc is the grpc.ServiceDesc for MessageDiscovery service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var MessageDiscovery_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "chainlink_ccv.v1.MessageDiscovery",
-	HandlerType: (*MessageDiscoveryServer)(nil),
-	Methods: []grpc.MethodDesc{
-		{
-			MethodName: "GetMessagesSince",
-			Handler:    _MessageDiscovery_GetMessagesSince_Handler,
-		},
-	},
-	Streams:  []grpc.StreamDesc{},
-	Metadata: "v1/aggregator.proto",
-}
-
-const (
-	VerifierResultAPI_GetVerifierResultsForMessage_FullMethodName = "/chainlink_ccv.v1.VerifierResultAPI/GetVerifierResultsForMessage"
+	VerifierResultAPI_GetVerifierResultForMessage_FullMethodName      = "/chainlink_ccv.v1.VerifierResultAPI/GetVerifierResultForMessage"
+	VerifierResultAPI_BatchGetVerifierResultForMessage_FullMethodName = "/chainlink_ccv.v1.VerifierResultAPI/BatchGetVerifierResultForMessage"
+	VerifierResultAPI_GetMessagesSince_FullMethodName                 = "/chainlink_ccv.v1.VerifierResultAPI/GetMessagesSince"
 )
 
 // VerifierResultAPIClient is the client API for VerifierResultAPI service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type VerifierResultAPIClient interface {
-	GetVerifierResultsForMessage(ctx context.Context, in *GetVerifierResultsForMessageRequest, opts ...grpc.CallOption) (*GetVerifierResultsForMessageResponse, error)
+	GetVerifierResultForMessage(ctx context.Context, in *GetVerifierResultForMessageRequest, opts ...grpc.CallOption) (*VerifierResult, error)
+	BatchGetVerifierResultForMessage(ctx context.Context, in *BatchGetVerifierResultForMessageRequest, opts ...grpc.CallOption) (*BatchGetVerifierResultForMessageResponse, error)
+	GetMessagesSince(ctx context.Context, in *GetMessagesSinceRequest, opts ...grpc.CallOption) (*GetMessagesSinceResponse, error)
 }
 
 type verifierResultAPIClient struct {
@@ -393,10 +295,30 @@ func NewVerifierResultAPIClient(cc grpc.ClientConnInterface) VerifierResultAPICl
 	return &verifierResultAPIClient{cc}
 }
 
-func (c *verifierResultAPIClient) GetVerifierResultsForMessage(ctx context.Context, in *GetVerifierResultsForMessageRequest, opts ...grpc.CallOption) (*GetVerifierResultsForMessageResponse, error) {
+func (c *verifierResultAPIClient) GetVerifierResultForMessage(ctx context.Context, in *GetVerifierResultForMessageRequest, opts ...grpc.CallOption) (*VerifierResult, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetVerifierResultsForMessageResponse)
-	err := c.cc.Invoke(ctx, VerifierResultAPI_GetVerifierResultsForMessage_FullMethodName, in, out, cOpts...)
+	out := new(VerifierResult)
+	err := c.cc.Invoke(ctx, VerifierResultAPI_GetVerifierResultForMessage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *verifierResultAPIClient) BatchGetVerifierResultForMessage(ctx context.Context, in *BatchGetVerifierResultForMessageRequest, opts ...grpc.CallOption) (*BatchGetVerifierResultForMessageResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(BatchGetVerifierResultForMessageResponse)
+	err := c.cc.Invoke(ctx, VerifierResultAPI_BatchGetVerifierResultForMessage_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *verifierResultAPIClient) GetMessagesSince(ctx context.Context, in *GetMessagesSinceRequest, opts ...grpc.CallOption) (*GetMessagesSinceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetMessagesSinceResponse)
+	err := c.cc.Invoke(ctx, VerifierResultAPI_GetMessagesSince_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -407,7 +329,9 @@ func (c *verifierResultAPIClient) GetVerifierResultsForMessage(ctx context.Conte
 // All implementations must embed UnimplementedVerifierResultAPIServer
 // for forward compatibility.
 type VerifierResultAPIServer interface {
-	GetVerifierResultsForMessage(context.Context, *GetVerifierResultsForMessageRequest) (*GetVerifierResultsForMessageResponse, error)
+	GetVerifierResultForMessage(context.Context, *GetVerifierResultForMessageRequest) (*VerifierResult, error)
+	BatchGetVerifierResultForMessage(context.Context, *BatchGetVerifierResultForMessageRequest) (*BatchGetVerifierResultForMessageResponse, error)
+	GetMessagesSince(context.Context, *GetMessagesSinceRequest) (*GetMessagesSinceResponse, error)
 	mustEmbedUnimplementedVerifierResultAPIServer()
 }
 
@@ -418,8 +342,14 @@ type VerifierResultAPIServer interface {
 // pointer dereference when methods are called.
 type UnimplementedVerifierResultAPIServer struct{}
 
-func (UnimplementedVerifierResultAPIServer) GetVerifierResultsForMessage(context.Context, *GetVerifierResultsForMessageRequest) (*GetVerifierResultsForMessageResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetVerifierResultsForMessage not implemented")
+func (UnimplementedVerifierResultAPIServer) GetVerifierResultForMessage(context.Context, *GetVerifierResultForMessageRequest) (*VerifierResult, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetVerifierResultForMessage not implemented")
+}
+func (UnimplementedVerifierResultAPIServer) BatchGetVerifierResultForMessage(context.Context, *BatchGetVerifierResultForMessageRequest) (*BatchGetVerifierResultForMessageResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method BatchGetVerifierResultForMessage not implemented")
+}
+func (UnimplementedVerifierResultAPIServer) GetMessagesSince(context.Context, *GetMessagesSinceRequest) (*GetMessagesSinceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMessagesSince not implemented")
 }
 func (UnimplementedVerifierResultAPIServer) mustEmbedUnimplementedVerifierResultAPIServer() {}
 func (UnimplementedVerifierResultAPIServer) testEmbeddedByValue()                           {}
@@ -442,20 +372,56 @@ func RegisterVerifierResultAPIServer(s grpc.ServiceRegistrar, srv VerifierResult
 	s.RegisterService(&VerifierResultAPI_ServiceDesc, srv)
 }
 
-func _VerifierResultAPI_GetVerifierResultsForMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetVerifierResultsForMessageRequest)
+func _VerifierResultAPI_GetVerifierResultForMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetVerifierResultForMessageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(VerifierResultAPIServer).GetVerifierResultsForMessage(ctx, in)
+		return srv.(VerifierResultAPIServer).GetVerifierResultForMessage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: VerifierResultAPI_GetVerifierResultsForMessage_FullMethodName,
+		FullMethod: VerifierResultAPI_GetVerifierResultForMessage_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(VerifierResultAPIServer).GetVerifierResultsForMessage(ctx, req.(*GetVerifierResultsForMessageRequest))
+		return srv.(VerifierResultAPIServer).GetVerifierResultForMessage(ctx, req.(*GetVerifierResultForMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VerifierResultAPI_BatchGetVerifierResultForMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BatchGetVerifierResultForMessageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VerifierResultAPIServer).BatchGetVerifierResultForMessage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VerifierResultAPI_BatchGetVerifierResultForMessage_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VerifierResultAPIServer).BatchGetVerifierResultForMessage(ctx, req.(*BatchGetVerifierResultForMessageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _VerifierResultAPI_GetMessagesSince_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMessagesSinceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(VerifierResultAPIServer).GetMessagesSince(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: VerifierResultAPI_GetMessagesSince_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(VerifierResultAPIServer).GetMessagesSince(ctx, req.(*GetMessagesSinceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -468,8 +434,16 @@ var VerifierResultAPI_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*VerifierResultAPIServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetVerifierResultsForMessage",
-			Handler:    _VerifierResultAPI_GetVerifierResultsForMessage_Handler,
+			MethodName: "GetVerifierResultForMessage",
+			Handler:    _VerifierResultAPI_GetVerifierResultForMessage_Handler,
+		},
+		{
+			MethodName: "BatchGetVerifierResultForMessage",
+			Handler:    _VerifierResultAPI_BatchGetVerifierResultForMessage_Handler,
+		},
+		{
+			MethodName: "GetMessagesSince",
+			Handler:    _VerifierResultAPI_GetMessagesSince_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
