@@ -45,65 +45,67 @@ message ReadChainStatusResponse {
 }
 
 message Message {
-  uint32 version = 1;
-  uint64 source_chain_selector = 2;
-  uint64 dest_chain_selector = 3;
-  uint64 nonce = 4;
-  uint32 on_ramp_address_length = 5;
-  bytes on_ramp_address = 6;
-  uint32 off_ramp_address_length = 7;
-  bytes off_ramp_address = 8;
-  uint32 finality = 9;
-  uint32 sender_length = 10;
-  bytes sender = 11;
-  uint32 receiver_length = 12;
-  bytes receiver = 13;
+  bytes sender = 1;
+  bytes data = 2;
+  bytes on_ramp_address = 3;
+  bytes token_transfer = 4;
+  bytes off_ramp_address = 5;
+  bytes dest_blob = 6;
+  bytes receiver = 7;
+  uint64 source_chain_selector = 8;
+  uint64 dest_chain_selector = 9;
+  uint64 sequence_number = 10;
+  uint32 execution_gas_limit = 11;
+  uint32 ccip_receive_gas_limit = 12;
+  uint32 finality = 13;
   uint32 dest_blob_length = 14;
-  bytes dest_blob = 15;
-  uint32 token_transfer_length = 16;
-  bytes token_transfer = 17;
-  uint32 data_length = 18;
-  bytes data = 19;
-  uint32 gas_limit = 20;
-}
-
-message ReceiptBlob {
-  bytes issuer = 1;
-  uint64 dest_gas_limit = 2;
-  uint32 dest_bytes_overhead = 3;
-  bytes blob = 4;
-  bytes extra_args = 5;
+  uint32 token_transfer_length = 15;
+  uint32 data_length = 16;
+  uint32 receiver_length = 17;
+  uint32 sender_length = 18;
+  uint32 version = 19;
+  uint32 off_ramp_address_length = 20;
+  uint32 on_ramp_address_length = 21;
 }
 
 message CommitteeVerifierNodeResult {
-  bytes message_id = 1;
-  bytes source_verifier_address = 2;
-  // ccv_data is the signature from the commit verifier node of the message id and the blob data
-  bytes ccv_data = 3;
-  // blob_data is the verifier specific data like the ccv version
-  bytes blob_data = 4;
-  int64 timestamp = 5;
-  Message message = 6;
-  repeated ReceiptBlob receipt_blobs = 7;
+  // Message data that the CCV node attests to
+  Message message = 1;
+  // Version of the CCV found from the receipt blob on the source chain
+  bytes ccv_version = 2;
+  // Addresses of the CCV specified for this message
+  repeated bytes ccv_addresses = 3;
+  // Address of the preferred executor
+  bytes executor_address = 4; 
+  // Node signature. Will be combined with other node signatures to reach quorum and for the final verifer result
+  bytes signature = 5;
 }
 
 message VerifierResult {
+  // Message data 
   Message message = 1;
-  bytes source_verifier_address = 2;
-  bytes dest_verifier_address = 3;
+  // Addresses of the CCV specified for this message
+  repeated bytes message_ccv_addresses = 2;
+  // Address of the preferred executor
+  bytes message_executor_address = 3;
+  // Verification data required to execute the message on the destination (e.g. signatures)
   bytes ccv_data = 4;
-  int64 timestamp = 5;
-  int64 sequence = 6;
+  VerifierResultMetadata metadata = 5;  
 }
 
-message MessageWithVerifierResult {
-  Message message = 1;
-  bytes source_verifier_address = 2;
-  bytes dest_verifier_address = 3;
-  bytes ccv_data = 4;
-  int64 timestamp = 5;
-  int64 sequence = 6;
-  repeated ReceiptBlob receipt_blobs_from_majority = 7;
+message VerifierResultMetadata {  
+  // Timestamp when the verifier result was created  
+  int64 timestamp = 1;  
+  // Execution hint so that executors can easily verify before writing on chain 
+  bytes verifier_dest_address = 2;  
+} 
+
+
+message VerifierResultWithSequence {  
+  // Verifier result contains the message data and required verification data from the committee verifier  
+  VerifierResult verifierResult = 1;  
+  // Monotonic sequence number assigned by the verifier result API. Can be used to query for new messages since a given sequence.  
+  int64 sequence = 2;  
 }
 
 message BatchWriteCommitteeVerifierNodeResultRequest {
@@ -116,7 +118,7 @@ message BatchWriteCommitteeVerifierNodeResultResponse {
 }
 
 message WriteCommitteeVerifierNodeResultRequest {
-  CommitteeVerifierNodeResult ccv_node_data = 1;
+  CommitteeVerifierNodeResult committee_verifier_node_result = 1;
 }
 
 enum WriteStatus {
@@ -134,7 +136,7 @@ message ReadCommitteeVerifierNodeResultRequest {
 }
 
 message ReadCommitteeVerifierNodeResultResponse {
-  CommitteeVerifierNodeResult ccv_node_data = 1;
+  CommitteeVerifierNodeResult committee_verifier_node_result = 1;
 }
 
 message GetVerifierResultsForMessageRequest {
@@ -151,5 +153,5 @@ message GetMessagesSinceRequest {
 }
 
 message GetMessagesSinceResponse {
-    repeated MessageWithVerifierResult results = 1;
+    repeated VerifierResultWithSequence results = 1;
 }
