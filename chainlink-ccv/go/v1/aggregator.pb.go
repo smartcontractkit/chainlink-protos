@@ -319,14 +319,15 @@ type Message struct {
 	ExecutionGasLimit    uint32                 `protobuf:"varint,11,opt,name=execution_gas_limit,json=executionGasLimit,proto3" json:"execution_gas_limit,omitempty"`
 	CcipReceiveGasLimit  uint32                 `protobuf:"varint,12,opt,name=ccip_receive_gas_limit,json=ccipReceiveGasLimit,proto3" json:"ccip_receive_gas_limit,omitempty"`
 	Finality             uint32                 `protobuf:"varint,13,opt,name=finality,proto3" json:"finality,omitempty"`
-	DestBlobLength       uint32                 `protobuf:"varint,14,opt,name=dest_blob_length,json=destBlobLength,proto3" json:"dest_blob_length,omitempty"`
-	TokenTransferLength  uint32                 `protobuf:"varint,15,opt,name=token_transfer_length,json=tokenTransferLength,proto3" json:"token_transfer_length,omitempty"`
-	DataLength           uint32                 `protobuf:"varint,16,opt,name=data_length,json=dataLength,proto3" json:"data_length,omitempty"`
-	ReceiverLength       uint32                 `protobuf:"varint,17,opt,name=receiver_length,json=receiverLength,proto3" json:"receiver_length,omitempty"`
-	SenderLength         uint32                 `protobuf:"varint,18,opt,name=sender_length,json=senderLength,proto3" json:"sender_length,omitempty"`
-	Version              uint32                 `protobuf:"varint,19,opt,name=version,proto3" json:"version,omitempty"`
-	OffRampAddressLength uint32                 `protobuf:"varint,20,opt,name=off_ramp_address_length,json=offRampAddressLength,proto3" json:"off_ramp_address_length,omitempty"`
-	OnRampAddressLength  uint32                 `protobuf:"varint,21,opt,name=on_ramp_address_length,json=onRampAddressLength,proto3" json:"on_ramp_address_length,omitempty"`
+	CcvAndExecutorHash   []byte                 `protobuf:"bytes,14,opt,name=ccv_and_executor_hash,json=ccvAndExecutorHash,proto3" json:"ccv_and_executor_hash,omitempty"`
+	DestBlobLength       uint32                 `protobuf:"varint,15,opt,name=dest_blob_length,json=destBlobLength,proto3" json:"dest_blob_length,omitempty"`
+	TokenTransferLength  uint32                 `protobuf:"varint,16,opt,name=token_transfer_length,json=tokenTransferLength,proto3" json:"token_transfer_length,omitempty"`
+	DataLength           uint32                 `protobuf:"varint,17,opt,name=data_length,json=dataLength,proto3" json:"data_length,omitempty"`
+	ReceiverLength       uint32                 `protobuf:"varint,18,opt,name=receiver_length,json=receiverLength,proto3" json:"receiver_length,omitempty"`
+	SenderLength         uint32                 `protobuf:"varint,19,opt,name=sender_length,json=senderLength,proto3" json:"sender_length,omitempty"`
+	Version              uint32                 `protobuf:"varint,20,opt,name=version,proto3" json:"version,omitempty"`
+	OffRampAddressLength uint32                 `protobuf:"varint,21,opt,name=off_ramp_address_length,json=offRampAddressLength,proto3" json:"off_ramp_address_length,omitempty"`
+	OnRampAddressLength  uint32                 `protobuf:"varint,22,opt,name=on_ramp_address_length,json=onRampAddressLength,proto3" json:"on_ramp_address_length,omitempty"`
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -450,6 +451,13 @@ func (x *Message) GetFinality() uint32 {
 		return x.Finality
 	}
 	return 0
+}
+
+func (x *Message) GetCcvAndExecutorHash() []byte {
+	if x != nil {
+		return x.CcvAndExecutorHash
+	}
+	return nil
 }
 
 func (x *Message) GetDestBlobLength() uint32 {
@@ -1257,7 +1265,7 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\x16ReadChainStatusRequest\x12'\n" +
 	"\x0fchain_selectors\x18\x01 \x03(\x04R\x0echainSelectors\"T\n" +
 	"\x17ReadChainStatusResponse\x129\n" +
-	"\bstatuses\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\bstatuses\"\xc8\x06\n" +
+	"\bstatuses\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\bstatuses\"\xfb\x06\n" +
 	"\aMessage\x12\x16\n" +
 	"\x06sender\x18\x01 \x01(\fR\x06sender\x12\x12\n" +
 	"\x04data\x18\x02 \x01(\fR\x04data\x12&\n" +
@@ -1272,16 +1280,17 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	" \x01(\x04R\x0esequenceNumber\x12.\n" +
 	"\x13execution_gas_limit\x18\v \x01(\rR\x11executionGasLimit\x123\n" +
 	"\x16ccip_receive_gas_limit\x18\f \x01(\rR\x13ccipReceiveGasLimit\x12\x1a\n" +
-	"\bfinality\x18\r \x01(\rR\bfinality\x12(\n" +
-	"\x10dest_blob_length\x18\x0e \x01(\rR\x0edestBlobLength\x122\n" +
-	"\x15token_transfer_length\x18\x0f \x01(\rR\x13tokenTransferLength\x12\x1f\n" +
-	"\vdata_length\x18\x10 \x01(\rR\n" +
+	"\bfinality\x18\r \x01(\rR\bfinality\x121\n" +
+	"\x15ccv_and_executor_hash\x18\x0e \x01(\fR\x12ccvAndExecutorHash\x12(\n" +
+	"\x10dest_blob_length\x18\x0f \x01(\rR\x0edestBlobLength\x122\n" +
+	"\x15token_transfer_length\x18\x10 \x01(\rR\x13tokenTransferLength\x12\x1f\n" +
+	"\vdata_length\x18\x11 \x01(\rR\n" +
 	"dataLength\x12'\n" +
-	"\x0freceiver_length\x18\x11 \x01(\rR\x0ereceiverLength\x12#\n" +
-	"\rsender_length\x18\x12 \x01(\rR\fsenderLength\x12\x18\n" +
-	"\aversion\x18\x13 \x01(\rR\aversion\x125\n" +
-	"\x17off_ramp_address_length\x18\x14 \x01(\rR\x14offRampAddressLength\x123\n" +
-	"\x16on_ramp_address_length\x18\x15 \x01(\rR\x13onRampAddressLength\"\xe1\x01\n" +
+	"\x0freceiver_length\x18\x12 \x01(\rR\x0ereceiverLength\x12#\n" +
+	"\rsender_length\x18\x13 \x01(\rR\fsenderLength\x12\x18\n" +
+	"\aversion\x18\x14 \x01(\rR\aversion\x125\n" +
+	"\x17off_ramp_address_length\x18\x15 \x01(\rR\x14offRampAddressLength\x123\n" +
+	"\x16on_ramp_address_length\x18\x16 \x01(\rR\x13onRampAddressLength\"\xe1\x01\n" +
 	"\x1bCommitteeVerifierNodeResult\x123\n" +
 	"\amessage\x18\x01 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x12\x1f\n" +
 	"\vccv_version\x18\x02 \x01(\fR\n" +

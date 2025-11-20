@@ -58,14 +58,15 @@ message Message {
   uint32 execution_gas_limit = 11;
   uint32 ccip_receive_gas_limit = 12;
   uint32 finality = 13;
-  uint32 dest_blob_length = 14;
-  uint32 token_transfer_length = 15;
-  uint32 data_length = 16;
-  uint32 receiver_length = 17;
-  uint32 sender_length = 18;
-  uint32 version = 19;
-  uint32 off_ramp_address_length = 20;
-  uint32 on_ramp_address_length = 21;
+  bytes ccv_and_executor_hash = 14;
+  uint32 dest_blob_length = 15;
+  uint32 token_transfer_length = 16;
+  uint32 data_length = 17;
+  uint32 receiver_length = 18;
+  uint32 sender_length = 19;
+  uint32 version = 20;
+  uint32 off_ramp_address_length = 21;
+  uint32 on_ramp_address_length = 22;
 }
 
 message CommitteeVerifierNodeResult {
