@@ -96,7 +96,9 @@ message VerifierResult {
 
 message VerifierResultMetadata {  
   // Timestamp when the verifier result was created  
-  int64 timestamp = 1;  
+  int64 timestamp = 1;
+  // Hint to easily identify the source CCV contract address
+  bytes verifier_source_address = 3;
   // Execution hint so that executors can easily verify before writing on chain 
   bytes verifier_dest_address = 2;  
 } 

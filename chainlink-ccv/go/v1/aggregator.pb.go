@@ -681,6 +681,8 @@ type VerifierResultMetadata struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Timestamp when the verifier result was created
 	Timestamp int64 `protobuf:"varint,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	// Hint to easily identify the source CCV contract address
+	VerifierSourceAddress []byte `protobuf:"bytes,3,opt,name=verifier_source_address,json=verifierSourceAddress,proto3" json:"verifier_source_address,omitempty"`
 	// Execution hint so that executors can easily verify before writing on chain
 	VerifierDestAddress []byte `protobuf:"bytes,2,opt,name=verifier_dest_address,json=verifierDestAddress,proto3" json:"verifier_dest_address,omitempty"`
 	unknownFields       protoimpl.UnknownFields
@@ -722,6 +724,13 @@ func (x *VerifierResultMetadata) GetTimestamp() int64 {
 		return x.Timestamp
 	}
 	return 0
+}
+
+func (x *VerifierResultMetadata) GetVerifierSourceAddress() []byte {
+	if x != nil {
+		return x.VerifierSourceAddress
+	}
+	return nil
 }
 
 func (x *VerifierResultMetadata) GetVerifierDestAddress() []byte {
@@ -1303,9 +1312,10 @@ const file_v1_aggregator_proto_rawDesc = "" +
 	"\x15message_ccv_addresses\x18\x02 \x03(\fR\x13messageCcvAddresses\x128\n" +
 	"\x18message_executor_address\x18\x03 \x01(\fR\x16messageExecutorAddress\x12\x19\n" +
 	"\bccv_data\x18\x04 \x01(\fR\accvData\x12D\n" +
-	"\bmetadata\x18\x05 \x01(\v2(.chainlink_ccv.v1.VerifierResultMetadataR\bmetadata\"j\n" +
+	"\bmetadata\x18\x05 \x01(\v2(.chainlink_ccv.v1.VerifierResultMetadataR\bmetadata\"\xa2\x01\n" +
 	"\x16VerifierResultMetadata\x12\x1c\n" +
-	"\ttimestamp\x18\x01 \x01(\x03R\ttimestamp\x122\n" +
+	"\ttimestamp\x18\x01 \x01(\x03R\ttimestamp\x126\n" +
+	"\x17verifier_source_address\x18\x03 \x01(\fR\x15verifierSourceAddress\x122\n" +
 	"\x15verifier_dest_address\x18\x02 \x01(\fR\x13verifierDestAddress\"\x82\x01\n" +
 	"\x1aVerifierResultWithSequence\x12H\n" +
 	"\x0everifierResult\x18\x01 \x01(\v2 .chainlink_ccv.v1.VerifierResultR\x0everifierResult\x12\x1a\n" +
