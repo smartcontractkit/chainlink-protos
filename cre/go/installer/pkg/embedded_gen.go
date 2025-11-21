@@ -287,7 +287,7 @@ enum EncodingType {
   ENCODING_TYPE_NONE = 0;
   ENCODING_TYPE_BASE58  = 1;   // for data <129 bytes
   ENCODING_TYPE_BASE64  = 2;   // any size
-  ENCODING_TYPE_TYPE_BASE64_ZSTD = 3; // zstd-compressed, base64-wrapped
+  ENCODING_TYPE_BASE64_ZSTD = 3; // zstd-compressed, base64-wrapped
   ENCODING_TYPE_JSON_PARSED = 4; // program parsers; fallback to base64 if unknown
   ENCODING_TYPE_JSON = 5;      // raw JSON (rare; prefer JSON_PARSED)
 }
@@ -512,7 +512,7 @@ message CompiledInstruction {
   uint32 program_id_index = 1; // index into account_keys
   repeated uint32 accounts = 2; // indices into account_keys
   bytes  data = 3;              // program input bytes
-  optional  uint32 stack_height = 4;      // if recorded by node
+  uint32 stack_height = 4;      // if recorded by node
 }
 
 // Raw bytes with encoding tag.
@@ -644,7 +644,7 @@ service Client {
           defaults: [
             {
               key: "solana-mainnet"
-              value: 4949039107694359620
+              value: 124615329519749607
             },
             {
               key: "solana-testnet"
