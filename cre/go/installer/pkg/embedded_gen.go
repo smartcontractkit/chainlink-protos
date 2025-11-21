@@ -563,17 +563,6 @@ message GetTransactionRequest {
   bytes signature = 1; // 64-byte signature
 }
 
-// Comparator against hashed values.
-message HashedValueComparator {
-  repeated bytes values = 1; // hashed bytes
-  int64 operator = 2;        // comparison op
-}
-
-// Subkey path elements.
-message Subkeys {
-  repeated string subkeys = 1; // e.g., ["events","0","fields","owner"]
-}
-
 // RPC read context.
 message RPCContext {
   uint64 slot = 1;
