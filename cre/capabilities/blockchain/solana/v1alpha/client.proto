@@ -1,19 +1,18 @@
 syntax = "proto3";
-
-import "tools/generator/v1alpha/cre_metadata.proto";
-import "sdk/v1alpha/sdk.proto";
-import "values/v1/values.proto";
 package capabilities.blockchain.solana.v1alpha;
 
+import "sdk/v1alpha/sdk.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
+import "values/v1/values.proto";
 
 // Account/tx data encodings.
 enum EncodingType {
   ENCODING_TYPE_NONE = 0;
-  ENCODING_TYPE_BASE58  = 1;   // for data <129 bytes
-  ENCODING_TYPE_BASE64  = 2;   // any size
+  ENCODING_TYPE_BASE58 = 1; // for data <129 bytes
+  ENCODING_TYPE_BASE64 = 2; // any size
   ENCODING_TYPE_BASE64_ZSTD = 3; // zstd-compressed, base64-wrapped
   ENCODING_TYPE_JSON_PARSED = 4; // program parsers; fallback to base64 if unknown
-  ENCODING_TYPE_JSON = 5;      // raw JSON (rare; prefer JSON_PARSED)
+  ENCODING_TYPE_JSON = 5; // raw JSON (rare; prefer JSON_PARSED)
 }
 
 // Read consistency of queried state.
@@ -34,33 +33,33 @@ enum ConfirmationStatusType {
 
 // Transaction execution status returned by submitters/simulations.
 enum TxStatus {
-  TX_STATUS_FATAL = 0;    // unrecoverable failure
-  TX_STATUS_ABORTED = 1;  // not executed / dropped
-  TX_STATUS_SUCCESS = 2;  // executed successfully
+  TX_STATUS_FATAL = 0; // unrecoverable failure
+  TX_STATUS_ABORTED = 1; // not executed / dropped
+  TX_STATUS_SUCCESS = 2; // executed successfully
 }
 
 // On-chain account state.
 message Account {
-  uint64 lamports = 1;                // balance in lamports (1e-9 SOL)
-  bytes owner = 2;                    // 32-byte program id (Pubkey)
-  DataBytesOrJSON data = 3;           // account data (encoded or JSON)
-  bool executable = 4;                // true if this is a program account
-  values.v1.BigInt  rent_epoch = 5;   // next rent epoch
-  uint64 space = 6;                   // data length in bytes
+  uint64 lamports = 1; // balance in lamports (1e-9 SOL)
+  bytes owner = 2; // 32-byte program id (Pubkey)
+  DataBytesOrJSON data = 3; // account data (encoded or JSON)
+  bool executable = 4; // true if this is a program account
+  values.v1.BigInt rent_epoch = 5; // next rent epoch
+  uint64 space = 6; // data length in bytes
 }
 
 // Compute budget configuration when submitting txs.
 message ComputeConfig {
-  uint32 compute_limit = 1;      // max CUs (approx per-tx limit)
-  uint64 compute_max_price = 2;  // max lamports per CU
+  uint32 compute_limit = 1; // max CUs (approx per-tx limit)
+  uint64 compute_max_price = 2; // max lamports per CU
 }
 
 // Raw bytes vs parsed JSON (as returned by RPC).
 message DataBytesOrJSON {
   EncodingType encoding = 1;
   oneof body {
-    bytes raw  = 2;  // program data (node’s base64/base58 decoded)
-    bytes json = 3;  // json: UTF-8 bytes of the jsonParsed payload.
+    bytes raw = 2; // program data (node’s base64/base58 decoded)
+    bytes json = 3; // json: UTF-8 bytes of the jsonParsed payload.
   }
 }
 
@@ -72,21 +71,21 @@ message DataSlice {
 
 // Options for GetAccountInfo.
 message GetAccountInfoOpts {
-  EncodingType encoding = 1;        // data encoding
-  CommitmentType commitment = 2;    // read consistency
-  DataSlice data_slice = 3;         // optional slice window
-  uint64 min_context_slot = 4;      // lower bound slot
+  EncodingType encoding = 1; // data encoding
+  CommitmentType commitment = 2; // read consistency
+  DataSlice data_slice = 3; // optional slice window
+  uint64 min_context_slot = 4; // lower bound slot
 }
 
 // Reply for GetAccountInfoWithOpts.
 message GetAccountInfoWithOptsReply {
   RPCContext rpc_context = 1; // read slot
-  optional Account value = 2;          // account (may be empty)
+  optional Account value = 2; // account (may be empty)
 }
 
 // Request for GetAccountInfoWithOpts.
 message GetAccountInfoWithOptsRequest {
-  bytes account = 1;        // 32-byte Pubkey
+  bytes account = 1; // 32-byte Pubkey
   GetAccountInfoOpts opts = 2;
 }
 
@@ -97,27 +96,27 @@ message GetBalanceReply {
 
 // Request for GetBalance.
 message GetBalanceRequest {
-  bytes addr = 1;                 // 32-byte Pubkey
-  CommitmentType commitment = 2;  // read consistency
+  bytes addr = 1; // 32-byte Pubkey
+  CommitmentType commitment = 2; // read consistency
 }
 
 // Options for GetBlock.
 message GetBlockOpts {
-  CommitmentType commitment = 4;  // read consistency
+  CommitmentType commitment = 4; // read consistency
 }
 
 // Block response.
 message GetBlockReply {
-  bytes blockhash = 1;            // 32-byte block hash
-  bytes previous_blockhash = 2;   // 32-byte parent hash
+  bytes blockhash = 1; // 32-byte block hash
+  bytes previous_blockhash = 2; // 32-byte parent hash
   uint64 parent_slot = 3;
-  optional int64 block_time = 4;  // unix seconds, node may not report it
-  uint64 block_height = 5;        // chain height
+  optional int64 block_time = 4; // unix seconds, node may not report it
+  uint64 block_height = 5; // chain height
 }
 
 // Request for GetBlock.
 message GetBlockRequest {
-  uint64 slot = 1;       // target slot
+  uint64 slot = 1; // target slot
   GetBlockOpts opts = 2;
 }
 
@@ -127,8 +126,8 @@ message GetFeeForMessageReply {
 }
 
 message GetFeeForMessageRequest {
-  string message = 1;             // must be base58-encoded Message
-  CommitmentType commitment = 2;  // read consistency
+  string message = 1; // must be base58-encoded Message
+  CommitmentType commitment = 2; // read consistency
 }
 
 // Options for GetMultipleAccounts.
@@ -140,13 +139,13 @@ message GetMultipleAccountsOpts {
 }
 
 message OptionalAccountWrapper {
-    optional Account account = 1;
+  optional Account account = 1;
 }
 
 // Reply for GetMultipleAccountsWithOpts.
 message GetMultipleAccountsWithOptsReply {
   RPCContext rpc_context = 1; // read slot
-  repeated OptionalAccountWrapper value = 2;   // accounts (nil entries allowed)
+  repeated OptionalAccountWrapper value = 2; // accounts (nil entries allowed)
 }
 
 // Request for GetMultipleAccountsWithOpts.
@@ -167,9 +166,9 @@ message GetSignatureStatusesRequest {
 
 // Per-signature status.
 message GetSignatureStatusesResult {
-  uint64 slot = 1;                               // processed slot
-  optional uint64 confirmations = 2;             // null->0 here
-  string err = 3;                                // error JSON string (empty on success)
+  uint64 slot = 1; // processed slot
+  optional uint64 confirmations = 2; // null->0 here
+  string err = 3; // error JSON string (empty on success)
   ConfirmationStatusType confirmation_status = 4;
 }
 
@@ -184,15 +183,15 @@ message GetSlotHeightRequest {
 
 // Message header counts.
 message MessageHeader {
-  uint32 num_required_signatures = 1;        // signer count
-  uint32 num_readonly_signed_accounts = 2;   // trailing signed RO
+  uint32 num_required_signatures = 1; // signer count
+  uint32 num_readonly_signed_accounts = 2; // trailing signed RO
   uint32 num_readonly_unsigned_accounts = 3; // trailing unsigned RO
 }
 
 // Parsed message (no address tables).
 message ParsedMessage {
-  bytes recent_blockhash = 1;           // 32-byte Hash
-  repeated bytes account_keys = 2;      // list of 32-byte Pubkeys
+  bytes recent_blockhash = 1; // 32-byte Hash
+  repeated bytes account_keys = 2; // list of 32-byte Pubkeys
   MessageHeader header = 3;
   repeated CompiledInstruction instructions = 4;
 }
@@ -205,24 +204,24 @@ message ParsedTransaction {
 
 // Token amount (UI-friendly).
 message UiTokenAmount {
-  string amount = 1;         // raw integer string
-  uint32 decimals = 2;       // mint decimals
+  string amount = 1; // raw integer string
+  uint32 decimals = 2; // mint decimals
   string ui_amount_string = 4; // amount / 10^decimals
 }
 
 // SPL token balance entry.
 message TokenBalance {
-  uint32 account_index = 1;  // index in account_keys
-  optional bytes  owner = 2;          // 32-byte owner (optional)
-  optional bytes  program_id = 3;     // 32-byte token program (optional)
-  bytes  mint = 4;           // 32-byte mint
-  UiTokenAmount ui = 5;      // formatted amounts
+  uint32 account_index = 1; // index in account_keys
+  optional bytes owner = 2; // 32-byte owner (optional)
+  optional bytes program_id = 3; // 32-byte token program (optional)
+  bytes mint = 4; // 32-byte mint
+  UiTokenAmount ui = 5; // formatted amounts
 }
 
 // Inner instruction list at a given outer instruction index.
 message InnerInstruction {
-  uint32 index = 1;                                 // outer ix index
-  repeated CompiledInstruction instructions = 2;    // invoked ixs
+  uint32 index = 1; // outer ix index
+  repeated CompiledInstruction instructions = 2; // invoked ixs
 }
 
 // Address table lookups expanded by loader.
@@ -235,51 +234,51 @@ message LoadedAddresses {
 message CompiledInstruction {
   uint32 program_id_index = 1; // index into account_keys
   repeated uint32 accounts = 2; // indices into account_keys
-  bytes  data = 3;              // program input bytes
-  uint32 stack_height = 4;      // if recorded by node
+  bytes data = 3; // program input bytes
+  uint32 stack_height = 4; // if recorded by node
 }
 
 // Raw bytes with encoding tag.
 message Data {
-  bytes content = 1;         // raw bytes
+  bytes content = 1; // raw bytes
   EncodingType encoding = 2; // how it was encoded originally
 }
 
 // Program return data.
 message ReturnData {
   bytes program_id = 1; // 32-byte Pubkey
-  Data data = 2;        // raw return bytes
+  Data data = 2; // raw return bytes
 }
 
 // Transaction execution metadata.
 message TransactionMeta {
-  string err_json = 1;                          // error JSON (empty on success)
-  uint64 fee = 2;                               // lamports
-  repeated uint64 pre_balances  = 3;            // lamports per account
-  repeated uint64 post_balances = 4;            // lamports per account
-  repeated string log_messages = 5;             // runtime logs
-  repeated TokenBalance pre_token_balances  = 6;
+  string err_json = 1; // error JSON (empty on success)
+  uint64 fee = 2; // lamports
+  repeated uint64 pre_balances = 3; // lamports per account
+  repeated uint64 post_balances = 4; // lamports per account
+  repeated string log_messages = 5; // runtime logs
+  repeated TokenBalance pre_token_balances = 6;
   repeated TokenBalance post_token_balances = 7;
   repeated InnerInstruction inner_instructions = 8;
   LoadedAddresses loaded_addresses = 9;
   ReturnData return_data = 10;
-  optional uint64 compute_units_consumed = 11;           // CUs
+  optional uint64 compute_units_consumed = 11; // CUs
 }
 
 // Transaction envelope: raw bytes or parsed struct.
 message TransactionEnvelope {
   oneof transaction {
-    bytes raw = 1;               // raw tx bytes (for RAW/base64)
+    bytes raw = 1; // raw tx bytes (for RAW/base64)
     ParsedTransaction parsed = 2; // parsed tx (for JSON_PARSED)
   }
 }
 
 // GetTransaction reply.
 message GetTransactionReply {
-  uint64 slot = 1;                 // processed slot
-  optional int64 block_time = 2;            // unix seconds
+  uint64 slot = 1; // processed slot
+  optional int64 block_time = 2; // unix seconds
   optional TransactionEnvelope transaction = 3; // tx bytes or parsed
-  optional TransactionMeta meta = 4;       // may be omitted by node
+  optional TransactionMeta meta = 4; // may be omitted by node
 }
 
 // GetTransaction request.
@@ -294,52 +293,52 @@ message RPCContext {
 
 // Simulation options.
 message SimulateTXOpts {
-  bool sig_verify = 1;                 // verify sigs
-  CommitmentType commitment = 2;       // read consistency
-  bool replace_recent_blockhash = 3;   // refresh blockhash
+  bool sig_verify = 1; // verify sigs
+  CommitmentType commitment = 2; // read consistency
+  bool replace_recent_blockhash = 3; // refresh blockhash
   SimulateTransactionAccountsOpts accounts = 4; // return accounts
 }
 
 // Simulation result.
 message SimulateTXReply {
-  string err = 1;                 // empty on success
-  repeated string logs = 2;       // runtime logs
-  repeated Account accounts = 3;  // returned accounts
-  uint64 units_consumed = 4;      // CUs
+  string err = 1; // empty on success
+  repeated string logs = 2; // runtime logs
+  repeated Account accounts = 3; // returned accounts
+  uint64 units_consumed = 4; // CUs
 }
 
 // Simulation request.
 message SimulateTXRequest {
-  bytes receiver = 1;            // 32-byte program id (target)
+  bytes receiver = 1; // 32-byte program id (target)
   string encoded_transaction = 2; // base64/base58 tx
   SimulateTXOpts opts = 3;
 }
 
 // Accounts to return during simulation.
 message SimulateTransactionAccountsOpts {
-  EncodingType encoding = 1;   // account data encoding
+  EncodingType encoding = 1; // account data encoding
   repeated bytes addresses = 2; // 32-byte Pubkeys
 }
 
 message FilterLogTriggerRequest {
-    // TODO PLEX-1828
+  // TODO PLEX-1828
 }
 
 message Log {
-    // TODO PLEX-1828
+  // TODO PLEX-1828
 }
 
 // All metas are non-signers.
 message AccountMeta {
-    bytes public_key = 1; // 32 bytes account public key
-    bool is_writable = 2; // write flag
+  bytes public_key = 1; // 32 bytes account public key
+  bool is_writable = 2; // write flag
 }
 
 message WriteReportRequest {
-    repeated AccountMeta remaining_accounts = 1; // accounts that are required by the receiver to accept the report
-    bytes receiver = 2; // 32 bytes receiver
-    optional ComputeConfig compute_config = 3;
-    sdk.v1alpha.ReportResponse report = 4;
+  repeated AccountMeta remaining_accounts = 1; // accounts that are required by the receiver to accept the report
+  bytes receiver = 2; // 32 bytes receiver
+  optional ComputeConfig compute_config = 3;
+  sdk.v1alpha.ReportResponse report = 4;
 }
 
 enum ReceiverContractExecutionStatus {
@@ -362,7 +361,7 @@ service Client {
     labels: {
       // from https://github.com/smartcontractkit/chain-selectors/blob/main/selectors.yml
       // as a subset of the selectors supported on the CRE
-      key: "ChainSelector",
+      key: "ChainSelector"
       value: {
         uint64_label: {
           defaults: [
@@ -395,4 +394,3 @@ service Client {
   rpc LogTrigger(FilterLogTriggerRequest) returns (stream Log);
   rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
 }
-
