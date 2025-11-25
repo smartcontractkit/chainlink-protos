@@ -224,6 +224,10 @@ service Client {
             {
               key: "ethereum-testnet-sepolia-optimism-1"
               value: 5224473277236331295
+            },
+            {
+              key: "private-testnet-andesite"
+              value: 6915682381028791124
             }
           ]
         }
