@@ -48,6 +48,8 @@ message VerifierResultMetadata {
   bytes verifier_source_address = 2;
   // Execution hint so that executors can easily verify before writing on chain 
   bytes verifier_dest_address = 3; 
+  // Block timestamp of which the message was included on source chain (milliseconds since epoch)
+  int64 source_chain_block_timestamp = 4;
 } 
 
 enum WriteStatus {

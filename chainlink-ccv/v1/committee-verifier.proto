@@ -32,6 +32,8 @@ message CommitteeVerifierNodeResult {
   bytes executor_address = 4; 
   // Node signature. Will be combined with other node signatures to reach quorum and for the final verifer result
   bytes signature = 5;
+  // Source block timestamp when the message was included on source chain
+  int64 source_chain_block_timestamp = 6;
 }
 
 message WriteChainStatusRequest {

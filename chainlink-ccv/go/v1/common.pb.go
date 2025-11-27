@@ -367,8 +367,10 @@ type VerifierResultMetadata struct {
 	VerifierSourceAddress []byte `protobuf:"bytes,2,opt,name=verifier_source_address,json=verifierSourceAddress,proto3" json:"verifier_source_address,omitempty"`
 	// Execution hint so that executors can easily verify before writing on chain
 	VerifierDestAddress []byte `protobuf:"bytes,3,opt,name=verifier_dest_address,json=verifierDestAddress,proto3" json:"verifier_dest_address,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	// Block timestamp of which the message was included on source chain (milliseconds since epoch)
+	SourceChainBlockTimestamp int64 `protobuf:"varint,4,opt,name=source_chain_block_timestamp,json=sourceChainBlockTimestamp,proto3" json:"source_chain_block_timestamp,omitempty"`
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
 }
 
 func (x *VerifierResultMetadata) Reset() {
@@ -422,6 +424,13 @@ func (x *VerifierResultMetadata) GetVerifierDestAddress() []byte {
 	return nil
 }
 
+func (x *VerifierResultMetadata) GetSourceChainBlockTimestamp() int64 {
+	if x != nil {
+		return x.SourceChainBlockTimestamp
+	}
+	return 0
+}
+
 var File_chainlink_ccv_v1_common_proto protoreflect.FileDescriptor
 
 const file_chainlink_ccv_v1_common_proto_rawDesc = "" +
@@ -457,11 +466,12 @@ const file_chainlink_ccv_v1_common_proto_rawDesc = "" +
 	"\x15message_ccv_addresses\x18\x02 \x03(\fR\x13messageCcvAddresses\x128\n" +
 	"\x18message_executor_address\x18\x03 \x01(\fR\x16messageExecutorAddress\x12\x19\n" +
 	"\bccv_data\x18\x04 \x01(\fR\accvData\x12D\n" +
-	"\bmetadata\x18\x05 \x01(\v2(.chainlink_ccv.v1.VerifierResultMetadataR\bmetadata\"\xa2\x01\n" +
+	"\bmetadata\x18\x05 \x01(\v2(.chainlink_ccv.v1.VerifierResultMetadataR\bmetadata\"\xe3\x01\n" +
 	"\x16VerifierResultMetadata\x12\x1c\n" +
 	"\ttimestamp\x18\x01 \x01(\x03R\ttimestamp\x126\n" +
 	"\x17verifier_source_address\x18\x02 \x01(\fR\x15verifierSourceAddress\x122\n" +
-	"\x15verifier_dest_address\x18\x03 \x01(\fR\x13verifierDestAddress*&\n" +
+	"\x15verifier_dest_address\x18\x03 \x01(\fR\x13verifierDestAddress\x12?\n" +
+	"\x1csource_chain_block_timestamp\x18\x04 \x01(\x03R\x19sourceChainBlockTimestamp*&\n" +
 	"\vWriteStatus\x12\v\n" +
 	"\aSUCCESS\x10\x00\x12\n" +
 	"\n" +

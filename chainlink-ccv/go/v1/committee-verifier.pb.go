@@ -93,9 +93,11 @@ type CommitteeVerifierNodeResult struct {
 	// Address of the preferred executor
 	ExecutorAddress []byte `protobuf:"bytes,4,opt,name=executor_address,json=executorAddress,proto3" json:"executor_address,omitempty"`
 	// Node signature. Will be combined with other node signatures to reach quorum and for the final verifer result
-	Signature     []byte `protobuf:"bytes,5,opt,name=signature,proto3" json:"signature,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Signature []byte `protobuf:"bytes,5,opt,name=signature,proto3" json:"signature,omitempty"`
+	// Source block timestamp when the message was included on source chain
+	SourceChainBlockTimestamp int64 `protobuf:"varint,6,opt,name=source_chain_block_timestamp,json=sourceChainBlockTimestamp,proto3" json:"source_chain_block_timestamp,omitempty"`
+	unknownFields             protoimpl.UnknownFields
+	sizeCache                 protoimpl.SizeCache
 }
 
 func (x *CommitteeVerifierNodeResult) Reset() {
@@ -161,6 +163,13 @@ func (x *CommitteeVerifierNodeResult) GetSignature() []byte {
 		return x.Signature
 	}
 	return nil
+}
+
+func (x *CommitteeVerifierNodeResult) GetSourceChainBlockTimestamp() int64 {
+	if x != nil {
+		return x.SourceChainBlockTimestamp
+	}
+	return 0
 }
 
 type WriteChainStatusRequest struct {
@@ -627,14 +636,15 @@ const file_chainlink_ccv_v1_committee_verifier_proto_rawDesc = "" +
 	"\vChainStatus\x12%\n" +
 	"\x0echain_selector\x18\x01 \x01(\x04R\rchainSelector\x124\n" +
 	"\x16finalized_block_height\x18\x02 \x01(\x04R\x14finalizedBlockHeight\x12\x1a\n" +
-	"\bdisabled\x18\x03 \x01(\bR\bdisabled\"\xe1\x01\n" +
+	"\bdisabled\x18\x03 \x01(\bR\bdisabled\"\xa2\x02\n" +
 	"\x1bCommitteeVerifierNodeResult\x123\n" +
 	"\amessage\x18\x01 \x01(\v2\x19.chainlink_ccv.v1.MessageR\amessage\x12\x1f\n" +
 	"\vccv_version\x18\x02 \x01(\fR\n" +
 	"ccvVersion\x12#\n" +
 	"\rccv_addresses\x18\x03 \x03(\fR\fccvAddresses\x12)\n" +
 	"\x10executor_address\x18\x04 \x01(\fR\x0fexecutorAddress\x12\x1c\n" +
-	"\tsignature\x18\x05 \x01(\fR\tsignature\"T\n" +
+	"\tsignature\x18\x05 \x01(\fR\tsignature\x12?\n" +
+	"\x1csource_chain_block_timestamp\x18\x06 \x01(\x03R\x19sourceChainBlockTimestamp\"T\n" +
 	"\x17WriteChainStatusRequest\x129\n" +
 	"\bstatuses\x18\x01 \x03(\v2\x1d.chainlink_ccv.v1.ChainStatusR\bstatuses\"Q\n" +
 	"\x18WriteChainStatusResponse\x125\n" +
