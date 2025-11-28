@@ -1,18 +1,24 @@
-* @smartcontractkit/devex-tooling
+* @smartcontractkit/op-tooling
 
-/job-distributor/ @smartcontractkit/devex-tooling
-/orchestrator/ @smartcontractkit/devex-tooling
-/svr/ @smartcontractkit/oev @smartcontractkit/devex-tooling
-/rmn/ @smartcontractkit/RMN @smartcontractkit/ccip @smartcontractkit/devex-tooling
-/chainlink-ccv/ @smartcontractkit/ccip @smartcontractkit/devex-tooling
-/billing/ @smartcontractkit/cre-business @smartcontractkit/core @smartcontractkit/devex-tooling
-/workflows/ @smartcontractkit/foundations @smartcontractkit/core @smartcontractkit/devex-tooling
-/cre/ @smartcontractkit/keystone @smartcontractkit/devex-tooling
-/storage-service/ @smartcontractkit/dev-services @smartcontractkit/devex-tooling
-/.github/workflows/cre-validations.yml @smartcontractkit/keystone @smartcontractkit/devex-tooling
-/linking-service/ @smartcontractkit/cre-business @smartcontractkit/core @smartcontractkit/devex-tooling
-# Changesets do not have owners
+# CCIP
+/rmn/ @smartcontractkit/RMN @smartcontractkit/ccip @smartcontractkit/op-tooling
+/chainlink-ccv/ @smartcontractkit/ccip @smartcontractkit/op-tooling
+
+# CLD Services
+/job-distributor/ @smartcontractkit/op-tooling
+/orchestrator/ @smartcontractkit/op-tooling
+/op-catalog/ @smartcontractkit/cld-team @smartcontractkit/op-tooling
+
+# CRE
+/cre/ @smartcontractkit/keystone @smartcontractkit/op-tooling
+/workflows/ @smartcontractkit/foundations @smartcontractkit/core @smartcontractkit/op-tooling
+/billing/ @smartcontractkit/cre-business @smartcontractkit/core @smartcontractkit/op-tooling
+/storage-service/ @smartcontractkit/dev-services @smartcontractkit/op-tooling
+/.github/workflows/cre-validations.yml @smartcontractkit/keystone @smartcontractkit/op-tooling
+/linking-service/ @smartcontractkit/cre-business @smartcontractkit/core @smartcontractkit/op-tooling
+
+# Data
+/svr/ @smartcontractkit/oev @smartcontractkit/op-tooling
+
+# Release changesets do not have owners
 /.changeset/**
-
-# Catalog owners
-/op-catalog/ @smartcontractkit/cld-team
