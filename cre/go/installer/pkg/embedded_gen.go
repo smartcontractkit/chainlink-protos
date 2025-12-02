@@ -231,6 +231,14 @@ service Client {
             {
               key: "private-testnet-andesite"
               value: 6915682381028791124
+            },
+            {
+              key: "ethereum-testnet-sepolia-zksync-1"
+              value: 6898391096552792247
+            },
+            {
+              key: "ethereum-mainnet-zksync-1"
+              value: 1562403441176082196
             }
           ]
         }
