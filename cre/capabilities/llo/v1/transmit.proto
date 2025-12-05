@@ -2,22 +2,22 @@ syntax = "proto3";
 
 package capabilities.llo.v1;
 
-option go_package = "github.com/smartcontractkit/chainlink-common/pkg/capabilities/v2/actions/llo";
-
 import "tools/generator/v1alpha/cre_metadata.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-common/pkg/capabilities/v2/actions/llo";
 
 // Configuration for the LLO Transmit Action
 message Config {
   // The ID of the DON (Decentralized Oracle Network)
   uint32 don_id = 1;
-  
+
   // Mercury server configurations (legacy support)
   // Map of server URL to public key (32 bytes hex)
   map<string, bytes> servers = 2;
-  
+
   // Transmitter-specific configurations
   repeated TransmitterConfig transmitters = 3;
-  
+
   // Enable verbose logging for debugging
   bool verbose_logging = 4;
 }
@@ -26,7 +26,7 @@ message Config {
 message TransmitterConfig {
   // Type of transmitter (e.g., "cre", "mercury")
   string type = 1;
-  
+
   // Transmitter-specific options as JSON
   bytes opts = 2;
 }
@@ -35,16 +35,16 @@ message TransmitterConfig {
 message Request {
   // Configuration digest for the OCR round
   bytes config_digest = 1;
-  
+
   // Sequence number of the report
   uint64 seq_nr = 2;
-  
+
   // The report bytes to transmit
   bytes report = 3;
-  
+
   // Report metadata
   ReportInfo report_info = 4;
-  
+
   // Attributed onchain signatures
   repeated AttributedSignature signatures = 5;
 }
@@ -53,7 +53,7 @@ message Request {
 message ReportInfo {
   // Lifecycle stage (e.g., production, staging, retirement)
   string life_cycle_stage = 1;
-  
+
   // Report format identifier
   string report_format = 2;
 }
@@ -62,7 +62,7 @@ message ReportInfo {
 message AttributedSignature {
   // The signature bytes
   bytes signature = 1;
-  
+
   // The signer index
   uint32 signer = 2;
 }
@@ -71,16 +71,16 @@ message AttributedSignature {
 message Response {
   // Whether the transmission was successful
   bool success = 1;
-  
+
   // Error message if transmission failed
   string error = 2;
-  
+
   // Number of sub-transmitters that successfully transmitted
   uint32 successful_transmissions = 3;
-  
+
   // Number of sub-transmitters that failed
   uint32 failed_transmissions = 4;
-  
+
   // Details about each sub-transmitter's result
   repeated TransmitterResult transmitter_results = 5;
 }
@@ -89,10 +89,10 @@ message Response {
 message TransmitterResult {
   // Transmitter type
   string type = 1;
-  
+
   // Success status
   bool success = 2;
-  
+
   // Error message if failed
   string error = 3;
 }
@@ -107,4 +107,3 @@ service LLOTransmit {
   // Transmit an LLO report to configured destinations
   rpc Execute(Request) returns (Response);
 }
-
