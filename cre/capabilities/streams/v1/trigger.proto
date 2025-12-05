@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package capabilities.streams.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-common/pkg/capabilities/v2/triggers/streams";
+
+import "tools/generator/v1alpha/cre_metadata.proto";
+
+// Configuration for the Streams Trigger
+message Config {
+  // The IDs of the data feeds that will have their reports included in the trigger event.
+  // Feed IDs are hex-encoded strings (e.g., "0x000...").
+  repeated string feed_ids = 1;
+  
+  // The interval in milliseconds after which a new trigger event is generated.
+  uint64 max_frequency_ms = 2;
+}
+
+// Metadata about the signers that produced the reports
+message SignersMetadata {
+  // The IDs of the signers
+  repeated string signers = 1;
+  
+  // The minimum number of signatures required to validate a report
+  int64 min_required_signatures = 2;
+}
+
+// A single feed report containing data and signatures
+message FeedReport {
+  // The ID of the data feed (hex-encoded)
+  string feed_id = 1;
+  
+  // The full report as raw bytes
+  bytes full_report = 2;
+  
+  // Report context required to validate signatures
+  bytes report_context = 3;
+  
+  // Signatures over the full report and report context
+  repeated bytes signatures = 4;
+  
+  // The benchmark price extracted from the full report
+  bytes benchmark_price = 5;
+  
+  // Timestamp when the observation was made
+  int64 observation_timestamp = 6;
+}
+
+// The payload emitted by the Streams Trigger containing feed data
+message Feed {
+  // Timestamp when the trigger event was generated
+  int64 timestamp = 1;
+  
+  // Metadata about the signers
+  SignersMetadata metadata = 2;
+  
+  // Array of feed reports
+  repeated FeedReport payload = 3;
+}
+
+// Streams Trigger service definition
+service Streams {
+  option (tools.generator.v1alpha.capability) = {
+    mode: MODE_DON
+    capability_id: "streams-trigger@1.0.0"
+  };
+
+  // Trigger method that streams feed data
+  rpc Trigger(Config) returns (stream Feed);
+}
+
