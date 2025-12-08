@@ -8,6 +8,7 @@ import "workflows/v2/xxx_no_send.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
 
+// CapabilityExecutionFinished
 message CapabilityExecutionFinished {
   CreInfo creInfo = 1;
   WorkflowKey workflow = 2;

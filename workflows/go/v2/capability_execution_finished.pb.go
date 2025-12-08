@@ -21,6 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// CapabilityExecutionFinished
 type CapabilityExecutionFinished struct {
 	state               protoimpl.MessageState `protogen:"open.v1"`
 	CreInfo             *CreInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
