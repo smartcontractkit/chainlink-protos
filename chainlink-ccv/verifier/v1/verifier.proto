@@ -45,16 +45,23 @@ message Message {
 }
 
 message VerifierResult {
+  // Message data 
   Message message = 1;
+  // Addresses of the CCV specified for this message
   repeated bytes message_ccv_addresses = 2;
+  // Address of the preferred executor
   bytes message_executor_address = 3;
+  // Verification data required to execute the message on the destination (e.g. signatures)
   bytes ccv_data = 4;
   VerifierResultMetadata metadata = 5;  
 }
 
-message VerifierResultMetadata {  
+message VerifierResultMetadata { 
+  // Timestamp when the verifier result was created 
   int64 timestamp = 1; 
+  // Hint to easily identify the source CCV contract address
   bytes verifier_source_address = 2;
+  // Execution hint so that executors can easily verify before writing on chain 
   bytes verifier_dest_address = 3; 
 } 
 
