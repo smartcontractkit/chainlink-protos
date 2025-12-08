@@ -1,8 +1,23 @@
 syntax = "proto3";
 
-package chainlink_ccv.v1;
+package chainlink_ccv.verifier.v1;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/chainlink-ccv/go/v1";
+import "google/rpc/status.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/chainlink-ccv/verifier/v1";
+
+service Verifier {
+  rpc GetVerifierResultsForMessage(GetVerifierResultsForMessageRequest) returns (GetVerifierResultsForMessageResponse);
+}
+
+message GetVerifierResultsForMessageRequest {
+  repeated bytes message_ids = 1;
+}
+
+message GetVerifierResultsForMessageResponse {
+  repeated VerifierResult results = 1;
+  repeated google.rpc.Status errors = 2;
+}
 
 message Message {
   bytes sender = 1;
@@ -41,8 +56,8 @@ message VerifierResult {
   VerifierResultMetadata metadata = 5;  
 }
 
-message VerifierResultMetadata {  
-  // Timestamp when the verifier result was created  
+message VerifierResultMetadata {
+  // Timestamp when the verifier result was created
   int64 timestamp = 1; 
   // Hint to easily identify the source CCV contract address
   bytes verifier_source_address = 2;
@@ -50,7 +65,3 @@ message VerifierResultMetadata {
   bytes verifier_dest_address = 3; 
 } 
 
-enum WriteStatus {
-  SUCCESS = 0;
-  FAILED = 1;
-}

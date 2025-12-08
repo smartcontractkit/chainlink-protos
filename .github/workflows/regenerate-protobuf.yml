@@ -167,6 +167,11 @@ jobs:
         run: |
           asdf install protoc
 
+      - name: Install buf
+        if: github.actor != 'app-token-issuer-engops[bot]'
+        run: |
+          asdf install buf
+
       - name: Regenerate protobuf files
         if: github.actor != 'app-token-issuer-engops[bot]'
         run: |
