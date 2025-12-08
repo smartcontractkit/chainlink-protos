@@ -3,7 +3,7 @@ module github.com/smartcontractkit/chainlink-protos/chainlink-ccv/message-discov
 go 1.23.0
 
 require (
-	github.com/smartcontractkit/chainlink-protos/chainlink-ccv/verifier v0.0.0-20251208115806-c038b79a895d
+	github.com/smartcontractkit/chainlink-protos/chainlink-ccv/verifier v0.0.0
 	google.golang.org/grpc v1.75.0
 	google.golang.org/protobuf v1.36.8
 )
@@ -14,3 +14,5 @@ require (
 	golang.org/x/text v0.26.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250707201910-8d1bb00bc6a7 // indirect
 )
+
+replace github.com/smartcontractkit/chainlink-protos/chainlink-ccv/verifier => ../verifier
