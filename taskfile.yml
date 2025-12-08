@@ -27,6 +27,7 @@ tasks:
       - task proto:gen:data-feeds
       - task proto:gen:rane
       - task proto:gen:linking-service
+      - task proto:gen:chainlink-ccv
       - task go:mod:tidy
 
   proto:gen:job-distributor:
@@ -111,6 +112,12 @@ tasks:
       - find ./linking-service/ -name '*.pb.go' -delete
       - cd linking-service/go && go generate
 
+  proto:gen:chainlink-ccv:
+    desc: "Generate Go code from protobuf files for chainlink-ccv"
+    cmds:
+      - find ./chainlink-ccv/ -name '*.pb.go' -delete
+      - cd chainlink-ccv && buf generate
+
   proto:clean:
     desc: "Clean generated protobuf files for all services"
     cmds:
@@ -123,6 +130,7 @@ tasks:
       - find ./data-feeds/ -name '*.pb.go' -delete
       - find ./rane/ -name '*.pb.go' -delete
       - find ./linking-service/ -name '*.pb.go' -delete
+      - find ./chainlink-ccv/ -name '*.pb.go' -delete
 
   go:mod:tidy:
     desc: "Run go mod tidy in each service folder"
