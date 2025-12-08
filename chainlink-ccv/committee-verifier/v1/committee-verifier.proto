@@ -1,11 +1,11 @@
 syntax = "proto3";
 
-package chainlink_ccv.v1;
+package chainlink_ccv.committee_verifier.v1;
 
-import "chainlink-ccv/v1/common.proto";
+import "verifier/v1/verifier.proto";
 import "google/rpc/status.proto";
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/chainlink-ccv/go/v1";
+option go_package = "github.com/smartcontractkit/chainlink-protos/chainlink-ccv/committee-verifier/v1";
 
 service CommitteeVerifier {
   rpc WriteCommitteeVerifierNodeResult(WriteCommitteeVerifierNodeResultRequest) returns (WriteCommitteeVerifierNodeResultResponse);
@@ -13,6 +13,11 @@ service CommitteeVerifier {
   rpc ReadCommitteeVerifierNodeResult(ReadCommitteeVerifierNodeResultRequest) returns (ReadCommitteeVerifierNodeResultResponse);
   rpc WriteChainStatus(WriteChainStatusRequest) returns (WriteChainStatusResponse);
   rpc ReadChainStatus(ReadChainStatusRequest) returns (ReadChainStatusResponse);
+}
+
+enum WriteStatus {
+  SUCCESS = 0;
+  FAILED = 1;
 }
 
 message ChainStatus {
@@ -23,7 +28,7 @@ message ChainStatus {
 
 message CommitteeVerifierNodeResult {
   // Message data that the CCV node attests to
-  Message message = 1;
+  chainlink_ccv.verifier.v1.Message message = 1;
   // Version of the CCV found from the receipt blob on the source chain
   bytes ccv_version = 2;
   // Addresses of the CCV specified for this message
@@ -75,3 +80,4 @@ message ReadCommitteeVerifierNodeResultRequest {
 message ReadCommitteeVerifierNodeResultResponse {
   CommitteeVerifierNodeResult committee_verifier_node_result = 1;
 }
+
