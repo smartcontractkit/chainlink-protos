@@ -56,8 +56,8 @@ message VerifierResult {
   VerifierResultMetadata metadata = 5;  
 }
 
-message VerifierResultMetadata { 
-  // Timestamp when the verifier result was created 
+message VerifierResultMetadata {
+  // Timestamp when the verifier result was created
   int64 timestamp = 1; 
   // Hint to easily identify the source CCV contract address
   bytes verifier_source_address = 2;
