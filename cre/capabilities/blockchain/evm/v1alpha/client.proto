@@ -170,72 +170,108 @@ service Client {
         uint64_label: {
           defaults: [
             {
-              key: "ethereum-mainnet-arbitrum-1"
-              value: 4949039107694359620
-            },
-            {
-              key: "ethereum-mainnet"
-              value: 5009297550715157269
-            },
-            {
-              key: "polygon-mainnet"
-              value: 4051577828743386545
-            },
-            {
-              key: "binance_smart_chain-mainnet-opbnb-1"
-              value: 465944652040885897
+              key: "apechain-testnet-curtis"
+              value: 9900119385908781505
             },
             {
               key: "avalanche-mainnet"
               value: 6433500567565415381
             },
             {
-              key: "ethereum-mainnet-optimism-1"
-              value: 3734403246176062136
+              key: "avalanche-testnet-fuji"
+              value: 14767482510784806043
             },
             {
-              key: "ethereum-testnet-sepolia-arbitrum-1"
-              value: 3478487238524512106
-            },
-            {
-              key: "ethereum-testnet-sepolia"
-              value: 16015286601757825753
-            },
-            {
-              key: "ethereum-mainnet-base-1"
-              value: 15971525489660198786
-            },
-            {
-              key: "ethereum-testnet-sepolia-base-1"
-              value: 10344971235874465080
-            },
-            {
-              key: "polygon-testnet-amoy"
-              value: 16281711391670634445
+              key: "binance_smart_chain-mainnet-opbnb-1"
+              value: 465944652040885897
             },
             {
               key: "binance_smart_chain-testnet-opbnb-1"
               value: 13274425992935471758
             },
             {
-              key: "avalanche-testnet-fuji"
-              value: 14767482510784806043
+              key: "ethereum-mainnet"
+              value: 5009297550715157269
+            },
+            {
+              key: "ethereum-mainnet-arbitrum-1"
+              value: 4949039107694359620
+            },
+            {
+              key: "ethereum-mainnet-base-1"
+              value: 15971525489660198786
+            },
+            {
+              key: "ethereum-mainnet-optimism-1"
+              value: 3734403246176062136
+            },
+            {
+              key: "ethereum-testnet-sepolia"
+              value: 16015286601757825753
+            },
+            {
+              key: "ethereum-testnet-sepolia-arbitrum-1"
+              value: 3478487238524512106
+            },
+            {
+              key: "ethereum-testnet-sepolia-base-1"
+              value: 10344971235874465080
+            },
+            {
+              key: "ethereum-testnet-sepolia-linea-1"
+              value: 5719461335882077547
             },
             {
               key: "ethereum-testnet-sepolia-optimism-1"
               value: 5224473277236331295
             },
             {
-              key: "private-testnet-andesite"
-              value: 6915682381028791124
+              key: "ethereum-testnet-sepolia-worldchain-1"
+              value: 5299555114858065850
             },
             {
               key: "ethereum-testnet-sepolia-zksync-1"
               value: 6898391096552792247
             },
             {
-              key: "ethereum-mainnet-zksync-1"
-              value: 1562403441176082196
+              key: "etherlink-testnet"
+              value: 1910019406958449359
+            },
+            {
+              key: "hyperliquid-testnet"
+              value: 4286062357653186312
+            },
+            {
+              key: "ink-testnet-sepolia"
+              value: 9763904284804119144
+            },
+            {
+              key: "jovay-testnet"
+              value: 945045181441419236
+            },
+            {
+              key: "pharos-testnet"
+              value: 4012524741200567430
+            },
+            {
+              key: "plasma-testnet"
+              value: 3967220077692964309
+            },
+            {
+              key: "polygon-mainnet"
+              value: 4051577828743386545
+            },
+            {
+              key: "polygon-testnet-amoy"
+              value: 16281711391670634445
+            },
+            {
+              key: "private-testnet-andesite"
+              value: 6915682381028791124
+            },
+            {
+              key: "tempo-testnet"
+              value: 3963528237232804922
             }
           ]
         }
