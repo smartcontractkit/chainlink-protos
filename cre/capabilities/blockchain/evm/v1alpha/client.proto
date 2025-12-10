@@ -206,10 +206,6 @@ service Client {
               value: 3734403246176062136
             },
             {
-              key: "ethereum-mainnet-zksync-1"
-              value: 1562403441176082196
-            },
-            {
               key: "ethereum-testnet-sepolia"
               value: 16015286601757825753
             },
