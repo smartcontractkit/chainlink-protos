@@ -856,8 +856,13 @@ func (x *GetNodeResponse) GetNode() *Node {
 //
 // If no filter is provided, all nodes are returned.
 type ListNodesRequest struct {
-	state         protoimpl.MessageState   `protogen:"open.v1"`
-	Filter        *ListNodesRequest_Filter `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	state  protoimpl.MessageState   `protogen:"open.v1"`
+	Filter *ListNodesRequest_Filter `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	// Pagination parameters (optional - if not provided, returns all results)
+	// Maximum number of nodes to return per page. If 0 or not set, returns all nodes.
+	PageSize int32 `protobuf:"varint,2,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	// Page number to return (1-indexed). If 0 or not set, defaults to 1.
+	Page          int32 `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -899,13 +904,29 @@ func (x *ListNodesRequest) GetFilter() *ListNodesRequest_Filter {
 	return nil
 }
 
+func (x *ListNodesRequest) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *ListNodesRequest) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
 // *
 // ListNodesResponse is the response object for the ListNodes method.
 //
 // It returns a list of nodes that match the filter criteria.
 type ListNodesResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Nodes         []*Node                `protobuf:"bytes,1,rep,name=nodes,proto3" json:"nodes,omitempty"` // List of nodes.
+	state protoimpl.MessageState `protogen:"open.v1"`
+	Nodes []*Node                `protobuf:"bytes,1,rep,name=nodes,proto3" json:"nodes,omitempty"` // List of nodes.
+	// Total number of nodes matching the filter (for pagination)
+	TotalCount    int32 `protobuf:"varint,2,opt,name=total_count,json=totalCount,proto3" json:"total_count,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -945,6 +966,13 @@ func (x *ListNodesResponse) GetNodes() []*Node {
 		return x.Nodes
 	}
 	return nil
+}
+
+func (x *ListNodesResponse) GetTotalCount() int32 {
+	if x != nil {
+		return x.TotalCount
+	}
+	return 0
 }
 
 // UpdateNodeRequest contains the information necessary to update a node.
@@ -1906,17 +1934,21 @@ const file_job_distributor_v1_node_node_proto_rawDesc = "" +
 	"public_key\x18\x02 \x01(\tH\x00R\tpublicKey\x88\x01\x01B\r\n" +
 	"\v_public_key\"8\n" +
 	"\x0fGetNodeResponse\x12%\n" +
-	"\x04node\x18\x01 \x01(\v2\x11.api.node.v1.NodeR\x04node\"\xf5\x01\n" +
+	"\x04node\x18\x01 \x01(\v2\x11.api.node.v1.NodeR\x04node\"\xa6\x02\n" +
 	"\x10ListNodesRequest\x12<\n" +
-	"\x06filter\x18\x01 \x01(\v2$.api.node.v1.ListNodesRequest.FilterR\x06filter\x1a\xa2\x01\n" +
+	"\x06filter\x18\x01 \x01(\v2$.api.node.v1.ListNodesRequest.FilterR\x06filter\x12\x1b\n" +
+	"\tpage_size\x18\x02 \x01(\x05R\bpageSize\x12\x12\n" +
+	"\x04page\x18\x03 \x01(\x05R\x04page\x1a\xa2\x01\n" +
 	"\x06Filter\x12\x10\n" +
 	"\x03ids\x18\x01 \x03(\tR\x03ids\x122\n" +
 	"\aenabled\x18\x02 \x01(\x0e2\x18.api.node.v1.EnableStateR\aenabled\x121\n" +
 	"\tselectors\x18\x03 \x03(\v2\x13.api.label.SelectorR\tselectors\x12\x1f\n" +
 	"\vpublic_keys\x18\x04 \x03(\tR\n" +
-	"publicKeys\"<\n" +
+	"publicKeys\"]\n" +
 	"\x11ListNodesResponse\x12'\n" +
-	"\x05nodes\x18\x01 \x03(\v2\x11.api.node.v1.NodeR\x05nodes\"\x80\x01\n" +
+	"\x05nodes\x18\x01 \x03(\v2\x11.api.node.v1.NodeR\x05nodes\x12\x1f\n" +
+	"\vtotal_count\x18\x02 \x01(\x05R\n" +
+	"totalCount\"\x80\x01\n" +
 	"\x11UpdateNodeRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1d\n" +

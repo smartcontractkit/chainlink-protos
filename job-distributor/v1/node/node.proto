@@ -184,6 +184,12 @@ message ListNodesRequest {
   }
 
   Filter filter = 1;
+
+  // Pagination parameters (optional - if not provided, returns all results)
+  // Maximum number of nodes to return per page. If 0 or not set, returns all nodes.
+  int32 page_size = 2;
+  // Page number to return (1-indexed). If 0 or not set, defaults to 1.
+  int32 page = 3;
 }
 
 /**
@@ -193,6 +199,8 @@ message ListNodesRequest {
  */
 message ListNodesResponse {
   repeated Node nodes = 1; // List of nodes.
+  // Total number of nodes matching the filter (for pagination)
+  int32 total_count = 2;
 }
 
 // UpdateNodeRequest contains the information necessary to update a node.
