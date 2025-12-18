@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.18.0
+
+### Minor Changes
+
+- [#251](https://github.com/smartcontractkit/chainlink-protos/pull/251) [`f2976ad`](https://github.com/smartcontractkit/chainlink-protos/commit/f2976ad341dfa440e66cf18e6c3a9837bfc32529) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - Add Pagination to List Nodes
+
 ## 0.17.0
 
 ### Minor Changes
