@@ -29,14 +29,39 @@ permissions:
   contents: write
   pull-requests: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ inputs.chain-selector }}
+  cancel-in-progress: true
+
 jobs:
   add-new-evm-chain:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     outputs:
       chain-name: ${{ steps.run-tool.outputs.chain_name }}
       action: ${{ steps.run-tool.outputs.action }}
       pr-url: ${{ steps.create-pr.outputs.pr_url }}
     steps:
+      - name: Validate inputs
+        run: |
+          set -euo pipefail
+          
+          CHAIN_SELECTOR="${{ inputs.chain-selector }}"
+          
+          # Validate chain-selector is a positive integer (uint64)
+          if ! [[ "$CHAIN_SELECTOR" =~ ^[0-9]+$ ]]; then
+            echo "::error::chain-selector must be a positive integer, got: $CHAIN_SELECTOR"
+            exit 1
+          fi
+          
+          # Validate it's within uint64 range (max: 18446744073709551615)
+          if [[ ${#CHAIN_SELECTOR} -gt 20 ]]; then
+            echo "::error::chain-selector exceeds uint64 maximum value"
+            exit 1
+          fi
+          
+          echo "::notice::Input validation passed: chain-selector=$CHAIN_SELECTOR"
+
       - name: Assume AWS GATI role
         uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
         with:
@@ -68,68 +93,94 @@ jobs:
 
       - name: Build add-new-evm-chain tool
         run: |
+          set -euo pipefail
           cd cre/go
           go build -o add-new-evm-chain ./tools/add-new-evm-chain
 
       - name: Run add-new-evm-chain tool
         id: run-tool
+        env:
+          INPUT_CHAIN_SELECTOR: ${{ inputs.chain-selector }}
+          INPUT_DRY_RUN: ${{ inputs.dry-run }}
         run: |
+          set -euo pipefail
           cd cre/go
           
-          # Capture tool output
-          if [ "${{ inputs.dry-run }}" == "true" ]; then
-            OUTPUT=$(./add-new-evm-chain \
-              -chain-selector ${{ inputs.chain-selector }} \
-              -proto-file ../capabilities/blockchain/evm/v1alpha/client.proto \
-              -dry-run 2>&1) || true
-          else
-            OUTPUT=$(./add-new-evm-chain \
-              -chain-selector ${{ inputs.chain-selector }} \
-              -proto-file ../capabilities/blockchain/evm/v1alpha/client.proto 2>&1) || true
+          # Build command arguments
+          ARGS="-chain-selector $INPUT_CHAIN_SELECTOR -proto-file ../capabilities/blockchain/evm/v1alpha/client.proto"
+          if [[ "$INPUT_DRY_RUN" == "true" ]]; then
+            ARGS="$ARGS -dry-run"
           fi
           
+          # Run tool and capture output
+          echo "::group::Tool output"
+          if ! OUTPUT=$(./add-new-evm-chain $ARGS 2>&1); then
+            echo "$OUTPUT"
+            echo "::endgroup::"
+            
+            # Try to parse ACTION even on failure
+            ACTION=$(echo "$OUTPUT" | grep "^ACTION=" | cut -d'=' -f2 || echo "error")
+            echo "action=$ACTION" >> $GITHUB_OUTPUT
+            
+            echo "::error::Tool execution failed"
+            exit 1
+          fi
           echo "$OUTPUT"
+          echo "::endgroup::"
           
           # Parse structured output
           CHAIN_NAME=$(echo "$OUTPUT" | grep "^CHAIN_NAME=" | cut -d'=' -f2)
           CHAIN_SELECTOR=$(echo "$OUTPUT" | grep "^CHAIN_SELECTOR=" | cut -d'=' -f2)
           ACTION=$(echo "$OUTPUT" | grep "^ACTION=" | cut -d'=' -f2)
           
+          # Validate outputs
+          if [[ -z "$CHAIN_NAME" || -z "$ACTION" ]]; then
+            echo "::error::Failed to parse tool output - missing CHAIN_NAME or ACTION"
+            exit 1
+          fi
+          
           echo "chain_name=$CHAIN_NAME" >> $GITHUB_OUTPUT
           echo "chain_selector=$CHAIN_SELECTOR" >> $GITHUB_OUTPUT
           echo "action=$ACTION" >> $GITHUB_OUTPUT
           
           echo "::notice::Chain: $CHAIN_NAME, Selector: $CHAIN_SELECTOR, Action: $ACTION"
+
+      - name: Sanitize chain name for branch
+        id: sanitize
+        if: ${{ !inputs.dry-run && steps.run-tool.outputs.action == 'added' }}
+        env:
+          CHAIN_NAME: ${{ steps.run-tool.outputs.chain_name }}
+        run: |
+          set -euo pipefail
           
-          # Fail if action is error
-          if [ "$ACTION" == "error" ]; then
-            echo "::error::Tool failed to process chain selector"
+          # Sanitize chain name for use in git branch names
+          # Only allow alphanumeric, hyphens, and underscores
+          SAFE_CHAIN_NAME=$(echo "$CHAIN_NAME" | tr -cd '[:alnum:]-_' | tr '[:upper:]' '[:lower:]')
+          
+          if [[ -z "$SAFE_CHAIN_NAME" ]]; then
+            echo "::error::Chain name sanitization resulted in empty string"
             exit 1
           fi
-
-      - name: Check if changes needed
-        id: check-changes
-        if: ${{ inputs.dry-run != true }}
-        run: |
-          if [ "${{ steps.run-tool.outputs.action }}" == "added" ]; then
-            echo "changes_needed=true" >> $GITHUB_OUTPUT
-          else
-            echo "changes_needed=false" >> $GITHUB_OUTPUT
-            echo "::notice::No changes needed - chain already exists or dry-run mode"
-          fi
+          
+          echo "safe_chain_name=$SAFE_CHAIN_NAME" >> $GITHUB_OUTPUT
+          echo "::notice::Sanitized chain name: $SAFE_CHAIN_NAME"
 
       - name: Create branch for PR
-        if: ${{ inputs.dry-run != true && steps.check-changes.outputs.changes_needed == 'true' }}
+        if: ${{ !inputs.dry-run && steps.run-tool.outputs.action == 'added' }}
         id: create-branch
+        env:
+          SAFE_CHAIN_NAME: ${{ steps.sanitize.outputs.safe_chain_name }}
         run: |
-          BRANCH_NAME="add-evm-chain/${{ steps.run-tool.outputs.chain_name }}-$(date +%Y%m%d-%H%M%S)"
+          set -euo pipefail
+          
+          BRANCH_NAME="add-evm-chain/${SAFE_CHAIN_NAME}-$(date +%Y%m%d-%H%M%S)"
           echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
           
           git checkout -b "$BRANCH_NAME"
           echo "::notice::Created branch: $BRANCH_NAME"
 
       - name: Commit changes using ghcommit
-        if: ${{ inputs.dry-run != true && steps.check-changes.outputs.changes_needed == 'true' }}
+        if: ${{ !inputs.dry-run && steps.run-tool.outputs.action == 'added' }}
         uses: planetscale/ghcommit-action@v0.1.45
         with:
           commit_message: "feat(cre): add EVM chain ${{ steps.run-tool.outputs.chain_name }}"
@@ -140,15 +191,19 @@ jobs:
           GITHUB_TOKEN: ${{ steps.get-gh-token.outputs.access-token }}
 
       - name: Create Pull Request
-        if: ${{ inputs.dry-run != true && steps.check-changes.outputs.changes_needed == 'true' }}
+        if: ${{ !inputs.dry-run && steps.run-tool.outputs.action == 'added' }}
         id: create-pr
-        uses: actions/github-script@v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        env:
+          CHAIN_NAME: ${{ steps.run-tool.outputs.chain_name }}
+          CHAIN_SELECTOR: ${{ steps.run-tool.outputs.chain_selector }}
+          BRANCH_NAME: ${{ steps.create-branch.outputs.branch_name }}
         with:
           github-token: ${{ steps.get-gh-token.outputs.access-token }}
           script: |
-            const chainName = '${{ steps.run-tool.outputs.chain_name }}';
-            const chainSelector = '${{ steps.run-tool.outputs.chain_selector }}';
-            const branchName = '${{ steps.create-branch.outputs.branch_name }}';
+            const chainName = process.env.CHAIN_NAME;
+            const chainSelector = process.env.CHAIN_SELECTOR;
+            const branchName = process.env.BRANCH_NAME;
             
             const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
@@ -177,15 +232,23 @@ jobs:
             core.notice(`Created PR: ${pr.html_url}`);
 
       - name: Summary
+        env:
+          CHAIN_NAME: ${{ steps.run-tool.outputs.chain_name }}
+          CHAIN_SELECTOR: ${{ steps.run-tool.outputs.chain_selector }}
+          ACTION: ${{ steps.run-tool.outputs.action }}
+          DRY_RUN: ${{ inputs.dry-run }}
+          PR_URL: ${{ steps.create-pr.outputs.pr_url }}
         run: |
+          set -euo pipefail
+          
           echo "## Add New EVM Chain Results" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
           echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| Chain Name | ${{ steps.run-tool.outputs.chain_name }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Chain Selector | ${{ steps.run-tool.outputs.chain_selector }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Action | ${{ steps.run-tool.outputs.action }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| Dry Run | ${{ inputs.dry-run }} |" >> $GITHUB_STEP_SUMMARY
-          if [ -n "${{ steps.create-pr.outputs.pr_url }}" ]; then
-            echo "| PR URL | ${{ steps.create-pr.outputs.pr_url }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Chain Name | $CHAIN_NAME |" >> $GITHUB_STEP_SUMMARY
+          echo "| Chain Selector | $CHAIN_SELECTOR |" >> $GITHUB_STEP_SUMMARY
+          echo "| Action | $ACTION |" >> $GITHUB_STEP_SUMMARY
+          echo "| Dry Run | $DRY_RUN |" >> $GITHUB_STEP_SUMMARY
+          if [[ -n "$PR_URL" ]]; then
+            echo "| PR URL | $PR_URL |" >> $GITHUB_STEP_SUMMARY
           fi
