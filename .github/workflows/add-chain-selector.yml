@@ -1,0 +1,92 @@
+name: Add Chain Selector
+
+on:
+  workflow_dispatch:
+    inputs:
+      chain-selector:
+        description: 'The chain selector value (uint64)'
+        required: true
+        type: string
+      dry-run:
+        description: 'Dry run mode - show what would be done without making changes'
+        required: false
+        default: false
+        type: boolean
+  workflow_call:
+    inputs:
+      chain-selector:
+        description: 'The chain selector value (uint64)'
+        required: true
+        type: string
+      dry-run:
+        description: 'Dry run mode - show what would be done without making changes'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  add-chain-selector:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assume AWS GATI role
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+        with:
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN_GATI }}
+          role-duration-seconds: 900
+          aws-region: ${{ secrets.AWS_REGION }}
+          mask-aws-account-id: true
+
+      - name: Get GitHub token from GATI
+        id: get-gh-token
+        uses: smartcontractkit/chainlink-github-actions/github-app-token-issuer@main
+        with:
+          url: ${{ secrets.AWS_LAMBDA_URL_GATI }}
+
+      - name: Checkout repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          token: ${{ steps.get-gh-token.outputs.access-token }}
+          fetch-depth: 0
+
+      - name: Set tool versions to env vars
+        id: tool-versions
+        uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
+
+      - name: Set up Go
+        uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.0.0
+        with:
+          go-version: ${{ steps.tool-versions.outputs.golang_version }}
+
+      - name: Build add-chain-selector tool
+        run: |
+          cd cre/go
+          go build -o add-chain-selector ./tools/add-chain-selector
+
+      - name: Run add-chain-selector (dry-run)
+        if: ${{ inputs.dry-run == true }}
+        run: |
+          cd cre/go
+          ./add-chain-selector \
+            -chain-selector ${{ inputs.chain-selector }} \
+            -proto-file ../capabilities/blockchain/evm/v1alpha/client.proto \
+            -dry-run
+
+      - name: Run add-chain-selector
+        if: ${{ inputs.dry-run != true }}
+        env:
+          GITHUB_TOKEN: ${{ steps.get-gh-token.outputs.access-token }}
+        run: |
+          cd cre/go
+          ./add-chain-selector \
+            -chain-selector ${{ inputs.chain-selector }} \
+            -proto-file ../capabilities/blockchain/evm/v1alpha/client.proto \
+            -github-token "$GITHUB_TOKEN" \
+            -repo-owner smartcontractkit \
+            -repo-name chainlink-protos \
+            -base-branch main
+

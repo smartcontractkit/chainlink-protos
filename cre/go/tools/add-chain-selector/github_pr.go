@@ -1,0 +1,189 @@
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strings"
+	"time"
+
+	"github.com/google/go-github/v60/github"
+	"golang.org/x/oauth2"
+)
+
+// PRConfig holds configuration for creating a GitHub PR.
+type PRConfig struct {
+	Token      string
+	Owner      string
+	Repo       string
+	BaseBranch string
+	ChainName  string
+	Selector   uint64
+	ProtoFile  string
+}
+
+// createPR creates a GitHub PR with the proto file changes.
+func createPR(ctx context.Context, config PRConfig) (string, error) {
+	// Generate branch name
+	timestamp := time.Now().Format("20060102-150405")
+	branchName := fmt.Sprintf("add-chain-selector/%s-%s", sanitizeBranchName(config.ChainName), timestamp)
+
+	// Get the repository root directory
+	repoRoot, err := getRepoRoot(config.ProtoFile)
+	if err != nil {
+		return "", fmt.Errorf("failed to get repo root: %w", err)
+	}
+
+	// Create and checkout new branch
+	if err := gitCreateBranch(repoRoot, branchName, config.BaseBranch); err != nil {
+		return "", fmt.Errorf("failed to create branch: %w", err)
+	}
+
+	// Stage the proto file
+	if err := gitAdd(repoRoot, config.ProtoFile); err != nil {
+		return "", fmt.Errorf("failed to stage changes: %w", err)
+	}
+
+	// Commit the changes
+	commitMsg := fmt.Sprintf("feat(cre): add chain selector for %s", config.ChainName)
+	if err := gitCommit(repoRoot, commitMsg); err != nil {
+		return "", fmt.Errorf("failed to commit changes: %w", err)
+	}
+
+	// Push the branch
+	if err := gitPush(repoRoot, branchName); err != nil {
+		return "", fmt.Errorf("failed to push branch: %w", err)
+	}
+
+	// Create PR using GitHub API
+	prURL, err := createGitHubPR(ctx, config, branchName)
+	if err != nil {
+		return "", fmt.Errorf("failed to create GitHub PR: %w", err)
+	}
+
+	return prURL, nil
+}
+
+// sanitizeBranchName sanitizes a chain name for use in a branch name.
+func sanitizeBranchName(name string) string {
+	// Replace underscores and spaces with hyphens
+	name = strings.ReplaceAll(name, "_", "-")
+	name = strings.ReplaceAll(name, " ", "-")
+	// Remove any characters that aren't alphanumeric or hyphens
+	var result strings.Builder
+	for _, r := range name {
+		if (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') || r == '-' {
+			result.WriteRune(r)
+		}
+	}
+	return strings.ToLower(result.String())
+}
+
+// getRepoRoot finds the git repository root from a file path.
+func getRepoRoot(filePath string) (string, error) {
+	dir := filepath.Dir(filePath)
+	cmd := exec.Command("git", "rev-parse", "--show-toplevel")
+	cmd.Dir = dir
+	output, err := cmd.Output()
+	if err != nil {
+		return "", fmt.Errorf("failed to find git root: %w", err)
+	}
+	return strings.TrimSpace(string(output)), nil
+}
+
+// gitCreateBranch creates and checks out a new branch.
+func gitCreateBranch(repoRoot, branchName, baseBranch string) error {
+	// Fetch the latest from remote
+	cmd := exec.Command("git", "fetch", "origin", baseBranch)
+	cmd.Dir = repoRoot
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("failed to fetch: %w", err)
+	}
+
+	// Create and checkout new branch from base
+	cmd = exec.Command("git", "checkout", "-b", branchName, fmt.Sprintf("origin/%s", baseBranch))
+	cmd.Dir = repoRoot
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("failed to create branch: %w", err)
+	}
+
+	return nil
+}
+
+// gitAdd stages a file for commit.
+func gitAdd(repoRoot, filePath string) error {
+	// Get relative path from repo root
+	relPath, err := filepath.Rel(repoRoot, filePath)
+	if err != nil {
+		relPath = filePath
+	}
+
+	cmd := exec.Command("git", "add", relPath)
+	cmd.Dir = repoRoot
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
+}
+
+// gitCommit commits staged changes.
+func gitCommit(repoRoot, message string) error {
+	cmd := exec.Command("git", "commit", "-m", message)
+	cmd.Dir = repoRoot
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
+}
+
+// gitPush pushes a branch to origin.
+func gitPush(repoRoot, branchName string) error {
+	cmd := exec.Command("git", "push", "-u", "origin", branchName)
+	cmd.Dir = repoRoot
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	return cmd.Run()
+}
+
+// createGitHubPR creates a pull request using the GitHub API.
+func createGitHubPR(ctx context.Context, config PRConfig, branchName string) (string, error) {
+	// Create GitHub client with OAuth token
+	ts := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: config.Token},
+	)
+	tc := oauth2.NewClient(ctx, ts)
+	client := github.NewClient(tc)
+
+	// Create the PR
+	title := fmt.Sprintf("feat(cre): add chain selector for %s", config.ChainName)
+	body := fmt.Sprintf("## Summary\n\n"+
+		"This PR adds the chain selector for **%s** to the EVM client.proto file.\n\n"+
+		"### Chain Details\n"+
+		"- **Chain Name**: %s\n"+
+		"- **Selector**: %d\n\n"+
+		"### Changes\n"+
+		"- Added entry to `cre/capabilities/blockchain/evm/v1alpha/client.proto`\n\n"+
+		"---\n"+
+		"*This PR was automatically generated by the add-chain-selector tool.*\n",
+		config.ChainName, config.ChainName, config.Selector)
+
+	newPR := &github.NewPullRequest{
+		Title:               github.String(title),
+		Head:                github.String(branchName),
+		Base:                github.String(config.BaseBranch),
+		Body:                github.String(body),
+		MaintainerCanModify: github.Bool(true),
+	}
+
+	pr, _, err := client.PullRequests.Create(ctx, config.Owner, config.Repo, newPR)
+	if err != nil {
+		return "", fmt.Errorf("failed to create PR: %w", err)
+	}
+
+	return pr.GetHTMLURL(), nil
+}
+

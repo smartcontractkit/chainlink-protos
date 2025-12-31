@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package capabilities.blockchain.evm.v1alpha;
+
+service Client {
+  option (tools.generator.v1alpha.capability) = {
+    mode: MODE_DON
+    capability_id: "evm@1.0.0"
+    labels: {
+      key: "ChainSelector"
+      value: {
+        uint64_label: {
+          defaults: [
+            {
+              key: "avalanche-mainnet"
+              value: 6433500567565415381
+            },
+            {
+              key: "ethereum-mainnet"
+              value: 5009297550715157269
+            },
+            {
+              key: "polygon-mainnet"
+              value: 4051577828743386545
+            }
+          ]
+        }
+      }
+    }
+  };
+}
+
