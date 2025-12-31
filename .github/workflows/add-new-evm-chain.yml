@@ -1,0 +1,191 @@
+name: Add New EVM Chain
+
+on:
+  workflow_dispatch:
+    inputs:
+      chain-selector:
+        description: 'The chain selector value (uint64)'
+        required: true
+        type: string
+      dry-run:
+        description: 'Dry run mode - show what would be done without making changes'
+        required: false
+        default: false
+        type: boolean
+  workflow_call:
+    inputs:
+      chain-selector:
+        description: 'The chain selector value (uint64)'
+        required: true
+        type: string
+      dry-run:
+        description: 'Dry run mode - show what would be done without making changes'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  add-new-evm-chain:
+    runs-on: ubuntu-latest
+    outputs:
+      chain-name: ${{ steps.run-tool.outputs.chain_name }}
+      action: ${{ steps.run-tool.outputs.action }}
+      pr-url: ${{ steps.create-pr.outputs.pr_url }}
+    steps:
+      - name: Assume AWS GATI role
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+        with:
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN_GATI }}
+          role-duration-seconds: 900
+          aws-region: ${{ secrets.AWS_REGION }}
+          mask-aws-account-id: true
+
+      - name: Get GitHub token from GATI
+        id: get-gh-token
+        uses: smartcontractkit/chainlink-github-actions/github-app-token-issuer@main
+        with:
+          url: ${{ secrets.AWS_LAMBDA_URL_GATI }}
+
+      - name: Checkout repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          token: ${{ steps.get-gh-token.outputs.access-token }}
+          fetch-depth: 0
+
+      - name: Set tool versions to env vars
+        id: tool-versions
+        uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
+
+      - name: Set up Go
+        uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.0.0
+        with:
+          go-version: ${{ steps.tool-versions.outputs.golang_version }}
+
+      - name: Build add-new-evm-chain tool
+        run: |
+          cd cre/go
+          go build -o add-new-evm-chain ./tools/add-new-evm-chain
+
+      - name: Run add-new-evm-chain tool
+        id: run-tool
+        run: |
+          cd cre/go
+          
+          # Capture tool output
+          if [ "${{ inputs.dry-run }}" == "true" ]; then
+            OUTPUT=$(./add-new-evm-chain \
+              -chain-selector ${{ inputs.chain-selector }} \
+              -proto-file ../capabilities/blockchain/evm/v1alpha/client.proto \
+              -dry-run 2>&1) || true
+          else
+            OUTPUT=$(./add-new-evm-chain \
+              -chain-selector ${{ inputs.chain-selector }} \
+              -proto-file ../capabilities/blockchain/evm/v1alpha/client.proto 2>&1) || true
+          fi
+          
+          echo "$OUTPUT"
+          
+          # Parse structured output
+          CHAIN_NAME=$(echo "$OUTPUT" | grep "^CHAIN_NAME=" | cut -d'=' -f2)
+          CHAIN_SELECTOR=$(echo "$OUTPUT" | grep "^CHAIN_SELECTOR=" | cut -d'=' -f2)
+          ACTION=$(echo "$OUTPUT" | grep "^ACTION=" | cut -d'=' -f2)
+          
+          echo "chain_name=$CHAIN_NAME" >> $GITHUB_OUTPUT
+          echo "chain_selector=$CHAIN_SELECTOR" >> $GITHUB_OUTPUT
+          echo "action=$ACTION" >> $GITHUB_OUTPUT
+          
+          echo "::notice::Chain: $CHAIN_NAME, Selector: $CHAIN_SELECTOR, Action: $ACTION"
+          
+          # Fail if action is error
+          if [ "$ACTION" == "error" ]; then
+            echo "::error::Tool failed to process chain selector"
+            exit 1
+          fi
+
+      - name: Check if changes needed
+        id: check-changes
+        if: ${{ inputs.dry-run != true }}
+        run: |
+          if [ "${{ steps.run-tool.outputs.action }}" == "added" ]; then
+            echo "changes_needed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changes_needed=false" >> $GITHUB_OUTPUT
+            echo "::notice::No changes needed - chain already exists or dry-run mode"
+          fi
+
+      - name: Create branch for PR
+        if: ${{ inputs.dry-run != true && steps.check-changes.outputs.changes_needed == 'true' }}
+        id: create-branch
+        run: |
+          BRANCH_NAME="add-evm-chain/${{ steps.run-tool.outputs.chain_name }}-$(date +%Y%m%d-%H%M%S)"
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          
+          git checkout -b "$BRANCH_NAME"
+          echo "::notice::Created branch: $BRANCH_NAME"
+
+      - name: Commit changes using ghcommit
+        if: ${{ inputs.dry-run != true && steps.check-changes.outputs.changes_needed == 'true' }}
+        uses: planetscale/ghcommit-action@v0.1.45
+        with:
+          commit_message: "feat(cre): add EVM chain ${{ steps.run-tool.outputs.chain_name }}"
+          repo: ${{ github.repository }}
+          branch: ${{ steps.create-branch.outputs.branch_name }}
+          file_pattern: "cre/capabilities/blockchain/evm/v1alpha/client.proto"
+        env:
+          GITHUB_TOKEN: ${{ steps.get-gh-token.outputs.access-token }}
+
+      - name: Create Pull Request
+        if: ${{ inputs.dry-run != true && steps.check-changes.outputs.changes_needed == 'true' }}
+        id: create-pr
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.get-gh-token.outputs.access-token }}
+          script: |
+            const chainName = '${{ steps.run-tool.outputs.chain_name }}';
+            const chainSelector = '${{ steps.run-tool.outputs.chain_selector }}';
+            const branchName = '${{ steps.create-branch.outputs.branch_name }}';
+            
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `feat(cre): add EVM chain ${chainName}`,
+              head: branchName,
+              base: 'main',
+              body: `## Summary
+            
+            This PR adds the EVM chain **${chainName}** to the CRE client.proto file.
+            
+            ### Chain Details
+            - **Chain Name**: ${chainName}
+            - **Selector**: ${chainSelector}
+            
+            ### Changes
+            - Added entry to \`cre/capabilities/blockchain/evm/v1alpha/client.proto\`
+            
+            ---
+            *This PR was automatically generated by the add-new-evm-chain workflow.*
+            `,
+              maintainer_can_modify: true
+            });
+            
+            core.setOutput('pr_url', pr.html_url);
+            core.notice(`Created PR: ${pr.html_url}`);
+
+      - name: Summary
+        run: |
+          echo "## Add New EVM Chain Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Chain Name | ${{ steps.run-tool.outputs.chain_name }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Chain Selector | ${{ steps.run-tool.outputs.chain_selector }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Action | ${{ steps.run-tool.outputs.action }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Dry Run | ${{ inputs.dry-run }} |" >> $GITHUB_STEP_SUMMARY
+          if [ -n "${{ steps.create-pr.outputs.pr_url }}" ]; then
+            echo "| PR URL | ${{ steps.create-pr.outputs.pr_url }} |" >> $GITHUB_STEP_SUMMARY
+          fi

@@ -2,7 +2,6 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"fmt"
 	"os"
@@ -11,34 +10,58 @@ import (
 	chain_selectors "github.com/smartcontractkit/chain-selectors"
 )
 
+// Action represents the outcome action of the tool execution.
+type Action string
+
+// Action constants define the possible outcomes of the tool execution.
+const (
+	ActionAdded  Action = "added"
+	ActionExists Action = "exists"
+	ActionDryRun Action = "dry-run"
+	ActionError  Action = "error"
+)
+
 // Config holds the tool configuration from command-line flags.
 type Config struct {
 	ChainSelector uint64
 	DryRun        bool
-	GithubToken   string
-	BaseBranch    string
 	ProtoFile     string
-	RepoOwner     string
-	RepoName      string
+}
+
+// Result represents the outcome of the tool execution.
+type Result struct {
+	ChainName     string
+	ChainSelector uint64
+	Action        Action
 }
 
 func main() {
-	if err := run(); err != nil {
+	result, err := run()
+	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+		// Output structured result for workflow
+		fmt.Println("\n--- OUTPUT ---")
+		fmt.Printf("ACTION=%s\n", ActionError)
 		os.Exit(1)
 	}
+
+	// Output structured result for workflow consumption
+	fmt.Println("\n--- OUTPUT ---")
+	fmt.Printf("CHAIN_NAME=%s\n", result.ChainName)
+	fmt.Printf("CHAIN_SELECTOR=%d\n", result.ChainSelector)
+	fmt.Printf("ACTION=%s\n", result.Action)
 }
 
-func run() error {
+func run() (*Result, error) {
 	config, err := parseFlags()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// Look up chain information from chain-selectors package
 	chainName, err := lookupChainSelector(config.ChainSelector)
 	if err != nil {
-		return fmt.Errorf("failed to look up chain selector: %w", err)
+		return nil, fmt.Errorf("failed to look up chain selector: %w", err)
 	}
 
 	fmt.Printf("Found chain: %s (selector: %d)\n", chainName, config.ChainSelector)
@@ -46,12 +69,16 @@ func run() error {
 	// Check if chain already exists in proto file
 	exists, err := chainSelectorExists(config.ProtoFile, chainName)
 	if err != nil {
-		return fmt.Errorf("failed to check if chain exists: %w", err)
+		return nil, fmt.Errorf("failed to check if chain exists: %w", err)
 	}
 
 	if exists {
 		fmt.Printf("Chain %s already exists in proto file, nothing to do\n", chainName)
-		return nil
+		return &Result{
+			ChainName:     chainName,
+			ChainSelector: config.ChainSelector,
+			Action:        ActionExists,
+		}, nil
 	}
 
 	if config.DryRun {
@@ -60,57 +87,35 @@ func run() error {
 		fmt.Printf("  Key: %s\n", chainName)
 		fmt.Printf("  Value: %d\n", config.ChainSelector)
 		fmt.Printf("To file: %s\n", config.ProtoFile)
-		return nil
+		return &Result{
+			ChainName:     chainName,
+			ChainSelector: config.ChainSelector,
+			Action:        ActionDryRun,
+		}, nil
 	}
 
 	// Update proto file with new chain
 	if err := updateProtoFile(config.ProtoFile, chainName, config.ChainSelector); err != nil {
-		return fmt.Errorf("failed to update proto file: %w", err)
+		return nil, fmt.Errorf("failed to update proto file: %w", err)
 	}
 
 	fmt.Printf("Successfully added chain %s to proto file\n", chainName)
 
-	// Create GitHub PR
-	if config.GithubToken == "" {
-		fmt.Println("No GitHub token provided, skipping PR creation")
-		fmt.Println("Please commit and push changes manually")
-		return nil
-	}
-
-	ctx := context.Background()
-	prURL, err := createPR(ctx, PRConfig{
-		Token:      config.GithubToken,
-		Owner:      config.RepoOwner,
-		Repo:       config.RepoName,
-		BaseBranch: config.BaseBranch,
-		ChainName:  chainName,
-		Selector:   config.ChainSelector,
-		ProtoFile:  config.ProtoFile,
-	})
-	if err != nil {
-		return fmt.Errorf("failed to create PR: %w", err)
-	}
-
-	fmt.Printf("Created PR: %s\n", prURL)
-	return nil
+	return &Result{
+		ChainName:     chainName,
+		ChainSelector: config.ChainSelector,
+		Action:        ActionAdded,
+	}, nil
 }
 
 func parseFlags() (*Config, error) {
 	var chainSelector uint64
 	var dryRun bool
-	var githubToken string
-	var baseBranch string
 	var protoFile string
-	var repoOwner string
-	var repoName string
 
 	flag.Uint64Var(&chainSelector, "chain-selector", 0, "The chain selector value (required)")
 	flag.BoolVar(&dryRun, "dry-run", false, "Show what would be done without making changes")
-	flag.StringVar(&githubToken, "github-token", "", "GitHub token for PR creation (required if not dry-run)")
-	flag.StringVar(&baseBranch, "base-branch", "main", "Base branch for PR")
 	flag.StringVar(&protoFile, "proto-file", "", "Path to client.proto (default: auto-detect)")
-	flag.StringVar(&repoOwner, "repo-owner", "smartcontractkit", "GitHub repository owner")
-	flag.StringVar(&repoName, "repo-name", "chainlink-protos", "GitHub repository name")
 
 	flag.Parse()
 
@@ -134,11 +139,7 @@ func parseFlags() (*Config, error) {
 	return &Config{
 		ChainSelector: chainSelector,
 		DryRun:        dryRun,
-		GithubToken:   githubToken,
-		BaseBranch:    baseBranch,
 		ProtoFile:     protoFile,
-		RepoOwner:     repoOwner,
-		RepoName:      repoName,
 	}, nil
 }
 
@@ -197,4 +198,3 @@ func lookupChainSelector(selector uint64) (string, error) {
 
 	return chainName, nil
 }
-

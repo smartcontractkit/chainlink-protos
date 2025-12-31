@@ -1,12 +1,34 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"regexp"
 	"sort"
 	"strconv"
 	"strings"
+)
+
+// Sentinel errors for common error conditions.
+var (
+	ErrChainExists       = errors.New("chain already exists in proto file")
+	ErrNoDefaultsArray   = errors.New("could not find defaults array in proto file")
+	ErrNoEntriesFound    = errors.New("no entries found in defaults array")
+	ErrPatternNotMatched = errors.New("failed to replace defaults array - pattern may not match")
+)
+
+// Pre-compiled regex patterns for better performance.
+// See: 100 Go Mistakes #42 - Not using compiled regular expressions.
+var (
+	// defaultsArrayRe matches the entire defaults array block.
+	defaultsArrayRe = regexp.MustCompile(`defaults:\s*\[[\s\S]*?\n\s*\]`)
+
+	// defaultsContentRe extracts the content inside the defaults array.
+	defaultsContentRe = regexp.MustCompile(`defaults:\s*\[([\s\S]*?)\n\s*\]`)
+
+	// entryRe matches individual chain entries within the defaults array.
+	entryRe = regexp.MustCompile(`\{\s*key:\s*"([^"]+)"\s*value:\s*(\d+)\s*\}`)
 )
 
 // ChainEntry represents a key-value entry in the proto file.
@@ -17,33 +39,27 @@ type ChainEntry struct {
 
 // chainSelectorExists checks if a chain selector already exists in the proto file.
 func chainSelectorExists(protoFile, chainName string) (bool, error) {
-	data, err := os.ReadFile(protoFile)
+	fileContent, err := os.ReadFile(protoFile)
 	if err != nil {
 		return false, fmt.Errorf("failed to read proto file: %w", err)
 	}
 
-	content := string(data)
-	// Check if the chain name already exists in the defaults array
-	pattern := fmt.Sprintf(`key:\s*"%s"`, regexp.QuoteMeta(chainName))
-	matched, err := regexp.MatchString(pattern, content)
-	if err != nil {
-		return false, fmt.Errorf("failed to match pattern: %w", err)
-	}
-
-	return matched, nil
+	// Build pattern to check if the chain name already exists
+	pattern := regexp.MustCompile(fmt.Sprintf(`key:\s*"%s"`, regexp.QuoteMeta(chainName)))
+	return pattern.MatchString(string(fileContent)), nil
 }
 
 // updateProtoFile updates the proto file with a new chain selector entry.
 func updateProtoFile(protoFile, chainName string, selector uint64) error {
-	data, err := os.ReadFile(protoFile)
+	fileContent, err := os.ReadFile(protoFile)
 	if err != nil {
 		return fmt.Errorf("failed to read proto file: %w", err)
 	}
 
-	content := string(data)
+	protoContent := string(fileContent)
 
 	// Parse existing entries
-	entries, err := parseProtoEntries(content)
+	entries, err := parseProtoEntries(protoContent)
 	if err != nil {
 		return fmt.Errorf("failed to parse proto entries: %w", err)
 	}
@@ -51,7 +67,7 @@ func updateProtoFile(protoFile, chainName string, selector uint64) error {
 	// Check if entry already exists
 	for _, entry := range entries {
 		if entry.Key == chainName {
-			return fmt.Errorf("chain %s already exists in proto file", chainName)
+			return fmt.Errorf("%w: %s", ErrChainExists, chainName)
 		}
 	}
 
@@ -70,10 +86,9 @@ func updateProtoFile(protoFile, chainName string, selector uint64) error {
 	newDefaults := buildDefaultsArray(entries)
 
 	// Replace the defaults array in the content
-	re := regexp.MustCompile(`defaults:\s*\[[\s\S]*?\n\s*\]`)
-	newContent := re.ReplaceAllString(content, newDefaults)
-	if newContent == content {
-		return fmt.Errorf("failed to replace defaults array - pattern may not match")
+	newContent := defaultsArrayRe.ReplaceAllString(protoContent, newDefaults)
+	if newContent == protoContent {
+		return ErrPatternNotMatched
 	}
 
 	// Write back to file
@@ -85,36 +100,33 @@ func updateProtoFile(protoFile, chainName string, selector uint64) error {
 }
 
 // parseProtoEntries parses the defaults array from the proto file.
-func parseProtoEntries(content string) ([]ChainEntry, error) {
-	entries := []ChainEntry{}
-
-	// Find the defaults array - match from "defaults: [" to the closing "]"
-	re := regexp.MustCompile(`defaults:\s*\[([\s\S]*?)\n\s*\]`)
-	matches := re.FindStringSubmatch(content)
+func parseProtoEntries(protoContent string) ([]ChainEntry, error) {
+	// Find the defaults array content
+	matches := defaultsContentRe.FindStringSubmatch(protoContent)
 	if len(matches) < 2 {
-		return nil, fmt.Errorf("could not find defaults array in proto file")
+		return nil, ErrNoDefaultsArray
 	}
 
 	defaultsContent := matches[1]
 
-	// Parse each entry - match the exact format with proper whitespace
-	// Pattern: { key: "..." value: ... }
-	entryRe := regexp.MustCompile(`\{\s*key:\s*"([^"]+)"\s*value:\s*(\d+)\s*\}`)
+	// Parse each entry
 	entryMatches := entryRe.FindAllStringSubmatch(defaultsContent, -1)
-
 	if len(entryMatches) == 0 {
-		return nil, fmt.Errorf("no entries found in defaults array")
+		return nil, ErrNoEntriesFound
 	}
 
+	entries := make([]ChainEntry, 0, len(entryMatches))
 	for _, match := range entryMatches {
 		if len(match) < 3 {
 			continue
 		}
+
 		key := match[1]
 		value, err := strconv.ParseUint(match[2], 10, 64)
 		if err != nil {
 			return nil, fmt.Errorf("failed to parse selector value %s for key %s: %w", match[2], key, err)
 		}
+
 		entries = append(entries, ChainEntry{
 			Key:   key,
 			Value: value,
@@ -128,6 +140,7 @@ func parseProtoEntries(content string) ([]ChainEntry, error) {
 func buildDefaultsArray(entries []ChainEntry) string {
 	var builder strings.Builder
 	builder.WriteString("defaults: [\n")
+
 	for i, entry := range entries {
 		builder.WriteString(fmt.Sprintf("            {\n              key: \"%s\"\n              value: %d\n            }", entry.Key, entry.Value))
 		if i < len(entries)-1 {
@@ -136,7 +149,7 @@ func buildDefaultsArray(entries []ChainEntry) string {
 			builder.WriteString("\n")
 		}
 	}
+
 	builder.WriteString("          ]")
 	return builder.String()
 }
-

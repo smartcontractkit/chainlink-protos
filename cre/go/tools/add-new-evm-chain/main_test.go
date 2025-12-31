@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
@@ -11,6 +12,8 @@ import (
 )
 
 func TestLookupChainSelector(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name        string
 		selector    uint64
@@ -46,6 +49,8 @@ func TestLookupChainSelector(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			name, err := lookupChainSelector(tt.selector)
 			if tt.wantErr {
 				require.Error(t, err)
@@ -61,11 +66,13 @@ func TestLookupChainSelector(t *testing.T) {
 }
 
 func TestParseProtoEntries(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name        string
 		content     string
 		wantEntries []ChainEntry
-		wantErr     bool
+		wantErr     error
 		errContains string
 	}{
 		{
@@ -85,32 +92,30 @@ defaults: [
 				{Key: "ethereum-mainnet", Value: 5009297550715157269},
 				{Key: "polygon-mainnet", Value: 4051577828743386545},
 			},
-			wantErr: false,
+			wantErr: nil,
 		},
 		{
-			name:        "missing defaults array",
-			content:     `some other content`,
-			wantErr:     true,
-			errContains: "could not find defaults array",
+			name:    "missing defaults array",
+			content: `some other content`,
+			wantErr: ErrNoDefaultsArray,
 		},
 		{
 			name: "empty defaults array",
 			content: `
 defaults: [
           ]`,
-			wantErr:     true,
-			errContains: "no entries found",
+			wantErr: ErrNoEntriesFound,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			entries, err := parseProtoEntries(tt.content)
-			if tt.wantErr {
+			if tt.wantErr != nil {
 				require.Error(t, err)
-				if tt.errContains != "" {
-					assert.Contains(t, err.Error(), tt.errContains)
-				}
+				assert.True(t, errors.Is(err, tt.wantErr), "expected error %v, got %v", tt.wantErr, err)
 				return
 			}
 			require.NoError(t, err)
@@ -120,6 +125,8 @@ defaults: [
 }
 
 func TestBuildDefaultsArray(t *testing.T) {
+	t.Parallel()
+
 	entries := []ChainEntry{
 		{Key: "avalanche-mainnet", Value: 6433500567565415381},
 		{Key: "ethereum-mainnet", Value: 5009297550715157269},
@@ -137,6 +144,8 @@ func TestBuildDefaultsArray(t *testing.T) {
 }
 
 func TestChainSelectorExists(t *testing.T) {
+	t.Parallel()
+
 	// Create a temporary test file
 	tmpDir := t.TempDir()
 	testFile := filepath.Join(tmpDir, "test.proto")
@@ -181,6 +190,8 @@ service Client {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			exists, err := chainSelectorExists(testFile, tt.chainName)
 			require.NoError(t, err)
 			assert.Equal(t, tt.wantExists, exists)
@@ -189,9 +200,7 @@ service Client {
 }
 
 func TestUpdateProtoFile(t *testing.T) {
-	// Create a temporary test file
-	tmpDir := t.TempDir()
-	testFile := filepath.Join(tmpDir, "test.proto")
+	t.Parallel()
 
 	originalContent := `syntax = "proto3";
 
@@ -214,6 +223,11 @@ service Client {
 }`
 
 	t.Run("add new chain", func(t *testing.T) {
+		t.Parallel()
+
+		tmpDir := t.TempDir()
+		testFile := filepath.Join(tmpDir, "test.proto")
+
 		err := os.WriteFile(testFile, []byte(originalContent), 0644)
 		require.NoError(t, err)
 
@@ -238,6 +252,11 @@ service Client {
 	})
 
 	t.Run("add chain alphabetically after existing", func(t *testing.T) {
+		t.Parallel()
+
+		tmpDir := t.TempDir()
+		testFile := filepath.Join(tmpDir, "test.proto")
+
 		err := os.WriteFile(testFile, []byte(originalContent), 0644)
 		require.NoError(t, err)
 
@@ -258,52 +277,23 @@ service Client {
 	})
 
 	t.Run("reject duplicate chain", func(t *testing.T) {
+		t.Parallel()
+
+		tmpDir := t.TempDir()
+		testFile := filepath.Join(tmpDir, "test.proto")
+
 		err := os.WriteFile(testFile, []byte(originalContent), 0644)
 		require.NoError(t, err)
 
 		err = updateProtoFile(testFile, "ethereum-mainnet", 5009297550715157269)
 		require.Error(t, err)
-		assert.Contains(t, err.Error(), "already exists")
+		assert.True(t, errors.Is(err, ErrChainExists), "expected ErrChainExists, got %v", err)
 	})
 }
 
-func TestSanitizeBranchName(t *testing.T) {
-	tests := []struct {
-		name  string
-		input string
-		want  string
-	}{
-		{
-			name:  "simple name",
-			input: "ethereum-mainnet",
-			want:  "ethereum-mainnet",
-		},
-		{
-			name:  "name with underscores",
-			input: "binance_smart_chain-mainnet",
-			want:  "binance-smart-chain-mainnet",
-		},
-		{
-			name:  "name with special chars",
-			input: "chain@1.0.0",
-			want:  "chain100",
-		},
-		{
-			name:  "uppercase",
-			input: "ETHEREUM-MAINNET",
-			want:  "ethereum-mainnet",
-		},
-	}
-
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got := sanitizeBranchName(tt.input)
-			assert.Equal(t, tt.want, got)
-		})
-	}
-}
-
 func TestIntegration_DryRun(t *testing.T) {
+	t.Parallel()
+
 	// This test verifies the dry-run flow works correctly
 	// by using a real proto file from testdata
 
@@ -334,4 +324,3 @@ func TestIntegration_DryRun(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, string(originalContent), string(afterContent), "file should not be modified during read operations")
 }
-
