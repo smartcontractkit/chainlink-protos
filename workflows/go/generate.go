@@ -31,4 +31,7 @@ package workflows
 //go:generate protoc --proto_path=../ --go_out=./ --go_opt=module=github.com/smartcontractkit/chainlink-protos/workflows/go ../workflows/v2/workflow_user_log.proto
 //go:generate protoc --proto_path=../ --go_out=./ --go_opt=module=github.com/smartcontractkit/chainlink-protos/workflows/go ../workflows/v2/xxx_no_send.proto
 
+// sources/v1 - workflow metadata source service
+//go:generate protoc --proto_path=../ --go_out=./ --go-grpc_out=./ --go_opt=module=github.com/smartcontractkit/chainlink-protos/workflows/go --go-grpc_opt=module=github.com/smartcontractkit/chainlink-protos/workflows/go ../sources/v1/workflow_metadata_source.proto
+
 // do not include deprecated workflows/pb/base_message_legacy.proto
