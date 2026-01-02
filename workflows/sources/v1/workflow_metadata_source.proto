@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package workflows.sources.v1;
+package sources.v1;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/sources/v1";
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/sources";
 
 // WorkflowMetadataSourceService provides workflow metadata from an external source.
 // This service allows the chainlink node to fetch workflow metadata from sources
@@ -71,4 +71,3 @@ message Head {
   // timestamp is the Unix timestamp of this state.
   uint64 timestamp = 3;
 }
-
