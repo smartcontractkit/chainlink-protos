@@ -33,8 +33,11 @@ type CreInfo struct {
 	EngineVersion               string                 `protobuf:"bytes,8,opt,name=engineVersion,proto3" json:"engineVersion,omitempty"`
 	CapabilitiesRegistryVersion string                 `protobuf:"bytes,9,opt,name=capabilitiesRegistryVersion,proto3" json:"capabilitiesRegistryVersion,omitempty"`
 	DonVersion                  string                 `protobuf:"bytes,10,opt,name=donVersion,proto3" json:"donVersion,omitempty"`
-	unknownFields               protoimpl.UnknownFields
-	sizeCache                   protoimpl.SizeCache
+	// workflowSource identifies where the workflow was deployed from
+	// e.g., "contract", "grpc:my-source", "file"
+	WorkflowSource string `protobuf:"bytes,11,opt,name=workflowSource,proto3" json:"workflowSource,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *CreInfo) Reset() {
@@ -137,11 +140,18 @@ func (x *CreInfo) GetDonVersion() string {
 	return ""
 }
 
+func (x *CreInfo) GetWorkflowSource() string {
+	if x != nil {
+		return x.WorkflowSource
+	}
+	return ""
+}
+
 var File_workflows_v2_cre_info_proto protoreflect.FileDescriptor
 
 const file_workflows_v2_cre_info_proto_rawDesc = "" +
 	"\n" +
-	"\x1bworkflows/v2/cre_info.proto\x12\fworkflows.v2\"\x8f\x03\n" +
+	"\x1bworkflows/v2/cre_info.proto\x12\fworkflows.v2\"\xb7\x03\n" +
 	"\aCreInfo\x12\x14\n" +
 	"\x05donID\x18\x01 \x01(\x05R\x05donID\x12\x12\n" +
 	"\x04donF\x18\x02 \x01(\x05R\x04donF\x12\x12\n" +
@@ -155,7 +165,8 @@ const file_workflows_v2_cre_info_proto_rawDesc = "" +
 	"\n" +
 	"donVersion\x18\n" +
 	" \x01(\tR\n" +
-	"donVersionB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
+	"donVersion\x12&\n" +
+	"\x0eworkflowSource\x18\v \x01(\tR\x0eworkflowSourceB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
 
 var (
 	file_workflows_v2_cre_info_proto_rawDescOnce sync.Once
