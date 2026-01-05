@@ -100,10 +100,8 @@ type ListWorkflowMetadataResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// workflows is the list of workflow metadata entries.
 	Workflows []*WorkflowMetadata `protobuf:"bytes,1,rep,name=workflows,proto3" json:"workflows,omitempty"`
-	// head represents the state at which the metadata was read.
-	Head *Head `protobuf:"bytes,2,opt,name=head,proto3" json:"head,omitempty"`
 	// has_more indicates whether there are more workflows available beyond this page.
-	HasMore       bool `protobuf:"varint,3,opt,name=has_more,json=hasMore,proto3" json:"has_more,omitempty"`
+	HasMore       bool `protobuf:"varint,2,opt,name=has_more,json=hasMore,proto3" json:"has_more,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -141,13 +139,6 @@ func (*ListWorkflowMetadataResponse) Descriptor() ([]byte, []int) {
 func (x *ListWorkflowMetadataResponse) GetWorkflows() []*WorkflowMetadata {
 	if x != nil {
 		return x.Workflows
-	}
-	return nil
-}
-
-func (x *ListWorkflowMetadataResponse) GetHead() *Head {
-	if x != nil {
-		return x.Head
 	}
 	return nil
 }
@@ -284,72 +275,6 @@ func (x *WorkflowMetadata) GetDonFamily() string {
 	return ""
 }
 
-// Head represents the state at which metadata was read.
-// For blockchain sources, this is the block information.
-// For non-blockchain sources, this may be a synthetic head.
-type Head struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// height is the block height or equivalent state identifier.
-	Height string `protobuf:"bytes,1,opt,name=height,proto3" json:"height,omitempty"`
-	// hash is the block hash or equivalent state hash.
-	Hash []byte `protobuf:"bytes,2,opt,name=hash,proto3" json:"hash,omitempty"`
-	// timestamp is the Unix timestamp of this state.
-	Timestamp     uint64 `protobuf:"varint,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *Head) Reset() {
-	*x = Head{}
-	mi := &file_sources_v1_workflow_metadata_source_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *Head) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Head) ProtoMessage() {}
-
-func (x *Head) ProtoReflect() protoreflect.Message {
-	mi := &file_sources_v1_workflow_metadata_source_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Head.ProtoReflect.Descriptor instead.
-func (*Head) Descriptor() ([]byte, []int) {
-	return file_sources_v1_workflow_metadata_source_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *Head) GetHeight() string {
-	if x != nil {
-		return x.Height
-	}
-	return ""
-}
-
-func (x *Head) GetHash() []byte {
-	if x != nil {
-		return x.Hash
-	}
-	return nil
-}
-
-func (x *Head) GetTimestamp() uint64 {
-	if x != nil {
-		return x.Timestamp
-	}
-	return 0
-}
-
 var File_sources_v1_workflow_metadata_source_proto protoreflect.FileDescriptor
 
 const file_sources_v1_workflow_metadata_source_proto_rawDesc = "" +
@@ -360,11 +285,10 @@ const file_sources_v1_workflow_metadata_source_proto_rawDesc = "" +
 	"\fdon_families\x18\x01 \x03(\tR\vdonFamilies\x12\x14\n" +
 	"\x05start\x18\x02 \x01(\x03R\x05start\x12\x14\n" +
 	"\x05limit\x18\x03 \x01(\x03R\x05limit\x12#\n" +
-	"\rstatus_filter\x18\x04 \x03(\rR\fstatusFilter\"\x9b\x01\n" +
+	"\rstatus_filter\x18\x04 \x03(\rR\fstatusFilter\"u\n" +
 	"\x1cListWorkflowMetadataResponse\x12:\n" +
-	"\tworkflows\x18\x01 \x03(\v2\x1c.sources.v1.WorkflowMetadataR\tworkflows\x12$\n" +
-	"\x04head\x18\x02 \x01(\v2\x10.sources.v1.HeadR\x04head\x12\x19\n" +
-	"\bhas_more\x18\x03 \x01(\bR\ahasMore\"\xb4\x02\n" +
+	"\tworkflows\x18\x01 \x03(\v2\x1c.sources.v1.WorkflowMetadataR\tworkflows\x12\x19\n" +
+	"\bhas_more\x18\x02 \x01(\bR\ahasMore\"\xb4\x02\n" +
 	"\x10WorkflowMetadata\x12\x1f\n" +
 	"\vworkflow_id\x18\x01 \x01(\fR\n" +
 	"workflowId\x12\x14\n" +
@@ -383,11 +307,7 @@ const file_sources_v1_workflow_metadata_source_proto_rawDesc = "" +
 	"attributes\x12\x1d\n" +
 	"\n" +
 	"don_family\x18\n" +
-	" \x01(\tR\tdonFamily\"P\n" +
-	"\x04Head\x12\x16\n" +
-	"\x06height\x18\x01 \x01(\tR\x06height\x12\x12\n" +
-	"\x04hash\x18\x02 \x01(\fR\x04hash\x12\x1c\n" +
-	"\ttimestamp\x18\x03 \x01(\x04R\ttimestamp2\x8a\x01\n" +
+	" \x01(\tR\tdonFamily2\x8a\x01\n" +
 	"\x1dWorkflowMetadataSourceService\x12i\n" +
 	"\x14ListWorkflowMetadata\x12'.sources.v1.ListWorkflowMetadataRequest\x1a(.sources.v1.ListWorkflowMetadataResponseBCZAgithub.com/smartcontractkit/chainlink-protos/workflows/go/sourcesb\x06proto3"
 
@@ -403,23 +323,21 @@ func file_sources_v1_workflow_metadata_source_proto_rawDescGZIP() []byte {
 	return file_sources_v1_workflow_metadata_source_proto_rawDescData
 }
 
-var file_sources_v1_workflow_metadata_source_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_sources_v1_workflow_metadata_source_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_sources_v1_workflow_metadata_source_proto_goTypes = []any{
 	(*ListWorkflowMetadataRequest)(nil),  // 0: sources.v1.ListWorkflowMetadataRequest
 	(*ListWorkflowMetadataResponse)(nil), // 1: sources.v1.ListWorkflowMetadataResponse
 	(*WorkflowMetadata)(nil),             // 2: sources.v1.WorkflowMetadata
-	(*Head)(nil),                         // 3: sources.v1.Head
 }
 var file_sources_v1_workflow_metadata_source_proto_depIdxs = []int32{
 	2, // 0: sources.v1.ListWorkflowMetadataResponse.workflows:type_name -> sources.v1.WorkflowMetadata
-	3, // 1: sources.v1.ListWorkflowMetadataResponse.head:type_name -> sources.v1.Head
-	0, // 2: sources.v1.WorkflowMetadataSourceService.ListWorkflowMetadata:input_type -> sources.v1.ListWorkflowMetadataRequest
-	1, // 3: sources.v1.WorkflowMetadataSourceService.ListWorkflowMetadata:output_type -> sources.v1.ListWorkflowMetadataResponse
-	3, // [3:4] is the sub-list for method output_type
-	2, // [2:3] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	0, // 1: sources.v1.WorkflowMetadataSourceService.ListWorkflowMetadata:input_type -> sources.v1.ListWorkflowMetadataRequest
+	1, // 2: sources.v1.WorkflowMetadataSourceService.ListWorkflowMetadata:output_type -> sources.v1.ListWorkflowMetadataResponse
+	2, // [2:3] is the sub-list for method output_type
+	1, // [1:2] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_sources_v1_workflow_metadata_source_proto_init() }
@@ -433,7 +351,7 @@ func file_sources_v1_workflow_metadata_source_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_sources_v1_workflow_metadata_source_proto_rawDesc), len(file_sources_v1_workflow_metadata_source_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

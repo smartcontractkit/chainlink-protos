@@ -29,10 +29,8 @@ message ListWorkflowMetadataRequest {
 message ListWorkflowMetadataResponse {
   // workflows is the list of workflow metadata entries.
   repeated WorkflowMetadata workflows = 1;
-  // head represents the state at which the metadata was read.
-  Head head = 2;
   // has_more indicates whether there are more workflows available beyond this page.
-  bool has_more = 3;
+  bool has_more = 2;
 }
 
 // WorkflowMetadata represents metadata for a single workflow.
@@ -55,16 +53,4 @@ message WorkflowMetadata {
   bytes attributes = 9;
   // don_family is the DON family this workflow belongs to.
   string don_family = 10;
-}
-
-// Head represents the state at which metadata was read.
-// For blockchain sources, this is the block information.
-// For non-blockchain sources, this may be a synthetic head.
-message Head {
-  // height is the block height or equivalent state identifier.
-  string height = 1;
-  // hash is the block hash or equivalent state hash.
-  bytes hash = 2;
-  // timestamp is the Unix timestamp of this state.
-  uint64 timestamp = 3;
 }
