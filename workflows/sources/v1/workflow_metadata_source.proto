@@ -15,7 +15,6 @@ service WorkflowMetadataSourceService {
 // ListWorkflowMetadataRequest is the request message for ListWorkflowMetadata.
 message ListWorkflowMetadataRequest {
   // don_families is the list of DON families to filter workflows by.
-  // Workflows are assigned to DON families, not individual DONs.
   repeated string don_families = 1;
   // start is the pagination offset (0-indexed). Defaults to 0.
   int64 start = 2;
@@ -38,9 +37,7 @@ message ListWorkflowMetadataResponse {
 
 // WorkflowMetadata represents metadata for a single workflow.
 message WorkflowMetadata {
-  // workflow_id is the 32-byte unique identifier for the workflow.
   bytes workflow_id = 1;
-  // owner is the owner address (e.g., Ethereum address).
   bytes owner = 2;
   // created_at is the Unix timestamp when the workflow was created.
   uint64 created_at = 3;
