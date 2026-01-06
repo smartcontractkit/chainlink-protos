@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package sources.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/sources";
+
+// WorkflowMetadataSourceService provides workflow metadata from an external source.
+// This service allows the chainlink node to fetch workflow metadata from sources
+// other than the on-chain workflow registry contract.
+service WorkflowMetadataSourceService {
+  // ListWorkflowMetadata returns all workflow metadata for the given DON.
+  rpc ListWorkflowMetadata(ListWorkflowMetadataRequest) returns (ListWorkflowMetadataResponse);
+}
+
+// ListWorkflowMetadataRequest is the request message for ListWorkflowMetadata.
+message ListWorkflowMetadataRequest {
+  // don_families is the list of DON families to filter workflows by.
+  repeated string don_families = 1;
+  // start is the pagination offset (0-indexed). Defaults to 0.
+  int64 start = 2;
+  // limit is the maximum number of workflows to return. Defaults to 1000 if not specified.
+  int64 limit = 3;
+  // status_filter filters workflows by status. Empty = all, [0] = active only, [1] = paused only.
+  // Multiple values can be provided to include workflows matching any of the specified statuses.
+  repeated uint32 status_filter = 4;
+}
+
+// ListWorkflowMetadataResponse is the response message for ListWorkflowMetadata.
+message ListWorkflowMetadataResponse {
+  // workflows is the list of workflow metadata entries.
+  repeated WorkflowMetadata workflows = 1;
+  // has_more indicates whether there are more workflows available beyond this page.
+  bool has_more = 2;
+}
+
+// WorkflowMetadata represents metadata for a single workflow.
+message WorkflowMetadata {
+  bytes workflow_id = 1;
+  bytes owner = 2;
+  // created_at is the Unix timestamp when the workflow was created.
+  uint64 created_at = 3;
+  // status indicates the workflow status (0=active, 1=paused).
+  uint32 status = 4;
+  // workflow_name is the human-readable name of the workflow.
+  string workflow_name = 5;
+  // binary_url is the URL to fetch the workflow binary.
+  string binary_url = 6;
+  // config_url is the URL to fetch the workflow config.
+  string config_url = 7;
+  // tag is the version tag of the workflow.
+  string tag = 8;
+  // attributes is optional JSON-encoded attributes.
+  bytes attributes = 9;
+  // don_family is the DON family this workflow belongs to.
+  string don_family = 10;
+}
