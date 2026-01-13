@@ -896,117 +896,6 @@ service BasicAction {
 }
 `
 
-const lloV1TransmitEmbedded = `syntax = "proto3";
-
-package capabilities.llo.v1;
-
-import "tools/generator/v1alpha/cre_metadata.proto";
-
-option go_package = "github.com/smartcontractkit/chainlink-common/pkg/capabilities/v2/actions/llo";
-
-// Configuration for the LLO Transmit Action
-message Config {
-  // The ID of the DON (Decentralized Oracle Network)
-  uint32 don_id = 1;
-
-  // Mercury server configurations (legacy support)
-  // Map of server URL to public key (32 bytes hex)
-  map<string, bytes> servers = 2;
-
-  // Transmitter-specific configurations
-  repeated TransmitterConfig transmitters = 3;
-
-  // Enable verbose logging for debugging
-  bool verbose_logging = 4;
-}
-
-// Configuration for a specific transmitter type
-message TransmitterConfig {
-  // Type of transmitter (e.g., "cre", "mercury")
-  string type = 1;
-
-  // Transmitter-specific options as JSON
-  bytes opts = 2;
-}
-
-// Input for transmitting an LLO report
-message Request {
-  // Configuration digest for the OCR round
-  bytes config_digest = 1;
-
-  // Sequence number of the report
-  uint64 seq_nr = 2;
-
-  // The report bytes to transmit
-  bytes report = 3;
-
-  // Report metadata
-  ReportInfo report_info = 4;
-
-  // Attributed onchain signatures
-  repeated AttributedSignature signatures = 5;
-}
-
-// Metadata about the report
-message ReportInfo {
-  // Lifecycle stage (e.g., production, staging, retirement)
-  string life_cycle_stage = 1;
-
-  // Report format identifier
-  string report_format = 2;
-}
-
-// An attributed onchain signature
-message AttributedSignature {
-  // The signature bytes
-  bytes signature = 1;
-
-  // The signer index
-  uint32 signer = 2;
-}
-
-// Response after transmitting a report
-message Response {
-  // Whether the transmission was successful
-  bool success = 1;
-
-  // Error message if transmission failed
-  string error = 2;
-
-  // Number of sub-transmitters that successfully transmitted
-  uint32 successful_transmissions = 3;
-
-  // Number of sub-transmitters that failed
-  uint32 failed_transmissions = 4;
-
-  // Details about each sub-transmitter's result
-  repeated TransmitterResult transmitter_results = 5;
-}
-
-// Result from a specific transmitter
-message TransmitterResult {
-  // Transmitter type
-  string type = 1;
-
-  // Success status
-  bool success = 2;
-
-  // Error message if failed
-  string error = 3;
-}
-
-// LLO Transmit Action service definition
-service LLOTransmit {
-  option (tools.generator.v1alpha.capability) = {
-    mode: MODE_DON
-    capability_id: "llo-transmit@1.0.0"
-  };
-
-  // Transmit an LLO report to configured destinations
-  rpc Execute(Request) returns (Response);
-}
-`
-
 const networkingConfidentialhttpV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.networking.confidentialhttp.v1alpha;
@@ -1171,71 +1060,58 @@ const streamsV1TriggerEmbedded = `syntax = "proto3";
 
 package capabilities.streams.v1;
 
-import "tools/generator/v1alpha/cre_metadata.proto";
+import "cre/tools/generator/v1alpha/cre_metadata.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-common/pkg/capabilities/v2/triggers/streams";
 
-// Configuration for the Streams Trigger
+// Configuration for the Streams LLO Trigger
+// This matches the existing LLOTriggerConfig structure
 message Config {
-  // The IDs of the data feeds that will have their reports included in the trigger event.
-  // Feed IDs are hex-encoded strings (e.g., "0x000...").
-  repeated string feed_ids = 1;
+  // The IDs of the LLO data streams to subscribe to.
+  // Stream IDs are uint32 values that identify specific feeds.
+  repeated uint32 stream_ids = 1;
 
-  // The interval in milliseconds after which a new trigger event is generated.
+  // The minimum interval in milliseconds between trigger events.
+  // Trigger will only emit events at most once per this interval.
   uint64 max_frequency_ms = 2;
 }
 
-// Metadata about the signers that produced the reports
-message SignersMetadata {
-  // The IDs of the signers
-  repeated string signers = 1;
+// An attributed onchain signature
+message OCRSignature {
+  // The signer index
+  uint32 signer = 1;
 
-  // The minimum number of signatures required to validate a report
-  int64 min_required_signatures = 2;
+  // The signature bytes
+  bytes signature = 2;
 }
 
-// A single feed report containing data and signatures
-message FeedReport {
-  // The ID of the data feed (hex-encoded)
-  string feed_id = 1;
+// OCR Trigger Event payload
+// This matches the existing OCRTriggerEvent structure that the transmitter emits
+message Report {
+  // Configuration digest for the OCR round
+  bytes config_digest = 1;
 
-  // The full report as raw bytes
-  bytes full_report = 2;
+  // Sequence number of the report
+  uint64 seq_nr = 2;
 
-  // Report context required to validate signatures
-  bytes report_context = 3;
+  // The report bytes (raw OCR report)
+  bytes report = 3;
 
-  // Signatures over the full report and report context
-  repeated bytes signatures = 4;
-
-  // The benchmark price extracted from the full report
-  bytes benchmark_price = 5;
-
-  // Timestamp when the observation was made
-  int64 observation_timestamp = 6;
+  // Attributed onchain signatures
+  repeated OCRSignature sigs = 4;
 }
 
-// The payload emitted by the Streams Trigger containing feed data
-message Feed {
-  // Timestamp when the trigger event was generated
-  int64 timestamp = 1;
-
-  // Metadata about the signers
-  SignersMetadata metadata = 2;
-
-  // Array of feed reports
-  repeated FeedReport payload = 3;
-}
-
-// Streams Trigger service definition
+// Streams LLO Trigger service definition
+// This is the NoDAG API for the existing LLO CRE Transmitter
 service Streams {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
-    capability_id: "streams-trigger@1.0.0"
+    capability_id: "streams-trigger@2.0.0"
   };
 
-  // Trigger method that streams feed data
-  rpc Trigger(Config) returns (stream Feed);
+  // Trigger method that emits OCR reports from the LLO plugin
+  // This replaces the legacy RegisterTrigger/UnregisterTrigger API
+  rpc Trigger(Config) returns (stream Report);
 }
 `
 
@@ -1755,10 +1631,6 @@ var allFiles = []*embeddedFile{
 	{
 		name:    "capabilities/internal/nodeaction/v1/node_action.proto",
 		content: internalNodeactionV1NodeActionEmbedded,
-	},
-	{
-		name:    "capabilities/llo/v1/transmit.proto",
-		content: lloV1TransmitEmbedded,
 	},
 	{
 		name:    "capabilities/networking/confidentialhttp/v1alpha/client.proto",
