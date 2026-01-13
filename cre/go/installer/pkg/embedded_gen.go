@@ -1056,6 +1056,65 @@ service Cron {
 }
 `
 
+const streamsV1TriggerEmbedded = `syntax = "proto3";
+
+package capabilities.streams.v1;
+
+import "cre/tools/generator/v1alpha/cre_metadata.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-common/pkg/capabilities/v2/triggers/streams";
+
+// Configuration for the Streams LLO Trigger
+// This matches the existing LLOTriggerConfig structure
+message Config {
+  // The IDs of the LLO data streams to subscribe to.
+  // Stream IDs are uint32 values that identify specific feeds.
+  repeated uint32 stream_ids = 1;
+
+  // The minimum interval in milliseconds between trigger events.
+  // Trigger will only emit events at most once per this interval.
+  uint64 max_frequency_ms = 2;
+}
+
+// An attributed onchain signature
+message OCRSignature {
+  // The signer index
+  uint32 signer = 1;
+
+  // The signature bytes
+  bytes signature = 2;
+}
+
+// OCR Trigger Event payload
+// This matches the existing OCRTriggerEvent structure that the transmitter emits
+message Report {
+  // Configuration digest for the OCR round
+  bytes config_digest = 1;
+
+  // Sequence number of the report
+  uint64 seq_nr = 2;
+
+  // The report bytes (raw OCR report)
+  bytes report = 3;
+
+  // Attributed onchain signatures
+  repeated OCRSignature sigs = 4;
+}
+
+// Streams LLO Trigger service definition
+// This is the NoDAG API for the existing LLO CRE Transmitter
+service Streams {
+  option (tools.generator.v1alpha.capability) = {
+    mode: MODE_DON
+    capability_id: "streams-trigger@2.0.0"
+  };
+
+  // Trigger method that emits OCR reports from the LLO plugin
+  // This replaces the legacy RegisterTrigger/UnregisterTrigger API
+  rpc Trigger(Config) returns (stream Report);
+}
+`
+
 const v1alphaSdkEmbedded = `syntax = "proto3";
 
 package sdk.v1alpha;
@@ -1588,6 +1647,10 @@ var allFiles = []*embeddedFile{
 	{
 		name:    "capabilities/scheduler/cron/v1/trigger.proto",
 		content: schedulerCronV1TriggerEmbedded,
+	},
+	{
+		name:    "capabilities/streams/v1/trigger.proto",
+		content: streamsV1TriggerEmbedded,
 	},
 	{
 		name:    "sdk/v1alpha/sdk.proto",
