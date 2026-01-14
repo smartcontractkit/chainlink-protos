@@ -9,3 +9,4 @@ packages:
   - 'chainlink-ccv/verifier'
   - 'chainlink-ccv/committee-verifier'
   - 'chainlink-ccv/message-discovery'
+  - 'chainlink-ccv/heartbeat'
