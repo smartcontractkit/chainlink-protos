@@ -1,6 +1,23 @@
 # Adds a new EVM chain to client.proto and creates a PR.
-# Trigger manually from Actions tab with a chain selector value.
-# Can also be triggered programmatically via workflow_call or repository_dispatch.
+#
+# Usage:
+#   1. Manual: Actions tab → "Add EVM Chain" → Enter selector → Run
+#   2. From another workflow:
+#        jobs:
+#          add-chain:
+#            uses: ./.github/workflows/add-evm-chain.yml
+#            with:
+#              selector: "5009297550715157269"
+#   3. Via API:
+#        curl -X POST -H "Authorization: token $TOKEN" \
+#          -H "Accept: application/vnd.github.v3+json" \
+#          https://api.github.com/repos/OWNER/REPO/dispatches \
+#          -d '{"event_type":"add-evm-chain","client_payload":{"selector":"5009297550715157269"}}'
+#
+# Outputs:
+#   - Creates a PR adding the chain to cre/capabilities/blockchain/evm/v1alpha/client.proto
+#   - Annotation with chain name and PR link
+#   - Warning annotation if chain already exists
 name: Add EVM Chain
 
 on:
