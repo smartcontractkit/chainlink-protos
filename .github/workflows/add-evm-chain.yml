@@ -53,7 +53,7 @@ jobs:
       CHAIN_SELECTOR: ${{ inputs.selector || github.event.client_payload.selector }}
     steps:
       # Clone the repository so we can modify files and create a PR
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
       # Parse .tool-versions file to extract version numbers for Go, protoc, etc.
       - name: Set tool versions
@@ -62,7 +62,7 @@ jobs:
 
       # Install Go runtime using the version specified in .tool-versions
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.0.0
         with:
           go-version: ${{ steps.tool-versions.outputs.golang_version }}
 
@@ -116,7 +116,7 @@ jobs:
       # Commit all changes and open a pull request for review
       - name: Create PR
         id: create-pr
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "feat(cre): add EVM chain"
