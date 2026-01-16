@@ -1,0 +1,118 @@
+# Adds a new EVM chain to client.proto and creates a PR.
+# Trigger manually from Actions tab with a chain selector value.
+# Can also be triggered programmatically via workflow_call or repository_dispatch.
+name: Add EVM Chain
+
+on:
+  # Manual trigger from GitHub Actions UI
+  workflow_dispatch:
+    inputs:
+      selector:
+        description: 'Chain selector (uint64), e.g. 5009297550715157269 for ethereum-mainnet'
+        required: true
+        type: string
+
+  # Allows this workflow to be called from other workflows
+  workflow_call:
+    inputs:
+      selector:
+        description: 'Chain selector (uint64), e.g. 5009297550715157269 for ethereum-mainnet'
+        required: true
+        type: string
+
+  # Allows triggering via GitHub API with event_type "add-evm-chain"
+  repository_dispatch:
+    types: [add-evm-chain]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  add-chain:
+    runs-on: ubuntu-latest
+    # Resolve selector from inputs (workflow_dispatch/workflow_call) or client_payload (repository_dispatch)
+    env:
+      CHAIN_SELECTOR: ${{ inputs.selector || github.event.client_payload.selector }}
+    steps:
+      # Clone the repository so we can modify files and create a PR
+      - uses: actions/checkout@v4
+
+      # Parse .tool-versions file to extract version numbers for Go, protoc, etc.
+      - name: Set tool versions
+        id: tool-versions
+        uses: smartcontractkit/tool-versions-to-env-action@aabd5efbaf28005284e846c5cf3a02f2cba2f4c2 # v1.0.8
+
+      # Install Go runtime using the version specified in .tool-versions
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ steps.tool-versions.outputs.golang_version }}
+
+      # Install asdf version manager and all plugins defined in .tool-versions
+      - name: Install asdf
+        uses: asdf-vm/actions/plugins-add@1902764435ca0dd2f3388eea723a4f92a4eb8302 # v3.0.2
+        with:
+          asdf_branch: v0.16.7
+
+      # Add asdf binaries and shims to PATH so installed tools are available
+      - name: Setup asdf environment
+        run: |
+          echo "$HOME/.asdf/bin" >> $GITHUB_PATH
+          echo "$HOME/.asdf/shims" >> $GITHUB_PATH
+
+      # Install the protobuf compiler using the version from .tool-versions
+      - name: Install protoc
+        run: asdf install protoc
+
+      # Install the Go protobuf code generator plugin for protoc
+      - name: Install protoc-gen-go
+        run: go install google.golang.org/protobuf/cmd/protoc-gen-go@v${{ steps.tool-versions.outputs.protoc-gen-go_version }}
+
+      # Fetch the latest chain-selectors library which contains chain name mappings
+      - name: Update chain-selectors and download dependencies
+        working-directory: cre/go
+        run: |
+          go get github.com/smartcontractkit/chain-selectors@latest
+          go mod tidy
+
+      # Run the add-evm-chain tool to append the new chain entry to client.proto
+      - name: Add chain to proto
+        id: add-chain
+        working-directory: cre/go
+        run: |
+          OUTPUT=$(go run ./tools/add-evm-chain -selector $CHAIN_SELECTOR 2>&1)
+          echo "$OUTPUT"
+          # Extract chain name from "added <name> (selector: ...)" or "chain <name> already exists"
+          CHAIN_NAME=$(echo "$OUTPUT" | sed -n 's/^added \([^ ]*\) .*/\1/p; s/^chain \([^ ]*\) already exists/\1/p')
+          echo "chain_name=$CHAIN_NAME" >> $GITHUB_OUTPUT
+
+      # Run go generate to update embedded_gen.go with the modified proto content
+      - name: Regenerate embedded files
+        working-directory: cre/go
+        run: go generate ./...
+
+      # Commit all changes and open a pull request for review
+      - name: Create PR
+        id: create-pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "feat(cre): add EVM chain"
+          title: "feat(cre): add EVM chain (selector: ${{ env.CHAIN_SELECTOR }})"
+          body: "Adds EVM chain with selector `${{ env.CHAIN_SELECTOR }}` to client.proto"
+          branch: add-evm-chain/${{ env.CHAIN_SELECTOR }}
+
+      # Output chain and PR details as GitHub Actions annotations and job summary
+      - name: Output summary
+        run: |
+          echo "::notice title=Chain Added::Chain: ${{ steps.add-chain.outputs.chain_name }} (selector: $CHAIN_SELECTOR)"
+          echo "::notice title=Pull Request::${{ steps.create-pr.outputs.pull-request-url }}"
+          echo "## 🔗 EVM Chain Added" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Field | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Chain Name** | \`${{ steps.add-chain.outputs.chain_name }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Chain Selector** | \`$CHAIN_SELECTOR\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Pull Request** | ${{ steps.create-pr.outputs.pull-request-url }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **PR Number** | #${{ steps.create-pr.outputs.pull-request-number }} |" >> $GITHUB_STEP_SUMMARY
