@@ -86,6 +86,10 @@ jobs:
           # Extract chain name from "added <name> (selector: ...)" or "chain <name> already exists"
           CHAIN_NAME=$(echo "$OUTPUT" | sed -n 's/^added \([^ ]*\) .*/\1/p; s/^chain \([^ ]*\) already exists/\1/p')
           echo "chain_name=$CHAIN_NAME" >> $GITHUB_OUTPUT
+          # Warn if chain already exists
+          if echo "$OUTPUT" | grep -q "already exists"; then
+            echo "::warning title=Chain Already Exists::$CHAIN_NAME (selector: $CHAIN_SELECTOR) already exists"
+          fi
 
       # Run go generate to update embedded_gen.go with the modified proto content
       - name: Regenerate embedded files
