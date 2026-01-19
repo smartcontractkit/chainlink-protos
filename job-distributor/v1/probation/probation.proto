@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package api.probation.v1;
 
-import "google/protobuf/timestamp.proto";
 import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/v1/probation";
 

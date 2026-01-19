@@ -1,0 +1,10 @@
+version: v2
+inputs:
+  - directory: job-distributor
+plugins:
+  - local: protoc-gen-go
+    out: job-distributor
+    opt: paths=source_relative
+  - local: protoc-gen-go-grpc
+    out: job-distributor
+    opt: paths=source_relative
