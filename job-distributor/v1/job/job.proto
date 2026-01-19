@@ -83,7 +83,6 @@ message Proposal {
   optional google.protobuf.Timestamp response_received_at = 10; // Timestamp when a response was received.
 }
 
-
 // GetJobRequest specifies the criteria for retrieving a job.
 message GetJobRequest {
   oneof id_oneof {

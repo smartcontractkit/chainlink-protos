@@ -508,7 +508,7 @@ var File_v1_probation_probation_proto protoreflect.FileDescriptor
 
 const file_v1_probation_probation_proto_rawDesc = "" +
 	"\n" +
-	"\x1cv1/probation/probation.proto\x12\x10api.probation.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/protobuf/struct.proto\"\xc7\x01\n" +
+	"\x1cv1/probation/probation.proto\x12\x10api.probation.v1\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xc7\x01\n" +
 	"\x0eRollbackPolicy\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12/\n" +
 	"\x06policy\x18\x02 \x01(\v2\x17.google.protobuf.StructR\x06policy\x129\n" +
