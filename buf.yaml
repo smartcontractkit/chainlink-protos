@@ -46,6 +46,10 @@ modules:
     lint:
       except:
         - PACKAGE_DIRECTORY_MATCH
+  - path: job-distributor
+    lint:
+      except:
+        - PACKAGE_DIRECTORY_MATCH
 
 lint:
   use:
