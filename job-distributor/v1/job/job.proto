@@ -3,7 +3,7 @@ syntax = "proto3";
 package api.job.v1;
 
 import "google/protobuf/timestamp.proto";
-import "job-distributor/v1/shared/ptypes/label.proto";
+import "v1/shared/ptypes/label.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/job-distributor/v1/job";
 
@@ -82,7 +82,6 @@ message Proposal {
   optional google.protobuf.Timestamp acked_at = 9; // Timestamp when the proposal was acknowledged.
   optional google.protobuf.Timestamp response_received_at = 10; // Timestamp when a response was received.
 }
-
 
 // GetJobRequest specifies the criteria for retrieving a job.
 message GetJobRequest {

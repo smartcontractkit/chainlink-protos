@@ -46,6 +46,13 @@ modules:
     lint:
       except:
         - PACKAGE_DIRECTORY_MATCH
+  - path: job-distributor
+    lint:
+      except:
+        - PACKAGE_DIRECTORY_MATCH
+        - PACKAGE_VERSION_SUFFIX
+        - ENUM_VALUE_PREFIX
+        - ENUM_ZERO_VALUE_SUFFIX
 
 lint:
   use:
