@@ -1,0 +1,100 @@
+# Dispatches to cre-sdk-go to bump chainlink-protos version when a PR is merged.
+# Uses the CRE Github Automation App (app_id: 2666290) for authentication.
+#
+# Required Organization Secrets:
+#   - CRE_GH_AUTOMATION_APP_ID: GitHub App ID
+#   - CRE_GH_AUTOMATION_APP_PRIVATE_KEY: GitHub App private key
+name: Notify cre-sdk-go
+
+on:
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Override version (leave empty to calculate from current commit)'
+        required: false
+        type: string
+      skip_tagging:
+        description: 'Skip version tagging in cre-sdk-go'
+        required: false
+        type: boolean
+        default: false
+
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  dispatch:
+    # Run if manually triggered OR if the PR was merged (not just closed)
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Calculate pseudo-version
+        id: version
+        run: |
+          # Use input version if provided, otherwise calculate from commit
+          if [ -n "${{ inputs.version }}" ]; then
+            VERSION="${{ inputs.version }}"
+            echo "Using provided version: ${VERSION}"
+          else
+            # Get the merge commit info
+            TIMESTAMP=$(TZ=UTC git log -1 --format='%cd' --date=format:%Y%m%d%H%M%S)
+            SHORT_SHA=$(git rev-parse --short=12 HEAD)
+            VERSION="v0.0.0-${TIMESTAMP}-${SHORT_SHA}"
+            echo "Calculated version: ${VERSION}"
+          fi
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Generate GitHub App Token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.CRE_GH_AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.CRE_GH_AUTOMATION_APP_PRIVATE_KEY }}
+          owner: smartcontractkit
+          repositories: cre-sdk-go
+
+      - name: Dispatch to cre-sdk-go
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          repository: smartcontractkit/cre-sdk-go
+          event-type: bump-chainlink-protos
+          client-payload: |
+            {
+              "version": "${{ steps.version.outputs.version }}",
+              "skip_tagging": ${{ inputs.skip_tagging == true }}
+            }
+
+      - name: Summary
+        run: |
+          DISPATCH_TIME=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          
+          echo "## 🚀 Dispatch Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Target" >> $GITHUB_STEP_SUMMARY
+          echo "- **Repository:** [\`smartcontractkit/cre-sdk-go\`](https://github.com/smartcontractkit/cre-sdk-go)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Workflow:** \`bump-chainlink-protos.yml\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Event Type:** \`bump-chainlink-protos\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Dispatched at:** ${DISPATCH_TIME}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Payload" >> $GITHUB_STEP_SUMMARY
+          echo "| Parameter | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| version | \`${{ steps.version.outputs.version }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| skip_tagging | \`${{ inputs.skip_tagging == true }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### View Triggered Workflow" >> $GITHUB_STEP_SUMMARY
+          echo "👉 **[View bump-chainlink-protos runs](https://github.com/smartcontractkit/cre-sdk-go/actions/workflows/bump-chainlink-protos.yml?query=event%3Arepository_dispatch)**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "_Look for the run started at approximately ${DISPATCH_TIME}_" >> $GITHUB_STEP_SUMMARY
+
+
