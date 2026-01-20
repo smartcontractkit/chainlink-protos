@@ -6,6 +6,9 @@
 #   - CRE_GH_AUTOMATION_APP_PRIVATE_KEY: GitHub App private key
 name: Notify cre-sdk-go
 
+permissions:
+  contents: read
+
 on:
   # Manual trigger
   workflow_dispatch:
@@ -32,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           ref: main
           fetch-depth: 1
