@@ -15,3 +15,6 @@ deploy-prod:
 
 destroy-prod:
 	iron-flask deploy-all -e prod -c ./iron-flask.yaml --destroy
+
+generate:
+	go generate ./...
