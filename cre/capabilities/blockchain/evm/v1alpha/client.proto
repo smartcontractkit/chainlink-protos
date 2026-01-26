@@ -278,6 +278,10 @@ service Client {
               value: 6915682381028791124
             },
             {
+              key: "ethereum-testnet-hoodi-taiko-1"
+              value: 15858691699034549072
+            },
+            {
               key: "tempo-testnet"
               value: 3963528237232804922
             }
