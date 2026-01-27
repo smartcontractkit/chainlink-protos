@@ -25,8 +25,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { name: cre,        file: chip-cre.json }
-          - { name: platform,   file: chip-platform.json }
+          - { name: cre,        dir: workflows,    file: chip-cre.json }
+          - { name: platform,   dir: workflows,    file: chip-platform.json }
+          - { name: svr,        dir: svr,          file: chip-svr.json }
 
     steps:
       - uses: actions/checkout@v5
@@ -43,8 +44,8 @@ jobs:
         with:
           aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_ROOT }}
           aws-region: us-west-2
-          chip-schema-dir: "workflows"
-          chip-config-file-path: "workflows/${{ matrix.config.file }}"
+          chip-schema-dir: ${{ matrix.config.dir }}
+          chip-config-file-path: "${{ matrix.config.dir }}/${{ matrix.config.file }}"
           chip-config-host: ${{ github.ref_name == 'master' && secrets.chip_config_host_prod || secrets.chip_config_host_staging }}
           chip-config-user: ${{ secrets.chip_config_user }}
           chip-config-password: ${{ github.ref_name == 'master' && secrets.chip_config_password_prod || secrets.chip_config_password_staging }}

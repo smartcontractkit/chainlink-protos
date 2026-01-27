@@ -1,0 +1,9 @@
+{
+  "domain": "svr",
+  "schemas": [
+    {
+      "entity": "svr.v1.FastlaneAtlasError",
+      "path": "svr/v1/fastlane_atlas_error.proto"
+    }
+  ]
+}
