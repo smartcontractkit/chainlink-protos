@@ -23,5 +23,8 @@
 # Data
 /svr/ @smartcontractkit/oev @smartcontractkit/op-tooling
 
+# Ring
+/ring/ @smartcontractkit/foundations @smartcontractkit/op-tooling
+
 # Release changesets do not have owners
 /.changeset/**

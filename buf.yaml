@@ -13,6 +13,13 @@ modules:
         - BASIC
       except:
         - FIELD_LOWER_SNAKE_CASE
+  - path: ring/pb
+    lint:
+      use:
+        - BASIC
+      except:
+        - FIELD_LOWER_SNAKE_CASE
+        - PACKAGE_DIRECTORY_MATCH
   - path: rmn/v1.6/proto
     lint:
       except:
