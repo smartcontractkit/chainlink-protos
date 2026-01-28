@@ -258,10 +258,6 @@ service Client {
               value: 945045181441419236
             },
             {
-              key: "pharos-testnet"
-              value: 4012524741200567430
-            },
-            {
               key: "plasma-testnet"
               value: 3967220077692964309
             },
