@@ -3,11 +3,11 @@
   "schemas": [
     {
       "entity": "svr.v1.TxMessage",
-      "path": "svr/v1/beholder_tx_message.proto"
+      "path": "v1/beholder_tx_message.proto"
     },
     {
       "entity": "svr.v1.FastLaneAtlasError",
-      "path": "svr/v1/beholder_fast_lane_atlas_error.proto"
+      "path": "v1/beholder_fast_lane_atlas_error.proto"
     }
   ]
 }
