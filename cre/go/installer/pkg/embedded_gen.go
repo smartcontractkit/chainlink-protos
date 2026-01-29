@@ -279,6 +279,10 @@ service Client {
             {
               key: "tempo-testnet"
               value: 3963528237232804922
+            },
+            {
+              key: "ethereum-mainnet-worldchain-1"
+              value: 2049429975587534727
             }
           ]
         }
