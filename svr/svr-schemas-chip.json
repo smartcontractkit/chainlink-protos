@@ -7,7 +7,7 @@
     },
     {
       "entity": "svr.v1.FastLaneAtlasError",
-      "path": "v1/beholder_fast_lane_atlas_error.proto"
+      "path": "v1/fastlane_atlas_error.proto"
     }
   ]
 }
