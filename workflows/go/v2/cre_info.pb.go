@@ -33,8 +33,11 @@ type CreInfo struct {
 	EngineVersion               string                 `protobuf:"bytes,8,opt,name=engineVersion,proto3" json:"engineVersion,omitempty"`
 	CapabilitiesRegistryVersion string                 `protobuf:"bytes,9,opt,name=capabilitiesRegistryVersion,proto3" json:"capabilitiesRegistryVersion,omitempty"`
 	DonVersion                  string                 `protobuf:"bytes,10,opt,name=donVersion,proto3" json:"donVersion,omitempty"`
-	// workflowSource identifies where the workflow was deployed from
-	// e.g., "contract", "grpc:my-source", "file"
+	// workflowSource identifies where the workflow was deployed from.
+	// Format varies by source type:
+	//   - Onchain contract: "contract:{chain_selector}:{contract_address}"
+	//   - GRPC source:      "grpc:{source_name}:v1"
+	//   - File source:      "file:{source_name}:v1"
 	WorkflowSource string `protobuf:"bytes,11,opt,name=workflowSource,proto3" json:"workflowSource,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
