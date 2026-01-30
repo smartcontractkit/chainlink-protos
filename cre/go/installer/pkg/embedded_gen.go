@@ -213,6 +213,10 @@ service Client {
               value: 3734403246176062136
             },
             {
+              key: "ethereum-mainnet-zksync-1"
+              value: 1562403441176082196
+            },
+            {
               key: "ethereum-testnet-sepolia"
               value: 16015286601757825753
             },
@@ -255,10 +259,6 @@ service Client {
             {
               key: "jovay-testnet"
               value: 945045181441419236
-            },
-            {
-              key: "pharos-testnet"
-              value: 4012524741200567430
             },
             {
               key: "plasma-testnet"

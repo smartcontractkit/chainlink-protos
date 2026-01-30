@@ -77,6 +77,11 @@ tasks:
     cmds:
       - cd billing && make generate
 
+  proto:gen:ring:
+    desc: "Generate Go code from protobuf files for ring"
+    cmds:
+      - cd ring && make generate
+
   proto:gen:storage-service:
     desc: "Generate Go code from protobuf files for storage-service"
     cmds:

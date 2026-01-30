@@ -11,7 +11,7 @@
 
 # CRE
 /cre/ @smartcontractkit/keystone @smartcontractkit/op-tooling
-/cre/capabilties/blockchain/ @smartcontractkit/bix-framework
+/cre/capabilities/blockchain/ @smartcontractkit/bix-framework
 /cre/go/installer/pkg/embedded_gen.go @smartcontractkit/bix-framework
 
 /workflows/ @smartcontractkit/foundations @smartcontractkit/core @smartcontractkit/op-tooling
@@ -22,6 +22,9 @@
 
 # Data
 /svr/ @smartcontractkit/oev @smartcontractkit/op-tooling
+
+# Ring
+/ring/ @smartcontractkit/foundations @smartcontractkit/op-tooling
 
 # Release changesets do not have owners
 /.changeset/**
