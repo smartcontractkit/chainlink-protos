@@ -17,7 +17,10 @@ message CreInfo {
   string engineVersion = 8;
   string capabilitiesRegistryVersion = 9;
   string donVersion = 10;
-  // workflowSource identifies where the workflow was deployed from
-  // e.g., "contract", "grpc:my-source", "file"
+  // workflowSource identifies where the workflow was deployed from.
+  // Format varies by source type:
+  //   - Onchain contract: "contract:{chain_selector}:{contract_address}"
+  //   - GRPC source:      "grpc:{source_name}:v1"
+  //   - File source:      "file:{source_name}:v1"
   string workflowSource = 11;
 }
