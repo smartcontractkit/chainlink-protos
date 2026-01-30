@@ -1,0 +1,13 @@
+{
+  "domain": "svr",
+  "schemas": [
+    {
+      "entity": "svr.v1.TxMessage",
+      "path": "v1/beholder_tx_message.proto"
+    },
+    {
+      "entity": "svr.v1.FastLaneAtlasError",
+      "path": "v1/fastlane_atlas_error.proto"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+name: register-svr-schemas
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/register-svr-schemas.yaml"
+      - "svr/**/*.proto"
+  pull_request:
+    paths:
+      - ".github/workflows/register-svr-schemas.yaml"
+      - "svr/**/*.proto"
+
+jobs:
+  register-schemas:
+    runs-on: ubuntu-latest
+    environment: publish
+    permissions:
+      id-token: write
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { name: beholder, file: svr-schemas-beholder.json }
+          - { name: chip,     file: svr-schemas-chip.json }
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+        with:
+          mask-aws-account-id: true
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_PUBLISH_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Register SVR Schemas for ${{ matrix.config.name }} domain
+        uses: smartcontractkit/.github/actions/chip-schema-registration@b1bec0ae729606681897cbf7fad5d7c1d572173e  # v1.1.0
+        with:
+          aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_ROOT }}
+          aws-region: us-west-2
+          chip-schema-dir: "svr"
+          chip-config-file-path: "svr/${{ matrix.config.file }}"
+          chip-config-host: ${{ github.ref_name == 'master' && secrets.chip_config_host_prod || secrets.chip_config_host_staging }}
+          chip-config-user: ${{ secrets.chip_config_user }}
+          chip-config-password: ${{ github.ref_name == 'master' && secrets.chip_config_password_prod || secrets.chip_config_password_staging }}
+          ts-ouath-client-id: ${{ secrets.chip_config_ts_oauth_client_id }}
+          ts-ouath-secret: ${{ secrets.chip_config_ts_oauth_secret }}

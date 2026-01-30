@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package svr.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/svr/v1";
+
+message FastLaneAtlasError {
+  string chain_id = 1;
+  string from_address = 2;
+  string to_address = 3;
+  string feed_address = 4;
+  string nonce = 5;
+  string error_type = 6;
+  string error_message = 7;
+  int32 http_status_code = 8;
+  int64 transaction_id = 9;
+  string atlas_url = 10;
+  int64 created_at = 11;
+}
