@@ -186,12 +186,12 @@ service Client {
               value: 14767482510784806043
             },
             {
-              key: "binance_smart_chain-mainnet-opbnb-1"
-              value: 465944652040885897
+              key: "binance_smart_chain-mainnet"
+              value: 11344663589394136015
             },
             {
-              key: "binance_smart_chain-testnet-opbnb-1"
-              value: 13274425992935471758
+              key: "binance_smart_chain-testnet"
+              value: 13264668187771770619
             },
             {
               key: "ethereum-mainnet"
@@ -242,10 +242,6 @@ service Client {
               value: 6898391096552792247
             },
             {
-              key: "etherlink-testnet"
-              value: 1910019406958449359
-            },
-            {
               key: "hyperliquid-testnet"
               value: 4286062357653186312
             },
@@ -272,14 +268,6 @@ service Client {
             {
               key: "private-testnet-andesite"
               value: 6915682381028791124
-            },
-            {
-              key: "tempo-testnet"
-              value: 3963528237232804922
-            },
-            {
-              key: "ethereum-mainnet-worldchain-1"
-              value: 2049429975587534727
             }
           ]
         }
