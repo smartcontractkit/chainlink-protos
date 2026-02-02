@@ -45,8 +45,8 @@ jobs:
           aws-region: us-west-2
           chip-schema-dir: "workflows"
           chip-config-file-path: "workflows/${{ matrix.config.file }}"
-          chip-config-host: ${{ github.ref_name == 'master' && secrets.chip_config_host_prod || secrets.chip_config_host_staging }}
+          chip-config-host: ${{ github.ref_name == 'main' && secrets.chip_config_host_prod || secrets.chip_config_host_staging }}
           chip-config-user: ${{ secrets.chip_config_user }}
-          chip-config-password: ${{ github.ref_name == 'master' && secrets.chip_config_password_prod || secrets.chip_config_password_staging }}
+          chip-config-password: ${{ github.ref_name == 'main' && secrets.chip_config_password_prod || secrets.chip_config_password_staging }}
           ts-ouath-client-id: ${{ secrets.chip_config_ts_oauth_client_id }}
           ts-ouath-secret: ${{ secrets.chip_config_ts_oauth_secret }}
