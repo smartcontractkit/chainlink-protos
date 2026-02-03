@@ -6,18 +6,54 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/storage-service/go;storage_service";
 
-// NodeService defines the download-related storage service interface that is used by nodes.
-// Workflow nodes will directly connect via gRPC to the storage service to retrieve presigned URLs
-// which can be used to download workflow artifacts.
+// NodeService defines the interface that is used by nodes.
+// Workflow nodes will directly connect via gRPC to the storage service to retrieve presigned URLs, get workflow lists.
 service NodeService {
   // DownloadArtifact streams a file from the storage service in chunks.
   rpc DownloadArtifact(DownloadArtifactRequest) returns (DownloadArtifactResponse);
+  // Cursor/keyset pagination (created_at + workflow_id cursor).
+  rpc GetWorkflowListByDONCursor(GetWorkflowListByDONCursorRequest) returns (GetWorkflowListByDONCursorResponse);
+  // Offset pagination (start + limit).
+  rpc GetWorkflowListByDON(GetWorkflowListByDONRequest) returns (GetWorkflowListByDONResponse);
 }
 
 enum ArtifactType {
   ARTIFACT_TYPE_UNSPECIFIED = 0; // Unspecified artifact type
   ARTIFACT_TYPE_BINARY = 1; // Workflow binary artifact
   ARTIFACT_TYPE_CONFIG = 2; // Workflow configuration artifact
+}
+
+enum WorkflowStatus {
+  WORKFLOW_STATUS_UNSPECIFIED = 0; // Unspecified workflow status
+  WORKFLOW_STATUS_ACTIVE = 1;
+  WORKFLOW_STATUS_PAUSED = 2;
+}
+
+// Identifies which system created/updated the workflow metadata.
+enum WorkflowManagedBy {
+  WORKFLOW_MANAGED_BY_UNSPECIFIED = 0;
+  WORKFLOW_MANAGED_BY_CLI = 1;
+  WORKFLOW_MANAGED_BY_CREC = 2;
+}
+
+// Core workflow metadata
+message WorkflowMetadata {
+  bytes workflow_id = 1; // bytes32 - globally unique workflow identifier
+  string workflow_name = 2;
+
+  string owner = 3; // 0x... web3 wallet address or address string derived from org
+  string organization_id = 4;
+  string don_family = 5; // must be a valid DON family, registered on the Capabilities Registry
+
+  WorkflowStatus status = 6;
+  WorkflowManagedBy managed_by = 7; // origin of this workflow (CLI, CREC, etc.)
+  bytes workflow_attributes = 8; // custom attributes controlled by the caller (e.g. JSON blob)
+
+  // fields not used but added for compatibility
+  string binary_url = 9;
+  string config_url = 10;
+  string tags = 11;
+  uint64 created_at = 12;
 }
 
 message DownloadArtifactRequest {
@@ -28,4 +64,42 @@ message DownloadArtifactRequest {
 message DownloadArtifactResponse {
   string url = 1; // The presigned GET URL for downloading
   google.protobuf.Timestamp expiry = 2; // Expiration time of the presigned URL
+}
+
+message GetWorkflowListByDONCursorRequest {
+  string don_family = 1;
+
+  // Max number of workflows to return.
+  uint32 limit = 2;
+
+  // Cursor: unix timestamp seconds of the last workflow from the previous page.
+  // Use 0 for the first page.
+  uint64 last_workflow_created_at = 3;
+
+  // Cursor: workflow_id (32 bytes) of the last workflow from the previous page.
+  // Use empty for the first page.
+  bytes last_workflow_id = 4;
+}
+
+message GetWorkflowListByDONCursorResponse {
+  repeated WorkflowMetadata workflows = 1;
+
+  // Cursor values to request the next page.
+  // If workflows is empty, these may be unset/zero.
+  uint64 next_last_workflow_created_at = 2;
+  bytes next_last_workflow_id = 3;
+}
+
+message GetWorkflowListByDONRequest {
+  string don_family = 1;
+  // Zero-based offset into the result set.
+  uint32 start = 2;
+  // Max number of workflows to return.
+  uint32 limit = 3;
+}
+
+message GetWorkflowListByDONResponse {
+  repeated WorkflowMetadata workflows = 1;
+  // Next start offset for the subsequent page.
+  uint32 next_start = 2;
 }
