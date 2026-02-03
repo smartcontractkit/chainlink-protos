@@ -12,8 +12,7 @@ message FastLaneAtlasError {
   string nonce = 5;
   string error_type = 6;
   string error_message = 7;
-  int32 http_status_code = 8;
-  int64 transaction_id = 9;
+  uint64 transaction_id = 9;
   string atlas_url = 10;
   int64 created_at = 11;
 }
