@@ -2,8 +2,8 @@
   "domain": "node-platform",
   "schemas": [
     {
-      "entity": "common.v1.Node",
-      "path": "common/v1/node.proto"
+      "entity": "common.v1.ChainPluginConfig",
+      "path": "common/v1/chain_plugin_config.proto"
     }
   ]
 }
