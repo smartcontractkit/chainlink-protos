@@ -26,5 +26,8 @@
 # Ring
 /ring/ @smartcontractkit/foundations @smartcontractkit/op-tooling
 
+# Node Platform
+/node-platform/ @smartcontractkit/infra-nodes @smartcontractkit/op-tooling
+
 # Release changesets do not have owners
 /.changeset/**

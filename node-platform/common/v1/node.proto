@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package common.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/node-platform/common/v1";
+
+message Node {
+    string http_url = 1;
+    string ws_url = 2;
+    string url = 3;
+}
