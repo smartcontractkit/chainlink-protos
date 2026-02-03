@@ -4,18 +4,6 @@
     {
       "entity": "common.v1.Node",
       "path": "common/v1/node.proto"
-    },
-
-    {
-      "entity": "common.v1.ChainPluginConfig",
-      "path": "common/v1/ChainPluginConfig.proto",
-      "references": [
-        {
-          "name": "common/v1/node.proto",
-          "entity": "common.v1.Node",
-          "path": "common/v1/node.proto"
-        }
-      ]
     }
   ]
 }

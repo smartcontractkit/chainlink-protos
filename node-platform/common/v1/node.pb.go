@@ -81,6 +81,66 @@ func (x *Node) GetUrl() string {
 	return ""
 }
 
+type ChainPluginConfig struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	CsaPublicKey  string                 `protobuf:"bytes,1,opt,name=csa_public_key,json=csaPublicKey,proto3" json:"csa_public_key,omitempty"`
+	ChainId       string                 `protobuf:"bytes,2,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
+	Nodes         []*Node                `protobuf:"bytes,3,rep,name=nodes,proto3" json:"nodes,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ChainPluginConfig) Reset() {
+	*x = ChainPluginConfig{}
+	mi := &file_node_platform_common_v1_node_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ChainPluginConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ChainPluginConfig) ProtoMessage() {}
+
+func (x *ChainPluginConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_node_platform_common_v1_node_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ChainPluginConfig.ProtoReflect.Descriptor instead.
+func (*ChainPluginConfig) Descriptor() ([]byte, []int) {
+	return file_node_platform_common_v1_node_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ChainPluginConfig) GetCsaPublicKey() string {
+	if x != nil {
+		return x.CsaPublicKey
+	}
+	return ""
+}
+
+func (x *ChainPluginConfig) GetChainId() string {
+	if x != nil {
+		return x.ChainId
+	}
+	return ""
+}
+
+func (x *ChainPluginConfig) GetNodes() []*Node {
+	if x != nil {
+		return x.Nodes
+	}
+	return nil
+}
+
 var File_node_platform_common_v1_node_proto protoreflect.FileDescriptor
 
 const file_node_platform_common_v1_node_proto_rawDesc = "" +
@@ -89,7 +149,11 @@ const file_node_platform_common_v1_node_proto_rawDesc = "" +
 	"\x04Node\x12\x19\n" +
 	"\bhttp_url\x18\x01 \x01(\tR\ahttpUrl\x12\x15\n" +
 	"\x06ws_url\x18\x02 \x01(\tR\x05wsUrl\x12\x10\n" +
-	"\x03url\x18\x03 \x01(\tR\x03urlBFZDgithub.com/smartcontractkit/chainlink-protos/node-platform/common/v1b\x06proto3"
+	"\x03url\x18\x03 \x01(\tR\x03url\"{\n" +
+	"\x11ChainPluginConfig\x12$\n" +
+	"\x0ecsa_public_key\x18\x01 \x01(\tR\fcsaPublicKey\x12\x19\n" +
+	"\bchain_id\x18\x02 \x01(\tR\achainId\x12%\n" +
+	"\x05nodes\x18\x03 \x03(\v2\x0f.common.v1.NodeR\x05nodesBFZDgithub.com/smartcontractkit/chainlink-protos/node-platform/common/v1b\x06proto3"
 
 var (
 	file_node_platform_common_v1_node_proto_rawDescOnce sync.Once
@@ -103,16 +167,18 @@ func file_node_platform_common_v1_node_proto_rawDescGZIP() []byte {
 	return file_node_platform_common_v1_node_proto_rawDescData
 }
 
-var file_node_platform_common_v1_node_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_node_platform_common_v1_node_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_node_platform_common_v1_node_proto_goTypes = []any{
-	(*Node)(nil), // 0: common.v1.Node
+	(*Node)(nil),              // 0: common.v1.Node
+	(*ChainPluginConfig)(nil), // 1: common.v1.ChainPluginConfig
 }
 var file_node_platform_common_v1_node_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0, // 0: common.v1.ChainPluginConfig.nodes:type_name -> common.v1.Node
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_node_platform_common_v1_node_proto_init() }
@@ -126,7 +192,7 @@ func file_node_platform_common_v1_node_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_node_platform_common_v1_node_proto_rawDesc), len(file_node_platform_common_v1_node_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

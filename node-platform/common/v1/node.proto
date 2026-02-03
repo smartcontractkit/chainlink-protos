@@ -9,3 +9,9 @@ message Node {
     string ws_url = 2;
     string url = 3;
 }
+
+message ChainPluginConfig {
+    string csa_public_key = 1;
+    string chain_id = 2;
+    repeated Node nodes = 3;
+}
