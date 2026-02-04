@@ -217,6 +217,10 @@ service Client {
               value: 1562403441176082196
             },
             {
+              key: "ethereum-mainnet-worldchain-1"
+              value: 2049429975587534727
+            },
+            {
               key: "ethereum-testnet-sepolia"
               value: 16015286601757825753
             },
