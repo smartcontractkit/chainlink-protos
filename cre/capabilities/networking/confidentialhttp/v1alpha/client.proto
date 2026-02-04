@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package capabilities.networking.confidentialhttp.v1alpha;
 
+import "google/protobuf/duration.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
 message SecretIdentifier {
@@ -10,7 +11,70 @@ message SecretIdentifier {
   optional string owner = 3;
 }
 
+// =============================================================================
+// NEW TYPES (use these for new integrations)
+// =============================================================================
+
+// Header represents a single HTTP header as a name-value pair.
+// Using a message instead of a map ensures deterministic ordering for request hashing.
+message Header {
+  string name = 1;
+  string value = 2;
+}
+
+// TemplatePublicValue represents a single template variable as a name-value pair.
+// Using a message instead of a map ensures deterministic ordering for request hashing.
+message TemplatePublicValue {
+  string name = 1;
+  string value = 2;
+}
+
+// HTTPRequest contains the HTTP fields used to make a request from the enclave.
+message HTTPRequest {
+  // url is the endpoint to which the request is sent.
+  string url = 1;
+  // method is the HTTP method (GET, POST, PUT, DELETE, etc.).
+  string method = 2;
+  // body is the request body - either a string template or raw bytes.
+  oneof body {
+    string body_string = 3;
+    bytes body_bytes = 8;
+  }
+  // headers are the request headers as name-value pairs.
+  repeated Header headers = 4;
+  // template_public_values are public values used to fill in request body and header templates.
+  repeated TemplatePublicValue template_public_values = 5;
+  // custom_root_ca_cert_pem is an optional custom root CA certificate (PEM format)
+  // for verifying the external server's TLS certificate.
+  bytes custom_root_ca_cert_pem = 6;
+  // timeout is the request timeout duration.
+  google.protobuf.Duration timeout = 7;
+}
+
+// HTTPResponse contains the HTTP response from the enclave.
+message HTTPResponse {
+  // status_code is the HTTP status code.
+  uint32 status_code = 1;
+  // body is the response body.
+  bytes body = 2;
+  // headers are the response headers.
+  repeated Header headers = 3;
+}
+
+// ConfidentialHTTPRequest is the input provided to the confidential HTTP capability.
+// It combines an HTTPRequest with secrets from VaultDON.
+message ConfidentialHTTPRequest {
+  repeated SecretIdentifier vault_don_secrets = 1;
+  HTTPRequest request = 2;
+}
+
+// =============================================================================
+// DEPRECATED TYPES (kept for backward compatibility, will be removed in future)
+// =============================================================================
+
+// Deprecated: Use HTTPRequest instead.
 message Request {
+  option deprecated = true;
   string url = 1;
   string method = 2;
   string body = 3;
@@ -19,28 +83,47 @@ message Request {
   bytes custom_cert_bundle = 6;
 }
 
+// Deprecated: Use HTTPResponse instead.
 message ResponseTemplate {
+  option deprecated = true;
   int64 status_code = 1;
   bytes body = 2;
 }
 
+// Deprecated: Use ConfidentialHTTPRequest instead.
 message HTTPEnclaveRequestData {
+  option deprecated = true;
   repeated Request requests = 1;
 }
 
+// Deprecated: Use ConfidentialHTTPRequest instead.
 message EnclaveActionInput {
+  option deprecated = true;
   repeated SecretIdentifier vault_don_secrets = 1;
   HTTPEnclaveRequestData input = 2;
 }
 
+// Deprecated: Use HTTPResponse instead.
 message HTTPEnclaveResponseData {
+  option deprecated = true;
   repeated ResponseTemplate responses = 1;
 }
+
+// =============================================================================
+// SERVICE
+// =============================================================================
 
 service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "confidential-http@1.0.0-alpha"
   };
-  rpc SendRequests(EnclaveActionInput) returns (HTTPEnclaveResponseData);
+
+  // SendRequest is the new RPC method using the updated types.
+  rpc SendRequest(ConfidentialHTTPRequest) returns (HTTPResponse);
+
+  // Deprecated: Use SendRequest instead.
+  rpc SendRequests(EnclaveActionInput) returns (HTTPEnclaveResponseData) {
+    option deprecated = true;
+  }
 }
