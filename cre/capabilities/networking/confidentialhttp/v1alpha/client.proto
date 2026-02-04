@@ -11,10 +11,6 @@ message SecretIdentifier {
   optional string owner = 3;
 }
 
-// =============================================================================
-// NEW TYPES (use these for new integrations)
-// =============================================================================
-
 // Header represents a single HTTP header as a name-value pair.
 // Using a message instead of a map ensures deterministic ordering for request hashing.
 message Header {
@@ -68,62 +64,11 @@ message ConfidentialHTTPRequest {
   HTTPRequest request = 2;
 }
 
-// =============================================================================
-// DEPRECATED TYPES (kept for backward compatibility, will be removed in future)
-// =============================================================================
-
-// Deprecated: Use HTTPRequest instead.
-message Request {
-  option deprecated = true;
-  string url = 1;
-  string method = 2;
-  string body = 3;
-  repeated string headers = 4;
-  map<string, string> public_template_values = 5;
-  bytes custom_cert_bundle = 6;
-}
-
-// Deprecated: Use HTTPResponse instead.
-message ResponseTemplate {
-  option deprecated = true;
-  int64 status_code = 1;
-  bytes body = 2;
-}
-
-// Deprecated: Use ConfidentialHTTPRequest instead.
-message HTTPEnclaveRequestData {
-  option deprecated = true;
-  repeated Request requests = 1;
-}
-
-// Deprecated: Use ConfidentialHTTPRequest instead.
-message EnclaveActionInput {
-  option deprecated = true;
-  repeated SecretIdentifier vault_don_secrets = 1;
-  HTTPEnclaveRequestData input = 2;
-}
-
-// Deprecated: Use HTTPResponse instead.
-message HTTPEnclaveResponseData {
-  option deprecated = true;
-  repeated ResponseTemplate responses = 1;
-}
-
-// =============================================================================
-// SERVICE
-// =============================================================================
-
 service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "confidential-http@1.0.0-alpha"
   };
 
-  // SendRequest is the new RPC method using the updated types.
   rpc SendRequest(ConfidentialHTTPRequest) returns (HTTPResponse);
-
-  // Deprecated: Use SendRequest instead.
-  rpc SendRequests(EnclaveActionInput) returns (HTTPEnclaveResponseData) {
-    option deprecated = true;
-  }
 }
