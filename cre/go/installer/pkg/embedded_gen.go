@@ -662,11 +662,9 @@ message SubkeyConfig {
 message FilterLogTriggerRequest {
   string name = 1;
   bytes address = 2; // Solana PublicKey (32 bytes)
-  string event_name = 3;
-  bytes event_sig = 4; // Event signature
-  bytes event_idl_json = 5;
-  repeated SubkeyConfig subkeys = 6;
-  int64 starting_block = 7;
+  string event_name = 3; 
+  bytes event_idl_json = 4;
+  repeated SubkeyConfig subkeys = 5;
 }
 
 message Log {
