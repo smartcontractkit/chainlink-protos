@@ -640,12 +640,45 @@ message SimulateTransactionAccountsOpts {
   repeated bytes addresses = 2; // 32-byte Pubkeys
 }
 
+enum ComparisonOperator {
+  COMPARISON_OPERATOR_EQ = 0;
+  COMPARISON_OPERATOR_NEQ = 1;
+  COMPARISON_OPERATOR_GT = 2;
+  COMPARISON_OPERATOR_LT = 3;
+  COMPARISON_OPERATOR_GTE = 4;
+  COMPARISON_OPERATOR_LTE = 5;
+}
+
+message ValueComparator {
+  bytes value = 1;
+  ComparisonOperator operator = 2;
+}
+
+message SubkeyConfig {
+  repeated string path = 1;
+  repeated ValueComparator comparers = 2;
+}
+
 message FilterLogTriggerRequest {
-  // TODO PLEX-1828
+  string name = 1;
+  bytes address = 2; // Solana PublicKey (32 bytes)
+  string event_name = 3;
+  bytes event_idl_json = 4;
+  repeated SubkeyConfig subkeys = 5;
 }
 
 message Log {
-  // TODO PLEX-1828
+  string chain_id = 1; // Chain identifier
+  int64 log_index = 2; // Index of the log within the block
+  bytes block_hash = 3; // 32-byte block hash
+  int64 block_number = 4; // Block/slot number
+  uint64 block_timestamp = 5; // Unix timestamp of the block
+  bytes address = 6; // 32-byte program PublicKey
+  bytes event_sig = 7; // 8-byte event signature
+  bytes tx_hash = 8; // 64-byte transaction signature
+  bytes data = 9; // Decoded event data
+  int64 sequence_num = 10; // Sequence number for ordering
+  optional string error = 11; // Error message if log processing failed
 }
 
 // All metas are non-signers.
