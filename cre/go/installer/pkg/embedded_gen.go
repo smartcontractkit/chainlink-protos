@@ -189,12 +189,12 @@ service Client {
               value: 14767482510784806043
             },
             {
-              key: "binance_smart_chain-mainnet-opbnb-1"
-              value: 465944652040885897
+              key: "binance_smart_chain-mainnet"
+              value: 11344663589394136015
             },
             {
-              key: "binance_smart_chain-testnet-opbnb-1"
-              value: 13274425992935471758
+              key: "binance_smart_chain-testnet"
+              value: 13264668187771770619
             },
             {
               key: "ethereum-mainnet"
@@ -245,10 +245,6 @@ service Client {
               value: 6898391096552792247
             },
             {
-              key: "etherlink-testnet"
-              value: 1910019406958449359
-            },
-            {
               key: "hyperliquid-testnet"
               value: 4286062357653186312
             },
@@ -275,10 +271,6 @@ service Client {
             {
               key: "private-testnet-andesite"
               value: 6915682381028791124
-            },
-            {
-              key: "tempo-testnet"
-              value: 3963528237232804922
             }
           ]
         }
@@ -648,12 +640,47 @@ message SimulateTransactionAccountsOpts {
   repeated bytes addresses = 2; // 32-byte Pubkeys
 }
 
+enum ComparisonOperator {
+  COMPARISON_OPERATOR_EQ = 0;
+  COMPARISON_OPERATOR_NEQ = 1;
+  COMPARISON_OPERATOR_GT = 2;
+  COMPARISON_OPERATOR_LT = 3;
+  COMPARISON_OPERATOR_GTE = 4;
+  COMPARISON_OPERATOR_LTE = 5;
+}
+
+message ValueComparator {
+  bytes value = 1;
+  ComparisonOperator operator = 2;
+}
+
+message SubkeyConfig {
+  repeated string path = 1;
+  repeated ValueComparator comparers = 2;
+}
+
 message FilterLogTriggerRequest {
-  // TODO PLEX-1828
+  string name = 1;
+  bytes address = 2; // Solana PublicKey (32 bytes)
+  string event_name = 3;
+  bytes event_sig = 4; // Event signature
+  bytes event_idl_json = 5;
+  repeated SubkeyConfig subkeys = 6;
+  int64 starting_block = 7;
 }
 
 message Log {
-  // TODO PLEX-1828
+  string chain_id = 1; // Chain identifier
+  int64 log_index = 2; // Index of the log within the block
+  bytes block_hash = 3; // 32-byte block hash
+  int64 block_number = 4; // Block/slot number
+  uint64 block_timestamp = 5; // Unix timestamp of the block
+  bytes address = 6; // 32-byte program PublicKey
+  bytes event_sig = 7; // 8-byte event signature
+  bytes tx_hash = 8; // 64-byte transaction signature
+  bytes data = 9; // Decoded event data
+  int64 sequence_num = 10; // Sequence number for ordering
+  optional string error = 11; // Error message if log processing failed
 }
 
 // All metas are non-signers.
