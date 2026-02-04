@@ -30,7 +30,7 @@ message HTTPRequest {
     bytes body_bytes = 8;
   }
   // headers are the request headers as name-value pairs.
-  repeated Header headers = 4;
+  map<string, string> headers = 4;
   // template_public_values are public values used to fill in request body and header templates.
   map<string, string> template_public_values = 5;
   // custom_root_ca_cert_pem is an optional custom root CA certificate (PEM format)
