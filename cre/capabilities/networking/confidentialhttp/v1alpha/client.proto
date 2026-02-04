@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package capabilities.networking.confidentialhttp.v1alpha;
 
+import "google/protobuf/duration.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
 message SecretIdentifier {
@@ -10,31 +11,50 @@ message SecretIdentifier {
   optional string owner = 3;
 }
 
-message Request {
+// Header represents a single HTTP header as a name-value pair.
+// Using repeated messages instead of a map allows duplicate header names (e.g., multiple Set-Cookie headers).
+message Header {
+  string name = 1;
+  string value = 2;
+}
+
+// HTTPRequest contains the HTTP fields used to make a request from the enclave.
+message HTTPRequest {
+  // url is the endpoint to which the request is sent.
   string url = 1;
+  // method is the HTTP method (GET, POST, PUT, DELETE, etc.).
   string method = 2;
-  string body = 3;
-  repeated string headers = 4;
-  map<string, string> public_template_values = 5;
-  bytes custom_cert_bundle = 6;
+  // body is the request body - either a string template or raw bytes.
+  oneof body {
+    string body_string = 3;
+    bytes body_bytes = 8;
+  }
+  // headers are the request headers as name-value pairs.
+  map<string, string> headers = 4;
+  // template_public_values are public values used to fill in request body and header templates.
+  map<string, string> template_public_values = 5;
+  // custom_root_ca_cert_pem is an optional custom root CA certificate (PEM format)
+  // for verifying the external server's TLS certificate.
+  bytes custom_root_ca_cert_pem = 6;
+  // timeout is the request timeout duration.
+  google.protobuf.Duration timeout = 7;
 }
 
-message ResponseTemplate {
-  int64 status_code = 1;
+// HTTPResponse contains the HTTP response from the enclave.
+message HTTPResponse {
+  // status_code is the HTTP status code.
+  uint32 status_code = 1;
+  // body is the response body.
   bytes body = 2;
+  // headers are the response headers.
+  repeated Header headers = 3;
 }
 
-message HTTPEnclaveRequestData {
-  repeated Request requests = 1;
-}
-
-message EnclaveActionInput {
+// ConfidentialHTTPRequest is the input provided to the confidential HTTP capability.
+// It combines an HTTPRequest with secrets from VaultDON.
+message ConfidentialHTTPRequest {
   repeated SecretIdentifier vault_don_secrets = 1;
-  HTTPEnclaveRequestData input = 2;
-}
-
-message HTTPEnclaveResponseData {
-  repeated ResponseTemplate responses = 1;
+  HTTPRequest request = 2;
 }
 
 service Client {
@@ -42,5 +62,6 @@ service Client {
     mode: MODE_NODE
     capability_id: "confidential-http@1.0.0-alpha"
   };
-  rpc SendRequests(EnclaveActionInput) returns (HTTPEnclaveResponseData);
+
+  rpc SendRequest(ConfidentialHTTPRequest) returns (HTTPResponse);
 }
