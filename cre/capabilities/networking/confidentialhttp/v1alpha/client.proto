@@ -12,15 +12,8 @@ message SecretIdentifier {
 }
 
 // Header represents a single HTTP header as a name-value pair.
-// Using a message instead of a map ensures deterministic ordering for request hashing.
+// Using repeated messages instead of a map allows duplicate header names (e.g., multiple Set-Cookie headers).
 message Header {
-  string name = 1;
-  string value = 2;
-}
-
-// TemplatePublicValue represents a single template variable as a name-value pair.
-// Using a message instead of a map ensures deterministic ordering for request hashing.
-message TemplatePublicValue {
   string name = 1;
   string value = 2;
 }
@@ -39,7 +32,7 @@ message HTTPRequest {
   // headers are the request headers as name-value pairs.
   repeated Header headers = 4;
   // template_public_values are public values used to fill in request body and header templates.
-  repeated TemplatePublicValue template_public_values = 5;
+  map<string, string> template_public_values = 5;
   // custom_root_ca_cert_pem is an optional custom root CA certificate (PEM format)
   // for verifying the external server's TLS certificate.
   bytes custom_root_ca_cert_pem = 6;
