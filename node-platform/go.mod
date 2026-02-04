@@ -1,4 +1,4 @@
-module github.com/smartcontractkit/chainlink-protos/node_platform
+module github.com/smartcontractkit/chainlink-protos/node-platform
 
 go 1.24.5
 
