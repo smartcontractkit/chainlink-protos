@@ -1016,19 +1016,26 @@ message CacheSettings {
   google.protobuf.Duration max_age = 2; // Maximum age of a cached response. If zero, do not attempt to read from cache
 }
 
+// HeaderValues represents multiple values for a single header key
+message HeaderValues {
+  repeated string values = 1;
+}
+
 message Request {
   string url = 1;
   string method = 2;
-  map<string, string> headers = 3;
+  map<string, string> headers = 3 [deprecated = true]; // Deprecated: use multi_headers
   bytes body = 4;
   google.protobuf.Duration timeout = 5; // Request timeout duration
   CacheSettings cache_settings = 6;
+  map<string, HeaderValues> multi_headers = 7;
 }
 
 message Response {
   uint32 status_code = 1;
-  map<string, string> headers = 2;
+  map<string, string> headers = 2 [deprecated = true]; // Deprecated: use multi_headers
   bytes body = 3;
+  map<string, HeaderValues> multi_headers = 4;
 }
 
 service Client {
