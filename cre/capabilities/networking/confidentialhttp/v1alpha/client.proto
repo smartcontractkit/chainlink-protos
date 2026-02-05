@@ -27,9 +27,9 @@ message HTTPRequest {
     string body_string = 3;
     bytes body_bytes = 8;
   }
-  // headers are the request headers as name-value pairs.
+  // multi_headers are the request headers as name-value pairs.
   // Supports multiple values per header key.
-  map<string, HeaderValues> headers = 4;
+  map<string, HeaderValues> multi_headers = 4;
   // template_public_values are public values used to fill in request body and header templates.
   map<string, string> template_public_values = 5;
   // custom_root_ca_cert_pem is an optional custom root CA certificate (PEM format)
@@ -45,9 +45,9 @@ message HTTPResponse {
   uint32 status_code = 1;
   // body is the response body.
   bytes body = 2;
-  // headers are the response headers.
+  // multi_headers are the response headers.
   // Supports multiple values per header key.
-  map<string, HeaderValues> headers = 3;
+  map<string, HeaderValues> multi_headers = 3;
 }
 
 // ConfidentialHTTPRequest is the input provided to the confidential HTTP capability.
