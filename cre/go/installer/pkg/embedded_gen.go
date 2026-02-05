@@ -986,6 +986,13 @@ message HTTPResponse {
 message ConfidentialHTTPRequest {
   repeated SecretIdentifier vault_don_secrets = 1;
   HTTPRequest request = 2;
+  // encrypt_output controls whether the enclave response should be encrypted.
+  // If true and a secret named "san_marino_aes_gcm_encryption_key" is provided,
+  // the response will be AES-GCM encrypted using that key.
+  // If true and no such key is provided, the response will be TDH2 encrypted
+  // using the VaultDON master public key.
+  // Default is false (response returned unencrypted).
+  bool encrypt_output = 3;
 }
 
 service Client {
