@@ -18,6 +18,11 @@ message Header {
   string value = 2;
 }
 
+// HeaderValues represents multiple values for a single header key.
+message HeaderValues {
+  repeated string values = 1;
+}
+
 // HTTPRequest contains the HTTP fields used to make a request from the enclave.
 message HTTPRequest {
   // url is the endpoint to which the request is sent.
@@ -30,7 +35,8 @@ message HTTPRequest {
     bytes body_bytes = 8;
   }
   // headers are the request headers as name-value pairs.
-  map<string, string> headers = 4;
+  // Supports multiple values per header key.
+  map<string, HeaderValues> headers = 4;
   // template_public_values are public values used to fill in request body and header templates.
   map<string, string> template_public_values = 5;
   // custom_root_ca_cert_pem is an optional custom root CA certificate (PEM format)
