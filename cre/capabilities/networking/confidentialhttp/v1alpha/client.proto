@@ -11,13 +11,6 @@ message SecretIdentifier {
   optional string owner = 3;
 }
 
-// Header represents a single HTTP header as a name-value pair.
-// Using repeated messages instead of a map allows duplicate header names (e.g., multiple Set-Cookie headers).
-message Header {
-  string name = 1;
-  string value = 2;
-}
-
 // HeaderValues represents multiple values for a single header key.
 message HeaderValues {
   repeated string values = 1;
@@ -53,7 +46,8 @@ message HTTPResponse {
   // body is the response body.
   bytes body = 2;
   // headers are the response headers.
-  repeated Header headers = 3;
+  // Supports multiple values per header key.
+  map<string, HeaderValues> headers = 3;
 }
 
 // ConfidentialHTTPRequest is the input provided to the confidential HTTP capability.
