@@ -7,5 +7,5 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/node-platform/
 message ChainPluginConfig {
   string csa_public_key = 1;
   string chain_id = 2;
-  repeated string urls = 3;
+  map<string, string> urls = 3;
 }

@@ -25,7 +25,7 @@ type ChainPluginConfig struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	CsaPublicKey  string                 `protobuf:"bytes,1,opt,name=csa_public_key,json=csaPublicKey,proto3" json:"csa_public_key,omitempty"`
 	ChainId       string                 `protobuf:"bytes,2,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
-	Urls          []string               `protobuf:"bytes,3,rep,name=urls,proto3" json:"urls,omitempty"`
+	Urls          map[string]string      `protobuf:"bytes,3,rep,name=urls,proto3" json:"urls,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -74,7 +74,7 @@ func (x *ChainPluginConfig) GetChainId() string {
 	return ""
 }
 
-func (x *ChainPluginConfig) GetUrls() []string {
+func (x *ChainPluginConfig) GetUrls() map[string]string {
 	if x != nil {
 		return x.Urls
 	}
@@ -85,11 +85,14 @@ var File_node_platform_common_v1_chain_plugin_config_proto protoreflect.FileDesc
 
 const file_node_platform_common_v1_chain_plugin_config_proto_rawDesc = "" +
 	"\n" +
-	"1node-platform/common/v1/chain_plugin_config.proto\x12\tcommon.v1\"h\n" +
+	"1node-platform/common/v1/chain_plugin_config.proto\x12\tcommon.v1\"\xc9\x01\n" +
 	"\x11ChainPluginConfig\x12$\n" +
 	"\x0ecsa_public_key\x18\x01 \x01(\tR\fcsaPublicKey\x12\x19\n" +
-	"\bchain_id\x18\x02 \x01(\tR\achainId\x12\x12\n" +
-	"\x04urls\x18\x03 \x03(\tR\x04urlsBFZDgithub.com/smartcontractkit/chainlink-protos/node-platform/common/v1b\x06proto3"
+	"\bchain_id\x18\x02 \x01(\tR\achainId\x12:\n" +
+	"\x04urls\x18\x03 \x03(\v2&.common.v1.ChainPluginConfig.UrlsEntryR\x04urls\x1a7\n" +
+	"\tUrlsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01BFZDgithub.com/smartcontractkit/chainlink-protos/node-platform/common/v1b\x06proto3"
 
 var (
 	file_node_platform_common_v1_chain_plugin_config_proto_rawDescOnce sync.Once
@@ -103,16 +106,18 @@ func file_node_platform_common_v1_chain_plugin_config_proto_rawDescGZIP() []byte
 	return file_node_platform_common_v1_chain_plugin_config_proto_rawDescData
 }
 
-var file_node_platform_common_v1_chain_plugin_config_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_node_platform_common_v1_chain_plugin_config_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_node_platform_common_v1_chain_plugin_config_proto_goTypes = []any{
 	(*ChainPluginConfig)(nil), // 0: common.v1.ChainPluginConfig
+	nil,                       // 1: common.v1.ChainPluginConfig.UrlsEntry
 }
 var file_node_platform_common_v1_chain_plugin_config_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	1, // 0: common.v1.ChainPluginConfig.urls:type_name -> common.v1.ChainPluginConfig.UrlsEntry
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_node_platform_common_v1_chain_plugin_config_proto_init() }
@@ -126,7 +131,7 @@ func file_node_platform_common_v1_chain_plugin_config_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_node_platform_common_v1_chain_plugin_config_proto_rawDesc), len(file_node_platform_common_v1_chain_plugin_config_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
