@@ -123,13 +123,13 @@ func mapValueToMap(f reflect.Type, t reflect.Type, data any) (any, error) {
 	if f != reflect.TypeOf(map[string]Value{}) {
 		return data, nil
 	}
+	dv := data.(map[string]Value)
 	switch t {
 	// If the destination type is `map[string]any` or `any`,
 	// fully unwrap the values.Map.
 	// We have to handle the `any` case here as otherwise UnwrapTo won't work on
 	// maps recursively
 	case reflect.TypeOf(map[string]any{}), reflect.TypeOf((*any)(nil)).Elem():
-		dv := data.(map[string]Value)
 		d := map[string]any{}
 		for k, v := range dv {
 			unw, err := Unwrap(v)
@@ -141,6 +141,22 @@ func mapValueToMap(f reflect.Type, t reflect.Type, data any) (any, error) {
 		}
 
 		return d, nil
+	}
+
+	// Handle map[string]*StructType targets by unwrapping each Value element.
+	// This covers cases like map[string]*HeaderValues where mapstructure cannot
+	// natively convert values.Value to the struct pointer type.
+	if t.Kind() == reflect.Map && t.Key().Kind() == reflect.String &&
+		t.Elem().Kind() == reflect.Ptr && t.Elem().Elem().Kind() == reflect.Struct {
+		result := reflect.MakeMap(t)
+		for k, v := range dv {
+			ptr := reflect.New(t.Elem().Elem())
+			if err := v.UnwrapTo(ptr.Interface()); err != nil {
+				return nil, err
+			}
+			result.SetMapIndex(reflect.ValueOf(k), ptr)
+		}
+		return result.Interface(), nil
 	}
 
 	return data, nil
