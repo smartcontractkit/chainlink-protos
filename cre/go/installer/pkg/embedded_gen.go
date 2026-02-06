@@ -942,11 +942,9 @@ message SecretIdentifier {
   optional string owner = 3;
 }
 
-// Header represents a single HTTP header as a name-value pair.
-// Using repeated messages instead of a map allows duplicate header names (e.g., multiple Set-Cookie headers).
-message Header {
-  string name = 1;
-  string value = 2;
+// HeaderValues represents multiple values for a single header key.
+message HeaderValues {
+  repeated string values = 1;
 }
 
 // HTTPRequest contains the HTTP fields used to make a request from the enclave.
@@ -960,8 +958,9 @@ message HTTPRequest {
     string body_string = 3;
     bytes body_bytes = 8;
   }
-  // headers are the request headers as name-value pairs.
-  map<string, string> headers = 4;
+  // multi_headers are the request headers as name-value pairs.
+  // Supports multiple values per header key.
+  map<string, HeaderValues> multi_headers = 4;
   // template_public_values are public values used to fill in request body and header templates.
   map<string, string> template_public_values = 5;
   // custom_root_ca_cert_pem is an optional custom root CA certificate (PEM format)
@@ -977,8 +976,9 @@ message HTTPResponse {
   uint32 status_code = 1;
   // body is the response body.
   bytes body = 2;
-  // headers are the response headers.
-  repeated Header headers = 3;
+  // multi_headers are the response headers.
+  // Supports multiple values per header key.
+  map<string, HeaderValues> multi_headers = 3;
 }
 
 // ConfidentialHTTPRequest is the input provided to the confidential HTTP capability.
@@ -986,6 +986,13 @@ message HTTPResponse {
 message ConfidentialHTTPRequest {
   repeated SecretIdentifier vault_don_secrets = 1;
   HTTPRequest request = 2;
+  // encrypt_output controls whether the enclave response should be encrypted.
+  // If true and a secret named "san_marino_aes_gcm_encryption_key" is provided,
+  // the response will be AES-GCM encrypted using that key.
+  // If true and no such key is provided, the response will be TDH2 encrypted
+  // using the VaultDON master public key.
+  // Default is false (response returned unencrypted).
+  bool encrypt_output = 3;
 }
 
 service Client {
