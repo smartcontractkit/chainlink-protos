@@ -20,6 +20,9 @@
 /.github/workflows/cre-*.yml @smartcontractkit/keystone @smartcontractkit/op-tooling
 /linking-service/ @smartcontractkit/cre-business @smartcontractkit/core @smartcontractkit/op-tooling
 
+#CRE Privacy
+/cre/capabilities/networking/confidentialhttp @smartcontractkit/privacy @smartcontractkit/op-tooling
+
 # Data
 /svr/ @smartcontractkit/oev @smartcontractkit/op-tooling
 
