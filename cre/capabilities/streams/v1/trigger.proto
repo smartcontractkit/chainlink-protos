@@ -11,11 +11,21 @@ option go_package = "github.com/smartcontractkit/chainlink-common/pkg/capabiliti
 message Config {
   // The IDs of the LLO data streams to subscribe to.
   // Stream IDs are uint32 values that identify specific feeds.
+  // The DON should only send reports for these streams when report identity is available.
   repeated uint32 stream_ids = 1;
 
   // The minimum interval in milliseconds between trigger events.
   // Trigger will only emit events at most once per this interval.
   uint64 max_frequency_ms = 2;
+
+  // Report encoding formats the workflow accepts. e.g. [5, 7] for CapabilityTrigger (protobuf) and EVMABIEncodeUnpackedExpr (ABI).
+  // The DON filters: only sends reports whose report_format is in this list.
+  // Empty means accept all formats (backward compatible).
+  repeated uint32 accepted_report_formats = 3;
+
+  // Transmission window in milliseconds. When > 0, the DON delays pushing to this workflow until the next wall-clock boundary (top of window).
+  // 0 = use capability-level default or send immediately. Defined by the workflow so each workflow can choose its alignment.
+  uint64 transmission_window_ms = 4;
 }
 
 // An attributed onchain signature
@@ -41,6 +51,11 @@ message Report {
 
   // Attributed onchain signatures
   repeated OCRSignature sigs = 4;
+
+  // Report encoding format. When set by the transmitter, the workflow should use this to decode.
+  // 0 = unspecified (workflow must use expected_report_format from config).
+  // 5 = CapabilityTrigger (protobuf). 7 = EVMABIEncodeUnpackedExpr (ABI).
+  uint32 report_format = 5;
 }
 
 // Streams LLO Trigger service definition
