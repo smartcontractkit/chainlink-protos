@@ -5,7 +5,7 @@ go 1.24.5
 require (
 	github.com/go-viper/mapstructure/v2 v2.4.0
 	github.com/shopspring/decimal v1.4.0
-	github.com/smartcontractkit/chain-selectors v1.0.89
+	github.com/smartcontractkit/chain-selectors v1.0.92
 	github.com/stretchr/testify v1.11.1
 	google.golang.org/protobuf v1.36.7
 )
