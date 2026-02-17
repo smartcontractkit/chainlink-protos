@@ -9,15 +9,15 @@ import "tools/generator/v1alpha/cre_metadata.proto";
 
 // Transaction execution status returned by the forwarder.
 enum TxStatus {
-  TX_STATUS_FATAL = 0;       // unrecoverable failure
-  TX_STATUS_ABORTED = 1;     // not executed / dropped
-  TX_STATUS_SUCCESS = 2;     // executed successfully
+  TX_STATUS_FATAL = 0; // unrecoverable failure
+  TX_STATUS_ABORTED = 1; // not executed / dropped
+  TX_STATUS_SUCCESS = 2; // executed successfully
 }
 
 // ========== AccountAPTBalance ==========
 
 message AccountAPTBalanceRequest {
-  bytes address = 1;        // 32-byte address
+  bytes address = 1; // 32-byte address
 }
 
 message AccountAPTBalanceReply {
@@ -42,7 +42,7 @@ message ViewPayload {
 }
 
 message ModuleID {
-  bytes address = 1;  // 32-byte address
+  bytes address = 1; // 32-byte address
   string name = 2;
 }
 
@@ -75,7 +75,7 @@ message VectorTag {
 }
 
 message StructTag {
-  bytes address = 1;     // 32-byte address
+  bytes address = 1; // 32-byte address
   string module = 2;
   string name = 3;
   repeated TypeTag type_params = 4;
@@ -88,11 +88,11 @@ message GenericTag {
 // ========== EventsByHandle ==========
 
 message EventsByHandleRequest {
-  bytes account = 1;           // 32-byte address
-  string event_handle = 2;     // Event handle struct tag
-  string field_name = 3;       // Field in the event handle struct
-  optional uint64 start = 4;   // Starting sequence number
-  optional uint64 limit = 5;   // Number of events to return (default 100)
+  bytes account = 1; // 32-byte address
+  string event_handle = 2; // Event handle struct tag
+  string field_name = 3; // Field in the event handle struct
+  optional uint64 start = 4; // Starting sequence number
+  optional uint64 limit = 5; // Number of events to return (default 100)
 }
 
 message EventsByHandleReply {
@@ -100,22 +100,22 @@ message EventsByHandleReply {
 }
 
 message Event {
-  uint64 version = 1;          // Block version of the event
-  string type = 2;             // Fully qualified name e.g. 0x1::coin::WithdrawEvent
-  optional GUID guid = 3;      // Unique identifier (V1 events only)
-  uint64 sequence_number = 4;  // Sequence number (V1 events only)
-  bytes data = 5;              // Event data as raw bytes
+  uint64 version = 1; // Block version of the event
+  string type = 2; // Fully qualified name e.g. 0x1::coin::WithdrawEvent
+  optional GUID guid = 3; // Unique identifier (V1 events only)
+  uint64 sequence_number = 4; // Sequence number (V1 events only)
+  bytes data = 5; // Event data as raw bytes
 }
 
 message GUID {
-  uint64 creation_number = 1;  // Number of the GUID
-  bytes account_address = 2;   // 32-byte account address of creator
+  uint64 creation_number = 1; // Number of the GUID
+  bytes account_address = 2; // 32-byte account address of creator
 }
 
 // ========== TransactionByHash ==========
 
 message TransactionByHashRequest {
-  string hash = 1;  // Transaction hash (hex string with 0x prefix)
+  string hash = 1; // Transaction hash (hex string with 0x prefix)
 }
 
 message TransactionByHashReply {
@@ -136,9 +136,9 @@ enum TransactionVariant {
 message Transaction {
   TransactionVariant type = 1;
   string hash = 2;
-  optional uint64 version = 3;  // nil for pending transactions
-  optional bool success = 4;    // nil for pending/genesis transactions
-  bytes data = 5;               // Raw transaction data
+  optional uint64 version = 3; // nil for pending transactions
+  optional bool success = 4; // nil for pending/genesis transactions
+  bytes data = 5; // Raw transaction data
 }
 
 // ========== SubmitTransaction ==========
@@ -154,34 +154,34 @@ message SubmitTransactionReply {
 }
 
 message GasConfig {
-  uint64 max_gas_amount = 1;  // Maximum gas units willing to pay
-  uint64 gas_unit_price = 2;  // Price per gas unit in octas
+  uint64 max_gas_amount = 1; // Maximum gas units willing to pay
+  uint64 gas_unit_price = 2; // Price per gas unit in octas
 }
 
 message PendingTransaction {
-  string hash = 1;                             // Transaction hash (hex string with 0x prefix)
-  bytes sender = 2;                            // 32-byte sender address
-  uint64 sequence_number = 3;                  // Sequence number
+  string hash = 1; // Transaction hash (hex string with 0x prefix)
+  bytes sender = 2; // 32-byte sender address
+  uint64 sequence_number = 3; // Sequence number
   optional uint64 replay_protection_nonce = 4; // Optional nonce for replay protection
-  uint64 max_gas_amount = 5;                   // Maximum gas amount
-  uint64 gas_unit_price = 6;                   // Gas unit price
-  uint64 expiration_timestamp_secs = 7;        // Expiration timestamp in seconds
-  bytes payload = 8;                           // Transaction payload as raw bytes
-  bytes signature = 9;                         // Signature as raw bytes
+  uint64 max_gas_amount = 5; // Maximum gas amount
+  uint64 gas_unit_price = 6; // Gas unit price
+  uint64 expiration_timestamp_secs = 7; // Expiration timestamp in seconds
+  bytes payload = 8; // Transaction payload as raw bytes
+  bytes signature = 9; // Signature as raw bytes
 }
 
 // ========== WriteReport ==========
 
 message WriteReportRequest {
-  bytes receiver = 1;                     // 32-byte Aptos account address of the receiver module
-  optional GasConfig gas_config = 2;      // optional gas configuration
-  sdk.v1alpha.ReportResponse report = 3;  // signed report from consensus
+  bytes receiver = 1; // 32-byte Aptos account address of the receiver module
+  optional GasConfig gas_config = 2; // optional gas configuration
+  sdk.v1alpha.ReportResponse report = 3; // signed report from consensus
 }
 
 message WriteReportReply {
   TxStatus tx_status = 1;
-  optional string tx_hash = 2;            // transaction hash (hex string with 0x prefix)
-  optional uint64 transaction_fee = 3;    // gas used in octas
+  optional string tx_hash = 2; // transaction hash (hex string with 0x prefix)
+  optional uint64 transaction_fee = 3; // gas used in octas
   optional string error_message = 4;
 }
 
@@ -213,7 +213,6 @@ service Client {
 
   rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
 }
-
 `
 
 const blockchainEvmV1alphaClientEmbedded = `syntax = "proto3";
