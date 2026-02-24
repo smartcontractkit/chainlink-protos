@@ -6,7 +6,8 @@ import "tools/generator/v1alpha/cre_metadata.proto";
 
 message SecretIdentifier {
   string key = 1;
-  string namespace = 2;
+  // namespace defaults to "main" when unset.
+  optional string namespace = 2;
   optional string owner = 3;
 }
 
