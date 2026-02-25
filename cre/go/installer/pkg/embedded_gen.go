@@ -763,7 +763,6 @@ message SecretIdentifier {
   string key = 1;
   // namespace defaults to "main" when unset.
   optional string namespace = 2;
-  optional string owner = 3;
 }
 
 // WorkflowExecution is the public data sent to the enclave.
