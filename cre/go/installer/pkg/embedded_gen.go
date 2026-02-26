@@ -942,6 +942,55 @@ service Client {
 }
 `
 
+const computeConfidentialworkflowV1alphaClientEmbedded = `syntax = "proto3";
+
+package capabilities.compute.confidentialworkflow.v1alpha;
+
+import "tools/generator/v1alpha/cre_metadata.proto";
+
+message SecretIdentifier {
+  string key = 1;
+  // namespace defaults to "main" when unset.
+  optional string namespace = 2;
+}
+
+// WorkflowExecution is the public data sent to the enclave.
+// Becomes ComputeRequest.PublicData after proto serialization.
+message WorkflowExecution {
+  // workflow_id identifies the workflow to execute.
+  string workflow_id = 1;
+  // binary_url is the URL from which the enclave fetches the compiled WASM binary.
+  string binary_url = 2;
+  // binary_hash is the expected SHA-256 hash of the WASM binary, for integrity verification.
+  bytes binary_hash = 3;
+  // execute_request is a serialized sdk.v1alpha.ExecuteRequest proto.
+  // Contains either a subscribe request or a trigger execution request.
+  bytes execute_request = 4;
+}
+
+// ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
+// It combines a WorkflowExecution with secrets from VaultDON.
+message ConfidentialWorkflowRequest {
+  repeated SecretIdentifier vault_don_secrets = 1;
+  WorkflowExecution execution = 2;
+}
+
+// ConfidentialWorkflowResponse is the output from the confidential workflows capability.
+message ConfidentialWorkflowResponse {
+  // execution_result is a serialized sdk.v1alpha.ExecutionResult proto.
+  bytes execution_result = 1;
+}
+
+service Client {
+  option (tools.generator.v1alpha.capability) = {
+    mode: MODE_DON
+    capability_id: "confidential-workflows@1.0.0-alpha"
+  };
+
+  rpc Execute(ConfidentialWorkflowRequest) returns (ConfidentialWorkflowResponse);
+}
+`
+
 const internalActionandtriggerV1ActionAndTriggerEmbedded = `syntax = "proto3";
 
 package capabilities.internal.actionandtrigger.v1;
@@ -1795,6 +1844,10 @@ var allFiles = []*embeddedFile{
 	{
 		name:    "capabilities/blockchain/solana/v1alpha/client.proto",
 		content: blockchainSolanaV1alphaClientEmbedded,
+	},
+	{
+		name:    "capabilities/compute/confidentialworkflow/v1alpha/client.proto",
+		content: computeConfidentialworkflowV1alphaClientEmbedded,
 	},
 	{
 		name:    "capabilities/internal/actionandtrigger/v1/action_and_trigger.proto",
