@@ -117,9 +117,9 @@ message Transaction {
 // ========== AccountTransactions ==========
 
 message AccountTransactionsRequest {
-  bytes address = 1;              // 32-byte address
-  optional uint64 start = 2;     // Starting version number; nil for most recent
-  optional uint64 limit = 3;     // Number of transactions to return; nil for default (~100)
+  bytes address = 1; // 32-byte address
+  optional uint64 start = 2; // Starting version number; nil for most recent
+  optional uint64 limit = 3; // Number of transactions to return; nil for default (~100)
 }
 
 message AccountTransactionsReply {
