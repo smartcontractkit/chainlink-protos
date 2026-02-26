@@ -190,7 +190,6 @@ service Client {
   rpc View(ViewRequest) returns (ViewReply);
   rpc TransactionByHash(TransactionByHashRequest) returns (TransactionByHashReply);
   rpc AccountTransactions(AccountTransactionsRequest) returns (AccountTransactionsReply);
-  rpc SubmitTransaction(SubmitTransactionRequest) returns (SubmitTransactionReply);
   rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
 }
 `
