@@ -56,7 +56,7 @@ message TypeTag {
 }
 
 enum TypeTagKind {
-  TYPE_TAG_BOOL = 0;
+  TYPE_TAG_KIND_BOOL = 0;
   TYPE_TAG_U8 = 1;
   TYPE_TAG_U16 = 2;
   TYPE_TAG_U32 = 3;
