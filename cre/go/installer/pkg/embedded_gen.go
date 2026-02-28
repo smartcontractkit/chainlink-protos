@@ -366,6 +366,10 @@ service Client {
         uint64_label: {
           defaults: [
             {
+              key: "adi-mainnet"
+              value: 4059281736450291836
+            },
+            {
               key: "apechain-testnet-curtis"
               value: 9900119385908781505
             },
