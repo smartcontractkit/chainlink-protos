@@ -222,6 +222,10 @@ service Client {
               value: 1562403441176082196
             },
             {
+              key: "ethereum-testnet-hoodi-taiko-1"
+              value: 15858691699034549072
+            },
+            {
               key: "ethereum-testnet-sepolia"
               value: 16015286601757825753
             },
