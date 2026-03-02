@@ -955,7 +955,8 @@ service Client {
   rpc GetTransaction(GetTransactionRequest) returns (GetTransactionReply);
   rpc LogTrigger(FilterLogTriggerRequest) returns (stream Log);
   rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
-}`
+}
+`
 
 const computeConfidentialworkflowV1alphaClientEmbedded = `syntax = "proto3";
 
