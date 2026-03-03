@@ -20,6 +20,7 @@ func main() {
 	sanitizedFiles = mustCollectFiles("sdk", sanitizedFiles)
 	sanitizedFiles = mustCollectFiles("tools", sanitizedFiles)
 	sanitizedFiles = mustCollectFiles("values", sanitizedFiles)
+	sanitizedFiles = mustCollectFilesFromBase("chains", "../../chains", sanitizedFiles)
 
 	results := bytes.Buffer{}
 	err := template.Must(template.New("embedded").Parse(embeddedTemplate)).Execute(&results, sanitizedFiles)
@@ -74,6 +75,35 @@ func mustCollectFiles(root string, sanitizedFiles []SanitizedFile) []SanitizedFi
 		panic(err)
 	}
 
+	return sanitizedFiles
+}
+
+// mustCollectFilesFromBase walks rootDir (relative to bootstrap cwd) and adds files with FileName prefix basePath.
+func mustCollectFilesFromBase(basePath, rootDir string, sanitizedFiles []SanitizedFile) []SanitizedFile {
+	if err := filepath.Walk(rootDir, func(path string, info fs.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if ".proto" != filepath.Ext(path) {
+			return nil
+		}
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		rel, err := filepath.Rel(rootDir, path)
+		if err != nil {
+			return err
+		}
+		sanitizedFiles = append(sanitizedFiles, SanitizedFile{
+			FileName: basePath + "/" + rel,
+			VarName:  sanitize(rel),
+			Content:  escapeBackticks(string(content)),
+		})
+		return nil
+	}); err != nil {
+		panic(err)
+	}
 	return sanitizedFiles
 }
 
