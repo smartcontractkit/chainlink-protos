@@ -869,7 +869,7 @@ message SubkeyConfig {
 }
 
 message CPIFilterConfig {
-  bytes address = 1;
+  bytes dest_address = 1;
   bytes method_name = 2;
 }
 
