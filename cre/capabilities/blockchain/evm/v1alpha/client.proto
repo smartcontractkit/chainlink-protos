@@ -266,6 +266,10 @@ service Client {
               value: 945045181441419236
             },
             {
+              key: "pharos-atlantic-testnet"
+              value: 16098325658947243212
+            },
+            {
               key: "pharos-mainnet"
               value: 7801139999541420232
             },
