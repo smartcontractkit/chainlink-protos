@@ -1,5 +1,5 @@
 {
-  "domain": "node-platform",
+  "domain": "beholder__node-platform__messages",
   "schemas": [
     {
       "entity": "common.v1.ChainPluginConfig",
