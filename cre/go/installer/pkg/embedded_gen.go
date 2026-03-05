@@ -390,6 +390,10 @@ service Client {
               value: 13264668187771770619
             },
             {
+              key: "celo-sepolia"
+              value: 3761762704474186180
+            },
+            {
               key: "cronos-testnet"
               value: 2995292832068775165
             },
