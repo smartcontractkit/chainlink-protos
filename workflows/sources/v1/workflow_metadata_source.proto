@@ -36,11 +36,11 @@ message ListWorkflowMetadataResponse {
 // WorkflowMetadata represents metadata for a single workflow.
 message WorkflowMetadata {
   bytes workflow_id = 1;
-  bytes owner = 2;
+  string owner = 2;
   // created_at is the Unix timestamp when the workflow was created.
   uint64 created_at = 3;
   // status indicates the workflow status (0=active, 1=paused).
-  uint32 status = 4;
+  WorkflowStatus status = 4;
   // workflow_name is the human-readable name of the workflow.
   string workflow_name = 5;
   // binary_url is the URL to fetch the workflow binary.
@@ -53,4 +53,20 @@ message WorkflowMetadata {
   bytes attributes = 9;
   // don_family is the DON family this workflow belongs to.
   string don_family = 10;
+  // managed_by is the origin of this workflow (CLI, CREC, etc.)
+  WorkflowManagedBy managed_by = 11;
+  string organization_id = 12;
+}
+
+enum WorkflowStatus {
+  WORKFLOW_STATUS_UNSPECIFIED = 0; // Unspecified workflow status
+  WORKFLOW_STATUS_ACTIVE = 1;
+  WORKFLOW_STATUS_PAUSED = 2;
+}
+
+// Identifies which system created/updated the workflow metadata.
+enum WorkflowManagedBy {
+  WORKFLOW_MANAGED_BY_UNSPECIFIED = 0;
+  WORKFLOW_MANAGED_BY_CLI = 1;
+  WORKFLOW_MANAGED_BY_CREC = 2;
 }

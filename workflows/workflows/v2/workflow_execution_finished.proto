@@ -15,4 +15,5 @@ message WorkflowExecutionFinished {
   string timestamp = 4;
 
   ExecutionStatus status = 5;
+  string error = 6;
 }

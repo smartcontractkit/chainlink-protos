@@ -11,14 +11,17 @@
 
 # CRE
 /cre/ @smartcontractkit/keystone @smartcontractkit/op-tooling
-/cre/capabilities/blockchain/ @smartcontractkit/bix-framework
-/cre/go/installer/pkg/embedded_gen.go @smartcontractkit/bix-framework
+/cre/capabilities/blockchain/ @smartcontractkit/bix-framework @smartcontractkit/keystone @smartcontractkit/op-tooling
+/cre/go/installer/pkg/embedded_gen.go @smartcontractkit/bix-framework @smartcontractkit/keystone @smartcontractkit/op-tooling
 
 /workflows/ @smartcontractkit/foundations @smartcontractkit/core @smartcontractkit/op-tooling
 /billing/ @smartcontractkit/cre-business @smartcontractkit/core @smartcontractkit/op-tooling
 /storage-service/ @smartcontractkit/dev-services @smartcontractkit/op-tooling
 /.github/workflows/cre-*.yml @smartcontractkit/keystone @smartcontractkit/op-tooling
 /linking-service/ @smartcontractkit/cre-business @smartcontractkit/core @smartcontractkit/op-tooling
+
+#CRE Privacy
+/cre/capabilities/networking/confidentialhttp @smartcontractkit/privacy @smartcontractkit/op-tooling
 
 # Data
 /svr/ @smartcontractkit/oev @smartcontractkit/op-tooling
@@ -27,7 +30,7 @@
 /ring/ @smartcontractkit/foundations @smartcontractkit/op-tooling
 
 # Node Platform
-/node-platform/ @smartcontractkit/infra-nodes @smartcontractkit/op-tooling
+/node-platform/ @smartcontractkit/infra-nodes @smartcontractkit/op-tooling @smartcontractkit/rane
 
 # Release changesets do not have owners
 /.changeset/**
