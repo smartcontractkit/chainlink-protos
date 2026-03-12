@@ -395,6 +395,10 @@ service Client {
               value: 2995292832068775165
             },
             {
+              key: "dtcc-testnet-andesite"
+              value: 15513093881969820114
+            },
+            {
               key: "ethereum-mainnet"
               value: 5009297550715157269
             },
