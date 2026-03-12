@@ -391,6 +391,10 @@ service Client {
               value: 13264668187771770619
             },
             {
+              key: "cronos-testnet"
+              value: 2995292832068775165
+            },
+            {
               key: "ethereum-mainnet"
               value: 5009297550715157269
             },
@@ -435,8 +439,20 @@ service Client {
               value: 5719461335882077547
             },
             {
+              key: "ethereum-testnet-sepolia-mantle-1"
+              value: 8236463271206331221
+            },
+            {
               key: "ethereum-testnet-sepolia-optimism-1"
               value: 5224473277236331295
+            },
+            {
+              key: "ethereum-testnet-sepolia-scroll-1"
+              value: 2279865765895943307
+            },
+            {
+              key: "ethereum-testnet-sepolia-unichain-1"
+              value: 14135854469784514356
             },
             {
               key: "ethereum-testnet-sepolia-worldchain-1"
@@ -463,6 +479,10 @@ service Client {
               value: 945045181441419236
             },
             {
+              key: "megaeth-testnet-2"
+              value: 18241817625092392675
+            },
+            {
               key: "pharos-atlantic-testnet"
               value: 16098325658947243212
             },
@@ -485,6 +505,18 @@ service Client {
             {
               key: "private-testnet-andesite"
               value: 6915682381028791124
+            },
+            {
+              key: "sonic-testnet"
+              value: 1763698235108410440
+            },
+            {
+              key: "tac-testnet"
+              value: 9488606126177218005
+            },
+            {
+              key: "xlayer-testnet"
+              value: 10212741611335999305
             }
           ]
         }
