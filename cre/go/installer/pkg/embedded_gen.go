@@ -28,6 +28,7 @@ message AccountAPTBalanceReply {
 
 message ViewRequest {
   ViewPayload payload = 1;
+  optional uint64 ledger_version = 2; // nil means use latest ledger version
 }
 
 message ViewReply {
