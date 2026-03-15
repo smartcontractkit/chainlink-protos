@@ -151,11 +151,17 @@ message WriteReportRequest {
   sdk.v1alpha.ReportResponse report = 3; // signed report from consensus
 }
 
+enum ReceiverContractExecutionStatus {
+  RECEIVER_CONTRACT_EXECUTION_STATUS_SUCCESS = 0;
+  RECEIVER_CONTRACT_EXECUTION_STATUS_REVERTED = 1;
+}
+
 message WriteReportReply {
   TxStatus tx_status = 1;
-  optional string tx_hash = 2; // transaction hash (hex string with 0x prefix)
-  optional uint64 transaction_fee = 3; // gas used in octas
-  optional string error_message = 4;
+  optional ReceiverContractExecutionStatus receiver_contract_execution_status = 2;
+  optional string tx_hash = 3; // transaction hash (hex string with 0x prefix)
+  optional uint64 transaction_fee = 4; // gas used in octas
+  optional string error_message = 5;
 }
 
 // ========== Service ==========
