@@ -12,7 +12,7 @@
 # CRE
 /cre/ @smartcontractkit/keystone @smartcontractkit/op-tooling
 /cre/capabilities/blockchain/ @smartcontractkit/bix-framework @smartcontractkit/keystone @smartcontractkit/op-tooling
-/cre/go/installer/pkg/embedded_gen.go @smartcontractkit/bix-framework @smartcontractkit/keystone @smartcontractkit/op-tooling
+/cre/go/installer/pkg/embedded_gen.go @smartcontractkit/bix-framework @smartcontractkit/keystone @smartcontractkit/op-tooling @smartcontractkit/privacy
 
 /workflows/ @smartcontractkit/foundations @smartcontractkit/core @smartcontractkit/op-tooling
 /billing/ @smartcontractkit/cre-business @smartcontractkit/core @smartcontractkit/op-tooling
