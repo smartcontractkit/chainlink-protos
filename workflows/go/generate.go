@@ -29,6 +29,7 @@ package workflows
 //go:generate protoc --proto_path=../ --go_out=./ --go_opt=module=github.com/smartcontractkit/chainlink-protos/workflows/go ../workflows/v2/capability_execution_started.proto
 //go:generate protoc --proto_path=../ --go_out=./ --go_opt=module=github.com/smartcontractkit/chainlink-protos/workflows/go ../workflows/v2/capability_execution_finished.proto
 //go:generate protoc --proto_path=../ --go_out=./ --go_opt=module=github.com/smartcontractkit/chainlink-protos/workflows/go ../workflows/v2/workflow_user_log.proto
+//go:generate protoc --proto_path=../ --go_out=./ --go_opt=module=github.com/smartcontractkit/chainlink-protos/workflows/go ../workflows/v2/workflow_user_metric.proto
 //go:generate protoc --proto_path=../ --go_out=./ --go_opt=module=github.com/smartcontractkit/chainlink-protos/workflows/go ../workflows/v2/xxx_no_send.proto
 
 // sources/v1 - workflow metadata source service
