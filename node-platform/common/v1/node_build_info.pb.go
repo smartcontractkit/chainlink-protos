@@ -27,6 +27,7 @@ type NodeBuildInfo struct {
 	CommitSha     string                 `protobuf:"bytes,2,opt,name=commit_sha,json=commitSha,proto3" json:"commit_sha,omitempty"`
 	VersionTag    string                 `protobuf:"bytes,3,opt,name=version_tag,json=versionTag,proto3" json:"version_tag,omitempty"`
 	Version       string                 `protobuf:"bytes,4,opt,name=version,proto3" json:"version,omitempty"`
+	DockerTag     string                 `protobuf:"bytes,5,opt,name=docker_tag,json=dockerTag,proto3" json:"docker_tag,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -89,18 +90,27 @@ func (x *NodeBuildInfo) GetVersion() string {
 	return ""
 }
 
+func (x *NodeBuildInfo) GetDockerTag() string {
+	if x != nil {
+		return x.DockerTag
+	}
+	return ""
+}
+
 var File_node_platform_common_v1_node_build_info_proto protoreflect.FileDescriptor
 
 const file_node_platform_common_v1_node_build_info_proto_rawDesc = "" +
 	"\n" +
-	"-node-platform/common/v1/node_build_info.proto\x12\tcommon.v1\"\x8f\x01\n" +
+	"-node-platform/common/v1/node_build_info.proto\x12\tcommon.v1\"\xae\x01\n" +
 	"\rNodeBuildInfo\x12$\n" +
 	"\x0ecsa_public_key\x18\x01 \x01(\tR\fcsaPublicKey\x12\x1d\n" +
 	"\n" +
 	"commit_sha\x18\x02 \x01(\tR\tcommitSha\x12\x1f\n" +
 	"\vversion_tag\x18\x03 \x01(\tR\n" +
 	"versionTag\x12\x18\n" +
-	"\aversion\x18\x04 \x01(\tR\aversionBFZDgithub.com/smartcontractkit/chainlink-protos/node-platform/common/v1b\x06proto3"
+	"\aversion\x18\x04 \x01(\tR\aversion\x12\x1d\n" +
+	"\n" +
+	"docker_tag\x18\x05 \x01(\tR\tdockerTagBFZDgithub.com/smartcontractkit/chainlink-protos/node-platform/common/v1b\x06proto3"
 
 var (
 	file_node_platform_common_v1_node_build_info_proto_rawDescOnce sync.Once
