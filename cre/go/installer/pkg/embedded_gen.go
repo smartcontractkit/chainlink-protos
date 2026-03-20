@@ -491,6 +491,10 @@ service Client {
               value: 465200170687744372
             },
             {
+              key: "hyperliquid-mainnet"
+              value: 2442541497099098535
+            },
+            {
               key: "hyperliquid-testnet"
               value: 4286062357653186312
             },
