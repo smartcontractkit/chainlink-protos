@@ -294,6 +294,10 @@ service Client {
               value: 465200170687744372
             },
             {
+              key: "gnosis_chain-testnet-chiado"
+              value: 8871595565390010547
+            },
+            {
               key: "hyperliquid-mainnet"
               value: 2442541497099098535
             },
