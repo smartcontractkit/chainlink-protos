@@ -27,7 +27,6 @@ const (
 	UserMetricType_USER_METRIC_TYPE_UNSPECIFIED UserMetricType = 0
 	UserMetricType_USER_METRIC_TYPE_COUNTER     UserMetricType = 1
 	UserMetricType_USER_METRIC_TYPE_GAUGE       UserMetricType = 2
-	UserMetricType_USER_METRIC_TYPE_HISTOGRAM   UserMetricType = 3
 )
 
 // Enum value maps for UserMetricType.
@@ -36,13 +35,11 @@ var (
 		0: "USER_METRIC_TYPE_UNSPECIFIED",
 		1: "USER_METRIC_TYPE_COUNTER",
 		2: "USER_METRIC_TYPE_GAUGE",
-		3: "USER_METRIC_TYPE_HISTOGRAM",
 	}
 	UserMetricType_value = map[string]int32{
 		"USER_METRIC_TYPE_UNSPECIFIED": 0,
 		"USER_METRIC_TYPE_COUNTER":     1,
 		"USER_METRIC_TYPE_GAUGE":       2,
-		"USER_METRIC_TYPE_HISTOGRAM":   3,
 	}
 )
 
@@ -80,7 +77,7 @@ type WorkflowUserMetric struct {
 	WorkflowExecutionID string                 `protobuf:"bytes,3,opt,name=workflowExecutionID,proto3" json:"workflowExecutionID,omitempty"`
 	Timestamp           string                 `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	Name                string                 `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
-	Value               int64                  `protobuf:"varint,6,opt,name=value,proto3" json:"value,omitempty"`
+	Value               float64                `protobuf:"fixed64,6,opt,name=value,proto3" json:"value,omitempty"`
 	Type                UserMetricType         `protobuf:"varint,7,opt,name=type,proto3,enum=workflows.v2.UserMetricType" json:"type,omitempty"`
 	Labels              map[string]string      `protobuf:"bytes,8,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields       protoimpl.UnknownFields
@@ -152,7 +149,7 @@ func (x *WorkflowUserMetric) GetName() string {
 	return ""
 }
 
-func (x *WorkflowUserMetric) GetValue() int64 {
+func (x *WorkflowUserMetric) GetValue() float64 {
 	if x != nil {
 		return x.Value
 	}
@@ -184,17 +181,16 @@ const file_workflows_v2_workflow_user_metric_proto_rawDesc = "" +
 	"\x13workflowExecutionID\x18\x03 \x01(\tR\x13workflowExecutionID\x12\x1c\n" +
 	"\ttimestamp\x18\x04 \x01(\tR\ttimestamp\x12\x12\n" +
 	"\x04name\x18\x05 \x01(\tR\x04name\x12\x14\n" +
-	"\x05value\x18\x06 \x01(\x03R\x05value\x120\n" +
+	"\x05value\x18\x06 \x01(\x01R\x05value\x120\n" +
 	"\x04type\x18\a \x01(\x0e2\x1c.workflows.v2.UserMetricTypeR\x04type\x12D\n" +
 	"\x06labels\x18\b \x03(\v2,.workflows.v2.WorkflowUserMetric.LabelsEntryR\x06labels\x1a9\n" +
 	"\vLabelsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\x8c\x01\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*l\n" +
 	"\x0eUserMetricType\x12 \n" +
 	"\x1cUSER_METRIC_TYPE_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18USER_METRIC_TYPE_COUNTER\x10\x01\x12\x1a\n" +
-	"\x16USER_METRIC_TYPE_GAUGE\x10\x02\x12\x1e\n" +
-	"\x1aUSER_METRIC_TYPE_HISTOGRAM\x10\x03B>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
+	"\x16USER_METRIC_TYPE_GAUGE\x10\x02B>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
 
 var (
 	file_workflows_v2_workflow_user_metric_proto_rawDescOnce sync.Once
