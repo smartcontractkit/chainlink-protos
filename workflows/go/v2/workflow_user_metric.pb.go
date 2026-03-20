@@ -24,22 +24,25 @@ const (
 type UserMetricType int32
 
 const (
-	UserMetricType_USER_METRIC_TYPE_COUNTER_UNSPECIFIED UserMetricType = 0
-	UserMetricType_USER_METRIC_TYPE_GAUGE               UserMetricType = 1
-	UserMetricType_USER_METRIC_TYPE_HISTOGRAM           UserMetricType = 2
+	UserMetricType_USER_METRIC_TYPE_UNSPECIFIED UserMetricType = 0
+	UserMetricType_USER_METRIC_TYPE_COUNTER     UserMetricType = 1
+	UserMetricType_USER_METRIC_TYPE_GAUGE       UserMetricType = 2
+	UserMetricType_USER_METRIC_TYPE_HISTOGRAM   UserMetricType = 3
 )
 
 // Enum value maps for UserMetricType.
 var (
 	UserMetricType_name = map[int32]string{
-		0: "USER_METRIC_TYPE_COUNTER_UNSPECIFIED",
-		1: "USER_METRIC_TYPE_GAUGE",
-		2: "USER_METRIC_TYPE_HISTOGRAM",
+		0: "USER_METRIC_TYPE_UNSPECIFIED",
+		1: "USER_METRIC_TYPE_COUNTER",
+		2: "USER_METRIC_TYPE_GAUGE",
+		3: "USER_METRIC_TYPE_HISTOGRAM",
 	}
 	UserMetricType_value = map[string]int32{
-		"USER_METRIC_TYPE_COUNTER_UNSPECIFIED": 0,
-		"USER_METRIC_TYPE_GAUGE":               1,
-		"USER_METRIC_TYPE_HISTOGRAM":           2,
+		"USER_METRIC_TYPE_UNSPECIFIED": 0,
+		"USER_METRIC_TYPE_COUNTER":     1,
+		"USER_METRIC_TYPE_GAUGE":       2,
+		"USER_METRIC_TYPE_HISTOGRAM":   3,
 	}
 )
 
@@ -160,7 +163,7 @@ func (x *WorkflowUserMetric) GetType() UserMetricType {
 	if x != nil {
 		return x.Type
 	}
-	return UserMetricType_USER_METRIC_TYPE_COUNTER_UNSPECIFIED
+	return UserMetricType_USER_METRIC_TYPE_UNSPECIFIED
 }
 
 func (x *WorkflowUserMetric) GetLabels() map[string]string {
@@ -186,11 +189,12 @@ const file_workflows_v2_workflow_user_metric_proto_rawDesc = "" +
 	"\x06labels\x18\b \x03(\v2,.workflows.v2.WorkflowUserMetric.LabelsEntryR\x06labels\x1a9\n" +
 	"\vLabelsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*v\n" +
-	"\x0eUserMetricType\x12(\n" +
-	"$USER_METRIC_TYPE_COUNTER_UNSPECIFIED\x10\x00\x12\x1a\n" +
-	"\x16USER_METRIC_TYPE_GAUGE\x10\x01\x12\x1e\n" +
-	"\x1aUSER_METRIC_TYPE_HISTOGRAM\x10\x02B>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\x8c\x01\n" +
+	"\x0eUserMetricType\x12 \n" +
+	"\x1cUSER_METRIC_TYPE_UNSPECIFIED\x10\x00\x12\x1c\n" +
+	"\x18USER_METRIC_TYPE_COUNTER\x10\x01\x12\x1a\n" +
+	"\x16USER_METRIC_TYPE_GAUGE\x10\x02\x12\x1e\n" +
+	"\x1aUSER_METRIC_TYPE_HISTOGRAM\x10\x03B>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
 
 var (
 	file_workflows_v2_workflow_user_metric_proto_rawDescOnce sync.Once
