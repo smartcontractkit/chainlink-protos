@@ -8,9 +8,10 @@ import "workflows/v2/workflow_key.proto";
 option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
 
 enum UserMetricType {
-  USER_METRIC_TYPE_COUNTER_UNSPECIFIED = 0;
-  USER_METRIC_TYPE_GAUGE = 1;
-  USER_METRIC_TYPE_HISTOGRAM = 2;
+  USER_METRIC_TYPE_UNSPECIFIED = 0;
+  USER_METRIC_TYPE_COUNTER = 1;
+  USER_METRIC_TYPE_GAUGE = 2;
+  USER_METRIC_TYPE_HISTOGRAM = 3;
 }
 
 message WorkflowUserMetric {
