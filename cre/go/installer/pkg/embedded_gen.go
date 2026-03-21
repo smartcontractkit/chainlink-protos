@@ -949,12 +949,18 @@ message SubkeyConfig {
   repeated ValueComparator comparers = 2;
 }
 
+message CPIFilterConfig {
+  bytes dest_address = 1;
+  bytes method_name = 2;
+}
+
 message FilterLogTriggerRequest {
   string name = 1;
   bytes address = 2; // Solana PublicKey (32 bytes)
   string event_name = 3;
-  bytes event_idl_json = 4;
+  bytes contract_idl_json = 4;
   repeated SubkeyConfig subkeys = 5;
+  optional CPIFilterConfig cpi_filter_config = 6;
 }
 
 message Log {
