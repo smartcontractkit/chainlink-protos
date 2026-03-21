@@ -22,16 +22,17 @@ const (
 )
 
 type TxMessage struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Hash          string                 `protobuf:"bytes,1,opt,name=hash,proto3" json:"hash,omitempty"`
-	FromAddress   string                 `protobuf:"bytes,2,opt,name=from_address,json=fromAddress,proto3" json:"from_address,omitempty"`
-	ToAddress     string                 `protobuf:"bytes,3,opt,name=to_address,json=toAddress,proto3" json:"to_address,omitempty"`
-	Nonce         string                 `protobuf:"bytes,4,opt,name=nonce,proto3" json:"nonce,omitempty"`
-	CreatedAt     int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	ChainId       string                 `protobuf:"bytes,6,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
-	FeedAddress   string                 `protobuf:"bytes,7,opt,name=feed_address,json=feedAddress,proto3" json:"feed_address,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Hash                string                 `protobuf:"bytes,1,opt,name=hash,proto3" json:"hash,omitempty"`
+	FromAddress         string                 `protobuf:"bytes,2,opt,name=from_address,json=fromAddress,proto3" json:"from_address,omitempty"`
+	ToAddress           string                 `protobuf:"bytes,3,opt,name=to_address,json=toAddress,proto3" json:"to_address,omitempty"`
+	Nonce               string                 `protobuf:"bytes,4,opt,name=nonce,proto3" json:"nonce,omitempty"`
+	CreatedAt           int64                  `protobuf:"varint,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	ChainId             string                 `protobuf:"bytes,6,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
+	FeedAddress         string                 `protobuf:"bytes,7,opt,name=feed_address,json=feedAddress,proto3" json:"feed_address,omitempty"`
+	DualBroadcastParams *string                `protobuf:"bytes,8,opt,name=dual_broadcast_params,json=dualBroadcastParams,proto3,oneof" json:"dual_broadcast_params,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *TxMessage) Reset() {
@@ -113,11 +114,18 @@ func (x *TxMessage) GetFeedAddress() string {
 	return ""
 }
 
+func (x *TxMessage) GetDualBroadcastParams() string {
+	if x != nil && x.DualBroadcastParams != nil {
+		return *x.DualBroadcastParams
+	}
+	return ""
+}
+
 var File_svr_v1_beholder_tx_message_proto protoreflect.FileDescriptor
 
 const file_svr_v1_beholder_tx_message_proto_rawDesc = "" +
 	"\n" +
-	" svr/v1/beholder_tx_message.proto\x12\x06svr.v1\"\xd4\x01\n" +
+	" svr/v1/beholder_tx_message.proto\x12\x06svr.v1\"\xa7\x02\n" +
 	"\tTxMessage\x12\x12\n" +
 	"\x04hash\x18\x01 \x01(\tR\x04hash\x12!\n" +
 	"\ffrom_address\x18\x02 \x01(\tR\vfromAddress\x12\x1d\n" +
@@ -127,7 +135,9 @@ const file_svr_v1_beholder_tx_message_proto_rawDesc = "" +
 	"\n" +
 	"created_at\x18\x05 \x01(\x03R\tcreatedAt\x12\x19\n" +
 	"\bchain_id\x18\x06 \x01(\tR\achainId\x12!\n" +
-	"\ffeed_address\x18\a \x01(\tR\vfeedAddressB5Z3github.com/smartcontractkit/chainlink-protos/svr/v1b\x06proto3"
+	"\ffeed_address\x18\a \x01(\tR\vfeedAddress\x127\n" +
+	"\x15dual_broadcast_params\x18\b \x01(\tH\x00R\x13dualBroadcastParams\x88\x01\x01B\x18\n" +
+	"\x16_dual_broadcast_paramsB5Z3github.com/smartcontractkit/chainlink-protos/svr/v1b\x06proto3"
 
 var (
 	file_svr_v1_beholder_tx_message_proto_rawDescOnce sync.Once
@@ -158,6 +168,7 @@ func file_svr_v1_beholder_tx_message_proto_init() {
 	if File_svr_v1_beholder_tx_message_proto != nil {
 		return
 	}
+	file_svr_v1_beholder_tx_message_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
