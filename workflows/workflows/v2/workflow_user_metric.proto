@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package workflows.v2;
+
+import "workflows/v2/cre_info.proto";
+import "workflows/v2/workflow_key.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
+
+enum UserMetricType {
+  USER_METRIC_TYPE_UNSPECIFIED = 0;
+  USER_METRIC_TYPE_COUNTER = 1;
+  USER_METRIC_TYPE_GAUGE = 2;
+}
+
+message WorkflowUserMetric {
+  CreInfo creInfo = 1;
+  WorkflowKey workflow = 2;
+  string workflowExecutionID = 3;
+  string timestamp = 4;
+
+  string name = 5;
+  double value = 6;
+  UserMetricType type = 7;
+  map<string, string> labels = 8;
+}
