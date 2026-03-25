@@ -3,12 +3,15 @@ name: CRE branch protection
 on:
   pull_request:
     types: [opened, reopened, synchronize]
+    branches:
+      - main
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   check-cre-target-branch:
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -21,9 +24,9 @@ jobs:
         run: |
           git fetch origin "${TARGET_BRANCH}" --quiet 2>/dev/null || true
 
-          CRE_CHANGED=$(git diff --name-only "origin/${TARGET_BRANCH}" -- cre/)
+          CRE_CHANGED=$(git diff --name-only "origin/${TARGET_BRANCH}...HEAD" -- cre/)
 
-          if [ -z "$CRE_CHANGED" ]; then
+          if [[ -z "$CRE_CHANGED" ]]; then
             echo "No cre/ files modified. Skipping branch check."
             exit 0
           fi
@@ -31,11 +34,6 @@ jobs:
           echo "The following cre/ files are modified in this PR:"
           echo "$CRE_CHANGED"
           echo ""
-
-          if [ "$TARGET_BRANCH" != "main" ]; then
-            echo "PR targets '${TARGET_BRANCH}', not 'main'. CRE changes are allowed."
-            exit 0
-          fi
 
           echo "PR targets 'main' and contains cre/ changes."
           echo "Verifying all CRE-modifying commits are cherry-picks from capabilities-development..."
