@@ -32,12 +32,12 @@ jobs:
           echo "$CRE_CHANGED"
           echo ""
 
-          if [ "$TARGET_BRANCH" = "capabilities-development" ]; then
-            echo "PR targets capabilities-development. CRE changes are allowed."
+          if [ "$TARGET_BRANCH" != "main" ]; then
+            echo "PR targets '${TARGET_BRANCH}', not 'main'. CRE changes are allowed."
             exit 0
           fi
 
-          echo "PR targets '${TARGET_BRANCH}' and contains cre/ changes."
+          echo "PR targets 'main' and contains cre/ changes."
           echo "Verifying all CRE-modifying commits are cherry-picks from capabilities-development..."
           echo ""
 
