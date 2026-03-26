@@ -145,6 +145,11 @@ message GasConfig {
 
 // ========== WriteReport ==========
 
+enum ReceiverContractExecutionStatus {
+  RECEIVER_CONTRACT_EXECUTION_STATUS_SUCCESS = 0;
+  RECEIVER_CONTRACT_EXECUTION_STATUS_REVERTED = 1;
+}
+
 message WriteReportRequest {
   bytes receiver = 1; // 32-byte Aptos account address of the receiver module
   optional GasConfig gas_config = 2; // optional gas configuration
@@ -156,6 +161,7 @@ message WriteReportReply {
   optional string tx_hash = 2; // transaction hash (hex string with 0x prefix)
   optional uint64 transaction_fee = 3; // gas used in octas
   optional string error_message = 4;
+  optional ReceiverContractExecutionStatus receiver_contract_execution_status = 5;
 }
 
 // ========== Service ==========
