@@ -910,6 +910,9 @@ message CapabilityResponse {
     google.protobuf.Any payload = 1;
     string error = 2;
   }
+  // capability_id identifies which capability produced this response.
+  // Populated by the host on error to allow callers to attribute failures.
+  string capability_id = 3;
 }
 
 enum Mode {
@@ -1069,6 +1072,9 @@ message CapabilityResponse {
     google.protobuf.Any payload = 1;
     string error = 2;
   }
+  // capability_id identifies which capability produced this response.
+  // Populated by the host on error to allow callers to attribute failures.
+  string capability_id = 3;
 }
 
 enum Mode {
