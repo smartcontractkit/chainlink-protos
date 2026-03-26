@@ -958,6 +958,9 @@ message ExecutionResult {
     string error = 2;
     TriggerSubscriptionRequest trigger_subscriptions = 3;
   }
+  // failed_capability_id identifies the capability whose error caused this execution to fail.
+  // Only set when the result is an error originating from a capability call.
+  optional string failed_capability_id = 4;
 }
 
 message GetSecretsRequest {
@@ -1120,6 +1123,9 @@ message ExecutionResult {
     string error = 2;
     TriggerSubscriptionRequest trigger_subscriptions = 3;
   }
+  // failed_capability_id identifies the capability whose error caused this execution to fail.
+  // Only set when the result is an error originating from a capability call.
+  optional string failed_capability_id = 4;
 }
 
 message GetSecretsRequest {
