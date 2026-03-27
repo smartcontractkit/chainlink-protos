@@ -348,6 +348,22 @@
       ]
     },
     {
+      "entity": "workflows.v2.WorkflowUserMetric",
+      "path": "workflows/v2/workflow_user_metric.proto",
+      "references": [
+        {
+          "name": "workflows/v2/cre_info.proto",
+          "entity": "workflows.v2.CreInfo",
+          "path": "workflows/v2/cre_info.proto"
+        },
+        {
+          "name": "workflows/v2/workflow_key.proto",
+          "entity": "workflows.v2.WorkflowKey",
+          "path": "workflows/v2/workflow_key.proto"
+        }
+      ]
+    },
+    {
       "entity": "bridge_status.v1.JobInfo",
       "path": "bridge_status/v1/job_info.proto"
     },
