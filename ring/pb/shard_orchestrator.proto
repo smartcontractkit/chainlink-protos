@@ -18,6 +18,8 @@ message GetWorkflowShardMappingResponse {
   map<string, uint32> mappings = 1;
   map<string, WorkflowMappingState> mapping_states = 2;
   uint64 mapping_version = 3;
+  uint64 routing_state_id = 4;
+  bool routing_steady = 5;
 }
 
 message ReportWorkflowTriggerRegistrationRequest {
