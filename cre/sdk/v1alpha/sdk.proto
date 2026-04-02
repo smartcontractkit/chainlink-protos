@@ -80,6 +80,22 @@ message TriggerSubscription {
   string method = 3;
 }
 
+enum TeeType {
+  TEE_TYPE_AWS_NITRO = 0;
+}
+
+
+message TeeTypeSelection {
+  repeated TeeType types = 1;
+}
+
+message Tee {
+  oneof type {
+    google.protobuf.Empty any = 1;
+    TeeTypeSelection type_selection = 2;
+  }
+}
+
 message TriggerSubscriptionRequest {
   repeated TriggerSubscription subscriptions = 1;
 }
@@ -87,6 +103,10 @@ message TriggerSubscriptionRequest {
 message Trigger {
   uint64 id = 1;
   google.protobuf.Any payload = 2;
+}
+
+message Requirements {
+  Tee tee = 1;
 }
 
 message AwaitCapabilitiesRequest {

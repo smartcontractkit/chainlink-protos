@@ -717,6 +717,7 @@ service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "confidential-http@1.0.0-alpha"
+    tee_enabled: true
   };
 
   rpc SendRequest(ConfidentialHTTPRequest) returns (HTTPResponse);
@@ -762,6 +763,7 @@ service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "http-actions@1.0.0-alpha"
+    tee_enabled: true
   };
   rpc SendRequest(Request) returns (Response);
 }
@@ -924,6 +926,22 @@ message TriggerSubscription {
   string method = 3;
 }
 
+enum TeeType {
+  TEE_TYPE_AWS_NITRO = 0;
+}
+
+
+message TeeTypeSelection {
+  repeated TeeType types = 1;
+}
+
+message Tee {
+  oneof type {
+    google.protobuf.Empty any = 1;
+    TeeTypeSelection type_selection = 2;
+  }
+}
+
 message TriggerSubscriptionRequest {
   repeated TriggerSubscription subscriptions = 1;
 }
@@ -931,6 +949,10 @@ message TriggerSubscriptionRequest {
 message Trigger {
   uint64 id = 1;
   google.protobuf.Any payload = 2;
+}
+
+message Requirements {
+  Tee tee = 1;
 }
 
 message AwaitCapabilitiesRequest {
@@ -1201,6 +1223,7 @@ message CapabilityMetadata {
   sdk.v1alpha.Mode mode = 1;
   string capability_id = 2;
   map<string, Label> labels = 3;
+  bool tee_enabled = 4;
 }
 
 extend google.protobuf.ServiceOptions {
