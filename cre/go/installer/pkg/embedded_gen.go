@@ -28,6 +28,7 @@ message AccountAPTBalanceReply {
 
 message ViewRequest {
   ViewPayload payload = 1;
+  optional uint64 ledger_version = 2; // nil means use latest ledger version
 }
 
 message ViewReply {
@@ -147,6 +148,11 @@ message GasConfig {
 
 // ========== WriteReport ==========
 
+enum ReceiverContractExecutionStatus {
+  RECEIVER_CONTRACT_EXECUTION_STATUS_SUCCESS = 0;
+  RECEIVER_CONTRACT_EXECUTION_STATUS_REVERTED = 1;
+}
+
 message WriteReportRequest {
   bytes receiver = 1; // 32-byte Aptos account address of the receiver module
   optional GasConfig gas_config = 2; // optional gas configuration
@@ -158,6 +164,7 @@ message WriteReportReply {
   optional string tx_hash = 2; // transaction hash (hex string with 0x prefix)
   optional uint64 transaction_fee = 3; // gas used in octas
   optional string error_message = 4;
+  optional ReceiverContractExecutionStatus receiver_contract_execution_status = 5;
 }
 
 // ========== Service ==========
@@ -390,6 +397,18 @@ service Client {
               value: 13264668187771770619
             },
             {
+              key: "celo-mainnet"
+              value: 1346049177634351622
+            },
+            {
+              key: "cronos-testnet"
+              value: 2995292832068775165
+            },
+            {
+              key: "dtcc-testnet-andesite"
+              value: 15513093881969820114
+            },
+            {
               key: "ethereum-mainnet"
               value: 5009297550715157269
             },
@@ -402,8 +421,24 @@ service Client {
               value: 15971525489660198786
             },
             {
+              key: "ethereum-mainnet-ink-1"
+              value: 3461204551265785888
+            },
+            {
+              key: "ethereum-mainnet-linea-1"
+              value: 4627098889531055414
+            },
+            {
+              key: "ethereum-mainnet-mantle-1"
+              value: 1556008542357238666
+            },
+            {
               key: "ethereum-mainnet-optimism-1"
               value: 3734403246176062136
+            },
+            {
+              key: "ethereum-mainnet-scroll-1"
+              value: 13204309965629103672
             },
             {
               key: "ethereum-mainnet-worldchain-1"
@@ -434,8 +469,20 @@ service Client {
               value: 5719461335882077547
             },
             {
+              key: "ethereum-testnet-sepolia-mantle-1"
+              value: 8236463271206331221
+            },
+            {
               key: "ethereum-testnet-sepolia-optimism-1"
               value: 5224473277236331295
+            },
+            {
+              key: "ethereum-testnet-sepolia-scroll-1"
+              value: 2279865765895943307
+            },
+            {
+              key: "ethereum-testnet-sepolia-unichain-1"
+              value: 14135854469784514356
             },
             {
               key: "ethereum-testnet-sepolia-worldchain-1"
@@ -444,6 +491,18 @@ service Client {
             {
               key: "ethereum-testnet-sepolia-zksync-1"
               value: 6898391096552792247
+            },
+            {
+              key: "gnosis_chain-mainnet"
+              value: 465200170687744372
+            },
+            {
+              key: "gnosis_chain-testnet-chiado"
+              value: 8871595565390010547
+            },
+            {
+              key: "hyperliquid-mainnet"
+              value: 2442541497099098535
             },
             {
               key: "hyperliquid-testnet"
@@ -462,8 +521,24 @@ service Client {
               value: 945045181441419236
             },
             {
+              key: "megaeth-mainnet"
+              value: 6093540873831549674
+            },
+            {
+              key: "megaeth-testnet-2"
+              value: 18241817625092392675
+            },
+            {
+              key: "pharos-atlantic-testnet"
+              value: 16098325658947243212
+            },
+            {
               key: "pharos-mainnet"
               value: 7801139999541420232
+            },
+            {
+              key: "plasma-mainnet"
+              value: 9335212494177455608
             },
             {
               key: "plasma-testnet"
@@ -480,6 +555,22 @@ service Client {
             {
               key: "private-testnet-andesite"
               value: 6915682381028791124
+            },
+            {
+              key: "sonic-mainnet"
+              value: 1673871237479749969
+            },
+            {
+              key: "sonic-testnet"
+              value: 1763698235108410440
+            },
+            {
+              key: "tac-testnet"
+              value: 9488606126177218005
+            },
+            {
+              key: "xlayer-testnet"
+              value: 10212741611335999305
             }
           ]
         }
@@ -988,6 +1079,12 @@ message WorkflowExecution {
   // execute_request is a serialized sdk.v1alpha.ExecuteRequest proto.
   // Contains either a subscribe request or a trigger execution request.
   bytes execute_request = 4;
+  // owner is the on-chain owner address of the workflow (hex, 0x-prefixed).
+  // Used by the enclave for runtime secret fetching from VaultDON.
+  string owner = 5;
+  // execution_id is the unique execution identifier (64 hex chars, 32 bytes).
+  // Used by the enclave for runtime secret fetching from VaultDON.
+  string execution_id = 6;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.

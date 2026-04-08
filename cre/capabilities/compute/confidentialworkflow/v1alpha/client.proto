@@ -22,6 +22,12 @@ message WorkflowExecution {
   // execute_request is a serialized sdk.v1alpha.ExecuteRequest proto.
   // Contains either a subscribe request or a trigger execution request.
   bytes execute_request = 4;
+  // owner is the on-chain owner address of the workflow (hex, 0x-prefixed).
+  // Used by the enclave for runtime secret fetching from VaultDON.
+  string owner = 5;
+  // execution_id is the unique execution identifier (64 hex chars, 32 bytes).
+  // Used by the enclave for runtime secret fetching from VaultDON.
+  string execution_id = 6;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.

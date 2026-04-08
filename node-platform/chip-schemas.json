@@ -4,6 +4,10 @@
     {
       "entity": "common.v1.ChainPluginConfig",
       "path": "common/v1/chain_plugin_config.proto"
+    },
+    {
+      "entity": "common.v1.NodeBuildInfo",
+      "path": "common/v1/node_build_info.proto"
     }
   ]
 }
