@@ -130,6 +130,8 @@ type GetWorkflowShardMappingResponse struct {
 	Mappings       map[string]uint32                `protobuf:"bytes,1,rep,name=mappings,proto3" json:"mappings,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`
 	MappingStates  map[string]*WorkflowMappingState `protobuf:"bytes,2,rep,name=mapping_states,json=mappingStates,proto3" json:"mapping_states,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	MappingVersion uint64                           `protobuf:"varint,3,opt,name=mapping_version,json=mappingVersion,proto3" json:"mapping_version,omitempty"`
+	RoutingStateId uint64                           `protobuf:"varint,4,opt,name=routing_state_id,json=routingStateId,proto3" json:"routing_state_id,omitempty"`
+	RoutingSteady  bool                             `protobuf:"varint,5,opt,name=routing_steady,json=routingSteady,proto3" json:"routing_steady,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -183,6 +185,20 @@ func (x *GetWorkflowShardMappingResponse) GetMappingVersion() uint64 {
 		return x.MappingVersion
 	}
 	return 0
+}
+
+func (x *GetWorkflowShardMappingResponse) GetRoutingStateId() uint64 {
+	if x != nil {
+		return x.RoutingStateId
+	}
+	return 0
+}
+
+func (x *GetWorkflowShardMappingResponse) GetRoutingSteady() bool {
+	if x != nil {
+		return x.RoutingSteady
+	}
+	return false
 }
 
 type ReportWorkflowTriggerRegistrationRequest struct {
@@ -301,11 +317,13 @@ const file_shard_orchestrator_proto_rawDesc = "" +
 	"oldShardId\x12 \n" +
 	"\fnew_shard_id\x18\x02 \x01(\rR\n" +
 	"newShardId\x12#\n" +
-	"\rin_transition\x18\x03 \x01(\bR\finTransition\"\x97\x03\n" +
+	"\rin_transition\x18\x03 \x01(\bR\finTransition\"\xe8\x03\n" +
 	"\x1fGetWorkflowShardMappingResponse\x12O\n" +
 	"\bmappings\x18\x01 \x03(\v23.ring.GetWorkflowShardMappingResponse.MappingsEntryR\bmappings\x12_\n" +
 	"\x0emapping_states\x18\x02 \x03(\v28.ring.GetWorkflowShardMappingResponse.MappingStatesEntryR\rmappingStates\x12'\n" +
-	"\x0fmapping_version\x18\x03 \x01(\x04R\x0emappingVersion\x1a;\n" +
+	"\x0fmapping_version\x18\x03 \x01(\x04R\x0emappingVersion\x12(\n" +
+	"\x10routing_state_id\x18\x04 \x01(\x04R\x0eroutingStateId\x12%\n" +
+	"\x0erouting_steady\x18\x05 \x01(\bR\rroutingSteady\x1a;\n" +
 	"\rMappingsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\rR\x05value:\x028\x01\x1a\\\n" +
