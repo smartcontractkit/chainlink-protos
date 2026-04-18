@@ -671,7 +671,6 @@ message Account {
 // Compute budget configuration when submitting txs.
 message ComputeConfig {
   uint32 compute_limit = 1; // max CUs (approx per-tx limit)
-  uint64 compute_max_price = 2; // max lamports per CU
 }
 
 // Raw bytes vs parsed JSON (as returned by RPC).
