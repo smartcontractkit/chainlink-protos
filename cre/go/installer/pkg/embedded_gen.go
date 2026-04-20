@@ -726,10 +726,10 @@ message ConfidentialHTTPRequest {
 message AuthConfig {
   oneof method {
     ApiKeyAuth api_key = 1;
-    BasicAuth  basic   = 2;
-    BearerAuth bearer  = 3;
-    HmacAuth   hmac    = 4;
-    OAuth2Auth oauth2  = 5;
+    BasicAuth basic = 2;
+    BearerAuth bearer = 3;
+    HmacAuth hmac = 4;
+    OAuth2Auth oauth2 = 5;
   }
 }
 
@@ -738,8 +738,8 @@ message AuthConfig {
 // Example (header_name="x-api-key", secret_name="coingecko", value_prefix=""):
 //   x-api-key: <secret>
 message ApiKeyAuth {
-  string header_name  = 1; // required, e.g. "x-api-key", "Authorization"
-  string secret_name  = 2; // required; key into ConfidentialHTTPRequest.vault_don_secrets
+  string header_name = 1; // required, e.g. "x-api-key", "Authorization"
+  string secret_name = 2; // required; key into ConfidentialHTTPRequest.vault_don_secrets
   string value_prefix = 3; // optional, e.g. "ApiKey ", "Token "
 }
 
@@ -755,16 +755,16 @@ message BasicAuth {
 // "Authorization: token <pat>").
 message BearerAuth {
   string token_secret_name = 1; // required
-  string header_name       = 2; // optional override, default "Authorization"
-  string value_prefix      = 3; // optional override, default "Bearer "
+  string header_name = 2; // optional override, default "Authorization"
+  string value_prefix = 3; // optional override, default "Bearer "
 }
 
 // HmacAuth groups all HMAC-family signing variants.
 message HmacAuth {
   oneof variant {
-    HmacSha256 sha256       = 1;
-    AwsSigV4   aws_sig_v4   = 2;
-    HmacCustom custom       = 3;
+    HmacSha256 sha256 = 1;
+    AwsSigV4 aws_sig_v4 = 2;
+    HmacCustom custom = 3;
   }
 }
 
@@ -772,28 +772,28 @@ message HmacAuth {
 // Canonical string: method "\n" url "\n" sha256(body) "\n" timestamp
 // Signature is attached via signature_header, timestamp via timestamp_header.
 message HmacSha256 {
-  string secret_name       = 1; // required shared secret
-  string signature_header  = 2; // default "X-Signature"
-  string timestamp_header  = 3; // default "X-Timestamp"
-  bool   include_query     = 4; // if true, include the query string in the canonical url
-  string encoding          = 5; // "hex" (default) or "base64"
+  string secret_name = 1; // required shared secret
+  string signature_header = 2; // default "X-Signature"
+  string timestamp_header = 3; // default "X-Timestamp"
+  bool include_query = 4; // if true, include the query string in the canonical url
+  string encoding = 5; // "hex" (default) or "base64"
 }
 
 // AwsSigV4 implements AWS Signature Version 4.
 // Uses github.com/aws/aws-sdk-go-v2/aws/signer/v4 under the hood.
 message AwsSigV4 {
-  string access_key_id_secret_name     = 1; // required
+  string access_key_id_secret_name = 1; // required
   string secret_access_key_secret_name = 2; // required
-  string session_token_secret_name     = 3; // optional (for STS creds)
-  string region                        = 4; // required, e.g. "us-east-1"
-  string service                       = 5; // required, e.g. "execute-api", "s3"
+  string session_token_secret_name = 3; // optional (for STS creds)
+  string region = 4; // required, e.g. "us-east-1"
+  string service = 5; // required, e.g. "execute-api", "s3"
   // Signed headers (comma-separated lowercase). Optional; defaults to
   // "host;x-amz-date" plus "x-amz-security-token" if session_token_secret_name
   // is set.
-  repeated string signed_headers       = 6;
+  repeated string signed_headers = 6;
   // If true, uses X-Amz-Content-Sha256: UNSIGNED-PAYLOAD (useful for large S3
   // uploads). Default false.
-  bool unsigned_payload                = 7;
+  bool unsigned_payload = 7;
 }
 
 // HmacCustom lets workflow authors specify the canonical string via a
@@ -801,15 +801,18 @@ message AwsSigV4 {
 //   {{.method}} {{.url}} {{.path}} {{.query}} {{.body}} {{.body_sha256}}
 //   {{.timestamp}} {{.nonce}} {{header "X-Foo"}}
 message HmacCustom {
-  string secret_name            = 1; // required
-  string canonical_template     = 2; // required
-  enum Hash { HASH_SHA256 = 0; HASH_SHA512 = 1; }
-  Hash   hash                   = 3;
-  string signature_header       = 4; // required
-  string signature_prefix       = 5; // e.g. "HMAC-SHA256 "
-  string timestamp_header       = 6; // optional; if set, timestamp header injected
-  string nonce_header           = 7; // optional; if set, random nonce header injected
-  string encoding               = 8; // "hex" (default) or "base64"
+  string secret_name = 1; // required
+  string canonical_template = 2; // required
+  enum Hash {
+    HASH_SHA256 = 0;
+    HASH_SHA512 = 1;
+  }
+  Hash hash = 3;
+  string signature_header = 4; // required
+  string signature_prefix = 5; // e.g. "HMAC-SHA256 "
+  string timestamp_header = 6; // optional; if set, timestamp header injected
+  string nonce_header = 7; // optional; if set, random nonce header injected
+  string encoding = 8; // "hex" (default) or "base64"
 }
 
 // OAuth2Auth groups headless OAuth 2.0 flows.
@@ -818,7 +821,7 @@ message HmacCustom {
 message OAuth2Auth {
   oneof variant {
     OAuth2ClientCredentials client_credentials = 1;
-    OAuth2RefreshToken      refresh_token      = 2;
+    OAuth2RefreshToken refresh_token = 2;
   }
 }
 
@@ -827,16 +830,16 @@ message OAuth2Auth {
 // resulting access_token per (workflow_owner, token_url, client_id, scopes),
 // and attaches "Authorization: Bearer <access_token>" to the outbound request.
 message OAuth2ClientCredentials {
-  string token_url                  = 1; // required, must be https://
-  string client_id_secret_name      = 2; // required
-  string client_secret_secret_name  = 3; // required
-  repeated string scopes            = 4; // optional
-  string audience                   = 5; // optional (Auth0-style)
+  string token_url = 1; // required, must be https://
+  string client_id_secret_name = 2; // required
+  string client_secret_secret_name = 3; // required
+  repeated string scopes = 4; // optional
+  string audience = 5; // optional (Auth0-style)
   // "basic_auth" (default) or "request_body" — where to put client creds
   // on the token request.
-  string client_auth_method         = 6;
+  string client_auth_method = 6;
   // Extra form params to send with the token request.
-  map<string, string> extra_params  = 7;
+  map<string, string> extra_params = 7;
 }
 
 // OAuth2RefreshToken: the workflow stores a long-lived refresh_token in Vault
@@ -847,12 +850,12 @@ message OAuth2ClientCredentials {
 // cannot persist the new refresh_token back to Vault. Disable refresh-token
 // rotation at the IdP, or prefer client_credentials where possible.
 message OAuth2RefreshToken {
-  string token_url                  = 1; // required, must be https://
-  string refresh_token_secret_name  = 2; // required
-  string client_id_secret_name      = 3; // optional (some IdPs require)
-  string client_secret_secret_name  = 4; // optional (some IdPs require)
-  repeated string scopes            = 5; // optional
-  map<string, string> extra_params  = 6;
+  string token_url = 1; // required, must be https://
+  string refresh_token_secret_name = 2; // required
+  string client_id_secret_name = 3; // optional (some IdPs require)
+  string client_secret_secret_name = 4; // optional (some IdPs require)
+  repeated string scopes = 5; // optional
+  map<string, string> extra_params = 6;
 }
 
 service Client {
