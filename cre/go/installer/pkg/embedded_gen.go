@@ -662,6 +662,17 @@ message SecretIdentifier {
   optional string owner = 3;
 }
 
+// StringOrSecret allows a field to carry either a plain string value
+// (used directly) or a SecretIdentifier (resolved from the vault at
+// signing time). Use this for fields that aren't necessarily secret,
+// e.g. a username or client_id.
+message StringOrSecret {
+  oneof value {
+    string plain = 1;
+    SecretIdentifier secret = 2;
+  }
+}
+
 // HeaderValues represents multiple values for a single header key.
 message HeaderValues {
   repeated string values = 1;
@@ -712,8 +723,8 @@ message ConfidentialHTTPRequest {
   repeated SecretIdentifier vault_don_secrets = 1;
   HTTPRequest request = 2;
   // auth, when set, instructs the enclave to sign the outbound request using
-  // the specified method. Every secret_name referenced inside AuthConfig must
-  // also appear in vault_don_secrets (enforced by the capability validator).
+  // the specified method. Every SecretIdentifier referenced inside AuthConfig
+  // must also appear in vault_don_secrets (enforced by the capability validator).
   // When auth is nil, the request is sent with only the headers/body the
   // caller provided — preserving the legacy "{{.SECRET_NAME}}" header-template
   // behavior.
@@ -722,7 +733,7 @@ message ConfidentialHTTPRequest {
 
 // AuthConfig selects one of the supported request-signing methods.
 // Each variant carries the method-specific parameters and references
-// the names of the Vault-DON secrets it needs.
+// the secrets it needs.
 message AuthConfig {
   oneof method {
     ApiKeyAuth api_key = 1;
@@ -735,18 +746,18 @@ message AuthConfig {
 
 // ApiKeyAuth attaches a secret value to a chosen header.
 // Renders as:  <header_name>: <value_prefix><secret-value>
-// Example (header_name="x-api-key", secret_name="coingecko", value_prefix=""):
+// Example (header_name="x-api-key"):
 //   x-api-key: <secret>
 message ApiKeyAuth {
-  string header_name = 1; // required, e.g. "x-api-key", "Authorization"
-  string secret_name = 2; // required; key into ConfidentialHTTPRequest.vault_don_secrets
-  string value_prefix = 3; // optional, e.g. "ApiKey ", "Token "
+  string header_name = 1;       // required, e.g. "x-api-key", "Authorization"
+  SecretIdentifier secret = 2;  // required; the API key value
+  string value_prefix = 3;      // optional, e.g. "ApiKey ", "Token "
 }
 
 // BasicAuth renders: Authorization: Basic base64(username ":" password).
 message BasicAuth {
-  string username_secret_name = 1; // required
-  string password_secret_name = 2; // required
+  StringOrSecret username = 1;   // required
+  SecretIdentifier password = 2; // required
 }
 
 // BearerAuth attaches a pre-issued long-lived token.
@@ -754,9 +765,9 @@ message BasicAuth {
 // header_name and value_prefix allow rare overrides (e.g. GitHub's
 // "Authorization: token <pat>").
 message BearerAuth {
-  string token_secret_name = 1; // required
-  string header_name = 2; // optional override, default "Authorization"
-  string value_prefix = 3; // optional override, default "Bearer "
+  SecretIdentifier token = 1; // required
+  string header_name = 2;     // optional override, default "Authorization"
+  string value_prefix = 3;    // optional override, default "Bearer "
 }
 
 // HmacAuth groups all HMAC-family signing variants.
@@ -772,24 +783,23 @@ message HmacAuth {
 // Canonical string: method "\n" url "\n" sha256(body) "\n" timestamp
 // Signature is attached via signature_header, timestamp via timestamp_header.
 message HmacSha256 {
-  string secret_name = 1; // required shared secret
-  string signature_header = 2; // default "X-Signature"
-  string timestamp_header = 3; // default "X-Timestamp"
-  bool include_query = 4; // if true, include the query string in the canonical url
-  string encoding = 5; // "hex" (default) or "base64"
+  SecretIdentifier secret = 1;  // required; the shared signing secret
+  string signature_header = 2;  // default "X-Signature"
+  string timestamp_header = 3;  // default "X-Timestamp"
+  bool include_query = 4;       // if true, include the query string in the canonical url
+  string encoding = 5;          // "hex" (default) or "base64"
 }
 
 // AwsSigV4 implements AWS Signature Version 4.
 // Uses github.com/aws/aws-sdk-go-v2/aws/signer/v4 under the hood.
 message AwsSigV4 {
-  string access_key_id_secret_name = 1; // required
-  string secret_access_key_secret_name = 2; // required
-  string session_token_secret_name = 3; // optional (for STS creds)
-  string region = 4; // required, e.g. "us-east-1"
-  string service = 5; // required, e.g. "execute-api", "s3"
+  StringOrSecret access_key_id = 1;      // required
+  SecretIdentifier secret_access_key = 2; // required
+  SecretIdentifier session_token = 3;     // optional (for STS temporary credentials)
+  string region = 4;                      // required, e.g. "us-east-1"
+  string service = 5;                     // required, e.g. "execute-api", "s3"
   // Signed headers (comma-separated lowercase). Optional; defaults to
-  // "host;x-amz-date" plus "x-amz-security-token" if session_token_secret_name
-  // is set.
+  // "host;x-amz-date" plus "x-amz-security-token" if session_token is set.
   repeated string signed_headers = 6;
   // If true, uses X-Amz-Content-Sha256: UNSIGNED-PAYLOAD (useful for large S3
   // uploads). Default false.
@@ -801,18 +811,18 @@ message AwsSigV4 {
 //   {{.method}} {{.url}} {{.path}} {{.query}} {{.body}} {{.body_sha256}}
 //   {{.timestamp}} {{.nonce}} {{header "X-Foo"}}
 message HmacCustom {
-  string secret_name = 1; // required
+  SecretIdentifier secret = 1;  // required; the signing secret
   string canonical_template = 2; // required
   enum Hash {
     HASH_SHA256 = 0;
     HASH_SHA512 = 1;
   }
   Hash hash = 3;
-  string signature_header = 4; // required
-  string signature_prefix = 5; // e.g. "HMAC-SHA256 "
-  string timestamp_header = 6; // optional; if set, timestamp header injected
-  string nonce_header = 7; // optional; if set, random nonce header injected
-  string encoding = 8; // "hex" (default) or "base64"
+  string signature_header = 4;  // required
+  string signature_prefix = 5;  // e.g. "HMAC-SHA256 "
+  string timestamp_header = 6;  // optional; if set, timestamp header injected
+  string nonce_header = 7;      // optional; if set, random nonce header injected
+  string encoding = 8;          // "hex" (default) or "base64"
 }
 
 // OAuth2Auth groups headless OAuth 2.0 flows.
@@ -830,11 +840,11 @@ message OAuth2Auth {
 // resulting access_token per (workflow_owner, token_url, client_id, scopes),
 // and attaches "Authorization: Bearer <access_token>" to the outbound request.
 message OAuth2ClientCredentials {
-  string token_url = 1; // required, must be https://
-  string client_id_secret_name = 2; // required
-  string client_secret_secret_name = 3; // required
-  repeated string scopes = 4; // optional
-  string audience = 5; // optional (Auth0-style)
+  string token_url = 1;                  // required, must be https://
+  StringOrSecret client_id = 2;          // required
+  SecretIdentifier client_secret = 3;    // required
+  repeated string scopes = 4;            // optional
+  string audience = 5;                   // optional (Auth0-style)
   // "basic_auth" (default) or "request_body" — where to put client creds
   // on the token request.
   string client_auth_method = 6;
@@ -850,11 +860,11 @@ message OAuth2ClientCredentials {
 // cannot persist the new refresh_token back to Vault. Disable refresh-token
 // rotation at the IdP, or prefer client_credentials where possible.
 message OAuth2RefreshToken {
-  string token_url = 1; // required, must be https://
-  string refresh_token_secret_name = 2; // required
-  string client_id_secret_name = 3; // optional (some IdPs require)
-  string client_secret_secret_name = 4; // optional (some IdPs require)
-  repeated string scopes = 5; // optional
+  string token_url = 1;                  // required, must be https://
+  SecretIdentifier refresh_token = 2;    // required
+  StringOrSecret client_id = 3;          // optional
+  SecretIdentifier client_secret = 4;    // optional when present
+  repeated string scopes = 5;            // optional
   map<string, string> extra_params = 6;
 }
 
