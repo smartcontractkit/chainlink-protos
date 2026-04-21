@@ -84,9 +84,13 @@ enum TeeType {
   TEE_TYPE_AWS_NITRO = 0;
 }
 
+message TeeTypeAndRegions {
+  TeeType type = 1;
+  repeated string regions = 2;
+}
 
 message TeeTypeSelection {
-  repeated TeeType types = 1;
+  repeated TeeTypeAndRegions types = 1;
 }
 
 message Tee {
