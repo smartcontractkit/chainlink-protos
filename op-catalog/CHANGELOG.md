@@ -1,5 +1,11 @@
 # @chainlink/op-catalog
 
+## 0.1.0
+
+### Minor Changes
+
+- [#342](https://github.com/smartcontractkit/chainlink-protos/pull/342) [`41350ca`](https://github.com/smartcontractkit/chainlink-protos/commit/41350cab6cc270d17beba6ec78b68790fab6ad92) Thanks [@giogam](https://github.com/giogam)! - feat(op-catalog): add SEMANTICS_DELETE to EditSemantics enum
+
 ## 0.0.4
 
 ### Patch Changes
