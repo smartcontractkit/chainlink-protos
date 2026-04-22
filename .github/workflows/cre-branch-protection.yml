@@ -1,0 +1,85 @@
+name: CRE branch protection
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches:
+      - main
+
+permissions: {}
+
+jobs:
+  check-cre-target-branch:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Enforce CRE changes target capabilities-development
+        env:
+          TARGET_BRANCH: ${{ github.base_ref }}
+        run: |
+          git fetch origin "${TARGET_BRANCH}" --quiet 2>/dev/null || true
+
+          CRE_CHANGED=$(git diff --name-only "origin/${TARGET_BRANCH}...HEAD" -- cre/)
+
+          if [[ -z "$CRE_CHANGED" ]]; then
+            echo "No cre/ files modified. Skipping branch check."
+            exit 0
+          fi
+
+          echo "The following cre/ files are modified in this PR:"
+          echo "$CRE_CHANGED"
+          echo ""
+
+          echo "PR targets 'main' and contains cre/ changes."
+          echo "Verifying all CRE-modifying commits are cherry-picks from capabilities-development..."
+          echo ""
+
+          if ! git fetch origin capabilities-development --quiet 2>/dev/null; then
+            echo "::error::Could not fetch the 'capabilities-development' branch. Ensure it exists on the remote."
+            echo "::error::CRE changes must target 'capabilities-development' or be cherry-picks of commits already in that branch."
+            exit 1
+          fi
+
+          # Precompute patch-ids for all CRE-touching commits in capabilities-development
+          CAP_PATCH_IDS=$(mktemp)
+          git log --format=%H origin/capabilities-development -- cre/ | while read -r cap_commit; do
+            git show "$cap_commit" -- cre/ | git patch-id --stable 2>/dev/null | awk '{print $1}'
+          done | sort -u > "$CAP_PATCH_IDS"
+
+          CAP_COUNT=$(wc -l < "$CAP_PATCH_IDS" | tr -d ' ')
+          echo "Found ${CAP_COUNT} unique CRE patch-ids in capabilities-development."
+          echo ""
+
+          # Check each PR commit that touches cre/
+          FAILURES=$(mktemp)
+          git log --format=%H "origin/${TARGET_BRANCH}..HEAD" -- cre/ | while read -r commit; do
+            PATCH_ID=$(git show "$commit" -- cre/ | git patch-id --stable 2>/dev/null | awk '{print $1}')
+
+            if [ -z "$PATCH_ID" ]; then
+              continue
+            fi
+
+            if ! grep -qF "$PATCH_ID" "$CAP_PATCH_IDS"; then
+              git log -1 --format='%h %s' "$commit" >> "$FAILURES"
+            fi
+          done
+
+          if [ -s "$FAILURES" ]; then
+            echo "::error::The following commits modify cre/ but are not cherry-picks of commits in capabilities-development:"
+            echo ""
+            while IFS= read -r line; do
+              echo "  - ${line}"
+            done < "$FAILURES"
+            echo ""
+            echo "::error::CRE changes must first be merged into 'capabilities-development'. PRs to other branches may only include cherry-picks of commits already in that branch."
+            rm -f "$CAP_PATCH_IDS" "$FAILURES"
+            exit 1
+          fi
+
+          rm -f "$CAP_PATCH_IDS" "$FAILURES"
+          echo "All CRE-modifying commits are verified cherry-picks from capabilities-development."
