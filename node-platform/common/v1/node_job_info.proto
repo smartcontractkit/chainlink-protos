@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package common.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/node-platform/common/v1";
+
+message NodeJobInfo {
+  string csa_public_key = 1;
+  repeated NodeTransmitter transmitters = 2;
+}
+
+message NodeTransmitter {
+  string chain_id = 1;
+  map<string, NodeTransmitterAddresses> addresses = 2;
+}
+
+message NodeTransmitterAddresses {
+  repeated string values = 1;
+}
