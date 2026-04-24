@@ -8,6 +8,10 @@
     {
       "entity": "svr.v1.FastLaneAtlasError",
       "path": "v1/fastlane_atlas_error.proto"
+    },
+    {
+      "entity": "svr.v1.FastLaneAtlasUserOp",
+      "path": "v1/fastlane_atlas_user_op.proto"
     }
   ]
 }
