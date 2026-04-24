@@ -35,11 +35,16 @@ message Label {
   }
 }
 
+enum AdditionalEnironments {
+  ADDITIONAL_ENVIRONMENTS_UNSPECIFIED = 0;
+  ADDITIONAL_ENVIRONMENTS_TEE = 1;
+}
+
 message CapabilityMetadata {
   sdk.v1alpha.Mode mode = 1;
   string capability_id = 2;
   map<string, Label> labels = 3;
-  bool tee_enabled = 4;
+  repeated AdditionalEnironments additional_environments = 4;
 }
 
 extend google.protobuf.ServiceOptions {

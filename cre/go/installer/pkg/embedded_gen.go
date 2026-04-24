@@ -1357,7 +1357,7 @@ service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "confidential-http@1.0.0-alpha"
-    tee_enabled: true
+    additional_environments: [ADDITIONAL_ENVIRONMENTS_TEE]
   };
 
   rpc SendRequest(ConfidentialHTTPRequest) returns (HTTPResponse);
@@ -1403,7 +1403,7 @@ service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "http-actions@1.0.0-alpha"
-    tee_enabled: true
+    additional_environments: [ADDITIONAL_ENVIRONMENTS_TEE]
   };
   rpc SendRequest(Request) returns (Response);
 }
@@ -1863,11 +1863,16 @@ message Label {
   }
 }
 
+enum AdditionalEnironments {
+  ADDITIONAL_ENVIRONMENTS_UNSPECIFIED = 0;
+  ADDITIONAL_ENVIRONMENTS_TEE = 1;
+}
+
 message CapabilityMetadata {
   sdk.v1alpha.Mode mode = 1;
   string capability_id = 2;
   map<string, Label> labels = 3;
-  bool tee_enabled = 4;
+  repeated AdditionalEnironments additional_environments = 4;
 }
 
 extend google.protobuf.ServiceOptions {

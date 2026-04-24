@@ -37,7 +37,7 @@ service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "http-actions@1.0.0-alpha"
-    tee_enabled: true
+    additional_environments: [ADDITIONAL_ENVIRONMENTS_TEE]
   };
   rpc SendRequest(Request) returns (Response);
 }
