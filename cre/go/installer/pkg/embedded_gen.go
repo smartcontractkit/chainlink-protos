@@ -1564,6 +1564,7 @@ message TriggerSubscription {
   string id = 1;
   google.protobuf.Any payload = 2;
   string method = 3;
+  Requirements requirements = 4;
 }
 
 enum TeeType {

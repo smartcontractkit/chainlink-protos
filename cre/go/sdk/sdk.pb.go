@@ -746,6 +746,7 @@ type TriggerSubscription struct {
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Payload       *anypb.Any             `protobuf:"bytes,2,opt,name=payload,proto3" json:"payload,omitempty"`
 	Method        string                 `protobuf:"bytes,3,opt,name=method,proto3" json:"method,omitempty"`
+	Requirements  *Requirements          `protobuf:"bytes,4,opt,name=requirements,proto3" json:"requirements,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -799,6 +800,13 @@ func (x *TriggerSubscription) GetMethod() string {
 		return x.Method
 	}
 	return ""
+}
+
+func (x *TriggerSubscription) GetRequirements() *Requirements {
+	if x != nil {
+		return x.Requirements
+	}
+	return nil
 }
 
 type TeeTypeAndRegions struct {
@@ -1904,11 +1912,12 @@ const file_sdk_v1alpha_sdk_proto_rawDesc = "" +
 	"\apayload\x18\x01 \x01(\v2\x14.google.protobuf.AnyH\x00R\apayload\x12\x16\n" +
 	"\x05error\x18\x02 \x01(\tH\x00R\x05errorB\n" +
 	"\n" +
-	"\bresponse\"m\n" +
+	"\bresponse\"\xac\x01\n" +
 	"\x13TriggerSubscription\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12.\n" +
 	"\apayload\x18\x02 \x01(\v2\x14.google.protobuf.AnyR\apayload\x12\x16\n" +
-	"\x06method\x18\x03 \x01(\tR\x06method\"W\n" +
+	"\x06method\x18\x03 \x01(\tR\x06method\x12=\n" +
+	"\frequirements\x18\x04 \x01(\v2\x19.sdk.v1alpha.RequirementsR\frequirements\"W\n" +
 	"\x11TeeTypeAndRegions\x12(\n" +
 	"\x04type\x18\x01 \x01(\x0e2\x14.sdk.v1alpha.TeeTypeR\x04type\x12\x18\n" +
 	"\aregions\x18\x02 \x03(\tR\aregions\"H\n" +
@@ -2050,31 +2059,32 @@ var file_sdk_v1alpha_sdk_proto_depIdxs = []int32{
 	34, // 7: sdk.v1alpha.CapabilityRequest.payload:type_name -> google.protobuf.Any
 	34, // 8: sdk.v1alpha.CapabilityResponse.payload:type_name -> google.protobuf.Any
 	34, // 9: sdk.v1alpha.TriggerSubscription.payload:type_name -> google.protobuf.Any
-	2,  // 10: sdk.v1alpha.TeeTypeAndRegions.type:type_name -> sdk.v1alpha.TeeType
-	12, // 11: sdk.v1alpha.TeeTypeSelection.types:type_name -> sdk.v1alpha.TeeTypeAndRegions
-	35, // 12: sdk.v1alpha.Tee.any:type_name -> google.protobuf.Empty
-	13, // 13: sdk.v1alpha.Tee.type_selection:type_name -> sdk.v1alpha.TeeTypeSelection
-	11, // 14: sdk.v1alpha.TriggerSubscriptionRequest.subscriptions:type_name -> sdk.v1alpha.TriggerSubscription
-	34, // 15: sdk.v1alpha.Trigger.payload:type_name -> google.protobuf.Any
-	14, // 16: sdk.v1alpha.Requirements.tee:type_name -> sdk.v1alpha.Tee
-	31, // 17: sdk.v1alpha.AwaitCapabilitiesResponse.responses:type_name -> sdk.v1alpha.AwaitCapabilitiesResponse.ResponsesEntry
-	35, // 18: sdk.v1alpha.ExecuteRequest.subscribe:type_name -> google.protobuf.Empty
-	16, // 19: sdk.v1alpha.ExecuteRequest.trigger:type_name -> sdk.v1alpha.Trigger
-	33, // 20: sdk.v1alpha.ExecutionResult.value:type_name -> values.v1.Value
-	15, // 21: sdk.v1alpha.ExecutionResult.trigger_subscriptions:type_name -> sdk.v1alpha.TriggerSubscriptionRequest
-	25, // 22: sdk.v1alpha.GetSecretsRequest.requests:type_name -> sdk.v1alpha.SecretRequest
-	32, // 23: sdk.v1alpha.AwaitSecretsResponse.responses:type_name -> sdk.v1alpha.AwaitSecretsResponse.ResponsesEntry
-	26, // 24: sdk.v1alpha.SecretResponse.secret:type_name -> sdk.v1alpha.Secret
-	27, // 25: sdk.v1alpha.SecretResponse.error:type_name -> sdk.v1alpha.SecretError
-	28, // 26: sdk.v1alpha.SecretResponses.responses:type_name -> sdk.v1alpha.SecretResponse
-	5,  // 27: sdk.v1alpha.FieldsMap.FieldsEntry.value:type_name -> sdk.v1alpha.ConsensusDescriptor
-	10, // 28: sdk.v1alpha.AwaitCapabilitiesResponse.ResponsesEntry.value:type_name -> sdk.v1alpha.CapabilityResponse
-	29, // 29: sdk.v1alpha.AwaitSecretsResponse.ResponsesEntry.value:type_name -> sdk.v1alpha.SecretResponses
-	30, // [30:30] is the sub-list for method output_type
-	30, // [30:30] is the sub-list for method input_type
-	30, // [30:30] is the sub-list for extension type_name
-	30, // [30:30] is the sub-list for extension extendee
-	0,  // [0:30] is the sub-list for field type_name
+	17, // 10: sdk.v1alpha.TriggerSubscription.requirements:type_name -> sdk.v1alpha.Requirements
+	2,  // 11: sdk.v1alpha.TeeTypeAndRegions.type:type_name -> sdk.v1alpha.TeeType
+	12, // 12: sdk.v1alpha.TeeTypeSelection.types:type_name -> sdk.v1alpha.TeeTypeAndRegions
+	35, // 13: sdk.v1alpha.Tee.any:type_name -> google.protobuf.Empty
+	13, // 14: sdk.v1alpha.Tee.type_selection:type_name -> sdk.v1alpha.TeeTypeSelection
+	11, // 15: sdk.v1alpha.TriggerSubscriptionRequest.subscriptions:type_name -> sdk.v1alpha.TriggerSubscription
+	34, // 16: sdk.v1alpha.Trigger.payload:type_name -> google.protobuf.Any
+	14, // 17: sdk.v1alpha.Requirements.tee:type_name -> sdk.v1alpha.Tee
+	31, // 18: sdk.v1alpha.AwaitCapabilitiesResponse.responses:type_name -> sdk.v1alpha.AwaitCapabilitiesResponse.ResponsesEntry
+	35, // 19: sdk.v1alpha.ExecuteRequest.subscribe:type_name -> google.protobuf.Empty
+	16, // 20: sdk.v1alpha.ExecuteRequest.trigger:type_name -> sdk.v1alpha.Trigger
+	33, // 21: sdk.v1alpha.ExecutionResult.value:type_name -> values.v1.Value
+	15, // 22: sdk.v1alpha.ExecutionResult.trigger_subscriptions:type_name -> sdk.v1alpha.TriggerSubscriptionRequest
+	25, // 23: sdk.v1alpha.GetSecretsRequest.requests:type_name -> sdk.v1alpha.SecretRequest
+	32, // 24: sdk.v1alpha.AwaitSecretsResponse.responses:type_name -> sdk.v1alpha.AwaitSecretsResponse.ResponsesEntry
+	26, // 25: sdk.v1alpha.SecretResponse.secret:type_name -> sdk.v1alpha.Secret
+	27, // 26: sdk.v1alpha.SecretResponse.error:type_name -> sdk.v1alpha.SecretError
+	28, // 27: sdk.v1alpha.SecretResponses.responses:type_name -> sdk.v1alpha.SecretResponse
+	5,  // 28: sdk.v1alpha.FieldsMap.FieldsEntry.value:type_name -> sdk.v1alpha.ConsensusDescriptor
+	10, // 29: sdk.v1alpha.AwaitCapabilitiesResponse.ResponsesEntry.value:type_name -> sdk.v1alpha.CapabilityResponse
+	29, // 30: sdk.v1alpha.AwaitSecretsResponse.ResponsesEntry.value:type_name -> sdk.v1alpha.SecretResponses
+	31, // [31:31] is the sub-list for method output_type
+	31, // [31:31] is the sub-list for method input_type
+	31, // [31:31] is the sub-list for extension type_name
+	31, // [31:31] is the sub-list for extension extendee
+	0,  // [0:31] is the sub-list for field type_name
 }
 
 func init() { file_sdk_v1alpha_sdk_proto_init() }
