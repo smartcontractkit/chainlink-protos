@@ -36,3 +36,34 @@ beholder:
         - name: "bridge_status/v1/configuration_item.proto"
           subject: "data-feeds-bridge_status.v1.ConfigurationItem"
           version: 1
+
+    # job_spec/v1
+    - entity: OCR1OracleSpecInfo
+      schema: "job_spec/v1/ocr1_oracle_spec_info.proto"
+
+    - entity: OCR2EVMRelayConfig
+      schema: "job_spec/v1/ocr2_evm_relay_config.proto"
+
+    - entity: OCR2MedianPluginConfig
+      schema: "job_spec/v1/ocr2_median_plugin_config.proto"
+
+    - entity: OCR2OracleSpecInfo
+      schema: "job_spec/v1/ocr2_oracle_spec_info.proto"
+      references:
+        - name: "job_spec/v1/ocr2_evm_relay_config.proto"
+          subject: "data-feeds-job_spec.v1.OCR2EVMRelayConfig"
+          version: 1
+        - name: "job_spec/v1/ocr2_median_plugin_config.proto"
+          subject: "data-feeds-job_spec.v1.OCR2MedianPluginConfig"
+          version: 1
+
+    # job_spec/v1 - Main event
+    - entity: JobSpecEvent
+      schema: "job_spec/v1/job_spec_event.proto"
+      references:
+        - name: "job_spec/v1/ocr1_oracle_spec_info.proto"
+          subject: "data-feeds-job_spec.v1.OCR1OracleSpecInfo"
+          version: 1
+        - name: "job_spec/v1/ocr2_oracle_spec_info.proto"
+          subject: "data-feeds-job_spec.v1.OCR2OracleSpecInfo"
+          version: 1
