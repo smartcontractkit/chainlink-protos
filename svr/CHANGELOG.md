@@ -1,5 +1,11 @@
 # @chainlink/svr
 
+## 1.2.0
+
+### Minor Changes
+
+- OEV-851: Add optional `dual_broadcast_params` field (8) to `TxMessage` proto. Populated with the URL-encoded MEVShare/Atlas params when a secondary (dual-broadcast) transaction is emitted.
+
 ## 1.1.0
 
 ### Minor Changes
