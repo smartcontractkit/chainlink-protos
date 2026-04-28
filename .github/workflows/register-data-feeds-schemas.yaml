@@ -9,13 +9,11 @@ on:
       - ".github/workflows/register-data-feeds-schemas.yaml"
       - "data-feeds/**/*.proto"
       - "data-feeds/chip-schemas.json"
-      - "data-feeds/iron-flask-data-feeds.yaml"
   pull_request:
     paths:
       - ".github/workflows/register-data-feeds-schemas.yaml"
       - "data-feeds/**/*.proto"
       - "data-feeds/chip-schemas.json"
-      - "data-feeds/iron-flask-data-feeds.yaml"
 
 jobs:
   register-schemas:
