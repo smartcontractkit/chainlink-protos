@@ -22,11 +22,11 @@ const (
 )
 
 type NodeJobInfo struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CsaPublicKey  string                 `protobuf:"bytes,1,opt,name=csa_public_key,json=csaPublicKey,proto3" json:"csa_public_key,omitempty"`
-	Transmitters  []*NodeTransmitter     `protobuf:"bytes,2,rep,name=transmitters,proto3" json:"transmitters,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state              protoimpl.MessageState  `protogen:"open.v1"`
+	CsaPublicKey       string                  `protobuf:"bytes,1,opt,name=csa_public_key,json=csaPublicKey,proto3" json:"csa_public_key,omitempty"`
+	SubmitterAddresses []*NodeSubmitterAddress `protobuf:"bytes,2,rep,name=submitter_addresses,json=submitterAddresses,proto3" json:"submitter_addresses,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
 }
 
 func (x *NodeJobInfo) Reset() {
@@ -66,35 +66,38 @@ func (x *NodeJobInfo) GetCsaPublicKey() string {
 	return ""
 }
 
-func (x *NodeJobInfo) GetTransmitters() []*NodeTransmitter {
+func (x *NodeJobInfo) GetSubmitterAddresses() []*NodeSubmitterAddress {
 	if x != nil {
-		return x.Transmitters
+		return x.SubmitterAddresses
 	}
 	return nil
 }
 
-type NodeTransmitter struct {
-	state         protoimpl.MessageState               `protogen:"open.v1"`
-	ChainId       string                               `protobuf:"bytes,1,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
-	Addresses     map[string]*NodeTransmitterAddresses `protobuf:"bytes,2,rep,name=addresses,proto3" json:"addresses,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+type NodeSubmitterAddress struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ChainId       string                 `protobuf:"bytes,1,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
+	JobType       string                 `protobuf:"bytes,2,opt,name=job_type,json=jobType,proto3" json:"job_type,omitempty"`
+	PluginType    string                 `protobuf:"bytes,3,opt,name=plugin_type,json=pluginType,proto3" json:"plugin_type,omitempty"`
+	FieldPath     string                 `protobuf:"bytes,4,opt,name=field_path,json=fieldPath,proto3" json:"field_path,omitempty"`
+	Addresses     []string               `protobuf:"bytes,5,rep,name=addresses,proto3" json:"addresses,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *NodeTransmitter) Reset() {
-	*x = NodeTransmitter{}
+func (x *NodeSubmitterAddress) Reset() {
+	*x = NodeSubmitterAddress{}
 	mi := &file_node_platform_common_v1_node_job_info_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *NodeTransmitter) String() string {
+func (x *NodeSubmitterAddress) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*NodeTransmitter) ProtoMessage() {}
+func (*NodeSubmitterAddress) ProtoMessage() {}
 
-func (x *NodeTransmitter) ProtoReflect() protoreflect.Message {
+func (x *NodeSubmitterAddress) ProtoReflect() protoreflect.Message {
 	mi := &file_node_platform_common_v1_node_job_info_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -106,65 +109,42 @@ func (x *NodeTransmitter) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use NodeTransmitter.ProtoReflect.Descriptor instead.
-func (*NodeTransmitter) Descriptor() ([]byte, []int) {
+// Deprecated: Use NodeSubmitterAddress.ProtoReflect.Descriptor instead.
+func (*NodeSubmitterAddress) Descriptor() ([]byte, []int) {
 	return file_node_platform_common_v1_node_job_info_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *NodeTransmitter) GetChainId() string {
+func (x *NodeSubmitterAddress) GetChainId() string {
 	if x != nil {
 		return x.ChainId
 	}
 	return ""
 }
 
-func (x *NodeTransmitter) GetAddresses() map[string]*NodeTransmitterAddresses {
+func (x *NodeSubmitterAddress) GetJobType() string {
+	if x != nil {
+		return x.JobType
+	}
+	return ""
+}
+
+func (x *NodeSubmitterAddress) GetPluginType() string {
+	if x != nil {
+		return x.PluginType
+	}
+	return ""
+}
+
+func (x *NodeSubmitterAddress) GetFieldPath() string {
+	if x != nil {
+		return x.FieldPath
+	}
+	return ""
+}
+
+func (x *NodeSubmitterAddress) GetAddresses() []string {
 	if x != nil {
 		return x.Addresses
-	}
-	return nil
-}
-
-type NodeTransmitterAddresses struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Values        []string               `protobuf:"bytes,1,rep,name=values,proto3" json:"values,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *NodeTransmitterAddresses) Reset() {
-	*x = NodeTransmitterAddresses{}
-	mi := &file_node_platform_common_v1_node_job_info_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *NodeTransmitterAddresses) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*NodeTransmitterAddresses) ProtoMessage() {}
-
-func (x *NodeTransmitterAddresses) ProtoReflect() protoreflect.Message {
-	mi := &file_node_platform_common_v1_node_job_info_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use NodeTransmitterAddresses.ProtoReflect.Descriptor instead.
-func (*NodeTransmitterAddresses) Descriptor() ([]byte, []int) {
-	return file_node_platform_common_v1_node_job_info_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *NodeTransmitterAddresses) GetValues() []string {
-	if x != nil {
-		return x.Values
 	}
 	return nil
 }
@@ -173,18 +153,18 @@ var File_node_platform_common_v1_node_job_info_proto protoreflect.FileDescriptor
 
 const file_node_platform_common_v1_node_job_info_proto_rawDesc = "" +
 	"\n" +
-	"+node-platform/common/v1/node_job_info.proto\x12\tcommon.v1\"s\n" +
+	"+node-platform/common/v1/node_job_info.proto\x12\tcommon.v1\"\x85\x01\n" +
 	"\vNodeJobInfo\x12$\n" +
-	"\x0ecsa_public_key\x18\x01 \x01(\tR\fcsaPublicKey\x12>\n" +
-	"\ftransmitters\x18\x02 \x03(\v2\x1a.common.v1.NodeTransmitterR\ftransmitters\"\xd8\x01\n" +
-	"\x0fNodeTransmitter\x12\x19\n" +
-	"\bchain_id\x18\x01 \x01(\tR\achainId\x12G\n" +
-	"\taddresses\x18\x02 \x03(\v2).common.v1.NodeTransmitter.AddressesEntryR\taddresses\x1aa\n" +
-	"\x0eAddressesEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x129\n" +
-	"\x05value\x18\x02 \x01(\v2#.common.v1.NodeTransmitterAddressesR\x05value:\x028\x01\"2\n" +
-	"\x18NodeTransmitterAddresses\x12\x16\n" +
-	"\x06values\x18\x01 \x03(\tR\x06valuesBFZDgithub.com/smartcontractkit/chainlink-protos/node-platform/common/v1b\x06proto3"
+	"\x0ecsa_public_key\x18\x01 \x01(\tR\fcsaPublicKey\x12P\n" +
+	"\x13submitter_addresses\x18\x02 \x03(\v2\x1f.common.v1.NodeSubmitterAddressR\x12submitterAddresses\"\xaa\x01\n" +
+	"\x14NodeSubmitterAddress\x12\x19\n" +
+	"\bchain_id\x18\x01 \x01(\tR\achainId\x12\x19\n" +
+	"\bjob_type\x18\x02 \x01(\tR\ajobType\x12\x1f\n" +
+	"\vplugin_type\x18\x03 \x01(\tR\n" +
+	"pluginType\x12\x1d\n" +
+	"\n" +
+	"field_path\x18\x04 \x01(\tR\tfieldPath\x12\x1c\n" +
+	"\taddresses\x18\x05 \x03(\tR\taddressesBFZDgithub.com/smartcontractkit/chainlink-protos/node-platform/common/v1b\x06proto3"
 
 var (
 	file_node_platform_common_v1_node_job_info_proto_rawDescOnce sync.Once
@@ -198,22 +178,18 @@ func file_node_platform_common_v1_node_job_info_proto_rawDescGZIP() []byte {
 	return file_node_platform_common_v1_node_job_info_proto_rawDescData
 }
 
-var file_node_platform_common_v1_node_job_info_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_node_platform_common_v1_node_job_info_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_node_platform_common_v1_node_job_info_proto_goTypes = []any{
-	(*NodeJobInfo)(nil),              // 0: common.v1.NodeJobInfo
-	(*NodeTransmitter)(nil),          // 1: common.v1.NodeTransmitter
-	(*NodeTransmitterAddresses)(nil), // 2: common.v1.NodeTransmitterAddresses
-	nil,                              // 3: common.v1.NodeTransmitter.AddressesEntry
+	(*NodeJobInfo)(nil),          // 0: common.v1.NodeJobInfo
+	(*NodeSubmitterAddress)(nil), // 1: common.v1.NodeSubmitterAddress
 }
 var file_node_platform_common_v1_node_job_info_proto_depIdxs = []int32{
-	1, // 0: common.v1.NodeJobInfo.transmitters:type_name -> common.v1.NodeTransmitter
-	3, // 1: common.v1.NodeTransmitter.addresses:type_name -> common.v1.NodeTransmitter.AddressesEntry
-	2, // 2: common.v1.NodeTransmitter.AddressesEntry.value:type_name -> common.v1.NodeTransmitterAddresses
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	1, // 0: common.v1.NodeJobInfo.submitter_addresses:type_name -> common.v1.NodeSubmitterAddress
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_node_platform_common_v1_node_job_info_proto_init() }
@@ -227,7 +203,7 @@ func file_node_platform_common_v1_node_job_info_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_node_platform_common_v1_node_job_info_proto_rawDesc), len(file_node_platform_common_v1_node_job_info_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
