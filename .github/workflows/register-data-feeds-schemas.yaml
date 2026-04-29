@@ -10,12 +10,14 @@ on:
       - "data-feeds/**/*.proto"
       - "data-feeds/chip-schemas.json"
       - "data-feeds/chip-job-spec-schemas.json"
+      - "data-feeds/beholder-job-spec-schemas.json"
   pull_request:
     paths:
       - ".github/workflows/register-data-feeds-schemas.yaml"
       - "data-feeds/**/*.proto"
       - "data-feeds/chip-schemas.json"
       - "data-feeds/chip-job-spec-schemas.json"
+      - "data-feeds/beholder-job-spec-schemas.json"
 
 jobs:
   register-schemas:
@@ -29,8 +31,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { name: data-feeds, file: chip-schemas.json }
-          - { name: job-spec,   file: chip-job-spec-schemas.json }
+          - { name: data-feeds,        file: chip-schemas.json }
+          - { name: job-spec,          file: chip-job-spec-schemas.json }
+          - { name: job-spec-beholder, file: beholder-job-spec-schemas.json }
 
     steps:
       - uses: actions/checkout@v5
