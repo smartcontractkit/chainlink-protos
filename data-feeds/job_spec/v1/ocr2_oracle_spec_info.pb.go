@@ -22,30 +22,19 @@ const (
 )
 
 // OCR2OracleSpecInfo mirrors job.OCR2OracleSpec.
-// contract_id and chain_id live on the parent JobSpecEvent.
+// contract_id lives on the parent JobSpecEvent.
 type OCR2OracleSpecInfo struct {
-	state                                    protoimpl.MessageState `protogen:"open.v1"`
-	SpecId                                   int32                  `protobuf:"varint,1,opt,name=spec_id,json=specId,proto3" json:"spec_id,omitempty"`
-	FeedId                                   string                 `protobuf:"bytes,2,opt,name=feed_id,json=feedId,proto3" json:"feed_id,omitempty"`
-	Relay                                    string                 `protobuf:"bytes,3,opt,name=relay,proto3" json:"relay,omitempty"`
-	PluginType                               string                 `protobuf:"bytes,4,opt,name=plugin_type,json=pluginType,proto3" json:"plugin_type,omitempty"`
-	TransmitterId                            string                 `protobuf:"bytes,5,opt,name=transmitter_id,json=transmitterId,proto3" json:"transmitter_id,omitempty"`
-	OcrKeyBundleId                           string                 `protobuf:"bytes,6,opt,name=ocr_key_bundle_id,json=ocrKeyBundleId,proto3" json:"ocr_key_bundle_id,omitempty"`
-	MonitoringEndpoint                       string                 `protobuf:"bytes,7,opt,name=monitoring_endpoint,json=monitoringEndpoint,proto3" json:"monitoring_endpoint,omitempty"`
-	P2Pv2Bootstrappers                       []string               `protobuf:"bytes,8,rep,name=p2pv2_bootstrappers,json=p2pv2Bootstrappers,proto3" json:"p2pv2_bootstrappers,omitempty"`
-	AllowNoBootstrappers                     bool                   `protobuf:"varint,9,opt,name=allow_no_bootstrappers,json=allowNoBootstrappers,proto3" json:"allow_no_bootstrappers,omitempty"`
-	BlockchainTimeoutSeconds                 float64                `protobuf:"fixed64,10,opt,name=blockchain_timeout_seconds,json=blockchainTimeoutSeconds,proto3" json:"blockchain_timeout_seconds,omitempty"`
-	ContractConfigTrackerPollIntervalSeconds float64                `protobuf:"fixed64,11,opt,name=contract_config_tracker_poll_interval_seconds,json=contractConfigTrackerPollIntervalSeconds,proto3" json:"contract_config_tracker_poll_interval_seconds,omitempty"`
-	ContractConfigConfirmations              uint32                 `protobuf:"varint,12,opt,name=contract_config_confirmations,json=contractConfigConfirmations,proto3" json:"contract_config_confirmations,omitempty"`
-	CaptureEaTelemetry                       bool                   `protobuf:"varint,13,opt,name=capture_ea_telemetry,json=captureEaTelemetry,proto3" json:"capture_ea_telemetry,omitempty"`
-	CaptureAutomationCustomTelemetry         bool                   `protobuf:"varint,14,opt,name=capture_automation_custom_telemetry,json=captureAutomationCustomTelemetry,proto3" json:"capture_automation_custom_telemetry,omitempty"`
-	SpecCreatedAt                            string                 `protobuf:"bytes,15,opt,name=spec_created_at,json=specCreatedAt,proto3" json:"spec_created_at,omitempty"`
-	SpecUpdatedAt                            string                 `protobuf:"bytes,16,opt,name=spec_updated_at,json=specUpdatedAt,proto3" json:"spec_updated_at,omitempty"`
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	FeedId             *string                `protobuf:"bytes,2,opt,name=feed_id,json=feedId,proto3,oneof" json:"feed_id,omitempty"`
+	Relay              string                 `protobuf:"bytes,3,opt,name=relay,proto3" json:"relay,omitempty"`
+	PluginType         string                 `protobuf:"bytes,4,opt,name=plugin_type,json=pluginType,proto3" json:"plugin_type,omitempty"`
+	TransmitterId      *string                `protobuf:"bytes,5,opt,name=transmitter_id,json=transmitterId,proto3,oneof" json:"transmitter_id,omitempty"`
+	OcrKeyBundleId     *string                `protobuf:"bytes,6,opt,name=ocr_key_bundle_id,json=ocrKeyBundleId,proto3,oneof" json:"ocr_key_bundle_id,omitempty"`
+	CaptureEaTelemetry bool                   `protobuf:"varint,13,opt,name=capture_ea_telemetry,json=captureEaTelemetry,proto3" json:"capture_ea_telemetry,omitempty"`
 	// Raw JSON passthroughs are always populated and authoritative over the typed
 	// sub-messages below.
-	RelayConfigJson            string `protobuf:"bytes,17,opt,name=relay_config_json,json=relayConfigJson,proto3" json:"relay_config_json,omitempty"`
-	PluginConfigJson           string `protobuf:"bytes,18,opt,name=plugin_config_json,json=pluginConfigJson,proto3" json:"plugin_config_json,omitempty"`
-	OnchainSigningStrategyJson string `protobuf:"bytes,19,opt,name=onchain_signing_strategy_json,json=onchainSigningStrategyJson,proto3" json:"onchain_signing_strategy_json,omitempty"`
+	RelayConfigJson  string `protobuf:"bytes,17,opt,name=relay_config_json,json=relayConfigJson,proto3" json:"relay_config_json,omitempty"`
+	PluginConfigJson string `protobuf:"bytes,18,opt,name=plugin_config_json,json=pluginConfigJson,proto3" json:"plugin_config_json,omitempty"`
 	// Populated when relay == "evm".
 	EvmRelayConfig *OCR2EVMRelayConfig `protobuf:"bytes,20,opt,name=evm_relay_config,json=evmRelayConfig,proto3" json:"evm_relay_config,omitempty"`
 	// Populated when plugin_type == "median".
@@ -84,16 +73,9 @@ func (*OCR2OracleSpecInfo) Descriptor() ([]byte, []int) {
 	return file_job_spec_v1_ocr2_oracle_spec_info_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *OCR2OracleSpecInfo) GetSpecId() int32 {
-	if x != nil {
-		return x.SpecId
-	}
-	return 0
-}
-
 func (x *OCR2OracleSpecInfo) GetFeedId() string {
-	if x != nil {
-		return x.FeedId
+	if x != nil && x.FeedId != nil {
+		return *x.FeedId
 	}
 	return ""
 }
@@ -113,59 +95,17 @@ func (x *OCR2OracleSpecInfo) GetPluginType() string {
 }
 
 func (x *OCR2OracleSpecInfo) GetTransmitterId() string {
-	if x != nil {
-		return x.TransmitterId
+	if x != nil && x.TransmitterId != nil {
+		return *x.TransmitterId
 	}
 	return ""
 }
 
 func (x *OCR2OracleSpecInfo) GetOcrKeyBundleId() string {
-	if x != nil {
-		return x.OcrKeyBundleId
+	if x != nil && x.OcrKeyBundleId != nil {
+		return *x.OcrKeyBundleId
 	}
 	return ""
-}
-
-func (x *OCR2OracleSpecInfo) GetMonitoringEndpoint() string {
-	if x != nil {
-		return x.MonitoringEndpoint
-	}
-	return ""
-}
-
-func (x *OCR2OracleSpecInfo) GetP2Pv2Bootstrappers() []string {
-	if x != nil {
-		return x.P2Pv2Bootstrappers
-	}
-	return nil
-}
-
-func (x *OCR2OracleSpecInfo) GetAllowNoBootstrappers() bool {
-	if x != nil {
-		return x.AllowNoBootstrappers
-	}
-	return false
-}
-
-func (x *OCR2OracleSpecInfo) GetBlockchainTimeoutSeconds() float64 {
-	if x != nil {
-		return x.BlockchainTimeoutSeconds
-	}
-	return 0
-}
-
-func (x *OCR2OracleSpecInfo) GetContractConfigTrackerPollIntervalSeconds() float64 {
-	if x != nil {
-		return x.ContractConfigTrackerPollIntervalSeconds
-	}
-	return 0
-}
-
-func (x *OCR2OracleSpecInfo) GetContractConfigConfirmations() uint32 {
-	if x != nil {
-		return x.ContractConfigConfirmations
-	}
-	return 0
 }
 
 func (x *OCR2OracleSpecInfo) GetCaptureEaTelemetry() bool {
@@ -173,27 +113,6 @@ func (x *OCR2OracleSpecInfo) GetCaptureEaTelemetry() bool {
 		return x.CaptureEaTelemetry
 	}
 	return false
-}
-
-func (x *OCR2OracleSpecInfo) GetCaptureAutomationCustomTelemetry() bool {
-	if x != nil {
-		return x.CaptureAutomationCustomTelemetry
-	}
-	return false
-}
-
-func (x *OCR2OracleSpecInfo) GetSpecCreatedAt() string {
-	if x != nil {
-		return x.SpecCreatedAt
-	}
-	return ""
-}
-
-func (x *OCR2OracleSpecInfo) GetSpecUpdatedAt() string {
-	if x != nil {
-		return x.SpecUpdatedAt
-	}
-	return ""
 }
 
 func (x *OCR2OracleSpecInfo) GetRelayConfigJson() string {
@@ -206,13 +125,6 @@ func (x *OCR2OracleSpecInfo) GetRelayConfigJson() string {
 func (x *OCR2OracleSpecInfo) GetPluginConfigJson() string {
 	if x != nil {
 		return x.PluginConfigJson
-	}
-	return ""
-}
-
-func (x *OCR2OracleSpecInfo) GetOnchainSigningStrategyJson() string {
-	if x != nil {
-		return x.OnchainSigningStrategyJson
 	}
 	return ""
 }
@@ -235,31 +147,23 @@ var File_job_spec_v1_ocr2_oracle_spec_info_proto protoreflect.FileDescriptor
 
 const file_job_spec_v1_ocr2_oracle_spec_info_proto_rawDesc = "" +
 	"\n" +
-	"'job_spec/v1/ocr2_oracle_spec_info.proto\x12\vjob_spec.v1\x1a'job_spec/v1/ocr2_evm_relay_config.proto\x1a+job_spec/v1/ocr2_median_plugin_config.proto\"\xda\b\n" +
-	"\x12OCR2OracleSpecInfo\x12\x17\n" +
-	"\aspec_id\x18\x01 \x01(\x05R\x06specId\x12\x17\n" +
-	"\afeed_id\x18\x02 \x01(\tR\x06feedId\x12\x14\n" +
+	"'job_spec/v1/ocr2_oracle_spec_info.proto\x12\vjob_spec.v1\x1a'job_spec/v1/ocr2_evm_relay_config.proto\x1a+job_spec/v1/ocr2_median_plugin_config.proto\"\xa8\x04\n" +
+	"\x12OCR2OracleSpecInfo\x12\x1c\n" +
+	"\afeed_id\x18\x02 \x01(\tH\x00R\x06feedId\x88\x01\x01\x12\x14\n" +
 	"\x05relay\x18\x03 \x01(\tR\x05relay\x12\x1f\n" +
 	"\vplugin_type\x18\x04 \x01(\tR\n" +
-	"pluginType\x12%\n" +
-	"\x0etransmitter_id\x18\x05 \x01(\tR\rtransmitterId\x12)\n" +
-	"\x11ocr_key_bundle_id\x18\x06 \x01(\tR\x0eocrKeyBundleId\x12/\n" +
-	"\x13monitoring_endpoint\x18\a \x01(\tR\x12monitoringEndpoint\x12/\n" +
-	"\x13p2pv2_bootstrappers\x18\b \x03(\tR\x12p2pv2Bootstrappers\x124\n" +
-	"\x16allow_no_bootstrappers\x18\t \x01(\bR\x14allowNoBootstrappers\x12<\n" +
-	"\x1ablockchain_timeout_seconds\x18\n" +
-	" \x01(\x01R\x18blockchainTimeoutSeconds\x12_\n" +
-	"-contract_config_tracker_poll_interval_seconds\x18\v \x01(\x01R(contractConfigTrackerPollIntervalSeconds\x12B\n" +
-	"\x1dcontract_config_confirmations\x18\f \x01(\rR\x1bcontractConfigConfirmations\x120\n" +
-	"\x14capture_ea_telemetry\x18\r \x01(\bR\x12captureEaTelemetry\x12M\n" +
-	"#capture_automation_custom_telemetry\x18\x0e \x01(\bR captureAutomationCustomTelemetry\x12&\n" +
-	"\x0fspec_created_at\x18\x0f \x01(\tR\rspecCreatedAt\x12&\n" +
-	"\x0fspec_updated_at\x18\x10 \x01(\tR\rspecUpdatedAt\x12*\n" +
+	"pluginType\x12*\n" +
+	"\x0etransmitter_id\x18\x05 \x01(\tH\x01R\rtransmitterId\x88\x01\x01\x12.\n" +
+	"\x11ocr_key_bundle_id\x18\x06 \x01(\tH\x02R\x0eocrKeyBundleId\x88\x01\x01\x120\n" +
+	"\x14capture_ea_telemetry\x18\r \x01(\bR\x12captureEaTelemetry\x12*\n" +
 	"\x11relay_config_json\x18\x11 \x01(\tR\x0frelayConfigJson\x12,\n" +
-	"\x12plugin_config_json\x18\x12 \x01(\tR\x10pluginConfigJson\x12A\n" +
-	"\x1donchain_signing_strategy_json\x18\x13 \x01(\tR\x1aonchainSigningStrategyJson\x12I\n" +
+	"\x12plugin_config_json\x18\x12 \x01(\tR\x10pluginConfigJson\x12I\n" +
 	"\x10evm_relay_config\x18\x14 \x01(\v2\x1f.job_spec.v1.OCR2EVMRelayConfigR\x0eevmRelayConfig\x12U\n" +
-	"\x14median_plugin_config\x18\x15 \x01(\v2#.job_spec.v1.OCR2MedianPluginConfigR\x12medianPluginConfigBEZCgithub.com/smartcontractkit/chainlink-protos/data-feeds/job_spec/v1b\x06proto3"
+	"\x14median_plugin_config\x18\x15 \x01(\v2#.job_spec.v1.OCR2MedianPluginConfigR\x12medianPluginConfigB\n" +
+	"\n" +
+	"\b_feed_idB\x11\n" +
+	"\x0f_transmitter_idB\x14\n" +
+	"\x12_ocr_key_bundle_idBEZCgithub.com/smartcontractkit/chainlink-protos/data-feeds/job_spec/v1b\x06proto3"
 
 var (
 	file_job_spec_v1_ocr2_oracle_spec_info_proto_rawDescOnce sync.Once
@@ -296,6 +200,7 @@ func file_job_spec_v1_ocr2_oracle_spec_info_proto_init() {
 	}
 	file_job_spec_v1_ocr2_evm_relay_config_proto_init()
 	file_job_spec_v1_ocr2_median_plugin_config_proto_init()
+	file_job_spec_v1_ocr2_oracle_spec_info_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

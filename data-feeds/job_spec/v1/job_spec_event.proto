@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package job_spec.v1;
 
-import "job_spec/v1/ocr1_oracle_spec_info.proto";
 import "job_spec/v1/ocr2_oracle_spec_info.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/data-feeds/job_spec/v1";
@@ -11,19 +10,16 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/data-feeds/job
 message JobSpecEvent {
   // Job identity
   string external_job_id = 1;
-  int32 internal_job_id = 2;
   string name = 3;
   string job_type = 4;
   uint32 schema_version = 5;
-  uint32 gas_limit = 6;
+  optional uint32 gas_limit = 6;
   bool forwarding_allowed = 7;
   optional uint32 stream_id = 8;
-  double max_task_duration_seconds = 9;
   string created_at = 10;
 
   // Observation pipeline
   string observation_source = 11;
-  int32 pipeline_spec_id = 12;
 
   // Top-level bridge names in the observation pipeline.
   repeated string bridge_names = 13;
@@ -48,13 +44,8 @@ message JobSpecEvent {
   EmissionTrigger emission_trigger = 24;
   string timestamp = 25;
 
-  // Primary on-chain contract, populated for single-contract job types
-  // (OCR1, OCR2, Flux Monitor, Keeper).
-  string contract_address = 26;
-  string chain_id = 27;
-
-  // OCR1-only; absent for other job types.
-  OCR1OracleSpecInfo ocr1_oracle_spec = 28;
+  // Primary on-chain contract, populated for single-contract job types.
+  string contract_id = 26;
 }
 
 // EmissionTrigger is the reason a JobSpecEvent was emitted.

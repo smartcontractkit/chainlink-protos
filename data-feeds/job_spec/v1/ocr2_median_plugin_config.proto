@@ -7,15 +7,4 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/data-feeds/job
 // OCR2MedianPluginConfig mirrors median/config.PluginConfig.
 message OCR2MedianPluginConfig {
   string juels_per_fee_coin_source = 1;
-
-  // Empty when gasPriceSubunitsSource is not configured.
-  string gas_price_subunits_source = 2;
-
-  // True when JuelsPerFeeCoinCache is nil or its Disable flag is set.
-  bool juels_per_fee_coin_cache_disabled = 3;
-  double juels_per_fee_coin_cache_update_interval_seconds = 4;
-  double juels_per_fee_coin_cache_staleness_alert_threshold_seconds = 5;
-
-  // Verbatim JSON of DeviationFunctionDefinition.
-  string deviation_func_json = 6;
 }
