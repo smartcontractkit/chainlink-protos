@@ -106,10 +106,8 @@ type JobSpecEvent struct {
 	// Event metadata
 	EmissionTrigger EmissionTrigger `protobuf:"varint,24,opt,name=emission_trigger,json=emissionTrigger,proto3,enum=job_spec.v1.EmissionTrigger" json:"emission_trigger,omitempty"`
 	Timestamp       string          `protobuf:"bytes,25,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	// Primary on-chain contract, populated for single-contract job types.
-	ContractId    string `protobuf:"bytes,26,opt,name=contract_id,json=contractId,proto3" json:"contract_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *JobSpecEvent) Reset() {
@@ -296,18 +294,11 @@ func (x *JobSpecEvent) GetTimestamp() string {
 	return ""
 }
 
-func (x *JobSpecEvent) GetContractId() string {
-	if x != nil {
-		return x.ContractId
-	}
-	return ""
-}
-
 var File_job_spec_v1_job_spec_event_proto protoreflect.FileDescriptor
 
 const file_job_spec_v1_job_spec_event_proto_rawDesc = "" +
 	"\n" +
-	" job_spec/v1/job_spec_event.proto\x12\vjob_spec.v1\x1a'job_spec/v1/ocr2_oracle_spec_info.proto\"\xaa\a\n" +
+	" job_spec/v1/job_spec_event.proto\x12\vjob_spec.v1\x1a'job_spec/v1/ocr2_oracle_spec_info.proto\"\x89\a\n" +
 	"\fJobSpecEvent\x12&\n" +
 	"\x0fexternal_job_id\x18\x01 \x01(\tR\rexternalJobId\x12\x12\n" +
 	"\x04name\x18\x03 \x01(\tR\x04name\x12\x19\n" +
@@ -335,9 +326,7 @@ const file_job_spec_v1_job_spec_event_proto_rawDesc = "" +
 	"\fnode_version\x18\x16 \x01(\tR\vnodeVersion\x12\x1a\n" +
 	"\bhostname\x18\x17 \x01(\tR\bhostname\x12G\n" +
 	"\x10emission_trigger\x18\x18 \x01(\x0e2\x1c.job_spec.v1.EmissionTriggerR\x0femissionTrigger\x12\x1c\n" +
-	"\ttimestamp\x18\x19 \x01(\tR\ttimestamp\x12\x1f\n" +
-	"\vcontract_id\x18\x1a \x01(\tR\n" +
-	"contractIdB\f\n" +
+	"\ttimestamp\x18\x19 \x01(\tR\ttimestampB\f\n" +
 	"\n" +
 	"_gas_limitB\f\n" +
 	"\n" +

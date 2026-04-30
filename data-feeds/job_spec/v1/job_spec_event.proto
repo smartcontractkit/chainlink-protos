@@ -43,9 +43,6 @@ message JobSpecEvent {
   // Event metadata
   EmissionTrigger emission_trigger = 24;
   string timestamp = 25;
-
-  // Primary on-chain contract, populated for single-contract job types.
-  string contract_id = 26;
 }
 
 // EmissionTrigger is the reason a JobSpecEvent was emitted.

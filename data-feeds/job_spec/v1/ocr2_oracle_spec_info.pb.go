@@ -22,9 +22,9 @@ const (
 )
 
 // OCR2OracleSpecInfo mirrors job.OCR2OracleSpec.
-// contract_id lives on the parent JobSpecEvent.
 type OCR2OracleSpecInfo struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
+	ContractId         string                 `protobuf:"bytes,1,opt,name=contract_id,json=contractId,proto3" json:"contract_id,omitempty"`
 	FeedId             *string                `protobuf:"bytes,2,opt,name=feed_id,json=feedId,proto3,oneof" json:"feed_id,omitempty"`
 	Relay              string                 `protobuf:"bytes,3,opt,name=relay,proto3" json:"relay,omitempty"`
 	PluginType         string                 `protobuf:"bytes,4,opt,name=plugin_type,json=pluginType,proto3" json:"plugin_type,omitempty"`
@@ -71,6 +71,13 @@ func (x *OCR2OracleSpecInfo) ProtoReflect() protoreflect.Message {
 // Deprecated: Use OCR2OracleSpecInfo.ProtoReflect.Descriptor instead.
 func (*OCR2OracleSpecInfo) Descriptor() ([]byte, []int) {
 	return file_job_spec_v1_ocr2_oracle_spec_info_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *OCR2OracleSpecInfo) GetContractId() string {
+	if x != nil {
+		return x.ContractId
+	}
+	return ""
 }
 
 func (x *OCR2OracleSpecInfo) GetFeedId() string {
@@ -147,8 +154,10 @@ var File_job_spec_v1_ocr2_oracle_spec_info_proto protoreflect.FileDescriptor
 
 const file_job_spec_v1_ocr2_oracle_spec_info_proto_rawDesc = "" +
 	"\n" +
-	"'job_spec/v1/ocr2_oracle_spec_info.proto\x12\vjob_spec.v1\x1a'job_spec/v1/ocr2_evm_relay_config.proto\x1a+job_spec/v1/ocr2_median_plugin_config.proto\"\xa8\x04\n" +
-	"\x12OCR2OracleSpecInfo\x12\x1c\n" +
+	"'job_spec/v1/ocr2_oracle_spec_info.proto\x12\vjob_spec.v1\x1a'job_spec/v1/ocr2_evm_relay_config.proto\x1a+job_spec/v1/ocr2_median_plugin_config.proto\"\xc9\x04\n" +
+	"\x12OCR2OracleSpecInfo\x12\x1f\n" +
+	"\vcontract_id\x18\x01 \x01(\tR\n" +
+	"contractId\x12\x1c\n" +
 	"\afeed_id\x18\x02 \x01(\tH\x00R\x06feedId\x88\x01\x01\x12\x14\n" +
 	"\x05relay\x18\x03 \x01(\tR\x05relay\x12\x1f\n" +
 	"\vplugin_type\x18\x04 \x01(\tR\n" +

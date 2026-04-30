@@ -8,8 +8,8 @@ import "job_spec/v1/ocr2_median_plugin_config.proto";
 option go_package = "github.com/smartcontractkit/chainlink-protos/data-feeds/job_spec/v1";
 
 // OCR2OracleSpecInfo mirrors job.OCR2OracleSpec.
-// contract_id lives on the parent JobSpecEvent.
 message OCR2OracleSpecInfo {
+  string contract_id = 1;
   optional string feed_id = 2;
   string relay = 3;
   string plugin_type = 4;
