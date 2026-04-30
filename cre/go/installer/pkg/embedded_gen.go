@@ -1060,6 +1060,7 @@ const computeConfidentialworkflowV1alphaClientEmbedded = `syntax = "proto3";
 package capabilities.compute.confidentialworkflow.v1alpha;
 
 import "tools/generator/v1alpha/cre_metadata.proto";
+import "sdk/v1alpha/sdk.proto";
 import "google/protobuf/empty.proto";
 
 message SecretIdentifier {
@@ -1077,9 +1078,8 @@ message WorkflowExecution {
   string binary_url = 2;
   // binary_hash is the expected SHA-256 hash of the WASM binary, for integrity verification.
   bytes binary_hash = 3;
-  // execute_request is a serialized sdk.v1alpha.ExecuteRequest proto.
   // Contains either a subscribe request or a trigger execution request.
-  bytes execute_request = 4;
+  sdk.v1alpha.ExecuteRequest execute_request = 4;
   // owner is the on-chain owner address of the workflow (hex, 0x-prefixed).
   // Used by the enclave for runtime secret fetching from VaultDON.
   string owner = 5;
@@ -1090,7 +1090,7 @@ message WorkflowExecution {
   // Used by the enclave when fetching secrets from VaultDON with org-based ownership.
   string org_id = 7;
   // regions that the workflow is allowed to run in.
-  repeated string regions = 8;
+  sdk.v1alpha.Tee tee = 8;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
@@ -1103,7 +1103,7 @@ message ConfidentialWorkflowRequest {
 // ConfidentialWorkflowResponse is the output from the confidential workflows capability.
 message ConfidentialWorkflowResponse {
   // execution_result is a serialized sdk.v1alpha.ExecutionResult proto.
-  bytes execution_result = 1;
+  sdk.v1alpha.ExecutionResult execution_result = 1;
 }
 
 message GetRegionsResponse {
