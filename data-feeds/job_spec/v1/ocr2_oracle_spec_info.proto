@@ -8,30 +8,19 @@ import "job_spec/v1/ocr2_median_plugin_config.proto";
 option go_package = "github.com/smartcontractkit/chainlink-protos/data-feeds/job_spec/v1";
 
 // OCR2OracleSpecInfo mirrors job.OCR2OracleSpec.
-// contract_id and chain_id live on the parent JobSpecEvent.
+// contract_id lives on the parent JobSpecEvent.
 message OCR2OracleSpecInfo {
-  int32 spec_id = 1;
-  string feed_id = 2;
+  optional string feed_id = 2;
   string relay = 3;
   string plugin_type = 4;
-  string transmitter_id = 5;
-  string ocr_key_bundle_id = 6;
-  string monitoring_endpoint = 7;
-  repeated string p2pv2_bootstrappers = 8;
-  bool allow_no_bootstrappers = 9;
-  double blockchain_timeout_seconds = 10;
-  double contract_config_tracker_poll_interval_seconds = 11;
-  uint32 contract_config_confirmations = 12;
+  optional string transmitter_id = 5;
+  optional string ocr_key_bundle_id = 6;
   bool capture_ea_telemetry = 13;
-  bool capture_automation_custom_telemetry = 14;
-  string spec_created_at = 15;
-  string spec_updated_at = 16;
 
   // Raw JSON passthroughs are always populated and authoritative over the typed
   // sub-messages below.
   string relay_config_json = 17;
   string plugin_config_json = 18;
-  string onchain_signing_strategy_json = 19;
 
   // Populated when relay == "evm".
   OCR2EVMRelayConfig evm_relay_config = 20;

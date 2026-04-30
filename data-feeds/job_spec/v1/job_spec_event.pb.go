@@ -78,19 +78,16 @@ func (EmissionTrigger) EnumDescriptor() ([]byte, []int) {
 type JobSpecEvent struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Job identity
-	ExternalJobId          string  `protobuf:"bytes,1,opt,name=external_job_id,json=externalJobId,proto3" json:"external_job_id,omitempty"`
-	InternalJobId          int32   `protobuf:"varint,2,opt,name=internal_job_id,json=internalJobId,proto3" json:"internal_job_id,omitempty"`
-	Name                   string  `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	JobType                string  `protobuf:"bytes,4,opt,name=job_type,json=jobType,proto3" json:"job_type,omitempty"`
-	SchemaVersion          uint32  `protobuf:"varint,5,opt,name=schema_version,json=schemaVersion,proto3" json:"schema_version,omitempty"`
-	GasLimit               uint32  `protobuf:"varint,6,opt,name=gas_limit,json=gasLimit,proto3" json:"gas_limit,omitempty"`
-	ForwardingAllowed      bool    `protobuf:"varint,7,opt,name=forwarding_allowed,json=forwardingAllowed,proto3" json:"forwarding_allowed,omitempty"`
-	StreamId               *uint32 `protobuf:"varint,8,opt,name=stream_id,json=streamId,proto3,oneof" json:"stream_id,omitempty"`
-	MaxTaskDurationSeconds float64 `protobuf:"fixed64,9,opt,name=max_task_duration_seconds,json=maxTaskDurationSeconds,proto3" json:"max_task_duration_seconds,omitempty"`
-	CreatedAt              string  `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	ExternalJobId     string  `protobuf:"bytes,1,opt,name=external_job_id,json=externalJobId,proto3" json:"external_job_id,omitempty"`
+	Name              string  `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	JobType           string  `protobuf:"bytes,4,opt,name=job_type,json=jobType,proto3" json:"job_type,omitempty"`
+	SchemaVersion     uint32  `protobuf:"varint,5,opt,name=schema_version,json=schemaVersion,proto3" json:"schema_version,omitempty"`
+	GasLimit          *uint32 `protobuf:"varint,6,opt,name=gas_limit,json=gasLimit,proto3,oneof" json:"gas_limit,omitempty"`
+	ForwardingAllowed bool    `protobuf:"varint,7,opt,name=forwarding_allowed,json=forwardingAllowed,proto3" json:"forwarding_allowed,omitempty"`
+	StreamId          *uint32 `protobuf:"varint,8,opt,name=stream_id,json=streamId,proto3,oneof" json:"stream_id,omitempty"`
+	CreatedAt         string  `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	// Observation pipeline
 	ObservationSource string `protobuf:"bytes,11,opt,name=observation_source,json=observationSource,proto3" json:"observation_source,omitempty"`
-	PipelineSpecId    int32  `protobuf:"varint,12,opt,name=pipeline_spec_id,json=pipelineSpecId,proto3" json:"pipeline_spec_id,omitempty"`
 	// Top-level bridge names in the observation pipeline.
 	BridgeNames []string `protobuf:"bytes,13,rep,name=bridge_names,json=bridgeNames,proto3" json:"bridge_names,omitempty"`
 	// Proposal lifecycle: zero/empty for jobs not managed by a Feeds Manager.
@@ -109,14 +106,10 @@ type JobSpecEvent struct {
 	// Event metadata
 	EmissionTrigger EmissionTrigger `protobuf:"varint,24,opt,name=emission_trigger,json=emissionTrigger,proto3,enum=job_spec.v1.EmissionTrigger" json:"emission_trigger,omitempty"`
 	Timestamp       string          `protobuf:"bytes,25,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	// Primary on-chain contract, populated for single-contract job types
-	// (OCR1, OCR2, Flux Monitor, Keeper).
-	ContractAddress string `protobuf:"bytes,26,opt,name=contract_address,json=contractAddress,proto3" json:"contract_address,omitempty"`
-	ChainId         string `protobuf:"bytes,27,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
-	// OCR1-only; absent for other job types.
-	Ocr1OracleSpec *OCR1OracleSpecInfo `protobuf:"bytes,28,opt,name=ocr1_oracle_spec,json=ocr1OracleSpec,proto3" json:"ocr1_oracle_spec,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// Primary on-chain contract, populated for single-contract job types.
+	ContractId    string `protobuf:"bytes,26,opt,name=contract_id,json=contractId,proto3" json:"contract_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *JobSpecEvent) Reset() {
@@ -156,13 +149,6 @@ func (x *JobSpecEvent) GetExternalJobId() string {
 	return ""
 }
 
-func (x *JobSpecEvent) GetInternalJobId() int32 {
-	if x != nil {
-		return x.InternalJobId
-	}
-	return 0
-}
-
 func (x *JobSpecEvent) GetName() string {
 	if x != nil {
 		return x.Name
@@ -185,8 +171,8 @@ func (x *JobSpecEvent) GetSchemaVersion() uint32 {
 }
 
 func (x *JobSpecEvent) GetGasLimit() uint32 {
-	if x != nil {
-		return x.GasLimit
+	if x != nil && x.GasLimit != nil {
+		return *x.GasLimit
 	}
 	return 0
 }
@@ -205,13 +191,6 @@ func (x *JobSpecEvent) GetStreamId() uint32 {
 	return 0
 }
 
-func (x *JobSpecEvent) GetMaxTaskDurationSeconds() float64 {
-	if x != nil {
-		return x.MaxTaskDurationSeconds
-	}
-	return 0
-}
-
 func (x *JobSpecEvent) GetCreatedAt() string {
 	if x != nil {
 		return x.CreatedAt
@@ -224,13 +203,6 @@ func (x *JobSpecEvent) GetObservationSource() string {
 		return x.ObservationSource
 	}
 	return ""
-}
-
-func (x *JobSpecEvent) GetPipelineSpecId() int32 {
-	if x != nil {
-		return x.PipelineSpecId
-	}
-	return 0
 }
 
 func (x *JobSpecEvent) GetBridgeNames() []string {
@@ -324,47 +296,30 @@ func (x *JobSpecEvent) GetTimestamp() string {
 	return ""
 }
 
-func (x *JobSpecEvent) GetContractAddress() string {
+func (x *JobSpecEvent) GetContractId() string {
 	if x != nil {
-		return x.ContractAddress
+		return x.ContractId
 	}
 	return ""
-}
-
-func (x *JobSpecEvent) GetChainId() string {
-	if x != nil {
-		return x.ChainId
-	}
-	return ""
-}
-
-func (x *JobSpecEvent) GetOcr1OracleSpec() *OCR1OracleSpecInfo {
-	if x != nil {
-		return x.Ocr1OracleSpec
-	}
-	return nil
 }
 
 var File_job_spec_v1_job_spec_event_proto protoreflect.FileDescriptor
 
 const file_job_spec_v1_job_spec_event_proto_rawDesc = "" +
 	"\n" +
-	" job_spec/v1/job_spec_event.proto\x12\vjob_spec.v1\x1a'job_spec/v1/ocr1_oracle_spec_info.proto\x1a'job_spec/v1/ocr2_oracle_spec_info.proto\"\x94\t\n" +
+	" job_spec/v1/job_spec_event.proto\x12\vjob_spec.v1\x1a'job_spec/v1/ocr2_oracle_spec_info.proto\"\xaa\a\n" +
 	"\fJobSpecEvent\x12&\n" +
-	"\x0fexternal_job_id\x18\x01 \x01(\tR\rexternalJobId\x12&\n" +
-	"\x0finternal_job_id\x18\x02 \x01(\x05R\rinternalJobId\x12\x12\n" +
+	"\x0fexternal_job_id\x18\x01 \x01(\tR\rexternalJobId\x12\x12\n" +
 	"\x04name\x18\x03 \x01(\tR\x04name\x12\x19\n" +
 	"\bjob_type\x18\x04 \x01(\tR\ajobType\x12%\n" +
-	"\x0eschema_version\x18\x05 \x01(\rR\rschemaVersion\x12\x1b\n" +
-	"\tgas_limit\x18\x06 \x01(\rR\bgasLimit\x12-\n" +
+	"\x0eschema_version\x18\x05 \x01(\rR\rschemaVersion\x12 \n" +
+	"\tgas_limit\x18\x06 \x01(\rH\x00R\bgasLimit\x88\x01\x01\x12-\n" +
 	"\x12forwarding_allowed\x18\a \x01(\bR\x11forwardingAllowed\x12 \n" +
-	"\tstream_id\x18\b \x01(\rH\x00R\bstreamId\x88\x01\x01\x129\n" +
-	"\x19max_task_duration_seconds\x18\t \x01(\x01R\x16maxTaskDurationSeconds\x12\x1d\n" +
+	"\tstream_id\x18\b \x01(\rH\x01R\bstreamId\x88\x01\x01\x12\x1d\n" +
 	"\n" +
 	"created_at\x18\n" +
 	" \x01(\tR\tcreatedAt\x12-\n" +
-	"\x12observation_source\x18\v \x01(\tR\x11observationSource\x12(\n" +
-	"\x10pipeline_spec_id\x18\f \x01(\x05R\x0epipelineSpecId\x12!\n" +
+	"\x12observation_source\x18\v \x01(\tR\x11observationSource\x12!\n" +
 	"\fbridge_names\x18\r \x03(\tR\vbridgeNames\x12(\n" +
 	"\x10feeds_manager_id\x18\x0e \x01(\x03R\x0efeedsManagerId\x12\x1f\n" +
 	"\vremote_uuid\x18\x0f \x01(\tR\n" +
@@ -380,10 +335,11 @@ const file_job_spec_v1_job_spec_event_proto_rawDesc = "" +
 	"\fnode_version\x18\x16 \x01(\tR\vnodeVersion\x12\x1a\n" +
 	"\bhostname\x18\x17 \x01(\tR\bhostname\x12G\n" +
 	"\x10emission_trigger\x18\x18 \x01(\x0e2\x1c.job_spec.v1.EmissionTriggerR\x0femissionTrigger\x12\x1c\n" +
-	"\ttimestamp\x18\x19 \x01(\tR\ttimestamp\x12)\n" +
-	"\x10contract_address\x18\x1a \x01(\tR\x0fcontractAddress\x12\x19\n" +
-	"\bchain_id\x18\x1b \x01(\tR\achainId\x12I\n" +
-	"\x10ocr1_oracle_spec\x18\x1c \x01(\v2\x1f.job_spec.v1.OCR1OracleSpecInfoR\x0eocr1OracleSpecB\f\n" +
+	"\ttimestamp\x18\x19 \x01(\tR\ttimestamp\x12\x1f\n" +
+	"\vcontract_id\x18\x1a \x01(\tR\n" +
+	"contractIdB\f\n" +
+	"\n" +
+	"_gas_limitB\f\n" +
 	"\n" +
 	"_stream_id*\x8d\x01\n" +
 	"\x0fEmissionTrigger\x12 \n" +
@@ -410,17 +366,15 @@ var file_job_spec_v1_job_spec_event_proto_goTypes = []any{
 	(EmissionTrigger)(0),       // 0: job_spec.v1.EmissionTrigger
 	(*JobSpecEvent)(nil),       // 1: job_spec.v1.JobSpecEvent
 	(*OCR2OracleSpecInfo)(nil), // 2: job_spec.v1.OCR2OracleSpecInfo
-	(*OCR1OracleSpecInfo)(nil), // 3: job_spec.v1.OCR1OracleSpecInfo
 }
 var file_job_spec_v1_job_spec_event_proto_depIdxs = []int32{
 	2, // 0: job_spec.v1.JobSpecEvent.ocr2_oracle_spec:type_name -> job_spec.v1.OCR2OracleSpecInfo
 	0, // 1: job_spec.v1.JobSpecEvent.emission_trigger:type_name -> job_spec.v1.EmissionTrigger
-	3, // 2: job_spec.v1.JobSpecEvent.ocr1_oracle_spec:type_name -> job_spec.v1.OCR1OracleSpecInfo
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_job_spec_v1_job_spec_event_proto_init() }
@@ -428,7 +382,6 @@ func file_job_spec_v1_job_spec_event_proto_init() {
 	if File_job_spec_v1_job_spec_event_proto != nil {
 		return
 	}
-	file_job_spec_v1_ocr1_oracle_spec_info_proto_init()
 	file_job_spec_v1_ocr2_oracle_spec_info_proto_init()
 	file_job_spec_v1_job_spec_event_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
