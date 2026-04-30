@@ -1060,6 +1060,7 @@ const computeConfidentialworkflowV1alphaClientEmbedded = `syntax = "proto3";
 package capabilities.compute.confidentialworkflow.v1alpha;
 
 import "tools/generator/v1alpha/cre_metadata.proto";
+import "google/protobuf/empty.proto";
 
 message SecretIdentifier {
   string key = 1;
@@ -1088,6 +1089,8 @@ message WorkflowExecution {
   // org_id is the organization identifier for the workflow owner.
   // Used by the enclave when fetching secrets from VaultDON with org-based ownership.
   string org_id = 7;
+  // regions that the workflow is allowed to run in.
+  repeated string regions = 8;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
@@ -1103,6 +1106,10 @@ message ConfidentialWorkflowResponse {
   bytes execution_result = 1;
 }
 
+message GetRegionsResponse {
+  repeated string regions = 1;
+}
+
 service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
@@ -1110,6 +1117,7 @@ service Client {
   };
 
   rpc Execute(ConfidentialWorkflowRequest) returns (ConfidentialWorkflowResponse);
+  rpc GetRegions(google.protobuf.Empty) returns (GetRegionsResponse);
 }
 `
 
