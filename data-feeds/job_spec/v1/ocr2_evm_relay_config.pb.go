@@ -25,14 +25,14 @@ const (
 type OCR2EVMRelayConfig struct {
 	state                   protoimpl.MessageState `protogen:"open.v1"`
 	ChainId                 string                 `protobuf:"bytes,1,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
-	FromBlock               uint64                 `protobuf:"varint,2,opt,name=from_block,json=fromBlock,proto3" json:"from_block,omitempty"`
+	FromBlock               *uint64                `protobuf:"varint,2,opt,name=from_block,json=fromBlock,proto3,oneof" json:"from_block,omitempty"`
 	EffectiveTransmitterId  string                 `protobuf:"bytes,3,opt,name=effective_transmitter_id,json=effectiveTransmitterId,proto3" json:"effective_transmitter_id,omitempty"`
-	EnableDualTransmission  bool                   `protobuf:"varint,4,opt,name=enable_dual_transmission,json=enableDualTransmission,proto3" json:"enable_dual_transmission,omitempty"`
-	EnableTriggerCapability bool                   `protobuf:"varint,5,opt,name=enable_trigger_capability,json=enableTriggerCapability,proto3" json:"enable_trigger_capability,omitempty"`
-	LloDonId                uint64                 `protobuf:"varint,6,opt,name=llo_don_id,json=lloDonId,proto3" json:"llo_don_id,omitempty"`
-	FeedId                  string                 `protobuf:"bytes,7,opt,name=feed_id,json=feedId,proto3" json:"feed_id,omitempty"`
+	EnableDualTransmission  *bool                  `protobuf:"varint,4,opt,name=enable_dual_transmission,json=enableDualTransmission,proto3,oneof" json:"enable_dual_transmission,omitempty"`
+	EnableTriggerCapability *bool                  `protobuf:"varint,5,opt,name=enable_trigger_capability,json=enableTriggerCapability,proto3,oneof" json:"enable_trigger_capability,omitempty"`
+	LloDonId                *uint64                `protobuf:"varint,6,opt,name=llo_don_id,json=lloDonId,proto3,oneof" json:"llo_don_id,omitempty"`
+	FeedId                  *string                `protobuf:"bytes,7,opt,name=feed_id,json=feedId,proto3,oneof" json:"feed_id,omitempty"`
 	SendingKeys             []string               `protobuf:"bytes,8,rep,name=sending_keys,json=sendingKeys,proto3" json:"sending_keys,omitempty"`
-	ProviderType            string                 `protobuf:"bytes,9,opt,name=provider_type,json=providerType,proto3" json:"provider_type,omitempty"`
+	ProviderType            *string                `protobuf:"bytes,9,opt,name=provider_type,json=providerType,proto3,oneof" json:"provider_type,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
 }
@@ -75,8 +75,8 @@ func (x *OCR2EVMRelayConfig) GetChainId() string {
 }
 
 func (x *OCR2EVMRelayConfig) GetFromBlock() uint64 {
-	if x != nil {
-		return x.FromBlock
+	if x != nil && x.FromBlock != nil {
+		return *x.FromBlock
 	}
 	return 0
 }
@@ -89,29 +89,29 @@ func (x *OCR2EVMRelayConfig) GetEffectiveTransmitterId() string {
 }
 
 func (x *OCR2EVMRelayConfig) GetEnableDualTransmission() bool {
-	if x != nil {
-		return x.EnableDualTransmission
+	if x != nil && x.EnableDualTransmission != nil {
+		return *x.EnableDualTransmission
 	}
 	return false
 }
 
 func (x *OCR2EVMRelayConfig) GetEnableTriggerCapability() bool {
-	if x != nil {
-		return x.EnableTriggerCapability
+	if x != nil && x.EnableTriggerCapability != nil {
+		return *x.EnableTriggerCapability
 	}
 	return false
 }
 
 func (x *OCR2EVMRelayConfig) GetLloDonId() uint64 {
-	if x != nil {
-		return x.LloDonId
+	if x != nil && x.LloDonId != nil {
+		return *x.LloDonId
 	}
 	return 0
 }
 
 func (x *OCR2EVMRelayConfig) GetFeedId() string {
-	if x != nil {
-		return x.FeedId
+	if x != nil && x.FeedId != nil {
+		return *x.FeedId
 	}
 	return ""
 }
@@ -124,8 +124,8 @@ func (x *OCR2EVMRelayConfig) GetSendingKeys() []string {
 }
 
 func (x *OCR2EVMRelayConfig) GetProviderType() string {
-	if x != nil {
-		return x.ProviderType
+	if x != nil && x.ProviderType != nil {
+		return *x.ProviderType
 	}
 	return ""
 }
@@ -134,19 +134,26 @@ var File_job_spec_v1_ocr2_evm_relay_config_proto protoreflect.FileDescriptor
 
 const file_job_spec_v1_ocr2_evm_relay_config_proto_rawDesc = "" +
 	"\n" +
-	"'job_spec/v1/ocr2_evm_relay_config.proto\x12\vjob_spec.v1\"\xfd\x02\n" +
+	"'job_spec/v1/ocr2_evm_relay_config.proto\x12\vjob_spec.v1\"\x92\x04\n" +
 	"\x12OCR2EVMRelayConfig\x12\x19\n" +
-	"\bchain_id\x18\x01 \x01(\tR\achainId\x12\x1d\n" +
+	"\bchain_id\x18\x01 \x01(\tR\achainId\x12\"\n" +
 	"\n" +
-	"from_block\x18\x02 \x01(\x04R\tfromBlock\x128\n" +
-	"\x18effective_transmitter_id\x18\x03 \x01(\tR\x16effectiveTransmitterId\x128\n" +
-	"\x18enable_dual_transmission\x18\x04 \x01(\bR\x16enableDualTransmission\x12:\n" +
-	"\x19enable_trigger_capability\x18\x05 \x01(\bR\x17enableTriggerCapability\x12\x1c\n" +
+	"from_block\x18\x02 \x01(\x04H\x00R\tfromBlock\x88\x01\x01\x128\n" +
+	"\x18effective_transmitter_id\x18\x03 \x01(\tR\x16effectiveTransmitterId\x12=\n" +
+	"\x18enable_dual_transmission\x18\x04 \x01(\bH\x01R\x16enableDualTransmission\x88\x01\x01\x12?\n" +
+	"\x19enable_trigger_capability\x18\x05 \x01(\bH\x02R\x17enableTriggerCapability\x88\x01\x01\x12!\n" +
 	"\n" +
-	"llo_don_id\x18\x06 \x01(\x04R\blloDonId\x12\x17\n" +
-	"\afeed_id\x18\a \x01(\tR\x06feedId\x12!\n" +
-	"\fsending_keys\x18\b \x03(\tR\vsendingKeys\x12#\n" +
-	"\rprovider_type\x18\t \x01(\tR\fproviderTypeBEZCgithub.com/smartcontractkit/chainlink-protos/data-feeds/job_spec/v1b\x06proto3"
+	"llo_don_id\x18\x06 \x01(\x04H\x03R\blloDonId\x88\x01\x01\x12\x1c\n" +
+	"\afeed_id\x18\a \x01(\tH\x04R\x06feedId\x88\x01\x01\x12!\n" +
+	"\fsending_keys\x18\b \x03(\tR\vsendingKeys\x12(\n" +
+	"\rprovider_type\x18\t \x01(\tH\x05R\fproviderType\x88\x01\x01B\r\n" +
+	"\v_from_blockB\x1b\n" +
+	"\x19_enable_dual_transmissionB\x1c\n" +
+	"\x1a_enable_trigger_capabilityB\r\n" +
+	"\v_llo_don_idB\n" +
+	"\n" +
+	"\b_feed_idB\x10\n" +
+	"\x0e_provider_typeBEZCgithub.com/smartcontractkit/chainlink-protos/data-feeds/job_spec/v1b\x06proto3"
 
 var (
 	file_job_spec_v1_ocr2_evm_relay_config_proto_rawDescOnce sync.Once
@@ -177,6 +184,7 @@ func file_job_spec_v1_ocr2_evm_relay_config_proto_init() {
 	if File_job_spec_v1_ocr2_evm_relay_config_proto != nil {
 		return
 	}
+	file_job_spec_v1_ocr2_evm_relay_config_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

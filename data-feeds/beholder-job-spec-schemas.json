@@ -2,10 +2,6 @@
   "domain": "beholder__data-feeds.job-spec__messages",
   "schemas": [
     {
-      "entity": "job_spec.v1.OCR1OracleSpecInfo",
-      "path": "job_spec/v1/ocr1_oracle_spec_info.proto"
-    },
-    {
       "entity": "job_spec.v1.OCR2EVMRelayConfig",
       "path": "job_spec/v1/ocr2_evm_relay_config.proto"
     },
@@ -33,11 +29,6 @@
       "entity": "job_spec.v1.JobSpecEvent",
       "path": "job_spec/v1/job_spec_event.proto",
       "references": [
-        {
-          "name": "job_spec/v1/ocr1_oracle_spec_info.proto",
-          "entity": "job_spec.v1.OCR1OracleSpecInfo",
-          "path": "job_spec/v1/ocr1_oracle_spec_info.proto"
-        },
         {
           "name": "job_spec/v1/ocr2_oracle_spec_info.proto",
           "entity": "job_spec.v1.OCR2OracleSpecInfo",

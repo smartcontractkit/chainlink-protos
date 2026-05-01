@@ -25,16 +25,8 @@ const (
 type OCR2MedianPluginConfig struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
 	JuelsPerFeeCoinSource string                 `protobuf:"bytes,1,opt,name=juels_per_fee_coin_source,json=juelsPerFeeCoinSource,proto3" json:"juels_per_fee_coin_source,omitempty"`
-	// Empty when gasPriceSubunitsSource is not configured.
-	GasPriceSubunitsSource string `protobuf:"bytes,2,opt,name=gas_price_subunits_source,json=gasPriceSubunitsSource,proto3" json:"gas_price_subunits_source,omitempty"`
-	// True when JuelsPerFeeCoinCache is nil or its Disable flag is set.
-	JuelsPerFeeCoinCacheDisabled                       bool    `protobuf:"varint,3,opt,name=juels_per_fee_coin_cache_disabled,json=juelsPerFeeCoinCacheDisabled,proto3" json:"juels_per_fee_coin_cache_disabled,omitempty"`
-	JuelsPerFeeCoinCacheUpdateIntervalSeconds          float64 `protobuf:"fixed64,4,opt,name=juels_per_fee_coin_cache_update_interval_seconds,json=juelsPerFeeCoinCacheUpdateIntervalSeconds,proto3" json:"juels_per_fee_coin_cache_update_interval_seconds,omitempty"`
-	JuelsPerFeeCoinCacheStalenessAlertThresholdSeconds float64 `protobuf:"fixed64,5,opt,name=juels_per_fee_coin_cache_staleness_alert_threshold_seconds,json=juelsPerFeeCoinCacheStalenessAlertThresholdSeconds,proto3" json:"juels_per_fee_coin_cache_staleness_alert_threshold_seconds,omitempty"`
-	// Verbatim JSON of DeviationFunctionDefinition.
-	DeviationFuncJson string `protobuf:"bytes,6,opt,name=deviation_func_json,json=deviationFuncJson,proto3" json:"deviation_func_json,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *OCR2MedianPluginConfig) Reset() {
@@ -74,53 +66,13 @@ func (x *OCR2MedianPluginConfig) GetJuelsPerFeeCoinSource() string {
 	return ""
 }
 
-func (x *OCR2MedianPluginConfig) GetGasPriceSubunitsSource() string {
-	if x != nil {
-		return x.GasPriceSubunitsSource
-	}
-	return ""
-}
-
-func (x *OCR2MedianPluginConfig) GetJuelsPerFeeCoinCacheDisabled() bool {
-	if x != nil {
-		return x.JuelsPerFeeCoinCacheDisabled
-	}
-	return false
-}
-
-func (x *OCR2MedianPluginConfig) GetJuelsPerFeeCoinCacheUpdateIntervalSeconds() float64 {
-	if x != nil {
-		return x.JuelsPerFeeCoinCacheUpdateIntervalSeconds
-	}
-	return 0
-}
-
-func (x *OCR2MedianPluginConfig) GetJuelsPerFeeCoinCacheStalenessAlertThresholdSeconds() float64 {
-	if x != nil {
-		return x.JuelsPerFeeCoinCacheStalenessAlertThresholdSeconds
-	}
-	return 0
-}
-
-func (x *OCR2MedianPluginConfig) GetDeviationFuncJson() string {
-	if x != nil {
-		return x.DeviationFuncJson
-	}
-	return ""
-}
-
 var File_job_spec_v1_ocr2_median_plugin_config_proto protoreflect.FileDescriptor
 
 const file_job_spec_v1_ocr2_median_plugin_config_proto_rawDesc = "" +
 	"\n" +
-	"+job_spec/v1/ocr2_median_plugin_config.proto\x12\vjob_spec.v1\"\xe3\x03\n" +
+	"+job_spec/v1/ocr2_median_plugin_config.proto\x12\vjob_spec.v1\"R\n" +
 	"\x16OCR2MedianPluginConfig\x128\n" +
-	"\x19juels_per_fee_coin_source\x18\x01 \x01(\tR\x15juelsPerFeeCoinSource\x129\n" +
-	"\x19gas_price_subunits_source\x18\x02 \x01(\tR\x16gasPriceSubunitsSource\x12G\n" +
-	"!juels_per_fee_coin_cache_disabled\x18\x03 \x01(\bR\x1cjuelsPerFeeCoinCacheDisabled\x12c\n" +
-	"0juels_per_fee_coin_cache_update_interval_seconds\x18\x04 \x01(\x01R)juelsPerFeeCoinCacheUpdateIntervalSeconds\x12v\n" +
-	":juels_per_fee_coin_cache_staleness_alert_threshold_seconds\x18\x05 \x01(\x01R2juelsPerFeeCoinCacheStalenessAlertThresholdSeconds\x12.\n" +
-	"\x13deviation_func_json\x18\x06 \x01(\tR\x11deviationFuncJsonBEZCgithub.com/smartcontractkit/chainlink-protos/data-feeds/job_spec/v1b\x06proto3"
+	"\x19juels_per_fee_coin_source\x18\x01 \x01(\tR\x15juelsPerFeeCoinSourceBEZCgithub.com/smartcontractkit/chainlink-protos/data-feeds/job_spec/v1b\x06proto3"
 
 var (
 	file_job_spec_v1_ocr2_median_plugin_config_proto_rawDescOnce sync.Once
