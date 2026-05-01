@@ -1089,8 +1089,8 @@ message WorkflowExecution {
   // org_id is the organization identifier for the workflow owner.
   // Used by the enclave when fetching secrets from VaultDON with org-based ownership.
   string org_id = 7;
-  // regions that the workflow is allowed to run in.
-  sdk.v1alpha.Tee tee = 8;
+  // requirements to run this workflow
+  sdk.v1alpha.Requirements requirements = 8;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
