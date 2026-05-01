@@ -49,8 +49,8 @@ message ConfidentialWorkflowResponse {
   sdk.v1alpha.ExecutionResult execution_result = 1;
 }
 
-message GetRegionsResponse {
-  repeated string regions = 1;
+message ProvidedTeesResponse {
+  repeated sdk.v1alpha.TeeTypeAndRegions tee = 1;
 }
 
 service Client {
@@ -60,5 +60,5 @@ service Client {
   };
 
   rpc Execute(ConfidentialWorkflowRequest) returns (ConfidentialWorkflowResponse);
-  rpc GetRegions(google.protobuf.Empty) returns (GetRegionsResponse);
+  rpc ProvidedTees(google.protobuf.Empty) returns (ProvidedTeesResponse);
 }

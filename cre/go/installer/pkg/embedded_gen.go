@@ -1106,8 +1106,8 @@ message ConfidentialWorkflowResponse {
   sdk.v1alpha.ExecutionResult execution_result = 1;
 }
 
-message GetRegionsResponse {
-  repeated string regions = 1;
+message ProvidedTeesResponse {
+  repeated sdk.v1alpha.TeeTypeAndRegions tee = 1;
 }
 
 service Client {
@@ -1117,7 +1117,7 @@ service Client {
   };
 
   rpc Execute(ConfidentialWorkflowRequest) returns (ConfidentialWorkflowResponse);
-  rpc GetRegions(google.protobuf.Empty) returns (GetRegionsResponse);
+  rpc ProvidedTees(google.protobuf.Empty) returns (ProvidedTeesResponse);
 }
 `
 
@@ -1581,18 +1581,7 @@ enum TeeType {
 
 message TeeTypeAndRegions {
   TeeType type = 1;
-  repeated string regions = 2;
-}
-
-message TeeTypeSelection {
-  repeated TeeTypeAndRegions types = 1;
-}
-
-message Tee {
-  oneof type {
-    google.protobuf.Empty any = 1;
-    TeeTypeSelection type_selection = 2;
-  }
+  repeated string regions = 3;
 }
 
 message TriggerSubscriptionRequest {
@@ -1602,6 +1591,21 @@ message TriggerSubscriptionRequest {
 message Trigger {
   uint64 id = 1;
   google.protobuf.Any payload = 2;
+}
+
+message Regions {
+  repeated string regions = 1;
+}
+
+message TeeTypesAndRegions {
+  repeated TeeTypeAndRegions tee_type_and_regions = 1;
+}
+
+message Tee {
+  oneof item {
+    Regions any_regions = 1;
+    TeeTypesAndRegions tee_types_and_regions = 2;
+  };
 }
 
 message Requirements {
