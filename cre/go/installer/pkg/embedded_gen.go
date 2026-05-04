@@ -958,12 +958,18 @@ message SubkeyConfig {
   repeated ValueComparator comparers = 2;
 }
 
+message CPIFilterConfig {
+  bytes dest_address = 1;
+  bytes method_name = 2;
+}
+
 message FilterLogTriggerRequest {
   string name = 1;
   bytes address = 2; // Solana PublicKey (32 bytes)
   string event_name = 3;
-  bytes event_idl_json = 4;
+  bytes contract_idl_json = 4;
   repeated SubkeyConfig subkeys = 5;
+  optional CPIFilterConfig cpi_filter_config = 6;
 }
 
 message Log {
@@ -1078,6 +1084,9 @@ message WorkflowExecution {
   // execution_id is the unique execution identifier (64 hex chars, 32 bytes).
   // Used by the enclave for runtime secret fetching from VaultDON.
   string execution_id = 6;
+  // org_id is the organization identifier for the workflow owner.
+  // Used by the enclave when fetching secrets from VaultDON with org-based ownership.
+  string org_id = 7;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
