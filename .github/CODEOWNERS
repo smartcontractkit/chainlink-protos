@@ -24,6 +24,7 @@
 /cre/capabilities/networking/confidentialhttp @smartcontractkit/privacy @smartcontractkit/op-tooling
 
 # Data
+/data-feeds/ @smartcontractkit/data-feeds-engineers @smartcontractkit/op-tooling
 /svr/ @smartcontractkit/oev @smartcontractkit/op-tooling
 
 # Ring

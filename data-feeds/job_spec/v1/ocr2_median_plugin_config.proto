@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package job_spec.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/data-feeds/job_spec/v1";
+
+// OCR2MedianPluginConfig mirrors median/config.PluginConfig.
+message OCR2MedianPluginConfig {
+  string juels_per_fee_coin_source = 1;
+}
