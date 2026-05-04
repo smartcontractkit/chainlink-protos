@@ -112,7 +112,7 @@ message Tee {
   oneof item {
     Regions any_regions = 1;
     TeeTypesAndRegions tee_types_and_regions = 2;
-  };
+  }
 }
 
 message Requirements {

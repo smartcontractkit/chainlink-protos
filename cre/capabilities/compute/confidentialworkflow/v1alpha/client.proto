@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package capabilities.compute.confidentialworkflow.v1alpha;
 
-import "tools/generator/v1alpha/cre_metadata.proto";
-import "sdk/v1alpha/sdk.proto";
 import "google/protobuf/empty.proto";
+import "sdk/v1alpha/sdk.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message SecretIdentifier {
   string key = 1;

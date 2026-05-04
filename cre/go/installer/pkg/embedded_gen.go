@@ -1059,9 +1059,9 @@ const computeConfidentialworkflowV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.compute.confidentialworkflow.v1alpha;
 
-import "tools/generator/v1alpha/cre_metadata.proto";
-import "sdk/v1alpha/sdk.proto";
 import "google/protobuf/empty.proto";
+import "sdk/v1alpha/sdk.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
 
 message SecretIdentifier {
   string key = 1;
@@ -1606,7 +1606,7 @@ message Tee {
   oneof item {
     Regions any_regions = 1;
     TeeTypesAndRegions tee_types_and_regions = 2;
-  };
+  }
 }
 
 message Requirements {
