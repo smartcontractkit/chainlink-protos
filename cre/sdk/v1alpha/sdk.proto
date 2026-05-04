@@ -78,6 +78,17 @@ message TriggerSubscription {
   string id = 1;
   google.protobuf.Any payload = 2;
   string method = 3;
+  Requirements requirements = 4;
+}
+
+enum TeeType {
+  TEE_TYPE_UNSPECIFIED = 0;
+  TEE_TYPE_AWS_NITRO = 1;
+}
+
+message TeeTypeAndRegions {
+  TeeType type = 1;
+  repeated string regions = 3;
 }
 
 message TriggerSubscriptionRequest {
@@ -87,6 +98,25 @@ message TriggerSubscriptionRequest {
 message Trigger {
   uint64 id = 1;
   google.protobuf.Any payload = 2;
+}
+
+message Regions {
+  repeated string regions = 1;
+}
+
+message TeeTypesAndRegions {
+  repeated TeeTypeAndRegions tee_type_and_regions = 1;
+}
+
+message Tee {
+  oneof item {
+    Regions any_regions = 1;
+    TeeTypesAndRegions tee_types_and_regions = 2;
+  }
+}
+
+message Requirements {
+  Tee tee = 1;
 }
 
 message AwaitCapabilitiesRequest {
