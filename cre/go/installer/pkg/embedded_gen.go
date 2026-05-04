@@ -1576,7 +1576,8 @@ message TriggerSubscription {
 }
 
 enum TeeType {
-  TEE_TYPE_AWS_NITRO = 0;
+  TEE_TYPE_UNSPECIFIED = 0;
+  TEE_TYPE_AWS_NITRO = 1;
 }
 
 message TeeTypeAndRegions {

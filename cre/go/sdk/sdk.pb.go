@@ -131,16 +131,19 @@ func (Mode) EnumDescriptor() ([]byte, []int) {
 type TeeType int32
 
 const (
-	TeeType_TEE_TYPE_AWS_NITRO TeeType = 0
+	TeeType_TEE_TYPE_UNSPECIFIED TeeType = 0
+	TeeType_TEE_TYPE_AWS_NITRO   TeeType = 1
 )
 
 // Enum value maps for TeeType.
 var (
 	TeeType_name = map[int32]string{
-		0: "TEE_TYPE_AWS_NITRO",
+		0: "TEE_TYPE_UNSPECIFIED",
+		1: "TEE_TYPE_AWS_NITRO",
 	}
 	TeeType_value = map[string]int32{
-		"TEE_TYPE_AWS_NITRO": 0,
+		"TEE_TYPE_UNSPECIFIED": 0,
+		"TEE_TYPE_AWS_NITRO":   1,
 	}
 )
 
@@ -851,7 +854,7 @@ func (x *TeeTypeAndRegions) GetType() TeeType {
 	if x != nil {
 		return x.Type
 	}
-	return TeeType_TEE_TYPE_AWS_NITRO
+	return TeeType_TEE_TYPE_UNSPECIFIED
 }
 
 func (x *TeeTypeAndRegions) GetRegions() []string {
@@ -2039,9 +2042,10 @@ const file_sdk_v1alpha_sdk_proto_rawDesc = "" +
 	"\x04Mode\x12\x14\n" +
 	"\x10MODE_UNSPECIFIED\x10\x00\x12\f\n" +
 	"\bMODE_DON\x10\x01\x12\r\n" +
-	"\tMODE_NODE\x10\x02*!\n" +
-	"\aTeeType\x12\x16\n" +
-	"\x12TEE_TYPE_AWS_NITRO\x10\x00b\x06proto3"
+	"\tMODE_NODE\x10\x02*;\n" +
+	"\aTeeType\x12\x18\n" +
+	"\x14TEE_TYPE_UNSPECIFIED\x10\x00\x12\x16\n" +
+	"\x12TEE_TYPE_AWS_NITRO\x10\x01b\x06proto3"
 
 var (
 	file_sdk_v1alpha_sdk_proto_rawDescOnce sync.Once
