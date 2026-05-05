@@ -7,10 +7,12 @@ on:
       - main
     paths:
       - ".github/workflows/register-workflows-schemas.yaml"
+      - "workflows/chip-*.json"
       - "workflows/**/*.proto"
   pull_request:
     paths:
       - ".github/workflows/register-workflows-schemas.yaml"
+      - "workflows/chip-*.json"
       - "workflows/**/*.proto"
 
 jobs:
