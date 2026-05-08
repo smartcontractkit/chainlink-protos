@@ -1091,6 +1091,10 @@ message WorkflowExecution {
   string org_id = 7;
   // requirements to run this workflow
   sdk.v1alpha.Requirements requirements = 8;
+
+  // restrictions on the capabilities and the secrets.bool
+  // This is sent to avoid sending extra requests when the TEE is not compromised
+  sdk.v1alpha.Restrictions restrictions = 9;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
