@@ -1063,12 +1063,6 @@ import "google/protobuf/empty.proto";
 import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
-message SecretIdentifier {
-  string key = 1;
-  // namespace defaults to "main" when unset.
-  optional string namespace = 2;
-}
-
 // WorkflowExecution is the public data sent to the enclave.
 // Becomes ComputeRequest.PublicData after proto serialization.
 message WorkflowExecution {
@@ -1100,8 +1094,7 @@ message WorkflowExecution {
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
 // It combines a WorkflowExecution with secrets from VaultDON.
 message ConfidentialWorkflowRequest {
-  repeated SecretIdentifier vault_don_secrets = 1;
-  WorkflowExecution execution = 2;
+  WorkflowExecution execution = 1;
 }
 
 // ConfidentialWorkflowResponse is the output from the confidential workflows capability.
