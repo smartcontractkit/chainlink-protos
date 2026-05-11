@@ -503,6 +503,96 @@ service Client {
 }
 `
 
+const blockchainStellarV1alphaClientEmbedded = `syntax = "proto3";
+package capabilities.blockchain.stellar.v1alpha;
+
+import "sdk/v1alpha/sdk.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
+
+enum TxStatus {
+  TX_STATUS_FATAL = 0;
+  TX_STATUS_REVERTED = 1;
+  TX_STATUS_SUCCESS = 2;
+}
+
+message ReadContractRequest {
+  string contract_id = 1;
+  string function = 2;
+  repeated bytes args = 3;
+  // Optional: 0 = latest
+  uint32 ledger_sequence = 4;
+}
+
+message ReadContractResponse {
+  bytes result = 1;
+  // Ledger actually used for simulation
+  uint32 ledger_sequence = 2;
+  // Response
+  string error = 3;
+}
+
+// ========== GetLatestLedger ==========
+
+message GetLatestLedgerRequest {}
+
+message GetLatestLedgerResponse {
+  bytes hash = 1; // 32-byte raw ledger hash
+  uint32 protocol_version = 2;
+  uint32 sequence = 3;
+  int64 ledger_close_time = 4;
+  bytes ledger_header_xdr = 5; // LedgerHeader binary XDR
+  bytes ledger_metadata_xdr = 6; // LedgerCloseMetaV2 binary XDR
+}
+
+// ========== WriteReport ==========
+
+message WriteReportRequest {
+  string contract_id = 1; // Stellar contract address (C… StrKey)
+  sdk.v1alpha.ReportResponse report = 2; // signed report from consensus
+}
+
+enum ReceiverContractExecutionStatus {
+  RECEIVER_CONTRACT_EXECUTION_STATUS_SUCCESS = 0;
+  RECEIVER_CONTRACT_EXECUTION_STATUS_REVERTED = 1;
+}
+
+message WriteReportReply {
+  TxStatus tx_status = 1;
+  optional ReceiverContractExecutionStatus receiver_contract_execution_status = 2;
+  optional string tx_hash = 3;
+  optional uint64 transaction_fee = 4; // total fee paid in stroops
+  optional uint32 ledger_sequence = 5;
+}
+
+service Client {
+  option (tools.generator.v1alpha.capability) = {
+    mode: MODE_DON
+    capability_id: "stellar@1.0.0"
+    labels: {
+      key: "ChainSelector"
+      value: {
+        uint64_label: {
+          defaults: [
+            {
+              key: "stellar-mainnet"
+              value: 17783245649066640917
+            },
+            {
+              key: "stellar-testnet"
+              value: 4894814558906953166
+            }
+          ]
+        }
+      }
+    }
+  };
+
+  rpc GetLatestLedger(GetLatestLedgerRequest) returns (GetLatestLedgerResponse);
+  rpc ReadContract(ReadContractRequest) returns (ReadContractResponse);
+  rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
+}
+`
+
 const computeConfidentialworkflowV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.compute.confidentialworkflow.v1alpha;
@@ -1410,6 +1500,10 @@ var allFiles = []*embeddedFile{
 	{
 		name:    "capabilities/blockchain/solana/v1alpha/client.proto",
 		content: blockchainSolanaV1alphaClientEmbedded,
+	},
+	{
+		name:    "capabilities/blockchain/stellar/v1alpha/client.proto",
+		content: blockchainStellarV1alphaClientEmbedded,
 	},
 	{
 		name:    "capabilities/compute/confidentialworkflow/v1alpha/client.proto",
