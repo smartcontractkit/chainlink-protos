@@ -53,6 +53,10 @@ message HTTPRequest {
   // "san_marino_aes_gcm_encryption_key" secret.
   // Default is false (response returned unencrypted).
   bool encrypt_output = 9;
+  // mtls, when set, configures mutual TLS for this request. Serialized here
+  // (on HTTPRequest, not just ConfidentialHTTPRequest) so the config reaches
+  // the enclave through the standard GetInput() serialization path.
+  optional MtlsAuth mtls = 10;
 }
 
 // HTTPResponse contains the HTTP response from the enclave.
@@ -64,6 +68,17 @@ message HTTPResponse {
   // multi_headers are the response headers.
   // Supports multiple values per header key.
   map<string, HeaderValues> multi_headers = 3;
+}
+
+// MtlsAuth configures mutual TLS for the outbound request. The client
+// certificate and private key are fetched from Vault DON at execution time;
+// only the SecretIdentifier key names (non-sensitive) are stored here.
+// Every SecretIdentifier referenced inside MtlsAuth must also appear in
+// vault_don_secrets (enforced by the capability validator).
+message MtlsAuth {
+  SecretIdentifier client_cert = 1;  // required; Vault key for PEM-encoded client certificate
+  SecretIdentifier client_key  = 2;  // required; Vault key for PEM-encoded private key
+  SecretIdentifier ca_cert     = 3;  // optional; Vault key for custom CA certificate PEM
 }
 
 // ConfidentialHTTPRequest is the input provided to the confidential HTTP capability.
@@ -78,6 +93,10 @@ message ConfidentialHTTPRequest {
   // caller provided — preserving the legacy "{{.SECRET_NAME}}" header-template
   // behavior.
   optional AuthConfig auth = 3;
+  // mtls, when set, configures mutual TLS for the outbound request. mTLS is
+  // transport-level and can be combined with any auth method. The cert/key
+  // PEM values are fetched from Vault DON and never leave the enclave.
+  optional MtlsAuth mtls = 4;
 }
 
 // AuthConfig selects one of the supported request-signing methods.
