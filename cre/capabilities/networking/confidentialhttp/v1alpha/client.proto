@@ -11,6 +11,17 @@ message SecretIdentifier {
   optional string owner = 3;
 }
 
+// StringOrSecret allows a field to carry either a plain string value
+// (used directly) or a SecretIdentifier (resolved from the vault at
+// signing time). Use this for fields that aren't necessarily secret,
+// e.g. a username or AWS access_key_id.
+message StringOrSecret {
+  oneof value {
+    string plain = 1;
+    SecretIdentifier secret = 2;
+  }
+}
+
 // HeaderValues represents multiple values for a single header key.
 message HeaderValues {
   repeated string values = 1;
@@ -42,6 +53,10 @@ message HTTPRequest {
   // "san_marino_aes_gcm_encryption_key" secret.
   // Default is false (response returned unencrypted).
   bool encrypt_output = 9;
+  // mtls, when set, configures mutual TLS for this request. Serialized here
+  // (on HTTPRequest, not just ConfidentialHTTPRequest) so the config reaches
+  // the enclave through the standard GetInput() serialization path.
+  optional MtlsAuth mtls = 10;
 }
 
 // HTTPResponse contains the HTTP response from the enclave.
@@ -55,11 +70,90 @@ message HTTPResponse {
   map<string, HeaderValues> multi_headers = 3;
 }
 
+// MtlsAuth configures mutual TLS for the outbound request. The client
+// certificate and private key are fetched from Vault DON at execution time;
+// only the SecretIdentifier key names (non-sensitive) are stored here.
+// Every SecretIdentifier referenced inside MtlsAuth must also appear in
+// vault_don_secrets (enforced by the capability validator).
+// mtls requires an https:// URL.
+message MtlsAuth {
+  SecretIdentifier client_cert = 1; // required; Vault key for PEM-encoded client certificate
+  SecretIdentifier client_key = 2; // required; Vault key for PEM-encoded private key
+  SecretIdentifier ca_cert = 3; // optional; Vault key for custom CA certificate PEM
+}
+
+// AuthConfig selects one of the supported request-signing methods.
+// Every SecretIdentifier referenced inside AuthConfig must also appear in
+// vault_don_secrets (enforced by the capability validator).
+// auth requires an https:// URL.
+message AuthConfig {
+  oneof method {
+    ApiKeyAuth api_key = 1;
+    BasicAuth basic = 2;
+    BearerAuth bearer = 3;
+    AwsSigV4Auth aws_sig_v4 = 4;
+  }
+}
+
+// ApiKeyAuth attaches a secret value to a chosen header.
+// Renders as:  <header_name>: <value_prefix><secret-value>
+// Example (header_name="x-api-key"):
+//   x-api-key: <secret>
+message ApiKeyAuth {
+  string header_name = 1; // required, e.g. "x-api-key", "Authorization"
+  SecretIdentifier secret = 2; // required; the API key value
+  string value_prefix = 3; // optional, e.g. "ApiKey ", "Token "
+}
+
+// BasicAuth renders: Authorization: Basic base64(username ":" password).
+message BasicAuth {
+  StringOrSecret username = 1; // required
+  SecretIdentifier password = 2; // required
+}
+
+// BearerAuth attaches a pre-issued long-lived token.
+// Default behavior: Authorization: Bearer <token>
+// header_name and value_prefix allow rare overrides (e.g. GitHub's
+// "Authorization: token <pat>").
+message BearerAuth {
+  SecretIdentifier token = 1; // required
+  string header_name = 2; // optional override, default "Authorization"
+  string value_prefix = 3; // optional override, default "Bearer "
+}
+
+// AwsSigV4Auth implements AWS Signature Version 4.
+// Uses github.com/aws/aws-sdk-go-v2/aws/signer/v4 under the hood.
+message AwsSigV4Auth {
+  StringOrSecret access_key_id = 1; // required
+  SecretIdentifier secret_access_key = 2; // required
+  SecretIdentifier session_token = 3; // optional (for STS temporary credentials)
+  string region = 4; // required, e.g. "us-east-1"
+  string service = 5; // required, e.g. "execute-api", "s3"
+  // Signed headers (comma-separated lowercase). Optional; defaults to
+  // "host;x-amz-date" plus "x-amz-security-token" if session_token is set.
+  repeated string signed_headers = 6;
+  // If true, uses X-Amz-Content-Sha256: UNSIGNED-PAYLOAD (useful for large S3
+  // uploads). Default false.
+  bool unsigned_payload = 7;
+}
+
 // ConfidentialHTTPRequest is the input provided to the confidential HTTP capability.
 // It combines an HTTPRequest with secrets from VaultDON.
 message ConfidentialHTTPRequest {
   repeated SecretIdentifier vault_don_secrets = 1;
   HTTPRequest request = 2;
+  // auth, when set, instructs the enclave to sign the outbound request using
+  // the specified method. Every SecretIdentifier referenced inside AuthConfig
+  // must also appear in vault_don_secrets (enforced by the capability validator).
+  // When auth is nil, the request is sent with only the headers/body the
+  // caller provided — preserving the legacy "{{.SECRET_NAME}}" header-template
+  // behavior. Requires an https:// URL.
+  optional AuthConfig auth = 3;
+  // mtls, when set, configures mutual TLS for the outbound request. mTLS is
+  // transport-level and can be combined with any auth method. The cert/key
+  // PEM values are fetched from Vault DON and never leave the enclave.
+  // Requires an https:// URL.
+  optional MtlsAuth mtls = 4;
 }
 
 service Client {
