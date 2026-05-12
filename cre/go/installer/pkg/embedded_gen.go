@@ -373,6 +373,10 @@ service Client {
         uint64_label: {
           defaults: [
             {
+              key: "adi-testnet"
+              value: 9418205736192840573
+            },
+            {
               key: "apechain-testnet-curtis"
               value: 9900119385908781505
             },
@@ -399,6 +403,10 @@ service Client {
             {
               key: "celo-mainnet"
               value: 1346049177634351622
+            },
+            {
+              key: "celo-sepolia"
+              value: 3761762704474186180
             },
             {
               key: "cronos-testnet"
