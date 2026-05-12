@@ -1,0 +1,212 @@
+syntax = "proto3";
+package capabilities.blockchain.stellar.v1alpha;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/cre/go/capabilities/blockchain/stellar/v1alpha";
+
+// ============================================================
+// Scalar 128/256-bit integer parts
+// These mirror the XDR UInt128Parts / Int128Parts / UInt256Parts / Int256Parts.
+// ============================================================
+
+message UInt128Parts {
+  uint64 hi = 1;
+  uint64 lo = 2;
+}
+
+message Int128Parts {
+  int64  hi = 1;
+  uint64 lo = 2;
+}
+
+message UInt256Parts {
+  uint64 hi_hi = 1;
+  uint64 hi_lo = 2;
+  uint64 lo_hi = 3;
+  uint64 lo_lo = 4;
+}
+
+message Int256Parts {
+  int64  hi_hi = 1;
+  uint64 hi_lo = 2;
+  uint64 lo_hi = 3;
+  uint64 lo_lo = 4;
+}
+
+// ============================================================
+// SCError  (XDR: union SCError switch (SCErrorType type))
+// ============================================================
+
+message ScError {
+  enum Type {
+    SCE_CONTRACT = 0;
+    SCE_WASM_VM  = 1;
+    SCE_CONTEXT  = 2;
+    SCE_STORAGE  = 3;
+    SCE_OBJECT   = 4;
+    SCE_CRYPTO   = 5;
+    SCE_EVENTS   = 6;
+    SCE_BUDGET   = 7;
+    SCE_VALUE    = 8;
+    SCE_AUTH     = 9;
+  }
+
+  enum Code {
+    SCEC_ARITH_DOMAIN    = 0;
+    SCEC_INDEX_BOUNDS    = 1;
+    SCEC_INVALID_INPUT   = 2;
+    SCEC_MISSING_VALUE   = 3;
+    SCEC_EXISTING_VALUE  = 4;
+    SCEC_EXCEEDED_LIMIT  = 5;
+    SCEC_INVALID_ACTION  = 6;
+    SCEC_INTERNAL_ERROR  = 7;
+    SCEC_UNEXPECTED_TYPE = 8;
+    SCEC_UNEXPECTED_SIZE = 9;
+  }
+
+  Type type = 1;
+
+  // For SCE_CONTRACT: user-defined numeric code.
+  // For all other types: one of the well-known SCErrorCode values.
+  oneof code_or_contract {
+    uint32 contract_code = 2;
+    Code   code          = 3;
+  }
+}
+
+// ============================================================
+// SCAddress  (XDR: union SCAddress switch (SCAddressType type))
+// ============================================================
+
+message MuxedEd25519Account {
+  uint64 id       = 1;
+  bytes  ed25519  = 2; // 32-byte Ed25519 public key
+}
+
+// A claimable balance ID is simply a 32-byte hash tagged with a type.
+// We encode only the v0 variant (hash bytes) since that is the only
+// type in the current protocol.
+message ClaimableBalanceId {
+  bytes v0 = 1; // 32-byte SHA-256 hash
+}
+
+message ScAddress {
+  oneof address {
+    bytes                account_id           = 1; // 32-byte Ed25519 public key (AccountID)
+    bytes                contract_id          = 2; // 32-byte contract hash (ContractID)
+    MuxedEd25519Account  muxed_account        = 3; // muxed Ed25519 account
+    ClaimableBalanceId   claimable_balance_id = 4;
+    bytes                liquidity_pool_id    = 5; // 32-byte pool hash (PoolID)
+  }
+}
+
+// ============================================================
+// Contract executable  (XDR: union ContractExecutable)
+// ============================================================
+
+message ContractExecutable {
+  oneof type {
+    bytes wasm_hash      = 1; // SHA-256 hash of the WASM module
+    bool  stellar_asset  = 2; // true ⇒ CONTRACT_EXECUTABLE_STELLAR_ASSET
+  }
+}
+
+// ============================================================
+// SCContractInstance  (XDR: struct SCContractInstance)
+// ============================================================
+
+// Forward-declared via ScMapEntry below; proto3 allows forward references.
+message ScContractInstance {
+  ContractExecutable  executable = 1;
+  repeated ScMapEntry storage    = 2; // empty slice ⇒ no storage map (nil in XDR)
+}
+
+// ============================================================
+// SCNonceKey  (XDR: struct SCNonceKey)
+// ============================================================
+
+message ScNonceKey {
+  int64 nonce = 1;
+}
+
+// ============================================================
+// SCMapEntry  (XDR: struct SCMapEntry)
+// ============================================================
+
+message ScMapEntry {
+  ScVal key = 1;
+  ScVal val = 2;
+}
+
+// ============================================================
+// Vec / Map containers  (XDR: SCVec / SCMap typedefs)
+// ============================================================
+
+message ScVec {
+  repeated ScVal values = 1;
+}
+
+message ScMap {
+  repeated ScMapEntry entries = 1;
+}
+
+// ============================================================
+// Void  – sentinel for XDR variants that carry no payload
+// ============================================================
+
+message Void {}
+
+// ============================================================
+// SCVal  (XDR: union SCVal switch (SCValType type))
+//
+// The active oneof field implicitly encodes the SCValType
+// discriminant.  Mapping:
+//   b                           → SCV_BOOL
+//   void_val                    → SCV_VOID
+//   error                       → SCV_ERROR
+//   u32                         → SCV_U32
+//   i32                         → SCV_I32
+//   u64                         → SCV_U64
+//   i64                         → SCV_I64
+//   timepoint                   → SCV_TIMEPOINT   (uint64)
+//   duration                    → SCV_DURATION    (uint64)
+//   u128                        → SCV_U128
+//   i128                        → SCV_I128
+//   u256                        → SCV_U256
+//   i256                        → SCV_I256
+//   bytes_val                   → SCV_BYTES
+//   str                         → SCV_STRING
+//   sym                         → SCV_SYMBOL      (≤32 chars)
+//   vec                         → SCV_VEC
+//   map                         → SCV_MAP
+//   address                     → SCV_ADDRESS
+//   contract_instance           → SCV_CONTRACT_INSTANCE
+//   ledger_key_contract_instance → SCV_LEDGER_KEY_CONTRACT_INSTANCE
+//   nonce_key                   → SCV_LEDGER_KEY_NONCE
+// ============================================================
+
+message ScVal {
+  oneof value {
+    bool               b                            =  1;
+    Void               void_val                     =  2;
+    ScError            error                        =  3;
+    uint32             u32                          =  4;
+    int32              i32                          =  5;
+    uint64             u64                          =  6;
+    int64              i64                          =  7;
+    uint64             timepoint                    =  8;
+    uint64             duration                     =  9;
+    UInt128Parts       u128                         = 10;
+    Int128Parts        i128                         = 11;
+    UInt256Parts       u256                         = 12;
+    Int256Parts        i256                         = 13;
+    bytes              bytes_val                    = 14;
+    string             str                          = 15;
+    string             sym                          = 16;
+    ScVec              vec                          = 17;
+    ScMap              map                          = 18;
+    ScAddress          address                      = 19;
+    ScContractInstance contract_instance            = 20;
+    Void               ledger_key_contract_instance = 21;
+    ScNonceKey         nonce_key                    = 22;
+  }
+}
