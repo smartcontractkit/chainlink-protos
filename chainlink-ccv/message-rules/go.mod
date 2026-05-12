@@ -1,9 +1,8 @@
-module github.com/smartcontractkit/chainlink-protos/chainlink-ccv/message-discovery
+module github.com/smartcontractkit/chainlink-protos/chainlink-ccv/message-rules
 
 go 1.24.0
 
 require (
-	github.com/smartcontractkit/chainlink-protos/chainlink-ccv/verifier v0.0.0-20251210213124-585855c1471e
 	google.golang.org/grpc v1.79.3
 	google.golang.org/protobuf v1.36.10
 )

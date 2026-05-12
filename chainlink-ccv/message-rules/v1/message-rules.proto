@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package chainlink_ccv.message_rules.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/chainlink-ccv/message-rules/v1";
+
+service MessageRules {
+  rpc ListMessageRules(ListMessageRulesRequest) returns (ListMessageRulesResponse);
+}
+
+message ListMessageRulesRequest {}
+
+message ListMessageRulesResponse {
+  repeated MessageRule rules = 1;
+}
+
+message MessageRule {
+  string id = 1;
+  oneof condition {
+    ChainMessageRule chain = 2;
+    LaneMessageRule lane = 3;
+    TokenMessageRule token = 4;
+  }
+  int64 created_at_unix_millis = 5;
+  int64 updated_at_unix_millis = 6;
+}
+
+message ChainMessageRule {
+  uint64 chain_selector = 1;
+}
+
+message LaneMessageRule {
+  uint64 selector_a = 1;
+  uint64 selector_b = 2;
+}
+
+message TokenMessageRule {
+  uint64 chain_selector = 1;
+  bytes token_address = 2;
+}

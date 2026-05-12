@@ -8,5 +8,6 @@ enum EditSemantics {
   SEMANTICS_INSERT = 0;
   SEMANTICS_UPSERT = 1;
   SEMANTICS_UPDATE = 2;
+  SEMANTICS_DELETE = 3;
 }
 
