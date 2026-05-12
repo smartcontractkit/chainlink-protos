@@ -53,6 +53,9 @@ message HTTPRequest {
   // "san_marino_aes_gcm_encryption_key" secret.
   // Default is false (response returned unencrypted).
   bool encrypt_output = 9;
+  // mtls, when set, configures mutual TLS for this request. Serialized here
+  // (on HTTPRequest) so it is included in GetInput() and reaches the enclave.
+  optional MtlsAuth mtls = 10;
 }
 
 // HTTPResponse contains the HTTP response from the enclave.
@@ -78,6 +81,19 @@ message ConfidentialHTTPRequest {
   // caller provided — preserving the legacy "{{.SECRET_NAME}}" header-template
   // behavior.
   optional AuthConfig auth = 3;
+  // mtls, when set, configures mutual TLS for the outbound request. mTLS is
+  // a transport-level mechanism and operates independently of auth.
+  optional MtlsAuth mtls = 4;
+}
+
+// MtlsAuth configures mutual TLS for the outbound request. The client
+// certificate and private key are resolved from VaultDON at execution time.
+// Every SecretIdentifier referenced inside MtlsAuth must also appear in
+// vault_don_secrets (enforced by the capability validator).
+message MtlsAuth {
+  SecretIdentifier client_cert = 1; // required; PEM-encoded client certificate
+  SecretIdentifier client_key  = 2; // required; PEM-encoded private key
+  SecretIdentifier ca_cert     = 3; // optional; PEM-encoded CA bundle for server verification
 }
 
 // AuthConfig selects one of the supported request-signing methods.
