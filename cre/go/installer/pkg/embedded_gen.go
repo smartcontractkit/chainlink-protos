@@ -1057,21 +1057,20 @@ service Client {
 const blockchainStellarV1alphaClientEmbedded = `syntax = "proto3";
 package capabilities.blockchain.stellar.v1alpha;
 
+import "capabilities/blockchain/stellar/v1alpha/scval.proto";
 import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
-import "capabilities/blockchain/stellar/v1alpha/scval.proto";
 
 enum TxStatus {
-    TX_STATUS_FATAL = 0;
-    TX_STATUS_REVERTED = 1;
-    TX_STATUS_SUCCESS = 2;
+  TX_STATUS_FATAL = 0;
+  TX_STATUS_REVERTED = 1;
+  TX_STATUS_SUCCESS = 2;
 }
-
 
 message ReadContractRequest {
   string contract_id = 1;
   string function = 2;
-  repeated ScVal args = 3;  // Typed Soroban contract arguments (replaces raw XDR bytes)
+  repeated ScVal args = 3; // Typed Soroban contract arguments (replaces raw XDR bytes)
   // Optional: 0 = latest
   uint32 ledger_sequence = 4;
 }
@@ -1089,18 +1088,18 @@ message ReadContractResponse {
 message GetLatestLedgerRequest {}
 
 message GetLatestLedgerResponse {
-  bytes  hash = 1;             // 32-byte raw ledger hash
+  bytes hash = 1; // 32-byte raw ledger hash
   uint32 protocol_version = 2;
   uint32 sequence = 3;
-  int64  ledger_close_time = 4;
-  bytes  ledger_header_xdr = 5;   // LedgerHeader binary XDR
-  bytes  ledger_metadata_xdr = 6; // LedgerCloseMetaV2 binary XDR
+  int64 ledger_close_time = 4;
+  bytes ledger_header_xdr = 5; // LedgerHeader binary XDR
+  bytes ledger_metadata_xdr = 6; // LedgerCloseMetaV2 binary XDR
 }
 
 // ========== WriteReport ==========
 
 message WriteReportRequest {
-  string contract_id = 1;                // Stellar contract address (C… StrKey)
+  string contract_id = 1; // Stellar contract address (C… StrKey)
   sdk.v1alpha.ReportResponse report = 2; // signed report from consensus
 }
 
@@ -1162,7 +1161,7 @@ message UInt128Parts {
 }
 
 message Int128Parts {
-  int64  hi = 1;
+  int64 hi = 1;
   uint64 lo = 2;
 }
 
@@ -1174,7 +1173,7 @@ message UInt256Parts {
 }
 
 message Int256Parts {
-  int64  hi_hi = 1;
+  int64 hi_hi = 1;
   uint64 hi_lo = 2;
   uint64 lo_hi = 3;
   uint64 lo_lo = 4;
@@ -1187,26 +1186,26 @@ message Int256Parts {
 message ScError {
   enum Type {
     SCE_CONTRACT = 0;
-    SCE_WASM_VM  = 1;
-    SCE_CONTEXT  = 2;
-    SCE_STORAGE  = 3;
-    SCE_OBJECT   = 4;
-    SCE_CRYPTO   = 5;
-    SCE_EVENTS   = 6;
-    SCE_BUDGET   = 7;
-    SCE_VALUE    = 8;
-    SCE_AUTH     = 9;
+    SCE_WASM_VM = 1;
+    SCE_CONTEXT = 2;
+    SCE_STORAGE = 3;
+    SCE_OBJECT = 4;
+    SCE_CRYPTO = 5;
+    SCE_EVENTS = 6;
+    SCE_BUDGET = 7;
+    SCE_VALUE = 8;
+    SCE_AUTH = 9;
   }
 
   enum Code {
-    SCEC_ARITH_DOMAIN    = 0;
-    SCEC_INDEX_BOUNDS    = 1;
-    SCEC_INVALID_INPUT   = 2;
-    SCEC_MISSING_VALUE   = 3;
-    SCEC_EXISTING_VALUE  = 4;
-    SCEC_EXCEEDED_LIMIT  = 5;
-    SCEC_INVALID_ACTION  = 6;
-    SCEC_INTERNAL_ERROR  = 7;
+    SCEC_ARITH_DOMAIN = 0;
+    SCEC_INDEX_BOUNDS = 1;
+    SCEC_INVALID_INPUT = 2;
+    SCEC_MISSING_VALUE = 3;
+    SCEC_EXISTING_VALUE = 4;
+    SCEC_EXCEEDED_LIMIT = 5;
+    SCEC_INVALID_ACTION = 6;
+    SCEC_INTERNAL_ERROR = 7;
     SCEC_UNEXPECTED_TYPE = 8;
     SCEC_UNEXPECTED_SIZE = 9;
   }
@@ -1217,7 +1216,7 @@ message ScError {
   // For all other types: one of the well-known SCErrorCode values.
   oneof code_or_contract {
     uint32 contract_code = 2;
-    Code   code          = 3;
+    Code code = 3;
   }
 }
 
@@ -1226,8 +1225,8 @@ message ScError {
 // ============================================================
 
 message MuxedEd25519Account {
-  uint64 id       = 1;
-  bytes  ed25519  = 2; // 32-byte Ed25519 public key
+  uint64 id = 1;
+  bytes ed25519 = 2; // 32-byte Ed25519 public key
 }
 
 // A claimable balance ID is simply a 32-byte hash tagged with a type.
@@ -1239,11 +1238,11 @@ message ClaimableBalanceId {
 
 message ScAddress {
   oneof address {
-    bytes                account_id           = 1; // 32-byte Ed25519 public key (AccountID)
-    bytes                contract_id          = 2; // 32-byte contract hash (ContractID)
-    MuxedEd25519Account  muxed_account        = 3; // muxed Ed25519 account
-    ClaimableBalanceId   claimable_balance_id = 4;
-    bytes                liquidity_pool_id    = 5; // 32-byte pool hash (PoolID)
+    bytes account_id = 1; // 32-byte Ed25519 public key (AccountID)
+    bytes contract_id = 2; // 32-byte contract hash (ContractID)
+    MuxedEd25519Account muxed_account = 3; // muxed Ed25519 account
+    ClaimableBalanceId claimable_balance_id = 4;
+    bytes liquidity_pool_id = 5; // 32-byte pool hash (PoolID)
   }
 }
 
@@ -1253,8 +1252,8 @@ message ScAddress {
 
 message ContractExecutable {
   oneof type {
-    bytes wasm_hash      = 1; // SHA-256 hash of the WASM module
-    bool  stellar_asset  = 2; // true ⇒ CONTRACT_EXECUTABLE_STELLAR_ASSET
+    bytes wasm_hash = 1; // SHA-256 hash of the WASM module
+    bool stellar_asset = 2; // true ⇒ CONTRACT_EXECUTABLE_STELLAR_ASSET
   }
 }
 
@@ -1264,8 +1263,8 @@ message ContractExecutable {
 
 // Forward-declared via ScMapEntry below; proto3 allows forward references.
 message ScContractInstance {
-  ContractExecutable  executable = 1;
-  repeated ScMapEntry storage    = 2; // empty slice ⇒ no storage map (nil in XDR)
+  ContractExecutable executable = 1;
+  repeated ScMapEntry storage = 2; // empty slice ⇒ no storage map (nil in XDR)
 }
 
 // ============================================================
@@ -1334,28 +1333,28 @@ message Void {}
 
 message ScVal {
   oneof value {
-    bool               b                            =  1;
-    Void               void_val                     =  2;
-    ScError            error                        =  3;
-    uint32             u32                          =  4;
-    int32              i32                          =  5;
-    uint64             u64                          =  6;
-    int64              i64                          =  7;
-    uint64             timepoint                    =  8;
-    uint64             duration                     =  9;
-    UInt128Parts       u128                         = 10;
-    Int128Parts        i128                         = 11;
-    UInt256Parts       u256                         = 12;
-    Int256Parts        i256                         = 13;
-    bytes              bytes_val                    = 14;
-    string             str                          = 15;
-    string             sym                          = 16;
-    ScVec              vec                          = 17;
-    ScMap              map                          = 18;
-    ScAddress          address                      = 19;
-    ScContractInstance contract_instance            = 20;
-    Void               ledger_key_contract_instance = 21;
-    ScNonceKey         nonce_key                    = 22;
+    bool b = 1;
+    Void void_val = 2;
+    ScError error = 3;
+    uint32 u32 = 4;
+    int32 i32 = 5;
+    uint64 u64 = 6;
+    int64 i64 = 7;
+    uint64 timepoint = 8;
+    uint64 duration = 9;
+    UInt128Parts u128 = 10;
+    Int128Parts i128 = 11;
+    UInt256Parts u256 = 12;
+    Int256Parts i256 = 13;
+    bytes bytes_val = 14;
+    string str = 15;
+    string sym = 16;
+    ScVec vec = 17;
+    ScMap map = 18;
+    ScAddress address = 19;
+    ScContractInstance contract_instance = 20;
+    Void ledger_key_contract_instance = 21;
+    ScNonceKey nonce_key = 22;
   }
 }
 `
