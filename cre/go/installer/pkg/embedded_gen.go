@@ -2045,6 +2045,10 @@ message Decimal {
 
 var allFiles = []*embeddedFile{
 	{
+		name:    "capabilities/blockchain/aptos/v1alpha/client.proto",
+		content: blockchainAptosV1alphaClientEmbedded,
+	},
+	{
 		name:    "capabilities/blockchain/evm/v1alpha/client.proto",
 		content: blockchainEvmV1alphaClientEmbedded,
 	},
