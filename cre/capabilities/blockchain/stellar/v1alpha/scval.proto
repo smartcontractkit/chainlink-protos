@@ -1,8 +1,6 @@
 syntax = "proto3";
 package capabilities.blockchain.stellar.v1alpha;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/cre/go/capabilities/blockchain/stellar/v1alpha";
-
 // ============================================================
 // Scalar 128/256-bit integer parts
 // These mirror the XDR UInt128Parts / Int128Parts / UInt256Parts / Int256Parts.

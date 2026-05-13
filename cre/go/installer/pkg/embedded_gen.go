@@ -510,8 +510,6 @@ import "capabilities/blockchain/stellar/v1alpha/scval.proto";
 import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/cre/go/capabilities/blockchain/stellar/v1alpha";
-
 enum TxStatus {
   TX_STATUS_FATAL = 0;
   TX_STATUS_REVERTED = 1;
@@ -598,8 +596,6 @@ service Client {
 
 const blockchainStellarV1alphaScvalEmbedded = `syntax = "proto3";
 package capabilities.blockchain.stellar.v1alpha;
-
-option go_package = "github.com/smartcontractkit/chainlink-protos/cre/go/capabilities/blockchain/stellar/v1alpha";
 
 // ============================================================
 // Scalar 128/256-bit integer parts
