@@ -1084,7 +1084,8 @@ message ReadContractRequest {
 }
 
 message ReadContractResponse {
-  bytes result = 1;
+  // Result is a serialized base64 string - return value of the Host Function call.
+  string result = 1;
   // Ledger actually used for simulation
   uint32 ledger_sequence = 2;
   // Response
