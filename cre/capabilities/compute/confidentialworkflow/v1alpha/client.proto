@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package capabilities.compute.confidentialworkflow.v1alpha;
 
+import "google/protobuf/empty.proto";
+import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
 // WorkflowExecution is the public data sent to the enclave.
@@ -15,7 +17,7 @@ message WorkflowExecution {
   bytes binary_hash = 2;
   // execute_request is a serialized sdk.v1alpha.ExecuteRequest proto.
   // Contains either a subscribe request or a trigger execution request.
-  bytes execute_request = 3;
+  sdk.v1alpha.ExecuteRequest execute_request = 3;
   // owner is the on-chain owner address of the workflow (hex, 0x-prefixed).
   // Used by the enclave for runtime secret fetching from VaultDON.
   string owner = 4;
@@ -25,6 +27,9 @@ message WorkflowExecution {
   // org_id is the organization identifier for the workflow owner.
   // Used by the enclave when fetching secrets from VaultDON with org-based ownership.
   string org_id = 6;
+
+  // requirements to run this workflow
+  sdk.v1alpha.Requirements requirements = 7;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
@@ -54,7 +59,11 @@ message ConfidentialWorkflowRequest {
 // ConfidentialWorkflowResponse is the output from the confidential workflows capability.
 message ConfidentialWorkflowResponse {
   // execution_result is a serialized sdk.v1alpha.ExecutionResult proto.
-  bytes execution_result = 1;
+  sdk.v1alpha.ExecutionResult execution_result = 1;
+}
+
+message ProvidedTeesResponse {
+  repeated sdk.v1alpha.TeeTypeAndRegions tee = 1;
 }
 
 service Client {
@@ -64,4 +73,5 @@ service Client {
   };
 
   rpc Execute(ConfidentialWorkflowRequest) returns (ConfidentialWorkflowResponse);
+  rpc ProvidedTees(google.protobuf.Empty) returns (ProvidedTeesResponse);
 }
