@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package capabilities.compute.confidentialworkflow.v1alpha;
 
+import "google/protobuf/empty.proto";
+import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
 message SecretIdentifier {
@@ -28,6 +30,13 @@ message WorkflowExecution {
   // execution_id is the unique execution identifier (64 hex chars, 32 bytes).
   // Used by the enclave for runtime secret fetching from VaultDON.
   string execution_id = 6;
+
+  // requirements to run this workflow
+  sdk.v1alpha.Requirements requirements = 7;
+
+  // restrictions on the capabilities and the secrets.bool
+  // This is sent to avoid overhead when a TEE is not compromised, the DON will verify the restrictions on its end as well.
+  sdk.v1alpha.Restrictions restrictions = 8;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
@@ -40,7 +49,11 @@ message ConfidentialWorkflowRequest {
 // ConfidentialWorkflowResponse is the output from the confidential workflows capability.
 message ConfidentialWorkflowResponse {
   // execution_result is a serialized sdk.v1alpha.ExecutionResult proto.
-  bytes execution_result = 1;
+  sdk.v1alpha.ExecutionResult execution_result = 1;
+}
+
+message ProvidedTeesResponse {
+  repeated sdk.v1alpha.TeeTypeAndRegions tee = 1;
 }
 
 service Client {
@@ -50,4 +63,5 @@ service Client {
   };
 
   rpc Execute(ConfidentialWorkflowRequest) returns (ConfidentialWorkflowResponse);
+  rpc ProvidedTees(google.protobuf.Empty) returns (ProvidedTeesResponse);
 }
