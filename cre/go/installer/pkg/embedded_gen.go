@@ -811,6 +811,8 @@ const computeConfidentialworkflowV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.compute.confidentialworkflow.v1alpha;
 
+import "google/protobuf/empty.proto";
+import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
 // WorkflowExecution is the public data sent to the enclave.
@@ -824,7 +826,7 @@ message WorkflowExecution {
   bytes binary_hash = 2;
   // execute_request is a serialized sdk.v1alpha.ExecuteRequest proto.
   // Contains either a subscribe request or a trigger execution request.
-  bytes execute_request = 3;
+  sdk.v1alpha.ExecuteRequest execute_request = 3;
   // owner is the on-chain owner address of the workflow (hex, 0x-prefixed).
   // Used by the enclave for runtime secret fetching from VaultDON.
   string owner = 4;
@@ -834,6 +836,9 @@ message WorkflowExecution {
   // org_id is the organization identifier for the workflow owner.
   // Used by the enclave when fetching secrets from VaultDON with org-based ownership.
   string org_id = 6;
+
+  // requirements to run this workflow
+  sdk.v1alpha.Requirements requirements = 7;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
@@ -863,7 +868,11 @@ message ConfidentialWorkflowRequest {
 // ConfidentialWorkflowResponse is the output from the confidential workflows capability.
 message ConfidentialWorkflowResponse {
   // execution_result is a serialized sdk.v1alpha.ExecutionResult proto.
-  bytes execution_result = 1;
+  sdk.v1alpha.ExecutionResult execution_result = 1;
+}
+
+message ProvidedTeesResponse {
+  repeated sdk.v1alpha.TeeTypeAndRegions tee = 1;
 }
 
 service Client {
@@ -873,6 +882,7 @@ service Client {
   };
 
   rpc Execute(ConfidentialWorkflowRequest) returns (ConfidentialWorkflowResponse);
+  rpc ProvidedTees(google.protobuf.Empty) returns (ProvidedTeesResponse);
 }
 `
 
@@ -1165,6 +1175,7 @@ service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "http-actions@1.0.0-alpha"
+    additional_environments: [ADDITIONAL_ENVIRONMENTS_TEE]
   };
   rpc SendRequest(Request) returns (Response);
 }
@@ -1325,6 +1336,17 @@ message TriggerSubscription {
   string id = 1;
   google.protobuf.Any payload = 2;
   string method = 3;
+  Requirements requirements = 4;
+}
+
+enum TeeType {
+  TEE_TYPE_UNSPECIFIED = 0;
+  TEE_TYPE_AWS_NITRO = 1;
+}
+
+message TeeTypeAndRegions {
+  TeeType type = 1;
+  repeated string regions = 3;
 }
 
 message TriggerSubscriptionRequest {
@@ -1334,6 +1356,25 @@ message TriggerSubscriptionRequest {
 message Trigger {
   uint64 id = 1;
   google.protobuf.Any payload = 2;
+}
+
+message Regions {
+  repeated string regions = 1;
+}
+
+message TeeTypesAndRegions {
+  repeated TeeTypeAndRegions tee_type_and_regions = 1;
+}
+
+message Tee {
+  oneof item {
+    Regions any_regions = 1;
+    TeeTypesAndRegions tee_types_and_regions = 2;
+  }
+}
+
+message Requirements {
+  Tee tee = 1;
 }
 
 message AwaitCapabilitiesRequest {
@@ -1600,10 +1641,16 @@ message Label {
   }
 }
 
+enum AdditionalEnvironments {
+  ADDITIONAL_ENVIRONMENTS_UNSPECIFIED = 0;
+  ADDITIONAL_ENVIRONMENTS_TEE = 1;
+}
+
 message CapabilityMetadata {
   sdk.v1alpha.Mode mode = 1;
   string capability_id = 2;
   map<string, Label> labels = 3;
+  repeated AdditionalEnvironments additional_environments = 4;
 }
 
 extend google.protobuf.ServiceOptions {
