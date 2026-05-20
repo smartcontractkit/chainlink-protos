@@ -173,6 +173,10 @@ service Client {
         uint64_label: {
           defaults: [
             {
+              key: "adi-mainnet"
+              value: 4059281736450291836
+            },
+            {
               key: "adi-testnet"
               value: 9418205736192840573
             },
