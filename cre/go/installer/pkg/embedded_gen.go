@@ -2337,6 +2337,10 @@ var allFiles = []*embeddedFile{
 		content: blockchainEvmV1alphaClientEmbedded,
 	},
 	{
+		name:    "capabilities/blockchain/solana/v1alpha/client.proto",
+		content: blockchainSolanaV1alphaClientEmbedded,
+	},
+	{
 		name:    "capabilities/blockchain/stellar/v1alpha/client.proto",
 		content: blockchainStellarV1alphaClientEmbedded,
 	},
