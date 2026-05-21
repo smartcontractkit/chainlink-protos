@@ -1,0 +1,69 @@
+syntax = "proto3";
+package capabilities.blockchain.solana.v1alpha;
+
+import "sdk/v1alpha/sdk.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
+import "values/v1/values.proto";
+
+
+// Compute budget configuration when submitting txs.
+message ComputeConfig {
+  uint32 compute_limit = 1; // max CUs (approx per-tx limit)
+}
+
+// Transaction execution status returned by submitters/simulations.
+enum TxStatus {
+  TX_STATUS_FATAL = 0; // unrecoverable failure
+  TX_STATUS_ABORTED = 1; // not executed / dropped
+  TX_STATUS_SUCCESS = 2; // executed successfully
+}
+
+// All metas are non-signers.
+message AccountMeta {
+  bytes public_key = 1; // 32 bytes account public key
+  bool is_writable = 2; // write flag
+}
+
+message WriteReportRequest {
+  repeated AccountMeta remaining_accounts = 1; // accounts that are required by the receiver to accept the report
+  bytes receiver = 2; // 32 bytes receiver
+  optional ComputeConfig compute_config = 3;
+  sdk.v1alpha.ReportResponse report = 4;
+}
+
+enum ReceiverContractExecutionStatus {
+  RECEIVER_CONTRACT_EXECUTION_STATUS_SUCCESS = 0;
+  RECEIVER_CONTRACT_EXECUTION_STATUS_REVERTED = 1;
+}
+
+message WriteReportReply {
+  TxStatus tx_status = 1;
+  optional ReceiverContractExecutionStatus receiver_contract_execution_status = 2;
+  optional bytes tx_signature = 3;
+  optional uint64 transaction_fee = 4;
+  optional string error_message = 5;
+}
+
+service Client {
+  option (tools.generator.v1alpha.capability) = {
+    mode: MODE_DON
+    capability_id: "solana@1.0.0"
+    labels: {
+      // from https://github.com/smartcontractkit/chain-selectors/blob/main/selectors.yml
+      // as a subset of the selectors supported on the CRE
+      key: "ChainSelector"
+      value: {
+        uint64_label: {
+          defaults: [
+            {
+              key: "solana-devnet"
+              value: 16423721717087811551
+            }
+          ]
+        }
+      }
+    }
+  };
+
+  rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
+}
