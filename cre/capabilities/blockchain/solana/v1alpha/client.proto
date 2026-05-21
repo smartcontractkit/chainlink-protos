@@ -404,14 +404,6 @@ service Client {
         uint64_label: {
           defaults: [
             {
-              key: "solana-mainnet"
-              value: 124615329519749607
-            },
-            {
-              key: "solana-testnet"
-              value: 6302590918974934319
-            },
-            {
               key: "solana-devnet"
               value: 16423721717087811551
             }
