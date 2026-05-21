@@ -569,6 +569,10 @@ service Client {
               value: 6915682381028791124
             },
             {
+              key: "private-testnet-rhyolite"
+              value: 604447335222770945
+            },
+            {
               key: "sonic-mainnet"
               value: 1673871237479749969
             },
