@@ -3,7 +3,6 @@ package capabilities.blockchain.solana.v1alpha;
 
 import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
-import "values/v1/values.proto";
 
 
 // Compute budget configuration when submitting txs.
