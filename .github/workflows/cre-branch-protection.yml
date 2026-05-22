@@ -70,13 +70,24 @@ jobs:
           done
 
           if [ -s "$FAILURES" ]; then
-            echo "::error::The following commits modify cre/ but are not cherry-picks of commits in capabilities-development:"
+            echo "The following commits modify cre/ but are not cherry-picks of commits in capabilities-development:"
             echo ""
             while IFS= read -r line; do
               echo "  - ${line}"
             done < "$FAILURES"
             echo ""
-            echo "::error::CRE changes must first be merged into 'capabilities-development'. PRs to other branches may only include cherry-picks of commits already in that branch."
+            echo "Trying proto subset fallback (PR cre/**/*.proto vs capabilities-development)..."
+            echo ""
+
+            if BASE_BRANCH="${TARGET_BRANCH}" REQUIRE_PROTO_CHANGES=1 \
+              bash .github/scripts/verify-cre-proto-subset-of-capdev.sh; then
+              echo "Fallback passed: PR proto changes exist on capabilities-development."
+              rm -f "$CAP_PATCH_IDS" "$FAILURES"
+              exit 0
+            fi
+
+            echo ""
+            echo "::error::CRE changes must first be merged into 'capabilities-development'. PRs to other branches may only include cherry-picks of commits already in that branch, or proto changes that already exist on that branch."
             rm -f "$CAP_PATCH_IDS" "$FAILURES"
             exit 1
           fi
