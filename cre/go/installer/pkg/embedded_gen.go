@@ -1174,60 +1174,75 @@ import "google/protobuf/empty.proto";
 import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
+message SecretIdentifier {
+  string key = 1;
+  // namespace defaults to "main" when unset.
+  optional string namespace = 2;
+}
+
 // WorkflowExecution is the public data sent to the enclave.
 // Becomes ComputeRequest.PublicData after proto serialization, which is
 // covered by ComputeRequest.Hash() for F+1 quorum matching at the enclave.
-// All fields here must be byte-identical across workflow DON nodes.
 message WorkflowExecution {
   // workflow_id identifies the workflow to execute.
   string workflow_id = 1;
+  // binary_url is retained for backward compatibility with existing consumers.
+  // New consumers must use ConfidentialWorkflowRequest.binary_url, which lives
+  // outside the hash envelope so each node can mint its own per-node URL
+  // without breaking F+1 quorum. See ConfidentialWorkflowRequest.binary_url.
+  string binary_url = 2;
   // binary_hash is the expected SHA-256 hash of the WASM binary, for integrity verification.
-  bytes binary_hash = 2;
+  bytes binary_hash = 3;
   // execute_request is a serialized sdk.v1alpha.ExecuteRequest proto.
   // Contains either a subscribe request or a trigger execution request.
-  sdk.v1alpha.ExecuteRequest execute_request = 3;
+  bytes execute_request = 4;
   // owner is the on-chain owner address of the workflow (hex, 0x-prefixed).
   // Used by the enclave for runtime secret fetching from VaultDON.
-  string owner = 4;
+  string owner = 5;
   // execution_id is the unique execution identifier (64 hex chars, 32 bytes).
   // Used by the enclave for runtime secret fetching from VaultDON.
-  string execution_id = 5;
+  string execution_id = 6;
   // org_id is the organization identifier for the workflow owner.
   // Used by the enclave when fetching secrets from VaultDON with org-based ownership.
-  string org_id = 6;
-
-  // requirements to run this workflow
-  sdk.v1alpha.Requirements requirements = 7;
+  string org_id = 7;
+  // requirements describes what is needed to run this workflow (e.g. TEE type
+  // and regions).
+  sdk.v1alpha.Requirements requirements = 8;
+  // sdk_execute_request is the structured form of execute_request. It carries
+  // the same sdk.v1alpha.ExecuteRequest as the serialized execute_request bytes
+  // field; the two are independent on the wire (setting one does not populate
+  // the other). Consumers that want the typed message read this; legacy
+  // consumers continue to unmarshal execute_request.
+  sdk.v1alpha.ExecuteRequest sdk_execute_request = 9;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
-// It carries a WorkflowExecution (deterministic across workflow DON nodes,
-// hashed for F+1 quorum) plus per-node-varying data that must live outside
-// the hash envelope.
+// It combines a WorkflowExecution with secrets from VaultDON.
 message ConfidentialWorkflowRequest {
-  WorkflowExecution execution = 1;
-  // binary_url is the pre-signed CloudFront URL used by the enclave to fetch
-  // the WASM binary. The workflow node mints this URL per-execution via
-  // NodeService.DownloadArtifact and ships it alongside the WorkflowExecution.
+  repeated SecretIdentifier vault_don_secrets = 1;
+  WorkflowExecution execution = 2;
+  // binary_url is the pre-signed URL used by the enclave to fetch the WASM
+  // binary. It lives here, on ConfidentialWorkflowRequest, rather than inside
+  // WorkflowExecution: every workflow DON node mints its own URL with its own
+  // signature and expiry timestamp, so the value differs across nodes.
+  // WorkflowExecution serializes into ComputeRequest.PublicData, which is
+  // covered by ComputeRequest.Hash() for F+1 quorum matching at the enclave.
+  // A per-node value inside that envelope would break quorum.
   //
-  // This field is deliberately on ConfidentialWorkflowRequest rather than
-  // inside WorkflowExecution: every workflow DON node mints its own URL with
-  // its own AWS signature and expiry timestamp, so the value differs across
-  // nodes. WorkflowExecution serializes into ComputeRequest.PublicData,
-  // which is covered by ComputeRequest.Hash() for F+1 quorum matching at the
-  // enclave. A per-node value inside that envelope would break quorum.
-  //
-  // The integrity anchor for the fetched bytes is execution.binary_hash,
-  // inside PublicData (and therefore signed and quorum-checked). The URL is
-  // a fetch hint; tampering with it is caught by the hash check on the
-  // returned bytes.
-  string binary_url = 2;
+  // The integrity anchor for the fetched bytes is execution.binary_hash, inside
+  // PublicData (and therefore signed and quorum-checked). The URL is a fetch
+  // hint; tampering with it is caught by the hash check on the returned bytes.
+  string binary_url = 3;
 }
 
 // ConfidentialWorkflowResponse is the output from the confidential workflows capability.
 message ConfidentialWorkflowResponse {
   // execution_result is a serialized sdk.v1alpha.ExecutionResult proto.
-  sdk.v1alpha.ExecutionResult execution_result = 1;
+  bytes execution_result = 1;
+  // sdk_execution_result is the structured form of execution_result. It carries
+  // the same sdk.v1alpha.ExecutionResult as the serialized execution_result
+  // bytes field; the two are independent on the wire.
+  sdk.v1alpha.ExecutionResult sdk_execution_result = 2;
 }
 
 message ProvidedTeesResponse {
