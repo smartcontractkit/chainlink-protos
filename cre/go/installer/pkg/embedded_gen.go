@@ -1408,6 +1408,12 @@ message WorkflowExecution {
   // requirements describes what is needed to run this workflow (e.g. TEE type
   // and regions).
   sdk.v1alpha.Requirements requirements = 8;
+  // sdk_execute_request is the structured form of execute_request. It carries
+  // the same sdk.v1alpha.ExecuteRequest as the serialized execute_request bytes
+  // field; the two are independent on the wire (setting one does not populate
+  // the other). Consumers that want the typed message read this; legacy
+  // consumers continue to unmarshal execute_request.
+  sdk.v1alpha.ExecuteRequest sdk_execute_request = 9;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
@@ -1433,6 +1439,10 @@ message ConfidentialWorkflowRequest {
 message ConfidentialWorkflowResponse {
   // execution_result is a serialized sdk.v1alpha.ExecutionResult proto.
   bytes execution_result = 1;
+  // sdk_execution_result is the structured form of execution_result. It carries
+  // the same sdk.v1alpha.ExecutionResult as the serialized execution_result
+  // bytes field; the two are independent on the wire.
+  sdk.v1alpha.ExecutionResult sdk_execution_result = 2;
 }
 
 message ProvidedTeesResponse {
