@@ -1,0 +1,38 @@
+{
+  "domain": "beholder__chain_capabilities__messages",
+  "schemas": [
+    {
+      "entity": "WriteReportInitiated",
+      "path": "evm/monitoring/write_report.proto",
+      "references": [
+        {
+          "name": "libs/monitoring/execution_context.proto",
+          "entity": "monitoring.ExecutionContext",
+          "path": "libs/monitoring/execution_context.proto"
+        }
+      ]
+    },
+    {
+      "entity": "WriteReportSuccess",
+      "path": "evm/monitoring/write_report.proto",
+      "references": [
+        {
+          "name": "libs/monitoring/execution_context.proto",
+          "entity": "monitoring.ExecutionContext",
+          "path": "libs/monitoring/execution_context.proto"
+        }
+      ]
+    },
+    {
+      "entity": "WriteReportError",
+      "path": "evm/monitoring/write_report.proto",
+      "references": [
+        {
+          "name": "libs/monitoring/execution_context.proto",
+          "entity": "monitoring.ExecutionContext",
+          "path": "libs/monitoring/execution_context.proto"
+        }
+      ]
+    }
+  ]
+}

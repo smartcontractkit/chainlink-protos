@@ -1,4 +1,4 @@
-name: register-data-feeds-schemas
+name: register-chain-capabilities-schemas
 
 on:
   workflow_dispatch:
@@ -6,20 +6,16 @@ on:
     branches:
       - main
     paths:
-      - ".github/workflows/register-data-feeds-schemas.yaml"
-      - "data-feeds/**/*.proto"
-      - "data-feeds/chip-schemas.json"
-      - "data-feeds/chip-job-spec-schemas.json"
-      - "data-feeds/beholder-job-spec-schemas.json"
-      - "data-feeds/beholder-schemas.json"
+      - ".github/workflows/register-chain-capabilities-schemas.yaml"
+      - "chain-capabilities/**/*.proto"
+      - "chain-capabilities/chip-schemas.json"
+      - "chain-capabilities/beholder-schemas.json"
   pull_request:
     paths:
-      - ".github/workflows/register-data-feeds-schemas.yaml"
-      - "data-feeds/**/*.proto"
-      - "data-feeds/chip-schemas.json"
-      - "data-feeds/chip-job-spec-schemas.json"
-      - "data-feeds/beholder-job-spec-schemas.json"
-      - "data-feeds/beholder-schemas.json"
+      - ".github/workflows/register-chain-capabilities-schemas.yaml"
+      - "chain-capabilities/**/*.proto"
+      - "chain-capabilities/chip-schemas.json"
+      - "chain-capabilities/beholder-schemas.json"
 
 jobs:
   register-schemas:
@@ -33,10 +29,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { name: data-feeds,        file: chip-schemas.json }
-          - { name: job-spec,          file: chip-job-spec-schemas.json }
-          - { name: job-spec-beholder, file: beholder-job-spec-schemas.json }
-          - { name: beholder,          file: beholder-schemas.json }
+          - { name: chain-capabilities, file: chip-schemas.json }
+          - { name: beholder,            file: beholder-schemas.json }
 
     steps:
       - uses: actions/checkout@v5
@@ -48,13 +42,13 @@ jobs:
           role-to-assume: ${{ secrets.AWS_IAM_ROLE_PUBLISH_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Register Data Feeds Schemas for ${{ matrix.config.name }} domain
-        uses: smartcontractkit/.github/actions/chip-schema-registration@b1bec0ae729606681897cbf7fad5d7c1d572173e # v1.1.0
+      - name: Register Chain Capabilities Schemas for ${{ matrix.config.name }} domain
+        uses: smartcontractkit/.github/actions/chip-schema-registration@b1bec0ae729606681897cbf7fad5d7c1d572173e  # v1.1.0
         with:
           aws-account-id: ${{ secrets.AWS_ACCOUNT_ID_ROOT }}
           aws-region: us-west-2
-          chip-schema-dir: "data-feeds"
-          chip-config-file-path: "data-feeds/${{ matrix.config.file }}"
+          chip-schema-dir: "chain-capabilities"
+          chip-config-file-path: "chain-capabilities/${{ matrix.config.file }}"
           chip-config-host: ${{ github.ref_name == 'main' && secrets.chip_config_host_prod || secrets.chip_config_host_staging }}
           chip-config-user: ${{ secrets.chip_config_user }}
           chip-config-password: ${{ github.ref_name == 'main' && secrets.chip_config_password_prod || secrets.chip_config_password_staging }}

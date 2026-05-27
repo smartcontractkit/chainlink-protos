@@ -33,5 +33,8 @@
 # Node Platform
 /node-platform/ @smartcontractkit/infra-nodes @smartcontractkit/op-tooling @smartcontractkit/rane
 
+# Chain Capabilities
+/chain-capabilities/ @smartcontractkit/keystone @smartcontractkit/bix-framework @smartcontractkit/op-tooling
+
 # Release changesets do not have owners
 /.changeset/**
