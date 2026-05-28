@@ -170,6 +170,10 @@ service Client {
         uint64_label: {
           defaults: [
             {
+              key: "adi-mainnet"
+              value: 4059281736450291836
+            },
+            {
               key: "adi-testnet"
               value: 9418205736192840573
             },
@@ -360,6 +364,10 @@ service Client {
             {
               key: "private-testnet-andesite"
               value: 6915682381028791124
+            },
+            {
+              key: "private-testnet-rhyolite"
+              value: 604447335222770945
             },
             {
               key: "sonic-mainnet"
