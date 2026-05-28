@@ -1826,9 +1826,9 @@ type OCR2Config_OCRKeyBundle struct {
 	OffchainPublicKey     string                 `protobuf:"bytes,3,opt,name=offchain_public_key,json=offchainPublicKey,proto3" json:"offchain_public_key,omitempty"`
 	OnchainSigningAddress string                 `protobuf:"bytes,4,opt,name=onchain_signing_address,json=onchainSigningAddress,proto3" json:"onchain_signing_address,omitempty"`
 	// Full uncompressed secp256k1 public key (65 bytes, hex-encoded) for EVM OCR2 bundles.
-	OnchainSigningAddressPubKey string `protobuf:"bytes,5,opt,name=onchain_signing_address_pub_key,json=onchainSigningAddressPubKey,proto3" json:"onchain_signing_address_pub_key,omitempty"`
-	unknownFields               protoimpl.UnknownFields
-	sizeCache                   protoimpl.SizeCache
+	OnchainSigningPubKey string `protobuf:"bytes,5,opt,name=onchain_signing_pub_key,json=onchainSigningPubKey,proto3" json:"onchain_signing_pub_key,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *OCR2Config_OCRKeyBundle) Reset() {
@@ -1889,9 +1889,9 @@ func (x *OCR2Config_OCRKeyBundle) GetOnchainSigningAddress() string {
 	return ""
 }
 
-func (x *OCR2Config_OCRKeyBundle) GetOnchainSigningAddressPubKey() string {
+func (x *OCR2Config_OCRKeyBundle) GetOnchainSigningPubKey() string {
 	if x != nil {
-		return x.OnchainSigningAddressPubKey
+		return x.OnchainSigningPubKey
 	}
 	return ""
 }
@@ -2002,7 +2002,7 @@ const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"\tbundle_id\x18\x01 \x01(\tR\bbundleId\x12*\n" +
 	"\x11config_public_key\x18\x02 \x01(\tR\x0fconfigPublicKey\x12.\n" +
 	"\x13offchain_public_key\x18\x03 \x01(\tR\x11offchainPublicKey\x126\n" +
-	"\x17onchain_signing_address\x18\x04 \x01(\tR\x15onchainSigningAddress\"\xca\x06\n" +
+	"\x17onchain_signing_address\x18\x04 \x01(\tR\x15onchainSigningAddress\"\xbb\x06\n" +
 	"\n" +
 	"OCR2Config\x12\x18\n" +
 	"\aenabled\x18\x01 \x01(\bR\aenabled\x12!\n" +
@@ -2015,13 +2015,13 @@ const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"\fP2PKeyBundle\x12\x17\n" +
 	"\apeer_id\x18\x01 \x01(\tR\x06peerId\x12\x1d\n" +
 	"\n" +
-	"public_key\x18\x02 \x01(\tR\tpublicKey\x1a\x85\x02\n" +
+	"public_key\x18\x02 \x01(\tR\tpublicKey\x1a\xf6\x01\n" +
 	"\fOCRKeyBundle\x12\x1b\n" +
 	"\tbundle_id\x18\x01 \x01(\tR\bbundleId\x12*\n" +
 	"\x11config_public_key\x18\x02 \x01(\tR\x0fconfigPublicKey\x12.\n" +
 	"\x13offchain_public_key\x18\x03 \x01(\tR\x11offchainPublicKey\x126\n" +
-	"\x17onchain_signing_address\x18\x04 \x01(\tR\x15onchainSigningAddress\x12D\n" +
-	"\x1fonchain_signing_address_pub_key\x18\x05 \x01(\tR\x1bonchainSigningAddressPubKey\x1a\x8d\x01\n" +
+	"\x17onchain_signing_address\x18\x04 \x01(\tR\x15onchainSigningAddress\x125\n" +
+	"\x17onchain_signing_pub_key\x18\x05 \x01(\tR\x14onchainSigningPubKey\x1a\x8d\x01\n" +
 	"\aPlugins\x12\x16\n" +
 	"\x06commit\x18\x01 \x01(\bR\x06commit\x12\x18\n" +
 	"\aexecute\x18\x02 \x01(\bR\aexecute\x12\x16\n" +
