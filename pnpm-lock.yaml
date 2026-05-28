@@ -15,7 +15,15 @@ importers:
         specifier: 2.29.7
         version: 2.29.7
 
-  chainlink-ccv: {}
+  chainlink-ccv/committee-verifier: {}
+
+  chainlink-ccv/heartbeat: {}
+
+  chainlink-ccv/message-discovery: {}
+
+  chainlink-ccv/message-rules: {}
+
+  chainlink-ccv/verifier: {}
 
   job-distributor: {}
 
