@@ -514,7 +514,6 @@ message GetAccountInfoOpts {
 
 // Reply for GetAccountInfoWithOpts.
 message GetAccountInfoWithOptsReply {
-  RPCContext rpc_context = 1; // read slot
   optional Account value = 2; // account (may be empty)
 }
 
@@ -579,7 +578,6 @@ message OptionalAccountWrapper {
 
 // Reply for GetMultipleAccountsWithOpts.
 message GetMultipleAccountsWithOptsReply {
-  RPCContext rpc_context = 1; // read slot
   repeated OptionalAccountWrapper value = 2; // accounts (nil entries allowed)
 }
 
@@ -719,11 +717,6 @@ message GetTransactionReply {
 // GetTransaction request.
 message GetTransactionRequest {
   bytes signature = 1; // 64-byte signature
-}
-
-// RPC read context.
-message RPCContext {
-  uint64 slot = 1;
 }
 
 // Simulation options.
