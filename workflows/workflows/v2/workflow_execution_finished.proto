@@ -16,4 +16,5 @@ message WorkflowExecutionFinished {
 
   ExecutionStatus status = 5;
   string error = 6;
+  bool executedInTEE = 7;
 }
