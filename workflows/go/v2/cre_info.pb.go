@@ -39,8 +39,12 @@ type CreInfo struct {
 	//   - GRPC source:      "grpc:{source_name}:v1"
 	//   - File source:      "file:{source_name}:v1"
 	WorkflowSource string `protobuf:"bytes,11,opt,name=workflowSource,proto3" json:"workflowSource,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// zone identifies the operational zone (e.g., "zone-a") of the DON this
+	// node belongs to. Sourced from the node's Telemetry.ResourceAttributes.zone
+	// configuration value.
+	Zone          string `protobuf:"bytes,12,opt,name=zone,proto3" json:"zone,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreInfo) Reset() {
@@ -150,11 +154,18 @@ func (x *CreInfo) GetWorkflowSource() string {
 	return ""
 }
 
+func (x *CreInfo) GetZone() string {
+	if x != nil {
+		return x.Zone
+	}
+	return ""
+}
+
 var File_workflows_v2_cre_info_proto protoreflect.FileDescriptor
 
 const file_workflows_v2_cre_info_proto_rawDesc = "" +
 	"\n" +
-	"\x1bworkflows/v2/cre_info.proto\x12\fworkflows.v2\"\xb7\x03\n" +
+	"\x1bworkflows/v2/cre_info.proto\x12\fworkflows.v2\"\xcb\x03\n" +
 	"\aCreInfo\x12\x14\n" +
 	"\x05donID\x18\x01 \x01(\x05R\x05donID\x12\x12\n" +
 	"\x04donF\x18\x02 \x01(\x05R\x04donF\x12\x12\n" +
@@ -169,7 +180,8 @@ const file_workflows_v2_cre_info_proto_rawDesc = "" +
 	"donVersion\x18\n" +
 	" \x01(\tR\n" +
 	"donVersion\x12&\n" +
-	"\x0eworkflowSource\x18\v \x01(\tR\x0eworkflowSourceB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
+	"\x0eworkflowSource\x18\v \x01(\tR\x0eworkflowSource\x12\x12\n" +
+	"\x04zone\x18\f \x01(\tR\x04zoneB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
 
 var (
 	file_workflows_v2_cre_info_proto_rawDescOnce sync.Once

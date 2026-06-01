@@ -23,4 +23,8 @@ message CreInfo {
   //   - GRPC source:      "grpc:{source_name}:v1"
   //   - File source:      "file:{source_name}:v1"
   string workflowSource = 11;
+  // zone identifies the operational zone (e.g., "zone-a") of the DON this
+  // node belongs to. Sourced from the node's Telemetry.ResourceAttributes.zone
+  // configuration value.
+  string zone = 12;
 }
