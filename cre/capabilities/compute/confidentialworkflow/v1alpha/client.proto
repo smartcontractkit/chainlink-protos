@@ -51,13 +51,9 @@ message WorkflowExecution {
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
-// It carries a WorkflowExecution; the enclave fetches any secrets dynamically
-// at runtime via the relay DON.
+// It combines a WorkflowExecution with secrets from VaultDON.
 message ConfidentialWorkflowRequest {
-  // Deprecated: secrets are fetched dynamically by the enclave at runtime via
-  // the relay DON, not declared up front on the request. Retained for
-  // back-compat; no longer populated.
-  repeated SecretIdentifier vault_don_secrets = 1 [deprecated = true];
+  repeated SecretIdentifier vault_don_secrets = 1;
   WorkflowExecution execution = 2;
   // Deprecated: the per-node pre-signed URL approach is superseded. binary_url
   // now travels inside WorkflowExecution (PublicData) as a canonical locator,
