@@ -1521,6 +1521,12 @@ message HeaderValues {
   repeated string values = 1;
 }
 
+// MtlsAuth represents the private-key/cert pair for mtls auth.
+message MtlsAuth {
+  bytes private_key = 1;
+  bytes certificate = 2;
+}
+
 message Request {
   string url = 1;
   string method = 2;
@@ -1529,6 +1535,7 @@ message Request {
   google.protobuf.Duration timeout = 5; // Request timeout duration
   CacheSettings cache_settings = 6;
   map<string, HeaderValues> multi_headers = 7;
+  optional MtlsAuth mtls = 8;
 }
 
 message Response {
