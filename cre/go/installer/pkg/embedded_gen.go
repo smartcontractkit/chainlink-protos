@@ -979,6 +979,7 @@ message FilterLogTriggerRequest {
   bytes contract_idl_json = 4;
   repeated SubkeyConfig subkeys = 5;
   optional CPIFilterConfig cpi_filter_config = 6;
+  bool include_reverted = 7;
 }
 
 message Log {
