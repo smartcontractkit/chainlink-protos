@@ -787,6 +787,43 @@ message GetMultipleAccountsWithOptsRequest {
   GetMultipleAccountsOpts opts = 2;
 }
 
+// Memcmp filter for getProgramAccounts.
+message RPCFilterMemcmp {
+  uint64 offset = 1; // byte offset into account data
+  bytes bytes = 2; // data to match (RPC encodes as base58)
+}
+
+// Account filter for getProgramAccounts (memcmp or data size).
+message RPCFilter {
+  RPCFilterMemcmp memcmp = 1;
+  uint64 data_size = 2; // match accounts with this data length
+}
+
+// Options for GetProgramAccounts.
+message GetProgramAccountsOpts {
+  EncodingType encoding = 1;
+  CommitmentType commitment = 2;
+  DataSlice data_slice = 3;
+  repeated RPCFilter filters = 4;
+}
+
+// Program-owned account with its pubkey.
+message KeyedAccount {
+  bytes pubkey = 1; // 32-byte Pubkey
+  Account account = 2;
+}
+
+// Reply for GetProgramAccounts.
+message GetProgramAccountsReply {
+  repeated KeyedAccount value = 1;
+}
+
+// Request for GetProgramAccounts.
+message GetProgramAccountsRequest {
+  bytes program = 1; // 32-byte program Pubkey
+  GetProgramAccountsOpts opts = 2;
+}
+
 // Reply for GetSignatureStatuses.
 message GetSignatureStatusesReply {
   repeated GetSignatureStatusesResult results = 1; // 1:1 with input
@@ -1048,6 +1085,7 @@ service Client {
   rpc GetBlock(GetBlockRequest) returns (GetBlockReply);
   rpc GetFeeForMessage(GetFeeForMessageRequest) returns (GetFeeForMessageReply);
   rpc GetMultipleAccountsWithOpts(GetMultipleAccountsWithOptsRequest) returns (GetMultipleAccountsWithOptsReply);
+  rpc GetProgramAccounts(GetProgramAccountsRequest) returns (GetProgramAccountsReply);
   rpc GetSignatureStatuses(GetSignatureStatusesRequest) returns (GetSignatureStatusesReply);
   rpc GetSlotHeight(GetSlotHeightRequest) returns (GetSlotHeightReply);
   rpc GetTransaction(GetTransactionRequest) returns (GetTransactionReply);
