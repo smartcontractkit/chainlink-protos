@@ -11,5 +11,10 @@
   "devDependencies": {
     "@changesets/changelog-github": "0.7.0",
     "@changesets/cli": "2.31.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "human-id": "4.1.1"
+    }
   }
 }
