@@ -84,6 +84,8 @@ message OCR2Config {
     string config_public_key = 2;
     string offchain_public_key = 3;
     string onchain_signing_address = 4;
+    // Full uncompressed secp256k1 public key (65 bytes, hex-encoded) for EVM OCR2 bundles.
+    string onchain_signing_pub_key = 5;
   }
 
   message Plugins {

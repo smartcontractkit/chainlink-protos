@@ -173,6 +173,14 @@ service Client {
         uint64_label: {
           defaults: [
             {
+              key: "adi-mainnet"
+              value: 4059281736450291836
+            },
+            {
+              key: "adi-testnet"
+              value: 9418205736192840573
+            },
+            {
               key: "apechain-testnet-curtis"
               value: 9900119385908781505
             },
@@ -199,6 +207,10 @@ service Client {
             {
               key: "celo-mainnet"
               value: 1346049177634351622
+            },
+            {
+              key: "celo-sepolia"
+              value: 3761762704474186180
             },
             {
               key: "cronos-testnet"
@@ -357,6 +369,10 @@ service Client {
               value: 6915682381028791124
             },
             {
+              key: "private-testnet-rhyolite"
+              value: 604447335222770945
+            },
+            {
               key: "sonic-mainnet"
               value: 1673871237479749969
             },
@@ -415,6 +431,75 @@ message WriteReportReply {
   optional bytes tx_hash = 3;
   optional values.v1.BigInt transaction_fee = 4;
   optional string error_message = 5;
+}
+`
+
+const blockchainSolanaV1alphaClientEmbedded = `syntax = "proto3";
+package capabilities.blockchain.solana.v1alpha;
+
+import "sdk/v1alpha/sdk.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
+
+// Compute budget configuration when submitting txs.
+message ComputeConfig {
+  uint32 compute_limit = 1; // max CUs (approx per-tx limit)
+}
+
+// Transaction execution status returned by submitters/simulations.
+enum TxStatus {
+  TX_STATUS_FATAL = 0; // unrecoverable failure
+  TX_STATUS_ABORTED = 1; // not executed / dropped
+  TX_STATUS_SUCCESS = 2; // executed successfully
+}
+
+// All metas are non-signers.
+message AccountMeta {
+  bytes public_key = 1; // 32 bytes account public key
+  bool is_writable = 2; // write flag
+}
+
+message WriteReportRequest {
+  repeated AccountMeta remaining_accounts = 1; // accounts that are required by the receiver to accept the report
+  bytes receiver = 2; // 32 bytes receiver
+  optional ComputeConfig compute_config = 3;
+  sdk.v1alpha.ReportResponse report = 4;
+}
+
+enum ReceiverContractExecutionStatus {
+  RECEIVER_CONTRACT_EXECUTION_STATUS_SUCCESS = 0;
+  RECEIVER_CONTRACT_EXECUTION_STATUS_REVERTED = 1;
+}
+
+message WriteReportReply {
+  TxStatus tx_status = 1;
+  optional ReceiverContractExecutionStatus receiver_contract_execution_status = 2;
+  optional bytes tx_signature = 3;
+  optional uint64 transaction_fee = 4;
+  optional string error_message = 5;
+}
+
+service Client {
+  option (tools.generator.v1alpha.capability) = {
+    mode: MODE_DON
+    capability_id: "solana@1.0.0"
+    labels: {
+      // from https://github.com/smartcontractkit/chain-selectors/blob/main/selectors.yml
+      // as a subset of the selectors supported on the CRE
+      key: "ChainSelector"
+      value: {
+        uint64_label: {
+          defaults: [
+            {
+              key: "solana-devnet"
+              value: 16423721717087811551
+            }
+          ]
+        }
+      }
+    }
+  };
+
+  rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
 }
 `
 
@@ -1318,6 +1403,10 @@ var allFiles = []*embeddedFile{
 	{
 		name:    "capabilities/blockchain/evm/v1alpha/client.proto",
 		content: blockchainEvmV1alphaClientEmbedded,
+	},
+	{
+		name:    "capabilities/blockchain/solana/v1alpha/client.proto",
+		content: blockchainSolanaV1alphaClientEmbedded,
 	},
 	{
 		name:    "capabilities/compute/confidentialworkflow/v1alpha/client.proto",

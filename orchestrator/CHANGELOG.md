@@ -1,5 +1,11 @@
 # @chainlink/orchestrator
 
+## 0.10.1
+
+### Patch Changes
+
+- [#380](https://github.com/smartcontractkit/chainlink-protos/pull/380) [`84746b7`](https://github.com/smartcontractkit/chainlink-protos/commit/84746b70eeeb70dd2739bac20417fc0764b24849) Thanks [@stackman27](https://github.com/stackman27)! - feat(feedsmanager): add OCR2 onchain signing pub key field
+
 ## 0.10.0
 
 ### Minor Changes
