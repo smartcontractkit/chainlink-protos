@@ -910,6 +910,10 @@ message ReadContractRequest {
   string contract_id = 1;
   string function = 2;
   repeated ScVal args = 3; // Typed Soroban contract arguments (replaces raw XDR bytes)
+  // Source account (G… StrKey) to simulate the call as (the invoker). Required for contracts
+  // whose result depends on the caller, e.g. that call require_auth or branch on the invoker.
+  // Leave empty for source-insensitive reads; a deterministic placeholder account is used.
+  string source_account = 4;
 }
 
 message ReadContractResponse {
