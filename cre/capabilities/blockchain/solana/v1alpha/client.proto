@@ -441,7 +441,6 @@ service Client {
               key: "solana-mainnet"
               value: 124615329519749607
             }
-
           ]
         }
       }
