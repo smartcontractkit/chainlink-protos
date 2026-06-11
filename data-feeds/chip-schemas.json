@@ -51,6 +51,10 @@
           "path": "bridge_status/v1/configuration_item.proto"
         }
       ]
+    },
+    {
+      "entity": "data_feeds.on_chain.registry.FeedUpdated",
+      "path": "on_chain/registry/feed_updated.proto"
     }
   ]
 }
