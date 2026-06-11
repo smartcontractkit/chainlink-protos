@@ -1072,6 +1072,10 @@ service Client {
             {
               key: "solana-devnet"
               value: 16423721717087811551
+            },
+            {
+              key: "solana-mainnet"
+              value: 124615329519749607
             }
           ]
         }
@@ -1419,10 +1423,12 @@ message SecretIdentifier {
 message WorkflowExecution {
   // workflow_id identifies the workflow to execute.
   string workflow_id = 1;
-  // binary_url is retained for backward compatibility with existing consumers.
-  // New consumers must use ConfidentialWorkflowRequest.binary_url, which lives
-  // outside the hash envelope so each node can mint its own per-node URL
-  // without breaking F+1 quorum. See ConfidentialWorkflowRequest.binary_url.
+  // binary_url is the URL from which the enclave fetches the compiled WASM
+  // binary. It lives inside WorkflowExecution (PublicData), covered by
+  // ComputeRequest.Hash() for F+1 quorum, so every node agrees on the same
+  // canonical locator. Authentication to the storage service is handled out of
+  // band by the fetch sidecar, so this is a stable, node-agnostic locator
+  // rather than a per-node pre-signed URL.
   string binary_url = 2;
   // binary_hash is the expected SHA-256 hash of the WASM binary, for integrity verification.
   bytes binary_hash = 3;
@@ -1454,18 +1460,11 @@ message WorkflowExecution {
 message ConfidentialWorkflowRequest {
   repeated SecretIdentifier vault_don_secrets = 1;
   WorkflowExecution execution = 2;
-  // binary_url is the pre-signed URL used by the enclave to fetch the WASM
-  // binary. It lives here, on ConfidentialWorkflowRequest, rather than inside
-  // WorkflowExecution: every workflow DON node mints its own URL with its own
-  // signature and expiry timestamp, so the value differs across nodes.
-  // WorkflowExecution serializes into ComputeRequest.PublicData, which is
-  // covered by ComputeRequest.Hash() for F+1 quorum matching at the enclave.
-  // A per-node value inside that envelope would break quorum.
-  //
-  // The integrity anchor for the fetched bytes is execution.binary_hash, inside
-  // PublicData (and therefore signed and quorum-checked). The URL is a fetch
-  // hint; tampering with it is caught by the hash check on the returned bytes.
-  string binary_url = 3;
+  // Deprecated: the per-node pre-signed URL approach is superseded. binary_url
+  // now travels inside WorkflowExecution (PublicData) as a canonical locator,
+  // with authentication to the storage service handled out of band by the fetch
+  // sidecar. Retained for back-compat; no longer populated.
+  string binary_url = 3 [deprecated = true];
 }
 
 // ConfidentialWorkflowResponse is the output from the confidential workflows capability.
