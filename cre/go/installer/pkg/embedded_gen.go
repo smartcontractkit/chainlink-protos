@@ -1072,6 +1072,10 @@ service Client {
             {
               key: "solana-devnet"
               value: 16423721717087811551
+            },
+            {
+              key: "solana-mainnet"
+              value: 124615329519749607
             }
           ]
         }
