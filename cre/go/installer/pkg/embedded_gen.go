@@ -1072,6 +1072,10 @@ service Client {
             {
               key: "solana-devnet"
               value: 16423721717087811551
+            },
+            {
+              key: "solana-mainnet"
+              value: 124615329519749607
             }
           ]
         }
@@ -1110,8 +1114,6 @@ message ReadContractRequest {
   string contract_id = 1;
   string function = 2;
   repeated ScVal args = 3; // Typed Soroban contract arguments (replaces raw XDR bytes)
-  // Optional: 0 = latest
-  uint32 ledger_sequence = 4;
 }
 
 message ReadContractResponse {
