@@ -1,0 +1,6 @@
+---
+beholder:
+  domain: platform
+  schemas:
+    - entity: MeterRecord
+      schema: "metering/v1/meter_record.proto"
