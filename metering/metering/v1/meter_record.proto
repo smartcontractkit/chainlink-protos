@@ -1,0 +1,61 @@
+syntax = "proto3";
+package metering.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/metering/go;metering";
+
+// MeterRecord is a single billable event describing the allocation,
+// deallocation, or utilization change of a durable resource.
+message MeterRecord {
+  // Time at which the metered action occurred.
+  google.protobuf.Timestamp timestamp = 1;
+  // Stable service constant identifying the emitting service, e.g.
+  // "cron-trigger", "http-trigger", "evm-log-trigger", "workflow-syncer-v2".
+  // Deployment environment and zone are NOT part of the entity; they are
+  // carried by transport-level attributes (OTel resource attributes) and by
+  // the per-environment CHiP pipelines.
+  string entity = 2;
+  // Resource pool the action applies to, e.g. "trigger_registrations".
+  string resource = 3;
+  // Billing unit for the utilization value, e.g. "operations".
+  string resource_type = 4;
+  // Billing semantics of this record.
+  MeterAction action = 5;
+  // Quantity and identifying metadata for the action.
+  Utilization utilization = 6;
+}
+
+// Utilization quantifies the resource affected by a metered action.
+message Utilization {
+  // Amount of the resource_type unit affected by the action.
+  int64 value = 1;
+  // Identifying metadata: owner, workflow_id, and resource-specific IDs.
+  map<string, string> labels = 2;
+  // Deterministic deduplication key: the lowercase hex SHA-256 of
+  // "entity|resource|action|resource-id|event-identity". Keys are
+  // level-triggered: producers intentionally re-emit identical keys for the
+  // same resource lifecycle edge (e.g. re-registration on restart, cleanup
+  // overlap). Consumers must use this key for exact-duplicate suppression
+  // ONLY, and derive lifecycle state by ordering records by timestamp per
+  // resource-id label (trigger_id / workflow_id / filter_id). See the module
+  // README for the full consumer contract.
+  string idempotency_key = 3;
+}
+
+// MeterAction identifies the billing semantics of a MeterRecord.
+enum MeterAction {
+  // Unknown / unset.
+  METER_ACTION_UNSPECIFIED = 0;
+  // A durable resource was allocated; billing for it starts.
+  METER_ACTION_RESERVE = 1;
+  // A previously reserved durable resource was deallocated; billing for it
+  // stops. Pair with the RESERVE that shares the same resource-id labels; the
+  // RELEASE value may differ from the paired RESERVE (orphan cleanup emits 0).
+  METER_ACTION_RELEASE = 2;
+  // The utilization of an existing reservation changed without releasing it.
+  METER_ACTION_UPDATE = 3;
+  // Instantaneous consumption billed per occurrence rather than per reservation
+  // lifetime. Reserved for future use; no current producer emits it.
+  METER_ACTION_USAGE = 4;
+}

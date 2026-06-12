@@ -22,6 +22,7 @@ tasks:
       - task proto:gen:rmn
       - task proto:gen:workflows
       - task proto:gen:billing
+      - task proto:gen:metering
       - task proto:gen:storage-service
       - task proto:gen:op-catalog
       - task proto:gen:data-feeds
@@ -77,6 +78,11 @@ tasks:
     desc: "Generate Go code from protobuf files for billing"
     cmds:
       - cd billing && make generate
+
+  proto:gen:metering:
+    desc: "Generate Go code from protobuf files for metering"
+    cmds:
+      - cd metering && make generate
 
   proto:gen:ring:
     desc: "Generate Go code from protobuf files for ring"
@@ -137,6 +143,7 @@ tasks:
       - find ./orchestrator/ -name '*.pb.go' -delete
       - find ./svr/ -name '*.pb.go' -delete
       - find ./billing/ -name '*.pb.go' -delete
+      - find ./metering/ -name '*.pb.go' -delete
       - find ./workflows/ -name '*.pb.go' -delete
       - find ./op-catalog/ -name '*.pb.go' -delete
       - find ./data-feeds/ -name '*.pb.go' -delete

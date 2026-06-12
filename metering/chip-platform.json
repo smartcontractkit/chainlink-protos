@@ -1,0 +1,9 @@
+{
+  "domain": "beholder__platform__messages",
+  "schemas": [
+    {
+      "entity": "metering.v1.MeterRecord",
+      "path": "metering/v1/meter_record.proto"
+    }
+  ]
+}
