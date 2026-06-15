@@ -139,7 +139,6 @@ message SubmitTransactionReply {
   TxStatus tx_status = 1;
   string tx_hash = 2;
   string tx_idempotency_key = 3;
-  uint64 tx_timestamp = 4; // transaction timestamp in microseconds
 }
 
 message GasConfig {
