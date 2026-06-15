@@ -22,90 +22,21 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// MeterAction identifies the billing semantics of a MeterRecord.
-type MeterAction int32
-
-const (
-	// Unknown / unset.
-	MeterAction_METER_ACTION_UNSPECIFIED MeterAction = 0
-	// A durable resource was allocated; billing for it starts.
-	MeterAction_METER_ACTION_RESERVE MeterAction = 1
-	// A previously reserved durable resource was deallocated; billing for it
-	// stops. Pair with the RESERVE that shares the same resource-id labels; the
-	// RELEASE value may differ from the paired RESERVE (orphan cleanup emits 0).
-	MeterAction_METER_ACTION_RELEASE MeterAction = 2
-	// The utilization of an existing reservation changed without releasing it.
-	MeterAction_METER_ACTION_UPDATE MeterAction = 3
-	// Instantaneous consumption billed per occurrence rather than per reservation
-	// lifetime. Reserved for future use; no current producer emits it.
-	MeterAction_METER_ACTION_USAGE MeterAction = 4
-)
-
-// Enum value maps for MeterAction.
-var (
-	MeterAction_name = map[int32]string{
-		0: "METER_ACTION_UNSPECIFIED",
-		1: "METER_ACTION_RESERVE",
-		2: "METER_ACTION_RELEASE",
-		3: "METER_ACTION_UPDATE",
-		4: "METER_ACTION_USAGE",
-	}
-	MeterAction_value = map[string]int32{
-		"METER_ACTION_UNSPECIFIED": 0,
-		"METER_ACTION_RESERVE":     1,
-		"METER_ACTION_RELEASE":     2,
-		"METER_ACTION_UPDATE":      3,
-		"METER_ACTION_USAGE":       4,
-	}
-)
-
-func (x MeterAction) Enum() *MeterAction {
-	p := new(MeterAction)
-	*p = x
-	return p
-}
-
-func (x MeterAction) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (MeterAction) Descriptor() protoreflect.EnumDescriptor {
-	return file_metering_v1_meter_record_proto_enumTypes[0].Descriptor()
-}
-
-func (MeterAction) Type() protoreflect.EnumType {
-	return &file_metering_v1_meter_record_proto_enumTypes[0]
-}
-
-func (x MeterAction) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use MeterAction.Descriptor instead.
-func (MeterAction) EnumDescriptor() ([]byte, []int) {
-	return file_metering_v1_meter_record_proto_rawDescGZIP(), []int{0}
-}
-
-// MeterRecord is a single billable event describing the allocation,
-// deallocation, or utilization change of a durable resource.
+// MeterRecord is a single state-transition event describing the allocation,
+// deallocation, or utilization change of a durable resource. It captures one
+// lifecycle edge; periodic absolute state (the level of all active resources
+// at a tick) is carried instead by Snapshot.
 type MeterRecord struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Time at which the metered action occurred.
 	Timestamp *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	// Stable service constant identifying the emitting service, e.g.
-	// "cron-trigger", "http-trigger", "evm-log-trigger", "workflow-syncer-v2".
-	// Deployment environment and zone are NOT part of the entity; they are
-	// carried by transport-level attributes (OTel resource attributes) and by
-	// the per-environment CHiP pipelines.
-	Entity string `protobuf:"bytes,2,opt,name=entity,proto3" json:"entity,omitempty"`
-	// Resource pool the action applies to, e.g. "trigger_registrations".
-	Resource string `protobuf:"bytes,3,opt,name=resource,proto3" json:"resource,omitempty"`
-	// Billing unit for the utilization value, e.g. "operations".
-	ResourceType string `protobuf:"bytes,4,opt,name=resource_type,json=resourceType,proto3" json:"resource_type,omitempty"`
-	// Billing semantics of this record.
-	Action MeterAction `protobuf:"varint,5,opt,name=action,proto3,enum=metering.v1.MeterAction" json:"action,omitempty"`
+	// Structured identity of the affected resource (deployment/DON/node
+	// dimensions + service + resource/resource_type + the physical resource_id).
+	Identity *ResourceIdentity `protobuf:"bytes,2,opt,name=identity,proto3" json:"identity,omitempty"`
+	// Billing semantics of this state transition.
+	Action MeterAction `protobuf:"varint,3,opt,name=action,proto3,enum=metering.v1.MeterAction" json:"action,omitempty"`
 	// Quantity and identifying metadata for the action.
-	Utilization   *Utilization `protobuf:"bytes,6,opt,name=utilization,proto3" json:"utilization,omitempty"`
+	Utilization   *Utilization `protobuf:"bytes,4,opt,name=utilization,proto3" json:"utilization,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -147,25 +78,11 @@ func (x *MeterRecord) GetTimestamp() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *MeterRecord) GetEntity() string {
+func (x *MeterRecord) GetIdentity() *ResourceIdentity {
 	if x != nil {
-		return x.Entity
+		return x.Identity
 	}
-	return ""
-}
-
-func (x *MeterRecord) GetResource() string {
-	if x != nil {
-		return x.Resource
-	}
-	return ""
-}
-
-func (x *MeterRecord) GetResourceType() string {
-	if x != nil {
-		return x.ResourceType
-	}
-	return ""
+	return nil
 }
 
 func (x *MeterRecord) GetAction() MeterAction {
@@ -182,102 +99,16 @@ func (x *MeterRecord) GetUtilization() *Utilization {
 	return nil
 }
 
-// Utilization quantifies the resource affected by a metered action.
-type Utilization struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Amount of the resource_type unit affected by the action.
-	Value int64 `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
-	// Identifying metadata: owner, workflow_id, and resource-specific IDs.
-	Labels map[string]string `protobuf:"bytes,2,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// Deterministic deduplication key: the lowercase hex SHA-256 of
-	// "entity|resource|action|resource-id|event-identity". Keys are
-	// level-triggered: producers intentionally re-emit identical keys for the
-	// same resource lifecycle edge (e.g. re-registration on restart, cleanup
-	// overlap). Consumers must use this key for exact-duplicate suppression
-	// ONLY, and derive lifecycle state by ordering records by timestamp per
-	// resource-id label (trigger_id / workflow_id / filter_id). See the module
-	// README for the full consumer contract.
-	IdempotencyKey string `protobuf:"bytes,3,opt,name=idempotency_key,json=idempotencyKey,proto3" json:"idempotency_key,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *Utilization) Reset() {
-	*x = Utilization{}
-	mi := &file_metering_v1_meter_record_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *Utilization) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Utilization) ProtoMessage() {}
-
-func (x *Utilization) ProtoReflect() protoreflect.Message {
-	mi := &file_metering_v1_meter_record_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Utilization.ProtoReflect.Descriptor instead.
-func (*Utilization) Descriptor() ([]byte, []int) {
-	return file_metering_v1_meter_record_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *Utilization) GetValue() int64 {
-	if x != nil {
-		return x.Value
-	}
-	return 0
-}
-
-func (x *Utilization) GetLabels() map[string]string {
-	if x != nil {
-		return x.Labels
-	}
-	return nil
-}
-
-func (x *Utilization) GetIdempotencyKey() string {
-	if x != nil {
-		return x.IdempotencyKey
-	}
-	return ""
-}
-
 var File_metering_v1_meter_record_proto protoreflect.FileDescriptor
 
 const file_metering_v1_meter_record_proto_rawDesc = "" +
 	"\n" +
-	"\x1emetering/v1/meter_record.proto\x12\vmetering.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8e\x02\n" +
+	"\x1emetering/v1/meter_record.proto\x12\vmetering.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1ametering/v1/identity.proto\x1a\x1dmetering/v1/utilization.proto\"\xf0\x01\n" +
 	"\vMeterRecord\x128\n" +
-	"\ttimestamp\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12\x16\n" +
-	"\x06entity\x18\x02 \x01(\tR\x06entity\x12\x1a\n" +
-	"\bresource\x18\x03 \x01(\tR\bresource\x12#\n" +
-	"\rresource_type\x18\x04 \x01(\tR\fresourceType\x120\n" +
-	"\x06action\x18\x05 \x01(\x0e2\x18.metering.v1.MeterActionR\x06action\x12:\n" +
-	"\vutilization\x18\x06 \x01(\v2\x18.metering.v1.UtilizationR\vutilization\"\xc5\x01\n" +
-	"\vUtilization\x12\x14\n" +
-	"\x05value\x18\x01 \x01(\x03R\x05value\x12<\n" +
-	"\x06labels\x18\x02 \x03(\v2$.metering.v1.Utilization.LabelsEntryR\x06labels\x12'\n" +
-	"\x0fidempotency_key\x18\x03 \x01(\tR\x0eidempotencyKey\x1a9\n" +
-	"\vLabelsEntry\x12\x10\n" +
-	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\x90\x01\n" +
-	"\vMeterAction\x12\x1c\n" +
-	"\x18METER_ACTION_UNSPECIFIED\x10\x00\x12\x18\n" +
-	"\x14METER_ACTION_RESERVE\x10\x01\x12\x18\n" +
-	"\x14METER_ACTION_RELEASE\x10\x02\x12\x17\n" +
-	"\x13METER_ACTION_UPDATE\x10\x03\x12\x16\n" +
-	"\x12METER_ACTION_USAGE\x10\x04BCZAgithub.com/smartcontractkit/chainlink-protos/metering/go;meteringb\x06proto3"
+	"\ttimestamp\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x129\n" +
+	"\bidentity\x18\x02 \x01(\v2\x1d.metering.v1.ResourceIdentityR\bidentity\x120\n" +
+	"\x06action\x18\x03 \x01(\x0e2\x18.metering.v1.MeterActionR\x06action\x12:\n" +
+	"\vutilization\x18\x04 \x01(\v2\x18.metering.v1.UtilizationR\vutilizationBCZAgithub.com/smartcontractkit/chainlink-protos/metering/go;meteringb\x06proto3"
 
 var (
 	file_metering_v1_meter_record_proto_rawDescOnce sync.Once
@@ -291,20 +122,19 @@ func file_metering_v1_meter_record_proto_rawDescGZIP() []byte {
 	return file_metering_v1_meter_record_proto_rawDescData
 }
 
-var file_metering_v1_meter_record_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_metering_v1_meter_record_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_metering_v1_meter_record_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_metering_v1_meter_record_proto_goTypes = []any{
-	(MeterAction)(0),              // 0: metering.v1.MeterAction
-	(*MeterRecord)(nil),           // 1: metering.v1.MeterRecord
-	(*Utilization)(nil),           // 2: metering.v1.Utilization
-	nil,                           // 3: metering.v1.Utilization.LabelsEntry
-	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
+	(*MeterRecord)(nil),           // 0: metering.v1.MeterRecord
+	(*timestamppb.Timestamp)(nil), // 1: google.protobuf.Timestamp
+	(*ResourceIdentity)(nil),      // 2: metering.v1.ResourceIdentity
+	(MeterAction)(0),              // 3: metering.v1.MeterAction
+	(*Utilization)(nil),           // 4: metering.v1.Utilization
 }
 var file_metering_v1_meter_record_proto_depIdxs = []int32{
-	4, // 0: metering.v1.MeterRecord.timestamp:type_name -> google.protobuf.Timestamp
-	0, // 1: metering.v1.MeterRecord.action:type_name -> metering.v1.MeterAction
-	2, // 2: metering.v1.MeterRecord.utilization:type_name -> metering.v1.Utilization
-	3, // 3: metering.v1.Utilization.labels:type_name -> metering.v1.Utilization.LabelsEntry
+	1, // 0: metering.v1.MeterRecord.timestamp:type_name -> google.protobuf.Timestamp
+	2, // 1: metering.v1.MeterRecord.identity:type_name -> metering.v1.ResourceIdentity
+	3, // 2: metering.v1.MeterRecord.action:type_name -> metering.v1.MeterAction
+	4, // 3: metering.v1.MeterRecord.utilization:type_name -> metering.v1.Utilization
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name
@@ -317,19 +147,20 @@ func file_metering_v1_meter_record_proto_init() {
 	if File_metering_v1_meter_record_proto != nil {
 		return
 	}
+	file_metering_v1_identity_proto_init()
+	file_metering_v1_utilization_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_metering_v1_meter_record_proto_rawDesc), len(file_metering_v1_meter_record_proto_rawDesc)),
-			NumEnums:      1,
-			NumMessages:   3,
+			NumEnums:      0,
+			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_metering_v1_meter_record_proto_goTypes,
 		DependencyIndexes: file_metering_v1_meter_record_proto_depIdxs,
-		EnumInfos:         file_metering_v1_meter_record_proto_enumTypes,
 		MessageInfos:      file_metering_v1_meter_record_proto_msgTypes,
 	}.Build()
 	File_metering_v1_meter_record_proto = out.File

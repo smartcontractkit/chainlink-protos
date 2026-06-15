@@ -1,0 +1,66 @@
+syntax = "proto3";
+package metering.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/metering/go;metering";
+
+// ResourceIdentity is the structured, first-class identity of a durable
+// resource. It is embedded by every metering message (MeterRecord and
+// Snapshot) so downstream aggregators, analytics, and UI can treat each
+// dimension as a discrete column rather than parsing a dotted string or
+// carrying values out-of-band on telemetry.
+message ResourceIdentity {
+  // Deployment product, e.g. "cre-mainline". One of the deployment+DON+node
+  // dimensions used for coarse billing rollup.
+  string product = 1;
+  // Deployment environment, e.g. "production", "staging". A coarse
+  // billing-rollup dimension.
+  string environment = 2;
+  // Deployment zone, e.g. "wf-zone-a". A coarse billing-rollup dimension.
+  string zone = 3;
+  // DON identifier the emitting service belongs to. A coarse billing-rollup
+  // dimension; used (with node_id) to count distinct nodes for quorum.
+  string don_id = 4;
+  // Node identifier (the node's CSA public key). A coarse billing-rollup
+  // dimension; lets billing dedup a node's retries and count distinct nodes.
+  string node_id = 5;
+  // Stable service constant identifying the emitting service (the old
+  // `entity`), e.g. "cron-trigger", "http-trigger", "evm-log-trigger",
+  // "workflow-syncer-v2". A coarse billing-rollup dimension.
+  string service = 6;
+  // Resource pool the action applies to, e.g. "trigger_registrations",
+  // "log_filters".
+  string resource = 7;
+  // Billing unit for the utilization value, e.g. "operations",
+  // "log_filter_addresses".
+  string resource_type = 8;
+  // The PHYSICAL/logical resource identity. Workflow-INDEPENDENT where a
+  // shared physical resource exists: for EVM log filters it is the content
+  // hash of (chain_selector + canonicalized addresses + event sigs +
+  // positional topics), so identical filters from different workflows share
+  // one resource_id. For cron/http/syncer (no shared physical resource) it is
+  // the workflow-scoped trigger_id / workflow_id. Note: workflow_id and
+  // trigger_id are NOT identity fields here; they live in Utilization labels.
+  string resource_id = 9;
+}
+
+// MeterAction identifies the billing semantics of a MeterRecord.
+enum MeterAction {
+  // Unknown / unset.
+  METER_ACTION_UNSPECIFIED = 0;
+  // A durable resource was allocated; billing for it starts.
+  METER_ACTION_RESERVE = 1;
+  // A previously reserved durable resource was deallocated by an explicit
+  // action (e.g. unregister, workflow delete/pause); billing for it stops.
+  // Pairs with the RESERVE that shares the same resource_id and carries the
+  // same value. RELEASE is emitted only for genuine deallocations, never for
+  // process-lifecycle cleanup of leaked/orphaned resources; a lost reservation
+  // (e.g. after a node crash) is reconciled by its absence from subsequent
+  // Snapshots, not by a synthetic RELEASE.
+  METER_ACTION_RELEASE = 2;
+  // The utilization of an existing reservation changed without releasing it.
+  METER_ACTION_UPDATE = 3;
+  // Instantaneous consumption billed per occurrence rather than per
+  // reservation lifetime. Reserved for future use; no current producer emits
+  // it.
+  METER_ACTION_USAGE = 4;
+}

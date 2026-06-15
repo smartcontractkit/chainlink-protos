@@ -4,6 +4,10 @@
     {
       "entity": "metering.v1.MeterRecord",
       "path": "metering/v1/meter_record.proto"
+    },
+    {
+      "entity": "metering.v1.MeterSnapshot",
+      "path": "metering/v1/snapshot.proto"
     }
   ]
 }
