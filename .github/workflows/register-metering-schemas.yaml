@@ -7,12 +7,14 @@ on:
       - main
     paths:
       - ".github/workflows/register-metering-schemas.yaml"
-      - "metering/chip-*.json"
+      - "metering/chip-cre.json"
+      - "metering/chip-platform.json"
       - "metering/**/*.proto"
   pull_request:
     paths:
       - ".github/workflows/register-metering-schemas.yaml"
-      - "metering/chip-*.json"
+      - "metering/chip-cre.json"
+      - "metering/chip-platform.json"
       - "metering/**/*.proto"
 
 jobs:
@@ -27,8 +29,8 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { name: cre,      file: chip-cre.json }
-          - { name: platform, file: chip-platform.json }
+          - { name: cre,        file: chip-cre.json }
+          - { name: platform,   file: chip-platform.json }
 
     steps:
       - uses: actions/checkout@v5
