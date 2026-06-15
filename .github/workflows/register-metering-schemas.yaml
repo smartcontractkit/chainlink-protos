@@ -27,6 +27,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
+          - { name: cre,      file: chip-cre.json }
           - { name: platform, file: chip-platform.json }
 
     steps:
