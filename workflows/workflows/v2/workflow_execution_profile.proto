@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package workflows.v2;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
+
+message ExecutionProfile {
+  string workflowID = 1;
+  string workflowExecutionID = 2;
+  string startTime = 3;
+  string endTime = 4;
+  string status = 5;
+  repeated ExecutionProfileStep steps = 6;
+}
+
+message ExecutionProfileStep {
+  string stepID = 1;
+  string startTime = 2;
+  string endTime = 3;
+  string capabilityID = 4;
+  bool hasError = 5;
+}

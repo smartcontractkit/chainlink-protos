@@ -1,5 +1,11 @@
 # @chainlink/job-distributor
 
+## 0.19.0
+
+### Minor Changes
+
+- [#391](https://github.com/smartcontractkit/chainlink-protos/pull/391) [`e09b354`](https://github.com/smartcontractkit/chainlink-protos/commit/e09b354110b82b2fc586e9b2bc7929f8375e5dc3) Thanks [@ChrisAmora](https://github.com/ChrisAmora)! - add pub key to ocr bundle
+
 ## 0.18.0
 
 ### Minor Changes
