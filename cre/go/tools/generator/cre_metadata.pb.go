@@ -23,49 +23,49 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type AdditionalEnironments int32
+type AdditionalEnvironments int32
 
 const (
-	AdditionalEnironments_ADDITIONAL_ENVIRONMENTS_UNSPECIFIED AdditionalEnironments = 0
-	AdditionalEnironments_ADDITIONAL_ENVIRONMENTS_TEE         AdditionalEnironments = 1
+	AdditionalEnvironments_ADDITIONAL_ENVIRONMENTS_UNSPECIFIED AdditionalEnvironments = 0
+	AdditionalEnvironments_ADDITIONAL_ENVIRONMENTS_TEE         AdditionalEnvironments = 1
 )
 
-// Enum value maps for AdditionalEnironments.
+// Enum value maps for AdditionalEnvironments.
 var (
-	AdditionalEnironments_name = map[int32]string{
+	AdditionalEnvironments_name = map[int32]string{
 		0: "ADDITIONAL_ENVIRONMENTS_UNSPECIFIED",
 		1: "ADDITIONAL_ENVIRONMENTS_TEE",
 	}
-	AdditionalEnironments_value = map[string]int32{
+	AdditionalEnvironments_value = map[string]int32{
 		"ADDITIONAL_ENVIRONMENTS_UNSPECIFIED": 0,
 		"ADDITIONAL_ENVIRONMENTS_TEE":         1,
 	}
 )
 
-func (x AdditionalEnironments) Enum() *AdditionalEnironments {
-	p := new(AdditionalEnironments)
+func (x AdditionalEnvironments) Enum() *AdditionalEnvironments {
+	p := new(AdditionalEnvironments)
 	*p = x
 	return p
 }
 
-func (x AdditionalEnironments) String() string {
+func (x AdditionalEnvironments) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (AdditionalEnironments) Descriptor() protoreflect.EnumDescriptor {
+func (AdditionalEnvironments) Descriptor() protoreflect.EnumDescriptor {
 	return file_tools_generator_v1alpha_cre_metadata_proto_enumTypes[0].Descriptor()
 }
 
-func (AdditionalEnironments) Type() protoreflect.EnumType {
+func (AdditionalEnvironments) Type() protoreflect.EnumType {
 	return &file_tools_generator_v1alpha_cre_metadata_proto_enumTypes[0]
 }
 
-func (x AdditionalEnironments) Number() protoreflect.EnumNumber {
+func (x AdditionalEnvironments) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use AdditionalEnironments.Descriptor instead.
-func (AdditionalEnironments) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use AdditionalEnvironments.Descriptor instead.
+func (AdditionalEnvironments) EnumDescriptor() ([]byte, []int) {
 	return file_tools_generator_v1alpha_cre_metadata_proto_rawDescGZIP(), []int{0}
 }
 
@@ -420,11 +420,11 @@ func (*Label_Uint32Label) isLabel_Kind() {}
 func (*Label_Int32Label) isLabel_Kind() {}
 
 type CapabilityMetadata struct {
-	state                  protoimpl.MessageState  `protogen:"open.v1"`
-	Mode                   sdk.Mode                `protobuf:"varint,1,opt,name=mode,proto3,enum=sdk.v1alpha.Mode" json:"mode,omitempty"`
-	CapabilityId           string                  `protobuf:"bytes,2,opt,name=capability_id,json=capabilityId,proto3" json:"capability_id,omitempty"`
-	Labels                 map[string]*Label       `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	AdditionalEnvironments []AdditionalEnironments `protobuf:"varint,4,rep,packed,name=additional_environments,json=additionalEnvironments,proto3,enum=tools.generator.v1alpha.AdditionalEnironments" json:"additional_environments,omitempty"`
+	state                  protoimpl.MessageState   `protogen:"open.v1"`
+	Mode                   sdk.Mode                 `protobuf:"varint,1,opt,name=mode,proto3,enum=sdk.v1alpha.Mode" json:"mode,omitempty"`
+	CapabilityId           string                   `protobuf:"bytes,2,opt,name=capability_id,json=capabilityId,proto3" json:"capability_id,omitempty"`
+	Labels                 map[string]*Label        `protobuf:"bytes,3,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	AdditionalEnvironments []AdditionalEnvironments `protobuf:"varint,4,rep,packed,name=additional_environments,json=additionalEnvironments,proto3,enum=tools.generator.v1alpha.AdditionalEnvironments" json:"additional_environments,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
 }
@@ -480,7 +480,7 @@ func (x *CapabilityMetadata) GetLabels() map[string]*Label {
 	return nil
 }
 
-func (x *CapabilityMetadata) GetAdditionalEnvironments() []AdditionalEnironments {
+func (x *CapabilityMetadata) GetAdditionalEnvironments() []AdditionalEnvironments {
 	if x != nil {
 		return x.AdditionalEnvironments
 	}
@@ -602,18 +602,18 @@ const file_tools_generator_v1alpha_cre_metadata_proto_rawDesc = "" +
 	"\fuint32_label\x18\x04 \x01(\v2$.tools.generator.v1alpha.Uint32LabelH\x00R\vuint32Label\x12F\n" +
 	"\vint32_label\x18\x05 \x01(\v2#.tools.generator.v1alpha.Int32LabelH\x00R\n" +
 	"int32LabelB\x06\n" +
-	"\x04kind\"\xf5\x02\n" +
+	"\x04kind\"\xf6\x02\n" +
 	"\x12CapabilityMetadata\x12%\n" +
 	"\x04mode\x18\x01 \x01(\x0e2\x11.sdk.v1alpha.ModeR\x04mode\x12#\n" +
 	"\rcapability_id\x18\x02 \x01(\tR\fcapabilityId\x12O\n" +
-	"\x06labels\x18\x03 \x03(\v27.tools.generator.v1alpha.CapabilityMetadata.LabelsEntryR\x06labels\x12g\n" +
-	"\x17additional_environments\x18\x04 \x03(\x0e2..tools.generator.v1alpha.AdditionalEnironmentsR\x16additionalEnvironments\x1aY\n" +
+	"\x06labels\x18\x03 \x03(\v27.tools.generator.v1alpha.CapabilityMetadata.LabelsEntryR\x06labels\x12h\n" +
+	"\x17additional_environments\x18\x04 \x03(\x0e2/.tools.generator.v1alpha.AdditionalEnvironmentsR\x16additionalEnvironments\x1aY\n" +
 	"\vLabelsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x124\n" +
 	"\x05value\x18\x02 \x01(\v2\x1e.tools.generator.v1alpha.LabelR\x05value:\x028\x01\"G\n" +
 	"\x18CapabilityMethodMetadata\x12+\n" +
-	"\x12map_to_untyped_api\x18\x01 \x01(\bR\x0fmapToUntypedApi*a\n" +
-	"\x15AdditionalEnironments\x12'\n" +
+	"\x12map_to_untyped_api\x18\x01 \x01(\bR\x0fmapToUntypedApi*b\n" +
+	"\x16AdditionalEnvironments\x12'\n" +
 	"#ADDITIONAL_ENVIRONMENTS_UNSPECIFIED\x10\x00\x12\x1f\n" +
 	"\x1bADDITIONAL_ENVIRONMENTS_TEE\x10\x01:n\n" +
 	"\n" +
@@ -636,7 +636,7 @@ func file_tools_generator_v1alpha_cre_metadata_proto_rawDescGZIP() []byte {
 var file_tools_generator_v1alpha_cre_metadata_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_tools_generator_v1alpha_cre_metadata_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_tools_generator_v1alpha_cre_metadata_proto_goTypes = []any{
-	(AdditionalEnironments)(0),          // 0: tools.generator.v1alpha.AdditionalEnironments
+	(AdditionalEnvironments)(0),         // 0: tools.generator.v1alpha.AdditionalEnvironments
 	(*StringLabel)(nil),                 // 1: tools.generator.v1alpha.StringLabel
 	(*Uint64Label)(nil),                 // 2: tools.generator.v1alpha.Uint64Label
 	(*Uint32Label)(nil),                 // 3: tools.generator.v1alpha.Uint32Label
@@ -668,7 +668,7 @@ var file_tools_generator_v1alpha_cre_metadata_proto_depIdxs = []int32{
 	5,  // 9: tools.generator.v1alpha.Label.int32_label:type_name -> tools.generator.v1alpha.Int32Label
 	15, // 10: tools.generator.v1alpha.CapabilityMetadata.mode:type_name -> sdk.v1alpha.Mode
 	14, // 11: tools.generator.v1alpha.CapabilityMetadata.labels:type_name -> tools.generator.v1alpha.CapabilityMetadata.LabelsEntry
-	0,  // 12: tools.generator.v1alpha.CapabilityMetadata.additional_environments:type_name -> tools.generator.v1alpha.AdditionalEnironments
+	0,  // 12: tools.generator.v1alpha.CapabilityMetadata.additional_environments:type_name -> tools.generator.v1alpha.AdditionalEnvironments
 	6,  // 13: tools.generator.v1alpha.CapabilityMetadata.LabelsEntry.value:type_name -> tools.generator.v1alpha.Label
 	16, // 14: tools.generator.v1alpha.capability:extendee -> google.protobuf.ServiceOptions
 	17, // 15: tools.generator.v1alpha.method:extendee -> google.protobuf.MethodOptions

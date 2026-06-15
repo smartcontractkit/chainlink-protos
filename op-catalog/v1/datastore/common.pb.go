@@ -27,6 +27,7 @@ const (
 	EditSemantics_SEMANTICS_INSERT EditSemantics = 0
 	EditSemantics_SEMANTICS_UPSERT EditSemantics = 1
 	EditSemantics_SEMANTICS_UPDATE EditSemantics = 2
+	EditSemantics_SEMANTICS_DELETE EditSemantics = 3
 )
 
 // Enum value maps for EditSemantics.
@@ -35,11 +36,13 @@ var (
 		0: "SEMANTICS_INSERT",
 		1: "SEMANTICS_UPSERT",
 		2: "SEMANTICS_UPDATE",
+		3: "SEMANTICS_DELETE",
 	}
 	EditSemantics_value = map[string]int32{
 		"SEMANTICS_INSERT": 0,
 		"SEMANTICS_UPSERT": 1,
 		"SEMANTICS_UPDATE": 2,
+		"SEMANTICS_DELETE": 3,
 	}
 )
 
@@ -74,11 +77,12 @@ var File_op_catalog_v1_datastore_common_proto protoreflect.FileDescriptor
 
 const file_op_catalog_v1_datastore_common_proto_rawDesc = "" +
 	"\n" +
-	"$op-catalog/v1/datastore/common.proto\x12\x10api.datastore.v1*Q\n" +
+	"$op-catalog/v1/datastore/common.proto\x12\x10api.datastore.v1*g\n" +
 	"\rEditSemantics\x12\x14\n" +
 	"\x10SEMANTICS_INSERT\x10\x00\x12\x14\n" +
 	"\x10SEMANTICS_UPSERT\x10\x01\x12\x14\n" +
-	"\x10SEMANTICS_UPDATE\x10\x02BFZDgithub.com/smartcontractkit/chainlink-protos/op-catalog/v1/datastoreb\x06proto3"
+	"\x10SEMANTICS_UPDATE\x10\x02\x12\x14\n" +
+	"\x10SEMANTICS_DELETE\x10\x03BFZDgithub.com/smartcontractkit/chainlink-protos/op-catalog/v1/datastoreb\x06proto3"
 
 var (
 	file_op_catalog_v1_datastore_common_proto_rawDescOnce sync.Once

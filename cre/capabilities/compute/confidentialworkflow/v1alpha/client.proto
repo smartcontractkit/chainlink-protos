@@ -6,17 +6,30 @@ import "google/protobuf/empty.proto";
 import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
+message SecretIdentifier {
+  string key = 1;
+  // namespace defaults to "main" when unset.
+  optional string namespace = 2;
+}
+
 // WorkflowExecution is the public data sent to the enclave.
-// Becomes ComputeRequest.PublicData after proto serialization.
+// Becomes ComputeRequest.PublicData after proto serialization, which is
+// covered by ComputeRequest.Hash() for F+1 quorum matching at the enclave.
 message WorkflowExecution {
   // workflow_id identifies the workflow to execute.
   string workflow_id = 1;
-  // binary_url is the URL from which the enclave fetches the compiled WASM binary.
+  // binary_url is the URL from which the enclave fetches the compiled WASM
+  // binary. It lives inside WorkflowExecution (PublicData), covered by
+  // ComputeRequest.Hash() for F+1 quorum, so every node agrees on the same
+  // canonical locator. Authentication to the storage service is handled out of
+  // band by the fetch sidecar, so this is a stable, node-agnostic locator
+  // rather than a per-node pre-signed URL.
   string binary_url = 2;
   // binary_hash is the expected SHA-256 hash of the WASM binary, for integrity verification.
   bytes binary_hash = 3;
+  // execute_request is a serialized sdk.v1alpha.ExecuteRequest proto.
   // Contains either a subscribe request or a trigger execution request.
-  sdk.v1alpha.ExecuteRequest execute_request = 4;
+  bytes execute_request = 4;
   // owner is the on-chain owner address of the workflow (hex, 0x-prefixed).
   // Used by the enclave for runtime secret fetching from VaultDON.
   string owner = 5;
@@ -26,24 +39,41 @@ message WorkflowExecution {
   // org_id is the organization identifier for the workflow owner.
   // Used by the enclave when fetching secrets from VaultDON with org-based ownership.
   string org_id = 7;
-  // requirements to run this workflow
+  // requirements describes what is needed to run this workflow (e.g. TEE type
+  // and regions).
   sdk.v1alpha.Requirements requirements = 8;
+  // sdk_execute_request is the structured form of execute_request. It carries
+  // the same sdk.v1alpha.ExecuteRequest as the serialized execute_request bytes
+  // field; the two are independent on the wire (setting one does not populate
+  // the other). Consumers that want the typed message read this; legacy
+  // consumers continue to unmarshal execute_request.
+  sdk.v1alpha.ExecuteRequest sdk_execute_request = 9;
 
   // restrictions on the capabilities and the secrets.bool
-  // This is sent to avoid sending extra requests when the TEE is not compromised
-  sdk.v1alpha.Restrictions restrictions = 9;
+  // This is sent to avoid overhead when a TEE is not compromised, the DON will verify the restrictions on its end as well.
+  sdk.v1alpha.Restrictions restrictions = 10;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
 // It combines a WorkflowExecution with secrets from VaultDON.
 message ConfidentialWorkflowRequest {
-  WorkflowExecution execution = 1;
+  repeated SecretIdentifier vault_don_secrets = 1;
+  WorkflowExecution execution = 2;
+  // Deprecated: the per-node pre-signed URL approach is superseded. binary_url
+  // now travels inside WorkflowExecution (PublicData) as a canonical locator,
+  // with authentication to the storage service handled out of band by the fetch
+  // sidecar. Retained for back-compat; no longer populated.
+  string binary_url = 3 [deprecated = true];
 }
 
 // ConfidentialWorkflowResponse is the output from the confidential workflows capability.
 message ConfidentialWorkflowResponse {
   // execution_result is a serialized sdk.v1alpha.ExecutionResult proto.
-  sdk.v1alpha.ExecutionResult execution_result = 1;
+  bytes execution_result = 1;
+  // sdk_execution_result is the structured form of execution_result. It carries
+  // the same sdk.v1alpha.ExecutionResult as the serialized execution_result
+  // bytes field; the two are independent on the wire.
+  sdk.v1alpha.ExecutionResult sdk_execution_result = 2;
 }
 
 message ProvidedTeesResponse {

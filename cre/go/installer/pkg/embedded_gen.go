@@ -165,6 +165,7 @@ message WriteReportReply {
   optional uint64 transaction_fee = 3; // gas used in octas
   optional string error_message = 4;
   optional ReceiverContractExecutionStatus receiver_contract_execution_status = 5;
+  optional uint64 tx_timestamp = 6; // transaction timestamp in microseconds
 }
 
 // ========== Service ==========
@@ -373,6 +374,14 @@ service Client {
         uint64_label: {
           defaults: [
             {
+              key: "adi-mainnet"
+              value: 4059281736450291836
+            },
+            {
+              key: "adi-testnet"
+              value: 9418205736192840573
+            },
+            {
               key: "apechain-testnet-curtis"
               value: 9900119385908781505
             },
@@ -399,6 +408,10 @@ service Client {
             {
               key: "celo-mainnet"
               value: 1346049177634351622
+            },
+            {
+              key: "celo-sepolia"
+              value: 3761762704474186180
             },
             {
               key: "cronos-testnet"
@@ -557,6 +570,10 @@ service Client {
               value: 6915682381028791124
             },
             {
+              key: "private-testnet-rhyolite"
+              value: 604447335222770945
+            },
+            {
               key: "sonic-mainnet"
               value: 1673871237479749969
             },
@@ -671,7 +688,6 @@ message Account {
 // Compute budget configuration when submitting txs.
 message ComputeConfig {
   uint32 compute_limit = 1; // max CUs (approx per-tx limit)
-  uint64 compute_max_price = 2; // max lamports per CU
 }
 
 // Raw bytes vs parsed JSON (as returned by RPC).
@@ -699,7 +715,6 @@ message GetAccountInfoOpts {
 
 // Reply for GetAccountInfoWithOpts.
 message GetAccountInfoWithOptsReply {
-  RPCContext rpc_context = 1; // read slot
   optional Account value = 2; // account (may be empty)
 }
 
@@ -764,7 +779,6 @@ message OptionalAccountWrapper {
 
 // Reply for GetMultipleAccountsWithOpts.
 message GetMultipleAccountsWithOptsReply {
-  RPCContext rpc_context = 1; // read slot
   repeated OptionalAccountWrapper value = 2; // accounts (nil entries allowed)
 }
 
@@ -772,6 +786,43 @@ message GetMultipleAccountsWithOptsReply {
 message GetMultipleAccountsWithOptsRequest {
   repeated bytes accounts = 1; // list of 32-byte Pubkeys
   GetMultipleAccountsOpts opts = 2;
+}
+
+// Memcmp filter for getProgramAccounts.
+message RPCFilterMemcmp {
+  uint64 offset = 1; // byte offset into account data
+  bytes bytes = 2; // data to match (RPC encodes as base58)
+}
+
+// Account filter for getProgramAccounts (memcmp or data size).
+message RPCFilter {
+  RPCFilterMemcmp memcmp = 1;
+  uint64 data_size = 2; // match accounts with this data length
+}
+
+// Options for GetProgramAccounts.
+message GetProgramAccountsOpts {
+  EncodingType encoding = 1;
+  CommitmentType commitment = 2;
+  DataSlice data_slice = 3;
+  repeated RPCFilter filters = 4;
+}
+
+// Program-owned account with its pubkey.
+message KeyedAccount {
+  bytes pubkey = 1; // 32-byte Pubkey
+  Account account = 2;
+}
+
+// Reply for GetProgramAccounts.
+message GetProgramAccountsReply {
+  repeated KeyedAccount value = 1;
+}
+
+// Request for GetProgramAccounts.
+message GetProgramAccountsRequest {
+  bytes program = 1; // 32-byte program Pubkey
+  GetProgramAccountsOpts opts = 2;
 }
 
 // Reply for GetSignatureStatuses.
@@ -906,11 +957,6 @@ message GetTransactionRequest {
   bytes signature = 1; // 64-byte signature
 }
 
-// RPC read context.
-message RPCContext {
-  uint64 slot = 1;
-}
-
 // Simulation options.
 message SimulateTXOpts {
   bool sig_verify = 1; // verify sigs
@@ -1025,16 +1071,12 @@ service Client {
         uint64_label: {
           defaults: [
             {
-              key: "solana-mainnet"
-              value: 124615329519749607
-            },
-            {
-              key: "solana-testnet"
-              value: 6302590918974934319
-            },
-            {
               key: "solana-devnet"
               value: 16423721717087811551
+            },
+            {
+              key: "solana-mainnet"
+              value: 124615329519749607
             }
           ]
         }
@@ -1047,11 +1089,318 @@ service Client {
   rpc GetBlock(GetBlockRequest) returns (GetBlockReply);
   rpc GetFeeForMessage(GetFeeForMessageRequest) returns (GetFeeForMessageReply);
   rpc GetMultipleAccountsWithOpts(GetMultipleAccountsWithOptsRequest) returns (GetMultipleAccountsWithOptsReply);
+  rpc GetProgramAccounts(GetProgramAccountsRequest) returns (GetProgramAccountsReply);
   rpc GetSignatureStatuses(GetSignatureStatusesRequest) returns (GetSignatureStatusesReply);
   rpc GetSlotHeight(GetSlotHeightRequest) returns (GetSlotHeightReply);
   rpc GetTransaction(GetTransactionRequest) returns (GetTransactionReply);
   rpc LogTrigger(FilterLogTriggerRequest) returns (stream Log);
   rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
+}
+`
+
+const blockchainStellarV1alphaClientEmbedded = `syntax = "proto3";
+package capabilities.blockchain.stellar.v1alpha;
+
+import "capabilities/blockchain/stellar/v1alpha/scval.proto";
+import "sdk/v1alpha/sdk.proto";
+import "tools/generator/v1alpha/cre_metadata.proto";
+
+enum TxStatus {
+  TX_STATUS_FATAL = 0;
+  TX_STATUS_REVERTED = 1;
+  TX_STATUS_SUCCESS = 2;
+}
+
+message ReadContractRequest {
+  string contract_id = 1;
+  string function = 2;
+  repeated ScVal args = 3; // Typed Soroban contract arguments (replaces raw XDR bytes)
+  // Source account (G… StrKey) to simulate the call as (the invoker). Required for contracts
+  // whose result depends on the caller, e.g. that call require_auth or branch on the invoker.
+  // Leave empty for source-insensitive reads; a deterministic placeholder account is used.
+  string source_account = 4;
+}
+
+message ReadContractResponse {
+  // Result is a serialized base64 string - return value of the Host Function call.
+  string result = 1;
+  // Ledger actually used for simulation
+  uint32 ledger_sequence = 2;
+  // Response
+  string error = 3;
+}
+
+// ========== GetLatestLedger ==========
+
+message GetLatestLedgerRequest {}
+
+message GetLatestLedgerResponse {
+  bytes hash = 1; // 32-byte raw ledger hash
+  uint32 protocol_version = 2;
+  uint32 sequence = 3;
+  int64 ledger_close_time = 4;
+  bytes ledger_header_xdr = 5; // LedgerHeader binary XDR
+  bytes ledger_metadata_xdr = 6; // LedgerCloseMetaV2 binary XDR
+}
+
+// ========== WriteReport ==========
+
+message WriteReportRequest {
+  string contract_id = 1; // Stellar contract address (C… StrKey)
+  sdk.v1alpha.ReportResponse report = 2; // signed report from consensus
+}
+
+enum ReceiverContractExecutionStatus {
+  RECEIVER_CONTRACT_EXECUTION_STATUS_SUCCESS = 0;
+  RECEIVER_CONTRACT_EXECUTION_STATUS_REVERTED = 1;
+}
+
+message WriteReportReply {
+  TxStatus tx_status = 1;
+  optional ReceiverContractExecutionStatus receiver_contract_execution_status = 2;
+  optional string tx_hash = 3;
+  optional uint64 transaction_fee = 4; // total fee paid in stroops
+  optional uint32 ledger_sequence = 5;
+}
+
+service Client {
+  option (tools.generator.v1alpha.capability) = {
+    mode: MODE_DON
+    capability_id: "stellar@1.0.0"
+    labels: {
+      key: "ChainSelector"
+      value: {
+        uint64_label: {
+          defaults: [
+            {
+              key: "stellar-mainnet"
+              value: 17783245649066640917
+            },
+            {
+              key: "stellar-testnet"
+              value: 4894814558906953166
+            }
+          ]
+        }
+      }
+    }
+  };
+
+  rpc GetLatestLedger(GetLatestLedgerRequest) returns (GetLatestLedgerResponse);
+  rpc ReadContract(ReadContractRequest) returns (ReadContractResponse);
+  rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
+}
+`
+
+const blockchainStellarV1alphaScvalEmbedded = `syntax = "proto3";
+package capabilities.blockchain.stellar.v1alpha;
+
+// ============================================================
+// Scalar 128/256-bit integer parts
+// These mirror the XDR UInt128Parts / Int128Parts / UInt256Parts / Int256Parts.
+// ============================================================
+
+message UInt128Parts {
+  uint64 hi = 1;
+  uint64 lo = 2;
+}
+
+message Int128Parts {
+  int64 hi = 1;
+  uint64 lo = 2;
+}
+
+message UInt256Parts {
+  uint64 hi_hi = 1;
+  uint64 hi_lo = 2;
+  uint64 lo_hi = 3;
+  uint64 lo_lo = 4;
+}
+
+message Int256Parts {
+  int64 hi_hi = 1;
+  uint64 hi_lo = 2;
+  uint64 lo_hi = 3;
+  uint64 lo_lo = 4;
+}
+
+// ============================================================
+// SCError  (XDR: union SCError switch (SCErrorType type))
+// ============================================================
+
+message ScError {
+  enum Type {
+    TYPE_CONTRACT = 0;
+    TYPE_WASM_VM = 1;
+    TYPE_CONTEXT = 2;
+    TYPE_STORAGE = 3;
+    TYPE_OBJECT = 4;
+    TYPE_CRYPTO = 5;
+    TYPE_EVENTS = 6;
+    TYPE_BUDGET = 7;
+    TYPE_VALUE = 8;
+    TYPE_AUTH = 9;
+  }
+
+  enum Code {
+    CODE_ARITH_DOMAIN = 0;
+    CODE_INDEX_BOUNDS = 1;
+    CODE_INVALID_INPUT = 2;
+    CODE_MISSING_VALUE = 3;
+    CODE_EXISTING_VALUE = 4;
+    CODE_EXCEEDED_LIMIT = 5;
+    CODE_INVALID_ACTION = 6;
+    CODE_INTERNAL_ERROR = 7;
+    CODE_UNEXPECTED_TYPE = 8;
+    CODE_UNEXPECTED_SIZE = 9;
+  }
+
+  Type type = 1;
+
+  // For SCE_CONTRACT: user-defined numeric code.
+  // For all other types: one of the well-known SCErrorCode values.
+  oneof code_or_contract {
+    uint32 contract_code = 2;
+    Code code = 3;
+  }
+}
+
+// ============================================================
+// SCAddress  (XDR: union SCAddress switch (SCAddressType type))
+// ============================================================
+
+message MuxedEd25519Account {
+  uint64 id = 1;
+  bytes ed25519 = 2; // 32-byte Ed25519 public key
+}
+
+// A claimable balance ID is simply a 32-byte hash tagged with a type.
+// We encode only the v0 variant (hash bytes) since that is the only
+// type in the current protocol.
+message ClaimableBalanceId {
+  bytes v0 = 1; // 32-byte SHA-256 hash
+}
+
+message ScAddress {
+  oneof address {
+    bytes account_id = 1; // 32-byte Ed25519 public key (AccountID)
+    bytes contract_id = 2; // 32-byte contract hash (ContractID)
+    MuxedEd25519Account muxed_account = 3; // muxed Ed25519 account
+    ClaimableBalanceId claimable_balance_id = 4;
+    bytes liquidity_pool_id = 5; // 32-byte pool hash (PoolID)
+  }
+}
+
+// ============================================================
+// Contract executable  (XDR: union ContractExecutable)
+// ============================================================
+
+message ContractExecutable {
+  oneof type {
+    bytes wasm_hash = 1; // SHA-256 hash of the WASM module
+    bool stellar_asset = 2; // true ⇒ CONTRACT_EXECUTABLE_STELLAR_ASSET
+  }
+}
+
+// ============================================================
+// SCContractInstance  (XDR: struct SCContractInstance)
+// ============================================================
+
+// Forward-declared via ScMapEntry below; proto3 allows forward references.
+message ScContractInstance {
+  ContractExecutable executable = 1;
+  repeated ScMapEntry storage = 2; // empty slice ⇒ no storage map (nil in XDR)
+}
+
+// ============================================================
+// SCNonceKey  (XDR: struct SCNonceKey)
+// ============================================================
+
+message ScNonceKey {
+  int64 nonce = 1;
+}
+
+// ============================================================
+// SCMapEntry  (XDR: struct SCMapEntry)
+// ============================================================
+
+message ScMapEntry {
+  ScVal key = 1;
+  ScVal val = 2;
+}
+
+// ============================================================
+// Vec / Map containers  (XDR: SCVec / SCMap typedefs)
+// ============================================================
+
+message ScVec {
+  repeated ScVal values = 1;
+}
+
+message ScMap {
+  repeated ScMapEntry entries = 1;
+}
+
+// ============================================================
+// Void  – sentinel for XDR variants that carry no payload
+// ============================================================
+
+message Void {}
+
+// ============================================================
+// SCVal  (XDR: union SCVal switch (SCValType type))
+//
+// The active oneof field implicitly encodes the SCValType
+// discriminant.  Mapping:
+//   b                           → SCV_BOOL
+//   void_val                    → SCV_VOID
+//   error                       → SCV_ERROR
+//   u32                         → SCV_U32
+//   i32                         → SCV_I32
+//   u64                         → SCV_U64
+//   i64                         → SCV_I64
+//   timepoint                   → SCV_TIMEPOINT   (uint64)
+//   duration                    → SCV_DURATION    (uint64)
+//   u128                        → SCV_U128
+//   i128                        → SCV_I128
+//   u256                        → SCV_U256
+//   i256                        → SCV_I256
+//   bytes_val                   → SCV_BYTES
+//   str                         → SCV_STRING
+//   sym                         → SCV_SYMBOL      (≤32 chars)
+//   vec                         → SCV_VEC
+//   map                         → SCV_MAP
+//   address                     → SCV_ADDRESS
+//   contract_instance           → SCV_CONTRACT_INSTANCE
+//   ledger_key_contract_instance → SCV_LEDGER_KEY_CONTRACT_INSTANCE
+//   nonce_key                   → SCV_LEDGER_KEY_NONCE
+// ============================================================
+
+message ScVal {
+  oneof value {
+    bool b = 1;
+    Void void_val = 2;
+    ScError error = 3;
+    uint32 u32 = 4;
+    int32 i32 = 5;
+    uint64 u64 = 6;
+    int64 i64 = 7;
+    uint64 timepoint = 8;
+    uint64 duration = 9;
+    UInt128Parts u128 = 10;
+    Int128Parts i128 = 11;
+    UInt256Parts u256 = 12;
+    Int256Parts i256 = 13;
+    bytes bytes_val = 14;
+    string str = 15;
+    string sym = 16;
+    ScVec vec = 17;
+    ScMap map = 18;
+    ScAddress address = 19;
+    ScContractInstance contract_instance = 20;
+    Void ledger_key_contract_instance = 21;
+    ScNonceKey nonce_key = 22;
+  }
 }
 `
 
@@ -1063,17 +1412,30 @@ import "google/protobuf/empty.proto";
 import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
+message SecretIdentifier {
+  string key = 1;
+  // namespace defaults to "main" when unset.
+  optional string namespace = 2;
+}
+
 // WorkflowExecution is the public data sent to the enclave.
-// Becomes ComputeRequest.PublicData after proto serialization.
+// Becomes ComputeRequest.PublicData after proto serialization, which is
+// covered by ComputeRequest.Hash() for F+1 quorum matching at the enclave.
 message WorkflowExecution {
   // workflow_id identifies the workflow to execute.
   string workflow_id = 1;
-  // binary_url is the URL from which the enclave fetches the compiled WASM binary.
+  // binary_url is the URL from which the enclave fetches the compiled WASM
+  // binary. It lives inside WorkflowExecution (PublicData), covered by
+  // ComputeRequest.Hash() for F+1 quorum, so every node agrees on the same
+  // canonical locator. Authentication to the storage service is handled out of
+  // band by the fetch sidecar, so this is a stable, node-agnostic locator
+  // rather than a per-node pre-signed URL.
   string binary_url = 2;
   // binary_hash is the expected SHA-256 hash of the WASM binary, for integrity verification.
   bytes binary_hash = 3;
+  // execute_request is a serialized sdk.v1alpha.ExecuteRequest proto.
   // Contains either a subscribe request or a trigger execution request.
-  sdk.v1alpha.ExecuteRequest execute_request = 4;
+  bytes execute_request = 4;
   // owner is the on-chain owner address of the workflow (hex, 0x-prefixed).
   // Used by the enclave for runtime secret fetching from VaultDON.
   string owner = 5;
@@ -1083,24 +1445,41 @@ message WorkflowExecution {
   // org_id is the organization identifier for the workflow owner.
   // Used by the enclave when fetching secrets from VaultDON with org-based ownership.
   string org_id = 7;
-  // requirements to run this workflow
+  // requirements describes what is needed to run this workflow (e.g. TEE type
+  // and regions).
   sdk.v1alpha.Requirements requirements = 8;
+  // sdk_execute_request is the structured form of execute_request. It carries
+  // the same sdk.v1alpha.ExecuteRequest as the serialized execute_request bytes
+  // field; the two are independent on the wire (setting one does not populate
+  // the other). Consumers that want the typed message read this; legacy
+  // consumers continue to unmarshal execute_request.
+  sdk.v1alpha.ExecuteRequest sdk_execute_request = 9;
 
   // restrictions on the capabilities and the secrets.bool
-  // This is sent to avoid sending extra requests when the TEE is not compromised
-  sdk.v1alpha.Restrictions restrictions = 9;
+  // This is sent to avoid overhead when a TEE is not compromised, the DON will verify the restrictions on its end as well.
+  sdk.v1alpha.Restrictions restrictions = 10;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
 // It combines a WorkflowExecution with secrets from VaultDON.
 message ConfidentialWorkflowRequest {
-  WorkflowExecution execution = 1;
+  repeated SecretIdentifier vault_don_secrets = 1;
+  WorkflowExecution execution = 2;
+  // Deprecated: the per-node pre-signed URL approach is superseded. binary_url
+  // now travels inside WorkflowExecution (PublicData) as a canonical locator,
+  // with authentication to the storage service handled out of band by the fetch
+  // sidecar. Retained for back-compat; no longer populated.
+  string binary_url = 3 [deprecated = true];
 }
 
 // ConfidentialWorkflowResponse is the output from the confidential workflows capability.
 message ConfidentialWorkflowResponse {
   // execution_result is a serialized sdk.v1alpha.ExecutionResult proto.
-  sdk.v1alpha.ExecutionResult execution_result = 1;
+  bytes execution_result = 1;
+  // sdk_execution_result is the structured form of execution_result. It carries
+  // the same sdk.v1alpha.ExecutionResult as the serialized execution_result
+  // bytes field; the two are independent on the wire.
+  sdk.v1alpha.ExecutionResult sdk_execution_result = 2;
 }
 
 message ProvidedTeesResponse {
@@ -1387,6 +1766,12 @@ message HeaderValues {
   repeated string values = 1;
 }
 
+// MtlsAuth represents the private-key/cert pair for mtls auth.
+message MtlsAuth {
+  bytes private_key = 1;
+  bytes certificate = 2;
+}
+
 message Request {
   string url = 1;
   string method = 2;
@@ -1395,6 +1780,7 @@ message Request {
   google.protobuf.Duration timeout = 5; // Request timeout duration
   CacheSettings cache_settings = 6;
   map<string, HeaderValues> multi_headers = 7;
+  optional MtlsAuth mtls = 8;
 }
 
 message Response {
@@ -1922,7 +2308,7 @@ message Label {
   }
 }
 
-enum AdditionalEnironments {
+enum AdditionalEnvironments {
   ADDITIONAL_ENVIRONMENTS_UNSPECIFIED = 0;
   ADDITIONAL_ENVIRONMENTS_TEE = 1;
 }
@@ -1931,7 +2317,7 @@ message CapabilityMetadata {
   sdk.v1alpha.Mode mode = 1;
   string capability_id = 2;
   map<string, Label> labels = 3;
-  repeated AdditionalEnironments additional_environments = 4;
+  repeated AdditionalEnvironments additional_environments = 4;
 }
 
 extend google.protobuf.ServiceOptions {
@@ -2057,6 +2443,14 @@ var allFiles = []*embeddedFile{
 	{
 		name:    "capabilities/blockchain/solana/v1alpha/client.proto",
 		content: blockchainSolanaV1alphaClientEmbedded,
+	},
+	{
+		name:    "capabilities/blockchain/stellar/v1alpha/client.proto",
+		content: blockchainStellarV1alphaClientEmbedded,
+	},
+	{
+		name:    "capabilities/blockchain/stellar/v1alpha/scval.proto",
+		content: blockchainStellarV1alphaScvalEmbedded,
 	},
 	{
 		name:    "capabilities/compute/confidentialworkflow/v1alpha/client.proto",
