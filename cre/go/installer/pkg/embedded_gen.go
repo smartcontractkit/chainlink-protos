@@ -165,6 +165,7 @@ message WriteReportReply {
   optional uint64 transaction_fee = 3; // gas used in octas
   optional string error_message = 4;
   optional ReceiverContractExecutionStatus receiver_contract_execution_status = 5;
+  optional uint64 tx_timestamp = 6; // transaction timestamp in microseconds
 }
 
 // ========== Service ==========
@@ -2378,6 +2379,10 @@ message Decimal {
 `
 
 var allFiles = []*embeddedFile{
+	{
+		name:    "capabilities/blockchain/aptos/v1alpha/client.proto",
+		content: blockchainAptosV1alphaClientEmbedded,
+	},
 	{
 		name:    "capabilities/blockchain/evm/v1alpha/client.proto",
 		content: blockchainEvmV1alphaClientEmbedded,
