@@ -29,7 +29,7 @@ enum ConfirmationStatusType {
   CONFIRMATION_STATUS_TYPE_PROCESSED = 1;
   CONFIRMATION_STATUS_TYPE_CONFIRMED = 2;
   CONFIRMATION_STATUS_TYPE_FINALIZED = 3;
-
+}
 
 // Transaction execution status returned by submitters/simulations.
 enum TxStatus {
