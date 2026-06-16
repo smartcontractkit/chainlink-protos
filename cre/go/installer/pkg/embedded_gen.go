@@ -570,6 +570,10 @@ service Client {
               value: 6915682381028791124
             },
             {
+              key: "private-testnet-pumice"
+              value: 1564738277398880633
+            },
+            {
               key: "private-testnet-rhyolite"
               value: 604447335222770945
             },
