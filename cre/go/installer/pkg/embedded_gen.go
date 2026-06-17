@@ -1165,7 +1165,7 @@ message WriteReportReply {
   optional string tx_hash = 3;
   optional uint64 transaction_fee = 4; // total fee paid in stroops
   optional uint32 ledger_sequence = 5;
-  optional string error_message = 6;
+  optional string error_message = 6; // user-actionable failure reason
 }
 
 service Client {
