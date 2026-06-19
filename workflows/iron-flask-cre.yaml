@@ -165,6 +165,16 @@ beholder:
           subject: "beholder__cre__messages-workflows.v2.Workflow"
           version: 1
 
+    - entity: WorkflowActivationAbandoned
+      schema: "workflows/v2/workflow_activation_abandoned.proto"
+      references:
+        - name: "workflows/v2/cre_info.proto"
+          subject: "beholder__cre__messages-workflows.v2.CreInfo"
+          version: 1
+        - name: "workflows/v2/workflow.proto"
+          subject: "beholder__cre__messages-workflows.v2.Workflow"
+          version: 1
+
     - entity: WorkflowDeleted
       schema: "workflows/v2/workflow_deleted.proto"
       references:

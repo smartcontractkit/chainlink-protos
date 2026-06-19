@@ -248,6 +248,22 @@
       ]
     },
     {
+      "entity": "workflows.v2.WorkflowActivationAbandoned",
+      "path": "workflows/v2/workflow_activation_abandoned.proto",
+      "references": [
+        {
+          "name": "workflows/v2/cre_info.proto",
+          "entity": "workflows.v2.CreInfo",
+          "path": "workflows/v2/cre_info.proto"
+        },
+        {
+          "name": "workflows/v2/workflow.proto",
+          "entity": "workflows.v2.Workflow",
+          "path": "workflows/v2/workflow.proto"
+        }
+      ]
+    },
+    {
       "entity": "workflows.v2.WorkflowDeleted",
       "path": "workflows/v2/workflow_deleted.proto",
       "references": [
