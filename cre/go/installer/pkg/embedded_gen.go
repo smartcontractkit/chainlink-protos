@@ -165,7 +165,7 @@ message WriteReportReply {
   optional uint64 transaction_fee = 3; // gas used in octas
   optional string error_message = 4;
   optional ReceiverContractExecutionStatus receiver_contract_execution_status = 5;
-  optional uint64 tx_timestamp = 6; // transaction timestamp in microseconds
+  optional uint64 block_timestamp = 6; // block timestamp in microseconds
 }
 
 // ========== Service ==========
@@ -568,6 +568,10 @@ service Client {
             {
               key: "private-testnet-andesite"
               value: 6915682381028791124
+            },
+            {
+              key: "private-testnet-pumice"
+              value: 1564738277398880633
             },
             {
               key: "private-testnet-rhyolite"
@@ -1161,6 +1165,8 @@ message WriteReportReply {
   optional string tx_hash = 3;
   optional uint64 transaction_fee = 4; // total fee paid in stroops
   optional uint32 ledger_sequence = 5;
+  optional string error_message = 6; // user-actionable failure reason
+  optional uint64 block_timestamp = 7; // block timestamp in microseconds
 }
 
 service Client {
