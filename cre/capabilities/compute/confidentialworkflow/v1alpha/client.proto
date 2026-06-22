@@ -48,6 +48,10 @@ message WorkflowExecution {
   // the other). Consumers that want the typed message read this; legacy
   // consumers continue to unmarshal execute_request.
   sdk.v1alpha.ExecuteRequest sdk_execute_request = 9;
+
+  // restrictions on the capabilities and the secrets.bool
+  // This is sent to avoid overhead when a TEE is not compromised, the DON will verify the restrictions on its end as well.
+  sdk.v1alpha.Restrictions restrictions = 10;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.

@@ -1460,6 +1460,10 @@ message WorkflowExecution {
   // the other). Consumers that want the typed message read this; legacy
   // consumers continue to unmarshal execute_request.
   sdk.v1alpha.ExecuteRequest sdk_execute_request = 9;
+
+  // restrictions on the capabilities and the secrets.bool
+  // This is sent to avoid overhead when a TEE is not compromised, the DON will verify the restrictions on its end as well.
+  sdk.v1alpha.Restrictions restrictions = 10;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
@@ -1957,6 +1961,7 @@ message TriggerSubscription {
   google.protobuf.Any payload = 2;
   string method = 3;
   Requirements requirements = 4;
+  bool pre_hook = 5;
 }
 
 enum TeeType {
@@ -2009,6 +2014,7 @@ message ExecuteRequest {
   oneof request {
     google.protobuf.Empty subscribe = 2;
     Trigger trigger = 3;
+    Trigger pre_hook = 5;
   }
   uint64 max_response_size = 4;
 }
@@ -2018,6 +2024,7 @@ message ExecutionResult {
     values.v1.Value value = 1;
     string error = 2;
     TriggerSubscriptionRequest trigger_subscriptions = 3;
+    Restrictions restrictions = 4;
   }
 }
 
@@ -2062,6 +2069,52 @@ message SecretResponse {
 
 message SecretResponses {
   repeated SecretResponse responses = 1;
+}
+
+message MethodRestriction {
+  string id = 1;
+  string method = 2;
+  int32 max_calls = 3;
+}
+
+message CapabilityRestriction {
+  oneof restriction {
+    MethodRestriction method = 1;
+  }
+}
+
+enum CapabilityRestrictionType {
+  CAPABILITY_RESTRICTION_TYPE_CLOSED = 0;
+  CAPABILITY_RESTRICTION_TYPE_OPEN = 1;
+}
+
+message CapabilityRestrictions {
+  repeated CapabilityRestriction restrictions = 1;
+  int32 max_total_calls = 2;
+  CapabilityRestrictionType type = 3;
+}
+
+message SecretPrefixRestriction {
+  string prefix = 1;
+  string namespace = 2;
+  int32 max_secrets = 3;
+}
+
+message SecretRestriction {
+  oneof restriction {
+    Secret exact_secret = 1;
+    SecretPrefixRestriction prefixed_secret = 2;
+  }
+}
+
+message SecretsRestritions {
+  repeated SecretRestriction restrictions = 1;
+  int32 max_secrets = 2;
+}
+
+message Restrictions {
+  SecretsRestritions secrets = 1;
+  CapabilityRestrictions capabilities = 2;
 }
 `
 
