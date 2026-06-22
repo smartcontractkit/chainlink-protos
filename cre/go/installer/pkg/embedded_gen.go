@@ -1747,7 +1747,6 @@ service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_DON
     capability_id: "confidential-http@1.0.0-alpha"
-    additional_environments: [ADDITIONAL_ENVIRONMENTS_TEE]
   };
 
   rpc SendRequest(ConfidentialHTTPRequest) returns (HTTPResponse);
