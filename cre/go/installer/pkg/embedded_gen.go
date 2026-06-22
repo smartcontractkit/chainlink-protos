@@ -2112,10 +2112,11 @@ message SecretsRestritions {
   int32 max_secrets = 2;
 }
 
-message Restrictions { 
+message Restrictions {
   SecretsRestritions secrets = 1;
   CapabilityRestrictions capabilities = 2;
-}`
+}
+`
 
 const v1betaSdkEmbedded = `syntax = "proto3";
 
