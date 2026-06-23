@@ -370,6 +370,10 @@ service Client {
               value: 1564738277398880633
             },
             {
+              key: "private-testnet-quartzite"
+              value: 4175996748267305081
+            },
+            {
               key: "private-testnet-rhyolite"
               value: 604447335222770945
             },
