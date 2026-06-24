@@ -2,13 +2,14 @@
 
 Protobuf definitions for the billable events emitted by services that manage
 durable resources (trigger registrations, log filters, workflow registrations,
-...). Records are published via Beholder and consumed by the billing pipeline.
+...). Records are published via ChIP Durable Emitter and consumed by the billing pipeline.
 
 There are two messages, and **each carries exactly one resource**, identified
 entirely by its `ResourceIdentity`:
 
 - `MeterRecord` — a single **state-transition event** (RESERVE / RELEASE /
   UPDATE / USAGE) describing one lifecycle edge of one durable resource.
+  `utilizations` carries one or more billed quantities for that edge.
 - `MeterSnapshot` — the **action-less periodic utilization** of one active
   resource (the liveness / utilization-over-time signal). The resource manager
   emits one `MeterSnapshot` per active resource each interval.
@@ -61,18 +62,21 @@ single owner and are billed by the DON / node dimensions.
 
 ## MeterRecord idempotency key contract (level-triggered)
 
-`Utilization.idempotency_key` is the lowercase hex SHA-256 over the full
-structured identity (**including `node_id`**) plus the action and
-event-identity:
+Idempotency keys are **not** carried on the protobuf payload. ChIP Durable
+Emitter sets one key per emitted `MeterRecord` (and per `MeterSnapshot`) at
+publish time. Producers derive keys exclusively through the canonical helpers
+in chainlink-common (`resourcemanager.IdempotencyKey` for records,
+`resourcemanager.SnapshotIdempotencyKey` for snapshots); inputs are
+identifiers and must not contain `|`.
+
+A `MeterRecord` key is the lowercase hex SHA-256 over the full structured
+identity (**including `node_id`**) plus the action and event-identity:
 
 ```
 product|environment|zone|don_id|node_id|service|resource|resource_type|action|resource_id|event-identity
 ```
 
 where `action` is the `MeterAction` enum name (e.g. `METER_ACTION_RESERVE`).
-Producers derive keys exclusively through the canonical helper
-(`resourcemanager.IdempotencyKey` in chainlink-common); inputs are identifiers
-and must not contain `|`.
 
 Because `node_id` is in the preimage, keys are **unique per node**: billing
 dedups a single node's retries by key and counts distinct nodes for quorum.
@@ -96,8 +100,9 @@ RELEASE always carries the same `value` as its paired RESERVE.
 
 Consumer rules:
 
-1. Use `idempotency_key` for **exact-duplicate suppression only** (per node).
-   Records with equal keys are one logical event; bill it once.
+1. Use the emitter-provided idempotency key for **exact-duplicate suppression
+   only** (per node). Records with equal keys are one logical event; bill it
+   once.
 2. Do NOT infer lifecycle state from key (re)appearance. Derive lifecycle
    state by ordering records by `timestamp` per `resource_id` + dimensions
    (last-write-wins), and treat `MeterSnapshot` as the authoritative liveness
@@ -127,8 +132,9 @@ does **not** apply to snapshots.
 
 ### MeterSnapshot idempotency key
 
-Snapshots key per interval rather than per lifecycle edge. The key is the
-lowercase hex SHA-256 of:
+As with `MeterRecord`, the snapshot key is set by ChIP Durable Emitter at
+publish time (not on the protobuf payload). Snapshots key per interval rather
+than per lifecycle edge. The key is the lowercase hex SHA-256 of:
 
 ```
 snapshot|product|environment|zone|don_id|node_id|service|resource|resource_id|interval-bucket

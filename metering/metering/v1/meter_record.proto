@@ -19,6 +19,7 @@ message MeterRecord {
   ResourceIdentity identity = 2;
   // Billing semantics of this state transition.
   MeterAction action = 3;
-  // Quantity and identifying metadata for the action.
-  Utilization utilization = 4;
+  // One or more utilization quantities for the action (e.g. multiple billing
+  // units affected by the same lifecycle edge).
+  repeated Utilization utilizations = 4;
 }

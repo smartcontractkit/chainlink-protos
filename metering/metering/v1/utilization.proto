@@ -3,29 +3,12 @@ package metering.v1;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/metering/go;metering";
 
-// Utilization quantifies the single resource affected by a metered action
-// (MeterRecord) or the periodic level of a single active resource
-// (MeterSnapshot). The resource itself is identified entirely by the
-// accompanying ResourceIdentity; Utilization carries no identifying metadata of
-// its own.
+// Utilization quantifies one billed unit for a metered action (MeterRecord) or
+// the periodic level of one active resource dimension (MeterSnapshot). The
+// resource itself is identified entirely by the accompanying ResourceIdentity;
+// Utilization carries no identifying metadata of its own.
 message Utilization {
   // Quantity of the resource_type unit: the amount affected by a MeterRecord
   // action, or the current level of the resource in a MeterSnapshot.
   int64 value = 1;
-  // Deterministic deduplication key: the lowercase hex SHA-256 over the full
-  // structured identity (including node_id) + action + an event identity. Keys
-  // are unique per node, so billing dedups a node's retries and counts distinct
-  // nodes for quorum; cross-node grouping and aggregation is the consumer's job
-  // on resource_id + dimensions, which is independent of the key.
-  //
-  // Keys are level-triggered: a producer re-emits an identical key for the
-  // same resource lifecycle edge (e.g. re-registration on restart). Consumers
-  // dedup exact duplicates per key and derive lifecycle state by ordering
-  // records by timestamp per resource_id (last write wins). RESERVE/RELEASE are
-  // emitted only for genuine allocation/deallocation — never for cleanup of
-  // leaked/orphaned resources — so a RELEASE carries the same value as its
-  // paired RESERVE; a reservation lost without a RELEASE is reconciled by its
-  // absence from subsequent MeterSnapshots. See the module README for the full
-  // consumer contract.
-  string idempotency_key = 2;
 }
