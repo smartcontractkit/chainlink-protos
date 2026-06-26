@@ -29,7 +29,10 @@ type Utilization struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Quantity of the resource_type unit: the amount affected by a MeterRecord
 	// action, or the current level of the resource in a MeterSnapshot.
-	Value         int64 `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
+	Value int64 `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
+	// The type of utilization that value measures.
+	// e.g. RESOURCE_TYPE_COMPUTE
+	ResourceType  string `protobuf:"bytes,2,opt,name=resource_type,json=resourceType,proto3" json:"resource_type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -71,13 +74,21 @@ func (x *Utilization) GetValue() int64 {
 	return 0
 }
 
+func (x *Utilization) GetResourceType() string {
+	if x != nil {
+		return x.ResourceType
+	}
+	return ""
+}
+
 var File_metering_v1_utilization_proto protoreflect.FileDescriptor
 
 const file_metering_v1_utilization_proto_rawDesc = "" +
 	"\n" +
-	"\x1dmetering/v1/utilization.proto\x12\vmetering.v1\"#\n" +
+	"\x1dmetering/v1/utilization.proto\x12\vmetering.v1\"H\n" +
 	"\vUtilization\x12\x14\n" +
-	"\x05value\x18\x01 \x01(\x03R\x05valueBCZAgithub.com/smartcontractkit/chainlink-protos/metering/go;meteringb\x06proto3"
+	"\x05value\x18\x01 \x01(\x03R\x05value\x12#\n" +
+	"\rresource_type\x18\x02 \x01(\tR\fresourceTypeBCZAgithub.com/smartcontractkit/chainlink-protos/metering/go;meteringb\x06proto3"
 
 var (
 	file_metering_v1_utilization_proto_rawDescOnce sync.Once

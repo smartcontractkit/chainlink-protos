@@ -46,7 +46,7 @@ type MeterSnapshot struct {
 	Identity *ResourceIdentity `protobuf:"bytes,2,opt,name=identity,proto3" json:"identity,omitempty"`
 	// Utilization of this one resource. value is the current level; the
 	// per-interval increment is value over the interval below.
-	Utilization *Utilization `protobuf:"bytes,3,opt,name=utilization,proto3" json:"utilization,omitempty"`
+	Utilization []*Utilization `protobuf:"bytes,3,rep,name=utilization,proto3" json:"utilization,omitempty"`
 	// Nominal period this snapshot covers, for staleness detection and for
 	// computing the per-interval increment by the consumer.
 	Interval      *durationpb.Duration `protobuf:"bytes,4,opt,name=interval,proto3" json:"interval,omitempty"`
@@ -98,7 +98,7 @@ func (x *MeterSnapshot) GetIdentity() *ResourceIdentity {
 	return nil
 }
 
-func (x *MeterSnapshot) GetUtilization() *Utilization {
+func (x *MeterSnapshot) GetUtilization() []*Utilization {
 	if x != nil {
 		return x.Utilization
 	}
@@ -120,7 +120,7 @@ const file_metering_v1_snapshot_proto_rawDesc = "" +
 	"\rMeterSnapshot\x128\n" +
 	"\ttimestamp\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x129\n" +
 	"\bidentity\x18\x02 \x01(\v2\x1d.metering.v1.ResourceIdentityR\bidentity\x12:\n" +
-	"\vutilization\x18\x03 \x01(\v2\x18.metering.v1.UtilizationR\vutilization\x125\n" +
+	"\vutilization\x18\x03 \x03(\v2\x18.metering.v1.UtilizationR\vutilization\x125\n" +
 	"\binterval\x18\x04 \x01(\v2\x19.google.protobuf.DurationR\bintervalBCZAgithub.com/smartcontractkit/chainlink-protos/metering/go;meteringb\x06proto3"
 
 var (

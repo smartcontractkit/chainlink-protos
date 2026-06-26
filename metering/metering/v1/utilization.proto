@@ -11,4 +11,7 @@ message Utilization {
   // Quantity of the resource_type unit: the amount affected by a MeterRecord
   // action, or the current level of the resource in a MeterSnapshot.
   int64 value = 1;
+  // The type of utilization that value measures.
+  // e.g. RESOURCE_TYPE_COMPUTE
+  string resource_type = 2;
 }

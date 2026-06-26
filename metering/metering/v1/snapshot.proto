@@ -30,7 +30,7 @@ message MeterSnapshot {
   ResourceIdentity identity = 2;
   // Utilization of this one resource. value is the current level; the
   // per-interval increment is value over the interval below.
-  Utilization utilization = 3;
+  repeated Utilization utilization = 3;
   // Nominal period this snapshot covers, for staleness detection and for
   // computing the per-interval increment by the consumer.
   google.protobuf.Duration interval = 4;
