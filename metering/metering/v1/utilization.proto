@@ -16,7 +16,7 @@ message Utilization {
   string resource_type = 2;
   // primarily valuable for workflow receipts where you could have workflowID.
   // persistant storage with a pre-allocated slice has a resource_id
-  // to identify it. 
+  // to identify it.
   string resource_id = 3;
   // UID or workflowExecutionID, identifying the event
   string event_id = 4;
