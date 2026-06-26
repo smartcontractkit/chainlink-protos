@@ -105,12 +105,16 @@ type ResourceIdentity struct {
 	Environment string `protobuf:"bytes,2,opt,name=environment,proto3" json:"environment,omitempty"`
 	// Deployment zone, e.g. "wf-zone-a". A coarse billing-rollup dimension.
 	Zone string `protobuf:"bytes,3,opt,name=zone,proto3" json:"zone,omitempty"`
-	// DON identifier the emitting service belongs to. A coarse billing-rollup
-	// dimension; used (with node_id) to count distinct nodes for quorum.
-	DonId string `protobuf:"bytes,4,opt,name=don_id,json=donId,proto3" json:"don_id,omitempty"`
-	// Node identifier (the node's CSA public key). A coarse billing-rollup
-	// dimension; lets billing dedup a node's retries and count distinct nodes.
-	NodeId string `protobuf:"bytes,5,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
+	// DON identifier the emitting service belongs to. Optional: web2 emitters
+	// without a DON leave this unset rather than sending an empty string. A
+	// coarse billing-rollup dimension; used (with node_id) to count distinct
+	// nodes for quorum.
+	DonId *string `protobuf:"bytes,4,opt,name=don_id,json=donId,proto3,oneof" json:"don_id,omitempty"`
+	// Node identifier (the node's CSA public key). Optional: web2 emitters
+	// without a node identity leave this unset rather than sending an empty
+	// string. A coarse billing-rollup dimension; lets billing dedup a node's
+	// retries and count distinct nodes.
+	NodeId *string `protobuf:"bytes,5,opt,name=node_id,json=nodeId,proto3,oneof" json:"node_id,omitempty"`
 	// Stable service constant identifying the emitting service (the old
 	// `entity`), e.g. "cron-trigger", "http-trigger", "evm-log-trigger",
 	// "workflow-syncer-v2". A coarse billing-rollup dimension.
@@ -177,15 +181,15 @@ func (x *ResourceIdentity) GetZone() string {
 }
 
 func (x *ResourceIdentity) GetDonId() string {
-	if x != nil {
-		return x.DonId
+	if x != nil && x.DonId != nil {
+		return *x.DonId
 	}
 	return ""
 }
 
 func (x *ResourceIdentity) GetNodeId() string {
-	if x != nil {
-		return x.NodeId
+	if x != nil && x.NodeId != nil {
+		return *x.NodeId
 	}
 	return ""
 }
@@ -215,16 +219,19 @@ var File_metering_v1_identity_proto protoreflect.FileDescriptor
 
 const file_metering_v1_identity_proto_rawDesc = "" +
 	"\n" +
-	"\x1ametering/v1/identity.proto\x12\vmetering.v1\"\xfb\x01\n" +
+	"\x1ametering/v1/identity.proto\x12\vmetering.v1\"\x9c\x02\n" +
 	"\x10ResourceIdentity\x12\x18\n" +
 	"\aproduct\x18\x01 \x01(\tR\aproduct\x12 \n" +
 	"\venvironment\x18\x02 \x01(\tR\venvironment\x12\x12\n" +
-	"\x04zone\x18\x03 \x01(\tR\x04zone\x12\x15\n" +
-	"\x06don_id\x18\x04 \x01(\tR\x05donId\x12\x17\n" +
-	"\anode_id\x18\x05 \x01(\tR\x06nodeId\x12\x18\n" +
+	"\x04zone\x18\x03 \x01(\tR\x04zone\x12\x1a\n" +
+	"\x06don_id\x18\x04 \x01(\tH\x00R\x05donId\x88\x01\x01\x12\x1c\n" +
+	"\anode_id\x18\x05 \x01(\tH\x01R\x06nodeId\x88\x01\x01\x12\x18\n" +
 	"\aservice\x18\x06 \x01(\tR\aservice\x12#\n" +
 	"\rresource_pool\x18\a \x01(\tR\fresourcePool\x12(\n" +
-	"\x10resource_pool_id\x18\b \x01(\tR\x0eresourcePoolId*\x90\x01\n" +
+	"\x10resource_pool_id\x18\b \x01(\tR\x0eresourcePoolIdB\t\n" +
+	"\a_don_idB\n" +
+	"\n" +
+	"\b_node_id*\x90\x01\n" +
 	"\vMeterAction\x12\x1c\n" +
 	"\x18METER_ACTION_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14METER_ACTION_RESERVE\x10\x01\x12\x18\n" +
@@ -263,6 +270,7 @@ func file_metering_v1_identity_proto_init() {
 	if File_metering_v1_identity_proto != nil {
 		return
 	}
+	file_metering_v1_identity_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

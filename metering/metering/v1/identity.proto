@@ -17,12 +17,16 @@ message ResourceIdentity {
   string environment = 2;
   // Deployment zone, e.g. "wf-zone-a". A coarse billing-rollup dimension.
   string zone = 3;
-  // DON identifier the emitting service belongs to. A coarse billing-rollup
-  // dimension; used (with node_id) to count distinct nodes for quorum.
-  string don_id = 4;
-  // Node identifier (the node's CSA public key). A coarse billing-rollup
-  // dimension; lets billing dedup a node's retries and count distinct nodes.
-  string node_id = 5;
+  // DON identifier the emitting service belongs to. Optional: web2 emitters
+  // without a DON leave this unset rather than sending an empty string. A
+  // coarse billing-rollup dimension; used (with node_id) to count distinct
+  // nodes for quorum.
+  optional string don_id = 4;
+  // Node identifier (the node's CSA public key). Optional: web2 emitters
+  // without a node identity leave this unset rather than sending an empty
+  // string. A coarse billing-rollup dimension; lets billing dedup a node's
+  // retries and count distinct nodes.
+  optional string node_id = 5;
   // Stable service constant identifying the emitting service (the old
   // `entity`), e.g. "cron-trigger", "http-trigger", "evm-log-trigger",
   // "workflow-syncer-v2". A coarse billing-rollup dimension.
