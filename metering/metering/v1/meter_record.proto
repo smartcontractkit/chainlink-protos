@@ -1,0 +1,25 @@
+syntax = "proto3";
+package metering.v1;
+
+import "google/protobuf/timestamp.proto";
+import "metering/v1/identity.proto";
+import "metering/v1/utilization.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/metering/go;metering";
+
+// MeterRecord is a single state-transition event describing the allocation,
+// deallocation, or utilization change of a durable resource. It captures one
+// lifecycle edge; periodic absolute state (the level of all active resources
+// at a tick) is carried instead by Snapshot.
+message MeterRecord {
+  // Time at which the metered action occurred.
+  google.protobuf.Timestamp timestamp = 1;
+  // Structured identity of the affected resource (deployment/DON/node
+  // dimensions + service + resource/resource_type + the physical resource_id).
+  ResourceIdentity identity = 2;
+  // Billing semantics of this state transition.
+  MeterAction action = 3;
+  // One or more utilization quantities for the action (e.g. multiple billing
+  // units affected by the same lifecycle edge).
+  repeated Utilization utilizations = 4;
+}

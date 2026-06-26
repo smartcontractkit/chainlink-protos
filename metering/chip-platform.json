@@ -1,0 +1,45 @@
+{
+  "domain": "beholder__platform__messages",
+  "schemas": [
+    {
+      "entity": "metering.v1.ResourceIdentity",
+      "path": "metering/v1/identity.proto"
+    },
+    {
+      "entity": "metering.v1.Utilization",
+      "path": "metering/v1/utilization.proto"
+    },
+    {
+      "entity": "metering.v1.MeterRecord",
+      "path": "metering/v1/meter_record.proto",
+      "references": [
+        {
+          "name": "metering/v1/identity.proto",
+          "entity": "metering.v1.ResourceIdentity",
+          "path": "metering/v1/identity.proto"
+        },
+        {
+          "name": "metering/v1/utilization.proto",
+          "entity": "metering.v1.Utilization",
+          "path": "metering/v1/utilization.proto"
+        }
+      ]
+    },
+    {
+      "entity": "metering.v1.MeterSnapshot",
+      "path": "metering/v1/snapshot.proto",
+      "references": [
+        {
+          "name": "metering/v1/identity.proto",
+          "entity": "metering.v1.ResourceIdentity",
+          "path": "metering/v1/identity.proto"
+        },
+        {
+          "name": "metering/v1/utilization.proto",
+          "entity": "metering.v1.Utilization",
+          "path": "metering/v1/utilization.proto"
+        }
+      ]
+    }
+  ]
+}
