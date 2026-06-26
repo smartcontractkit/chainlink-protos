@@ -348,6 +348,10 @@
       ]
     },
     {
+      "entity": "workflows.v2.ExecutionProfile",
+      "path": "workflows/v2/workflow_execution_profile.proto"
+    },
+    {
       "entity": "bridge_status.v1.JobInfo",
       "path": "bridge_status/v1/job_info.proto"
     },

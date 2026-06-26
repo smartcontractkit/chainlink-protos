@@ -97,21 +97,14 @@ jobs:
     needs: [buf, changes]
     if: ${{ needs.changes.outputs.relevant == 'true' && always() && needs.buf.result != 'cancelled' }}
     steps:
-      - name: Assume aws gati role
-        if: github.actor != 'app-token-issuer-engops[bot]'
-        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
-        with:
-          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN_GATI }}
-          role-duration-seconds: 900
-          aws-region: ${{ secrets.AWS_REGION }}
-          mask-aws-account-id: true
-
-      - name: Get github token from gati
+      - name: Setup Github Token
         id: get-gh-token
         if: github.actor != 'app-token-issuer-engops[bot]'
-        uses: smartcontractkit/chainlink-github-actions/github-app-token-issuer@main
+        uses: smartcontractkit/.github/actions/setup-github-token@setup-github-token/v1
         with:
-          url: ${{ secrets.AWS_LAMBDA_URL_GATI }}
+          aws-role-arn: ${{ secrets.AWS_IAM_ROLE_ARN_GATI }}
+          aws-lambda-url: ${{ secrets.AWS_LAMBDA_URL_GATI }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Checkout repo
         if: github.actor != 'app-token-issuer-engops[bot]'

@@ -369,6 +369,14 @@ service Client {
               value: 6915682381028791124
             },
             {
+              key: "private-testnet-pumice"
+              value: 1564738277398880633
+            },
+            {
+              key: "private-testnet-quartzite"
+              value: 4175996748267305081
+            },
+            {
               key: "private-testnet-rhyolite"
               value: 604447335222770945
             },
@@ -830,6 +838,12 @@ message HeaderValues {
   repeated string values = 1;
 }
 
+// MtlsAuth represents the private-key/cert pair for mtls auth.
+message MtlsAuth {
+  bytes private_key = 1;
+  bytes certificate = 2;
+}
+
 message Request {
   string url = 1;
   string method = 2;
@@ -838,6 +852,7 @@ message Request {
   google.protobuf.Duration timeout = 5; // Request timeout duration
   CacheSettings cache_settings = 6;
   map<string, HeaderValues> multi_headers = 7;
+  optional MtlsAuth mtls = 8;
 }
 
 message Response {
