@@ -29,10 +29,18 @@ type Utilization struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Quantity of the resource_type unit: the amount affected by a MeterRecord
 	// action, or the current level of the resource in a MeterSnapshot.
-	Value int64 `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
+	Value string `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
 	// The type of utilization that value measures.
 	// e.g. RESOURCE_TYPE_COMPUTE
-	ResourceType  string `protobuf:"bytes,2,opt,name=resource_type,json=resourceType,proto3" json:"resource_type,omitempty"`
+	ResourceType string `protobuf:"bytes,2,opt,name=resource_type,json=resourceType,proto3" json:"resource_type,omitempty"`
+	// primarily valuable for workflow receipts where you could have workflowID.
+	// persistant storage with a pre-allocated slice has a resource_id
+	// to identify it.
+	ResourceId string `protobuf:"bytes,3,opt,name=resource_id,json=resourceId,proto3" json:"resource_id,omitempty"`
+	// UID or workflowExecutionID, identifying the event
+	EventId string `protobuf:"bytes,4,opt,name=event_id,json=eventId,proto3" json:"event_id,omitempty"`
+	// customer org
+	OrgId         string `protobuf:"bytes,5,opt,name=org_id,json=orgId,proto3" json:"org_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -67,11 +75,11 @@ func (*Utilization) Descriptor() ([]byte, []int) {
 	return file_metering_v1_utilization_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Utilization) GetValue() int64 {
+func (x *Utilization) GetValue() string {
 	if x != nil {
 		return x.Value
 	}
-	return 0
+	return ""
 }
 
 func (x *Utilization) GetResourceType() string {
@@ -81,14 +89,39 @@ func (x *Utilization) GetResourceType() string {
 	return ""
 }
 
+func (x *Utilization) GetResourceId() string {
+	if x != nil {
+		return x.ResourceId
+	}
+	return ""
+}
+
+func (x *Utilization) GetEventId() string {
+	if x != nil {
+		return x.EventId
+	}
+	return ""
+}
+
+func (x *Utilization) GetOrgId() string {
+	if x != nil {
+		return x.OrgId
+	}
+	return ""
+}
+
 var File_metering_v1_utilization_proto protoreflect.FileDescriptor
 
 const file_metering_v1_utilization_proto_rawDesc = "" +
 	"\n" +
-	"\x1dmetering/v1/utilization.proto\x12\vmetering.v1\"H\n" +
+	"\x1dmetering/v1/utilization.proto\x12\vmetering.v1\"\x9b\x01\n" +
 	"\vUtilization\x12\x14\n" +
-	"\x05value\x18\x01 \x01(\x03R\x05value\x12#\n" +
-	"\rresource_type\x18\x02 \x01(\tR\fresourceTypeBCZAgithub.com/smartcontractkit/chainlink-protos/metering/go;meteringb\x06proto3"
+	"\x05value\x18\x01 \x01(\tR\x05value\x12#\n" +
+	"\rresource_type\x18\x02 \x01(\tR\fresourceType\x12\x1f\n" +
+	"\vresource_id\x18\x03 \x01(\tR\n" +
+	"resourceId\x12\x19\n" +
+	"\bevent_id\x18\x04 \x01(\tR\aeventId\x12\x15\n" +
+	"\x06org_id\x18\x05 \x01(\tR\x05orgIdBCZAgithub.com/smartcontractkit/chainlink-protos/metering/go;meteringb\x06proto3"
 
 var (
 	file_metering_v1_utilization_proto_rawDescOnce sync.Once

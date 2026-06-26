@@ -116,18 +116,13 @@ type ResourceIdentity struct {
 	// "workflow-syncer-v2". A coarse billing-rollup dimension.
 	Service string `protobuf:"bytes,6,opt,name=service,proto3" json:"service,omitempty"`
 	// Resource pool the action applies to, e.g. "trigger_registrations",
-	// "log_filters".
-	Resource string `protobuf:"bytes,7,opt,name=resource,proto3" json:"resource,omitempty"`
-	// The PHYSICAL/logical resource identity. Workflow-INDEPENDENT where a
-	// shared physical resource exists: for EVM log filters it is the content
-	// hash of (chain_selector + canonicalized addresses + event sigs +
-	// positional topics), so identical filters from different workflows share
-	// one resource_id. For cron/http/syncer (no shared physical resource) it is
-	// the workflow-scoped trigger_id / workflow_id. Note: workflow_id and
-	// trigger_id are NOT identity fields here; they live in Utilization labels.
-	ResourceId    string `protobuf:"bytes,8,opt,name=resource_id,json=resourceId,proto3" json:"resource_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	// "log_filters", "workflow_storage". Human friendly name
+	ResourcePool string `protobuf:"bytes,7,opt,name=resource_pool,json=resourcePool,proto3" json:"resource_pool,omitempty"`
+	// optionality to add a level of hierarchy within the resource_pool, or
+	// UID a resource_pool
+	ResourcePoolId string `protobuf:"bytes,8,opt,name=resource_pool_id,json=resourcePoolId,proto3" json:"resource_pool_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ResourceIdentity) Reset() {
@@ -202,16 +197,16 @@ func (x *ResourceIdentity) GetService() string {
 	return ""
 }
 
-func (x *ResourceIdentity) GetResource() string {
+func (x *ResourceIdentity) GetResourcePool() string {
 	if x != nil {
-		return x.Resource
+		return x.ResourcePool
 	}
 	return ""
 }
 
-func (x *ResourceIdentity) GetResourceId() string {
+func (x *ResourceIdentity) GetResourcePoolId() string {
 	if x != nil {
-		return x.ResourceId
+		return x.ResourcePoolId
 	}
 	return ""
 }
@@ -220,17 +215,16 @@ var File_metering_v1_identity_proto protoreflect.FileDescriptor
 
 const file_metering_v1_identity_proto_rawDesc = "" +
 	"\n" +
-	"\x1ametering/v1/identity.proto\x12\vmetering.v1\"\xe9\x01\n" +
+	"\x1ametering/v1/identity.proto\x12\vmetering.v1\"\xfb\x01\n" +
 	"\x10ResourceIdentity\x12\x18\n" +
 	"\aproduct\x18\x01 \x01(\tR\aproduct\x12 \n" +
 	"\venvironment\x18\x02 \x01(\tR\venvironment\x12\x12\n" +
 	"\x04zone\x18\x03 \x01(\tR\x04zone\x12\x15\n" +
 	"\x06don_id\x18\x04 \x01(\tR\x05donId\x12\x17\n" +
 	"\anode_id\x18\x05 \x01(\tR\x06nodeId\x12\x18\n" +
-	"\aservice\x18\x06 \x01(\tR\aservice\x12\x1a\n" +
-	"\bresource\x18\a \x01(\tR\bresource\x12\x1f\n" +
-	"\vresource_id\x18\b \x01(\tR\n" +
-	"resourceId*\x90\x01\n" +
+	"\aservice\x18\x06 \x01(\tR\aservice\x12#\n" +
+	"\rresource_pool\x18\a \x01(\tR\fresourcePool\x12(\n" +
+	"\x10resource_pool_id\x18\b \x01(\tR\x0eresourcePoolId*\x90\x01\n" +
 	"\vMeterAction\x12\x1c\n" +
 	"\x18METER_ACTION_UNSPECIFIED\x10\x00\x12\x18\n" +
 	"\x14METER_ACTION_RESERVE\x10\x01\x12\x18\n" +

@@ -28,16 +28,11 @@ message ResourceIdentity {
   // "workflow-syncer-v2". A coarse billing-rollup dimension.
   string service = 6;
   // Resource pool the action applies to, e.g. "trigger_registrations",
-  // "log_filters".
-  string resource = 7;
-  // The PHYSICAL/logical resource identity. Workflow-INDEPENDENT where a
-  // shared physical resource exists: for EVM log filters it is the content
-  // hash of (chain_selector + canonicalized addresses + event sigs +
-  // positional topics), so identical filters from different workflows share
-  // one resource_id. For cron/http/syncer (no shared physical resource) it is
-  // the workflow-scoped trigger_id / workflow_id. Note: workflow_id and
-  // trigger_id are NOT identity fields here; they live in Utilization labels.
-  string resource_id = 8;
+  // "log_filters", "workflow_storage". Human friendly name
+  string resource_pool = 7;
+  // optionality to add a level of hierarchy within the resource_pool, or
+  // UID a resource_pool
+  string resource_pool_id = 8;
 }
 
 // MeterAction identifies the billing semantics of a MeterRecord.

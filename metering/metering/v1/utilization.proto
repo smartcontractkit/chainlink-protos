@@ -10,8 +10,16 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/metering/go;me
 message Utilization {
   // Quantity of the resource_type unit: the amount affected by a MeterRecord
   // action, or the current level of the resource in a MeterSnapshot.
-  int64 value = 1;
+  string value = 1;
   // The type of utilization that value measures.
   // e.g. RESOURCE_TYPE_COMPUTE
   string resource_type = 2;
+  // primarily valuable for workflow receipts where you could have workflowID.
+  // persistant storage with a pre-allocated slice has a resource_id
+  // to identify it. 
+  string resource_id = 3;
+  // UID or workflowExecutionID, identifying the event
+  string event_id = 4;
+  // customer org
+  string org_id = 5;
 }
