@@ -2021,6 +2021,7 @@ message ExecuteRequest {
     Trigger pre_hook = 5;
   }
   uint64 max_response_size = 4;
+  bool suspend_on_await = 6;
 }
 
 message ExecutionResult {
