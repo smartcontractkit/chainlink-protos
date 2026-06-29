@@ -21,14 +21,63 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type ActivationAbandonReason int32
+
+const (
+	ActivationAbandonReason_ACTIVATION_ABANDON_REASON_UNSPECIFIED          ActivationAbandonReason = 0
+	ActivationAbandonReason_ACTIVATION_ABANDON_REASON_NON_RETRYABLE        ActivationAbandonReason = 1
+	ActivationAbandonReason_ACTIVATION_ABANDON_REASON_RETRY_LIMIT_EXCEEDED ActivationAbandonReason = 2
+)
+
+// Enum value maps for ActivationAbandonReason.
+var (
+	ActivationAbandonReason_name = map[int32]string{
+		0: "ACTIVATION_ABANDON_REASON_UNSPECIFIED",
+		1: "ACTIVATION_ABANDON_REASON_NON_RETRYABLE",
+		2: "ACTIVATION_ABANDON_REASON_RETRY_LIMIT_EXCEEDED",
+	}
+	ActivationAbandonReason_value = map[string]int32{
+		"ACTIVATION_ABANDON_REASON_UNSPECIFIED":          0,
+		"ACTIVATION_ABANDON_REASON_NON_RETRYABLE":        1,
+		"ACTIVATION_ABANDON_REASON_RETRY_LIMIT_EXCEEDED": 2,
+	}
+)
+
+func (x ActivationAbandonReason) Enum() *ActivationAbandonReason {
+	p := new(ActivationAbandonReason)
+	*p = x
+	return p
+}
+
+func (x ActivationAbandonReason) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ActivationAbandonReason) Descriptor() protoreflect.EnumDescriptor {
+	return file_workflows_v2_workflow_activation_abandoned_proto_enumTypes[0].Descriptor()
+}
+
+func (ActivationAbandonReason) Type() protoreflect.EnumType {
+	return &file_workflows_v2_workflow_activation_abandoned_proto_enumTypes[0]
+}
+
+func (x ActivationAbandonReason) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ActivationAbandonReason.Descriptor instead.
+func (ActivationAbandonReason) EnumDescriptor() ([]byte, []int) {
+	return file_workflows_v2_workflow_activation_abandoned_proto_rawDescGZIP(), []int{0}
+}
+
 type WorkflowActivationAbandoned struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CreInfo       *CreInfo               `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
-	Workflow      *Workflow              `protobuf:"bytes,2,opt,name=workflow,proto3" json:"workflow,omitempty"`
-	Timestamp     string                 `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	ErrorMessage  string                 `protobuf:"bytes,4,opt,name=errorMessage,proto3" json:"errorMessage,omitempty"`
-	Reason        string                 `protobuf:"bytes,5,opt,name=reason,proto3" json:"reason,omitempty"` // "non_retryable" | "retry_limit_exceeded"
-	RetryCount    int32                  `protobuf:"varint,6,opt,name=retryCount,proto3" json:"retryCount,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	CreInfo       *CreInfo                `protobuf:"bytes,1,opt,name=creInfo,proto3" json:"creInfo,omitempty"`
+	Workflow      *Workflow               `protobuf:"bytes,2,opt,name=workflow,proto3" json:"workflow,omitempty"`
+	Timestamp     uint64                  `protobuf:"varint,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"` // unix timestamp
+	ErrorMessage  string                  `protobuf:"bytes,4,opt,name=errorMessage,proto3" json:"errorMessage,omitempty"`
+	Reason        ActivationAbandonReason `protobuf:"varint,5,opt,name=reason,proto3,enum=workflows.v2.ActivationAbandonReason" json:"reason,omitempty"`
+	RetryCount    int32                   `protobuf:"varint,6,opt,name=retryCount,proto3" json:"retryCount,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -77,11 +126,11 @@ func (x *WorkflowActivationAbandoned) GetWorkflow() *Workflow {
 	return nil
 }
 
-func (x *WorkflowActivationAbandoned) GetTimestamp() string {
+func (x *WorkflowActivationAbandoned) GetTimestamp() uint64 {
 	if x != nil {
 		return x.Timestamp
 	}
-	return ""
+	return 0
 }
 
 func (x *WorkflowActivationAbandoned) GetErrorMessage() string {
@@ -91,11 +140,11 @@ func (x *WorkflowActivationAbandoned) GetErrorMessage() string {
 	return ""
 }
 
-func (x *WorkflowActivationAbandoned) GetReason() string {
+func (x *WorkflowActivationAbandoned) GetReason() ActivationAbandonReason {
 	if x != nil {
 		return x.Reason
 	}
-	return ""
+	return ActivationAbandonReason_ACTIVATION_ABANDON_REASON_UNSPECIFIED
 }
 
 func (x *WorkflowActivationAbandoned) GetRetryCount() int32 {
@@ -109,16 +158,20 @@ var File_workflows_v2_workflow_activation_abandoned_proto protoreflect.FileDescr
 
 const file_workflows_v2_workflow_activation_abandoned_proto_rawDesc = "" +
 	"\n" +
-	"0workflows/v2/workflow_activation_abandoned.proto\x12\fworkflows.v2\x1a\x1bworkflows/v2/cre_info.proto\x1a\x1bworkflows/v2/workflow.proto\"\xfc\x01\n" +
+	"0workflows/v2/workflow_activation_abandoned.proto\x12\fworkflows.v2\x1a\x1bworkflows/v2/cre_info.proto\x1a\x1bworkflows/v2/workflow.proto\"\xa3\x02\n" +
 	"\x1bWorkflowActivationAbandoned\x12/\n" +
 	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x122\n" +
 	"\bworkflow\x18\x02 \x01(\v2\x16.workflows.v2.WorkflowR\bworkflow\x12\x1c\n" +
-	"\ttimestamp\x18\x03 \x01(\tR\ttimestamp\x12\"\n" +
-	"\ferrorMessage\x18\x04 \x01(\tR\ferrorMessage\x12\x16\n" +
-	"\x06reason\x18\x05 \x01(\tR\x06reason\x12\x1e\n" +
+	"\ttimestamp\x18\x03 \x01(\x04R\ttimestamp\x12\"\n" +
+	"\ferrorMessage\x18\x04 \x01(\tR\ferrorMessage\x12=\n" +
+	"\x06reason\x18\x05 \x01(\x0e2%.workflows.v2.ActivationAbandonReasonR\x06reason\x12\x1e\n" +
 	"\n" +
 	"retryCount\x18\x06 \x01(\x05R\n" +
-	"retryCountB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
+	"retryCount*\xa5\x01\n" +
+	"\x17ActivationAbandonReason\x12)\n" +
+	"%ACTIVATION_ABANDON_REASON_UNSPECIFIED\x10\x00\x12+\n" +
+	"'ACTIVATION_ABANDON_REASON_NON_RETRYABLE\x10\x01\x122\n" +
+	".ACTIVATION_ABANDON_REASON_RETRY_LIMIT_EXCEEDED\x10\x02B>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
 
 var (
 	file_workflows_v2_workflow_activation_abandoned_proto_rawDescOnce sync.Once
@@ -132,20 +185,23 @@ func file_workflows_v2_workflow_activation_abandoned_proto_rawDescGZIP() []byte 
 	return file_workflows_v2_workflow_activation_abandoned_proto_rawDescData
 }
 
+var file_workflows_v2_workflow_activation_abandoned_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_workflows_v2_workflow_activation_abandoned_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_workflows_v2_workflow_activation_abandoned_proto_goTypes = []any{
-	(*WorkflowActivationAbandoned)(nil), // 0: workflows.v2.WorkflowActivationAbandoned
-	(*CreInfo)(nil),                     // 1: workflows.v2.CreInfo
-	(*Workflow)(nil),                    // 2: workflows.v2.Workflow
+	(ActivationAbandonReason)(0),        // 0: workflows.v2.ActivationAbandonReason
+	(*WorkflowActivationAbandoned)(nil), // 1: workflows.v2.WorkflowActivationAbandoned
+	(*CreInfo)(nil),                     // 2: workflows.v2.CreInfo
+	(*Workflow)(nil),                    // 3: workflows.v2.Workflow
 }
 var file_workflows_v2_workflow_activation_abandoned_proto_depIdxs = []int32{
-	1, // 0: workflows.v2.WorkflowActivationAbandoned.creInfo:type_name -> workflows.v2.CreInfo
-	2, // 1: workflows.v2.WorkflowActivationAbandoned.workflow:type_name -> workflows.v2.Workflow
-	2, // [2:2] is the sub-list for method output_type
-	2, // [2:2] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	2, // 0: workflows.v2.WorkflowActivationAbandoned.creInfo:type_name -> workflows.v2.CreInfo
+	3, // 1: workflows.v2.WorkflowActivationAbandoned.workflow:type_name -> workflows.v2.Workflow
+	0, // 2: workflows.v2.WorkflowActivationAbandoned.reason:type_name -> workflows.v2.ActivationAbandonReason
+	3, // [3:3] is the sub-list for method output_type
+	3, // [3:3] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_workflows_v2_workflow_activation_abandoned_proto_init() }
@@ -160,13 +216,14 @@ func file_workflows_v2_workflow_activation_abandoned_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_workflows_v2_workflow_activation_abandoned_proto_rawDesc), len(file_workflows_v2_workflow_activation_abandoned_proto_rawDesc)),
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_workflows_v2_workflow_activation_abandoned_proto_goTypes,
 		DependencyIndexes: file_workflows_v2_workflow_activation_abandoned_proto_depIdxs,
+		EnumInfos:         file_workflows_v2_workflow_activation_abandoned_proto_enumTypes,
 		MessageInfos:      file_workflows_v2_workflow_activation_abandoned_proto_msgTypes,
 	}.Build()
 	File_workflows_v2_workflow_activation_abandoned_proto = out.File
