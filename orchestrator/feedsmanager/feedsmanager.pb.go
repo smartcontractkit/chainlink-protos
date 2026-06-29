@@ -86,6 +86,8 @@ const (
 	ChainType_CHAIN_TYPE_TRON        ChainType = 5
 	ChainType_CHAIN_TYPE_TON         ChainType = 6
 	ChainType_CHAIN_TYPE_SUI         ChainType = 7
+	ChainType_CHAIN_TYPE_CANTON      ChainType = 8
+	ChainType_CHAIN_TYPE_STELLAR     ChainType = 9
 )
 
 // Enum value maps for ChainType.
@@ -99,6 +101,8 @@ var (
 		5: "CHAIN_TYPE_TRON",
 		6: "CHAIN_TYPE_TON",
 		7: "CHAIN_TYPE_SUI",
+		8: "CHAIN_TYPE_CANTON",
+		9: "CHAIN_TYPE_STELLAR",
 	}
 	ChainType_value = map[string]int32{
 		"CHAIN_TYPE_UNSPECIFIED": 0,
@@ -109,6 +113,8 @@ var (
 		"CHAIN_TYPE_TRON":        5,
 		"CHAIN_TYPE_TON":         6,
 		"CHAIN_TYPE_SUI":         7,
+		"CHAIN_TYPE_CANTON":      8,
+		"CHAIN_TYPE_STELLAR":     9,
 	}
 )
 
@@ -2121,7 +2127,7 @@ const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"\x14JOB_TYPE_UNSPECIFIED\x10\x00\x12\x19\n" +
 	"\x15JOB_TYPE_FLUX_MONITOR\x10\x01\x12\x10\n" +
 	"\fJOB_TYPE_OCR\x10\x02\x12\x11\n" +
-	"\rJOB_TYPE_OCR2\x10\x03*\xbe\x01\n" +
+	"\rJOB_TYPE_OCR2\x10\x03*\xed\x01\n" +
 	"\tChainType\x12\x1a\n" +
 	"\x16CHAIN_TYPE_UNSPECIFIED\x10\x00\x12\x12\n" +
 	"\x0eCHAIN_TYPE_EVM\x10\x01\x12\x15\n" +
@@ -2130,7 +2136,9 @@ const file_orchestrator_feedsmanager_feedsmanager_proto_rawDesc = "" +
 	"\x10CHAIN_TYPE_APTOS\x10\x04\x12\x13\n" +
 	"\x0fCHAIN_TYPE_TRON\x10\x05\x12\x12\n" +
 	"\x0eCHAIN_TYPE_TON\x10\x06\x12\x12\n" +
-	"\x0eCHAIN_TYPE_SUI\x10\a2\xd8\x02\n" +
+	"\x0eCHAIN_TYPE_SUI\x10\a\x12\x15\n" +
+	"\x11CHAIN_TYPE_CANTON\x10\b\x12\x16\n" +
+	"\x12CHAIN_TYPE_STELLAR\x10\t2\xd8\x02\n" +
 	"\fFeedsManager\x12@\n" +
 	"\vApprovedJob\x12\x17.cfm.ApprovedJobRequest\x1a\x18.cfm.ApprovedJobResponse\x12@\n" +
 	"\vHealthcheck\x12\x17.cfm.HealthcheckRequest\x1a\x18.cfm.HealthcheckResponse\x12=\n" +
