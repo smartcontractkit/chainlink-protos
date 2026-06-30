@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package workflows.v2;
+
+import "workflows/v2/cre_info.proto";
+import "workflows/v2/workflow.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
+
+enum ActivationAbandonReason {
+  ACTIVATION_ABANDON_REASON_UNSPECIFIED = 0;
+  ACTIVATION_ABANDON_REASON_NON_RETRYABLE = 1;
+  ACTIVATION_ABANDON_REASON_RETRY_LIMIT_EXCEEDED = 2;
+}
+
+message WorkflowActivationAbandoned {
+  CreInfo creInfo = 1;
+  Workflow workflow = 2;
+  uint64 timestamp = 3; // unix timestamp
+  string errorMessage = 4;
+  ActivationAbandonReason reason = 5;
+  int32 retryCount = 6;
+}
