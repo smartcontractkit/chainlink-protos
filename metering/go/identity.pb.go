@@ -100,26 +100,30 @@ type ResourceIdentity struct {
 	// Deployment product, e.g. "cre". One of the deployment+DON+node
 	// dimensions used for coarse billing rollup.
 	Product string `protobuf:"bytes,1,opt,name=product,proto3" json:"product,omitempty"`
-	// Deployment tenant, e.g. "mainline" or "enterprise" for "cre"
+	// Deployment tenant name, e.g. "mainline" or "enterprise". This is the
+	// human-readable tenant label (not the numeric tenant ID).
 	Tenant string `protobuf:"bytes,2,opt,name=tenant,proto3" json:"tenant,omitempty"`
+	// Numeric tenant identifier as used by Accounts/Linking/registry/Vault DON.
+	// This is a numbered identifier represented as a string.
+	NumericTenantId string `protobuf:"bytes,3,opt,name=numeric_tenant_id,json=numericTenantId,proto3" json:"numeric_tenant_id,omitempty"`
 	// Deployment environment, e.g. "production", "staging". A coarse
 	// billing-rollup dimension.
-	Environment string `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
+	Environment string `protobuf:"bytes,4,opt,name=environment,proto3" json:"environment,omitempty"`
 	// Deployment zone, e.g. "wf-zone-a". A coarse billing-rollup dimension.
-	Zone string `protobuf:"bytes,4,opt,name=zone,proto3" json:"zone,omitempty"`
+	Zone string `protobuf:"bytes,5,opt,name=zone,proto3" json:"zone,omitempty"`
 	// DON-specific identity dimensions. Present only for DON emitters. Web2 or
 	// other non-DON emitters leave this unset instead of sending empty IDs.
-	DonIdentifier *DonIdentifier `protobuf:"bytes,5,opt,name=don_identifier,json=donIdentifier,proto3,oneof" json:"don_identifier,omitempty"`
+	Don *DonIdentity `protobuf:"bytes,6,opt,name=don,proto3,oneof" json:"don,omitempty"`
 	// Stable service constant identifying the emitting service (the old
 	// `entity`), e.g. "cron-trigger", "http-trigger", "evm-log-trigger",
 	// "workflow-syncer-v2". A coarse billing-rollup dimension.
-	Service string `protobuf:"bytes,6,opt,name=service,proto3" json:"service,omitempty"`
+	Service string `protobuf:"bytes,7,opt,name=service,proto3" json:"service,omitempty"`
 	// Resource pool the action applies to, e.g. "trigger_registrations",
 	// "log_filters", "workflow_storage". Human friendly name
-	ResourcePool string `protobuf:"bytes,7,opt,name=resource_pool,json=resourcePool,proto3" json:"resource_pool,omitempty"`
+	ResourcePool string `protobuf:"bytes,8,opt,name=resource_pool,json=resourcePool,proto3" json:"resource_pool,omitempty"`
 	// optionality to add a level of hierarchy within the resource_pool, or
 	// UID a resource_pool
-	ResourcePoolId string `protobuf:"bytes,8,opt,name=resource_pool_id,json=resourcePoolId,proto3" json:"resource_pool_id,omitempty"`
+	ResourcePoolId string `protobuf:"bytes,9,opt,name=resource_pool_id,json=resourcePoolId,proto3" json:"resource_pool_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -168,6 +172,13 @@ func (x *ResourceIdentity) GetTenant() string {
 	return ""
 }
 
+func (x *ResourceIdentity) GetNumericTenantId() string {
+	if x != nil {
+		return x.NumericTenantId
+	}
+	return ""
+}
+
 func (x *ResourceIdentity) GetEnvironment() string {
 	if x != nil {
 		return x.Environment
@@ -182,9 +193,9 @@ func (x *ResourceIdentity) GetZone() string {
 	return ""
 }
 
-func (x *ResourceIdentity) GetDonIdentifier() *DonIdentifier {
+func (x *ResourceIdentity) GetDon() *DonIdentity {
 	if x != nil {
-		return x.DonIdentifier
+		return x.Don
 	}
 	return nil
 }
@@ -210,6 +221,62 @@ func (x *ResourceIdentity) GetResourcePoolId() string {
 	return ""
 }
 
+// DonIdentity captures DON-only identity dimensions together so consumers can
+// branch on message presence, not individual field permutations.
+type DonIdentity struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// DON ID the emitting service belongs to.
+	DonId string `protobuf:"bytes,1,opt,name=don_id,json=donId,proto3" json:"don_id,omitempty"`
+	// Node ID (the node's logical name, not the CSA public key).
+	NodeId        string `protobuf:"bytes,2,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DonIdentity) Reset() {
+	*x = DonIdentity{}
+	mi := &file_metering_v1_identity_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DonIdentity) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DonIdentity) ProtoMessage() {}
+
+func (x *DonIdentity) ProtoReflect() protoreflect.Message {
+	mi := &file_metering_v1_identity_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DonIdentity.ProtoReflect.Descriptor instead.
+func (*DonIdentity) Descriptor() ([]byte, []int) {
+	return file_metering_v1_identity_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *DonIdentity) GetDonId() string {
+	if x != nil {
+		return x.DonId
+	}
+	return ""
+}
+
+func (x *DonIdentity) GetNodeId() string {
+	if x != nil {
+		return x.NodeId
+	}
+	return ""
+}
+
 // DonIdentifier captures DON-only identity dimensions together so consumers
 // can branch on message presence, not individual field permutations.
 type DonIdentifier struct {
@@ -224,7 +291,7 @@ type DonIdentifier struct {
 
 func (x *DonIdentifier) Reset() {
 	*x = DonIdentifier{}
-	mi := &file_metering_v1_identity_proto_msgTypes[1]
+	mi := &file_metering_v1_identity_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -236,7 +303,7 @@ func (x *DonIdentifier) String() string {
 func (*DonIdentifier) ProtoMessage() {}
 
 func (x *DonIdentifier) ProtoReflect() protoreflect.Message {
-	mi := &file_metering_v1_identity_proto_msgTypes[1]
+	mi := &file_metering_v1_identity_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -249,7 +316,7 @@ func (x *DonIdentifier) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DonIdentifier.ProtoReflect.Descriptor instead.
 func (*DonIdentifier) Descriptor() ([]byte, []int) {
-	return file_metering_v1_identity_proto_rawDescGZIP(), []int{1}
+	return file_metering_v1_identity_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *DonIdentifier) GetDonId() string {
@@ -270,17 +337,21 @@ var File_metering_v1_identity_proto protoreflect.FileDescriptor
 
 const file_metering_v1_identity_proto_rawDesc = "" +
 	"\n" +
-	"\x1ametering/v1/identity.proto\x12\vmetering.v1\"\xbe\x02\n" +
+	"\x1ametering/v1/identity.proto\x12\vmetering.v1\"\xc8\x02\n" +
 	"\x10ResourceIdentity\x12\x18\n" +
 	"\aproduct\x18\x01 \x01(\tR\aproduct\x12\x16\n" +
-	"\x06tenant\x18\x02 \x01(\tR\x06tenant\x12 \n" +
-	"\venvironment\x18\x03 \x01(\tR\venvironment\x12\x12\n" +
-	"\x04zone\x18\x04 \x01(\tR\x04zone\x12F\n" +
-	"\x0edon_identifier\x18\x05 \x01(\v2\x1a.metering.v1.DonIdentifierH\x00R\rdonIdentifier\x88\x01\x01\x12\x18\n" +
-	"\aservice\x18\x06 \x01(\tR\aservice\x12#\n" +
-	"\rresource_pool\x18\a \x01(\tR\fresourcePool\x12(\n" +
-	"\x10resource_pool_id\x18\b \x01(\tR\x0eresourcePoolIdB\x11\n" +
-	"\x0f_don_identifier\"?\n" +
+	"\x06tenant\x18\x02 \x01(\tR\x06tenant\x12*\n" +
+	"\x11numeric_tenant_id\x18\x03 \x01(\tR\x0fnumericTenantId\x12 \n" +
+	"\venvironment\x18\x04 \x01(\tR\venvironment\x12\x12\n" +
+	"\x04zone\x18\x05 \x01(\tR\x04zone\x12/\n" +
+	"\x03don\x18\x06 \x01(\v2\x18.metering.v1.DonIdentityH\x00R\x03don\x88\x01\x01\x12\x18\n" +
+	"\aservice\x18\a \x01(\tR\aservice\x12#\n" +
+	"\rresource_pool\x18\b \x01(\tR\fresourcePool\x12(\n" +
+	"\x10resource_pool_id\x18\t \x01(\tR\x0eresourcePoolIdB\x06\n" +
+	"\x04_don\"=\n" +
+	"\vDonIdentity\x12\x15\n" +
+	"\x06don_id\x18\x01 \x01(\tR\x05donId\x12\x17\n" +
+	"\anode_id\x18\x02 \x01(\tR\x06nodeId\"?\n" +
 	"\rDonIdentifier\x12\x15\n" +
 	"\x06don_id\x18\x01 \x01(\tR\x05donId\x12\x17\n" +
 	"\anode_id\x18\x02 \x01(\tR\x06nodeId*\x90\x01\n" +
@@ -304,14 +375,15 @@ func file_metering_v1_identity_proto_rawDescGZIP() []byte {
 }
 
 var file_metering_v1_identity_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_metering_v1_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_metering_v1_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_metering_v1_identity_proto_goTypes = []any{
 	(MeterAction)(0),         // 0: metering.v1.MeterAction
 	(*ResourceIdentity)(nil), // 1: metering.v1.ResourceIdentity
-	(*DonIdentifier)(nil),    // 2: metering.v1.DonIdentifier
+	(*DonIdentity)(nil),      // 2: metering.v1.DonIdentity
+	(*DonIdentifier)(nil),    // 3: metering.v1.DonIdentifier
 }
 var file_metering_v1_identity_proto_depIdxs = []int32{
-	2, // 0: metering.v1.ResourceIdentity.don_identifier:type_name -> metering.v1.DonIdentifier
+	2, // 0: metering.v1.ResourceIdentity.don:type_name -> metering.v1.DonIdentity
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -331,7 +403,7 @@ func file_metering_v1_identity_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_metering_v1_identity_proto_rawDesc), len(file_metering_v1_identity_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

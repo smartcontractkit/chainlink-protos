@@ -12,26 +12,39 @@ message ResourceIdentity {
   // Deployment product, e.g. "cre". One of the deployment+DON+node
   // dimensions used for coarse billing rollup.
   string product = 1;
-  // Deployment tenant, e.g. "mainline" or "enterprise" for "cre"
+  // Deployment tenant name, e.g. "mainline" or "enterprise". This is the
+  // human-readable tenant label (not the numeric tenant ID).
   string tenant = 2;
+  // Numeric tenant identifier as used by Accounts/Linking/registry/Vault DON.
+  // This is a numbered identifier represented as a string.
+  string numeric_tenant_id = 3;
   // Deployment environment, e.g. "production", "staging". A coarse
   // billing-rollup dimension.
-  string environment = 3;
+  string environment = 4;
   // Deployment zone, e.g. "wf-zone-a". A coarse billing-rollup dimension.
-  string zone = 4;
+  string zone = 5;
   // DON-specific identity dimensions. Present only for DON emitters. Web2 or
   // other non-DON emitters leave this unset instead of sending empty IDs.
-  optional DonIdentifier don_identifier = 5;
+  optional DonIdentity don = 6;
   // Stable service constant identifying the emitting service (the old
   // `entity`), e.g. "cron-trigger", "http-trigger", "evm-log-trigger",
   // "workflow-syncer-v2". A coarse billing-rollup dimension.
-  string service = 6;
+  string service = 7;
   // Resource pool the action applies to, e.g. "trigger_registrations",
   // "log_filters", "workflow_storage". Human friendly name
-  string resource_pool = 7;
+  string resource_pool = 8;
   // optionality to add a level of hierarchy within the resource_pool, or
   // UID a resource_pool
-  string resource_pool_id = 8;
+  string resource_pool_id = 9;
+}
+
+// DonIdentity captures DON-only identity dimensions together so consumers can
+// branch on message presence, not individual field permutations.
+message DonIdentity {
+  // DON ID the emitting service belongs to.
+  string don_id = 1;
+  // Node ID (the node's logical name, not the CSA public key).
+  string node_id = 2;
 }
 
 // DonIdentifier captures DON-only identity dimensions together so consumers
