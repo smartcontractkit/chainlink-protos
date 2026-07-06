@@ -32,8 +32,8 @@
 /ring/ @smartcontractkit/foundations @smartcontractkit/op-tooling
 
 # Metering
-/metering/ @smartcontractkit/foundations @smartcontractkit/op-tooling
-/.github/workflows/register-metering-schemas.yaml @smartcontractkit/foundations @smartcontractkit/op-tooling
+/metering/ @smartcontractkit/foundations @smartcontractkit/cre-business @smartcontractkit/op-tooling
+/.github/workflows/register-metering-schemas.yaml @smartcontractkit/foundations @smartcontractkit/cre-business @smartcontractkit/op-tooling
 
 # Node Platform
 /node-platform/ @smartcontractkit/infra-nodes @smartcontractkit/op-tooling @smartcontractkit/rane

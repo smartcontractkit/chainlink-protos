@@ -47,6 +47,15 @@ message DonIdentity {
   string node_id = 2;
 }
 
+// DonIdentifier captures DON-only identity dimensions together so consumers
+// can branch on message presence, not individual field permutations.
+message DonIdentifier {
+  // DON identifier the emitting service belongs to.
+  string don_id = 1;
+  // Node identifier (the node's CSA public key).
+  string node_id = 2;
+}
+
 // MeterAction identifies the billing semantics of a MeterRecord.
 enum MeterAction {
   // Unknown / unset.
