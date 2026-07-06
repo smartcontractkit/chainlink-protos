@@ -9,34 +9,42 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/metering/go;me
 // dimension as a discrete column rather than parsing a dotted string or
 // carrying values out-of-band on telemetry.
 message ResourceIdentity {
-  // Deployment product, e.g. "cre-mainline". One of the deployment+DON+node
+  // Deployment product, e.g. "cre". One of the deployment+DON+node
   // dimensions used for coarse billing rollup.
   string product = 1;
+  // Deployment tenant name, e.g. "mainline" or "enterprise". This is the
+  // human-readable tenant label (not the numeric tenant ID).
+  string tenant = 2;
+  // Numeric tenant identifier as used by Accounts/Linking/registry/Vault DON.
+  // This is a numbered identifier represented as a string.
+  string numeric_tenant_id = 3;
   // Deployment environment, e.g. "production", "staging". A coarse
   // billing-rollup dimension.
-  string environment = 2;
+  string environment = 4;
   // Deployment zone, e.g. "wf-zone-a". A coarse billing-rollup dimension.
-  string zone = 3;
-  // DON identifier the emitting service belongs to. Optional: web2 emitters
-  // without a DON leave this unset rather than sending an empty string. A
-  // coarse billing-rollup dimension; used (with node_id) to count distinct
-  // nodes for quorum.
-  optional string don_id = 4;
-  // Node identifier (the node's CSA public key). Optional: web2 emitters
-  // without a node identity leave this unset rather than sending an empty
-  // string. A coarse billing-rollup dimension; lets billing dedup a node's
-  // retries and count distinct nodes.
-  optional string node_id = 5;
+  string zone = 5;
+  // DON-specific identity dimensions. Present only for DON emitters. Web2 or
+  // other non-DON emitters leave this unset instead of sending empty IDs.
+  optional DonIdentity don = 6;
   // Stable service constant identifying the emitting service (the old
   // `entity`), e.g. "cron-trigger", "http-trigger", "evm-log-trigger",
   // "workflow-syncer-v2". A coarse billing-rollup dimension.
-  string service = 6;
+  string service = 7;
   // Resource pool the action applies to, e.g. "trigger_registrations",
   // "log_filters", "workflow_storage". Human friendly name
-  string resource_pool = 7;
+  string resource_pool = 8;
   // optionality to add a level of hierarchy within the resource_pool, or
   // UID a resource_pool
-  string resource_pool_id = 8;
+  string resource_pool_id = 9;
+}
+
+// DonIdentity captures DON-only identity dimensions together so consumers can
+// branch on message presence, not individual field permutations.
+message DonIdentity {
+  // DON ID the emitting service belongs to.
+  string don_id = 1;
+  // Node ID (the node's logical name, not the CSA public key).
+  string node_id = 2;
 }
 
 // MeterAction identifies the billing semantics of a MeterRecord.
