@@ -214,6 +214,10 @@ service Client {
               value: 2995292832068775165
             },
             {
+              key: "dtcc-mainnet-appchain"
+              value: 13879014182901017172
+            },
+            {
               key: "dtcc-testnet-andesite"
               value: 15513093881969820114
             },
