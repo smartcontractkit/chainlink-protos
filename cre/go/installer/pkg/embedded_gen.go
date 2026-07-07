@@ -578,6 +578,10 @@ service Client {
               value: 1564738277398880633
             },
             {
+              key: "private-testnet-quartzite"
+              value: 4175996748267305081
+            },
+            {
               key: "private-testnet-rhyolite"
               value: 604447335222770945
             },
@@ -2021,6 +2025,7 @@ message ExecuteRequest {
     Trigger pre_hook = 5;
   }
   uint64 max_response_size = 4;
+  bool suspend_on_await = 6;
 }
 
 message ExecutionResult {

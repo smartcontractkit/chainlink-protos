@@ -1326,6 +1326,7 @@ type ExecuteRequest struct {
 	//	*ExecuteRequest_PreHook
 	Request         isExecuteRequest_Request `protobuf_oneof:"request"`
 	MaxResponseSize uint64                   `protobuf:"varint,4,opt,name=max_response_size,json=maxResponseSize,proto3" json:"max_response_size,omitempty"`
+	SuspendOnAwait  bool                     `protobuf:"varint,6,opt,name=suspend_on_await,json=suspendOnAwait,proto3" json:"suspend_on_await,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1406,6 +1407,13 @@ func (x *ExecuteRequest) GetMaxResponseSize() uint64 {
 		return x.MaxResponseSize
 	}
 	return 0
+}
+
+func (x *ExecuteRequest) GetSuspendOnAwait() bool {
+	if x != nil {
+		return x.SuspendOnAwait
+	}
+	return false
 }
 
 type isExecuteRequest_Request interface {
@@ -2509,13 +2517,14 @@ const file_sdk_v1alpha_sdk_proto_rawDesc = "" +
 	"\tresponses\x18\x01 \x03(\v25.sdk.v1alpha.AwaitCapabilitiesResponse.ResponsesEntryR\tresponses\x1a]\n" +
 	"\x0eResponsesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\x05R\x03key\x125\n" +
-	"\x05value\x18\x02 \x01(\v2\x1f.sdk.v1alpha.CapabilityResponseR\x05value:\x028\x01\"\xfc\x01\n" +
+	"\x05value\x18\x02 \x01(\v2\x1f.sdk.v1alpha.CapabilityResponseR\x05value:\x028\x01\"\xa6\x02\n" +
 	"\x0eExecuteRequest\x12\x16\n" +
 	"\x06config\x18\x01 \x01(\fR\x06config\x126\n" +
 	"\tsubscribe\x18\x02 \x01(\v2\x16.google.protobuf.EmptyH\x00R\tsubscribe\x120\n" +
 	"\atrigger\x18\x03 \x01(\v2\x14.sdk.v1alpha.TriggerH\x00R\atrigger\x121\n" +
 	"\bpre_hook\x18\x05 \x01(\v2\x14.sdk.v1alpha.TriggerH\x00R\apreHook\x12*\n" +
-	"\x11max_response_size\x18\x04 \x01(\x04R\x0fmaxResponseSizeB\t\n" +
+	"\x11max_response_size\x18\x04 \x01(\x04R\x0fmaxResponseSize\x12(\n" +
+	"\x10suspend_on_await\x18\x06 \x01(\bR\x0esuspendOnAwaitB\t\n" +
 	"\arequest\"\xfe\x01\n" +
 	"\x0fExecutionResult\x12(\n" +
 	"\x05value\x18\x01 \x01(\v2\x10.values.v1.ValueH\x00R\x05value\x12\x16\n" +

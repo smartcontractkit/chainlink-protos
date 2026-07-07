@@ -55,6 +55,7 @@ enum ChainType {
   CHAIN_TYPE_TRON = 5;
   CHAIN_TYPE_TON = 6;
   CHAIN_TYPE_SUI = 7;
+  CHAIN_TYPE_STELLAR = 8;
 }
 
 message Chain {
