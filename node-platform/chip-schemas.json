@@ -6,8 +6,8 @@
       "path": "common/v1/chain_plugin_config.proto"
     },
     {
-      "entity": "common.v1.NodeBuildInfo",
-      "path": "common/v1/node_build_info.proto"
+      "entity": "common.v1.NodeInfo",
+      "path": "common/v1/node_info.proto"
     },
     {
       "entity": "common.v1.NodeJobInfo",

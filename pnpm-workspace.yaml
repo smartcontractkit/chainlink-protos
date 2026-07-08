@@ -6,6 +6,7 @@ packages:
   - 'storage-service'
   - 'op-catalog'
   - 'rane'
+  - 'node-platform'
   - 'chainlink-ccv/verifier'
   - 'chainlink-ccv/committee-verifier'
   - 'chainlink-ccv/message-discovery'
