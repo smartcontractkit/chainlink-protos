@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package common.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/node-platform/common/v1";
+
+message NodeHealthInfo {
+  bool healthy = 6;
+  map<string, string> health_errors = 7;
+}
