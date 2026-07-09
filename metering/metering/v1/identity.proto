@@ -41,39 +41,31 @@ message ResourceIdentity {
 // DonIdentity captures DON-only identity dimensions together so consumers can
 // branch on message presence, not individual field permutations.
 message DonIdentity {
-  // DON ID the emitting service belongs to.
+  // The authoritative DON ID of the emitting service. For capability LOOPs this
+  // is CapDONID supplied over the standardcapabilities interface; for
+  // workflow-DON services (e.g. the syncer) it is the workflow DON ID.
   string don_id = 1;
-  // Node ID (the node's logical name, not the CSA public key).
+  // The node's logical name (e.g. "clp-cre-wf-zone-a-1"), not the CSA public
+  // key. Consumers join node_id -> CSA key via the workflow registry.
   string node_id = 2;
 }
 
-// DonIdentifier captures DON-only identity dimensions together so consumers
-// can branch on message presence, not individual field permutations.
-message DonIdentifier {
-  // DON identifier the emitting service belongs to.
-  string don_id = 1;
-  // Node identifier (the node's CSA public key).
-  string node_id = 2;
-}
-
-// MeterAction identifies the billing semantics of a MeterRecord.
+// MeterAction identifies the billing semantics of a MeterRecord. Producers emit
+// only METER_ACTION_UPDATE and METER_ACTION_USAGE; the action value is the
+// durable-vs-one-off discriminator.
 enum MeterAction {
   // Unknown / unset.
   METER_ACTION_UNSPECIFIED = 0;
-  // A durable resource was allocated; billing for it starts.
+  // Deprecated: retained for wire compatibility; producers must not emit.
+  // Historical pairing semantics are void.
   METER_ACTION_RESERVE = 1;
-  // A previously reserved durable resource was deallocated by an explicit
-  // action (e.g. unregister, workflow delete/pause); billing for it stops.
-  // Pairs with the RESERVE that shares the same resource_id and carries the
-  // same value. RELEASE is emitted only for genuine deallocations, never for
-  // process-lifecycle cleanup of leaked/orphaned resources; a lost reservation
-  // (e.g. after a node crash) is reconciled by its absence from subsequent
-  // Snapshots, not by a synthetic RELEASE.
+  // Deprecated: retained for wire compatibility; producers must not emit.
+  // Historical pairing semantics are void.
   METER_ACTION_RELEASE = 2;
-  // The utilization of an existing reservation changed without releasing it.
+  // A signed delta to a durable resource's level; the only action emitted for
+  // durable resources. Value semantics are defined on Utilization.value.
   METER_ACTION_UPDATE = 3;
-  // Instantaneous consumption billed per occurrence rather than per
-  // reservation lifetime. Reserved for future use; no current producer emits
-  // it.
+  // A one-off instantaneous consumption billed per occurrence; never
+  // snapshotted.
   METER_ACTION_USAGE = 4;
 }
