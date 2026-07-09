@@ -83,7 +83,7 @@ where a shared physical resource exists**:
   workflow-scoped `trigger_id` / `workflow_id`.
 
 `ResourceIdentity` is the **sole** identity of a metered resource: `Utilization`
-carries no labels beyond `event_id` and the resolved `org_id`.
+carries `event_id` and `resource_id` to allow aggregation of the event that caused the spot utilization or level edge change. It also includes the resolved `org_id`.
 
 ## Dedup and org attribution
 

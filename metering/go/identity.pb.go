@@ -228,7 +228,8 @@ type DonIdentity struct {
 	// workflow-DON services (e.g. the syncer) it is the workflow DON ID.
 	DonId string `protobuf:"bytes,1,opt,name=don_id,json=donId,proto3" json:"don_id,omitempty"`
 	// The node's logical name (e.g. "clp-cre-wf-zone-a-1"), not the CSA public
-	// key. Consumers join node_id -> CSA key via the workflow registry.
+	// key. Events will include csa key, handled by ChIP rotating signer. In the long
+	// term, the ResourceIdentity + DonIdentity should be unambiguous to aggregate.
 	NodeId        string `protobuf:"bytes,2,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

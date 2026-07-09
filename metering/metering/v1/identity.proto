@@ -46,7 +46,8 @@ message DonIdentity {
   // workflow-DON services (e.g. the syncer) it is the workflow DON ID.
   string don_id = 1;
   // The node's logical name (e.g. "clp-cre-wf-zone-a-1"), not the CSA public
-  // key. Consumers join node_id -> CSA key via the workflow registry.
+  // key. Events will include csa key, handled by ChIP rotating signer. In the long
+  // term, the ResourceIdentity + DonIdentity should be unambiguous to aggregate.
   string node_id = 2;
 }
 
