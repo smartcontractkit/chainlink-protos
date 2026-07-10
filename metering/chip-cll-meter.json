@@ -1,5 +1,5 @@
 {
-  "domain": "beholder__cll-meter__messages",
+  "domain": "cll.meter",
   "schemas": [
     {
       "entity": "metering.v1.ResourceIdentity",
