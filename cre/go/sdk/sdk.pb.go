@@ -7,14 +7,16 @@
 package sdk
 
 import (
-	pb "github.com/smartcontractkit/chainlink-protos/cre/go/values/pb"
+	reflect "reflect"
+	sync "sync"
+	unsafe "unsafe"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	anypb "google.golang.org/protobuf/types/known/anypb"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
+
+	pb "github.com/smartcontractkit/chainlink-protos/cre/go/values/pb"
 )
 
 const (
@@ -27,11 +29,12 @@ const (
 type AggregationType int32
 
 const (
-	AggregationType_AGGREGATION_TYPE_UNSPECIFIED   AggregationType = 0
-	AggregationType_AGGREGATION_TYPE_MEDIAN        AggregationType = 1
-	AggregationType_AGGREGATION_TYPE_IDENTICAL     AggregationType = 2
-	AggregationType_AGGREGATION_TYPE_COMMON_PREFIX AggregationType = 3
-	AggregationType_AGGREGATION_TYPE_COMMON_SUFFIX AggregationType = 4
+	AggregationType_AGGREGATION_TYPE_UNSPECIFIED    AggregationType = 0
+	AggregationType_AGGREGATION_TYPE_MEDIAN         AggregationType = 1
+	AggregationType_AGGREGATION_TYPE_IDENTICAL      AggregationType = 2
+	AggregationType_AGGREGATION_TYPE_COMMON_PREFIX  AggregationType = 3
+	AggregationType_AGGREGATION_TYPE_COMMON_SUFFIX  AggregationType = 4
+	AggregationType_AGGREGATION_TYPE_FREQUENCY_LIST AggregationType = 5
 )
 
 // Enum value maps for AggregationType.
@@ -42,13 +45,15 @@ var (
 		2: "AGGREGATION_TYPE_IDENTICAL",
 		3: "AGGREGATION_TYPE_COMMON_PREFIX",
 		4: "AGGREGATION_TYPE_COMMON_SUFFIX",
+		5: "AGGREGATION_TYPE_FREQUENCY_LIST",
 	}
 	AggregationType_value = map[string]int32{
-		"AGGREGATION_TYPE_UNSPECIFIED":   0,
-		"AGGREGATION_TYPE_MEDIAN":        1,
-		"AGGREGATION_TYPE_IDENTICAL":     2,
-		"AGGREGATION_TYPE_COMMON_PREFIX": 3,
-		"AGGREGATION_TYPE_COMMON_SUFFIX": 4,
+		"AGGREGATION_TYPE_UNSPECIFIED":    0,
+		"AGGREGATION_TYPE_MEDIAN":         1,
+		"AGGREGATION_TYPE_IDENTICAL":      2,
+		"AGGREGATION_TYPE_COMMON_PREFIX":  3,
+		"AGGREGATION_TYPE_COMMON_SUFFIX":  4,
+		"AGGREGATION_TYPE_FREQUENCY_LIST": 5,
 	}
 )
 
@@ -2589,13 +2594,14 @@ const file_sdk_v1alpha_sdk_proto_rawDesc = "" +
 	"maxSecrets\"\x92\x01\n" +
 	"\fRestrictions\x129\n" +
 	"\asecrets\x18\x01 \x01(\v2\x1f.sdk.v1alpha.SecretsRestritionsR\asecrets\x12G\n" +
-	"\fcapabilities\x18\x02 \x01(\v2#.sdk.v1alpha.CapabilityRestrictionsR\fcapabilities*\xb8\x01\n" +
+	"\fcapabilities\x18\x02 \x01(\v2#.sdk.v1alpha.CapabilityRestrictionsR\fcapabilities*\xdd\x01\n" +
 	"\x0fAggregationType\x12 \n" +
 	"\x1cAGGREGATION_TYPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17AGGREGATION_TYPE_MEDIAN\x10\x01\x12\x1e\n" +
 	"\x1aAGGREGATION_TYPE_IDENTICAL\x10\x02\x12\"\n" +
 	"\x1eAGGREGATION_TYPE_COMMON_PREFIX\x10\x03\x12\"\n" +
-	"\x1eAGGREGATION_TYPE_COMMON_SUFFIX\x10\x04*9\n" +
+	"\x1eAGGREGATION_TYPE_COMMON_SUFFIX\x10\x04\x12#\n" +
+	"\x1fAGGREGATION_TYPE_FREQUENCY_LIST\x10\x05*9\n" +
 	"\x04Mode\x12\x14\n" +
 	"\x10MODE_UNSPECIFIED\x10\x00\x12\f\n" +
 	"\bMODE_DON\x10\x01\x12\r\n" +
