@@ -7,19 +7,29 @@ import "metering/v1/utilization.proto";
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/metering/go;metering";
 
-// MeterRecord is a single state-transition event describing the allocation,
-// deallocation, or utilization change of a durable resource. It captures one
-// lifecycle edge; periodic absolute state (the level of all active resources
-// at a tick) is carried instead by Snapshot.
+// MeterRecord is a durable, first-class billing event. Each record captures one
+// signed delta: the level change of one request for a durable resource
+// (METER_ACTION_UPDATE) or one instantaneous occurrence of consumption
+// (METER_ACTION_USAGE). Records give the consumer precise request-time edges and
+// the audit trail. The periodic absolute level of each active resource — and the
+// only lifecycle-cleanup signal — is carried by MeterSnapshot; the two streams
+// are complementary load-bearing billing data.
+//
+// Bucket semantics: An org draws down credits in a time bucket if the bucket
+// contains any positive-delta UPDATE record, any USAGE record, or any nonzero
+// snapshot for a resource attributed to that org. A +N and -N cancelling within
+// one bucket still triggers drawdown via the positive delta.
 message MeterRecord {
-  // Time at which the metered action occurred.
+  // Time at which the metered request/occurrence happened (a raw edge, not
+  // truncated to a bucket boundary).
   google.protobuf.Timestamp timestamp = 1;
   // Structured identity of the affected resource (deployment/DON/node
   // dimensions + service + resource/resource_type + the physical resource_id).
   ResourceIdentity identity = 2;
-  // Billing semantics of this state transition.
+  // Billing semantics of this record: METER_ACTION_UPDATE (signed level delta)
+  // or METER_ACTION_USAGE (one-off consumption).
   MeterAction action = 3;
-  // One or more utilization quantities for the action (e.g. multiple billing
-  // units affected by the same lifecycle edge).
+  // One or more utilization quantities for this event (e.g. multiple billing
+  // units affected by the same request).
   repeated Utilization utilizations = 4;
 }

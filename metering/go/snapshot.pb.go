@@ -23,19 +23,19 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// MeterSnapshot is the ACTION-LESS periodic utilization of EXACTLY ONE durable
-// resource, uniquely identified by its ResourceIdentity (including resource_id).
-// It is the liveness / utilization-over-time signal that pure RESERVE/RELEASE
-// transitions cannot provide — a node panic would otherwise leak a reservation
-// forever — and it is the magnitude the billing median-across-nodes reducer
-// consumes.
+// MeterSnapshot is the ACTION-LESS periodic absolute level of EXACTLY ONE active
+// durable resource, uniquely identified by its ResourceIdentity (including
+// resource_id). It is load-bearing billing data: it provides the level and the
+// only lifecycle-cleanup signal, giving liveness and level reconciliation that
+// bounds drift in the delta-based MeterRecord stream. It is also the magnitude
+// the billing median-across-nodes reducer consumes.
 //
 // One MeterSnapshot covers one resource; the resource manager emits a separate
 // MeterSnapshot per active resource each interval. There is no batch and no
 // sequence number: each snapshot stands alone, keyed by its ResourceIdentity
-// and timestamp. A resource that stops being snapshotted is no longer active —
-// billing reconciles a released/lost reservation by that absence, not by a
-// synthetic record. MeterAction does NOT apply to snapshots.
+// and timestamp. A resource that stops being snapshotted is released — this
+// absence is the only lifecycle-cleanup mechanism. MeterAction does NOT apply to
+// snapshots.
 type MeterSnapshot struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Time at which the snapshot was taken (the interval boundary it covers).

@@ -21,27 +21,25 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// MeterAction identifies the billing semantics of a MeterRecord.
+// MeterAction identifies the billing semantics of a MeterRecord. Producers emit
+// only METER_ACTION_UPDATE and METER_ACTION_USAGE; the action value is the
+// durable-vs-one-off discriminator.
 type MeterAction int32
 
 const (
 	// Unknown / unset.
 	MeterAction_METER_ACTION_UNSPECIFIED MeterAction = 0
-	// A durable resource was allocated; billing for it starts.
+	// Deprecated: retained for wire compatibility; producers must not emit.
+	// Historical pairing semantics are void.
 	MeterAction_METER_ACTION_RESERVE MeterAction = 1
-	// A previously reserved durable resource was deallocated by an explicit
-	// action (e.g. unregister, workflow delete/pause); billing for it stops.
-	// Pairs with the RESERVE that shares the same resource_id and carries the
-	// same value. RELEASE is emitted only for genuine deallocations, never for
-	// process-lifecycle cleanup of leaked/orphaned resources; a lost reservation
-	// (e.g. after a node crash) is reconciled by its absence from subsequent
-	// Snapshots, not by a synthetic RELEASE.
+	// Deprecated: retained for wire compatibility; producers must not emit.
+	// Historical pairing semantics are void.
 	MeterAction_METER_ACTION_RELEASE MeterAction = 2
-	// The utilization of an existing reservation changed without releasing it.
+	// A signed delta to a durable resource's level; the only action emitted for
+	// durable resources. Value semantics are defined on Utilization.value.
 	MeterAction_METER_ACTION_UPDATE MeterAction = 3
-	// Instantaneous consumption billed per occurrence rather than per
-	// reservation lifetime. Reserved for future use; no current producer emits
-	// it.
+	// A one-off instantaneous consumption billed per occurrence; never
+	// snapshotted.
 	MeterAction_METER_ACTION_USAGE MeterAction = 4
 )
 
@@ -225,9 +223,13 @@ func (x *ResourceIdentity) GetResourcePoolId() string {
 // branch on message presence, not individual field permutations.
 type DonIdentity struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// DON ID the emitting service belongs to.
+	// The authoritative DON ID of the emitting service. For capability LOOPs this
+	// is CapDONID supplied over the standardcapabilities interface; for
+	// workflow-DON services (e.g. the syncer) it is the workflow DON ID.
 	DonId string `protobuf:"bytes,1,opt,name=don_id,json=donId,proto3" json:"don_id,omitempty"`
-	// Node ID (the node's logical name, not the CSA public key).
+	// The node's logical name (e.g. "clp-cre-wf-zone-a-1"), not the CSA public
+	// key. Events will include csa key, handled by ChIP rotating signer. In the long
+	// term, the ResourceIdentity + DonIdentity should be unambiguous to aggregate.
 	NodeId        string `protobuf:"bytes,2,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -277,62 +279,6 @@ func (x *DonIdentity) GetNodeId() string {
 	return ""
 }
 
-// DonIdentifier captures DON-only identity dimensions together so consumers
-// can branch on message presence, not individual field permutations.
-type DonIdentifier struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// DON identifier the emitting service belongs to.
-	DonId string `protobuf:"bytes,1,opt,name=don_id,json=donId,proto3" json:"don_id,omitempty"`
-	// Node identifier (the node's CSA public key).
-	NodeId        string `protobuf:"bytes,2,opt,name=node_id,json=nodeId,proto3" json:"node_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DonIdentifier) Reset() {
-	*x = DonIdentifier{}
-	mi := &file_metering_v1_identity_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DonIdentifier) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DonIdentifier) ProtoMessage() {}
-
-func (x *DonIdentifier) ProtoReflect() protoreflect.Message {
-	mi := &file_metering_v1_identity_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DonIdentifier.ProtoReflect.Descriptor instead.
-func (*DonIdentifier) Descriptor() ([]byte, []int) {
-	return file_metering_v1_identity_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *DonIdentifier) GetDonId() string {
-	if x != nil {
-		return x.DonId
-	}
-	return ""
-}
-
-func (x *DonIdentifier) GetNodeId() string {
-	if x != nil {
-		return x.NodeId
-	}
-	return ""
-}
-
 var File_metering_v1_identity_proto protoreflect.FileDescriptor
 
 const file_metering_v1_identity_proto_rawDesc = "" +
@@ -350,9 +296,6 @@ const file_metering_v1_identity_proto_rawDesc = "" +
 	"\x10resource_pool_id\x18\t \x01(\tR\x0eresourcePoolIdB\x06\n" +
 	"\x04_don\"=\n" +
 	"\vDonIdentity\x12\x15\n" +
-	"\x06don_id\x18\x01 \x01(\tR\x05donId\x12\x17\n" +
-	"\anode_id\x18\x02 \x01(\tR\x06nodeId\"?\n" +
-	"\rDonIdentifier\x12\x15\n" +
 	"\x06don_id\x18\x01 \x01(\tR\x05donId\x12\x17\n" +
 	"\anode_id\x18\x02 \x01(\tR\x06nodeId*\x90\x01\n" +
 	"\vMeterAction\x12\x1c\n" +
@@ -375,12 +318,11 @@ func file_metering_v1_identity_proto_rawDescGZIP() []byte {
 }
 
 var file_metering_v1_identity_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_metering_v1_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_metering_v1_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_metering_v1_identity_proto_goTypes = []any{
 	(MeterAction)(0),         // 0: metering.v1.MeterAction
 	(*ResourceIdentity)(nil), // 1: metering.v1.ResourceIdentity
 	(*DonIdentity)(nil),      // 2: metering.v1.DonIdentity
-	(*DonIdentifier)(nil),    // 3: metering.v1.DonIdentifier
 }
 var file_metering_v1_identity_proto_depIdxs = []int32{
 	2, // 0: metering.v1.ResourceIdentity.don:type_name -> metering.v1.DonIdentity
@@ -403,7 +345,7 @@ func file_metering_v1_identity_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_metering_v1_identity_proto_rawDesc), len(file_metering_v1_identity_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   3,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
