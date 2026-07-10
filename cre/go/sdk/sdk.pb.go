@@ -7,14 +7,16 @@
 package sdk
 
 import (
-	pb "github.com/smartcontractkit/chainlink-protos/cre/go/values/pb"
+	reflect "reflect"
+	sync "sync"
+	unsafe "unsafe"
+
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	anypb "google.golang.org/protobuf/types/known/anypb"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
-	reflect "reflect"
-	sync "sync"
-	unsafe "unsafe"
+
+	pb "github.com/smartcontractkit/chainlink-protos/cre/go/values/pb"
 )
 
 const (
@@ -32,6 +34,7 @@ const (
 	AggregationType_AGGREGATION_TYPE_IDENTICAL     AggregationType = 2
 	AggregationType_AGGREGATION_TYPE_COMMON_PREFIX AggregationType = 3
 	AggregationType_AGGREGATION_TYPE_COMMON_SUFFIX AggregationType = 4
+	AggregationType_AGGREGATION_TYPE_VALUE_COUNTS  AggregationType = 5
 )
 
 // Enum value maps for AggregationType.
@@ -42,6 +45,7 @@ var (
 		2: "AGGREGATION_TYPE_IDENTICAL",
 		3: "AGGREGATION_TYPE_COMMON_PREFIX",
 		4: "AGGREGATION_TYPE_COMMON_SUFFIX",
+		5: "AGGREGATION_TYPE_VALUE_COUNTS",
 	}
 	AggregationType_value = map[string]int32{
 		"AGGREGATION_TYPE_UNSPECIFIED":   0,
@@ -49,6 +53,7 @@ var (
 		"AGGREGATION_TYPE_IDENTICAL":     2,
 		"AGGREGATION_TYPE_COMMON_PREFIX": 3,
 		"AGGREGATION_TYPE_COMMON_SUFFIX": 4,
+		"AGGREGATION_TYPE_VALUE_COUNTS":  5,
 	}
 )
 
@@ -1697,13 +1702,14 @@ const file_sdk_v1alpha_sdk_proto_rawDesc = "" +
 	"\n" +
 	"\bresponse\"L\n" +
 	"\x0fSecretResponses\x129\n" +
-	"\tresponses\x18\x01 \x03(\v2\x1b.sdk.v1alpha.SecretResponseR\tresponses*\xb8\x01\n" +
+	"\tresponses\x18\x01 \x03(\v2\x1b.sdk.v1alpha.SecretResponseR\tresponses*\xdb\x01\n" +
 	"\x0fAggregationType\x12 \n" +
 	"\x1cAGGREGATION_TYPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17AGGREGATION_TYPE_MEDIAN\x10\x01\x12\x1e\n" +
 	"\x1aAGGREGATION_TYPE_IDENTICAL\x10\x02\x12\"\n" +
 	"\x1eAGGREGATION_TYPE_COMMON_PREFIX\x10\x03\x12\"\n" +
-	"\x1eAGGREGATION_TYPE_COMMON_SUFFIX\x10\x04*9\n" +
+	"\x1eAGGREGATION_TYPE_COMMON_SUFFIX\x10\x04\x12!\n" +
+	"\x1dAGGREGATION_TYPE_VALUE_COUNTS\x10\x05*9\n" +
 	"\x04Mode\x12\x14\n" +
 	"\x10MODE_UNSPECIFIED\x10\x00\x12\f\n" +
 	"\bMODE_DON\x10\x01\x12\r\n" +
