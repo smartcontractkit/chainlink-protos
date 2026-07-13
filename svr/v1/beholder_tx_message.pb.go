@@ -31,6 +31,7 @@ type TxMessage struct {
 	ChainId             string                 `protobuf:"bytes,6,opt,name=chain_id,json=chainId,proto3" json:"chain_id,omitempty"`
 	FeedAddress         string                 `protobuf:"bytes,7,opt,name=feed_address,json=feedAddress,proto3" json:"feed_address,omitempty"`
 	DualBroadcastParams *string                `protobuf:"bytes,8,opt,name=dual_broadcast_params,json=dualBroadcastParams,proto3,oneof" json:"dual_broadcast_params,omitempty"`
+	GasLimit            *uint64                `protobuf:"varint,9,opt,name=gas_limit,json=gasLimit,proto3,oneof" json:"gas_limit,omitempty"`
 	unknownFields       protoimpl.UnknownFields
 	sizeCache           protoimpl.SizeCache
 }
@@ -121,11 +122,18 @@ func (x *TxMessage) GetDualBroadcastParams() string {
 	return ""
 }
 
+func (x *TxMessage) GetGasLimit() uint64 {
+	if x != nil && x.GasLimit != nil {
+		return *x.GasLimit
+	}
+	return 0
+}
+
 var File_svr_v1_beholder_tx_message_proto protoreflect.FileDescriptor
 
 const file_svr_v1_beholder_tx_message_proto_rawDesc = "" +
 	"\n" +
-	" svr/v1/beholder_tx_message.proto\x12\x06svr.v1\"\xa7\x02\n" +
+	" svr/v1/beholder_tx_message.proto\x12\x06svr.v1\"\xd7\x02\n" +
 	"\tTxMessage\x12\x12\n" +
 	"\x04hash\x18\x01 \x01(\tR\x04hash\x12!\n" +
 	"\ffrom_address\x18\x02 \x01(\tR\vfromAddress\x12\x1d\n" +
@@ -136,8 +144,11 @@ const file_svr_v1_beholder_tx_message_proto_rawDesc = "" +
 	"created_at\x18\x05 \x01(\x03R\tcreatedAt\x12\x19\n" +
 	"\bchain_id\x18\x06 \x01(\tR\achainId\x12!\n" +
 	"\ffeed_address\x18\a \x01(\tR\vfeedAddress\x127\n" +
-	"\x15dual_broadcast_params\x18\b \x01(\tH\x00R\x13dualBroadcastParams\x88\x01\x01B\x18\n" +
-	"\x16_dual_broadcast_paramsB5Z3github.com/smartcontractkit/chainlink-protos/svr/v1b\x06proto3"
+	"\x15dual_broadcast_params\x18\b \x01(\tH\x00R\x13dualBroadcastParams\x88\x01\x01\x12 \n" +
+	"\tgas_limit\x18\t \x01(\x04H\x01R\bgasLimit\x88\x01\x01B\x18\n" +
+	"\x16_dual_broadcast_paramsB\f\n" +
+	"\n" +
+	"_gas_limitB5Z3github.com/smartcontractkit/chainlink-protos/svr/v1b\x06proto3"
 
 var (
 	file_svr_v1_beholder_tx_message_proto_rawDescOnce sync.Once
