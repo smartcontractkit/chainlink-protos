@@ -1,5 +1,11 @@
 # @chainlink/svr
 
+## 1.3.0
+
+### Minor Changes
+
+- [#429](https://github.com/smartcontractkit/chainlink-protos/pull/429) [`8c19365`](https://github.com/smartcontractkit/chainlink-protos/commit/8c19365a8f8ea315f3205e290524481fa0512183) Thanks [@mostlyconsistent](https://github.com/mostlyconsistent)! - Add optional `gas_limit` field (9) to `TxMessage` proto. Populated with the per-OFA "accountability" gas limit (the OFA-tiered gas limit) so on-chain transactions can be attributed to a specific OFA (e.g. Titan/MEV-Share) for auction and performance comparison.
+
 ## 1.2.0
 
 ### Minor Changes
