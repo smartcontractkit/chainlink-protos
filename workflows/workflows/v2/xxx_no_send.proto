@@ -16,3 +16,16 @@ enum ExecutionStatus {
   EXECUTION_STATUS_SUCCEEDED = 1;
   EXECUTION_STATUS_FAILED = 2;
 }
+
+// ClassifiedExecutionStatus is the terminal outcome of a workflow execution,
+// distinguishing failures caused by the user's workflow (its code, config, or a
+// returned error) from failures caused by the platform/infrastructure (execution
+// timeouts, unavailable capabilities, internal engine errors). It is emitted
+// alongside ExecutionStatus so downstream consumers can attribute a failure to
+// the user vs the platform without inspecting free-text error strings.
+enum ClassifiedExecutionStatus {
+  CLASSIFIED_EXECUTION_STATUS_UNSPECIFIED = 0;
+  CLASSIFIED_EXECUTION_STATUS_SUCCEEDED = 1;
+  CLASSIFIED_EXECUTION_STATUS_USER_ERROR = 2;
+  CLASSIFIED_EXECUTION_STATUS_SYSTEM_ERROR = 3;
+}
