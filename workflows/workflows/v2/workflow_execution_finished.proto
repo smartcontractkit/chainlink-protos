@@ -18,9 +18,6 @@ message WorkflowExecutionFinished {
   string error = 6;
   bool executedInTEE = 7;
 
-  // classifiedStatus attributes a terminal outcome to the user vs the platform.
-  // It is set alongside `status`: SUCCEEDED mirrors status, while a failure is
-  // reported as USER_ERROR or SYSTEM_ERROR. Consumers that do not understand it
-  // fall back to `status`.
+  // extends ExecutionStatus to track system and user error while remaining backwards compatible
   ClassifiedExecutionStatus classifiedStatus = 8;
 }

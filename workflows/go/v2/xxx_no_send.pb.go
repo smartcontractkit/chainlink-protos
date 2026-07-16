@@ -70,12 +70,7 @@ func (ExecutionStatus) EnumDescriptor() ([]byte, []int) {
 	return file_workflows_v2_xxx_no_send_proto_rawDescGZIP(), []int{0}
 }
 
-// ClassifiedExecutionStatus is the terminal outcome of a workflow execution,
-// distinguishing failures caused by the user's workflow (its code, config, or a
-// returned error) from failures caused by the platform/infrastructure (execution
-// timeouts, unavailable capabilities, internal engine errors). It is emitted
-// alongside ExecutionStatus so downstream consumers can attribute a failure to
-// the user vs the platform without inspecting free-text error strings.
+// ClassifiedExecutionStatus extends ExecutionStatus to track system and user error while remaining backwards compatible
 type ClassifiedExecutionStatus int32
 
 const (
