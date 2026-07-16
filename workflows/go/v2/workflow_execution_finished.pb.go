@@ -30,10 +30,7 @@ type WorkflowExecutionFinished struct {
 	Status              ExecutionStatus        `protobuf:"varint,5,opt,name=status,proto3,enum=workflows.v2.ExecutionStatus" json:"status,omitempty"`
 	Error               string                 `protobuf:"bytes,6,opt,name=error,proto3" json:"error,omitempty"`
 	ExecutedInTEE       bool                   `protobuf:"varint,7,opt,name=executedInTEE,proto3" json:"executedInTEE,omitempty"`
-	// classifiedStatus attributes a terminal outcome to the user vs the platform.
-	// It is set alongside `status`: SUCCEEDED mirrors status, while a failure is
-	// reported as USER_ERROR or SYSTEM_ERROR. Consumers that do not understand it
-	// fall back to `status`.
+	// extends ExecutionStatus to track system and user error while remaining backwards compatible
 	ClassifiedStatus ClassifiedExecutionStatus `protobuf:"varint,8,opt,name=classifiedStatus,proto3,enum=workflows.v2.ClassifiedExecutionStatus" json:"classifiedStatus,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
