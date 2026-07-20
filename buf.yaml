@@ -65,6 +65,7 @@ modules:
         - ENUM_VALUE_PREFIX
         - ENUM_ZERO_VALUE_SUFFIX
   - path: node-platform
+  - path: chain-capabilities
 
 lint:
   use:

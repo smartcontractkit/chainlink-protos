@@ -1,0 +1,9 @@
+{
+  "domain": "beholder__data_feeds__messages",
+  "schemas": [
+    {
+      "entity": "data_feeds.on_chain.registry.FeedUpdated",
+      "path": "on_chain/registry/feed_updated.proto"
+    }
+  ]
+}
