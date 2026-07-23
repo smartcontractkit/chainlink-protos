@@ -3,7 +3,7 @@ module github.com/smartcontractkit/chainlink-protos/cre/impl
 go 1.26.2
 
 require (
-	github.com/smartcontractkit/libocr v0.0.0-20250912173940-f3ab0246e23d
+	github.com/smartcontractkit/libocr v0.0.0-20260508200755-99940c85383c
 	google.golang.org/grpc v1.80.0
 	google.golang.org/protobuf v1.36.11
 )

@@ -427,6 +427,782 @@ func (x *BinaryMessageWithSender) GetSender() uint32 {
 	return 0
 }
 
+type Endpoint2ClientRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Message:
+	//
+	//	*Endpoint2ClientRequest_NewEndpoint
+	//	*Endpoint2ClientRequest_SendTo
+	//	*Endpoint2ClientRequest_Broadcast
+	Message       isEndpoint2ClientRequest_Message `protobuf_oneof:"message"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Endpoint2ClientRequest) Reset() {
+	*x = Endpoint2ClientRequest{}
+	mi := &file_proxy_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Endpoint2ClientRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Endpoint2ClientRequest) ProtoMessage() {}
+
+func (x *Endpoint2ClientRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Endpoint2ClientRequest.ProtoReflect.Descriptor instead.
+func (*Endpoint2ClientRequest) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *Endpoint2ClientRequest) GetMessage() isEndpoint2ClientRequest_Message {
+	if x != nil {
+		return x.Message
+	}
+	return nil
+}
+
+func (x *Endpoint2ClientRequest) GetNewEndpoint() *NewEndpoint2Request {
+	if x != nil {
+		if x, ok := x.Message.(*Endpoint2ClientRequest_NewEndpoint); ok {
+			return x.NewEndpoint
+		}
+	}
+	return nil
+}
+
+func (x *Endpoint2ClientRequest) GetSendTo() *Endpoint2Send {
+	if x != nil {
+		if x, ok := x.Message.(*Endpoint2ClientRequest_SendTo); ok {
+			return x.SendTo
+		}
+	}
+	return nil
+}
+
+func (x *Endpoint2ClientRequest) GetBroadcast() *Endpoint2Send {
+	if x != nil {
+		if x, ok := x.Message.(*Endpoint2ClientRequest_Broadcast); ok {
+			return x.Broadcast
+		}
+	}
+	return nil
+}
+
+type isEndpoint2ClientRequest_Message interface {
+	isEndpoint2ClientRequest_Message()
+}
+
+type Endpoint2ClientRequest_NewEndpoint struct {
+	NewEndpoint *NewEndpoint2Request `protobuf:"bytes,1,opt,name=new_endpoint,json=newEndpoint,proto3,oneof"` // must be the first message
+}
+
+type Endpoint2ClientRequest_SendTo struct {
+	SendTo *Endpoint2Send `protobuf:"bytes,2,opt,name=send_to,json=sendTo,proto3,oneof"`
+}
+
+type Endpoint2ClientRequest_Broadcast struct {
+	Broadcast *Endpoint2Send `protobuf:"bytes,3,opt,name=broadcast,proto3,oneof"` // to_oracle_id is ignored
+}
+
+func (*Endpoint2ClientRequest_NewEndpoint) isEndpoint2ClientRequest_Message() {}
+
+func (*Endpoint2ClientRequest_SendTo) isEndpoint2ClientRequest_Message() {}
+
+func (*Endpoint2ClientRequest_Broadcast) isEndpoint2ClientRequest_Message() {}
+
+type NewEndpoint2Request struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	ConfigDigest          []byte                 `protobuf:"bytes,1,opt,name=config_digest,json=configDigest,proto3" json:"config_digest,omitempty"`
+	PeerIds               []string               `protobuf:"bytes,2,rep,name=peer_ids,json=peerIds,proto3" json:"peer_ids,omitempty"`
+	V2Bootstrappers       []*BootstrapperLocator `protobuf:"bytes,3,rep,name=v2_bootstrappers,json=v2Bootstrappers,proto3" json:"v2_bootstrappers,omitempty"`
+	DefaultPriorityConfig *Endpoint2Config       `protobuf:"bytes,4,opt,name=default_priority_config,json=defaultPriorityConfig,proto3" json:"default_priority_config,omitempty"`
+	LowPriorityConfig     *Endpoint2Config       `protobuf:"bytes,5,opt,name=low_priority_config,json=lowPriorityConfig,proto3" json:"low_priority_config,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *NewEndpoint2Request) Reset() {
+	*x = NewEndpoint2Request{}
+	mi := &file_proxy_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *NewEndpoint2Request) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NewEndpoint2Request) ProtoMessage() {}
+
+func (x *NewEndpoint2Request) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NewEndpoint2Request.ProtoReflect.Descriptor instead.
+func (*NewEndpoint2Request) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *NewEndpoint2Request) GetConfigDigest() []byte {
+	if x != nil {
+		return x.ConfigDigest
+	}
+	return nil
+}
+
+func (x *NewEndpoint2Request) GetPeerIds() []string {
+	if x != nil {
+		return x.PeerIds
+	}
+	return nil
+}
+
+func (x *NewEndpoint2Request) GetV2Bootstrappers() []*BootstrapperLocator {
+	if x != nil {
+		return x.V2Bootstrappers
+	}
+	return nil
+}
+
+func (x *NewEndpoint2Request) GetDefaultPriorityConfig() *Endpoint2Config {
+	if x != nil {
+		return x.DefaultPriorityConfig
+	}
+	return nil
+}
+
+func (x *NewEndpoint2Request) GetLowPriorityConfig() *Endpoint2Config {
+	if x != nil {
+		return x.LowPriorityConfig
+	}
+	return nil
+}
+
+// Endpoint2Config mirrors ocr2types.BinaryNetworkEndpoint2Config.
+type Endpoint2Config struct {
+	state                             protoimpl.MessageState       `protogen:"open.v1"`
+	Limits                            *BinaryNetworkEndpointLimits `protobuf:"bytes,1,opt,name=limits,proto3" json:"limits,omitempty"`
+	OverrideIncomingMessageBufferSize *int32                       `protobuf:"varint,2,opt,name=override_incoming_message_buffer_size,json=overrideIncomingMessageBufferSize,proto3,oneof" json:"override_incoming_message_buffer_size,omitempty"`
+	OverrideOutgoingMessageBufferSize *int32                       `protobuf:"varint,3,opt,name=override_outgoing_message_buffer_size,json=overrideOutgoingMessageBufferSize,proto3,oneof" json:"override_outgoing_message_buffer_size,omitempty"`
+	unknownFields                     protoimpl.UnknownFields
+	sizeCache                         protoimpl.SizeCache
+}
+
+func (x *Endpoint2Config) Reset() {
+	*x = Endpoint2Config{}
+	mi := &file_proxy_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Endpoint2Config) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Endpoint2Config) ProtoMessage() {}
+
+func (x *Endpoint2Config) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Endpoint2Config.ProtoReflect.Descriptor instead.
+func (*Endpoint2Config) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *Endpoint2Config) GetLimits() *BinaryNetworkEndpointLimits {
+	if x != nil {
+		return x.Limits
+	}
+	return nil
+}
+
+func (x *Endpoint2Config) GetOverrideIncomingMessageBufferSize() int32 {
+	if x != nil && x.OverrideIncomingMessageBufferSize != nil {
+		return *x.OverrideIncomingMessageBufferSize
+	}
+	return 0
+}
+
+func (x *Endpoint2Config) GetOverrideOutgoingMessageBufferSize() int32 {
+	if x != nil && x.OverrideOutgoingMessageBufferSize != nil {
+		return *x.OverrideOutgoingMessageBufferSize
+	}
+	return 0
+}
+
+type Endpoint2Send struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ToOracleId    uint32                 `protobuf:"varint,1,opt,name=to_oracle_id,json=toOracleId,proto3" json:"to_oracle_id,omitempty"`
+	Msg           *OutboundMessage2      `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Endpoint2Send) Reset() {
+	*x = Endpoint2Send{}
+	mi := &file_proxy_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Endpoint2Send) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Endpoint2Send) ProtoMessage() {}
+
+func (x *Endpoint2Send) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Endpoint2Send.ProtoReflect.Descriptor instead.
+func (*Endpoint2Send) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *Endpoint2Send) GetToOracleId() uint32 {
+	if x != nil {
+		return x.ToOracleId
+	}
+	return 0
+}
+
+func (x *Endpoint2Send) GetMsg() *OutboundMessage2 {
+	if x != nil {
+		return x.Msg
+	}
+	return nil
+}
+
+// OutboundMessage2 mirrors ocr2types.OutboundBinaryMessage (plain/request/response).
+type OutboundMessage2 struct {
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	Payload  []byte                 `protobuf:"bytes,1,opt,name=payload,proto3" json:"payload,omitempty"`
+	Priority uint32                 `protobuf:"varint,2,opt,name=priority,proto3" json:"priority,omitempty"` // raw ocr2types.BinaryMessageOutboundPriority value
+	// Types that are valid to be assigned to Kind:
+	//
+	//	*OutboundMessage2_Plain
+	//	*OutboundMessage2_Request
+	//	*OutboundMessage2_Response
+	Kind          isOutboundMessage2_Kind `protobuf_oneof:"kind"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OutboundMessage2) Reset() {
+	*x = OutboundMessage2{}
+	mi := &file_proxy_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OutboundMessage2) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OutboundMessage2) ProtoMessage() {}
+
+func (x *OutboundMessage2) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OutboundMessage2.ProtoReflect.Descriptor instead.
+func (*OutboundMessage2) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *OutboundMessage2) GetPayload() []byte {
+	if x != nil {
+		return x.Payload
+	}
+	return nil
+}
+
+func (x *OutboundMessage2) GetPriority() uint32 {
+	if x != nil {
+		return x.Priority
+	}
+	return 0
+}
+
+func (x *OutboundMessage2) GetKind() isOutboundMessage2_Kind {
+	if x != nil {
+		return x.Kind
+	}
+	return nil
+}
+
+func (x *OutboundMessage2) GetPlain() *OutboundPlain2 {
+	if x != nil {
+		if x, ok := x.Kind.(*OutboundMessage2_Plain); ok {
+			return x.Plain
+		}
+	}
+	return nil
+}
+
+func (x *OutboundMessage2) GetRequest() *OutboundRequest2 {
+	if x != nil {
+		if x, ok := x.Kind.(*OutboundMessage2_Request); ok {
+			return x.Request
+		}
+	}
+	return nil
+}
+
+func (x *OutboundMessage2) GetResponse() *OutboundResponse2 {
+	if x != nil {
+		if x, ok := x.Kind.(*OutboundMessage2_Response); ok {
+			return x.Response
+		}
+	}
+	return nil
+}
+
+type isOutboundMessage2_Kind interface {
+	isOutboundMessage2_Kind()
+}
+
+type OutboundMessage2_Plain struct {
+	Plain *OutboundPlain2 `protobuf:"bytes,3,opt,name=plain,proto3,oneof"`
+}
+
+type OutboundMessage2_Request struct {
+	Request *OutboundRequest2 `protobuf:"bytes,4,opt,name=request,proto3,oneof"`
+}
+
+type OutboundMessage2_Response struct {
+	Response *OutboundResponse2 `protobuf:"bytes,5,opt,name=response,proto3,oneof"`
+}
+
+func (*OutboundMessage2_Plain) isOutboundMessage2_Kind() {}
+
+func (*OutboundMessage2_Request) isOutboundMessage2_Kind() {}
+
+func (*OutboundMessage2_Response) isOutboundMessage2_Kind() {}
+
+type OutboundPlain2 struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OutboundPlain2) Reset() {
+	*x = OutboundPlain2{}
+	mi := &file_proxy_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OutboundPlain2) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OutboundPlain2) ProtoMessage() {}
+
+func (x *OutboundPlain2) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OutboundPlain2.ProtoReflect.Descriptor instead.
+func (*OutboundPlain2) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{11}
+}
+
+type OutboundRequest2 struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// SingleUseSizedLimitedResponsePolicy fields.
+	PolicyMaxSize      int64 `protobuf:"varint,1,opt,name=policy_max_size,json=policyMaxSize,proto3" json:"policy_max_size,omitempty"`
+	PolicyExpiryUnixMs int64 `protobuf:"varint,2,opt,name=policy_expiry_unix_ms,json=policyExpiryUnixMs,proto3" json:"policy_expiry_unix_ms,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *OutboundRequest2) Reset() {
+	*x = OutboundRequest2{}
+	mi := &file_proxy_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OutboundRequest2) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OutboundRequest2) ProtoMessage() {}
+
+func (x *OutboundRequest2) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OutboundRequest2.ProtoReflect.Descriptor instead.
+func (*OutboundRequest2) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *OutboundRequest2) GetPolicyMaxSize() int64 {
+	if x != nil {
+		return x.PolicyMaxSize
+	}
+	return 0
+}
+
+func (x *OutboundRequest2) GetPolicyExpiryUnixMs() int64 {
+	if x != nil {
+		return x.PolicyExpiryUnixMs
+	}
+	return 0
+}
+
+type OutboundResponse2 struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Refers to the request_id of the InboundRequest2 being responded to; the
+	// server holds the real libocr RequestHandle keyed by this id.
+	RequestId     uint64 `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OutboundResponse2) Reset() {
+	*x = OutboundResponse2{}
+	mi := &file_proxy_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OutboundResponse2) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OutboundResponse2) ProtoMessage() {}
+
+func (x *OutboundResponse2) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OutboundResponse2.ProtoReflect.Descriptor instead.
+func (*OutboundResponse2) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *OutboundResponse2) GetRequestId() uint64 {
+	if x != nil {
+		return x.RequestId
+	}
+	return 0
+}
+
+// Endpoint2ServerMessage mirrors ocr2types.InboundBinaryMessageWithSender.
+type Endpoint2ServerMessage struct {
+	state    protoimpl.MessageState `protogen:"open.v1"`
+	Sender   uint32                 `protobuf:"varint,1,opt,name=sender,proto3" json:"sender,omitempty"`
+	Payload  []byte                 `protobuf:"bytes,2,opt,name=payload,proto3" json:"payload,omitempty"`
+	Priority uint32                 `protobuf:"varint,3,opt,name=priority,proto3" json:"priority,omitempty"` // raw ocr2types.BinaryMessageOutboundPriority value
+	// Types that are valid to be assigned to Kind:
+	//
+	//	*Endpoint2ServerMessage_Plain
+	//	*Endpoint2ServerMessage_Request
+	//	*Endpoint2ServerMessage_Response
+	Kind          isEndpoint2ServerMessage_Kind `protobuf_oneof:"kind"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Endpoint2ServerMessage) Reset() {
+	*x = Endpoint2ServerMessage{}
+	mi := &file_proxy_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Endpoint2ServerMessage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Endpoint2ServerMessage) ProtoMessage() {}
+
+func (x *Endpoint2ServerMessage) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Endpoint2ServerMessage.ProtoReflect.Descriptor instead.
+func (*Endpoint2ServerMessage) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *Endpoint2ServerMessage) GetSender() uint32 {
+	if x != nil {
+		return x.Sender
+	}
+	return 0
+}
+
+func (x *Endpoint2ServerMessage) GetPayload() []byte {
+	if x != nil {
+		return x.Payload
+	}
+	return nil
+}
+
+func (x *Endpoint2ServerMessage) GetPriority() uint32 {
+	if x != nil {
+		return x.Priority
+	}
+	return 0
+}
+
+func (x *Endpoint2ServerMessage) GetKind() isEndpoint2ServerMessage_Kind {
+	if x != nil {
+		return x.Kind
+	}
+	return nil
+}
+
+func (x *Endpoint2ServerMessage) GetPlain() *InboundPlain2 {
+	if x != nil {
+		if x, ok := x.Kind.(*Endpoint2ServerMessage_Plain); ok {
+			return x.Plain
+		}
+	}
+	return nil
+}
+
+func (x *Endpoint2ServerMessage) GetRequest() *InboundRequest2 {
+	if x != nil {
+		if x, ok := x.Kind.(*Endpoint2ServerMessage_Request); ok {
+			return x.Request
+		}
+	}
+	return nil
+}
+
+func (x *Endpoint2ServerMessage) GetResponse() *InboundResponse2 {
+	if x != nil {
+		if x, ok := x.Kind.(*Endpoint2ServerMessage_Response); ok {
+			return x.Response
+		}
+	}
+	return nil
+}
+
+type isEndpoint2ServerMessage_Kind interface {
+	isEndpoint2ServerMessage_Kind()
+}
+
+type Endpoint2ServerMessage_Plain struct {
+	Plain *InboundPlain2 `protobuf:"bytes,4,opt,name=plain,proto3,oneof"`
+}
+
+type Endpoint2ServerMessage_Request struct {
+	Request *InboundRequest2 `protobuf:"bytes,5,opt,name=request,proto3,oneof"`
+}
+
+type Endpoint2ServerMessage_Response struct {
+	Response *InboundResponse2 `protobuf:"bytes,6,opt,name=response,proto3,oneof"`
+}
+
+func (*Endpoint2ServerMessage_Plain) isEndpoint2ServerMessage_Kind() {}
+
+func (*Endpoint2ServerMessage_Request) isEndpoint2ServerMessage_Kind() {}
+
+func (*Endpoint2ServerMessage_Response) isEndpoint2ServerMessage_Kind() {}
+
+type InboundPlain2 struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InboundPlain2) Reset() {
+	*x = InboundPlain2{}
+	mi := &file_proxy_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InboundPlain2) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InboundPlain2) ProtoMessage() {}
+
+func (x *InboundPlain2) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InboundPlain2.ProtoReflect.Descriptor instead.
+func (*InboundPlain2) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{15}
+}
+
+type InboundRequest2 struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	RequestId     uint64                 `protobuf:"varint,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InboundRequest2) Reset() {
+	*x = InboundRequest2{}
+	mi := &file_proxy_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InboundRequest2) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InboundRequest2) ProtoMessage() {}
+
+func (x *InboundRequest2) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InboundRequest2.ProtoReflect.Descriptor instead.
+func (*InboundRequest2) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *InboundRequest2) GetRequestId() uint64 {
+	if x != nil {
+		return x.RequestId
+	}
+	return 0
+}
+
+type InboundResponse2 struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *InboundResponse2) Reset() {
+	*x = InboundResponse2{}
+	mi := &file_proxy_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *InboundResponse2) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*InboundResponse2) ProtoMessage() {}
+
+func (x *InboundResponse2) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use InboundResponse2.ProtoReflect.Descriptor instead.
+func (*InboundResponse2) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{17}
+}
+
 type PeerGroupClientRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Types that are valid to be assigned to Message:
@@ -442,7 +1218,7 @@ type PeerGroupClientRequest struct {
 
 func (x *PeerGroupClientRequest) Reset() {
 	*x = PeerGroupClientRequest{}
-	mi := &file_proxy_proto_msgTypes[6]
+	mi := &file_proxy_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -454,7 +1230,7 @@ func (x *PeerGroupClientRequest) String() string {
 func (*PeerGroupClientRequest) ProtoMessage() {}
 
 func (x *PeerGroupClientRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proxy_proto_msgTypes[6]
+	mi := &file_proxy_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -467,7 +1243,7 @@ func (x *PeerGroupClientRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PeerGroupClientRequest.ProtoReflect.Descriptor instead.
 func (*PeerGroupClientRequest) Descriptor() ([]byte, []int) {
-	return file_proxy_proto_rawDescGZIP(), []int{6}
+	return file_proxy_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *PeerGroupClientRequest) GetMessage() isPeerGroupClientRequest_Message {
@@ -552,7 +1328,7 @@ type NewPeerGroupRequest struct {
 
 func (x *NewPeerGroupRequest) Reset() {
 	*x = NewPeerGroupRequest{}
-	mi := &file_proxy_proto_msgTypes[7]
+	mi := &file_proxy_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -564,7 +1340,7 @@ func (x *NewPeerGroupRequest) String() string {
 func (*NewPeerGroupRequest) ProtoMessage() {}
 
 func (x *NewPeerGroupRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proxy_proto_msgTypes[7]
+	mi := &file_proxy_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -577,7 +1353,7 @@ func (x *NewPeerGroupRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewPeerGroupRequest.ProtoReflect.Descriptor instead.
 func (*NewPeerGroupRequest) Descriptor() ([]byte, []int) {
-	return file_proxy_proto_rawDescGZIP(), []int{7}
+	return file_proxy_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *NewPeerGroupRequest) GetConfigDigest() []byte {
@@ -619,7 +1395,7 @@ type NewStreamRequest struct {
 
 func (x *NewStreamRequest) Reset() {
 	*x = NewStreamRequest{}
-	mi := &file_proxy_proto_msgTypes[8]
+	mi := &file_proxy_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -631,7 +1407,7 @@ func (x *NewStreamRequest) String() string {
 func (*NewStreamRequest) ProtoMessage() {}
 
 func (x *NewStreamRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proxy_proto_msgTypes[8]
+	mi := &file_proxy_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -644,7 +1420,7 @@ func (x *NewStreamRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewStreamRequest.ProtoReflect.Descriptor instead.
 func (*NewStreamRequest) Descriptor() ([]byte, []int) {
-	return file_proxy_proto_rawDescGZIP(), []int{8}
+	return file_proxy_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *NewStreamRequest) GetStreamId() string {
@@ -713,7 +1489,7 @@ type TokenBucketParams struct {
 
 func (x *TokenBucketParams) Reset() {
 	*x = TokenBucketParams{}
-	mi := &file_proxy_proto_msgTypes[9]
+	mi := &file_proxy_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -725,7 +1501,7 @@ func (x *TokenBucketParams) String() string {
 func (*TokenBucketParams) ProtoMessage() {}
 
 func (x *TokenBucketParams) ProtoReflect() protoreflect.Message {
-	mi := &file_proxy_proto_msgTypes[9]
+	mi := &file_proxy_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -738,7 +1514,7 @@ func (x *TokenBucketParams) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TokenBucketParams.ProtoReflect.Descriptor instead.
 func (*TokenBucketParams) Descriptor() ([]byte, []int) {
-	return file_proxy_proto_rawDescGZIP(), []int{9}
+	return file_proxy_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *TokenBucketParams) GetRate() float64 {
@@ -764,7 +1540,7 @@ type CloseStreamRequest struct {
 
 func (x *CloseStreamRequest) Reset() {
 	*x = CloseStreamRequest{}
-	mi := &file_proxy_proto_msgTypes[10]
+	mi := &file_proxy_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -776,7 +1552,7 @@ func (x *CloseStreamRequest) String() string {
 func (*CloseStreamRequest) ProtoMessage() {}
 
 func (x *CloseStreamRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proxy_proto_msgTypes[10]
+	mi := &file_proxy_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -789,7 +1565,7 @@ func (x *CloseStreamRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CloseStreamRequest.ProtoReflect.Descriptor instead.
 func (*CloseStreamRequest) Descriptor() ([]byte, []int) {
-	return file_proxy_proto_rawDescGZIP(), []int{10}
+	return file_proxy_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *CloseStreamRequest) GetStreamId() string {
@@ -809,7 +1585,7 @@ type StreamSend struct {
 
 func (x *StreamSend) Reset() {
 	*x = StreamSend{}
-	mi := &file_proxy_proto_msgTypes[11]
+	mi := &file_proxy_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -821,7 +1597,7 @@ func (x *StreamSend) String() string {
 func (*StreamSend) ProtoMessage() {}
 
 func (x *StreamSend) ProtoReflect() protoreflect.Message {
-	mi := &file_proxy_proto_msgTypes[11]
+	mi := &file_proxy_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -834,7 +1610,7 @@ func (x *StreamSend) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamSend.ProtoReflect.Descriptor instead.
 func (*StreamSend) Descriptor() ([]byte, []int) {
-	return file_proxy_proto_rawDescGZIP(), []int{11}
+	return file_proxy_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *StreamSend) GetStreamId() string {
@@ -863,7 +1639,7 @@ type PeerGroupServerMessage struct {
 
 func (x *PeerGroupServerMessage) Reset() {
 	*x = PeerGroupServerMessage{}
-	mi := &file_proxy_proto_msgTypes[12]
+	mi := &file_proxy_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -875,7 +1651,7 @@ func (x *PeerGroupServerMessage) String() string {
 func (*PeerGroupServerMessage) ProtoMessage() {}
 
 func (x *PeerGroupServerMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proxy_proto_msgTypes[12]
+	mi := &file_proxy_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -888,7 +1664,7 @@ func (x *PeerGroupServerMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PeerGroupServerMessage.ProtoReflect.Descriptor instead.
 func (*PeerGroupServerMessage) Descriptor() ([]byte, []int) {
-	return file_proxy_proto_rawDescGZIP(), []int{12}
+	return file_proxy_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *PeerGroupServerMessage) GetMessage() isPeerGroupServerMessage_Message {
@@ -927,7 +1703,7 @@ type StreamRecv struct {
 
 func (x *StreamRecv) Reset() {
 	*x = StreamRecv{}
-	mi := &file_proxy_proto_msgTypes[13]
+	mi := &file_proxy_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -939,7 +1715,7 @@ func (x *StreamRecv) String() string {
 func (*StreamRecv) ProtoMessage() {}
 
 func (x *StreamRecv) ProtoReflect() protoreflect.Message {
-	mi := &file_proxy_proto_msgTypes[13]
+	mi := &file_proxy_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -952,7 +1728,7 @@ func (x *StreamRecv) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StreamRecv.ProtoReflect.Descriptor instead.
 func (*StreamRecv) Descriptor() ([]byte, []int) {
-	return file_proxy_proto_rawDescGZIP(), []int{13}
+	return file_proxy_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *StreamRecv) GetStreamId() string {
@@ -1000,7 +1776,55 @@ const file_proxy_proto_rawDesc = "" +
 	"toOracleId\"C\n" +
 	"\x17BinaryMessageWithSender\x12\x10\n" +
 	"\x03msg\x18\x01 \x01(\fR\x03msg\x12\x16\n" +
-	"\x06sender\x18\x02 \x01(\rR\x06sender\"\x9b\x02\n" +
+	"\x06sender\x18\x02 \x01(\rR\x06sender\"\xce\x01\n" +
+	"\x16Endpoint2ClientRequest\x12@\n" +
+	"\fnew_endpoint\x18\x01 \x01(\v2\x1b.shared.NewEndpoint2RequestH\x00R\vnewEndpoint\x120\n" +
+	"\asend_to\x18\x02 \x01(\v2\x15.shared.Endpoint2SendH\x00R\x06sendTo\x125\n" +
+	"\tbroadcast\x18\x03 \x01(\v2\x15.shared.Endpoint2SendH\x00R\tbroadcastB\t\n" +
+	"\amessage\"\xb7\x02\n" +
+	"\x13NewEndpoint2Request\x12#\n" +
+	"\rconfig_digest\x18\x01 \x01(\fR\fconfigDigest\x12\x19\n" +
+	"\bpeer_ids\x18\x02 \x03(\tR\apeerIds\x12F\n" +
+	"\x10v2_bootstrappers\x18\x03 \x03(\v2\x1b.shared.BootstrapperLocatorR\x0fv2Bootstrappers\x12O\n" +
+	"\x17default_priority_config\x18\x04 \x01(\v2\x17.shared.Endpoint2ConfigR\x15defaultPriorityConfig\x12G\n" +
+	"\x13low_priority_config\x18\x05 \x01(\v2\x17.shared.Endpoint2ConfigR\x11lowPriorityConfig\"\xd0\x02\n" +
+	"\x0fEndpoint2Config\x12;\n" +
+	"\x06limits\x18\x01 \x01(\v2#.shared.BinaryNetworkEndpointLimitsR\x06limits\x12U\n" +
+	"%override_incoming_message_buffer_size\x18\x02 \x01(\x05H\x00R!overrideIncomingMessageBufferSize\x88\x01\x01\x12U\n" +
+	"%override_outgoing_message_buffer_size\x18\x03 \x01(\x05H\x01R!overrideOutgoingMessageBufferSize\x88\x01\x01B(\n" +
+	"&_override_incoming_message_buffer_sizeB(\n" +
+	"&_override_outgoing_message_buffer_size\"]\n" +
+	"\rEndpoint2Send\x12 \n" +
+	"\fto_oracle_id\x18\x01 \x01(\rR\n" +
+	"toOracleId\x12*\n" +
+	"\x03msg\x18\x02 \x01(\v2\x18.shared.OutboundMessage2R\x03msg\"\xef\x01\n" +
+	"\x10OutboundMessage2\x12\x18\n" +
+	"\apayload\x18\x01 \x01(\fR\apayload\x12\x1a\n" +
+	"\bpriority\x18\x02 \x01(\rR\bpriority\x12.\n" +
+	"\x05plain\x18\x03 \x01(\v2\x16.shared.OutboundPlain2H\x00R\x05plain\x124\n" +
+	"\arequest\x18\x04 \x01(\v2\x18.shared.OutboundRequest2H\x00R\arequest\x127\n" +
+	"\bresponse\x18\x05 \x01(\v2\x19.shared.OutboundResponse2H\x00R\bresponseB\x06\n" +
+	"\x04kind\"\x10\n" +
+	"\x0eOutboundPlain2\"m\n" +
+	"\x10OutboundRequest2\x12&\n" +
+	"\x0fpolicy_max_size\x18\x01 \x01(\x03R\rpolicyMaxSize\x121\n" +
+	"\x15policy_expiry_unix_ms\x18\x02 \x01(\x03R\x12policyExpiryUnixMs\"2\n" +
+	"\x11OutboundResponse2\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\x04R\trequestId\"\x8a\x02\n" +
+	"\x16Endpoint2ServerMessage\x12\x16\n" +
+	"\x06sender\x18\x01 \x01(\rR\x06sender\x12\x18\n" +
+	"\apayload\x18\x02 \x01(\fR\apayload\x12\x1a\n" +
+	"\bpriority\x18\x03 \x01(\rR\bpriority\x12-\n" +
+	"\x05plain\x18\x04 \x01(\v2\x15.shared.InboundPlain2H\x00R\x05plain\x123\n" +
+	"\arequest\x18\x05 \x01(\v2\x17.shared.InboundRequest2H\x00R\arequest\x126\n" +
+	"\bresponse\x18\x06 \x01(\v2\x18.shared.InboundResponse2H\x00R\bresponseB\x06\n" +
+	"\x04kind\"\x0f\n" +
+	"\rInboundPlain2\"0\n" +
+	"\x0fInboundRequest2\x12\x1d\n" +
+	"\n" +
+	"request_id\x18\x01 \x01(\x04R\trequestId\"\x12\n" +
+	"\x10InboundResponse2\"\x9b\x02\n" +
 	"\x16PeerGroupClientRequest\x12C\n" +
 	"\x0enew_peer_group\x18\x01 \x01(\v2\x1b.shared.NewPeerGroupRequestH\x00R\fnewPeerGroup\x129\n" +
 	"\n" +
@@ -1043,6 +1867,8 @@ const file_proxy_proto_rawDesc = "" +
 	"\apayload\x18\x02 \x01(\fR\apayload2p\n" +
 	"\x1aBinaryNetworkEndpointProxy\x12R\n" +
 	"\aConnect\x12\".shared.BinaryNetworkClientRequest\x1a\x1f.shared.BinaryMessageWithSender(\x010\x012_\n" +
+	"\x0eEndpoint2Proxy\x12M\n" +
+	"\aConnect\x12\x1e.shared.Endpoint2ClientRequest\x1a\x1e.shared.Endpoint2ServerMessage(\x010\x012_\n" +
 	"\x0ePeerGroupProxy\x12M\n" +
 	"\aConnect\x12\x1e.shared.PeerGroupClientRequest\x1a\x1e.shared.PeerGroupServerMessage(\x010\x01B=Z;github.com/smartcontractkit/chainlink-protos/cre/impl/proxyb\x06proto3"
 
@@ -1058,7 +1884,7 @@ func file_proxy_proto_rawDescGZIP() []byte {
 	return file_proxy_proto_rawDescData
 }
 
-var file_proxy_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_proxy_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
 var file_proxy_proto_goTypes = []any{
 	(*BinaryNetworkClientRequest)(nil),  // 0: shared.BinaryNetworkClientRequest
 	(*NewEndpointRequest)(nil),          // 1: shared.NewEndpointRequest
@@ -1066,37 +1892,65 @@ var file_proxy_proto_goTypes = []any{
 	(*BinaryNetworkEndpointLimits)(nil), // 3: shared.BinaryNetworkEndpointLimits
 	(*SendToRequest)(nil),               // 4: shared.SendToRequest
 	(*BinaryMessageWithSender)(nil),     // 5: shared.BinaryMessageWithSender
-	(*PeerGroupClientRequest)(nil),      // 6: shared.PeerGroupClientRequest
-	(*NewPeerGroupRequest)(nil),         // 7: shared.NewPeerGroupRequest
-	(*NewStreamRequest)(nil),            // 8: shared.NewStreamRequest
-	(*TokenBucketParams)(nil),           // 9: shared.TokenBucketParams
-	(*CloseStreamRequest)(nil),          // 10: shared.CloseStreamRequest
-	(*StreamSend)(nil),                  // 11: shared.StreamSend
-	(*PeerGroupServerMessage)(nil),      // 12: shared.PeerGroupServerMessage
-	(*StreamRecv)(nil),                  // 13: shared.StreamRecv
+	(*Endpoint2ClientRequest)(nil),      // 6: shared.Endpoint2ClientRequest
+	(*NewEndpoint2Request)(nil),         // 7: shared.NewEndpoint2Request
+	(*Endpoint2Config)(nil),             // 8: shared.Endpoint2Config
+	(*Endpoint2Send)(nil),               // 9: shared.Endpoint2Send
+	(*OutboundMessage2)(nil),            // 10: shared.OutboundMessage2
+	(*OutboundPlain2)(nil),              // 11: shared.OutboundPlain2
+	(*OutboundRequest2)(nil),            // 12: shared.OutboundRequest2
+	(*OutboundResponse2)(nil),           // 13: shared.OutboundResponse2
+	(*Endpoint2ServerMessage)(nil),      // 14: shared.Endpoint2ServerMessage
+	(*InboundPlain2)(nil),               // 15: shared.InboundPlain2
+	(*InboundRequest2)(nil),             // 16: shared.InboundRequest2
+	(*InboundResponse2)(nil),            // 17: shared.InboundResponse2
+	(*PeerGroupClientRequest)(nil),      // 18: shared.PeerGroupClientRequest
+	(*NewPeerGroupRequest)(nil),         // 19: shared.NewPeerGroupRequest
+	(*NewStreamRequest)(nil),            // 20: shared.NewStreamRequest
+	(*TokenBucketParams)(nil),           // 21: shared.TokenBucketParams
+	(*CloseStreamRequest)(nil),          // 22: shared.CloseStreamRequest
+	(*StreamSend)(nil),                  // 23: shared.StreamSend
+	(*PeerGroupServerMessage)(nil),      // 24: shared.PeerGroupServerMessage
+	(*StreamRecv)(nil),                  // 25: shared.StreamRecv
 }
 var file_proxy_proto_depIdxs = []int32{
 	1,  // 0: shared.BinaryNetworkClientRequest.newEndpoint:type_name -> shared.NewEndpointRequest
 	4,  // 1: shared.BinaryNetworkClientRequest.sendTo:type_name -> shared.SendToRequest
 	2,  // 2: shared.NewEndpointRequest.v2_bootstrappers:type_name -> shared.BootstrapperLocator
 	3,  // 3: shared.NewEndpointRequest.limits:type_name -> shared.BinaryNetworkEndpointLimits
-	7,  // 4: shared.PeerGroupClientRequest.new_peer_group:type_name -> shared.NewPeerGroupRequest
-	8,  // 5: shared.PeerGroupClientRequest.new_stream:type_name -> shared.NewStreamRequest
-	10, // 6: shared.PeerGroupClientRequest.close_stream:type_name -> shared.CloseStreamRequest
-	11, // 7: shared.PeerGroupClientRequest.stream_send:type_name -> shared.StreamSend
-	2,  // 8: shared.NewPeerGroupRequest.v2_bootstrappers:type_name -> shared.BootstrapperLocator
-	9,  // 9: shared.NewStreamRequest.messages_limit:type_name -> shared.TokenBucketParams
-	9,  // 10: shared.NewStreamRequest.bytes_limit:type_name -> shared.TokenBucketParams
-	13, // 11: shared.PeerGroupServerMessage.stream_recv:type_name -> shared.StreamRecv
-	0,  // 12: shared.BinaryNetworkEndpointProxy.Connect:input_type -> shared.BinaryNetworkClientRequest
-	6,  // 13: shared.PeerGroupProxy.Connect:input_type -> shared.PeerGroupClientRequest
-	5,  // 14: shared.BinaryNetworkEndpointProxy.Connect:output_type -> shared.BinaryMessageWithSender
-	12, // 15: shared.PeerGroupProxy.Connect:output_type -> shared.PeerGroupServerMessage
-	14, // [14:16] is the sub-list for method output_type
-	12, // [12:14] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	7,  // 4: shared.Endpoint2ClientRequest.new_endpoint:type_name -> shared.NewEndpoint2Request
+	9,  // 5: shared.Endpoint2ClientRequest.send_to:type_name -> shared.Endpoint2Send
+	9,  // 6: shared.Endpoint2ClientRequest.broadcast:type_name -> shared.Endpoint2Send
+	2,  // 7: shared.NewEndpoint2Request.v2_bootstrappers:type_name -> shared.BootstrapperLocator
+	8,  // 8: shared.NewEndpoint2Request.default_priority_config:type_name -> shared.Endpoint2Config
+	8,  // 9: shared.NewEndpoint2Request.low_priority_config:type_name -> shared.Endpoint2Config
+	3,  // 10: shared.Endpoint2Config.limits:type_name -> shared.BinaryNetworkEndpointLimits
+	10, // 11: shared.Endpoint2Send.msg:type_name -> shared.OutboundMessage2
+	11, // 12: shared.OutboundMessage2.plain:type_name -> shared.OutboundPlain2
+	12, // 13: shared.OutboundMessage2.request:type_name -> shared.OutboundRequest2
+	13, // 14: shared.OutboundMessage2.response:type_name -> shared.OutboundResponse2
+	15, // 15: shared.Endpoint2ServerMessage.plain:type_name -> shared.InboundPlain2
+	16, // 16: shared.Endpoint2ServerMessage.request:type_name -> shared.InboundRequest2
+	17, // 17: shared.Endpoint2ServerMessage.response:type_name -> shared.InboundResponse2
+	19, // 18: shared.PeerGroupClientRequest.new_peer_group:type_name -> shared.NewPeerGroupRequest
+	20, // 19: shared.PeerGroupClientRequest.new_stream:type_name -> shared.NewStreamRequest
+	22, // 20: shared.PeerGroupClientRequest.close_stream:type_name -> shared.CloseStreamRequest
+	23, // 21: shared.PeerGroupClientRequest.stream_send:type_name -> shared.StreamSend
+	2,  // 22: shared.NewPeerGroupRequest.v2_bootstrappers:type_name -> shared.BootstrapperLocator
+	21, // 23: shared.NewStreamRequest.messages_limit:type_name -> shared.TokenBucketParams
+	21, // 24: shared.NewStreamRequest.bytes_limit:type_name -> shared.TokenBucketParams
+	25, // 25: shared.PeerGroupServerMessage.stream_recv:type_name -> shared.StreamRecv
+	0,  // 26: shared.BinaryNetworkEndpointProxy.Connect:input_type -> shared.BinaryNetworkClientRequest
+	6,  // 27: shared.Endpoint2Proxy.Connect:input_type -> shared.Endpoint2ClientRequest
+	18, // 28: shared.PeerGroupProxy.Connect:input_type -> shared.PeerGroupClientRequest
+	5,  // 29: shared.BinaryNetworkEndpointProxy.Connect:output_type -> shared.BinaryMessageWithSender
+	14, // 30: shared.Endpoint2Proxy.Connect:output_type -> shared.Endpoint2ServerMessage
+	24, // 31: shared.PeerGroupProxy.Connect:output_type -> shared.PeerGroupServerMessage
+	29, // [29:32] is the sub-list for method output_type
+	26, // [26:29] is the sub-list for method input_type
+	26, // [26:26] is the sub-list for extension type_name
+	26, // [26:26] is the sub-list for extension extendee
+	0,  // [0:26] is the sub-list for field type_name
 }
 
 func init() { file_proxy_proto_init() }
@@ -1110,12 +1964,28 @@ func file_proxy_proto_init() {
 		(*BinaryNetworkClientRequest_Broadcast)(nil),
 	}
 	file_proxy_proto_msgTypes[6].OneofWrappers = []any{
+		(*Endpoint2ClientRequest_NewEndpoint)(nil),
+		(*Endpoint2ClientRequest_SendTo)(nil),
+		(*Endpoint2ClientRequest_Broadcast)(nil),
+	}
+	file_proxy_proto_msgTypes[8].OneofWrappers = []any{}
+	file_proxy_proto_msgTypes[10].OneofWrappers = []any{
+		(*OutboundMessage2_Plain)(nil),
+		(*OutboundMessage2_Request)(nil),
+		(*OutboundMessage2_Response)(nil),
+	}
+	file_proxy_proto_msgTypes[14].OneofWrappers = []any{
+		(*Endpoint2ServerMessage_Plain)(nil),
+		(*Endpoint2ServerMessage_Request)(nil),
+		(*Endpoint2ServerMessage_Response)(nil),
+	}
+	file_proxy_proto_msgTypes[18].OneofWrappers = []any{
 		(*PeerGroupClientRequest_NewPeerGroup)(nil),
 		(*PeerGroupClientRequest_NewStream)(nil),
 		(*PeerGroupClientRequest_CloseStream)(nil),
 		(*PeerGroupClientRequest_StreamSend)(nil),
 	}
-	file_proxy_proto_msgTypes[12].OneofWrappers = []any{
+	file_proxy_proto_msgTypes[24].OneofWrappers = []any{
 		(*PeerGroupServerMessage_StreamRecv)(nil),
 	}
 	type x struct{}
@@ -1124,9 +1994,9 @@ func file_proxy_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proxy_proto_rawDesc), len(file_proxy_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   14,
+			NumMessages:   26,
 			NumExtensions: 0,
-			NumServices:   2,
+			NumServices:   3,
 		},
 		GoTypes:           file_proxy_proto_goTypes,
 		DependencyIndexes: file_proxy_proto_depIdxs,
