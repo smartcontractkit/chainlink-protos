@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package common.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/node-platform/common/v1";
+
+// CLJobInfo is a generic, type-agnostic snapshot of a single Chainlink job.
+//
+// Unlike NodeJobInfo (which projects a few specific submitter/transmitter
+// addresses across all jobs into a flat schema), CLJobInfo carries the job's
+// common identity fields plus the complete job definition as a raw TOML string.
+// This lets any job type be reported through a single schema without a
+// dedicated proto message or extractor per job type.
+message CLJobInfo {
+  // Node identity.
+  string csa_public_key = 1;
+  string node_version = 2;
+  string hostname = 3;
+
+  // Job identity — fields common to every job type (they live on job.Job
+  // itself rather than a type-specific spec).
+  string external_job_id = 10;
+  int32 job_id = 11;
+  string name = 12;
+  string job_type = 13;
+  uint32 schema_version = 14;
+  bool forwarding_allowed = 15;
+  optional uint32 gas_limit = 16;
+  optional uint32 stream_id = 17;
+  string created_at = 18;
+
+  // Complete job definition serialized as TOML. Captures all type-specific
+  // spec fields for any job type without requiring a per-type schema.
+  string spec_toml = 30;
+
+  // Event metadata.
+  CLJobInfoTrigger trigger = 40;
+  string timestamp = 41;
+}
+
+// CLJobInfoTrigger is the reason a CLJobInfo event was emitted.
+enum CLJobInfoTrigger {
+  CL_JOB_INFO_TRIGGER_UNSPECIFIED = 0;
+  CL_JOB_INFO_TRIGGER_HEARTBEAT = 1;
+  CL_JOB_INFO_TRIGGER_CREATE = 2;
+  CL_JOB_INFO_TRIGGER_DELETE = 3;
+}
