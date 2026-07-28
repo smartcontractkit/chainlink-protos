@@ -14,6 +14,11 @@
       "path": "metering/v1/meter_record.proto",
       "references": [
         {
+          "name": "google/protobuf/timestamp.proto",
+          "entity": "google.protobuf.Timestamp",
+          "path": "google/protobuf/timestamp.proto"
+        },
+        {
           "name": "metering/v1/identity.proto",
           "entity": "metering.v1.ResourceIdentity",
           "path": "metering/v1/identity.proto"
@@ -29,6 +34,16 @@
       "entity": "metering.v1.MeterSnapshot",
       "path": "metering/v1/snapshot.proto",
       "references": [
+        {
+          "name": "google/protobuf/duration.proto",
+          "entity": "google.protobuf.Duration",
+          "path": "google/protobuf/duration.proto"
+        },
+        {
+          "name": "google/protobuf/timestamp.proto",
+          "entity": "google.protobuf.Timestamp",
+          "path": "google/protobuf/timestamp.proto"
+        },
         {
           "name": "metering/v1/identity.proto",
           "entity": "metering.v1.ResourceIdentity",

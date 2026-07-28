@@ -20,12 +20,14 @@ one resource**, identified entirely by its `ResourceIdentity`:
 
 Both embed a structured `ResourceIdentity`.
 
-Metering registers under the ChIP domain `cll-meter`. Derived Kafka subjects
-(domain `beholder__cll-meter__messages` from `chip-cll-meter.json` + schema
-entity):
+Metering registers under the ChIP domain `cll.meter`. 
 
-- `beholder__cll-meter__messages-metering.v1.MeterRecord`
-- `beholder__cll-meter__messages-metering.v1.MeterSnapshot`
+### Vendored well-known types
+
+`google/protobuf/timestamp.proto` and `google/protobuf/duration.proto` are
+vendored under `metering/google/protobuf/` and declared as schema references in
+`chip-cll.meter.json`. ChIP accepts these dependencies at registration time but
+ they will fail at runtime.
 
 ## MeterAction
 
