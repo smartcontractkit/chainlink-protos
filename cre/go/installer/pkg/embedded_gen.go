@@ -2107,7 +2107,7 @@ message CapabilityRestrictions {
 message SecretPrefixRestriction {
   string prefix = 1;
   string namespace = 2;
-  int32 max_secrets = 3;
+  uint32 max_secrets = 3;
 }
 
 message SecretRestriction {
@@ -2119,7 +2119,7 @@ message SecretRestriction {
 
 message SecretsRestritions {
   repeated SecretRestriction restrictions = 1;
-  int32 max_secrets = 2;
+  uint32 max_secrets = 2;
 }
 
 message Restrictions {
