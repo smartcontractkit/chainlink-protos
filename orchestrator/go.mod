@@ -1,10 +1,10 @@
 module github.com/smartcontractkit/chainlink-protos/orchestrator
 
-go 1.22.5
+go 1.25.0
 
 require (
 	github.com/smartcontractkit/wsrpc v0.8.2
-	google.golang.org/protobuf v1.35.1
+	google.golang.org/protobuf v1.36.11
 )
 
 require (
@@ -14,6 +14,6 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.26.0 // indirect
-	golang.org/x/net v0.29.0 // indirect
-	google.golang.org/grpc v1.62.1 // indirect
+	golang.org/x/net v0.53.0 // indirect
+	google.golang.org/grpc v1.82.1 // indirect
 )
