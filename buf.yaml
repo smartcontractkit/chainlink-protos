@@ -17,6 +17,10 @@ modules:
     lint:
       use:
         - BASIC
+      except:
+        # Vendored Google well-known types use per-type go_packages (e.g. durationpb,
+        # timestamppb) within the single google.protobuf package, by design.
+        - PACKAGE_SAME_GO_PACKAGE
   - path: ring/pb
     lint:
       use:
