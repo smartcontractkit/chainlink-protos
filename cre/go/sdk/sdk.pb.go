@@ -2199,7 +2199,7 @@ type SecretPrefixRestriction struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Prefix        string                 `protobuf:"bytes,1,opt,name=prefix,proto3" json:"prefix,omitempty"`
 	Namespace     string                 `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
-	MaxSecrets    int32                  `protobuf:"varint,3,opt,name=max_secrets,json=maxSecrets,proto3" json:"max_secrets,omitempty"`
+	MaxSecrets    uint32                 `protobuf:"varint,3,opt,name=max_secrets,json=maxSecrets,proto3" json:"max_secrets,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2248,7 +2248,7 @@ func (x *SecretPrefixRestriction) GetNamespace() string {
 	return ""
 }
 
-func (x *SecretPrefixRestriction) GetMaxSecrets() int32 {
+func (x *SecretPrefixRestriction) GetMaxSecrets() uint32 {
 	if x != nil {
 		return x.MaxSecrets
 	}
@@ -2340,7 +2340,7 @@ func (*SecretRestriction_PrefixedSecret) isSecretRestriction_Restriction() {}
 type SecretsRestritions struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Restrictions  []*SecretRestriction   `protobuf:"bytes,1,rep,name=restrictions,proto3" json:"restrictions,omitempty"`
-	MaxSecrets    int32                  `protobuf:"varint,2,opt,name=max_secrets,json=maxSecrets,proto3" json:"max_secrets,omitempty"`
+	MaxSecrets    uint32                 `protobuf:"varint,2,opt,name=max_secrets,json=maxSecrets,proto3" json:"max_secrets,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2382,7 +2382,7 @@ func (x *SecretsRestritions) GetRestrictions() []*SecretRestriction {
 	return nil
 }
 
-func (x *SecretsRestritions) GetMaxSecrets() int32 {
+func (x *SecretsRestritions) GetMaxSecrets() uint32 {
 	if x != nil {
 		return x.MaxSecrets
 	}
@@ -2580,7 +2580,7 @@ const file_sdk_v1alpha_sdk_proto_rawDesc = "" +
 	"\x17SecretPrefixRestriction\x12\x16\n" +
 	"\x06prefix\x18\x01 \x01(\tR\x06prefix\x12\x1c\n" +
 	"\tnamespace\x18\x02 \x01(\tR\tnamespace\x12\x1f\n" +
-	"\vmax_secrets\x18\x03 \x01(\x05R\n" +
+	"\vmax_secrets\x18\x03 \x01(\rR\n" +
 	"maxSecrets\"\xad\x01\n" +
 	"\x11SecretRestriction\x128\n" +
 	"\fexact_secret\x18\x01 \x01(\v2\x13.sdk.v1alpha.SecretH\x00R\vexactSecret\x12O\n" +
@@ -2588,7 +2588,7 @@ const file_sdk_v1alpha_sdk_proto_rawDesc = "" +
 	"\vrestriction\"y\n" +
 	"\x12SecretsRestritions\x12B\n" +
 	"\frestrictions\x18\x01 \x03(\v2\x1e.sdk.v1alpha.SecretRestrictionR\frestrictions\x12\x1f\n" +
-	"\vmax_secrets\x18\x02 \x01(\x05R\n" +
+	"\vmax_secrets\x18\x02 \x01(\rR\n" +
 	"maxSecrets\"\x92\x01\n" +
 	"\fRestrictions\x129\n" +
 	"\asecrets\x18\x01 \x01(\v2\x1f.sdk.v1alpha.SecretsRestritionsR\asecrets\x12G\n" +
