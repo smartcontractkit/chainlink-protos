@@ -546,6 +546,10 @@ service Client {
               value: 18241817625092392675
             },
             {
+              key: "monad-mainet"
+              value: 8481857512324358265
+            },
+            {
               key: "pharos-atlantic-testnet"
               value: 16098325658947243212
             },
