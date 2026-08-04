@@ -560,7 +560,7 @@ message WorkflowExecution {
 
   // restrictions on the capabilities and the secrets.bool
   // This is sent to avoid overhead when a TEE is not compromised, the DON will verify the restrictions on its end as well.
-  sdk.v1alpha.Restrictions restrictions = 9;
+  sdk.v1alpha.Restrictions restrictions = 10;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
