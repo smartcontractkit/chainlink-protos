@@ -546,7 +546,7 @@ service Client {
               value: 18241817625092392675
             },
             {
-              key: "monad-mainet"
+              key: "monad-mainnet"
               value: 8481857512324358265
             },
             {
