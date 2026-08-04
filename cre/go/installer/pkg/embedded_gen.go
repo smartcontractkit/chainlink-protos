@@ -2088,7 +2088,7 @@ message SecretResponses {
 message MethodRestriction {
   string id = 1;
   string method = 2;
-  uint32 max_calls = 3;
+  int32 max_calls = 3;
 }
 
 message CapabilityRestriction {
@@ -2104,7 +2104,7 @@ enum CapabilityRestrictionType {
 
 message CapabilityRestrictions {
   repeated CapabilityRestriction restrictions = 1;
-  uint32 max_total_calls = 2;
+  int32 max_total_calls = 2;
   CapabilityRestrictionType type = 3;
 }
 
