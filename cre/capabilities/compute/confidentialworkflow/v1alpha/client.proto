@@ -30,13 +30,16 @@ message WorkflowExecution {
   // execution_id is the unique execution identifier (64 hex chars, 32 bytes).
   // Used by the enclave for runtime secret fetching from VaultDON.
   string execution_id = 6;
+  // org_id is the organization identifier for the workflow owner.
+  // Used by the enclave when fetching secrets from VaultDON with org-based ownership.
+  string org_id = 7;
 
   // requirements to run this workflow
-  sdk.v1alpha.Requirements requirements = 7;
+  sdk.v1alpha.Requirements requirements = 8;
 
   // restrictions on the capabilities and the secrets.bool
   // This is sent to avoid overhead when a TEE is not compromised, the DON will verify the restrictions on its end as well.
-  sdk.v1alpha.Restrictions restrictions = 8;
+  sdk.v1alpha.Restrictions restrictions = 9;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
