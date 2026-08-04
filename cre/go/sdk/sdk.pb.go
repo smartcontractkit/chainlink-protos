@@ -2013,7 +2013,7 @@ type MethodRestriction struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Method        string                 `protobuf:"bytes,2,opt,name=method,proto3" json:"method,omitempty"`
-	MaxCalls      int32                  `protobuf:"varint,3,opt,name=max_calls,json=maxCalls,proto3" json:"max_calls,omitempty"`
+	MaxCalls      uint32                 `protobuf:"varint,3,opt,name=max_calls,json=maxCalls,proto3" json:"max_calls,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2062,7 +2062,7 @@ func (x *MethodRestriction) GetMethod() string {
 	return ""
 }
 
-func (x *MethodRestriction) GetMaxCalls() int32 {
+func (x *MethodRestriction) GetMaxCalls() uint32 {
 	if x != nil {
 		return x.MaxCalls
 	}
@@ -2138,7 +2138,7 @@ func (*CapabilityRestriction_Method) isCapabilityRestriction_Restriction() {}
 type CapabilityRestrictions struct {
 	state         protoimpl.MessageState    `protogen:"open.v1"`
 	Restrictions  []*CapabilityRestriction  `protobuf:"bytes,1,rep,name=restrictions,proto3" json:"restrictions,omitempty"`
-	MaxTotalCalls int32                     `protobuf:"varint,2,opt,name=max_total_calls,json=maxTotalCalls,proto3" json:"max_total_calls,omitempty"`
+	MaxTotalCalls uint32                    `protobuf:"varint,2,opt,name=max_total_calls,json=maxTotalCalls,proto3" json:"max_total_calls,omitempty"`
 	Type          CapabilityRestrictionType `protobuf:"varint,3,opt,name=type,proto3,enum=sdk.v1alpha.CapabilityRestrictionType" json:"type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -2181,7 +2181,7 @@ func (x *CapabilityRestrictions) GetRestrictions() []*CapabilityRestriction {
 	return nil
 }
 
-func (x *CapabilityRestrictions) GetMaxTotalCalls() int32 {
+func (x *CapabilityRestrictions) GetMaxTotalCalls() uint32 {
 	if x != nil {
 		return x.MaxTotalCalls
 	}
@@ -2569,13 +2569,13 @@ const file_sdk_v1alpha_sdk_proto_rawDesc = "" +
 	"\x11MethodRestriction\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
 	"\x06method\x18\x02 \x01(\tR\x06method\x12\x1b\n" +
-	"\tmax_calls\x18\x03 \x01(\x05R\bmaxCalls\"`\n" +
+	"\tmax_calls\x18\x03 \x01(\rR\bmaxCalls\"`\n" +
 	"\x15CapabilityRestriction\x128\n" +
 	"\x06method\x18\x01 \x01(\v2\x1e.sdk.v1alpha.MethodRestrictionH\x00R\x06methodB\r\n" +
 	"\vrestriction\"\xc4\x01\n" +
 	"\x16CapabilityRestrictions\x12F\n" +
 	"\frestrictions\x18\x01 \x03(\v2\".sdk.v1alpha.CapabilityRestrictionR\frestrictions\x12&\n" +
-	"\x0fmax_total_calls\x18\x02 \x01(\x05R\rmaxTotalCalls\x12:\n" +
+	"\x0fmax_total_calls\x18\x02 \x01(\rR\rmaxTotalCalls\x12:\n" +
 	"\x04type\x18\x03 \x01(\x0e2&.sdk.v1alpha.CapabilityRestrictionTypeR\x04type\"p\n" +
 	"\x17SecretPrefixRestriction\x12\x16\n" +
 	"\x06prefix\x18\x01 \x01(\tR\x06prefix\x12\x1c\n" +
