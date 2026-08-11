@@ -13,6 +13,10 @@ import (
 	ocr2types "github.com/smartcontractkit/libocr/offchainreporting2plus/types"
 )
 
+// defaultRecvBufferSize is used for a stream's receive channel when the caller
+// requests a non-positive incoming buffer size.
+const defaultRecvBufferSize = 100
+
 // ProxyEndpoint2Factory is an ocr2types.BinaryNetworkEndpoint2Factory (OCR3.1)
 // that delegates to a remote Endpoint2Proxy server.
 type ProxyEndpoint2Factory struct {
