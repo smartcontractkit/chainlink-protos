@@ -126,6 +126,8 @@ message GetWorkflowExecutionRatesResponse {
   repeated RateCard rate_cards = 2;
   // chain selector -> gas tokens per credit
   map<uint64, string> gas_tokens_per_credit = 3;
+  // chain selector -> decimal precision of the gas token (e.g. 18 for EVM, 9 for Solana)
+  map<uint64, uint32> gas_decimal_points = 4;
 }
 
 message CheckAggregationStatusRequest {
