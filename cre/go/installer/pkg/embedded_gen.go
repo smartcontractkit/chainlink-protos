@@ -349,6 +349,10 @@ service Client {
               value: 8481857512324358265
             },
             {
+              key: "monad-testnet"
+              value: 2183018362218727504
+            },
+            {
               key: "pharos-atlantic-testnet"
               value: 16098325658947243212
             },
@@ -389,6 +393,10 @@ service Client {
               value: 604447335222770945
             },
             {
+              key: "robinhood-testnet"
+              value: 2032988798112970440
+            },
+            {
               key: "sonic-mainnet"
               value: 1673871237479749969
             },
@@ -397,8 +405,20 @@ service Client {
               value: 1763698235108410440
             },
             {
+              key: "stable-testnet"
+              value: 11793402411494852765
+            },
+            {
               key: "tac-testnet"
               value: 9488606126177218005
+            },
+            {
+              key: "tempo-testnet-moderato"
+              value: 8457817439310187923
+            },
+            {
+              key: "t-rex-testnet"
+              value: 17611928792452358269
             },
             {
               key: "xlayer-testnet"
