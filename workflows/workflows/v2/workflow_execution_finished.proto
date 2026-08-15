@@ -20,4 +20,8 @@ message WorkflowExecutionFinished {
 
   // extends ExecutionStatus to track system and user error while remaining backwards compatible
   ClassifiedExecutionStatus classifiedStatus = 8;
+
+  // JSON-encoded values.Value (protojson) of the workflow output.
+  // Absent on failed executions.
+  string result = 9;
 }
