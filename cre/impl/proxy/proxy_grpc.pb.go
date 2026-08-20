@@ -222,3 +222,259 @@ var Endpoint2Proxy_ServiceDesc = grpc.ServiceDesc{
 	},
 	Metadata: "proxy.proto",
 }
+
+const (
+	Signer_Keys_FullMethodName                = "/shared.Signer/Keys"
+	Signer_SignOffchain_FullMethodName        = "/shared.Signer/SignOffchain"
+	Signer_ConfigDiffieHellman_FullMethodName = "/shared.Signer/ConfigDiffieHellman"
+	Signer_SignReport_FullMethodName          = "/shared.Signer/SignReport"
+)
+
+// SignerClient is the client API for Signer service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// Signer signs on behalf of an oracle that does not hold its own keys.
+//
+// It exists for the same reason the endpoint services above do: the process
+// with the node's identity keeps it, and lends out what it can do rather than
+// what it is. A capability hosted in another process runs the protocol and
+// decides what to sign; this signs it. The key never leaves.
+//
+// libocr asks for signatures through interfaces rather than for key material
+// (types.OffchainKeyring, ocr3types.OnchainKeyring), so these calls are those
+// interfaces with a network in the middle. Verification is deliberately absent:
+// it takes the signer's public key as an argument and so needs no secret, and
+// every message received would otherwise cost a round trip.
+type SignerClient interface {
+	// Keys returns the public halves, which a caller reads once at startup: the
+	// oracle needs them to say who it is, and they cannot change while it runs.
+	Keys(ctx context.Context, in *KeysRequest, opts ...grpc.CallOption) (*KeysReply, error)
+	// SignOffchain signs a protocol message. Called for every message an oracle
+	// sends, so it is the one whose latency is felt.
+	SignOffchain(ctx context.Context, in *SignOffchainRequest, opts ...grpc.CallOption) (*SignatureReply, error)
+	// ConfigDiffieHellman multiplies a point by the config encryption secret,
+	// which is how an oracle decrypts the shared config addressed to it.
+	ConfigDiffieHellman(ctx context.Context, in *ConfigDiffieHellmanRequest, opts ...grpc.CallOption) (*ConfigDiffieHellmanReply, error)
+	// SignReport signs a report, once per round.
+	SignReport(ctx context.Context, in *SignReportRequest, opts ...grpc.CallOption) (*SignatureReply, error)
+}
+
+type signerClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewSignerClient(cc grpc.ClientConnInterface) SignerClient {
+	return &signerClient{cc}
+}
+
+func (c *signerClient) Keys(ctx context.Context, in *KeysRequest, opts ...grpc.CallOption) (*KeysReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(KeysReply)
+	err := c.cc.Invoke(ctx, Signer_Keys_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *signerClient) SignOffchain(ctx context.Context, in *SignOffchainRequest, opts ...grpc.CallOption) (*SignatureReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SignatureReply)
+	err := c.cc.Invoke(ctx, Signer_SignOffchain_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *signerClient) ConfigDiffieHellman(ctx context.Context, in *ConfigDiffieHellmanRequest, opts ...grpc.CallOption) (*ConfigDiffieHellmanReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ConfigDiffieHellmanReply)
+	err := c.cc.Invoke(ctx, Signer_ConfigDiffieHellman_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *signerClient) SignReport(ctx context.Context, in *SignReportRequest, opts ...grpc.CallOption) (*SignatureReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SignatureReply)
+	err := c.cc.Invoke(ctx, Signer_SignReport_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// SignerServer is the server API for Signer service.
+// All implementations must embed UnimplementedSignerServer
+// for forward compatibility.
+//
+// Signer signs on behalf of an oracle that does not hold its own keys.
+//
+// It exists for the same reason the endpoint services above do: the process
+// with the node's identity keeps it, and lends out what it can do rather than
+// what it is. A capability hosted in another process runs the protocol and
+// decides what to sign; this signs it. The key never leaves.
+//
+// libocr asks for signatures through interfaces rather than for key material
+// (types.OffchainKeyring, ocr3types.OnchainKeyring), so these calls are those
+// interfaces with a network in the middle. Verification is deliberately absent:
+// it takes the signer's public key as an argument and so needs no secret, and
+// every message received would otherwise cost a round trip.
+type SignerServer interface {
+	// Keys returns the public halves, which a caller reads once at startup: the
+	// oracle needs them to say who it is, and they cannot change while it runs.
+	Keys(context.Context, *KeysRequest) (*KeysReply, error)
+	// SignOffchain signs a protocol message. Called for every message an oracle
+	// sends, so it is the one whose latency is felt.
+	SignOffchain(context.Context, *SignOffchainRequest) (*SignatureReply, error)
+	// ConfigDiffieHellman multiplies a point by the config encryption secret,
+	// which is how an oracle decrypts the shared config addressed to it.
+	ConfigDiffieHellman(context.Context, *ConfigDiffieHellmanRequest) (*ConfigDiffieHellmanReply, error)
+	// SignReport signs a report, once per round.
+	SignReport(context.Context, *SignReportRequest) (*SignatureReply, error)
+	mustEmbedUnimplementedSignerServer()
+}
+
+// UnimplementedSignerServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedSignerServer struct{}
+
+func (UnimplementedSignerServer) Keys(context.Context, *KeysRequest) (*KeysReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Keys not implemented")
+}
+func (UnimplementedSignerServer) SignOffchain(context.Context, *SignOffchainRequest) (*SignatureReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignOffchain not implemented")
+}
+func (UnimplementedSignerServer) ConfigDiffieHellman(context.Context, *ConfigDiffieHellmanRequest) (*ConfigDiffieHellmanReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ConfigDiffieHellman not implemented")
+}
+func (UnimplementedSignerServer) SignReport(context.Context, *SignReportRequest) (*SignatureReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SignReport not implemented")
+}
+func (UnimplementedSignerServer) mustEmbedUnimplementedSignerServer() {}
+func (UnimplementedSignerServer) testEmbeddedByValue()                {}
+
+// UnsafeSignerServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SignerServer will
+// result in compilation errors.
+type UnsafeSignerServer interface {
+	mustEmbedUnimplementedSignerServer()
+}
+
+func RegisterSignerServer(s grpc.ServiceRegistrar, srv SignerServer) {
+	// If the following call pancis, it indicates UnimplementedSignerServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&Signer_ServiceDesc, srv)
+}
+
+func _Signer_Keys_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(KeysRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SignerServer).Keys(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Signer_Keys_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SignerServer).Keys(ctx, req.(*KeysRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Signer_SignOffchain_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignOffchainRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SignerServer).SignOffchain(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Signer_SignOffchain_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SignerServer).SignOffchain(ctx, req.(*SignOffchainRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Signer_ConfigDiffieHellman_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ConfigDiffieHellmanRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SignerServer).ConfigDiffieHellman(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Signer_ConfigDiffieHellman_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SignerServer).ConfigDiffieHellman(ctx, req.(*ConfigDiffieHellmanRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Signer_SignReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignReportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SignerServer).SignReport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Signer_SignReport_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SignerServer).SignReport(ctx, req.(*SignReportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Signer_ServiceDesc is the grpc.ServiceDesc for Signer service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Signer_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "shared.Signer",
+	HandlerType: (*SignerServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Keys",
+			Handler:    _Signer_Keys_Handler,
+		},
+		{
+			MethodName: "SignOffchain",
+			Handler:    _Signer_SignOffchain_Handler,
+		},
+		{
+			MethodName: "ConfigDiffieHellman",
+			Handler:    _Signer_ConfigDiffieHellman_Handler,
+		},
+		{
+			MethodName: "SignReport",
+			Handler:    _Signer_SignReport_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proxy.proto",
+}

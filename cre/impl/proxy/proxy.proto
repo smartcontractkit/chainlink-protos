@@ -128,3 +128,69 @@ message InboundRequest2 {
 }
 
 message InboundResponse2 {}
+
+// Signer signs on behalf of an oracle that does not hold its own keys.
+//
+// It exists for the same reason the endpoint services above do: the process
+// with the node's identity keeps it, and lends out what it can do rather than
+// what it is. A capability hosted in another process runs the protocol and
+// decides what to sign; this signs it. The key never leaves.
+//
+// libocr asks for signatures through interfaces rather than for key material
+// (types.OffchainKeyring, ocr3types.OnchainKeyring), so these calls are those
+// interfaces with a network in the middle. Verification is deliberately absent:
+// it takes the signer's public key as an argument and so needs no secret, and
+// every message received would otherwise cost a round trip.
+service Signer {
+  // Keys returns the public halves, which a caller reads once at startup: the
+  // oracle needs them to say who it is, and they cannot change while it runs.
+  rpc Keys(KeysRequest) returns (KeysReply);
+
+  // SignOffchain signs a protocol message. Called for every message an oracle
+  // sends, so it is the one whose latency is felt.
+  rpc SignOffchain(SignOffchainRequest) returns (SignatureReply);
+
+  // ConfigDiffieHellman multiplies a point by the config encryption secret,
+  // which is how an oracle decrypts the shared config addressed to it.
+  rpc ConfigDiffieHellman(ConfigDiffieHellmanRequest) returns (ConfigDiffieHellmanReply);
+
+  // SignReport signs a report, once per round.
+  rpc SignReport(SignReportRequest) returns (SignatureReply);
+}
+
+message KeysRequest {}
+
+message KeysReply {
+  bytes offchain_public_key = 1;
+  bytes config_encryption_public_key = 2;
+  bytes onchain_public_key = 3;
+  // max_signature_length is what libocr budgets for a signature from this
+  // keyring, and only the keyring knows it.
+  uint32 max_signature_length = 4;
+}
+
+message SignOffchainRequest {
+  bytes message = 1;
+}
+
+message ConfigDiffieHellmanRequest {
+  bytes point = 1; // [32]byte
+}
+
+message ConfigDiffieHellmanReply {
+  bytes shared_secret = 1; // [32]byte
+}
+
+// SignReportRequest is a report and what identifies the round it belongs to.
+// Both are signed over, so a signature cannot be lifted onto another round.
+message SignReportRequest {
+  bytes config_digest = 1; // [32]byte
+  uint64 seq_nr = 2;
+  // report is what is signed. A report's Info is deliberately absent: it is
+  // out-of-band context for the caller and libocr does not sign it either.
+  bytes report = 3;
+}
+
+message SignatureReply {
+  bytes signature = 1;
+}
