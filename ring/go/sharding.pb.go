@@ -2,9 +2,9 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v5.29.3
-// source: cre/sharding/v1/execution_completed.proto
+// source: sharding.proto
 
-package shardingv1
+package ring
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -57,11 +57,11 @@ func (x ExecutionStatus) String() string {
 }
 
 func (ExecutionStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_cre_sharding_v1_execution_completed_proto_enumTypes[0].Descriptor()
+	return file_sharding_proto_enumTypes[0].Descriptor()
 }
 
 func (ExecutionStatus) Type() protoreflect.EnumType {
-	return &file_cre_sharding_v1_execution_completed_proto_enumTypes[0]
+	return &file_sharding_proto_enumTypes[0]
 }
 
 func (x ExecutionStatus) Number() protoreflect.EnumNumber {
@@ -70,7 +70,7 @@ func (x ExecutionStatus) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ExecutionStatus.Descriptor instead.
 func (ExecutionStatus) EnumDescriptor() ([]byte, []int) {
-	return file_cre_sharding_v1_execution_completed_proto_rawDescGZIP(), []int{0}
+	return file_sharding_proto_rawDescGZIP(), []int{0}
 }
 
 type ExecutionCompleted struct {
@@ -78,7 +78,7 @@ type ExecutionCompleted struct {
 	WorkflowId     string                 `protobuf:"bytes,1,opt,name=workflow_id,json=workflowId,proto3" json:"workflow_id,omitempty"`
 	TriggerEventId string                 `protobuf:"bytes,2,opt,name=trigger_event_id,json=triggerEventId,proto3" json:"trigger_event_id,omitempty"`
 	TriggerIndex   uint32                 `protobuf:"varint,3,opt,name=trigger_index,json=triggerIndex,proto3" json:"trigger_index,omitempty"`
-	Status         ExecutionStatus        `protobuf:"varint,4,opt,name=status,proto3,enum=cre.sharding.v1.ExecutionStatus" json:"status,omitempty"`
+	Status         ExecutionStatus        `protobuf:"varint,4,opt,name=status,proto3,enum=ring.ExecutionStatus" json:"status,omitempty"`
 	PrimaryShardId uint32                 `protobuf:"varint,5,opt,name=primary_shard_id,json=primaryShardId,proto3" json:"primary_shard_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -86,7 +86,7 @@ type ExecutionCompleted struct {
 
 func (x *ExecutionCompleted) Reset() {
 	*x = ExecutionCompleted{}
-	mi := &file_cre_sharding_v1_execution_completed_proto_msgTypes[0]
+	mi := &file_sharding_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -98,7 +98,7 @@ func (x *ExecutionCompleted) String() string {
 func (*ExecutionCompleted) ProtoMessage() {}
 
 func (x *ExecutionCompleted) ProtoReflect() protoreflect.Message {
-	mi := &file_cre_sharding_v1_execution_completed_proto_msgTypes[0]
+	mi := &file_sharding_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -111,7 +111,7 @@ func (x *ExecutionCompleted) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecutionCompleted.ProtoReflect.Descriptor instead.
 func (*ExecutionCompleted) Descriptor() ([]byte, []int) {
-	return file_cre_sharding_v1_execution_completed_proto_rawDescGZIP(), []int{0}
+	return file_sharding_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *ExecutionCompleted) GetWorkflowId() string {
@@ -160,7 +160,7 @@ type ShardHeartbeat struct {
 
 func (x *ShardHeartbeat) Reset() {
 	*x = ShardHeartbeat{}
-	mi := &file_cre_sharding_v1_execution_completed_proto_msgTypes[1]
+	mi := &file_sharding_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -172,7 +172,7 @@ func (x *ShardHeartbeat) String() string {
 func (*ShardHeartbeat) ProtoMessage() {}
 
 func (x *ShardHeartbeat) ProtoReflect() protoreflect.Message {
-	mi := &file_cre_sharding_v1_execution_completed_proto_msgTypes[1]
+	mi := &file_sharding_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -185,7 +185,7 @@ func (x *ShardHeartbeat) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ShardHeartbeat.ProtoReflect.Descriptor instead.
 func (*ShardHeartbeat) Descriptor() ([]byte, []int) {
-	return file_cre_sharding_v1_execution_completed_proto_rawDescGZIP(), []int{1}
+	return file_sharding_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *ShardHeartbeat) GetPrimaryShardId() uint32 {
@@ -209,17 +209,17 @@ func (x *ShardHeartbeat) GetActiveExecutionCount() uint32 {
 	return 0
 }
 
-var File_cre_sharding_v1_execution_completed_proto protoreflect.FileDescriptor
+var File_sharding_proto protoreflect.FileDescriptor
 
-const file_cre_sharding_v1_execution_completed_proto_rawDesc = "" +
+const file_sharding_proto_rawDesc = "" +
 	"\n" +
-	")cre/sharding/v1/execution_completed.proto\x12\x0fcre.sharding.v1\"\xe8\x01\n" +
+	"\x0esharding.proto\x12\x04ring\"\xdd\x01\n" +
 	"\x12ExecutionCompleted\x12\x1f\n" +
 	"\vworkflow_id\x18\x01 \x01(\tR\n" +
 	"workflowId\x12(\n" +
 	"\x10trigger_event_id\x18\x02 \x01(\tR\x0etriggerEventId\x12#\n" +
-	"\rtrigger_index\x18\x03 \x01(\rR\ftriggerIndex\x128\n" +
-	"\x06status\x18\x04 \x01(\x0e2 .cre.sharding.v1.ExecutionStatusR\x06status\x12(\n" +
+	"\rtrigger_index\x18\x03 \x01(\rR\ftriggerIndex\x12-\n" +
+	"\x06status\x18\x04 \x01(\x0e2\x15.ring.ExecutionStatusR\x06status\x12(\n" +
 	"\x10primary_shard_id\x18\x05 \x01(\rR\x0eprimaryShardId\"\x8e\x01\n" +
 	"\x0eShardHeartbeat\x12(\n" +
 	"\x10primary_shard_id\x18\x01 \x01(\rR\x0eprimaryShardId\x12\x1c\n" +
@@ -229,29 +229,29 @@ const file_cre_sharding_v1_execution_completed_proto_rawDesc = "" +
 	"\x1cEXECUTION_STATUS_UNSPECIFIED\x10\x00\x12\x1c\n" +
 	"\x18EXECUTION_STATUS_SUCCESS\x10\x01\x12!\n" +
 	"\x1dEXECUTION_STATUS_SYSTEM_ERROR\x10\x02\x12\x1f\n" +
-	"\x1bEXECUTION_STATUS_USER_ERROR\x10\x03BLZJgithub.com/smartcontractkit/chainlink-protos/cre/go/sharding/v1;shardingv1b\x06proto3"
+	"\x1bEXECUTION_STATUS_USER_ERROR\x10\x03B;Z9github.com/smartcontractkit/chainlink-protos/ring/go;ringb\x06proto3"
 
 var (
-	file_cre_sharding_v1_execution_completed_proto_rawDescOnce sync.Once
-	file_cre_sharding_v1_execution_completed_proto_rawDescData []byte
+	file_sharding_proto_rawDescOnce sync.Once
+	file_sharding_proto_rawDescData []byte
 )
 
-func file_cre_sharding_v1_execution_completed_proto_rawDescGZIP() []byte {
-	file_cre_sharding_v1_execution_completed_proto_rawDescOnce.Do(func() {
-		file_cre_sharding_v1_execution_completed_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_cre_sharding_v1_execution_completed_proto_rawDesc), len(file_cre_sharding_v1_execution_completed_proto_rawDesc)))
+func file_sharding_proto_rawDescGZIP() []byte {
+	file_sharding_proto_rawDescOnce.Do(func() {
+		file_sharding_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_sharding_proto_rawDesc), len(file_sharding_proto_rawDesc)))
 	})
-	return file_cre_sharding_v1_execution_completed_proto_rawDescData
+	return file_sharding_proto_rawDescData
 }
 
-var file_cre_sharding_v1_execution_completed_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_cre_sharding_v1_execution_completed_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_cre_sharding_v1_execution_completed_proto_goTypes = []any{
-	(ExecutionStatus)(0),       // 0: cre.sharding.v1.ExecutionStatus
-	(*ExecutionCompleted)(nil), // 1: cre.sharding.v1.ExecutionCompleted
-	(*ShardHeartbeat)(nil),     // 2: cre.sharding.v1.ShardHeartbeat
+var file_sharding_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_sharding_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_sharding_proto_goTypes = []any{
+	(ExecutionStatus)(0),       // 0: ring.ExecutionStatus
+	(*ExecutionCompleted)(nil), // 1: ring.ExecutionCompleted
+	(*ShardHeartbeat)(nil),     // 2: ring.ShardHeartbeat
 }
-var file_cre_sharding_v1_execution_completed_proto_depIdxs = []int32{
-	0, // 0: cre.sharding.v1.ExecutionCompleted.status:type_name -> cre.sharding.v1.ExecutionStatus
+var file_sharding_proto_depIdxs = []int32{
+	0, // 0: ring.ExecutionCompleted.status:type_name -> ring.ExecutionStatus
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
@@ -259,27 +259,27 @@ var file_cre_sharding_v1_execution_completed_proto_depIdxs = []int32{
 	0, // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_cre_sharding_v1_execution_completed_proto_init() }
-func file_cre_sharding_v1_execution_completed_proto_init() {
-	if File_cre_sharding_v1_execution_completed_proto != nil {
+func init() { file_sharding_proto_init() }
+func file_sharding_proto_init() {
+	if File_sharding_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_cre_sharding_v1_execution_completed_proto_rawDesc), len(file_cre_sharding_v1_execution_completed_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_sharding_proto_rawDesc), len(file_sharding_proto_rawDesc)),
 			NumEnums:      1,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_cre_sharding_v1_execution_completed_proto_goTypes,
-		DependencyIndexes: file_cre_sharding_v1_execution_completed_proto_depIdxs,
-		EnumInfos:         file_cre_sharding_v1_execution_completed_proto_enumTypes,
-		MessageInfos:      file_cre_sharding_v1_execution_completed_proto_msgTypes,
+		GoTypes:           file_sharding_proto_goTypes,
+		DependencyIndexes: file_sharding_proto_depIdxs,
+		EnumInfos:         file_sharding_proto_enumTypes,
+		MessageInfos:      file_sharding_proto_msgTypes,
 	}.Build()
-	File_cre_sharding_v1_execution_completed_proto = out.File
-	file_cre_sharding_v1_execution_completed_proto_goTypes = nil
-	file_cre_sharding_v1_execution_completed_proto_depIdxs = nil
+	File_sharding_proto = out.File
+	file_sharding_proto_goTypes = nil
+	file_sharding_proto_depIdxs = nil
 }

@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package cre.sharding.v1;
+package ring;
 
-option go_package = "github.com/smartcontractkit/chainlink-protos/cre/go/sharding/v1;shardingv1";
+option go_package = "github.com/smartcontractkit/chainlink-protos/ring/go;ring";
 
 message ExecutionCompleted {
   string workflow_id = 1;
