@@ -28,6 +28,7 @@ message MeteringReportNodeDetail {
   string spend_unit = 2;
   string spend_value = 3;
   string spend_value_cre = 4;
+  string spend_value_in_gas_units = 5; // native fixed-point integer (wei, lamports, etc.). Empty = legacy.
 }
 
 message AggregatedSpendDetail {

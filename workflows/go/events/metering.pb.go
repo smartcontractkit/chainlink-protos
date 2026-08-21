@@ -175,13 +175,14 @@ func (x *MeteringReportStep) GetAggSpend() []*AggregatedSpendDetail {
 }
 
 type MeteringReportNodeDetail struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Peer_2PeerId  string                 `protobuf:"bytes,1,opt,name=peer_2_peer_id,json=peer2PeerId,proto3" json:"peer_2_peer_id,omitempty"`
-	SpendUnit     string                 `protobuf:"bytes,2,opt,name=spend_unit,json=spendUnit,proto3" json:"spend_unit,omitempty"`
-	SpendValue    string                 `protobuf:"bytes,3,opt,name=spend_value,json=spendValue,proto3" json:"spend_value,omitempty"`
-	SpendValueCre string                 `protobuf:"bytes,4,opt,name=spend_value_cre,json=spendValueCre,proto3" json:"spend_value_cre,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Peer_2PeerId         string                 `protobuf:"bytes,1,opt,name=peer_2_peer_id,json=peer2PeerId,proto3" json:"peer_2_peer_id,omitempty"`
+	SpendUnit            string                 `protobuf:"bytes,2,opt,name=spend_unit,json=spendUnit,proto3" json:"spend_unit,omitempty"`
+	SpendValue           string                 `protobuf:"bytes,3,opt,name=spend_value,json=spendValue,proto3" json:"spend_value,omitempty"`
+	SpendValueCre        string                 `protobuf:"bytes,4,opt,name=spend_value_cre,json=spendValueCre,proto3" json:"spend_value_cre,omitempty"`
+	SpendValueInGasUnits string                 `protobuf:"bytes,5,opt,name=spend_value_in_gas_units,json=spendValueInGasUnits,proto3" json:"spend_value_in_gas_units,omitempty"` // native fixed-point integer (wei, lamports, etc.). Empty = legacy.
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *MeteringReportNodeDetail) Reset() {
@@ -238,6 +239,13 @@ func (x *MeteringReportNodeDetail) GetSpendValue() string {
 func (x *MeteringReportNodeDetail) GetSpendValueCre() string {
 	if x != nil {
 		return x.SpendValueCre
+	}
+	return ""
+}
+
+func (x *MeteringReportNodeDetail) GetSpendValueInGasUnits() string {
+	if x != nil {
+		return x.SpendValueInGasUnits
 	}
 	return ""
 }
@@ -322,14 +330,15 @@ const file_workflows_v1_metering_proto_rawDesc = "" +
 	"\x0eagg_spend_unit\x18\x03 \x01(\tR\faggSpendUnit\x12-\n" +
 	"\x13agg_spend_value_cre\x18\x04 \x01(\tR\x10aggSpendValueCre\x12\x19\n" +
 	"\bcapdon_n\x18\x05 \x01(\rR\acapdonN\x12@\n" +
-	"\tagg_spend\x18\x06 \x03(\v2#.workflows.v1.AggregatedSpendDetailR\baggSpend\"\xa7\x01\n" +
+	"\tagg_spend\x18\x06 \x03(\v2#.workflows.v1.AggregatedSpendDetailR\baggSpend\"\xdf\x01\n" +
 	"\x18MeteringReportNodeDetail\x12#\n" +
 	"\x0epeer_2_peer_id\x18\x01 \x01(\tR\vpeer2PeerId\x12\x1d\n" +
 	"\n" +
 	"spend_unit\x18\x02 \x01(\tR\tspendUnit\x12\x1f\n" +
 	"\vspend_value\x18\x03 \x01(\tR\n" +
 	"spendValue\x12&\n" +
-	"\x0fspend_value_cre\x18\x04 \x01(\tR\rspendValueCre\"\x7f\n" +
+	"\x0fspend_value_cre\x18\x04 \x01(\tR\rspendValueCre\x126\n" +
+	"\x18spend_value_in_gas_units\x18\x05 \x01(\tR\x14spendValueInGasUnits\"\x7f\n" +
 	"\x15AggregatedSpendDetail\x12\x1d\n" +
 	"\n" +
 	"spend_unit\x18\x02 \x01(\tR\tspendUnit\x12\x1f\n" +
