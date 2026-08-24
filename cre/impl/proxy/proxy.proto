@@ -194,3 +194,46 @@ message SignReportRequest {
 message SignatureReply {
   bytes signature = 1;
 }
+
+// Keystore lends out what the node's chain keys can do, to a capability that
+// holds none.
+//
+// It is the Signer service's trade applied to the keys a chain wants rather than
+// the ones a protocol wants: the capability decides what to sign - it builds the
+// transaction, and it knows which account it transmits from - and this signs the
+// digest with the key the node is registered under. The key itself never leaves
+// the process that holds it.
+//
+// The shape is chainlink-common's core.Keystore, so a caller can hand what it
+// gets straight to anything already written against that interface, and an
+// account is named the way the keystore names it.
+service Keystore {
+  // Accounts lists what can be signed for. A caller uses it to check that the
+  // account it is configured to transmit from is one this node actually holds,
+  // which is better found at startup than at the first transaction.
+  rpc Accounts(AccountsRequest) returns (AccountsReply);
+
+  // Sign signs data with account's key. data is already the digest to sign -
+  // for an EVM transaction, the hash the chain's signer produced - since what a
+  // signature covers is the caller's business and hashing it here would mean
+  // this service knowing every chain's rules.
+  rpc Sign(SignRequest) returns (SignReply);
+}
+
+message AccountsRequest {}
+
+message AccountsReply {
+  repeated string accounts = 1;
+}
+
+message SignRequest {
+  // account is one of the accounts Accounts returned.
+  string account = 1;
+  // data is the digest to sign. Empty data is a no-op that checks the account
+  // exists, which is what core.Keystore says nil data means.
+  bytes data = 2;
+}
+
+message SignReply {
+  bytes signed = 1;
+}

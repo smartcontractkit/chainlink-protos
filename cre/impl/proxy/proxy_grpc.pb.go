@@ -478,3 +478,183 @@ var Signer_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "proxy.proto",
 }
+
+const (
+	Keystore_Accounts_FullMethodName = "/shared.Keystore/Accounts"
+	Keystore_Sign_FullMethodName     = "/shared.Keystore/Sign"
+)
+
+// KeystoreClient is the client API for Keystore service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// Keystore lends out what the node's chain keys can do, to a capability that
+// holds none.
+//
+// It is the Signer service's trade applied to the keys a chain wants rather than
+// the ones a protocol wants: the capability decides what to sign - it builds the
+// transaction, and it knows which account it transmits from - and this signs the
+// digest with the key the node is registered under. The key itself never leaves
+// the process that holds it.
+//
+// The shape is chainlink-common's core.Keystore, so a caller can hand what it
+// gets straight to anything already written against that interface, and an
+// account is named the way the keystore names it.
+type KeystoreClient interface {
+	// Accounts lists what can be signed for. A caller uses it to check that the
+	// account it is configured to transmit from is one this node actually holds,
+	// which is better found at startup than at the first transaction.
+	Accounts(ctx context.Context, in *AccountsRequest, opts ...grpc.CallOption) (*AccountsReply, error)
+	// Sign signs data with account's key. data is already the digest to sign -
+	// for an EVM transaction, the hash the chain's signer produced - since what a
+	// signature covers is the caller's business and hashing it here would mean
+	// this service knowing every chain's rules.
+	Sign(ctx context.Context, in *SignRequest, opts ...grpc.CallOption) (*SignReply, error)
+}
+
+type keystoreClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewKeystoreClient(cc grpc.ClientConnInterface) KeystoreClient {
+	return &keystoreClient{cc}
+}
+
+func (c *keystoreClient) Accounts(ctx context.Context, in *AccountsRequest, opts ...grpc.CallOption) (*AccountsReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AccountsReply)
+	err := c.cc.Invoke(ctx, Keystore_Accounts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *keystoreClient) Sign(ctx context.Context, in *SignRequest, opts ...grpc.CallOption) (*SignReply, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SignReply)
+	err := c.cc.Invoke(ctx, Keystore_Sign_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// KeystoreServer is the server API for Keystore service.
+// All implementations must embed UnimplementedKeystoreServer
+// for forward compatibility.
+//
+// Keystore lends out what the node's chain keys can do, to a capability that
+// holds none.
+//
+// It is the Signer service's trade applied to the keys a chain wants rather than
+// the ones a protocol wants: the capability decides what to sign - it builds the
+// transaction, and it knows which account it transmits from - and this signs the
+// digest with the key the node is registered under. The key itself never leaves
+// the process that holds it.
+//
+// The shape is chainlink-common's core.Keystore, so a caller can hand what it
+// gets straight to anything already written against that interface, and an
+// account is named the way the keystore names it.
+type KeystoreServer interface {
+	// Accounts lists what can be signed for. A caller uses it to check that the
+	// account it is configured to transmit from is one this node actually holds,
+	// which is better found at startup than at the first transaction.
+	Accounts(context.Context, *AccountsRequest) (*AccountsReply, error)
+	// Sign signs data with account's key. data is already the digest to sign -
+	// for an EVM transaction, the hash the chain's signer produced - since what a
+	// signature covers is the caller's business and hashing it here would mean
+	// this service knowing every chain's rules.
+	Sign(context.Context, *SignRequest) (*SignReply, error)
+	mustEmbedUnimplementedKeystoreServer()
+}
+
+// UnimplementedKeystoreServer must be embedded to have
+// forward compatible implementations.
+//
+// NOTE: this should be embedded by value instead of pointer to avoid a nil
+// pointer dereference when methods are called.
+type UnimplementedKeystoreServer struct{}
+
+func (UnimplementedKeystoreServer) Accounts(context.Context, *AccountsRequest) (*AccountsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Accounts not implemented")
+}
+func (UnimplementedKeystoreServer) Sign(context.Context, *SignRequest) (*SignReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Sign not implemented")
+}
+func (UnimplementedKeystoreServer) mustEmbedUnimplementedKeystoreServer() {}
+func (UnimplementedKeystoreServer) testEmbeddedByValue()                  {}
+
+// UnsafeKeystoreServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to KeystoreServer will
+// result in compilation errors.
+type UnsafeKeystoreServer interface {
+	mustEmbedUnimplementedKeystoreServer()
+}
+
+func RegisterKeystoreServer(s grpc.ServiceRegistrar, srv KeystoreServer) {
+	// If the following call pancis, it indicates UnimplementedKeystoreServer was
+	// embedded by pointer and is nil.  This will cause panics if an
+	// unimplemented method is ever invoked, so we test this at initialization
+	// time to prevent it from happening at runtime later due to I/O.
+	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
+		t.testEmbeddedByValue()
+	}
+	s.RegisterService(&Keystore_ServiceDesc, srv)
+}
+
+func _Keystore_Accounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AccountsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KeystoreServer).Accounts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Keystore_Accounts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KeystoreServer).Accounts(ctx, req.(*AccountsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Keystore_Sign_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SignRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(KeystoreServer).Sign(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Keystore_Sign_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(KeystoreServer).Sign(ctx, req.(*SignRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Keystore_ServiceDesc is the grpc.ServiceDesc for Keystore service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var Keystore_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "shared.Keystore",
+	HandlerType: (*KeystoreServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Accounts",
+			Handler:    _Keystore_Accounts_Handler,
+		},
+		{
+			MethodName: "Sign",
+			Handler:    _Keystore_Sign_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "proxy.proto",
+}

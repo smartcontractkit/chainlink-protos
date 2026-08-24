@@ -1549,6 +1549,185 @@ func (x *SignatureReply) GetSignature() []byte {
 	return nil
 }
 
+type AccountsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AccountsRequest) Reset() {
+	*x = AccountsRequest{}
+	mi := &file_proxy_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AccountsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AccountsRequest) ProtoMessage() {}
+
+func (x *AccountsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AccountsRequest.ProtoReflect.Descriptor instead.
+func (*AccountsRequest) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{25}
+}
+
+type AccountsReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Accounts      []string               `protobuf:"bytes,1,rep,name=accounts,proto3" json:"accounts,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AccountsReply) Reset() {
+	*x = AccountsReply{}
+	mi := &file_proxy_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AccountsReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AccountsReply) ProtoMessage() {}
+
+func (x *AccountsReply) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AccountsReply.ProtoReflect.Descriptor instead.
+func (*AccountsReply) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *AccountsReply) GetAccounts() []string {
+	if x != nil {
+		return x.Accounts
+	}
+	return nil
+}
+
+type SignRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// account is one of the accounts Accounts returned.
+	Account string `protobuf:"bytes,1,opt,name=account,proto3" json:"account,omitempty"`
+	// data is the digest to sign. Empty data is a no-op that checks the account
+	// exists, which is what core.Keystore says nil data means.
+	Data          []byte `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SignRequest) Reset() {
+	*x = SignRequest{}
+	mi := &file_proxy_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SignRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SignRequest) ProtoMessage() {}
+
+func (x *SignRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SignRequest.ProtoReflect.Descriptor instead.
+func (*SignRequest) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *SignRequest) GetAccount() string {
+	if x != nil {
+		return x.Account
+	}
+	return ""
+}
+
+func (x *SignRequest) GetData() []byte {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type SignReply struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Signed        []byte                 `protobuf:"bytes,1,opt,name=signed,proto3" json:"signed,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SignReply) Reset() {
+	*x = SignReply{}
+	mi := &file_proxy_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SignReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SignReply) ProtoMessage() {}
+
+func (x *SignReply) ProtoReflect() protoreflect.Message {
+	mi := &file_proxy_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SignReply.ProtoReflect.Descriptor instead.
+func (*SignReply) Descriptor() ([]byte, []int) {
+	return file_proxy_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *SignReply) GetSigned() []byte {
+	if x != nil {
+		return x.Signed
+	}
+	return nil
+}
+
 var File_proxy_proto protoreflect.FileDescriptor
 
 const file_proxy_proto_rawDesc = "" +
@@ -1646,7 +1825,15 @@ const file_proxy_proto_rawDesc = "" +
 	"\x06seq_nr\x18\x02 \x01(\x04R\x05seqNr\x12\x16\n" +
 	"\x06report\x18\x03 \x01(\fR\x06report\".\n" +
 	"\x0eSignatureReply\x12\x1c\n" +
-	"\tsignature\x18\x01 \x01(\fR\tsignature2p\n" +
+	"\tsignature\x18\x01 \x01(\fR\tsignature\"\x11\n" +
+	"\x0fAccountsRequest\"+\n" +
+	"\rAccountsReply\x12\x1a\n" +
+	"\baccounts\x18\x01 \x03(\tR\baccounts\";\n" +
+	"\vSignRequest\x12\x18\n" +
+	"\aaccount\x18\x01 \x01(\tR\aaccount\x12\x12\n" +
+	"\x04data\x18\x02 \x01(\fR\x04data\"#\n" +
+	"\tSignReply\x12\x16\n" +
+	"\x06signed\x18\x01 \x01(\fR\x06signed2p\n" +
 	"\x1aBinaryNetworkEndpointProxy\x12R\n" +
 	"\aConnect\x12\".shared.BinaryNetworkClientRequest\x1a\x1f.shared.BinaryMessageWithSender(\x010\x012_\n" +
 	"\x0eEndpoint2Proxy\x12M\n" +
@@ -1656,7 +1843,10 @@ const file_proxy_proto_rawDesc = "" +
 	"\fSignOffchain\x12\x1b.shared.SignOffchainRequest\x1a\x16.shared.SignatureReply\x12[\n" +
 	"\x13ConfigDiffieHellman\x12\".shared.ConfigDiffieHellmanRequest\x1a .shared.ConfigDiffieHellmanReply\x12?\n" +
 	"\n" +
-	"SignReport\x12\x19.shared.SignReportRequest\x1a\x16.shared.SignatureReplyB=Z;github.com/smartcontractkit/chainlink-protos/cre/impl/proxyb\x06proto3"
+	"SignReport\x12\x19.shared.SignReportRequest\x1a\x16.shared.SignatureReply2v\n" +
+	"\bKeystore\x12:\n" +
+	"\bAccounts\x12\x17.shared.AccountsRequest\x1a\x15.shared.AccountsReply\x12.\n" +
+	"\x04Sign\x12\x13.shared.SignRequest\x1a\x11.shared.SignReplyB=Z;github.com/smartcontractkit/chainlink-protos/cre/impl/proxyb\x06proto3"
 
 var (
 	file_proxy_proto_rawDescOnce sync.Once
@@ -1670,7 +1860,7 @@ func file_proxy_proto_rawDescGZIP() []byte {
 	return file_proxy_proto_rawDescData
 }
 
-var file_proxy_proto_msgTypes = make([]protoimpl.MessageInfo, 25)
+var file_proxy_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
 var file_proxy_proto_goTypes = []any{
 	(*BinaryNetworkClientRequest)(nil),  // 0: shared.BinaryNetworkClientRequest
 	(*NewEndpointRequest)(nil),          // 1: shared.NewEndpointRequest
@@ -1697,6 +1887,10 @@ var file_proxy_proto_goTypes = []any{
 	(*ConfigDiffieHellmanReply)(nil),    // 22: shared.ConfigDiffieHellmanReply
 	(*SignReportRequest)(nil),           // 23: shared.SignReportRequest
 	(*SignatureReply)(nil),              // 24: shared.SignatureReply
+	(*AccountsRequest)(nil),             // 25: shared.AccountsRequest
+	(*AccountsReply)(nil),               // 26: shared.AccountsReply
+	(*SignRequest)(nil),                 // 27: shared.SignRequest
+	(*SignReply)(nil),                   // 28: shared.SignReply
 }
 var file_proxy_proto_depIdxs = []int32{
 	1,  // 0: shared.BinaryNetworkClientRequest.newEndpoint:type_name -> shared.NewEndpointRequest
@@ -1723,14 +1917,18 @@ var file_proxy_proto_depIdxs = []int32{
 	20, // 21: shared.Signer.SignOffchain:input_type -> shared.SignOffchainRequest
 	21, // 22: shared.Signer.ConfigDiffieHellman:input_type -> shared.ConfigDiffieHellmanRequest
 	23, // 23: shared.Signer.SignReport:input_type -> shared.SignReportRequest
-	5,  // 24: shared.BinaryNetworkEndpointProxy.Connect:output_type -> shared.BinaryMessageWithSender
-	14, // 25: shared.Endpoint2Proxy.Connect:output_type -> shared.Endpoint2ServerMessage
-	19, // 26: shared.Signer.Keys:output_type -> shared.KeysReply
-	24, // 27: shared.Signer.SignOffchain:output_type -> shared.SignatureReply
-	22, // 28: shared.Signer.ConfigDiffieHellman:output_type -> shared.ConfigDiffieHellmanReply
-	24, // 29: shared.Signer.SignReport:output_type -> shared.SignatureReply
-	24, // [24:30] is the sub-list for method output_type
-	18, // [18:24] is the sub-list for method input_type
+	25, // 24: shared.Keystore.Accounts:input_type -> shared.AccountsRequest
+	27, // 25: shared.Keystore.Sign:input_type -> shared.SignRequest
+	5,  // 26: shared.BinaryNetworkEndpointProxy.Connect:output_type -> shared.BinaryMessageWithSender
+	14, // 27: shared.Endpoint2Proxy.Connect:output_type -> shared.Endpoint2ServerMessage
+	19, // 28: shared.Signer.Keys:output_type -> shared.KeysReply
+	24, // 29: shared.Signer.SignOffchain:output_type -> shared.SignatureReply
+	22, // 30: shared.Signer.ConfigDiffieHellman:output_type -> shared.ConfigDiffieHellmanReply
+	24, // 31: shared.Signer.SignReport:output_type -> shared.SignatureReply
+	26, // 32: shared.Keystore.Accounts:output_type -> shared.AccountsReply
+	28, // 33: shared.Keystore.Sign:output_type -> shared.SignReply
+	26, // [26:34] is the sub-list for method output_type
+	18, // [18:26] is the sub-list for method input_type
 	18, // [18:18] is the sub-list for extension type_name
 	18, // [18:18] is the sub-list for extension extendee
 	0,  // [0:18] is the sub-list for field type_name
@@ -1768,9 +1966,9 @@ func file_proxy_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proxy_proto_rawDesc), len(file_proxy_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   25,
+			NumMessages:   29,
 			NumExtensions: 0,
-			NumServices:   3,
+			NumServices:   4,
 		},
 		GoTypes:           file_proxy_proto_goTypes,
 		DependencyIndexes: file_proxy_proto_depIdxs,
