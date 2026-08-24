@@ -3,6 +3,7 @@ task 3.39.0
 protoc 29.3
 protoc-gen-go-grpc 1.5.1
 protoc-gen-go 1.36.6
+protoc-gen-connect-go 1.20.0
 nodejs 20.13.1
 pnpm 9.10.0
 buf 1.45.0
