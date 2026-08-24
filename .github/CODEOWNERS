@@ -8,6 +8,7 @@
 /job-distributor/ @smartcontractkit/op-tooling
 /orchestrator/ @smartcontractkit/op-tooling
 /op-catalog/ @smartcontractkit/cld-team @smartcontractkit/op-tooling
+/op-domain/ @smartcontractkit/cld-team @smartcontractkit/op-tooling
 
 # CRE
 /cre/ @smartcontractkit/keystone @smartcontractkit/op-tooling

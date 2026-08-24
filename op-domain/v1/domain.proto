@@ -1,0 +1,374 @@
+syntax = "proto3";
+
+package domain.v1;
+
+import "buf/validate/validate.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/op-domain/v1;domainv1";
+
+// Whether config authority is git (repo is source of truth) or the service (API is).
+// UNSPECIFIED defaults to GIT on create.
+enum ManagementMode {
+  MANAGEMENT_MODE_UNSPECIFIED = 0;
+  MANAGEMENT_MODE_GIT = 1;
+  MANAGEMENT_MODE_SERVICE = 2;
+}
+
+// A deployment domain — maps to a directory in chainlink-deployments/domains/.
+message Domain {
+  string id = 1;
+  // Matches the repo domain dir name (e.g. "ccip", "ccip-firedrill").
+  string key = 2;
+  string display_name = 3;
+  string description = 4;
+  ManagementMode management_mode = 5;
+  // Bumped on every mutation; used for optimistic concurrency.
+  int64 resource_version = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+  google.protobuf.Timestamp archived_at = 9;
+}
+
+message CreateDomainRequest {
+  string key = 1 [(buf.validate.field).string = {
+    min_len: 2
+    max_len: 63
+    pattern: "^[a-z][a-z0-9-]*[a-z0-9]$"
+  }];
+  string display_name = 2 [(buf.validate.field).string.min_len = 1];
+  string description = 3;
+  ManagementMode management_mode = 4 [(buf.validate.field).enum.defined_only = true];
+}
+
+message CreateDomainResponse {
+  Domain domain = 1;
+}
+
+message GetDomainRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message GetDomainResponse {
+  Domain domain = 1;
+}
+
+message ListDomainsRequest {
+  bool include_archived = 1;
+  string key = 2 [(buf.validate.field).string = {
+    max_len: 63
+    pattern: "^$|^[a-z][a-z0-9-]*[a-z0-9]$"
+  }];
+}
+
+message ListDomainsResponse {
+  repeated Domain domains = 1;
+}
+
+// Optional fields: omitted = unchanged. expected_resource_version must match
+// or the server returns ABORTED (409). key is immutable (rename = archive +
+// recreate).
+message UpdateDomainRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  int64 expected_resource_version = 2 [(buf.validate.field).int64.gt = 0];
+  optional string display_name = 3 [(buf.validate.field).string.min_len = 1];
+  optional string description = 4;
+  // git ↔ service flips config authority; unsafe transitions return FAILED_PRECONDITION.
+  optional ManagementMode management_mode = 5 [(buf.validate.field).enum = {
+    defined_only: true
+    not_in: [0]
+  }];
+}
+
+message UpdateDomainResponse {
+  Domain domain = 1;
+}
+
+// Soft-deletes the domain; key is freed for recreation.
+message ArchiveDomainRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  int64 expected_resource_version = 2 [(buf.validate.field).int64.gt = 0];
+}
+
+message ArchiveDomainResponse {
+  Domain domain = 1;
+}
+
+// A deployment environment within a domain (e.g. "testnet", "prod_mainnet").
+message Environment {
+  string id = 1;
+  string domain_id = 2;
+  string key = 3;
+  string display_name = 4;
+  int64 resource_version = 5;
+  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp updated_at = 7;
+  google.protobuf.Timestamp archived_at = 8;
+}
+
+message CreateEnvironmentRequest {
+  string domain_id = 1 [(buf.validate.field).string.min_len = 1];
+  string key = 2 [(buf.validate.field).string = {
+    min_len: 2
+    max_len: 63
+    pattern: "^[a-z][a-z0-9-]*[a-z0-9]$"
+  }];
+  string display_name = 3 [(buf.validate.field).string.min_len = 1];
+}
+
+message CreateEnvironmentResponse {
+  Environment environment = 1;
+}
+
+message GetEnvironmentRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message GetEnvironmentResponse {
+  Environment environment = 1;
+}
+
+message ListEnvironmentsRequest {
+  string domain_id = 1 [(buf.validate.field).string.min_len = 1];
+  bool include_archived = 2;
+  string key = 3 [(buf.validate.field).string = {
+    max_len: 63
+    pattern: "^$|^[a-z][a-z0-9-]*[a-z0-9]$"
+  }];
+}
+
+message ListEnvironmentsResponse {
+  repeated Environment environments = 1;
+}
+
+message UpdateEnvironmentRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  int64 expected_resource_version = 2 [(buf.validate.field).int64.gt = 0];
+  optional string display_name = 3 [(buf.validate.field).string.min_len = 1];
+}
+
+message UpdateEnvironmentResponse {
+  Environment environment = 1;
+}
+
+message ArchiveEnvironmentRequest {
+  string id = 1 [(buf.validate.field).string.min_len = 1];
+  int64 expected_resource_version = 2 [(buf.validate.field).int64.gt = 0];
+}
+
+message ArchiveEnvironmentResponse {
+  Environment environment = 1;
+}
+
+// A chain attached to an environment. Chain membership is on/off (enabled
+// toggle), not archived. Detaching does not free the (environment_id,
+// chain_selector) slot — re-attach sets enabled=true.
+message EnvironmentChain {
+  string environment_id = 1;
+  uint64 chain_selector = 2;
+  bool enabled = 3;
+  int64 resource_version = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message EnableChainRequest {
+  string environment_id = 1 [(buf.validate.field).string.min_len = 1];
+  uint64 chain_selector = 2 [(buf.validate.field).uint64.gt = 0];
+}
+
+message EnableChainResponse {
+  EnvironmentChain chain = 1;
+}
+
+message DisableChainRequest {
+  string environment_id = 1 [(buf.validate.field).string.min_len = 1];
+  uint64 chain_selector = 2 [(buf.validate.field).uint64.gt = 0];
+  int64 expected_resource_version = 3 [(buf.validate.field).int64.gt = 0];
+}
+
+message DisableChainResponse {
+  EnvironmentChain chain = 1;
+}
+
+message ListEnvironmentChainsRequest {
+  string environment_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message ListEnvironmentChainsResponse {
+  repeated EnvironmentChain chains = 1;
+}
+
+// What a config attaches to.
+enum ConfigScopeType {
+  CONFIG_SCOPE_TYPE_UNSPECIFIED = 0;
+  CONFIG_SCOPE_TYPE_DOMAIN = 1;
+  CONFIG_SCOPE_TYPE_ENVIRONMENT = 2;
+}
+
+// The single domain or environment a config lives in. Exactly one side must
+// be set.
+message ConfigScope {
+  oneof scope {
+    option (buf.validate.oneof).required = true;
+    string domain_id = 1 [(buf.validate.field).string.min_len = 1];
+    string environment_id = 2 [(buf.validate.field).string.min_len = 1];
+  }
+}
+
+// The natural key of a config. key defaults to "default" when unset.
+message ConfigRef {
+  ConfigScope scope = 1 [(buf.validate.field).required = true];
+  // Dotted namespace, e.g. "deployment.runtime".
+  string kind = 2 [(buf.validate.field).string = {
+    min_len: 3
+    max_len: 63
+    pattern: "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)+$"
+  }];
+  string key = 3 [(buf.validate.field).string = {
+    max_len: 128
+    pattern: "^$|^[a-zA-Z0-9][a-zA-Z0-9._:-]*$"
+  }];
+}
+
+// Kinds and schemas are compiled into the binary; the API serves them
+// read-only.
+message ConfigKind {
+  string kind = 1;
+  string owning_team = 2;
+  string description = 3;
+  ConfigScopeType scope = 4;
+}
+
+// One immutable JSON Schema version within a kind.
+message ConfigSchemaVersion {
+  string kind = 1;
+  int32 version = 2;
+  google.protobuf.Struct json_schema = 3;
+}
+
+// The current configuration at a (scope, kind, key): the live payload plus
+// its version number.
+message Config {
+  string id = 1;
+  ConfigScope scope = 2;
+  string kind = 3;
+  string key = 4;
+  int32 version = 5;
+  int32 schema_version = 6;
+  google.protobuf.Struct payload = 7;
+  string updated_by = 8;
+  string reason = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+}
+
+// One immutable entry in a config's history.
+message ConfigVersion {
+  string config_id = 1;
+  int32 version = 2;
+  int32 schema_version = 3;
+  google.protobuf.Struct payload = 4;
+  string created_by = 5;
+  string reason = 6;
+  google.protobuf.Timestamp created_at = 7;
+}
+
+message ListConfigKindsRequest {}
+
+message ListConfigKindsResponse {
+  repeated ConfigKind config_kinds = 1;
+}
+
+message ListConfigSchemasRequest {
+  string kind = 1 [(buf.validate.field).string = {
+    min_len: 3
+    max_len: 63
+    pattern: "^[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)+$"
+  }];
+}
+
+message ListConfigSchemasResponse {
+  repeated ConfigSchemaVersion config_schemas = 1;
+}
+
+// Creates the config on first put; otherwise appends the next version and
+// makes it live. schema_version is always explicit: shipping a newer schema
+// must never change what an identical request means. Rollback = put an old
+// version's payload again.
+message PutConfigRequest {
+  ConfigRef ref = 1 [(buf.validate.field).required = true];
+  int32 schema_version = 2 [(buf.validate.field).int32.gt = 0];
+  google.protobuf.Struct payload = 3 [(buf.validate.field).required = true];
+  string reason = 4 [(buf.validate.field).string.max_len = 1024];
+  // Omit to append unconditionally. Set it to the version you read and a
+  // concurrent write in between returns ABORTED (409) instead of being
+  // silently overwritten.
+  optional int32 expected_version = 5 [(buf.validate.field).int32.gt = 0];
+}
+
+message PutConfigResponse {
+  Config config = 1;
+}
+
+// Addressable by surrogate id or by natural ref; callers legitimately hold both.
+message GetConfigRequest {
+  oneof selector {
+    option (buf.validate.oneof).required = true;
+    string id = 1 [(buf.validate.field).string.min_len = 1];
+    ConfigRef ref = 2;
+  }
+}
+
+message GetConfigResponse {
+  Config config = 1;
+}
+
+// Every config in a scope. kind is an optional filter.
+message ListConfigsRequest {
+  ConfigScope scope = 1 [(buf.validate.field).required = true];
+  string kind = 2 [(buf.validate.field).string = {
+    max_len: 63
+    pattern: "^$|^[a-z][a-z0-9]*(\\.[a-z][a-z0-9]*)+$"
+  }];
+}
+
+message ListConfigsResponse {
+  repeated Config configs = 1;
+}
+
+// A config's history, newest first, capped at the most recent 200 versions.
+message ListConfigVersionsRequest {
+  string config_id = 1 [(buf.validate.field).string.min_len = 1];
+}
+
+message ListConfigVersionsResponse {
+  repeated ConfigVersion versions = 1;
+}
+
+service DomainService {
+  rpc CreateDomain(CreateDomainRequest) returns (CreateDomainResponse);
+  rpc GetDomain(GetDomainRequest) returns (GetDomainResponse);
+  rpc ListDomains(ListDomainsRequest) returns (ListDomainsResponse);
+  rpc UpdateDomain(UpdateDomainRequest) returns (UpdateDomainResponse);
+  rpc ArchiveDomain(ArchiveDomainRequest) returns (ArchiveDomainResponse);
+
+  rpc CreateEnvironment(CreateEnvironmentRequest) returns (CreateEnvironmentResponse);
+  rpc GetEnvironment(GetEnvironmentRequest) returns (GetEnvironmentResponse);
+  rpc ListEnvironments(ListEnvironmentsRequest) returns (ListEnvironmentsResponse);
+  rpc UpdateEnvironment(UpdateEnvironmentRequest) returns (UpdateEnvironmentResponse);
+  rpc ArchiveEnvironment(ArchiveEnvironmentRequest) returns (ArchiveEnvironmentResponse);
+
+  rpc EnableChain(EnableChainRequest) returns (EnableChainResponse);
+  rpc DisableChain(DisableChainRequest) returns (DisableChainResponse);
+  rpc ListEnvironmentChains(ListEnvironmentChainsRequest) returns (ListEnvironmentChainsResponse);
+
+  rpc ListConfigKinds(ListConfigKindsRequest) returns (ListConfigKindsResponse);
+  rpc ListConfigSchemas(ListConfigSchemasRequest) returns (ListConfigSchemasResponse);
+
+  rpc PutConfig(PutConfigRequest) returns (PutConfigResponse);
+  rpc GetConfig(GetConfigRequest) returns (GetConfigResponse);
+  rpc ListConfigs(ListConfigsRequest) returns (ListConfigsResponse);
+  rpc ListConfigVersions(ListConfigVersionsRequest) returns (ListConfigVersionsResponse);
+}

@@ -69,6 +69,15 @@ modules:
         - ENUM_VALUE_PREFIX
         - ENUM_ZERO_VALUE_SUFFIX
   - path: node-platform
+  - path: op-domain
+    lint:
+      except:
+        # The package is domain.v1 (it defines the Connect procedure paths the
+        # server serves) while the module directory is op-domain/v1.
+        - PACKAGE_DIRECTORY_MATCH
+
+deps:
+  - buf.build/bufbuild/protovalidate
 
 lint:
   use:
