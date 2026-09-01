@@ -30,8 +30,10 @@ type WorkflowExecutionFinished struct {
 	Status              ExecutionStatus        `protobuf:"varint,5,opt,name=status,proto3,enum=workflows.v2.ExecutionStatus" json:"status,omitempty"`
 	Error               string                 `protobuf:"bytes,6,opt,name=error,proto3" json:"error,omitempty"`
 	ExecutedInTEE       bool                   `protobuf:"varint,7,opt,name=executedInTEE,proto3" json:"executedInTEE,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	// extends ExecutionStatus to track system and user error while remaining backwards compatible
+	ClassifiedStatus ClassifiedExecutionStatus `protobuf:"varint,8,opt,name=classifiedStatus,proto3,enum=workflows.v2.ClassifiedExecutionStatus" json:"classifiedStatus,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *WorkflowExecutionFinished) Reset() {
@@ -113,11 +115,18 @@ func (x *WorkflowExecutionFinished) GetExecutedInTEE() bool {
 	return false
 }
 
+func (x *WorkflowExecutionFinished) GetClassifiedStatus() ClassifiedExecutionStatus {
+	if x != nil {
+		return x.ClassifiedStatus
+	}
+	return ClassifiedExecutionStatus_CLASSIFIED_EXECUTION_STATUS_UNSPECIFIED
+}
+
 var File_workflows_v2_workflow_execution_finished_proto protoreflect.FileDescriptor
 
 const file_workflows_v2_workflow_execution_finished_proto_rawDesc = "" +
 	"\n" +
-	".workflows/v2/workflow_execution_finished.proto\x12\fworkflows.v2\x1a\x1bworkflows/v2/cre_info.proto\x1a\x1fworkflows/v2/workflow_key.proto\x1a\x1eworkflows/v2/xxx_no_send.proto\"\xc6\x02\n" +
+	".workflows/v2/workflow_execution_finished.proto\x12\fworkflows.v2\x1a\x1bworkflows/v2/cre_info.proto\x1a\x1fworkflows/v2/workflow_key.proto\x1a\x1eworkflows/v2/xxx_no_send.proto\"\x9b\x03\n" +
 	"\x19WorkflowExecutionFinished\x12/\n" +
 	"\acreInfo\x18\x01 \x01(\v2\x15.workflows.v2.CreInfoR\acreInfo\x125\n" +
 	"\bworkflow\x18\x02 \x01(\v2\x19.workflows.v2.WorkflowKeyR\bworkflow\x120\n" +
@@ -125,7 +134,8 @@ const file_workflows_v2_workflow_execution_finished_proto_rawDesc = "" +
 	"\ttimestamp\x18\x04 \x01(\tR\ttimestamp\x125\n" +
 	"\x06status\x18\x05 \x01(\x0e2\x1d.workflows.v2.ExecutionStatusR\x06status\x12\x14\n" +
 	"\x05error\x18\x06 \x01(\tR\x05error\x12$\n" +
-	"\rexecutedInTEE\x18\a \x01(\bR\rexecutedInTEEB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
+	"\rexecutedInTEE\x18\a \x01(\bR\rexecutedInTEE\x12S\n" +
+	"\x10classifiedStatus\x18\b \x01(\x0e2'.workflows.v2.ClassifiedExecutionStatusR\x10classifiedStatusB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
 
 var (
 	file_workflows_v2_workflow_execution_finished_proto_rawDescOnce sync.Once
@@ -145,16 +155,18 @@ var file_workflows_v2_workflow_execution_finished_proto_goTypes = []any{
 	(*CreInfo)(nil),                   // 1: workflows.v2.CreInfo
 	(*WorkflowKey)(nil),               // 2: workflows.v2.WorkflowKey
 	(ExecutionStatus)(0),              // 3: workflows.v2.ExecutionStatus
+	(ClassifiedExecutionStatus)(0),    // 4: workflows.v2.ClassifiedExecutionStatus
 }
 var file_workflows_v2_workflow_execution_finished_proto_depIdxs = []int32{
 	1, // 0: workflows.v2.WorkflowExecutionFinished.creInfo:type_name -> workflows.v2.CreInfo
 	2, // 1: workflows.v2.WorkflowExecutionFinished.workflow:type_name -> workflows.v2.WorkflowKey
 	3, // 2: workflows.v2.WorkflowExecutionFinished.status:type_name -> workflows.v2.ExecutionStatus
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	4, // 3: workflows.v2.WorkflowExecutionFinished.classifiedStatus:type_name -> workflows.v2.ClassifiedExecutionStatus
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_workflows_v2_workflow_execution_finished_proto_init() }

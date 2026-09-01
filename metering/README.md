@@ -1,0 +1,130 @@
+# Metering
+
+Protobuf definitions for the billable events emitted by services that manage
+durable resources (trigger registrations, log filters, workflow registrations,
+...). Records and snapshots are published via ChIP Durable Emitter and consumed
+by the billing pipeline.
+
+There are two load-bearing billing streams, and **each message carries exactly
+one resource**, identified entirely by its `ResourceIdentity`:
+
+- `MeterRecord` — a durable, first-class billing event capturing one **signed
+  delta**: the level change of one request against a durable resource
+  (`METER_ACTION_UPDATE`) or one instantaneous occurrence of consumption
+  (`METER_ACTION_USAGE`). Records give the consumer precise request-time edges
+  and the audit trail. `utilizations` carries one or more billed quantities.
+- `MeterSnapshot` — the **action-less periodic absolute level** of one active
+  resource. It provides liveness and level reconciliation, and its **absence is
+  the only lifecycle-cleanup signal**. The resource manager emits one
+  `MeterSnapshot` per active resource each interval.
+
+Both embed a structured `ResourceIdentity`.
+
+Metering registers under the ChIP domain `cll.meter`. 
+
+### Vendored well-known types
+
+`google/protobuf/timestamp.proto` and `google/protobuf/duration.proto` are
+vendored under `metering/google/protobuf/` and declared as schema references in
+`chip-cll.meter.json`. ChIP accepts these dependencies at registration time but
+ they will fail at runtime.
+
+## MeterAction
+
+Producers emit only two actions; the action value is the durable-vs-one-off
+discriminator (there is no separate field):
+
+- `METER_ACTION_UPDATE` — a signed delta to a durable resource's level
+  (register `= +N`, unregister `= -N`, resize `= ±delta`). The resource has a
+  level; snapshots corroborate it. `Utilization.value` is the signed delta.
+- `METER_ACTION_USAGE` — a one-off instantaneous consumption event billed per
+  occurrence. It has no level and is never snapshotted.
+- `METER_ACTION_RESERVE` / `METER_ACTION_RELEASE` are **deprecated**: retained in
+  the enum for wire compatibility, but producers must not emit them and their
+  historical pairing semantics are void.
+
+## Bucket semantics
+
+An org draws down credits in a time bucket if the bucket contains any
+positive-delta `UPDATE` record, any `USAGE` record, or any nonzero snapshot for
+a resource attributed to that org. A `+N` and `-N` cancelling within one bucket
+still triggers drawdown via the positive delta.
+
+## Resource identity
+
+`ResourceIdentity` (in `identity.proto`) is the first-class, structured
+identity embedded by every metering message. Downstream aggregators, analytics,
+and UI treat each dimension as a discrete column rather than parsing a dotted
+string or carrying values out-of-band on telemetry. Its fields:
+
+| Field           | Meaning                                                                                  |
+| --------------- | ---------------------------------------------------------------------------------------- |
+| `product`       | Deployment product, e.g. `cre`. Coarse billing-rollup dimension.                         |
+| `environment`   | Deployment environment, e.g. `production`, `staging`. Coarse billing-rollup dimension.   |
+| `zone`          | Deployment zone, e.g. `wf-zone-a`. Coarse billing-rollup dimension.                      |
+| `don.don_id`    | Authoritative DON ID of the emitting service. Coarse billing-rollup dimension.           |
+| `don.node_id`   | Node's logical name (e.g. `clp-cre-wf-zone-a-1`), not the CSA public key.                |
+| `service`       | Stable service constant (the old `entity`), e.g. `cron-trigger`. Coarse rollup dimension.|
+| `resource_pool` | Resource pool, e.g. `trigger_registrations`, `log_filters`.                              |
+| `resource_type` | Billing unit for the value, e.g. `operations`, `log_filter_addresses`.                   |
+| `resource_id`   | The **physical/logical resource identity** (see below).                                  |
+
+`node_id` is the node's logical name, never the CSA public key; consumers join
+`node_id` → CSA key via the workflow registry. `don_id` is the authoritative DON
+ID of the emitting service — for capability LOOPs this is `CapDONID` supplied
+over the standardcapabilities interface, and for workflow-DON services (e.g. the
+syncer) it is the workflow DON ID.
+
+`resource_id` is the **physical/logical resource identity, workflow-independent
+where a shared physical resource exists**:
+
+- **EVM log filters** — content hash of `chain_selector` + canonicalized
+  addresses + event signatures + positional topics, so identical filters from
+  different workflows share one `resource_id`.
+- **cron / http / syncer** — no shared physical resource exists, so it is the
+  workflow-scoped `trigger_id` / `workflow_id`.
+
+`ResourceIdentity` is the **sole** identity of a metered resource: `Utilization`
+carries `event_id` and `resource_id` to allow aggregation of the event that caused the spot utilization or level edge change. It also includes the resolved `org_id`.
+
+## Dedup and org attribution
+
+`Utilization.event_id` is unique per emission (UUIDv4), generated by the emitting
+resource manager. Because deltas have counter semantics, at-least-once delivery
+must dedup by `event_id`; snapshot reconciliation then bounds any residual level
+drift.
+
+`Utilization.org_id` is resolved at emission time from the stored workflow owner
+(producers store the workflow owner, never a resolved org). Snapshots resolve
+the org via a caching resolver because `GetUtilization` is contractually
+no-network. `org_id` may lag an owner org link/unlink by at most the resolver
+cache TTL.
+
+## MeterSnapshot contract
+
+`MeterSnapshot` (in `snapshot.proto`) is the **action-less** periodic absolute
+level of **exactly one** active resource on one node. It is load-bearing billing
+data: it carries the level and the liveness signal, and its absence is the only
+lifecycle-cleanup mechanism. It is also the magnitude the billing
+median-across-nodes reducer consumes. `MeterAction` does **not** apply to
+snapshots.
+
+- `identity` is the **full** identity of the one resource (the coarse
+  dimensions plus `resource_pool` / `resource_type` / `resource_id`).
+- `utilization.value` is the resource's current absolute level (always ≥ 0).
+- `interval` is the nominal period the snapshot covers, for staleness detection.
+- There is **no batch and no sequence**: the resource manager emits one
+  `MeterSnapshot` per active resource per interval. A resource that **stops
+  being snapshotted is released** — billing zeroes it out by that absence.
+
+Snapshot timestamps are aligned to interval boundaries (truncated to the
+`SnapshotInterval`) so cross-node bucket agreement is structural for DonTime-
+synced clocks. `MeterRecord` timestamps stay raw — they are request-time edges.
+
+## Code generation
+
+```bash
+cd metering && make generate
+# or, from the repo root:
+task proto:gen:metering
+```

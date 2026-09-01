@@ -70,6 +70,64 @@ func (ExecutionStatus) EnumDescriptor() ([]byte, []int) {
 	return file_workflows_v2_xxx_no_send_proto_rawDescGZIP(), []int{0}
 }
 
+// ClassifiedExecutionStatus is the terminal outcome of a workflow execution,
+// distinguishing failures caused by the user's workflow (its code, config, or a
+// returned error) from failures caused by the platform/infrastructure (execution
+// timeouts, unavailable capabilities, internal engine errors). It is emitted
+// alongside ExecutionStatus so downstream consumers can attribute a failure to
+// the user vs the platform without inspecting free-text error strings.
+type ClassifiedExecutionStatus int32
+
+const (
+	ClassifiedExecutionStatus_CLASSIFIED_EXECUTION_STATUS_UNSPECIFIED  ClassifiedExecutionStatus = 0
+	ClassifiedExecutionStatus_CLASSIFIED_EXECUTION_STATUS_SUCCEEDED    ClassifiedExecutionStatus = 1
+	ClassifiedExecutionStatus_CLASSIFIED_EXECUTION_STATUS_USER_ERROR   ClassifiedExecutionStatus = 2
+	ClassifiedExecutionStatus_CLASSIFIED_EXECUTION_STATUS_SYSTEM_ERROR ClassifiedExecutionStatus = 3
+)
+
+// Enum value maps for ClassifiedExecutionStatus.
+var (
+	ClassifiedExecutionStatus_name = map[int32]string{
+		0: "CLASSIFIED_EXECUTION_STATUS_UNSPECIFIED",
+		1: "CLASSIFIED_EXECUTION_STATUS_SUCCEEDED",
+		2: "CLASSIFIED_EXECUTION_STATUS_USER_ERROR",
+		3: "CLASSIFIED_EXECUTION_STATUS_SYSTEM_ERROR",
+	}
+	ClassifiedExecutionStatus_value = map[string]int32{
+		"CLASSIFIED_EXECUTION_STATUS_UNSPECIFIED":  0,
+		"CLASSIFIED_EXECUTION_STATUS_SUCCEEDED":    1,
+		"CLASSIFIED_EXECUTION_STATUS_USER_ERROR":   2,
+		"CLASSIFIED_EXECUTION_STATUS_SYSTEM_ERROR": 3,
+	}
+)
+
+func (x ClassifiedExecutionStatus) Enum() *ClassifiedExecutionStatus {
+	p := new(ClassifiedExecutionStatus)
+	*p = x
+	return p
+}
+
+func (x ClassifiedExecutionStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ClassifiedExecutionStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_workflows_v2_xxx_no_send_proto_enumTypes[1].Descriptor()
+}
+
+func (ClassifiedExecutionStatus) Type() protoreflect.EnumType {
+	return &file_workflows_v2_xxx_no_send_proto_enumTypes[1]
+}
+
+func (x ClassifiedExecutionStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ClassifiedExecutionStatus.Descriptor instead.
+func (ClassifiedExecutionStatus) EnumDescriptor() ([]byte, []int) {
+	return file_workflows_v2_xxx_no_send_proto_rawDescGZIP(), []int{1}
+}
+
 // NeverSendThis is a message that should never be sent.
 // By including a root level message in this file, we can make
 // iron-flask and the CTFv2 proto-processing work.
@@ -127,7 +185,12 @@ const file_workflows_v2_xxx_no_send_proto_rawDesc = "" +
 	"\x0fExecutionStatus\x12 \n" +
 	"\x1cEXECUTION_STATUS_UNSPECIFIED\x10\x00\x12\x1e\n" +
 	"\x1aEXECUTION_STATUS_SUCCEEDED\x10\x01\x12\x1b\n" +
-	"\x17EXECUTION_STATUS_FAILED\x10\x02B>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
+	"\x17EXECUTION_STATUS_FAILED\x10\x02*\xcd\x01\n" +
+	"\x19ClassifiedExecutionStatus\x12+\n" +
+	"'CLASSIFIED_EXECUTION_STATUS_UNSPECIFIED\x10\x00\x12)\n" +
+	"%CLASSIFIED_EXECUTION_STATUS_SUCCEEDED\x10\x01\x12*\n" +
+	"&CLASSIFIED_EXECUTION_STATUS_USER_ERROR\x10\x02\x12,\n" +
+	"(CLASSIFIED_EXECUTION_STATUS_SYSTEM_ERROR\x10\x03B>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
 
 var (
 	file_workflows_v2_xxx_no_send_proto_rawDescOnce sync.Once
@@ -141,11 +204,12 @@ func file_workflows_v2_xxx_no_send_proto_rawDescGZIP() []byte {
 	return file_workflows_v2_xxx_no_send_proto_rawDescData
 }
 
-var file_workflows_v2_xxx_no_send_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_workflows_v2_xxx_no_send_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_workflows_v2_xxx_no_send_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_workflows_v2_xxx_no_send_proto_goTypes = []any{
-	(ExecutionStatus)(0),  // 0: workflows.v2.ExecutionStatus
-	(*NeverSendThis)(nil), // 1: workflows.v2.NeverSendThis
+	(ExecutionStatus)(0),           // 0: workflows.v2.ExecutionStatus
+	(ClassifiedExecutionStatus)(0), // 1: workflows.v2.ClassifiedExecutionStatus
+	(*NeverSendThis)(nil),          // 2: workflows.v2.NeverSendThis
 }
 var file_workflows_v2_xxx_no_send_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -165,7 +229,7 @@ func file_workflows_v2_xxx_no_send_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_workflows_v2_xxx_no_send_proto_rawDesc), len(file_workflows_v2_xxx_no_send_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      2,
 			NumMessages:   1,
 			NumExtensions: 0,
 			NumServices:   0,

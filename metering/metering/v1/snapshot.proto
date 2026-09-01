@@ -1,0 +1,37 @@
+syntax = "proto3";
+package metering.v1;
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "metering/v1/identity.proto";
+import "metering/v1/utilization.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/metering/go;metering";
+
+// MeterSnapshot is the ACTION-LESS periodic absolute level of EXACTLY ONE active
+// durable resource, uniquely identified by its ResourceIdentity (including
+// resource_id). It is load-bearing billing data: it provides the level and the
+// only lifecycle-cleanup signal, giving liveness and level reconciliation that
+// bounds drift in the delta-based MeterRecord stream. It is also the magnitude
+// the billing median-across-nodes reducer consumes.
+//
+// One MeterSnapshot covers one resource; the resource manager emits a separate
+// MeterSnapshot per active resource each interval. There is no batch and no
+// sequence number: each snapshot stands alone, keyed by its ResourceIdentity
+// and timestamp. A resource that stops being snapshotted is released — this
+// absence is the only lifecycle-cleanup mechanism. MeterAction does NOT apply to
+// snapshots.
+message MeterSnapshot {
+  // Time at which the snapshot was taken (the interval boundary it covers).
+  google.protobuf.Timestamp timestamp = 1;
+  // Full identity of the one resource this snapshot covers: the six coarse
+  // dimensions (product, environment, zone, don_id, node_id, service) plus
+  // resource, resource_type, and resource_id.
+  ResourceIdentity identity = 2;
+  // Utilization of this one resource. value is the current level; the
+  // per-interval increment is value over the interval below.
+  repeated Utilization utilization = 3;
+  // Nominal period this snapshot covers, for staleness detection and for
+  // computing the per-interval increment by the consumer.
+  google.protobuf.Duration interval = 4;
+}

@@ -27,11 +27,12 @@ const (
 type AggregationType int32
 
 const (
-	AggregationType_AGGREGATION_TYPE_UNSPECIFIED   AggregationType = 0
-	AggregationType_AGGREGATION_TYPE_MEDIAN        AggregationType = 1
-	AggregationType_AGGREGATION_TYPE_IDENTICAL     AggregationType = 2
-	AggregationType_AGGREGATION_TYPE_COMMON_PREFIX AggregationType = 3
-	AggregationType_AGGREGATION_TYPE_COMMON_SUFFIX AggregationType = 4
+	AggregationType_AGGREGATION_TYPE_UNSPECIFIED    AggregationType = 0
+	AggregationType_AGGREGATION_TYPE_MEDIAN         AggregationType = 1
+	AggregationType_AGGREGATION_TYPE_IDENTICAL      AggregationType = 2
+	AggregationType_AGGREGATION_TYPE_COMMON_PREFIX  AggregationType = 3
+	AggregationType_AGGREGATION_TYPE_COMMON_SUFFIX  AggregationType = 4
+	AggregationType_AGGREGATION_TYPE_FREQUENCY_LIST AggregationType = 5
 )
 
 // Enum value maps for AggregationType.
@@ -42,13 +43,15 @@ var (
 		2: "AGGREGATION_TYPE_IDENTICAL",
 		3: "AGGREGATION_TYPE_COMMON_PREFIX",
 		4: "AGGREGATION_TYPE_COMMON_SUFFIX",
+		5: "AGGREGATION_TYPE_FREQUENCY_LIST",
 	}
 	AggregationType_value = map[string]int32{
-		"AGGREGATION_TYPE_UNSPECIFIED":   0,
-		"AGGREGATION_TYPE_MEDIAN":        1,
-		"AGGREGATION_TYPE_IDENTICAL":     2,
-		"AGGREGATION_TYPE_COMMON_PREFIX": 3,
-		"AGGREGATION_TYPE_COMMON_SUFFIX": 4,
+		"AGGREGATION_TYPE_UNSPECIFIED":    0,
+		"AGGREGATION_TYPE_MEDIAN":         1,
+		"AGGREGATION_TYPE_IDENTICAL":      2,
+		"AGGREGATION_TYPE_COMMON_PREFIX":  3,
+		"AGGREGATION_TYPE_COMMON_SUFFIX":  4,
+		"AGGREGATION_TYPE_FREQUENCY_LIST": 5,
 	}
 )
 
@@ -126,6 +129,98 @@ func (x Mode) Number() protoreflect.EnumNumber {
 // Deprecated: Use Mode.Descriptor instead.
 func (Mode) EnumDescriptor() ([]byte, []int) {
 	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{1}
+}
+
+type TeeType int32
+
+const (
+	TeeType_TEE_TYPE_UNSPECIFIED TeeType = 0
+	TeeType_TEE_TYPE_AWS_NITRO   TeeType = 1
+)
+
+// Enum value maps for TeeType.
+var (
+	TeeType_name = map[int32]string{
+		0: "TEE_TYPE_UNSPECIFIED",
+		1: "TEE_TYPE_AWS_NITRO",
+	}
+	TeeType_value = map[string]int32{
+		"TEE_TYPE_UNSPECIFIED": 0,
+		"TEE_TYPE_AWS_NITRO":   1,
+	}
+)
+
+func (x TeeType) Enum() *TeeType {
+	p := new(TeeType)
+	*p = x
+	return p
+}
+
+func (x TeeType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (TeeType) Descriptor() protoreflect.EnumDescriptor {
+	return file_sdk_v1alpha_sdk_proto_enumTypes[2].Descriptor()
+}
+
+func (TeeType) Type() protoreflect.EnumType {
+	return &file_sdk_v1alpha_sdk_proto_enumTypes[2]
+}
+
+func (x TeeType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use TeeType.Descriptor instead.
+func (TeeType) EnumDescriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{2}
+}
+
+type CapabilityRestrictionType int32
+
+const (
+	CapabilityRestrictionType_CAPABILITY_RESTRICTION_TYPE_CLOSED CapabilityRestrictionType = 0
+	CapabilityRestrictionType_CAPABILITY_RESTRICTION_TYPE_OPEN   CapabilityRestrictionType = 1
+)
+
+// Enum value maps for CapabilityRestrictionType.
+var (
+	CapabilityRestrictionType_name = map[int32]string{
+		0: "CAPABILITY_RESTRICTION_TYPE_CLOSED",
+		1: "CAPABILITY_RESTRICTION_TYPE_OPEN",
+	}
+	CapabilityRestrictionType_value = map[string]int32{
+		"CAPABILITY_RESTRICTION_TYPE_CLOSED": 0,
+		"CAPABILITY_RESTRICTION_TYPE_OPEN":   1,
+	}
+)
+
+func (x CapabilityRestrictionType) Enum() *CapabilityRestrictionType {
+	p := new(CapabilityRestrictionType)
+	*p = x
+	return p
+}
+
+func (x CapabilityRestrictionType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CapabilityRestrictionType) Descriptor() protoreflect.EnumDescriptor {
+	return file_sdk_v1alpha_sdk_proto_enumTypes[3].Descriptor()
+}
+
+func (CapabilityRestrictionType) Type() protoreflect.EnumType {
+	return &file_sdk_v1alpha_sdk_proto_enumTypes[3]
+}
+
+func (x CapabilityRestrictionType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CapabilityRestrictionType.Descriptor instead.
+func (CapabilityRestrictionType) EnumDescriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{3}
 }
 
 type SimpleConsensusInputs struct {
@@ -703,6 +798,8 @@ type TriggerSubscription struct {
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Payload       *anypb.Any             `protobuf:"bytes,2,opt,name=payload,proto3" json:"payload,omitempty"`
 	Method        string                 `protobuf:"bytes,3,opt,name=method,proto3" json:"method,omitempty"`
+	Requirements  *Requirements          `protobuf:"bytes,4,opt,name=requirements,proto3" json:"requirements,omitempty"`
+	PreHook       bool                   `protobuf:"varint,5,opt,name=pre_hook,json=preHook,proto3" json:"pre_hook,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -758,6 +855,72 @@ func (x *TriggerSubscription) GetMethod() string {
 	return ""
 }
 
+func (x *TriggerSubscription) GetRequirements() *Requirements {
+	if x != nil {
+		return x.Requirements
+	}
+	return nil
+}
+
+func (x *TriggerSubscription) GetPreHook() bool {
+	if x != nil {
+		return x.PreHook
+	}
+	return false
+}
+
+type TeeTypeAndRegions struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Type          TeeType                `protobuf:"varint,1,opt,name=type,proto3,enum=sdk.v1alpha.TeeType" json:"type,omitempty"`
+	Regions       []string               `protobuf:"bytes,3,rep,name=regions,proto3" json:"regions,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TeeTypeAndRegions) Reset() {
+	*x = TeeTypeAndRegions{}
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TeeTypeAndRegions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TeeTypeAndRegions) ProtoMessage() {}
+
+func (x *TeeTypeAndRegions) ProtoReflect() protoreflect.Message {
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TeeTypeAndRegions.ProtoReflect.Descriptor instead.
+func (*TeeTypeAndRegions) Descriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *TeeTypeAndRegions) GetType() TeeType {
+	if x != nil {
+		return x.Type
+	}
+	return TeeType_TEE_TYPE_UNSPECIFIED
+}
+
+func (x *TeeTypeAndRegions) GetRegions() []string {
+	if x != nil {
+		return x.Regions
+	}
+	return nil
+}
+
 type TriggerSubscriptionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Subscriptions []*TriggerSubscription `protobuf:"bytes,1,rep,name=subscriptions,proto3" json:"subscriptions,omitempty"`
@@ -767,7 +930,7 @@ type TriggerSubscriptionRequest struct {
 
 func (x *TriggerSubscriptionRequest) Reset() {
 	*x = TriggerSubscriptionRequest{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[9]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -779,7 +942,7 @@ func (x *TriggerSubscriptionRequest) String() string {
 func (*TriggerSubscriptionRequest) ProtoMessage() {}
 
 func (x *TriggerSubscriptionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[9]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -792,7 +955,7 @@ func (x *TriggerSubscriptionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TriggerSubscriptionRequest.ProtoReflect.Descriptor instead.
 func (*TriggerSubscriptionRequest) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{9}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *TriggerSubscriptionRequest) GetSubscriptions() []*TriggerSubscription {
@@ -812,7 +975,7 @@ type Trigger struct {
 
 func (x *Trigger) Reset() {
 	*x = Trigger{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[10]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -824,7 +987,7 @@ func (x *Trigger) String() string {
 func (*Trigger) ProtoMessage() {}
 
 func (x *Trigger) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[10]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -837,7 +1000,7 @@ func (x *Trigger) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Trigger.ProtoReflect.Descriptor instead.
 func (*Trigger) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{10}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *Trigger) GetId() uint64 {
@@ -854,6 +1017,220 @@ func (x *Trigger) GetPayload() *anypb.Any {
 	return nil
 }
 
+type Regions struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Regions       []string               `protobuf:"bytes,1,rep,name=regions,proto3" json:"regions,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Regions) Reset() {
+	*x = Regions{}
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Regions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Regions) ProtoMessage() {}
+
+func (x *Regions) ProtoReflect() protoreflect.Message {
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Regions.ProtoReflect.Descriptor instead.
+func (*Regions) Descriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *Regions) GetRegions() []string {
+	if x != nil {
+		return x.Regions
+	}
+	return nil
+}
+
+type TeeTypesAndRegions struct {
+	state             protoimpl.MessageState `protogen:"open.v1"`
+	TeeTypeAndRegions []*TeeTypeAndRegions   `protobuf:"bytes,1,rep,name=tee_type_and_regions,json=teeTypeAndRegions,proto3" json:"tee_type_and_regions,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *TeeTypesAndRegions) Reset() {
+	*x = TeeTypesAndRegions{}
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TeeTypesAndRegions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TeeTypesAndRegions) ProtoMessage() {}
+
+func (x *TeeTypesAndRegions) ProtoReflect() protoreflect.Message {
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TeeTypesAndRegions.ProtoReflect.Descriptor instead.
+func (*TeeTypesAndRegions) Descriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *TeeTypesAndRegions) GetTeeTypeAndRegions() []*TeeTypeAndRegions {
+	if x != nil {
+		return x.TeeTypeAndRegions
+	}
+	return nil
+}
+
+type Tee struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Item:
+	//
+	//	*Tee_AnyRegions
+	//	*Tee_TeeTypesAndRegions
+	Item          isTee_Item `protobuf_oneof:"item"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Tee) Reset() {
+	*x = Tee{}
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Tee) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Tee) ProtoMessage() {}
+
+func (x *Tee) ProtoReflect() protoreflect.Message {
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Tee.ProtoReflect.Descriptor instead.
+func (*Tee) Descriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *Tee) GetItem() isTee_Item {
+	if x != nil {
+		return x.Item
+	}
+	return nil
+}
+
+func (x *Tee) GetAnyRegions() *Regions {
+	if x != nil {
+		if x, ok := x.Item.(*Tee_AnyRegions); ok {
+			return x.AnyRegions
+		}
+	}
+	return nil
+}
+
+func (x *Tee) GetTeeTypesAndRegions() *TeeTypesAndRegions {
+	if x != nil {
+		if x, ok := x.Item.(*Tee_TeeTypesAndRegions); ok {
+			return x.TeeTypesAndRegions
+		}
+	}
+	return nil
+}
+
+type isTee_Item interface {
+	isTee_Item()
+}
+
+type Tee_AnyRegions struct {
+	AnyRegions *Regions `protobuf:"bytes,1,opt,name=any_regions,json=anyRegions,proto3,oneof"`
+}
+
+type Tee_TeeTypesAndRegions struct {
+	TeeTypesAndRegions *TeeTypesAndRegions `protobuf:"bytes,2,opt,name=tee_types_and_regions,json=teeTypesAndRegions,proto3,oneof"`
+}
+
+func (*Tee_AnyRegions) isTee_Item() {}
+
+func (*Tee_TeeTypesAndRegions) isTee_Item() {}
+
+type Requirements struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Tee           *Tee                   `protobuf:"bytes,1,opt,name=tee,proto3" json:"tee,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Requirements) Reset() {
+	*x = Requirements{}
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Requirements) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Requirements) ProtoMessage() {}
+
+func (x *Requirements) ProtoReflect() protoreflect.Message {
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Requirements.ProtoReflect.Descriptor instead.
+func (*Requirements) Descriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *Requirements) GetTee() *Tee {
+	if x != nil {
+		return x.Tee
+	}
+	return nil
+}
+
 type AwaitCapabilitiesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Ids           []int32                `protobuf:"varint,1,rep,packed,name=ids,proto3" json:"ids,omitempty"`
@@ -863,7 +1240,7 @@ type AwaitCapabilitiesRequest struct {
 
 func (x *AwaitCapabilitiesRequest) Reset() {
 	*x = AwaitCapabilitiesRequest{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[11]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -875,7 +1252,7 @@ func (x *AwaitCapabilitiesRequest) String() string {
 func (*AwaitCapabilitiesRequest) ProtoMessage() {}
 
 func (x *AwaitCapabilitiesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[11]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -888,7 +1265,7 @@ func (x *AwaitCapabilitiesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AwaitCapabilitiesRequest.ProtoReflect.Descriptor instead.
 func (*AwaitCapabilitiesRequest) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{11}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *AwaitCapabilitiesRequest) GetIds() []int32 {
@@ -907,7 +1284,7 @@ type AwaitCapabilitiesResponse struct {
 
 func (x *AwaitCapabilitiesResponse) Reset() {
 	*x = AwaitCapabilitiesResponse{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[12]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -919,7 +1296,7 @@ func (x *AwaitCapabilitiesResponse) String() string {
 func (*AwaitCapabilitiesResponse) ProtoMessage() {}
 
 func (x *AwaitCapabilitiesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[12]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -932,7 +1309,7 @@ func (x *AwaitCapabilitiesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AwaitCapabilitiesResponse.ProtoReflect.Descriptor instead.
 func (*AwaitCapabilitiesResponse) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{12}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *AwaitCapabilitiesResponse) GetResponses() map[int32]*CapabilityResponse {
@@ -949,6 +1326,7 @@ type ExecuteRequest struct {
 	//
 	//	*ExecuteRequest_Subscribe
 	//	*ExecuteRequest_Trigger
+	//	*ExecuteRequest_PreHook
 	Request         isExecuteRequest_Request `protobuf_oneof:"request"`
 	MaxResponseSize uint64                   `protobuf:"varint,4,opt,name=max_response_size,json=maxResponseSize,proto3" json:"max_response_size,omitempty"`
 	unknownFields   protoimpl.UnknownFields
@@ -957,7 +1335,7 @@ type ExecuteRequest struct {
 
 func (x *ExecuteRequest) Reset() {
 	*x = ExecuteRequest{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[13]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -969,7 +1347,7 @@ func (x *ExecuteRequest) String() string {
 func (*ExecuteRequest) ProtoMessage() {}
 
 func (x *ExecuteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[13]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -982,7 +1360,7 @@ func (x *ExecuteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecuteRequest.ProtoReflect.Descriptor instead.
 func (*ExecuteRequest) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{13}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *ExecuteRequest) GetConfig() []byte {
@@ -1017,6 +1395,15 @@ func (x *ExecuteRequest) GetTrigger() *Trigger {
 	return nil
 }
 
+func (x *ExecuteRequest) GetPreHook() *Trigger {
+	if x != nil {
+		if x, ok := x.Request.(*ExecuteRequest_PreHook); ok {
+			return x.PreHook
+		}
+	}
+	return nil
+}
+
 func (x *ExecuteRequest) GetMaxResponseSize() uint64 {
 	if x != nil {
 		return x.MaxResponseSize
@@ -1036,9 +1423,15 @@ type ExecuteRequest_Trigger struct {
 	Trigger *Trigger `protobuf:"bytes,3,opt,name=trigger,proto3,oneof"`
 }
 
+type ExecuteRequest_PreHook struct {
+	PreHook *Trigger `protobuf:"bytes,5,opt,name=pre_hook,json=preHook,proto3,oneof"`
+}
+
 func (*ExecuteRequest_Subscribe) isExecuteRequest_Request() {}
 
 func (*ExecuteRequest_Trigger) isExecuteRequest_Request() {}
+
+func (*ExecuteRequest_PreHook) isExecuteRequest_Request() {}
 
 type ExecutionResult struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -1047,6 +1440,7 @@ type ExecutionResult struct {
 	//	*ExecutionResult_Value
 	//	*ExecutionResult_Error
 	//	*ExecutionResult_TriggerSubscriptions
+	//	*ExecutionResult_Restrictions
 	Result        isExecutionResult_Result `protobuf_oneof:"result"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -1054,7 +1448,7 @@ type ExecutionResult struct {
 
 func (x *ExecutionResult) Reset() {
 	*x = ExecutionResult{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[14]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1066,7 +1460,7 @@ func (x *ExecutionResult) String() string {
 func (*ExecutionResult) ProtoMessage() {}
 
 func (x *ExecutionResult) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[14]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1079,7 +1473,7 @@ func (x *ExecutionResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ExecutionResult.ProtoReflect.Descriptor instead.
 func (*ExecutionResult) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{14}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *ExecutionResult) GetResult() isExecutionResult_Result {
@@ -1116,6 +1510,15 @@ func (x *ExecutionResult) GetTriggerSubscriptions() *TriggerSubscriptionRequest 
 	return nil
 }
 
+func (x *ExecutionResult) GetRestrictions() *Restrictions {
+	if x != nil {
+		if x, ok := x.Result.(*ExecutionResult_Restrictions); ok {
+			return x.Restrictions
+		}
+	}
+	return nil
+}
+
 type isExecutionResult_Result interface {
 	isExecutionResult_Result()
 }
@@ -1132,11 +1535,17 @@ type ExecutionResult_TriggerSubscriptions struct {
 	TriggerSubscriptions *TriggerSubscriptionRequest `protobuf:"bytes,3,opt,name=trigger_subscriptions,json=triggerSubscriptions,proto3,oneof"`
 }
 
+type ExecutionResult_Restrictions struct {
+	Restrictions *Restrictions `protobuf:"bytes,4,opt,name=restrictions,proto3,oneof"`
+}
+
 func (*ExecutionResult_Value) isExecutionResult_Result() {}
 
 func (*ExecutionResult_Error) isExecutionResult_Result() {}
 
 func (*ExecutionResult_TriggerSubscriptions) isExecutionResult_Result() {}
+
+func (*ExecutionResult_Restrictions) isExecutionResult_Result() {}
 
 type GetSecretsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -1148,7 +1557,7 @@ type GetSecretsRequest struct {
 
 func (x *GetSecretsRequest) Reset() {
 	*x = GetSecretsRequest{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[15]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1160,7 +1569,7 @@ func (x *GetSecretsRequest) String() string {
 func (*GetSecretsRequest) ProtoMessage() {}
 
 func (x *GetSecretsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[15]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1173,7 +1582,7 @@ func (x *GetSecretsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetSecretsRequest.ProtoReflect.Descriptor instead.
 func (*GetSecretsRequest) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{15}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *GetSecretsRequest) GetRequests() []*SecretRequest {
@@ -1199,7 +1608,7 @@ type AwaitSecretsRequest struct {
 
 func (x *AwaitSecretsRequest) Reset() {
 	*x = AwaitSecretsRequest{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[16]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1211,7 +1620,7 @@ func (x *AwaitSecretsRequest) String() string {
 func (*AwaitSecretsRequest) ProtoMessage() {}
 
 func (x *AwaitSecretsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[16]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1224,7 +1633,7 @@ func (x *AwaitSecretsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AwaitSecretsRequest.ProtoReflect.Descriptor instead.
 func (*AwaitSecretsRequest) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{16}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *AwaitSecretsRequest) GetIds() []int32 {
@@ -1243,7 +1652,7 @@ type AwaitSecretsResponse struct {
 
 func (x *AwaitSecretsResponse) Reset() {
 	*x = AwaitSecretsResponse{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[17]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1255,7 +1664,7 @@ func (x *AwaitSecretsResponse) String() string {
 func (*AwaitSecretsResponse) ProtoMessage() {}
 
 func (x *AwaitSecretsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[17]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1268,7 +1677,7 @@ func (x *AwaitSecretsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AwaitSecretsResponse.ProtoReflect.Descriptor instead.
 func (*AwaitSecretsResponse) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{17}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *AwaitSecretsResponse) GetResponses() map[int32]*SecretResponses {
@@ -1288,7 +1697,7 @@ type SecretRequest struct {
 
 func (x *SecretRequest) Reset() {
 	*x = SecretRequest{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[18]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1300,7 +1709,7 @@ func (x *SecretRequest) String() string {
 func (*SecretRequest) ProtoMessage() {}
 
 func (x *SecretRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[18]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1313,7 +1722,7 @@ func (x *SecretRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SecretRequest.ProtoReflect.Descriptor instead.
 func (*SecretRequest) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{18}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *SecretRequest) GetId() string {
@@ -1342,7 +1751,7 @@ type Secret struct {
 
 func (x *Secret) Reset() {
 	*x = Secret{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[19]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1354,7 +1763,7 @@ func (x *Secret) String() string {
 func (*Secret) ProtoMessage() {}
 
 func (x *Secret) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[19]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1367,7 +1776,7 @@ func (x *Secret) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Secret.ProtoReflect.Descriptor instead.
 func (*Secret) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{19}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *Secret) GetId() string {
@@ -1410,7 +1819,7 @@ type SecretError struct {
 
 func (x *SecretError) Reset() {
 	*x = SecretError{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[20]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1422,7 +1831,7 @@ func (x *SecretError) String() string {
 func (*SecretError) ProtoMessage() {}
 
 func (x *SecretError) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[20]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1435,7 +1844,7 @@ func (x *SecretError) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SecretError.ProtoReflect.Descriptor instead.
 func (*SecretError) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{20}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *SecretError) GetId() string {
@@ -1479,7 +1888,7 @@ type SecretResponse struct {
 
 func (x *SecretResponse) Reset() {
 	*x = SecretResponse{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[21]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1491,7 +1900,7 @@ func (x *SecretResponse) String() string {
 func (*SecretResponse) ProtoMessage() {}
 
 func (x *SecretResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[21]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1504,7 +1913,7 @@ func (x *SecretResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SecretResponse.ProtoReflect.Descriptor instead.
 func (*SecretResponse) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{21}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *SecretResponse) GetResponse() isSecretResponse_Response {
@@ -1557,7 +1966,7 @@ type SecretResponses struct {
 
 func (x *SecretResponses) Reset() {
 	*x = SecretResponses{}
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[22]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1569,7 +1978,7 @@ func (x *SecretResponses) String() string {
 func (*SecretResponses) ProtoMessage() {}
 
 func (x *SecretResponses) ProtoReflect() protoreflect.Message {
-	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[22]
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1582,12 +1991,444 @@ func (x *SecretResponses) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SecretResponses.ProtoReflect.Descriptor instead.
 func (*SecretResponses) Descriptor() ([]byte, []int) {
-	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{22}
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *SecretResponses) GetResponses() []*SecretResponse {
 	if x != nil {
 		return x.Responses
+	}
+	return nil
+}
+
+type MethodRestriction struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Method        string                 `protobuf:"bytes,2,opt,name=method,proto3" json:"method,omitempty"`
+	MaxCalls      uint32                 `protobuf:"varint,3,opt,name=max_calls,json=maxCalls,proto3" json:"max_calls,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MethodRestriction) Reset() {
+	*x = MethodRestriction{}
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MethodRestriction) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MethodRestriction) ProtoMessage() {}
+
+func (x *MethodRestriction) ProtoReflect() protoreflect.Message {
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MethodRestriction.ProtoReflect.Descriptor instead.
+func (*MethodRestriction) Descriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *MethodRestriction) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *MethodRestriction) GetMethod() string {
+	if x != nil {
+		return x.Method
+	}
+	return ""
+}
+
+func (x *MethodRestriction) GetMaxCalls() uint32 {
+	if x != nil {
+		return x.MaxCalls
+	}
+	return 0
+}
+
+type CapabilityRestriction struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Restriction:
+	//
+	//	*CapabilityRestriction_Method
+	Restriction   isCapabilityRestriction_Restriction `protobuf_oneof:"restriction"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CapabilityRestriction) Reset() {
+	*x = CapabilityRestriction{}
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CapabilityRestriction) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CapabilityRestriction) ProtoMessage() {}
+
+func (x *CapabilityRestriction) ProtoReflect() protoreflect.Message {
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CapabilityRestriction.ProtoReflect.Descriptor instead.
+func (*CapabilityRestriction) Descriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *CapabilityRestriction) GetRestriction() isCapabilityRestriction_Restriction {
+	if x != nil {
+		return x.Restriction
+	}
+	return nil
+}
+
+func (x *CapabilityRestriction) GetMethod() *MethodRestriction {
+	if x != nil {
+		if x, ok := x.Restriction.(*CapabilityRestriction_Method); ok {
+			return x.Method
+		}
+	}
+	return nil
+}
+
+type isCapabilityRestriction_Restriction interface {
+	isCapabilityRestriction_Restriction()
+}
+
+type CapabilityRestriction_Method struct {
+	Method *MethodRestriction `protobuf:"bytes,1,opt,name=method,proto3,oneof"`
+}
+
+func (*CapabilityRestriction_Method) isCapabilityRestriction_Restriction() {}
+
+type CapabilityRestrictions struct {
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	Restrictions  []*CapabilityRestriction  `protobuf:"bytes,1,rep,name=restrictions,proto3" json:"restrictions,omitempty"`
+	MaxTotalCalls uint32                    `protobuf:"varint,2,opt,name=max_total_calls,json=maxTotalCalls,proto3" json:"max_total_calls,omitempty"`
+	Type          CapabilityRestrictionType `protobuf:"varint,3,opt,name=type,proto3,enum=sdk.v1alpha.CapabilityRestrictionType" json:"type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CapabilityRestrictions) Reset() {
+	*x = CapabilityRestrictions{}
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CapabilityRestrictions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CapabilityRestrictions) ProtoMessage() {}
+
+func (x *CapabilityRestrictions) ProtoReflect() protoreflect.Message {
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CapabilityRestrictions.ProtoReflect.Descriptor instead.
+func (*CapabilityRestrictions) Descriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *CapabilityRestrictions) GetRestrictions() []*CapabilityRestriction {
+	if x != nil {
+		return x.Restrictions
+	}
+	return nil
+}
+
+func (x *CapabilityRestrictions) GetMaxTotalCalls() uint32 {
+	if x != nil {
+		return x.MaxTotalCalls
+	}
+	return 0
+}
+
+func (x *CapabilityRestrictions) GetType() CapabilityRestrictionType {
+	if x != nil {
+		return x.Type
+	}
+	return CapabilityRestrictionType_CAPABILITY_RESTRICTION_TYPE_CLOSED
+}
+
+type SecretPrefixRestriction struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Prefix        string                 `protobuf:"bytes,1,opt,name=prefix,proto3" json:"prefix,omitempty"`
+	Namespace     string                 `protobuf:"bytes,2,opt,name=namespace,proto3" json:"namespace,omitempty"`
+	MaxSecrets    uint32                 `protobuf:"varint,3,opt,name=max_secrets,json=maxSecrets,proto3" json:"max_secrets,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SecretPrefixRestriction) Reset() {
+	*x = SecretPrefixRestriction{}
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[31]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SecretPrefixRestriction) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SecretPrefixRestriction) ProtoMessage() {}
+
+func (x *SecretPrefixRestriction) ProtoReflect() protoreflect.Message {
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[31]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SecretPrefixRestriction.ProtoReflect.Descriptor instead.
+func (*SecretPrefixRestriction) Descriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{31}
+}
+
+func (x *SecretPrefixRestriction) GetPrefix() string {
+	if x != nil {
+		return x.Prefix
+	}
+	return ""
+}
+
+func (x *SecretPrefixRestriction) GetNamespace() string {
+	if x != nil {
+		return x.Namespace
+	}
+	return ""
+}
+
+func (x *SecretPrefixRestriction) GetMaxSecrets() uint32 {
+	if x != nil {
+		return x.MaxSecrets
+	}
+	return 0
+}
+
+type SecretRestriction struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Restriction:
+	//
+	//	*SecretRestriction_ExactSecret
+	//	*SecretRestriction_PrefixedSecret
+	Restriction   isSecretRestriction_Restriction `protobuf_oneof:"restriction"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SecretRestriction) Reset() {
+	*x = SecretRestriction{}
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SecretRestriction) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SecretRestriction) ProtoMessage() {}
+
+func (x *SecretRestriction) ProtoReflect() protoreflect.Message {
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SecretRestriction.ProtoReflect.Descriptor instead.
+func (*SecretRestriction) Descriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *SecretRestriction) GetRestriction() isSecretRestriction_Restriction {
+	if x != nil {
+		return x.Restriction
+	}
+	return nil
+}
+
+func (x *SecretRestriction) GetExactSecret() *Secret {
+	if x != nil {
+		if x, ok := x.Restriction.(*SecretRestriction_ExactSecret); ok {
+			return x.ExactSecret
+		}
+	}
+	return nil
+}
+
+func (x *SecretRestriction) GetPrefixedSecret() *SecretPrefixRestriction {
+	if x != nil {
+		if x, ok := x.Restriction.(*SecretRestriction_PrefixedSecret); ok {
+			return x.PrefixedSecret
+		}
+	}
+	return nil
+}
+
+type isSecretRestriction_Restriction interface {
+	isSecretRestriction_Restriction()
+}
+
+type SecretRestriction_ExactSecret struct {
+	ExactSecret *Secret `protobuf:"bytes,1,opt,name=exact_secret,json=exactSecret,proto3,oneof"`
+}
+
+type SecretRestriction_PrefixedSecret struct {
+	PrefixedSecret *SecretPrefixRestriction `protobuf:"bytes,2,opt,name=prefixed_secret,json=prefixedSecret,proto3,oneof"`
+}
+
+func (*SecretRestriction_ExactSecret) isSecretRestriction_Restriction() {}
+
+func (*SecretRestriction_PrefixedSecret) isSecretRestriction_Restriction() {}
+
+type SecretsRestritions struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Restrictions  []*SecretRestriction   `protobuf:"bytes,1,rep,name=restrictions,proto3" json:"restrictions,omitempty"`
+	MaxSecrets    uint32                 `protobuf:"varint,2,opt,name=max_secrets,json=maxSecrets,proto3" json:"max_secrets,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SecretsRestritions) Reset() {
+	*x = SecretsRestritions{}
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SecretsRestritions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SecretsRestritions) ProtoMessage() {}
+
+func (x *SecretsRestritions) ProtoReflect() protoreflect.Message {
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SecretsRestritions.ProtoReflect.Descriptor instead.
+func (*SecretsRestritions) Descriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *SecretsRestritions) GetRestrictions() []*SecretRestriction {
+	if x != nil {
+		return x.Restrictions
+	}
+	return nil
+}
+
+func (x *SecretsRestritions) GetMaxSecrets() uint32 {
+	if x != nil {
+		return x.MaxSecrets
+	}
+	return 0
+}
+
+type Restrictions struct {
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Secrets       *SecretsRestritions     `protobuf:"bytes,1,opt,name=secrets,proto3" json:"secrets,omitempty"`
+	Capabilities  *CapabilityRestrictions `protobuf:"bytes,2,opt,name=capabilities,proto3" json:"capabilities,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Restrictions) Reset() {
+	*x = Restrictions{}
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Restrictions) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Restrictions) ProtoMessage() {}
+
+func (x *Restrictions) ProtoReflect() protoreflect.Message {
+	mi := &file_sdk_v1alpha_sdk_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Restrictions.ProtoReflect.Descriptor instead.
+func (*Restrictions) Descriptor() ([]byte, []int) {
+	return file_sdk_v1alpha_sdk_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *Restrictions) GetSecrets() *SecretsRestritions {
+	if x != nil {
+		return x.Secrets
+	}
+	return nil
+}
+
+func (x *Restrictions) GetCapabilities() *CapabilityRestrictions {
+	if x != nil {
+		return x.Capabilities
 	}
 	return nil
 }
@@ -1639,33 +2480,51 @@ const file_sdk_v1alpha_sdk_proto_rawDesc = "" +
 	"\apayload\x18\x01 \x01(\v2\x14.google.protobuf.AnyH\x00R\apayload\x12\x16\n" +
 	"\x05error\x18\x02 \x01(\tH\x00R\x05errorB\n" +
 	"\n" +
-	"\bresponse\"m\n" +
+	"\bresponse\"\xc7\x01\n" +
 	"\x13TriggerSubscription\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12.\n" +
 	"\apayload\x18\x02 \x01(\v2\x14.google.protobuf.AnyR\apayload\x12\x16\n" +
-	"\x06method\x18\x03 \x01(\tR\x06method\"d\n" +
+	"\x06method\x18\x03 \x01(\tR\x06method\x12=\n" +
+	"\frequirements\x18\x04 \x01(\v2\x19.sdk.v1alpha.RequirementsR\frequirements\x12\x19\n" +
+	"\bpre_hook\x18\x05 \x01(\bR\apreHook\"W\n" +
+	"\x11TeeTypeAndRegions\x12(\n" +
+	"\x04type\x18\x01 \x01(\x0e2\x14.sdk.v1alpha.TeeTypeR\x04type\x12\x18\n" +
+	"\aregions\x18\x03 \x03(\tR\aregions\"d\n" +
 	"\x1aTriggerSubscriptionRequest\x12F\n" +
 	"\rsubscriptions\x18\x01 \x03(\v2 .sdk.v1alpha.TriggerSubscriptionR\rsubscriptions\"I\n" +
 	"\aTrigger\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\x04R\x02id\x12.\n" +
-	"\apayload\x18\x02 \x01(\v2\x14.google.protobuf.AnyR\apayload\",\n" +
+	"\apayload\x18\x02 \x01(\v2\x14.google.protobuf.AnyR\apayload\"#\n" +
+	"\aRegions\x12\x18\n" +
+	"\aregions\x18\x01 \x03(\tR\aregions\"e\n" +
+	"\x12TeeTypesAndRegions\x12O\n" +
+	"\x14tee_type_and_regions\x18\x01 \x03(\v2\x1e.sdk.v1alpha.TeeTypeAndRegionsR\x11teeTypeAndRegions\"\x9c\x01\n" +
+	"\x03Tee\x127\n" +
+	"\vany_regions\x18\x01 \x01(\v2\x14.sdk.v1alpha.RegionsH\x00R\n" +
+	"anyRegions\x12T\n" +
+	"\x15tee_types_and_regions\x18\x02 \x01(\v2\x1f.sdk.v1alpha.TeeTypesAndRegionsH\x00R\x12teeTypesAndRegionsB\x06\n" +
+	"\x04item\"2\n" +
+	"\fRequirements\x12\"\n" +
+	"\x03tee\x18\x01 \x01(\v2\x10.sdk.v1alpha.TeeR\x03tee\",\n" +
 	"\x18AwaitCapabilitiesRequest\x12\x10\n" +
 	"\x03ids\x18\x01 \x03(\x05R\x03ids\"\xcf\x01\n" +
 	"\x19AwaitCapabilitiesResponse\x12S\n" +
 	"\tresponses\x18\x01 \x03(\v25.sdk.v1alpha.AwaitCapabilitiesResponse.ResponsesEntryR\tresponses\x1a]\n" +
 	"\x0eResponsesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\x05R\x03key\x125\n" +
-	"\x05value\x18\x02 \x01(\v2\x1f.sdk.v1alpha.CapabilityResponseR\x05value:\x028\x01\"\xc9\x01\n" +
+	"\x05value\x18\x02 \x01(\v2\x1f.sdk.v1alpha.CapabilityResponseR\x05value:\x028\x01\"\xfc\x01\n" +
 	"\x0eExecuteRequest\x12\x16\n" +
 	"\x06config\x18\x01 \x01(\fR\x06config\x126\n" +
 	"\tsubscribe\x18\x02 \x01(\v2\x16.google.protobuf.EmptyH\x00R\tsubscribe\x120\n" +
-	"\atrigger\x18\x03 \x01(\v2\x14.sdk.v1alpha.TriggerH\x00R\atrigger\x12*\n" +
+	"\atrigger\x18\x03 \x01(\v2\x14.sdk.v1alpha.TriggerH\x00R\atrigger\x121\n" +
+	"\bpre_hook\x18\x05 \x01(\v2\x14.sdk.v1alpha.TriggerH\x00R\apreHook\x12*\n" +
 	"\x11max_response_size\x18\x04 \x01(\x04R\x0fmaxResponseSizeB\t\n" +
-	"\arequest\"\xbd\x01\n" +
+	"\arequest\"\xfe\x01\n" +
 	"\x0fExecutionResult\x12(\n" +
 	"\x05value\x18\x01 \x01(\v2\x10.values.v1.ValueH\x00R\x05value\x12\x16\n" +
 	"\x05error\x18\x02 \x01(\tH\x00R\x05error\x12^\n" +
-	"\x15trigger_subscriptions\x18\x03 \x01(\v2'.sdk.v1alpha.TriggerSubscriptionRequestH\x00R\x14triggerSubscriptionsB\b\n" +
+	"\x15trigger_subscriptions\x18\x03 \x01(\v2'.sdk.v1alpha.TriggerSubscriptionRequestH\x00R\x14triggerSubscriptions\x12?\n" +
+	"\frestrictions\x18\x04 \x01(\v2\x19.sdk.v1alpha.RestrictionsH\x00R\frestrictionsB\b\n" +
 	"\x06result\"l\n" +
 	"\x11GetSecretsRequest\x126\n" +
 	"\brequests\x18\x01 \x03(\v2\x1a.sdk.v1alpha.SecretRequestR\brequests\x12\x1f\n" +
@@ -1697,17 +2556,51 @@ const file_sdk_v1alpha_sdk_proto_rawDesc = "" +
 	"\n" +
 	"\bresponse\"L\n" +
 	"\x0fSecretResponses\x129\n" +
-	"\tresponses\x18\x01 \x03(\v2\x1b.sdk.v1alpha.SecretResponseR\tresponses*\xb8\x01\n" +
+	"\tresponses\x18\x01 \x03(\v2\x1b.sdk.v1alpha.SecretResponseR\tresponses\"X\n" +
+	"\x11MethodRestriction\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x16\n" +
+	"\x06method\x18\x02 \x01(\tR\x06method\x12\x1b\n" +
+	"\tmax_calls\x18\x03 \x01(\rR\bmaxCalls\"`\n" +
+	"\x15CapabilityRestriction\x128\n" +
+	"\x06method\x18\x01 \x01(\v2\x1e.sdk.v1alpha.MethodRestrictionH\x00R\x06methodB\r\n" +
+	"\vrestriction\"\xc4\x01\n" +
+	"\x16CapabilityRestrictions\x12F\n" +
+	"\frestrictions\x18\x01 \x03(\v2\".sdk.v1alpha.CapabilityRestrictionR\frestrictions\x12&\n" +
+	"\x0fmax_total_calls\x18\x02 \x01(\rR\rmaxTotalCalls\x12:\n" +
+	"\x04type\x18\x03 \x01(\x0e2&.sdk.v1alpha.CapabilityRestrictionTypeR\x04type\"p\n" +
+	"\x17SecretPrefixRestriction\x12\x16\n" +
+	"\x06prefix\x18\x01 \x01(\tR\x06prefix\x12\x1c\n" +
+	"\tnamespace\x18\x02 \x01(\tR\tnamespace\x12\x1f\n" +
+	"\vmax_secrets\x18\x03 \x01(\rR\n" +
+	"maxSecrets\"\xad\x01\n" +
+	"\x11SecretRestriction\x128\n" +
+	"\fexact_secret\x18\x01 \x01(\v2\x13.sdk.v1alpha.SecretH\x00R\vexactSecret\x12O\n" +
+	"\x0fprefixed_secret\x18\x02 \x01(\v2$.sdk.v1alpha.SecretPrefixRestrictionH\x00R\x0eprefixedSecretB\r\n" +
+	"\vrestriction\"y\n" +
+	"\x12SecretsRestritions\x12B\n" +
+	"\frestrictions\x18\x01 \x03(\v2\x1e.sdk.v1alpha.SecretRestrictionR\frestrictions\x12\x1f\n" +
+	"\vmax_secrets\x18\x02 \x01(\rR\n" +
+	"maxSecrets\"\x92\x01\n" +
+	"\fRestrictions\x129\n" +
+	"\asecrets\x18\x01 \x01(\v2\x1f.sdk.v1alpha.SecretsRestritionsR\asecrets\x12G\n" +
+	"\fcapabilities\x18\x02 \x01(\v2#.sdk.v1alpha.CapabilityRestrictionsR\fcapabilities*\xdd\x01\n" +
 	"\x0fAggregationType\x12 \n" +
 	"\x1cAGGREGATION_TYPE_UNSPECIFIED\x10\x00\x12\x1b\n" +
 	"\x17AGGREGATION_TYPE_MEDIAN\x10\x01\x12\x1e\n" +
 	"\x1aAGGREGATION_TYPE_IDENTICAL\x10\x02\x12\"\n" +
 	"\x1eAGGREGATION_TYPE_COMMON_PREFIX\x10\x03\x12\"\n" +
-	"\x1eAGGREGATION_TYPE_COMMON_SUFFIX\x10\x04*9\n" +
+	"\x1eAGGREGATION_TYPE_COMMON_SUFFIX\x10\x04\x12#\n" +
+	"\x1fAGGREGATION_TYPE_FREQUENCY_LIST\x10\x05*9\n" +
 	"\x04Mode\x12\x14\n" +
 	"\x10MODE_UNSPECIFIED\x10\x00\x12\f\n" +
 	"\bMODE_DON\x10\x01\x12\r\n" +
-	"\tMODE_NODE\x10\x02b\x06proto3"
+	"\tMODE_NODE\x10\x02*;\n" +
+	"\aTeeType\x12\x18\n" +
+	"\x14TEE_TYPE_UNSPECIFIED\x10\x00\x12\x16\n" +
+	"\x12TEE_TYPE_AWS_NITRO\x10\x01*i\n" +
+	"\x19CapabilityRestrictionType\x12&\n" +
+	"\"CAPABILITY_RESTRICTION_TYPE_CLOSED\x10\x00\x12$\n" +
+	" CAPABILITY_RESTRICTION_TYPE_OPEN\x10\x01b\x06proto3"
 
 var (
 	file_sdk_v1alpha_sdk_proto_rawDescOnce sync.Once
@@ -1721,72 +2614,102 @@ func file_sdk_v1alpha_sdk_proto_rawDescGZIP() []byte {
 	return file_sdk_v1alpha_sdk_proto_rawDescData
 }
 
-var file_sdk_v1alpha_sdk_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_sdk_v1alpha_sdk_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
+var file_sdk_v1alpha_sdk_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_sdk_v1alpha_sdk_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
 var file_sdk_v1alpha_sdk_proto_goTypes = []any{
 	(AggregationType)(0),               // 0: sdk.v1alpha.AggregationType
 	(Mode)(0),                          // 1: sdk.v1alpha.Mode
-	(*SimpleConsensusInputs)(nil),      // 2: sdk.v1alpha.SimpleConsensusInputs
-	(*FieldsMap)(nil),                  // 3: sdk.v1alpha.FieldsMap
-	(*ConsensusDescriptor)(nil),        // 4: sdk.v1alpha.ConsensusDescriptor
-	(*ReportRequest)(nil),              // 5: sdk.v1alpha.ReportRequest
-	(*ReportResponse)(nil),             // 6: sdk.v1alpha.ReportResponse
-	(*AttributedSignature)(nil),        // 7: sdk.v1alpha.AttributedSignature
-	(*CapabilityRequest)(nil),          // 8: sdk.v1alpha.CapabilityRequest
-	(*CapabilityResponse)(nil),         // 9: sdk.v1alpha.CapabilityResponse
-	(*TriggerSubscription)(nil),        // 10: sdk.v1alpha.TriggerSubscription
-	(*TriggerSubscriptionRequest)(nil), // 11: sdk.v1alpha.TriggerSubscriptionRequest
-	(*Trigger)(nil),                    // 12: sdk.v1alpha.Trigger
-	(*AwaitCapabilitiesRequest)(nil),   // 13: sdk.v1alpha.AwaitCapabilitiesRequest
-	(*AwaitCapabilitiesResponse)(nil),  // 14: sdk.v1alpha.AwaitCapabilitiesResponse
-	(*ExecuteRequest)(nil),             // 15: sdk.v1alpha.ExecuteRequest
-	(*ExecutionResult)(nil),            // 16: sdk.v1alpha.ExecutionResult
-	(*GetSecretsRequest)(nil),          // 17: sdk.v1alpha.GetSecretsRequest
-	(*AwaitSecretsRequest)(nil),        // 18: sdk.v1alpha.AwaitSecretsRequest
-	(*AwaitSecretsResponse)(nil),       // 19: sdk.v1alpha.AwaitSecretsResponse
-	(*SecretRequest)(nil),              // 20: sdk.v1alpha.SecretRequest
-	(*Secret)(nil),                     // 21: sdk.v1alpha.Secret
-	(*SecretError)(nil),                // 22: sdk.v1alpha.SecretError
-	(*SecretResponse)(nil),             // 23: sdk.v1alpha.SecretResponse
-	(*SecretResponses)(nil),            // 24: sdk.v1alpha.SecretResponses
-	nil,                                // 25: sdk.v1alpha.FieldsMap.FieldsEntry
-	nil,                                // 26: sdk.v1alpha.AwaitCapabilitiesResponse.ResponsesEntry
-	nil,                                // 27: sdk.v1alpha.AwaitSecretsResponse.ResponsesEntry
-	(*pb.Value)(nil),                   // 28: values.v1.Value
-	(*anypb.Any)(nil),                  // 29: google.protobuf.Any
-	(*emptypb.Empty)(nil),              // 30: google.protobuf.Empty
+	(TeeType)(0),                       // 2: sdk.v1alpha.TeeType
+	(CapabilityRestrictionType)(0),     // 3: sdk.v1alpha.CapabilityRestrictionType
+	(*SimpleConsensusInputs)(nil),      // 4: sdk.v1alpha.SimpleConsensusInputs
+	(*FieldsMap)(nil),                  // 5: sdk.v1alpha.FieldsMap
+	(*ConsensusDescriptor)(nil),        // 6: sdk.v1alpha.ConsensusDescriptor
+	(*ReportRequest)(nil),              // 7: sdk.v1alpha.ReportRequest
+	(*ReportResponse)(nil),             // 8: sdk.v1alpha.ReportResponse
+	(*AttributedSignature)(nil),        // 9: sdk.v1alpha.AttributedSignature
+	(*CapabilityRequest)(nil),          // 10: sdk.v1alpha.CapabilityRequest
+	(*CapabilityResponse)(nil),         // 11: sdk.v1alpha.CapabilityResponse
+	(*TriggerSubscription)(nil),        // 12: sdk.v1alpha.TriggerSubscription
+	(*TeeTypeAndRegions)(nil),          // 13: sdk.v1alpha.TeeTypeAndRegions
+	(*TriggerSubscriptionRequest)(nil), // 14: sdk.v1alpha.TriggerSubscriptionRequest
+	(*Trigger)(nil),                    // 15: sdk.v1alpha.Trigger
+	(*Regions)(nil),                    // 16: sdk.v1alpha.Regions
+	(*TeeTypesAndRegions)(nil),         // 17: sdk.v1alpha.TeeTypesAndRegions
+	(*Tee)(nil),                        // 18: sdk.v1alpha.Tee
+	(*Requirements)(nil),               // 19: sdk.v1alpha.Requirements
+	(*AwaitCapabilitiesRequest)(nil),   // 20: sdk.v1alpha.AwaitCapabilitiesRequest
+	(*AwaitCapabilitiesResponse)(nil),  // 21: sdk.v1alpha.AwaitCapabilitiesResponse
+	(*ExecuteRequest)(nil),             // 22: sdk.v1alpha.ExecuteRequest
+	(*ExecutionResult)(nil),            // 23: sdk.v1alpha.ExecutionResult
+	(*GetSecretsRequest)(nil),          // 24: sdk.v1alpha.GetSecretsRequest
+	(*AwaitSecretsRequest)(nil),        // 25: sdk.v1alpha.AwaitSecretsRequest
+	(*AwaitSecretsResponse)(nil),       // 26: sdk.v1alpha.AwaitSecretsResponse
+	(*SecretRequest)(nil),              // 27: sdk.v1alpha.SecretRequest
+	(*Secret)(nil),                     // 28: sdk.v1alpha.Secret
+	(*SecretError)(nil),                // 29: sdk.v1alpha.SecretError
+	(*SecretResponse)(nil),             // 30: sdk.v1alpha.SecretResponse
+	(*SecretResponses)(nil),            // 31: sdk.v1alpha.SecretResponses
+	(*MethodRestriction)(nil),          // 32: sdk.v1alpha.MethodRestriction
+	(*CapabilityRestriction)(nil),      // 33: sdk.v1alpha.CapabilityRestriction
+	(*CapabilityRestrictions)(nil),     // 34: sdk.v1alpha.CapabilityRestrictions
+	(*SecretPrefixRestriction)(nil),    // 35: sdk.v1alpha.SecretPrefixRestriction
+	(*SecretRestriction)(nil),          // 36: sdk.v1alpha.SecretRestriction
+	(*SecretsRestritions)(nil),         // 37: sdk.v1alpha.SecretsRestritions
+	(*Restrictions)(nil),               // 38: sdk.v1alpha.Restrictions
+	nil,                                // 39: sdk.v1alpha.FieldsMap.FieldsEntry
+	nil,                                // 40: sdk.v1alpha.AwaitCapabilitiesResponse.ResponsesEntry
+	nil,                                // 41: sdk.v1alpha.AwaitSecretsResponse.ResponsesEntry
+	(*pb.Value)(nil),                   // 42: values.v1.Value
+	(*anypb.Any)(nil),                  // 43: google.protobuf.Any
+	(*emptypb.Empty)(nil),              // 44: google.protobuf.Empty
 }
 var file_sdk_v1alpha_sdk_proto_depIdxs = []int32{
-	28, // 0: sdk.v1alpha.SimpleConsensusInputs.value:type_name -> values.v1.Value
-	4,  // 1: sdk.v1alpha.SimpleConsensusInputs.descriptors:type_name -> sdk.v1alpha.ConsensusDescriptor
-	28, // 2: sdk.v1alpha.SimpleConsensusInputs.default:type_name -> values.v1.Value
-	25, // 3: sdk.v1alpha.FieldsMap.fields:type_name -> sdk.v1alpha.FieldsMap.FieldsEntry
+	42, // 0: sdk.v1alpha.SimpleConsensusInputs.value:type_name -> values.v1.Value
+	6,  // 1: sdk.v1alpha.SimpleConsensusInputs.descriptors:type_name -> sdk.v1alpha.ConsensusDescriptor
+	42, // 2: sdk.v1alpha.SimpleConsensusInputs.default:type_name -> values.v1.Value
+	39, // 3: sdk.v1alpha.FieldsMap.fields:type_name -> sdk.v1alpha.FieldsMap.FieldsEntry
 	0,  // 4: sdk.v1alpha.ConsensusDescriptor.aggregation:type_name -> sdk.v1alpha.AggregationType
-	3,  // 5: sdk.v1alpha.ConsensusDescriptor.fields_map:type_name -> sdk.v1alpha.FieldsMap
-	7,  // 6: sdk.v1alpha.ReportResponse.sigs:type_name -> sdk.v1alpha.AttributedSignature
-	29, // 7: sdk.v1alpha.CapabilityRequest.payload:type_name -> google.protobuf.Any
-	29, // 8: sdk.v1alpha.CapabilityResponse.payload:type_name -> google.protobuf.Any
-	29, // 9: sdk.v1alpha.TriggerSubscription.payload:type_name -> google.protobuf.Any
-	10, // 10: sdk.v1alpha.TriggerSubscriptionRequest.subscriptions:type_name -> sdk.v1alpha.TriggerSubscription
-	29, // 11: sdk.v1alpha.Trigger.payload:type_name -> google.protobuf.Any
-	26, // 12: sdk.v1alpha.AwaitCapabilitiesResponse.responses:type_name -> sdk.v1alpha.AwaitCapabilitiesResponse.ResponsesEntry
-	30, // 13: sdk.v1alpha.ExecuteRequest.subscribe:type_name -> google.protobuf.Empty
-	12, // 14: sdk.v1alpha.ExecuteRequest.trigger:type_name -> sdk.v1alpha.Trigger
-	28, // 15: sdk.v1alpha.ExecutionResult.value:type_name -> values.v1.Value
-	11, // 16: sdk.v1alpha.ExecutionResult.trigger_subscriptions:type_name -> sdk.v1alpha.TriggerSubscriptionRequest
-	20, // 17: sdk.v1alpha.GetSecretsRequest.requests:type_name -> sdk.v1alpha.SecretRequest
-	27, // 18: sdk.v1alpha.AwaitSecretsResponse.responses:type_name -> sdk.v1alpha.AwaitSecretsResponse.ResponsesEntry
-	21, // 19: sdk.v1alpha.SecretResponse.secret:type_name -> sdk.v1alpha.Secret
-	22, // 20: sdk.v1alpha.SecretResponse.error:type_name -> sdk.v1alpha.SecretError
-	23, // 21: sdk.v1alpha.SecretResponses.responses:type_name -> sdk.v1alpha.SecretResponse
-	4,  // 22: sdk.v1alpha.FieldsMap.FieldsEntry.value:type_name -> sdk.v1alpha.ConsensusDescriptor
-	9,  // 23: sdk.v1alpha.AwaitCapabilitiesResponse.ResponsesEntry.value:type_name -> sdk.v1alpha.CapabilityResponse
-	24, // 24: sdk.v1alpha.AwaitSecretsResponse.ResponsesEntry.value:type_name -> sdk.v1alpha.SecretResponses
-	25, // [25:25] is the sub-list for method output_type
-	25, // [25:25] is the sub-list for method input_type
-	25, // [25:25] is the sub-list for extension type_name
-	25, // [25:25] is the sub-list for extension extendee
-	0,  // [0:25] is the sub-list for field type_name
+	5,  // 5: sdk.v1alpha.ConsensusDescriptor.fields_map:type_name -> sdk.v1alpha.FieldsMap
+	9,  // 6: sdk.v1alpha.ReportResponse.sigs:type_name -> sdk.v1alpha.AttributedSignature
+	43, // 7: sdk.v1alpha.CapabilityRequest.payload:type_name -> google.protobuf.Any
+	43, // 8: sdk.v1alpha.CapabilityResponse.payload:type_name -> google.protobuf.Any
+	43, // 9: sdk.v1alpha.TriggerSubscription.payload:type_name -> google.protobuf.Any
+	19, // 10: sdk.v1alpha.TriggerSubscription.requirements:type_name -> sdk.v1alpha.Requirements
+	2,  // 11: sdk.v1alpha.TeeTypeAndRegions.type:type_name -> sdk.v1alpha.TeeType
+	12, // 12: sdk.v1alpha.TriggerSubscriptionRequest.subscriptions:type_name -> sdk.v1alpha.TriggerSubscription
+	43, // 13: sdk.v1alpha.Trigger.payload:type_name -> google.protobuf.Any
+	13, // 14: sdk.v1alpha.TeeTypesAndRegions.tee_type_and_regions:type_name -> sdk.v1alpha.TeeTypeAndRegions
+	16, // 15: sdk.v1alpha.Tee.any_regions:type_name -> sdk.v1alpha.Regions
+	17, // 16: sdk.v1alpha.Tee.tee_types_and_regions:type_name -> sdk.v1alpha.TeeTypesAndRegions
+	18, // 17: sdk.v1alpha.Requirements.tee:type_name -> sdk.v1alpha.Tee
+	40, // 18: sdk.v1alpha.AwaitCapabilitiesResponse.responses:type_name -> sdk.v1alpha.AwaitCapabilitiesResponse.ResponsesEntry
+	44, // 19: sdk.v1alpha.ExecuteRequest.subscribe:type_name -> google.protobuf.Empty
+	15, // 20: sdk.v1alpha.ExecuteRequest.trigger:type_name -> sdk.v1alpha.Trigger
+	15, // 21: sdk.v1alpha.ExecuteRequest.pre_hook:type_name -> sdk.v1alpha.Trigger
+	42, // 22: sdk.v1alpha.ExecutionResult.value:type_name -> values.v1.Value
+	14, // 23: sdk.v1alpha.ExecutionResult.trigger_subscriptions:type_name -> sdk.v1alpha.TriggerSubscriptionRequest
+	38, // 24: sdk.v1alpha.ExecutionResult.restrictions:type_name -> sdk.v1alpha.Restrictions
+	27, // 25: sdk.v1alpha.GetSecretsRequest.requests:type_name -> sdk.v1alpha.SecretRequest
+	41, // 26: sdk.v1alpha.AwaitSecretsResponse.responses:type_name -> sdk.v1alpha.AwaitSecretsResponse.ResponsesEntry
+	28, // 27: sdk.v1alpha.SecretResponse.secret:type_name -> sdk.v1alpha.Secret
+	29, // 28: sdk.v1alpha.SecretResponse.error:type_name -> sdk.v1alpha.SecretError
+	30, // 29: sdk.v1alpha.SecretResponses.responses:type_name -> sdk.v1alpha.SecretResponse
+	32, // 30: sdk.v1alpha.CapabilityRestriction.method:type_name -> sdk.v1alpha.MethodRestriction
+	33, // 31: sdk.v1alpha.CapabilityRestrictions.restrictions:type_name -> sdk.v1alpha.CapabilityRestriction
+	3,  // 32: sdk.v1alpha.CapabilityRestrictions.type:type_name -> sdk.v1alpha.CapabilityRestrictionType
+	28, // 33: sdk.v1alpha.SecretRestriction.exact_secret:type_name -> sdk.v1alpha.Secret
+	35, // 34: sdk.v1alpha.SecretRestriction.prefixed_secret:type_name -> sdk.v1alpha.SecretPrefixRestriction
+	36, // 35: sdk.v1alpha.SecretsRestritions.restrictions:type_name -> sdk.v1alpha.SecretRestriction
+	37, // 36: sdk.v1alpha.Restrictions.secrets:type_name -> sdk.v1alpha.SecretsRestritions
+	34, // 37: sdk.v1alpha.Restrictions.capabilities:type_name -> sdk.v1alpha.CapabilityRestrictions
+	6,  // 38: sdk.v1alpha.FieldsMap.FieldsEntry.value:type_name -> sdk.v1alpha.ConsensusDescriptor
+	11, // 39: sdk.v1alpha.AwaitCapabilitiesResponse.ResponsesEntry.value:type_name -> sdk.v1alpha.CapabilityResponse
+	31, // 40: sdk.v1alpha.AwaitSecretsResponse.ResponsesEntry.value:type_name -> sdk.v1alpha.SecretResponses
+	41, // [41:41] is the sub-list for method output_type
+	41, // [41:41] is the sub-list for method input_type
+	41, // [41:41] is the sub-list for extension type_name
+	41, // [41:41] is the sub-list for extension extendee
+	0,  // [0:41] is the sub-list for field type_name
 }
 
 func init() { file_sdk_v1alpha_sdk_proto_init() }
@@ -1806,26 +2729,39 @@ func file_sdk_v1alpha_sdk_proto_init() {
 		(*CapabilityResponse_Payload)(nil),
 		(*CapabilityResponse_Error)(nil),
 	}
-	file_sdk_v1alpha_sdk_proto_msgTypes[13].OneofWrappers = []any{
+	file_sdk_v1alpha_sdk_proto_msgTypes[14].OneofWrappers = []any{
+		(*Tee_AnyRegions)(nil),
+		(*Tee_TeeTypesAndRegions)(nil),
+	}
+	file_sdk_v1alpha_sdk_proto_msgTypes[18].OneofWrappers = []any{
 		(*ExecuteRequest_Subscribe)(nil),
 		(*ExecuteRequest_Trigger)(nil),
+		(*ExecuteRequest_PreHook)(nil),
 	}
-	file_sdk_v1alpha_sdk_proto_msgTypes[14].OneofWrappers = []any{
+	file_sdk_v1alpha_sdk_proto_msgTypes[19].OneofWrappers = []any{
 		(*ExecutionResult_Value)(nil),
 		(*ExecutionResult_Error)(nil),
 		(*ExecutionResult_TriggerSubscriptions)(nil),
+		(*ExecutionResult_Restrictions)(nil),
 	}
-	file_sdk_v1alpha_sdk_proto_msgTypes[21].OneofWrappers = []any{
+	file_sdk_v1alpha_sdk_proto_msgTypes[26].OneofWrappers = []any{
 		(*SecretResponse_Secret)(nil),
 		(*SecretResponse_Error)(nil),
+	}
+	file_sdk_v1alpha_sdk_proto_msgTypes[29].OneofWrappers = []any{
+		(*CapabilityRestriction_Method)(nil),
+	}
+	file_sdk_v1alpha_sdk_proto_msgTypes[32].OneofWrappers = []any{
+		(*SecretRestriction_ExactSecret)(nil),
+		(*SecretRestriction_PrefixedSecret)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_sdk_v1alpha_sdk_proto_rawDesc), len(file_sdk_v1alpha_sdk_proto_rawDesc)),
-			NumEnums:      2,
-			NumMessages:   26,
+			NumEnums:      4,
+			NumMessages:   38,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

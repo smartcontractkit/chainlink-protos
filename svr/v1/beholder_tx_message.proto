@@ -13,4 +13,5 @@ message TxMessage {
   string chain_id = 6;
   string feed_address = 7;
   optional string dual_broadcast_params = 8;
+  optional uint64 gas_limit = 9;
 }

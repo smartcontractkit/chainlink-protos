@@ -1,5 +1,21 @@
 # @chainlink/orchestrator
 
+## 0.11.0
+
+### Minor Changes
+
+- [#416](https://github.com/smartcontractkit/chainlink-protos/pull/416) [`c7c2c23`](https://github.com/smartcontractkit/chainlink-protos/commit/c7c2c2326bc2435dcf202ff73837086fe5f2acae) Thanks [@makramkd](https://github.com/makramkd)! - Add `CHAIN_TYPE_STELLAR` (8) and `CHAIN_TYPE_CANTON` (9) to the `ChainType` enum in
+  `feedsmanager.proto` and `node.proto`. These chain families are needed for standalone
+  committee verifier nodes to publish their onchain signing keys to JD via `UpdateNode`,
+  unblocking deployment tooling that reads signing addresses back via
+  `ListNodeChainConfigs`.
+
+## 0.10.1
+
+### Patch Changes
+
+- [#380](https://github.com/smartcontractkit/chainlink-protos/pull/380) [`84746b7`](https://github.com/smartcontractkit/chainlink-protos/commit/84746b70eeeb70dd2739bac20417fc0764b24849) Thanks [@stackman27](https://github.com/stackman27)! - feat(feedsmanager): add OCR2 onchain signing pub key field
+
 ## 0.10.0
 
 ### Minor Changes

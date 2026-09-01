@@ -8,6 +8,7 @@
 /job-distributor/ @smartcontractkit/op-tooling
 /orchestrator/ @smartcontractkit/op-tooling
 /op-catalog/ @smartcontractkit/cld-team @smartcontractkit/op-tooling
+/op-domain/ @smartcontractkit/cld-team @smartcontractkit/op-tooling
 
 # CRE
 /cre/ @smartcontractkit/keystone @smartcontractkit/op-tooling
@@ -22,6 +23,7 @@
 
 #CRE Privacy
 /cre/capabilities/networking/confidentialhttp @smartcontractkit/privacy @smartcontractkit/op-tooling
+/cre/capabilities/compute/confidentialworkflow @smartcontractkit/privacy @smartcontractkit/op-tooling
 
 # Data
 /data-feeds/ @smartcontractkit/data-feeds-engineers @smartcontractkit/op-tooling
@@ -29,6 +31,10 @@
 
 # Ring
 /ring/ @smartcontractkit/foundations @smartcontractkit/op-tooling
+
+# Metering
+/metering/ @smartcontractkit/foundations @smartcontractkit/cre-business @smartcontractkit/op-tooling
+/.github/workflows/register-metering-schemas.yaml @smartcontractkit/foundations @smartcontractkit/cre-business @smartcontractkit/op-tooling
 
 # Node Platform
 /node-platform/ @smartcontractkit/infra-nodes @smartcontractkit/op-tooling @smartcontractkit/rane

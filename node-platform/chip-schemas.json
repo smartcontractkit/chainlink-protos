@@ -12,6 +12,10 @@
     {
       "entity": "common.v1.NodeJobInfo",
       "path": "common/v1/node_job_info.proto"
+    },
+    {
+      "entity": "common.v1.HealthInfo",
+      "path": "common/v1/health_info.proto"
     }
   ]
 }

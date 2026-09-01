@@ -217,6 +217,10 @@ service Client {
               value: 2995292832068775165
             },
             {
+              key: "dtcc-mainnet-appchain"
+              value: 13879014182901017172
+            },
+            {
               key: "dtcc-testnet-andesite"
               value: 15513093881969820114
             },
@@ -341,6 +345,14 @@ service Client {
               value: 18241817625092392675
             },
             {
+              key: "monad-mainnet"
+              value: 8481857512324358265
+            },
+            {
+              key: "monad-testnet"
+              value: 2183018362218727504
+            },
+            {
               key: "pharos-atlantic-testnet"
               value: 16098325658947243212
             },
@@ -369,8 +381,20 @@ service Client {
               value: 6915682381028791124
             },
             {
+              key: "private-testnet-pumice"
+              value: 1564738277398880633
+            },
+            {
+              key: "private-testnet-quartzite"
+              value: 4175996748267305081
+            },
+            {
               key: "private-testnet-rhyolite"
               value: 604447335222770945
+            },
+            {
+              key: "robinhood-testnet"
+              value: 2032988798112970440
             },
             {
               key: "sonic-mainnet"
@@ -381,8 +405,20 @@ service Client {
               value: 1763698235108410440
             },
             {
+              key: "stable-testnet"
+              value: 11793402411494852765
+            },
+            {
               key: "tac-testnet"
               value: 9488606126177218005
+            },
+            {
+              key: "tempo-testnet-moderato"
+              value: 8457817439310187923
+            },
+            {
+              key: "t-rex-testnet"
+              value: 17611928792452358269
             },
             {
               key: "xlayer-testnet"
@@ -492,6 +528,10 @@ service Client {
             {
               key: "solana-devnet"
               value: 16423721717087811551
+            },
+            {
+              key: "solana-mainnet"
+              value: 124615329519749607
             }
           ]
         }
@@ -507,6 +547,8 @@ const computeConfidentialworkflowV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.compute.confidentialworkflow.v1alpha;
 
+import "google/protobuf/empty.proto";
+import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
 message SecretIdentifier {
@@ -516,11 +558,17 @@ message SecretIdentifier {
 }
 
 // WorkflowExecution is the public data sent to the enclave.
-// Becomes ComputeRequest.PublicData after proto serialization.
+// Becomes ComputeRequest.PublicData after proto serialization, which is
+// covered by ComputeRequest.Hash() for F+1 quorum matching at the enclave.
 message WorkflowExecution {
   // workflow_id identifies the workflow to execute.
   string workflow_id = 1;
-  // binary_url is the URL from which the enclave fetches the compiled WASM binary.
+  // binary_url is the URL from which the enclave fetches the compiled WASM
+  // binary. It lives inside WorkflowExecution (PublicData), covered by
+  // ComputeRequest.Hash() for F+1 quorum, so every node agrees on the same
+  // canonical locator. Authentication to the storage service is handled out of
+  // band by the fetch sidecar, so this is a stable, node-agnostic locator
+  // rather than a per-node pre-signed URL.
   string binary_url = 2;
   // binary_hash is the expected SHA-256 hash of the WASM binary, for integrity verification.
   bytes binary_hash = 3;
@@ -533,6 +581,22 @@ message WorkflowExecution {
   // execution_id is the unique execution identifier (64 hex chars, 32 bytes).
   // Used by the enclave for runtime secret fetching from VaultDON.
   string execution_id = 6;
+  // org_id is the organization identifier for the workflow owner.
+  // Used by the enclave when fetching secrets from VaultDON with org-based ownership.
+  string org_id = 7;
+  // requirements describes what is needed to run this workflow (e.g. TEE type
+  // and regions).
+  sdk.v1alpha.Requirements requirements = 8;
+  // sdk_execute_request is the structured form of execute_request. It carries
+  // the same sdk.v1alpha.ExecuteRequest as the serialized execute_request bytes
+  // field; the two are independent on the wire (setting one does not populate
+  // the other). Consumers that want the typed message read this; legacy
+  // consumers continue to unmarshal execute_request.
+  sdk.v1alpha.ExecuteRequest sdk_execute_request = 9;
+
+  // restrictions on the capabilities and the secrets.bool
+  // This is sent to avoid overhead when a TEE is not compromised, the DON will verify the restrictions on its end as well.
+  sdk.v1alpha.Restrictions restrictions = 10;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
@@ -540,12 +604,25 @@ message WorkflowExecution {
 message ConfidentialWorkflowRequest {
   repeated SecretIdentifier vault_don_secrets = 1;
   WorkflowExecution execution = 2;
+  // Deprecated: the per-node pre-signed URL approach is superseded. binary_url
+  // now travels inside WorkflowExecution (PublicData) as a canonical locator,
+  // with authentication to the storage service handled out of band by the fetch
+  // sidecar. Retained for back-compat; no longer populated.
+  string binary_url = 3 [deprecated = true];
 }
 
 // ConfidentialWorkflowResponse is the output from the confidential workflows capability.
 message ConfidentialWorkflowResponse {
   // execution_result is a serialized sdk.v1alpha.ExecutionResult proto.
   bytes execution_result = 1;
+  // sdk_execution_result is the structured form of execution_result. It carries
+  // the same sdk.v1alpha.ExecutionResult as the serialized execution_result
+  // bytes field; the two are independent on the wire.
+  sdk.v1alpha.ExecutionResult sdk_execution_result = 2;
+}
+
+message ProvidedTeesResponse {
+  repeated sdk.v1alpha.TeeTypeAndRegions tee = 1;
 }
 
 service Client {
@@ -555,6 +632,7 @@ service Client {
   };
 
   rpc Execute(ConfidentialWorkflowRequest) returns (ConfidentialWorkflowResponse);
+  rpc ProvidedTees(google.protobuf.Empty) returns (ProvidedTeesResponse);
 }
 `
 
@@ -826,6 +904,12 @@ message HeaderValues {
   repeated string values = 1;
 }
 
+// MtlsAuth represents the private-key/cert pair for mtls auth.
+message MtlsAuth {
+  bytes private_key = 1;
+  bytes certificate = 2;
+}
+
 message Request {
   string url = 1;
   string method = 2;
@@ -834,6 +918,7 @@ message Request {
   google.protobuf.Duration timeout = 5; // Request timeout duration
   CacheSettings cache_settings = 6;
   map<string, HeaderValues> multi_headers = 7;
+  optional MtlsAuth mtls = 8;
 }
 
 message Response {
@@ -847,6 +932,7 @@ service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "http-actions@1.0.0-alpha"
+    additional_environments: [ADDITIONAL_ENVIRONMENTS_TEE]
   };
   rpc SendRequest(Request) returns (Response);
 }
@@ -941,6 +1027,7 @@ enum AggregationType {
   AGGREGATION_TYPE_IDENTICAL = 2;
   AGGREGATION_TYPE_COMMON_PREFIX = 3;
   AGGREGATION_TYPE_COMMON_SUFFIX = 4;
+  AGGREGATION_TYPE_FREQUENCY_LIST = 5;
 }
 
 message SimpleConsensusInputs {
@@ -1007,6 +1094,18 @@ message TriggerSubscription {
   string id = 1;
   google.protobuf.Any payload = 2;
   string method = 3;
+  Requirements requirements = 4;
+  bool pre_hook = 5;
+}
+
+enum TeeType {
+  TEE_TYPE_UNSPECIFIED = 0;
+  TEE_TYPE_AWS_NITRO = 1;
+}
+
+message TeeTypeAndRegions {
+  TeeType type = 1;
+  repeated string regions = 3;
 }
 
 message TriggerSubscriptionRequest {
@@ -1016,6 +1115,25 @@ message TriggerSubscriptionRequest {
 message Trigger {
   uint64 id = 1;
   google.protobuf.Any payload = 2;
+}
+
+message Regions {
+  repeated string regions = 1;
+}
+
+message TeeTypesAndRegions {
+  repeated TeeTypeAndRegions tee_type_and_regions = 1;
+}
+
+message Tee {
+  oneof item {
+    Regions any_regions = 1;
+    TeeTypesAndRegions tee_types_and_regions = 2;
+  }
+}
+
+message Requirements {
+  Tee tee = 1;
 }
 
 message AwaitCapabilitiesRequest {
@@ -1030,6 +1148,7 @@ message ExecuteRequest {
   oneof request {
     google.protobuf.Empty subscribe = 2;
     Trigger trigger = 3;
+    Trigger pre_hook = 5;
   }
   uint64 max_response_size = 4;
 }
@@ -1039,6 +1158,7 @@ message ExecutionResult {
     values.v1.Value value = 1;
     string error = 2;
     TriggerSubscriptionRequest trigger_subscriptions = 3;
+    Restrictions restrictions = 4;
   }
 }
 
@@ -1084,6 +1204,52 @@ message SecretResponse {
 message SecretResponses {
   repeated SecretResponse responses = 1;
 }
+
+message MethodRestriction {
+  string id = 1;
+  string method = 2;
+  uint32 max_calls = 3;
+}
+
+message CapabilityRestriction {
+  oneof restriction {
+    MethodRestriction method = 1;
+  }
+}
+
+enum CapabilityRestrictionType {
+  CAPABILITY_RESTRICTION_TYPE_CLOSED = 0;
+  CAPABILITY_RESTRICTION_TYPE_OPEN = 1;
+}
+
+message CapabilityRestrictions {
+  repeated CapabilityRestriction restrictions = 1;
+  uint32 max_total_calls = 2;
+  CapabilityRestrictionType type = 3;
+}
+
+message SecretPrefixRestriction {
+  string prefix = 1;
+  string namespace = 2;
+  uint32 max_secrets = 3;
+}
+
+message SecretRestriction {
+  oneof restriction {
+    Secret exact_secret = 1;
+    SecretPrefixRestriction prefixed_secret = 2;
+  }
+}
+
+message SecretsRestritions {
+  repeated SecretRestriction restrictions = 1;
+  uint32 max_secrets = 2;
+}
+
+message Restrictions {
+  SecretsRestritions secrets = 1;
+  CapabilityRestrictions capabilities = 2;
+}
 `
 
 const v1betaSdkEmbedded = `syntax = "proto3";
@@ -1100,6 +1266,7 @@ enum AggregationType {
   AGGREGATION_TYPE_IDENTICAL = 2;
   AGGREGATION_TYPE_COMMON_PREFIX = 3;
   AGGREGATION_TYPE_COMMON_SUFFIX = 4;
+  AGGREGATION_TYPE_FREQUENCY_LIST = 5;
 }
 
 message SimpleConsensusInputs {
@@ -1282,10 +1449,16 @@ message Label {
   }
 }
 
+enum AdditionalEnvironments {
+  ADDITIONAL_ENVIRONMENTS_UNSPECIFIED = 0;
+  ADDITIONAL_ENVIRONMENTS_TEE = 1;
+}
+
 message CapabilityMetadata {
   sdk.v1alpha.Mode mode = 1;
   string capability_id = 2;
   map<string, Label> labels = 3;
+  repeated AdditionalEnvironments additional_environments = 4;
 }
 
 extend google.protobuf.ServiceOptions {

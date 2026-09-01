@@ -55,6 +55,8 @@ enum ChainType {
   CHAIN_TYPE_TRON = 5;
   CHAIN_TYPE_TON = 6;
   CHAIN_TYPE_SUI = 7;
+  CHAIN_TYPE_STELLAR = 8;
+  CHAIN_TYPE_CANTON = 9;
 }
 
 message Chain {
@@ -100,6 +102,7 @@ message OCR2Config {
     string config_public_key = 2;
     string offchain_public_key = 3;
     string onchain_signing_address = 4;
+    string onchain_signing_pub_key = 5;
   }
 
   message Plugins {

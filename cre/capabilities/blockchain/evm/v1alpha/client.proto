@@ -214,6 +214,10 @@ service Client {
               value: 2995292832068775165
             },
             {
+              key: "dtcc-mainnet-appchain"
+              value: 13879014182901017172
+            },
+            {
               key: "dtcc-testnet-andesite"
               value: 15513093881969820114
             },
@@ -338,6 +342,14 @@ service Client {
               value: 18241817625092392675
             },
             {
+              key: "monad-mainnet"
+              value: 8481857512324358265
+            },
+            {
+              key: "monad-testnet"
+              value: 2183018362218727504
+            },
+            {
               key: "pharos-atlantic-testnet"
               value: 16098325658947243212
             },
@@ -366,8 +378,20 @@ service Client {
               value: 6915682381028791124
             },
             {
+              key: "private-testnet-pumice"
+              value: 1564738277398880633
+            },
+            {
+              key: "private-testnet-quartzite"
+              value: 4175996748267305081
+            },
+            {
               key: "private-testnet-rhyolite"
               value: 604447335222770945
+            },
+            {
+              key: "robinhood-testnet"
+              value: 2032988798112970440
             },
             {
               key: "sonic-mainnet"
@@ -378,8 +402,20 @@ service Client {
               value: 1763698235108410440
             },
             {
+              key: "stable-testnet"
+              value: 11793402411494852765
+            },
+            {
               key: "tac-testnet"
               value: 9488606126177218005
+            },
+            {
+              key: "tempo-testnet-moderato"
+              value: 8457817439310187923
+            },
+            {
+              key: "t-rex-testnet"
+              value: 17611928792452358269
             },
             {
               key: "xlayer-testnet"
