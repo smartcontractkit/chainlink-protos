@@ -4,12 +4,13 @@ package ring;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/ring/go;ring";
 
-message ExecutionCompleted {
+message ExecutionStatusUpdate {
   string workflow_id = 1;
   string trigger_event_id = 2;
   uint32 trigger_index = 3;
   ExecutionStatus status = 4;
   uint32 primary_shard_id = 5;
+  string execution_id = 6;
 }
 
 enum ExecutionStatus {
