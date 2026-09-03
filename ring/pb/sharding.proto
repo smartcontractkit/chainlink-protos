@@ -10,6 +10,7 @@ message ExecutionStatusUpdate {
   uint32 trigger_index = 3;
   ExecutionStatus status = 4;
   uint32 primary_shard_id = 5;
+  string execution_id = 6;
 }
 
 enum ExecutionStatus {
