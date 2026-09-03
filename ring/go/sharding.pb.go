@@ -73,31 +73,32 @@ func (ExecutionStatus) EnumDescriptor() ([]byte, []int) {
 	return file_sharding_proto_rawDescGZIP(), []int{0}
 }
 
-type ExecutionCompleted struct {
+type ExecutionStatusUpdate struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	WorkflowId     string                 `protobuf:"bytes,1,opt,name=workflow_id,json=workflowId,proto3" json:"workflow_id,omitempty"`
 	TriggerEventId string                 `protobuf:"bytes,2,opt,name=trigger_event_id,json=triggerEventId,proto3" json:"trigger_event_id,omitempty"`
 	TriggerIndex   uint32                 `protobuf:"varint,3,opt,name=trigger_index,json=triggerIndex,proto3" json:"trigger_index,omitempty"`
 	Status         ExecutionStatus        `protobuf:"varint,4,opt,name=status,proto3,enum=ring.ExecutionStatus" json:"status,omitempty"`
 	PrimaryShardId uint32                 `protobuf:"varint,5,opt,name=primary_shard_id,json=primaryShardId,proto3" json:"primary_shard_id,omitempty"`
+	ExecutionId    string                 `protobuf:"bytes,6,opt,name=execution_id,json=executionId,proto3" json:"execution_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
 
-func (x *ExecutionCompleted) Reset() {
-	*x = ExecutionCompleted{}
+func (x *ExecutionStatusUpdate) Reset() {
+	*x = ExecutionStatusUpdate{}
 	mi := &file_sharding_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ExecutionCompleted) String() string {
+func (x *ExecutionStatusUpdate) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ExecutionCompleted) ProtoMessage() {}
+func (*ExecutionStatusUpdate) ProtoMessage() {}
 
-func (x *ExecutionCompleted) ProtoReflect() protoreflect.Message {
+func (x *ExecutionStatusUpdate) ProtoReflect() protoreflect.Message {
 	mi := &file_sharding_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -109,44 +110,51 @@ func (x *ExecutionCompleted) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ExecutionCompleted.ProtoReflect.Descriptor instead.
-func (*ExecutionCompleted) Descriptor() ([]byte, []int) {
+// Deprecated: Use ExecutionStatusUpdate.ProtoReflect.Descriptor instead.
+func (*ExecutionStatusUpdate) Descriptor() ([]byte, []int) {
 	return file_sharding_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ExecutionCompleted) GetWorkflowId() string {
+func (x *ExecutionStatusUpdate) GetWorkflowId() string {
 	if x != nil {
 		return x.WorkflowId
 	}
 	return ""
 }
 
-func (x *ExecutionCompleted) GetTriggerEventId() string {
+func (x *ExecutionStatusUpdate) GetTriggerEventId() string {
 	if x != nil {
 		return x.TriggerEventId
 	}
 	return ""
 }
 
-func (x *ExecutionCompleted) GetTriggerIndex() uint32 {
+func (x *ExecutionStatusUpdate) GetTriggerIndex() uint32 {
 	if x != nil {
 		return x.TriggerIndex
 	}
 	return 0
 }
 
-func (x *ExecutionCompleted) GetStatus() ExecutionStatus {
+func (x *ExecutionStatusUpdate) GetStatus() ExecutionStatus {
 	if x != nil {
 		return x.Status
 	}
 	return ExecutionStatus_EXECUTION_STATUS_UNSPECIFIED
 }
 
-func (x *ExecutionCompleted) GetPrimaryShardId() uint32 {
+func (x *ExecutionStatusUpdate) GetPrimaryShardId() uint32 {
 	if x != nil {
 		return x.PrimaryShardId
 	}
 	return 0
+}
+
+func (x *ExecutionStatusUpdate) GetExecutionId() string {
+	if x != nil {
+		return x.ExecutionId
+	}
+	return ""
 }
 
 type ShardHeartbeat struct {
@@ -213,14 +221,15 @@ var File_sharding_proto protoreflect.FileDescriptor
 
 const file_sharding_proto_rawDesc = "" +
 	"\n" +
-	"\x0esharding.proto\x12\x04ring\"\xdd\x01\n" +
-	"\x12ExecutionCompleted\x12\x1f\n" +
+	"\x0esharding.proto\x12\x04ring\"\x83\x02\n" +
+	"\x15ExecutionStatusUpdate\x12\x1f\n" +
 	"\vworkflow_id\x18\x01 \x01(\tR\n" +
 	"workflowId\x12(\n" +
 	"\x10trigger_event_id\x18\x02 \x01(\tR\x0etriggerEventId\x12#\n" +
 	"\rtrigger_index\x18\x03 \x01(\rR\ftriggerIndex\x12-\n" +
 	"\x06status\x18\x04 \x01(\x0e2\x15.ring.ExecutionStatusR\x06status\x12(\n" +
-	"\x10primary_shard_id\x18\x05 \x01(\rR\x0eprimaryShardId\"\x8e\x01\n" +
+	"\x10primary_shard_id\x18\x05 \x01(\rR\x0eprimaryShardId\x12!\n" +
+	"\fexecution_id\x18\x06 \x01(\tR\vexecutionId\"\x8e\x01\n" +
 	"\x0eShardHeartbeat\x12(\n" +
 	"\x10primary_shard_id\x18\x01 \x01(\rR\x0eprimaryShardId\x12\x1c\n" +
 	"\ttimestamp\x18\x02 \x01(\x03R\ttimestamp\x124\n" +
@@ -246,12 +255,12 @@ func file_sharding_proto_rawDescGZIP() []byte {
 var file_sharding_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_sharding_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_sharding_proto_goTypes = []any{
-	(ExecutionStatus)(0),       // 0: ring.ExecutionStatus
-	(*ExecutionCompleted)(nil), // 1: ring.ExecutionCompleted
-	(*ShardHeartbeat)(nil),     // 2: ring.ShardHeartbeat
+	(ExecutionStatus)(0),          // 0: ring.ExecutionStatus
+	(*ExecutionStatusUpdate)(nil), // 1: ring.ExecutionStatusUpdate
+	(*ShardHeartbeat)(nil),        // 2: ring.ShardHeartbeat
 }
 var file_sharding_proto_depIdxs = []int32{
-	0, // 0: ring.ExecutionCompleted.status:type_name -> ring.ExecutionStatus
+	0, // 0: ring.ExecutionStatusUpdate.status:type_name -> ring.ExecutionStatus
 	1, // [1:1] is the sub-list for method output_type
 	1, // [1:1] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
