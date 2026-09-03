@@ -4,7 +4,7 @@ package ring;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/ring/go;ring";
 
-message ExecutionCompleted {
+message ExecutionStatusUpdate {
   string workflow_id = 1;
   string trigger_event_id = 2;
   uint32 trigger_index = 3;
