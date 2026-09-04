@@ -24,7 +24,7 @@ const (
 
 type ShardStatusRequest struct {
 	state         protoimpl.MessageState  `protogen:"open.v1"`
-	Status        map[uint32]*ShardStatus `protobuf:"bytes,1,rep,name=status,proto3" json:"status,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // shard_id -> status
+	Status        map[uint32]*ShardStatus `protobuf:"bytes,1,rep,name=status,proto3" json:"status,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // don_id -> status
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

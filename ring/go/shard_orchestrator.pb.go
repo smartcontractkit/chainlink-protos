@@ -67,8 +67,8 @@ func (x *GetWorkflowShardMappingRequest) GetWorkflowIds() []string {
 
 type WorkflowMappingState struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	OldShardId    uint32                 `protobuf:"varint,1,opt,name=old_shard_id,json=oldShardId,proto3" json:"old_shard_id,omitempty"`
-	NewShardId    uint32                 `protobuf:"varint,2,opt,name=new_shard_id,json=newShardId,proto3" json:"new_shard_id,omitempty"`
+	OldDonId      uint32                 `protobuf:"varint,1,opt,name=old_don_id,json=oldDonId,proto3" json:"old_don_id,omitempty"`
+	NewDonId      uint32                 `protobuf:"varint,2,opt,name=new_don_id,json=newDonId,proto3" json:"new_don_id,omitempty"`
 	InTransition  bool                   `protobuf:"varint,3,opt,name=in_transition,json=inTransition,proto3" json:"in_transition,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -104,16 +104,16 @@ func (*WorkflowMappingState) Descriptor() ([]byte, []int) {
 	return file_shard_orchestrator_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *WorkflowMappingState) GetOldShardId() uint32 {
+func (x *WorkflowMappingState) GetOldDonId() uint32 {
 	if x != nil {
-		return x.OldShardId
+		return x.OldDonId
 	}
 	return 0
 }
 
-func (x *WorkflowMappingState) GetNewShardId() uint32 {
+func (x *WorkflowMappingState) GetNewDonId() uint32 {
 	if x != nil {
-		return x.NewShardId
+		return x.NewDonId
 	}
 	return 0
 }
@@ -203,7 +203,7 @@ func (x *GetWorkflowShardMappingResponse) GetRoutingSteady() bool {
 
 type ReportWorkflowTriggerRegistrationRequest struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	SourceShardId        uint32                 `protobuf:"varint,1,opt,name=source_shard_id,json=sourceShardId,proto3" json:"source_shard_id,omitempty"`
+	SourceDonId          uint32                 `protobuf:"varint,1,opt,name=source_don_id,json=sourceDonId,proto3" json:"source_don_id,omitempty"`
 	RegisteredWorkflows  map[string]uint32      `protobuf:"bytes,2,rep,name=registered_workflows,json=registeredWorkflows,proto3" json:"registered_workflows,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"varint,2,opt,name=value"`
 	TotalActiveWorkflows uint32                 `protobuf:"varint,3,opt,name=total_active_workflows,json=totalActiveWorkflows,proto3" json:"total_active_workflows,omitempty"`
 	unknownFields        protoimpl.UnknownFields
@@ -240,9 +240,9 @@ func (*ReportWorkflowTriggerRegistrationRequest) Descriptor() ([]byte, []int) {
 	return file_shard_orchestrator_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ReportWorkflowTriggerRegistrationRequest) GetSourceShardId() uint32 {
+func (x *ReportWorkflowTriggerRegistrationRequest) GetSourceDonId() uint32 {
 	if x != nil {
-		return x.SourceShardId
+		return x.SourceDonId
 	}
 	return 0
 }
@@ -311,12 +311,12 @@ const file_shard_orchestrator_proto_rawDesc = "" +
 	"\n" +
 	"\x18shard_orchestrator.proto\x12\x04ring\"C\n" +
 	"\x1eGetWorkflowShardMappingRequest\x12!\n" +
-	"\fworkflow_ids\x18\x01 \x03(\tR\vworkflowIds\"\x7f\n" +
-	"\x14WorkflowMappingState\x12 \n" +
-	"\fold_shard_id\x18\x01 \x01(\rR\n" +
-	"oldShardId\x12 \n" +
-	"\fnew_shard_id\x18\x02 \x01(\rR\n" +
-	"newShardId\x12#\n" +
+	"\fworkflow_ids\x18\x01 \x03(\tR\vworkflowIds\"w\n" +
+	"\x14WorkflowMappingState\x12\x1c\n" +
+	"\n" +
+	"old_don_id\x18\x01 \x01(\rR\boldDonId\x12\x1c\n" +
+	"\n" +
+	"new_don_id\x18\x02 \x01(\rR\bnewDonId\x12#\n" +
 	"\rin_transition\x18\x03 \x01(\bR\finTransition\"\xe8\x03\n" +
 	"\x1fGetWorkflowShardMappingResponse\x12O\n" +
 	"\bmappings\x18\x01 \x03(\v23.ring.GetWorkflowShardMappingResponse.MappingsEntryR\bmappings\x12_\n" +
@@ -329,9 +329,9 @@ const file_shard_orchestrator_proto_rawDesc = "" +
 	"\x05value\x18\x02 \x01(\rR\x05value:\x028\x01\x1a\\\n" +
 	"\x12MappingStatesEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x120\n" +
-	"\x05value\x18\x02 \x01(\v2\x1a.ring.WorkflowMappingStateR\x05value:\x028\x01\"\xcc\x02\n" +
-	"(ReportWorkflowTriggerRegistrationRequest\x12&\n" +
-	"\x0fsource_shard_id\x18\x01 \x01(\rR\rsourceShardId\x12z\n" +
+	"\x05value\x18\x02 \x01(\v2\x1a.ring.WorkflowMappingStateR\x05value:\x028\x01\"\xc8\x02\n" +
+	"(ReportWorkflowTriggerRegistrationRequest\x12\"\n" +
+	"\rsource_don_id\x18\x01 \x01(\rR\vsourceDonId\x12z\n" +
 	"\x14registered_workflows\x18\x02 \x03(\v2G.ring.ReportWorkflowTriggerRegistrationRequest.RegisteredWorkflowsEntryR\x13registeredWorkflows\x124\n" +
 	"\x16total_active_workflows\x18\x03 \x01(\rR\x14totalActiveWorkflows\x1aF\n" +
 	"\x18RegisteredWorkflowsEntry\x12\x10\n" +

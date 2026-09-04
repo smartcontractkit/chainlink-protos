@@ -79,7 +79,7 @@ type ExecutionStatusUpdate struct {
 	TriggerEventId string                 `protobuf:"bytes,2,opt,name=trigger_event_id,json=triggerEventId,proto3" json:"trigger_event_id,omitempty"`
 	TriggerIndex   uint32                 `protobuf:"varint,3,opt,name=trigger_index,json=triggerIndex,proto3" json:"trigger_index,omitempty"`
 	Status         ExecutionStatus        `protobuf:"varint,4,opt,name=status,proto3,enum=ring.ExecutionStatus" json:"status,omitempty"`
-	PrimaryShardId uint32                 `protobuf:"varint,5,opt,name=primary_shard_id,json=primaryShardId,proto3" json:"primary_shard_id,omitempty"`
+	PrimaryDonId   uint32                 `protobuf:"varint,5,opt,name=primary_don_id,json=primaryDonId,proto3" json:"primary_don_id,omitempty"`
 	ExecutionId    string                 `protobuf:"bytes,6,opt,name=execution_id,json=executionId,proto3" json:"execution_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -143,9 +143,9 @@ func (x *ExecutionStatusUpdate) GetStatus() ExecutionStatus {
 	return ExecutionStatus_EXECUTION_STATUS_UNSPECIFIED
 }
 
-func (x *ExecutionStatusUpdate) GetPrimaryShardId() uint32 {
+func (x *ExecutionStatusUpdate) GetPrimaryDonId() uint32 {
 	if x != nil {
-		return x.PrimaryShardId
+		return x.PrimaryDonId
 	}
 	return 0
 }
@@ -159,7 +159,7 @@ func (x *ExecutionStatusUpdate) GetExecutionId() string {
 
 type ShardHeartbeat struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	PrimaryShardId       uint32                 `protobuf:"varint,1,opt,name=primary_shard_id,json=primaryShardId,proto3" json:"primary_shard_id,omitempty"`
+	PrimaryDonId         uint32                 `protobuf:"varint,1,opt,name=primary_don_id,json=primaryDonId,proto3" json:"primary_don_id,omitempty"`
 	Timestamp            int64                  `protobuf:"varint,2,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	ActiveExecutionCount uint32                 `protobuf:"varint,3,opt,name=active_execution_count,json=activeExecutionCount,proto3" json:"active_execution_count,omitempty"`
 	unknownFields        protoimpl.UnknownFields
@@ -196,9 +196,9 @@ func (*ShardHeartbeat) Descriptor() ([]byte, []int) {
 	return file_sharding_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *ShardHeartbeat) GetPrimaryShardId() uint32 {
+func (x *ShardHeartbeat) GetPrimaryDonId() uint32 {
 	if x != nil {
-		return x.PrimaryShardId
+		return x.PrimaryDonId
 	}
 	return 0
 }
@@ -221,17 +221,17 @@ var File_sharding_proto protoreflect.FileDescriptor
 
 const file_sharding_proto_rawDesc = "" +
 	"\n" +
-	"\x0esharding.proto\x12\x04ring\"\x83\x02\n" +
+	"\x0esharding.proto\x12\x04ring\"\xff\x01\n" +
 	"\x15ExecutionStatusUpdate\x12\x1f\n" +
 	"\vworkflow_id\x18\x01 \x01(\tR\n" +
 	"workflowId\x12(\n" +
 	"\x10trigger_event_id\x18\x02 \x01(\tR\x0etriggerEventId\x12#\n" +
 	"\rtrigger_index\x18\x03 \x01(\rR\ftriggerIndex\x12-\n" +
-	"\x06status\x18\x04 \x01(\x0e2\x15.ring.ExecutionStatusR\x06status\x12(\n" +
-	"\x10primary_shard_id\x18\x05 \x01(\rR\x0eprimaryShardId\x12!\n" +
-	"\fexecution_id\x18\x06 \x01(\tR\vexecutionId\"\x8e\x01\n" +
-	"\x0eShardHeartbeat\x12(\n" +
-	"\x10primary_shard_id\x18\x01 \x01(\rR\x0eprimaryShardId\x12\x1c\n" +
+	"\x06status\x18\x04 \x01(\x0e2\x15.ring.ExecutionStatusR\x06status\x12$\n" +
+	"\x0eprimary_don_id\x18\x05 \x01(\rR\fprimaryDonId\x12!\n" +
+	"\fexecution_id\x18\x06 \x01(\tR\vexecutionId\"\x8a\x01\n" +
+	"\x0eShardHeartbeat\x12$\n" +
+	"\x0eprimary_don_id\x18\x01 \x01(\rR\fprimaryDonId\x12\x1c\n" +
 	"\ttimestamp\x18\x02 \x01(\x03R\ttimestamp\x124\n" +
 	"\x16active_execution_count\x18\x03 \x01(\rR\x14activeExecutionCount*\x95\x01\n" +
 	"\x0fExecutionStatus\x12 \n" +
