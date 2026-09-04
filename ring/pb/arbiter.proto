@@ -8,7 +8,7 @@ import "shared.proto";
 option go_package = "github.com/smartcontractkit/chainlink-protos/ring/go;ring";
 
 message ShardStatusRequest {
-  map<uint32, ShardStatus> status = 1; // shard_id -> status
+  map<uint32, ShardStatus> status = 1; // don_id -> status
 }
 
 message ArbiterResponse {

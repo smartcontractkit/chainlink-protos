@@ -24,7 +24,7 @@ const (
 
 type Observation struct {
 	state         protoimpl.MessageState  `protogen:"open.v1"`
-	ShardStatus   map[uint32]*ShardStatus `protobuf:"bytes,1,rep,name=shard_status,json=shardStatus,proto3" json:"shard_status,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // shard_id -> status
+	ShardStatus   map[uint32]*ShardStatus `protobuf:"bytes,1,rep,name=shard_status,json=shardStatus,proto3" json:"shard_status,omitempty" protobuf_key:"varint,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // don_id -> status
 	WorkflowIds   []string                `protobuf:"bytes,2,rep,name=workflow_ids,json=workflowIds,proto3" json:"workflow_ids,omitempty"`
 	Now           *timestamppb.Timestamp  `protobuf:"bytes,3,opt,name=now,proto3" json:"now,omitempty"`
 	WantShards    uint32                  `protobuf:"varint,4,opt,name=want_shards,json=wantShards,proto3" json:"want_shards,omitempty"` // from ArbiterScaler.Status()
@@ -92,7 +92,7 @@ func (x *Observation) GetWantShards() uint32 {
 
 type WorkflowRoute struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Shard         uint32                 `protobuf:"varint,1,opt,name=shard,proto3" json:"shard,omitempty"`
+	DonId         uint32                 `protobuf:"varint,1,opt,name=don_id,json=donId,proto3" json:"don_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -127,9 +127,9 @@ func (*WorkflowRoute) Descriptor() ([]byte, []int) {
 	return file_consensus_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *WorkflowRoute) GetShard() uint32 {
+func (x *WorkflowRoute) GetDonId() uint32 {
 	if x != nil {
-		return x.Shard
+		return x.DonId
 	}
 	return 0
 }
@@ -349,9 +349,9 @@ const file_consensus_proto_rawDesc = "" +
 	"wantShards\x1aQ\n" +
 	"\x10ShardStatusEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\rR\x03key\x12'\n" +
-	"\x05value\x18\x02 \x01(\v2\x11.ring.ShardStatusR\x05value:\x028\x01\"%\n" +
-	"\rWorkflowRoute\x12\x14\n" +
-	"\x05shard\x18\x01 \x01(\rR\x05shard\"\xa3\x01\n" +
+	"\x05value\x18\x02 \x01(\v2\x11.ring.ShardStatusR\x05value:\x028\x01\"&\n" +
+	"\rWorkflowRoute\x12\x15\n" +
+	"\x06don_id\x18\x01 \x01(\rR\x05donId\"\xa3\x01\n" +
 	"\n" +
 	"Transition\x12\x1f\n" +
 	"\vwant_shards\x18\x01 \x01(\rR\n" +
