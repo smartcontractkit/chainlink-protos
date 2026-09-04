@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package common.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/node-platform/common/v1";
+
+// CLJobInfo is a generic, type-agnostic snapshot of a single Chainlink job.
+//
+// Unlike NodeJobInfo (which projects a few specific submitter/transmitter
+// addresses across all jobs into a flat schema), CLJobInfo carries the job's
+// common identity fields plus the complete job definition as a raw TOML string.
+// This lets any job type be reported through a single schema without a
+// dedicated proto message or extractor per job type.
+//
+// spec_toml deliberately mirrors how the Job Distributor already moves a job
+// definition around: neither cfm.ProposeJobRequest nor api.job.v1.Proposal
+// carries a structured spec, both carry the TOML document as an opaque string
+// alongside identity metadata. No JD message describes a job's contents, so
+// there is nothing to reuse here and this message follows the same shape.
+message CLJobInfo {
+  // Node identity.
+  string csa_public_key = 1;
+  string node_version = 2;
+  string hostname = 3;
+
+  // Job identity — fields common to every job type (they live on job.Job
+  // itself rather than a type-specific spec).
+  string external_job_id = 10;
+  int32 job_id = 11;
+  string name = 12;
+  string job_type = 13;
+  uint32 schema_version = 14;
+  bool forwarding_allowed = 15;
+  optional uint32 gas_limit = 16;
+  optional uint32 stream_id = 17;
+  google.protobuf.Timestamp created_at = 18;
+
+  // Complete job definition serialized as TOML. Captures all type-specific
+  // spec fields for any job type without requiring a per-type schema.
+  string spec_toml = 30;
+
+  // Event metadata.
+  CLJobInfoTrigger trigger = 40;
+  google.protobuf.Timestamp timestamp = 41;
+
+  // Job Distributor provenance, set only for jobs that reached the node as an
+  // approved job proposal. Jobs created directly (CLI, UI, TOML on disk) leave
+  // these unset, which is itself the signal that the job is unmanaged.
+  optional int64 feeds_manager_id = 50;
+  // remote_uuid is the proposal's UUID in the Job Distributor, i.e. the join
+  // key back to api.job.v1.Job.uuid.
+  optional string remote_uuid = 51;
+  // spec_version is the revision of the approved proposal spec that produced
+  // the running job.
+  optional int32 spec_version = 52;
+  // Unset (nil) rather than the epoch when the job has no approved proposal.
+  google.protobuf.Timestamp proposed_at = 53;
+  google.protobuf.Timestamp approved_at = 54;
+}
+
+// CLJobInfoTrigger is the reason a CLJobInfo event was emitted.
+enum CLJobInfoTrigger {
+  CL_JOB_INFO_TRIGGER_UNSPECIFIED = 0;
+  CL_JOB_INFO_TRIGGER_HEARTBEAT = 1;
+  CL_JOB_INFO_TRIGGER_CREATE = 2;
+  CL_JOB_INFO_TRIGGER_DELETE = 3;
+}
