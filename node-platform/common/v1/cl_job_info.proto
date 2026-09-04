@@ -11,6 +11,12 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/node-platform/
 // common identity fields plus the complete job definition as a raw TOML string.
 // This lets any job type be reported through a single schema without a
 // dedicated proto message or extractor per job type.
+//
+// spec_toml deliberately mirrors how the Job Distributor already moves a job
+// definition around: neither cfm.ProposeJobRequest nor api.job.v1.Proposal
+// carries a structured spec, both carry the TOML document as an opaque string
+// alongside identity metadata. No JD message describes a job's contents, so
+// there is nothing to reuse here and this message follows the same shape.
 message CLJobInfo {
   // Node identity.
   string csa_public_key = 1;
@@ -36,6 +42,19 @@ message CLJobInfo {
   // Event metadata.
   CLJobInfoTrigger trigger = 40;
   string timestamp = 41;
+
+  // Job Distributor provenance, set only for jobs that reached the node as an
+  // approved job proposal. Jobs created directly (CLI, UI, TOML on disk) leave
+  // these unset, which is itself the signal that the job is unmanaged.
+  optional int64 feeds_manager_id = 50;
+  // remote_uuid is the proposal's UUID in the Job Distributor, i.e. the join
+  // key back to api.job.v1.Job.uuid.
+  optional string remote_uuid = 51;
+  // spec_version is the revision of the approved proposal spec that produced
+  // the running job.
+  optional int32 spec_version = 52;
+  optional string proposed_at = 53;
+  optional string approved_at = 54;
 }
 
 // CLJobInfoTrigger is the reason a CLJobInfo event was emitted.

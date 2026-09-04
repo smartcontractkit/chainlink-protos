@@ -81,6 +81,12 @@ func (CLJobInfoTrigger) EnumDescriptor() ([]byte, []int) {
 // common identity fields plus the complete job definition as a raw TOML string.
 // This lets any job type be reported through a single schema without a
 // dedicated proto message or extractor per job type.
+//
+// spec_toml deliberately mirrors how the Job Distributor already moves a job
+// definition around: neither cfm.ProposeJobRequest nor api.job.v1.Proposal
+// carries a structured spec, both carry the TOML document as an opaque string
+// alongside identity metadata. No JD message describes a job's contents, so
+// there is nothing to reuse here and this message follows the same shape.
 type CLJobInfo struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Node identity.
@@ -102,8 +108,20 @@ type CLJobInfo struct {
 	// spec fields for any job type without requiring a per-type schema.
 	SpecToml string `protobuf:"bytes,30,opt,name=spec_toml,json=specToml,proto3" json:"spec_toml,omitempty"`
 	// Event metadata.
-	Trigger       CLJobInfoTrigger `protobuf:"varint,40,opt,name=trigger,proto3,enum=common.v1.CLJobInfoTrigger" json:"trigger,omitempty"`
-	Timestamp     string           `protobuf:"bytes,41,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Trigger   CLJobInfoTrigger `protobuf:"varint,40,opt,name=trigger,proto3,enum=common.v1.CLJobInfoTrigger" json:"trigger,omitempty"`
+	Timestamp string           `protobuf:"bytes,41,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	// Job Distributor provenance, set only for jobs that reached the node as an
+	// approved job proposal. Jobs created directly (CLI, UI, TOML on disk) leave
+	// these unset, which is itself the signal that the job is unmanaged.
+	FeedsManagerId *int64 `protobuf:"varint,50,opt,name=feeds_manager_id,json=feedsManagerId,proto3,oneof" json:"feeds_manager_id,omitempty"`
+	// remote_uuid is the proposal's UUID in the Job Distributor, i.e. the join
+	// key back to api.job.v1.Job.uuid.
+	RemoteUuid *string `protobuf:"bytes,51,opt,name=remote_uuid,json=remoteUuid,proto3,oneof" json:"remote_uuid,omitempty"`
+	// spec_version is the revision of the approved proposal spec that produced
+	// the running job.
+	SpecVersion   *int32  `protobuf:"varint,52,opt,name=spec_version,json=specVersion,proto3,oneof" json:"spec_version,omitempty"`
+	ProposedAt    *string `protobuf:"bytes,53,opt,name=proposed_at,json=proposedAt,proto3,oneof" json:"proposed_at,omitempty"`
+	ApprovedAt    *string `protobuf:"bytes,54,opt,name=approved_at,json=approvedAt,proto3,oneof" json:"approved_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -243,11 +261,46 @@ func (x *CLJobInfo) GetTimestamp() string {
 	return ""
 }
 
+func (x *CLJobInfo) GetFeedsManagerId() int64 {
+	if x != nil && x.FeedsManagerId != nil {
+		return *x.FeedsManagerId
+	}
+	return 0
+}
+
+func (x *CLJobInfo) GetRemoteUuid() string {
+	if x != nil && x.RemoteUuid != nil {
+		return *x.RemoteUuid
+	}
+	return ""
+}
+
+func (x *CLJobInfo) GetSpecVersion() int32 {
+	if x != nil && x.SpecVersion != nil {
+		return *x.SpecVersion
+	}
+	return 0
+}
+
+func (x *CLJobInfo) GetProposedAt() string {
+	if x != nil && x.ProposedAt != nil {
+		return *x.ProposedAt
+	}
+	return ""
+}
+
+func (x *CLJobInfo) GetApprovedAt() string {
+	if x != nil && x.ApprovedAt != nil {
+		return *x.ApprovedAt
+	}
+	return ""
+}
+
 var File_node_platform_common_v1_cl_job_info_proto protoreflect.FileDescriptor
 
 const file_node_platform_common_v1_cl_job_info_proto_rawDesc = "" +
 	"\n" +
-	")node-platform/common/v1/cl_job_info.proto\x12\tcommon.v1\"\xa5\x04\n" +
+	")node-platform/common/v1/cl_job_info.proto\x12\tcommon.v1\"\xc4\x06\n" +
 	"\tCLJobInfo\x12$\n" +
 	"\x0ecsa_public_key\x18\x01 \x01(\tR\fcsaPublicKey\x12!\n" +
 	"\fnode_version\x18\x02 \x01(\tR\vnodeVersion\x12\x1a\n" +
@@ -265,11 +318,24 @@ const file_node_platform_common_v1_cl_job_info_proto_rawDesc = "" +
 	"created_at\x18\x12 \x01(\tR\tcreatedAt\x12\x1b\n" +
 	"\tspec_toml\x18\x1e \x01(\tR\bspecToml\x125\n" +
 	"\atrigger\x18( \x01(\x0e2\x1b.common.v1.CLJobInfoTriggerR\atrigger\x12\x1c\n" +
-	"\ttimestamp\x18) \x01(\tR\ttimestampB\f\n" +
+	"\ttimestamp\x18) \x01(\tR\ttimestamp\x12-\n" +
+	"\x10feeds_manager_id\x182 \x01(\x03H\x02R\x0efeedsManagerId\x88\x01\x01\x12$\n" +
+	"\vremote_uuid\x183 \x01(\tH\x03R\n" +
+	"remoteUuid\x88\x01\x01\x12&\n" +
+	"\fspec_version\x184 \x01(\x05H\x04R\vspecVersion\x88\x01\x01\x12$\n" +
+	"\vproposed_at\x185 \x01(\tH\x05R\n" +
+	"proposedAt\x88\x01\x01\x12$\n" +
+	"\vapproved_at\x186 \x01(\tH\x06R\n" +
+	"approvedAt\x88\x01\x01B\f\n" +
 	"\n" +
 	"_gas_limitB\f\n" +
 	"\n" +
-	"_stream_id*\x9a\x01\n" +
+	"_stream_idB\x13\n" +
+	"\x11_feeds_manager_idB\x0e\n" +
+	"\f_remote_uuidB\x0f\n" +
+	"\r_spec_versionB\x0e\n" +
+	"\f_proposed_atB\x0e\n" +
+	"\f_approved_at*\x9a\x01\n" +
 	"\x10CLJobInfoTrigger\x12#\n" +
 	"\x1fCL_JOB_INFO_TRIGGER_UNSPECIFIED\x10\x00\x12!\n" +
 	"\x1dCL_JOB_INFO_TRIGGER_HEARTBEAT\x10\x01\x12\x1e\n" +
