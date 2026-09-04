@@ -5,6 +5,7 @@ packages:
   - 'rmn'
   - 'storage-service'
   - 'op-catalog'
+  - 'op-domain'
   - 'rane'
   - 'node-platform'
   - 'chainlink-ccv/verifier'

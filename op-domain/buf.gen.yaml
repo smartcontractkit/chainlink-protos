@@ -1,0 +1,8 @@
+version: v2
+plugins:
+  - local: protoc-gen-go
+    out: op-domain
+    opt: paths=source_relative
+  - local: protoc-gen-connect-go
+    out: op-domain
+    opt: paths=source_relative

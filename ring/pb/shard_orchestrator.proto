@@ -9,8 +9,8 @@ message GetWorkflowShardMappingRequest {
 }
 
 message WorkflowMappingState {
-  uint32 old_shard_id = 1;
-  uint32 new_shard_id = 2;
+  uint32 old_don_id = 1;
+  uint32 new_don_id = 2;
   bool in_transition = 3;
 }
 
@@ -23,7 +23,7 @@ message GetWorkflowShardMappingResponse {
 }
 
 message ReportWorkflowTriggerRegistrationRequest {
-  uint32 source_shard_id = 1;
+  uint32 source_don_id = 1;
   map<string, uint32> registered_workflows = 2;
   uint32 total_active_workflows = 3;
 }

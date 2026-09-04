@@ -345,6 +345,14 @@ service Client {
               value: 18241817625092392675
             },
             {
+              key: "monad-mainnet"
+              value: 8481857512324358265
+            },
+            {
+              key: "monad-testnet"
+              value: 2183018362218727504
+            },
+            {
               key: "pharos-atlantic-testnet"
               value: 16098325658947243212
             },
@@ -385,6 +393,10 @@ service Client {
               value: 604447335222770945
             },
             {
+              key: "robinhood-testnet"
+              value: 2032988798112970440
+            },
+            {
               key: "sonic-mainnet"
               value: 1673871237479749969
             },
@@ -393,8 +405,20 @@ service Client {
               value: 1763698235108410440
             },
             {
+              key: "stable-testnet"
+              value: 11793402411494852765
+            },
+            {
               key: "tac-testnet"
               value: 9488606126177218005
+            },
+            {
+              key: "tempo-testnet-moderato"
+              value: 8457817439310187923
+            },
+            {
+              key: "t-rex-testnet"
+              value: 17611928792452358269
             },
             {
               key: "xlayer-testnet"
@@ -451,10 +475,32 @@ package capabilities.blockchain.solana.v1alpha;
 
 import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
+import "values/v1/values.proto";
 
-// Compute budget configuration when submitting txs.
-message ComputeConfig {
-  uint32 compute_limit = 1; // max CUs (approx per-tx limit)
+// Account/tx data encodings.
+enum EncodingType {
+  ENCODING_TYPE_NONE = 0;
+  ENCODING_TYPE_BASE58 = 1; // for data <129 bytes
+  ENCODING_TYPE_BASE64 = 2; // any size
+  ENCODING_TYPE_BASE64_ZSTD = 3; // zstd-compressed, base64-wrapped
+  ENCODING_TYPE_JSON_PARSED = 4; // program parsers; fallback to base64 if unknown
+  ENCODING_TYPE_JSON = 5; // raw JSON (rare; prefer JSON_PARSED)
+}
+
+// Read consistency of queried state.
+enum CommitmentType {
+  COMMITMENT_TYPE_NONE = 0;
+  COMMITMENT_TYPE_FINALIZED = 1; // cluster-finalized
+  COMMITMENT_TYPE_CONFIRMED = 2; // voted by supermajority
+  COMMITMENT_TYPE_PROCESSED = 3; // node’s latest
+}
+
+// Cluster confirmation status of a tx/signature.
+enum ConfirmationStatusType {
+  CONFIRMATION_STATUS_TYPE_NONE = 0;
+  CONFIRMATION_STATUS_TYPE_PROCESSED = 1;
+  CONFIRMATION_STATUS_TYPE_CONFIRMED = 2;
+  CONFIRMATION_STATUS_TYPE_FINALIZED = 3;
 }
 
 // Transaction execution status returned by submitters/simulations.
@@ -462,6 +508,364 @@ enum TxStatus {
   TX_STATUS_FATAL = 0; // unrecoverable failure
   TX_STATUS_ABORTED = 1; // not executed / dropped
   TX_STATUS_SUCCESS = 2; // executed successfully
+}
+
+// On-chain account state.
+message Account {
+  uint64 lamports = 1; // balance in lamports (1e-9 SOL)
+  bytes owner = 2; // 32-byte program id (Pubkey)
+  DataBytesOrJSON data = 3; // account data (encoded or JSON)
+  bool executable = 4; // true if this is a program account
+  values.v1.BigInt rent_epoch = 5; // next rent epoch
+  uint64 space = 6; // data length in bytes
+}
+
+// Compute budget configuration when submitting txs.
+message ComputeConfig {
+  uint32 compute_limit = 1; // max CUs (approx per-tx limit)
+}
+
+// Raw bytes vs parsed JSON (as returned by RPC).
+message DataBytesOrJSON {
+  EncodingType encoding = 1;
+  oneof body {
+    bytes raw = 2; // program data (node’s base64/base58 decoded)
+    bytes json = 3; // json: UTF-8 bytes of the jsonParsed payload.
+  }
+}
+
+// Return a slice of account data.
+message DataSlice {
+  uint64 offset = 1; // start byte
+  uint64 length = 2; // number of bytes
+}
+
+// Options for GetAccountInfo.
+message GetAccountInfoOpts {
+  EncodingType encoding = 1; // data encoding
+  CommitmentType commitment = 2; // read consistency
+  DataSlice data_slice = 3; // optional slice window
+  uint64 min_context_slot = 4; // lower bound slot
+}
+
+// Reply for GetAccountInfoWithOpts.
+message GetAccountInfoWithOptsReply {
+  optional Account value = 2; // account (may be empty)
+}
+
+// Request for GetAccountInfoWithOpts.
+message GetAccountInfoWithOptsRequest {
+  bytes account = 1; // 32-byte Pubkey
+  GetAccountInfoOpts opts = 2;
+}
+
+// Reply for GetBalance.
+message GetBalanceReply {
+  uint64 value = 1; // lamports
+}
+
+// Request for GetBalance.
+message GetBalanceRequest {
+  bytes addr = 1; // 32-byte Pubkey
+  CommitmentType commitment = 2; // read consistency
+}
+
+// Options for GetBlock.
+message GetBlockOpts {
+  CommitmentType commitment = 4; // read consistency
+}
+
+// Block response.
+message GetBlockReply {
+  bytes blockhash = 1; // 32-byte block hash
+  bytes previous_blockhash = 2; // 32-byte parent hash
+  uint64 parent_slot = 3;
+  optional int64 block_time = 4; // unix seconds, node may not report it
+  uint64 block_height = 5; // chain height
+}
+
+// Request for GetBlock.
+message GetBlockRequest {
+  uint64 slot = 1; // target slot
+  GetBlockOpts opts = 2;
+}
+
+// Fee quote for a base58-encoded Message.
+message GetFeeForMessageReply {
+  uint64 fee = 1; // lamports
+}
+
+message GetFeeForMessageRequest {
+  string message = 1; // must be base58-encoded Message
+  CommitmentType commitment = 2; // read consistency
+}
+
+// Options for GetMultipleAccounts.
+message GetMultipleAccountsOpts {
+  EncodingType encoding = 1;
+  CommitmentType commitment = 2;
+  DataSlice data_slice = 3;
+  uint64 min_context_slot = 4;
+}
+
+message OptionalAccountWrapper {
+  optional Account account = 1;
+}
+
+// Reply for GetMultipleAccountsWithOpts.
+message GetMultipleAccountsWithOptsReply {
+  repeated OptionalAccountWrapper value = 2; // accounts (nil entries allowed)
+}
+
+// Request for GetMultipleAccountsWithOpts.
+message GetMultipleAccountsWithOptsRequest {
+  repeated bytes accounts = 1; // list of 32-byte Pubkeys
+  GetMultipleAccountsOpts opts = 2;
+}
+
+// Memcmp filter for getProgramAccounts.
+message RPCFilterMemcmp {
+  uint64 offset = 1; // byte offset into account data
+  bytes bytes = 2; // data to match (RPC encodes as base58)
+}
+
+// Account filter for getProgramAccounts (memcmp or data size).
+message RPCFilter {
+  RPCFilterMemcmp memcmp = 1;
+  uint64 data_size = 2; // match accounts with this data length
+}
+
+// Options for GetProgramAccounts.
+message GetProgramAccountsOpts {
+  EncodingType encoding = 1;
+  CommitmentType commitment = 2;
+  DataSlice data_slice = 3;
+  repeated RPCFilter filters = 4;
+}
+
+// Program-owned account with its pubkey.
+message KeyedAccount {
+  bytes pubkey = 1; // 32-byte Pubkey
+  Account account = 2;
+}
+
+// Reply for GetProgramAccounts.
+message GetProgramAccountsReply {
+  repeated KeyedAccount value = 1;
+}
+
+// Request for GetProgramAccounts.
+message GetProgramAccountsRequest {
+  bytes program = 1; // 32-byte program Pubkey
+  GetProgramAccountsOpts opts = 2;
+}
+
+// Reply for GetSignatureStatuses.
+message GetSignatureStatusesReply {
+  repeated GetSignatureStatusesResult results = 1; // 1:1 with input
+}
+
+// Request for GetSignatureStatuses.
+message GetSignatureStatusesRequest {
+  repeated bytes sigs = 1; // 64-byte signatures
+}
+
+// Per-signature status.
+message GetSignatureStatusesResult {
+  uint64 slot = 1; // processed slot
+  optional uint64 confirmations = 2; // null->0 here
+  string err = 3; // error JSON string (empty on success)
+  ConfirmationStatusType confirmation_status = 4;
+}
+
+// Current “height” (blocks below latest).
+message GetSlotHeightReply {
+  uint64 height = 1;
+}
+
+message GetSlotHeightRequest {
+  CommitmentType commitment = 1; // read consistency
+}
+
+// Message header counts.
+message MessageHeader {
+  uint32 num_required_signatures = 1; // signer count
+  uint32 num_readonly_signed_accounts = 2; // trailing signed RO
+  uint32 num_readonly_unsigned_accounts = 3; // trailing unsigned RO
+}
+
+// Parsed message (no address tables).
+message ParsedMessage {
+  bytes recent_blockhash = 1; // 32-byte Hash
+  repeated bytes account_keys = 2; // list of 32-byte Pubkeys
+  MessageHeader header = 3;
+  repeated CompiledInstruction instructions = 4;
+}
+
+// Parsed transaction (signatures + message).
+message ParsedTransaction {
+  repeated bytes signatures = 1; // 64-byte signatures
+  ParsedMessage message = 2;
+}
+
+// Token amount (UI-friendly).
+message UiTokenAmount {
+  string amount = 1; // raw integer string
+  uint32 decimals = 2; // mint decimals
+  string ui_amount_string = 4; // amount / 10^decimals
+}
+
+// SPL token balance entry.
+message TokenBalance {
+  uint32 account_index = 1; // index in account_keys
+  optional bytes owner = 2; // 32-byte owner (optional)
+  optional bytes program_id = 3; // 32-byte token program (optional)
+  bytes mint = 4; // 32-byte mint
+  UiTokenAmount ui = 5; // formatted amounts
+}
+
+// Inner instruction list at a given outer instruction index.
+message InnerInstruction {
+  uint32 index = 1; // outer ix index
+  repeated CompiledInstruction instructions = 2; // invoked ixs
+}
+
+// Address table lookups expanded by loader.
+message LoadedAddresses {
+  repeated bytes readonly = 1; // 32-byte Pubkeys
+  repeated bytes writable = 2; // 32-byte Pubkeys
+}
+
+// Compiled (program) instruction.
+message CompiledInstruction {
+  uint32 program_id_index = 1; // index into account_keys
+  repeated uint32 accounts = 2; // indices into account_keys
+  bytes data = 3; // program input bytes
+  uint32 stack_height = 4; // if recorded by node
+}
+
+// Raw bytes with encoding tag.
+message Data {
+  bytes content = 1; // raw bytes
+  EncodingType encoding = 2; // how it was encoded originally
+}
+
+// Program return data.
+message ReturnData {
+  bytes program_id = 1; // 32-byte Pubkey
+  Data data = 2; // raw return bytes
+}
+
+// Transaction execution metadata.
+message TransactionMeta {
+  string err_json = 1; // error JSON (empty on success)
+  uint64 fee = 2; // lamports
+  repeated uint64 pre_balances = 3; // lamports per account
+  repeated uint64 post_balances = 4; // lamports per account
+  repeated string log_messages = 5; // runtime logs
+  repeated TokenBalance pre_token_balances = 6;
+  repeated TokenBalance post_token_balances = 7;
+  repeated InnerInstruction inner_instructions = 8;
+  LoadedAddresses loaded_addresses = 9;
+  ReturnData return_data = 10;
+  optional uint64 compute_units_consumed = 11; // CUs
+}
+
+// Transaction envelope: raw bytes or parsed struct.
+message TransactionEnvelope {
+  oneof transaction {
+    bytes raw = 1; // raw tx bytes (for RAW/base64)
+    ParsedTransaction parsed = 2; // parsed tx (for JSON_PARSED)
+  }
+}
+
+// GetTransaction reply.
+message GetTransactionReply {
+  uint64 slot = 1; // processed slot
+  optional int64 block_time = 2; // unix seconds
+  optional TransactionEnvelope transaction = 3; // tx bytes or parsed
+  optional TransactionMeta meta = 4; // may be omitted by node
+}
+
+// GetTransaction request.
+message GetTransactionRequest {
+  bytes signature = 1; // 64-byte signature
+}
+
+// Simulation options.
+message SimulateTXOpts {
+  bool sig_verify = 1; // verify sigs
+  CommitmentType commitment = 2; // read consistency
+  bool replace_recent_blockhash = 3; // refresh blockhash
+  SimulateTransactionAccountsOpts accounts = 4; // return accounts
+}
+
+// Simulation result.
+message SimulateTXReply {
+  string err = 1; // empty on success
+  repeated string logs = 2; // runtime logs
+  repeated Account accounts = 3; // returned accounts
+  uint64 units_consumed = 4; // CUs
+}
+
+// Simulation request.
+message SimulateTXRequest {
+  bytes receiver = 1; // 32-byte program id (target)
+  string encoded_transaction = 2; // base64/base58 tx
+  SimulateTXOpts opts = 3;
+}
+
+// Accounts to return during simulation.
+message SimulateTransactionAccountsOpts {
+  EncodingType encoding = 1; // account data encoding
+  repeated bytes addresses = 2; // 32-byte Pubkeys
+}
+
+enum ComparisonOperator {
+  COMPARISON_OPERATOR_EQ = 0;
+  COMPARISON_OPERATOR_NEQ = 1;
+  COMPARISON_OPERATOR_GT = 2;
+  COMPARISON_OPERATOR_LT = 3;
+  COMPARISON_OPERATOR_GTE = 4;
+  COMPARISON_OPERATOR_LTE = 5;
+}
+
+message ValueComparator {
+  bytes value = 1;
+  ComparisonOperator operator = 2;
+}
+
+message SubkeyConfig {
+  repeated string path = 1;
+  repeated ValueComparator comparers = 2;
+}
+
+message CPIFilterConfig {
+  bytes dest_address = 1;
+  bytes method_name = 2;
+}
+
+message FilterLogTriggerRequest {
+  string name = 1;
+  bytes address = 2; // Solana PublicKey (32 bytes)
+  string event_name = 3;
+  bytes contract_idl_json = 4;
+  repeated SubkeyConfig subkeys = 5;
+  optional CPIFilterConfig cpi_filter_config = 6;
+}
+
+message Log {
+  string chain_id = 1; // Chain identifier
+  int64 log_index = 2; // Index of the log within the block
+  bytes block_hash = 3; // 32-byte block hash
+  int64 block_number = 4; // Block/slot number
+  uint64 block_timestamp = 5; // Unix timestamp of the block
+  bytes address = 6; // 32-byte program PublicKey
+  bytes event_sig = 7; // 8-byte event signature
+  bytes tx_hash = 8; // 64-byte transaction signature
+  bytes data = 9; // Decoded event data
+  int64 sequence_num = 10; // Sequence number for ordering
+  optional string error = 11; // Error message if log processing failed
 }
 
 // All metas are non-signers.
@@ -515,6 +919,16 @@ service Client {
     }
   };
 
+  rpc GetAccountInfoWithOpts(GetAccountInfoWithOptsRequest) returns (GetAccountInfoWithOptsReply);
+  rpc GetBalance(GetBalanceRequest) returns (GetBalanceReply);
+  rpc GetBlock(GetBlockRequest) returns (GetBlockReply);
+  rpc GetFeeForMessage(GetFeeForMessageRequest) returns (GetFeeForMessageReply);
+  rpc GetMultipleAccountsWithOpts(GetMultipleAccountsWithOptsRequest) returns (GetMultipleAccountsWithOptsReply);
+  rpc GetProgramAccounts(GetProgramAccountsRequest) returns (GetProgramAccountsReply);
+  rpc GetSignatureStatuses(GetSignatureStatusesRequest) returns (GetSignatureStatusesReply);
+  rpc GetSlotHeight(GetSlotHeightRequest) returns (GetSlotHeightReply);
+  rpc GetTransaction(GetTransactionRequest) returns (GetTransactionReply);
+  rpc LogTrigger(FilterLogTriggerRequest) returns (stream Log);
   rpc WriteReport(WriteReportRequest) returns (WriteReportReply);
 }
 `
@@ -523,6 +937,8 @@ const computeConfidentialworkflowV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.compute.confidentialworkflow.v1alpha;
 
+import "google/protobuf/empty.proto";
+import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
 
 message SecretIdentifier {
@@ -532,11 +948,17 @@ message SecretIdentifier {
 }
 
 // WorkflowExecution is the public data sent to the enclave.
-// Becomes ComputeRequest.PublicData after proto serialization.
+// Becomes ComputeRequest.PublicData after proto serialization, which is
+// covered by ComputeRequest.Hash() for F+1 quorum matching at the enclave.
 message WorkflowExecution {
   // workflow_id identifies the workflow to execute.
   string workflow_id = 1;
-  // binary_url is the URL from which the enclave fetches the compiled WASM binary.
+  // binary_url is the URL from which the enclave fetches the compiled WASM
+  // binary. It lives inside WorkflowExecution (PublicData), covered by
+  // ComputeRequest.Hash() for F+1 quorum, so every node agrees on the same
+  // canonical locator. Authentication to the storage service is handled out of
+  // band by the fetch sidecar, so this is a stable, node-agnostic locator
+  // rather than a per-node pre-signed URL.
   string binary_url = 2;
   // binary_hash is the expected SHA-256 hash of the WASM binary, for integrity verification.
   bytes binary_hash = 3;
@@ -549,6 +971,22 @@ message WorkflowExecution {
   // execution_id is the unique execution identifier (64 hex chars, 32 bytes).
   // Used by the enclave for runtime secret fetching from VaultDON.
   string execution_id = 6;
+  // org_id is the organization identifier for the workflow owner.
+  // Used by the enclave when fetching secrets from VaultDON with org-based ownership.
+  string org_id = 7;
+  // requirements describes what is needed to run this workflow (e.g. TEE type
+  // and regions).
+  sdk.v1alpha.Requirements requirements = 8;
+  // sdk_execute_request is the structured form of execute_request. It carries
+  // the same sdk.v1alpha.ExecuteRequest as the serialized execute_request bytes
+  // field; the two are independent on the wire (setting one does not populate
+  // the other). Consumers that want the typed message read this; legacy
+  // consumers continue to unmarshal execute_request.
+  sdk.v1alpha.ExecuteRequest sdk_execute_request = 9;
+
+  // restrictions on the capabilities and the secrets.bool
+  // This is sent to avoid overhead when a TEE is not compromised, the DON will verify the restrictions on its end as well.
+  sdk.v1alpha.Restrictions restrictions = 10;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
@@ -556,12 +994,25 @@ message WorkflowExecution {
 message ConfidentialWorkflowRequest {
   repeated SecretIdentifier vault_don_secrets = 1;
   WorkflowExecution execution = 2;
+  // Deprecated: the per-node pre-signed URL approach is superseded. binary_url
+  // now travels inside WorkflowExecution (PublicData) as a canonical locator,
+  // with authentication to the storage service handled out of band by the fetch
+  // sidecar. Retained for back-compat; no longer populated.
+  string binary_url = 3 [deprecated = true];
 }
 
 // ConfidentialWorkflowResponse is the output from the confidential workflows capability.
 message ConfidentialWorkflowResponse {
   // execution_result is a serialized sdk.v1alpha.ExecutionResult proto.
   bytes execution_result = 1;
+  // sdk_execution_result is the structured form of execution_result. It carries
+  // the same sdk.v1alpha.ExecutionResult as the serialized execution_result
+  // bytes field; the two are independent on the wire.
+  sdk.v1alpha.ExecutionResult sdk_execution_result = 2;
+}
+
+message ProvidedTeesResponse {
+  repeated sdk.v1alpha.TeeTypeAndRegions tee = 1;
 }
 
 service Client {
@@ -571,6 +1022,7 @@ service Client {
   };
 
   rpc Execute(ConfidentialWorkflowRequest) returns (ConfidentialWorkflowResponse);
+  rpc ProvidedTees(google.protobuf.Empty) returns (ProvidedTeesResponse);
 }
 `
 
@@ -870,6 +1322,7 @@ service Client {
   option (tools.generator.v1alpha.capability) = {
     mode: MODE_NODE
     capability_id: "http-actions@1.0.0-alpha"
+    additional_environments: [ADDITIONAL_ENVIRONMENTS_TEE]
   };
   rpc SendRequest(Request) returns (Response);
 }
@@ -1031,6 +1484,18 @@ message TriggerSubscription {
   string id = 1;
   google.protobuf.Any payload = 2;
   string method = 3;
+  Requirements requirements = 4;
+  bool pre_hook = 5;
+}
+
+enum TeeType {
+  TEE_TYPE_UNSPECIFIED = 0;
+  TEE_TYPE_AWS_NITRO = 1;
+}
+
+message TeeTypeAndRegions {
+  TeeType type = 1;
+  repeated string regions = 3;
 }
 
 message TriggerSubscriptionRequest {
@@ -1040,6 +1505,25 @@ message TriggerSubscriptionRequest {
 message Trigger {
   uint64 id = 1;
   google.protobuf.Any payload = 2;
+}
+
+message Regions {
+  repeated string regions = 1;
+}
+
+message TeeTypesAndRegions {
+  repeated TeeTypeAndRegions tee_type_and_regions = 1;
+}
+
+message Tee {
+  oneof item {
+    Regions any_regions = 1;
+    TeeTypesAndRegions tee_types_and_regions = 2;
+  }
+}
+
+message Requirements {
+  Tee tee = 1;
 }
 
 message AwaitCapabilitiesRequest {
@@ -1054,6 +1538,7 @@ message ExecuteRequest {
   oneof request {
     google.protobuf.Empty subscribe = 2;
     Trigger trigger = 3;
+    Trigger pre_hook = 5;
   }
   uint64 max_response_size = 4;
 }
@@ -1063,6 +1548,7 @@ message ExecutionResult {
     values.v1.Value value = 1;
     string error = 2;
     TriggerSubscriptionRequest trigger_subscriptions = 3;
+    Restrictions restrictions = 4;
   }
 }
 
@@ -1107,6 +1593,52 @@ message SecretResponse {
 
 message SecretResponses {
   repeated SecretResponse responses = 1;
+}
+
+message MethodRestriction {
+  string id = 1;
+  string method = 2;
+  uint32 max_calls = 3;
+}
+
+message CapabilityRestriction {
+  oneof restriction {
+    MethodRestriction method = 1;
+  }
+}
+
+enum CapabilityRestrictionType {
+  CAPABILITY_RESTRICTION_TYPE_CLOSED = 0;
+  CAPABILITY_RESTRICTION_TYPE_OPEN = 1;
+}
+
+message CapabilityRestrictions {
+  repeated CapabilityRestriction restrictions = 1;
+  uint32 max_total_calls = 2;
+  CapabilityRestrictionType type = 3;
+}
+
+message SecretPrefixRestriction {
+  string prefix = 1;
+  string namespace = 2;
+  uint32 max_secrets = 3;
+}
+
+message SecretRestriction {
+  oneof restriction {
+    Secret exact_secret = 1;
+    SecretPrefixRestriction prefixed_secret = 2;
+  }
+}
+
+message SecretsRestritions {
+  repeated SecretRestriction restrictions = 1;
+  uint32 max_secrets = 2;
+}
+
+message Restrictions {
+  SecretsRestritions secrets = 1;
+  CapabilityRestrictions capabilities = 2;
 }
 `
 
@@ -1307,10 +1839,16 @@ message Label {
   }
 }
 
+enum AdditionalEnvironments {
+  ADDITIONAL_ENVIRONMENTS_UNSPECIFIED = 0;
+  ADDITIONAL_ENVIRONMENTS_TEE = 1;
+}
+
 message CapabilityMetadata {
   sdk.v1alpha.Mode mode = 1;
   string capability_id = 2;
   map<string, Label> labels = 3;
+  repeated AdditionalEnvironments additional_environments = 4;
 }
 
 extend google.protobuf.ServiceOptions {

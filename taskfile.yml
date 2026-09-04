@@ -25,6 +25,7 @@ tasks:
       - task proto:gen:metering
       - task proto:gen:storage-service
       - task proto:gen:op-catalog
+      - task proto:gen:op-domain
       - task proto:gen:data-feeds
       - task proto:gen:rane
       - task proto:gen:node-platform
@@ -101,6 +102,13 @@ tasks:
       - task: proto:gen
         vars:
           SERVICE_NAME: op-catalog
+
+  proto:gen:op-domain:
+    desc: "Generate Go code from protobuf files for op-domain"
+    cmds:
+      - find ./op-domain/ -name '*.pb.go' -delete
+      - find ./op-domain/ -name '*.connect.go' -delete
+      - buf generate --template op-domain/buf.gen.yaml op-domain
 
   proto:gen:data-feeds:
     desc: "Generate Go code from protobuf files for data-feeds"
