@@ -9,6 +9,7 @@ package v1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -95,21 +96,21 @@ type CLJobInfo struct {
 	Hostname     string `protobuf:"bytes,3,opt,name=hostname,proto3" json:"hostname,omitempty"`
 	// Job identity — fields common to every job type (they live on job.Job
 	// itself rather than a type-specific spec).
-	ExternalJobId     string  `protobuf:"bytes,10,opt,name=external_job_id,json=externalJobId,proto3" json:"external_job_id,omitempty"`
-	JobId             int32   `protobuf:"varint,11,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
-	Name              string  `protobuf:"bytes,12,opt,name=name,proto3" json:"name,omitempty"`
-	JobType           string  `protobuf:"bytes,13,opt,name=job_type,json=jobType,proto3" json:"job_type,omitempty"`
-	SchemaVersion     uint32  `protobuf:"varint,14,opt,name=schema_version,json=schemaVersion,proto3" json:"schema_version,omitempty"`
-	ForwardingAllowed bool    `protobuf:"varint,15,opt,name=forwarding_allowed,json=forwardingAllowed,proto3" json:"forwarding_allowed,omitempty"`
-	GasLimit          *uint32 `protobuf:"varint,16,opt,name=gas_limit,json=gasLimit,proto3,oneof" json:"gas_limit,omitempty"`
-	StreamId          *uint32 `protobuf:"varint,17,opt,name=stream_id,json=streamId,proto3,oneof" json:"stream_id,omitempty"`
-	CreatedAt         string  `protobuf:"bytes,18,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	ExternalJobId     string                 `protobuf:"bytes,10,opt,name=external_job_id,json=externalJobId,proto3" json:"external_job_id,omitempty"`
+	JobId             int32                  `protobuf:"varint,11,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
+	Name              string                 `protobuf:"bytes,12,opt,name=name,proto3" json:"name,omitempty"`
+	JobType           string                 `protobuf:"bytes,13,opt,name=job_type,json=jobType,proto3" json:"job_type,omitempty"`
+	SchemaVersion     uint32                 `protobuf:"varint,14,opt,name=schema_version,json=schemaVersion,proto3" json:"schema_version,omitempty"`
+	ForwardingAllowed bool                   `protobuf:"varint,15,opt,name=forwarding_allowed,json=forwardingAllowed,proto3" json:"forwarding_allowed,omitempty"`
+	GasLimit          *uint32                `protobuf:"varint,16,opt,name=gas_limit,json=gasLimit,proto3,oneof" json:"gas_limit,omitempty"`
+	StreamId          *uint32                `protobuf:"varint,17,opt,name=stream_id,json=streamId,proto3,oneof" json:"stream_id,omitempty"`
+	CreatedAt         *timestamppb.Timestamp `protobuf:"bytes,18,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	// Complete job definition serialized as TOML. Captures all type-specific
 	// spec fields for any job type without requiring a per-type schema.
 	SpecToml string `protobuf:"bytes,30,opt,name=spec_toml,json=specToml,proto3" json:"spec_toml,omitempty"`
 	// Event metadata.
-	Trigger   CLJobInfoTrigger `protobuf:"varint,40,opt,name=trigger,proto3,enum=common.v1.CLJobInfoTrigger" json:"trigger,omitempty"`
-	Timestamp string           `protobuf:"bytes,41,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Trigger   CLJobInfoTrigger       `protobuf:"varint,40,opt,name=trigger,proto3,enum=common.v1.CLJobInfoTrigger" json:"trigger,omitempty"`
+	Timestamp *timestamppb.Timestamp `protobuf:"bytes,41,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	// Job Distributor provenance, set only for jobs that reached the node as an
 	// approved job proposal. Jobs created directly (CLI, UI, TOML on disk) leave
 	// these unset, which is itself the signal that the job is unmanaged.
@@ -119,9 +120,10 @@ type CLJobInfo struct {
 	RemoteUuid *string `protobuf:"bytes,51,opt,name=remote_uuid,json=remoteUuid,proto3,oneof" json:"remote_uuid,omitempty"`
 	// spec_version is the revision of the approved proposal spec that produced
 	// the running job.
-	SpecVersion   *int32  `protobuf:"varint,52,opt,name=spec_version,json=specVersion,proto3,oneof" json:"spec_version,omitempty"`
-	ProposedAt    *string `protobuf:"bytes,53,opt,name=proposed_at,json=proposedAt,proto3,oneof" json:"proposed_at,omitempty"`
-	ApprovedAt    *string `protobuf:"bytes,54,opt,name=approved_at,json=approvedAt,proto3,oneof" json:"approved_at,omitempty"`
+	SpecVersion *int32 `protobuf:"varint,52,opt,name=spec_version,json=specVersion,proto3,oneof" json:"spec_version,omitempty"`
+	// Unset (nil) rather than the epoch when the job has no approved proposal.
+	ProposedAt    *timestamppb.Timestamp `protobuf:"bytes,53,opt,name=proposed_at,json=proposedAt,proto3" json:"proposed_at,omitempty"`
+	ApprovedAt    *timestamppb.Timestamp `protobuf:"bytes,54,opt,name=approved_at,json=approvedAt,proto3" json:"approved_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -233,11 +235,11 @@ func (x *CLJobInfo) GetStreamId() uint32 {
 	return 0
 }
 
-func (x *CLJobInfo) GetCreatedAt() string {
+func (x *CLJobInfo) GetCreatedAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.CreatedAt
 	}
-	return ""
+	return nil
 }
 
 func (x *CLJobInfo) GetSpecToml() string {
@@ -254,11 +256,11 @@ func (x *CLJobInfo) GetTrigger() CLJobInfoTrigger {
 	return CLJobInfoTrigger_CL_JOB_INFO_TRIGGER_UNSPECIFIED
 }
 
-func (x *CLJobInfo) GetTimestamp() string {
+func (x *CLJobInfo) GetTimestamp() *timestamppb.Timestamp {
 	if x != nil {
 		return x.Timestamp
 	}
-	return ""
+	return nil
 }
 
 func (x *CLJobInfo) GetFeedsManagerId() int64 {
@@ -282,25 +284,25 @@ func (x *CLJobInfo) GetSpecVersion() int32 {
 	return 0
 }
 
-func (x *CLJobInfo) GetProposedAt() string {
-	if x != nil && x.ProposedAt != nil {
-		return *x.ProposedAt
+func (x *CLJobInfo) GetProposedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ProposedAt
 	}
-	return ""
+	return nil
 }
 
-func (x *CLJobInfo) GetApprovedAt() string {
-	if x != nil && x.ApprovedAt != nil {
-		return *x.ApprovedAt
+func (x *CLJobInfo) GetApprovedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ApprovedAt
 	}
-	return ""
+	return nil
 }
 
 var File_node_platform_common_v1_cl_job_info_proto protoreflect.FileDescriptor
 
 const file_node_platform_common_v1_cl_job_info_proto_rawDesc = "" +
 	"\n" +
-	")node-platform/common/v1/cl_job_info.proto\x12\tcommon.v1\"\xc4\x06\n" +
+	")node-platform/common/v1/cl_job_info.proto\x12\tcommon.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8a\a\n" +
 	"\tCLJobInfo\x12$\n" +
 	"\x0ecsa_public_key\x18\x01 \x01(\tR\fcsaPublicKey\x12!\n" +
 	"\fnode_version\x18\x02 \x01(\tR\vnodeVersion\x12\x1a\n" +
@@ -313,29 +315,27 @@ const file_node_platform_common_v1_cl_job_info_proto_rawDesc = "" +
 	"\x0eschema_version\x18\x0e \x01(\rR\rschemaVersion\x12-\n" +
 	"\x12forwarding_allowed\x18\x0f \x01(\bR\x11forwardingAllowed\x12 \n" +
 	"\tgas_limit\x18\x10 \x01(\rH\x00R\bgasLimit\x88\x01\x01\x12 \n" +
-	"\tstream_id\x18\x11 \x01(\rH\x01R\bstreamId\x88\x01\x01\x12\x1d\n" +
+	"\tstream_id\x18\x11 \x01(\rH\x01R\bstreamId\x88\x01\x01\x129\n" +
 	"\n" +
-	"created_at\x18\x12 \x01(\tR\tcreatedAt\x12\x1b\n" +
+	"created_at\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x1b\n" +
 	"\tspec_toml\x18\x1e \x01(\tR\bspecToml\x125\n" +
-	"\atrigger\x18( \x01(\x0e2\x1b.common.v1.CLJobInfoTriggerR\atrigger\x12\x1c\n" +
-	"\ttimestamp\x18) \x01(\tR\ttimestamp\x12-\n" +
+	"\atrigger\x18( \x01(\x0e2\x1b.common.v1.CLJobInfoTriggerR\atrigger\x128\n" +
+	"\ttimestamp\x18) \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12-\n" +
 	"\x10feeds_manager_id\x182 \x01(\x03H\x02R\x0efeedsManagerId\x88\x01\x01\x12$\n" +
 	"\vremote_uuid\x183 \x01(\tH\x03R\n" +
 	"remoteUuid\x88\x01\x01\x12&\n" +
-	"\fspec_version\x184 \x01(\x05H\x04R\vspecVersion\x88\x01\x01\x12$\n" +
-	"\vproposed_at\x185 \x01(\tH\x05R\n" +
-	"proposedAt\x88\x01\x01\x12$\n" +
-	"\vapproved_at\x186 \x01(\tH\x06R\n" +
-	"approvedAt\x88\x01\x01B\f\n" +
+	"\fspec_version\x184 \x01(\x05H\x04R\vspecVersion\x88\x01\x01\x12;\n" +
+	"\vproposed_at\x185 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"proposedAt\x12;\n" +
+	"\vapproved_at\x186 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"approvedAtB\f\n" +
 	"\n" +
 	"_gas_limitB\f\n" +
 	"\n" +
 	"_stream_idB\x13\n" +
 	"\x11_feeds_manager_idB\x0e\n" +
 	"\f_remote_uuidB\x0f\n" +
-	"\r_spec_versionB\x0e\n" +
-	"\f_proposed_atB\x0e\n" +
-	"\f_approved_at*\x9a\x01\n" +
+	"\r_spec_version*\x9a\x01\n" +
 	"\x10CLJobInfoTrigger\x12#\n" +
 	"\x1fCL_JOB_INFO_TRIGGER_UNSPECIFIED\x10\x00\x12!\n" +
 	"\x1dCL_JOB_INFO_TRIGGER_HEARTBEAT\x10\x01\x12\x1e\n" +
@@ -357,16 +357,21 @@ func file_node_platform_common_v1_cl_job_info_proto_rawDescGZIP() []byte {
 var file_node_platform_common_v1_cl_job_info_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_node_platform_common_v1_cl_job_info_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_node_platform_common_v1_cl_job_info_proto_goTypes = []any{
-	(CLJobInfoTrigger)(0), // 0: common.v1.CLJobInfoTrigger
-	(*CLJobInfo)(nil),     // 1: common.v1.CLJobInfo
+	(CLJobInfoTrigger)(0),         // 0: common.v1.CLJobInfoTrigger
+	(*CLJobInfo)(nil),             // 1: common.v1.CLJobInfo
+	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
 }
 var file_node_platform_common_v1_cl_job_info_proto_depIdxs = []int32{
-	0, // 0: common.v1.CLJobInfo.trigger:type_name -> common.v1.CLJobInfoTrigger
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2, // 0: common.v1.CLJobInfo.created_at:type_name -> google.protobuf.Timestamp
+	0, // 1: common.v1.CLJobInfo.trigger:type_name -> common.v1.CLJobInfoTrigger
+	2, // 2: common.v1.CLJobInfo.timestamp:type_name -> google.protobuf.Timestamp
+	2, // 3: common.v1.CLJobInfo.proposed_at:type_name -> google.protobuf.Timestamp
+	2, // 4: common.v1.CLJobInfo.approved_at:type_name -> google.protobuf.Timestamp
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_node_platform_common_v1_cl_job_info_proto_init() }

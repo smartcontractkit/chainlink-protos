@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package common.v1;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "github.com/smartcontractkit/chainlink-protos/node-platform/common/v1";
 
 // CLJobInfo is a generic, type-agnostic snapshot of a single Chainlink job.
@@ -33,7 +35,7 @@ message CLJobInfo {
   bool forwarding_allowed = 15;
   optional uint32 gas_limit = 16;
   optional uint32 stream_id = 17;
-  string created_at = 18;
+  google.protobuf.Timestamp created_at = 18;
 
   // Complete job definition serialized as TOML. Captures all type-specific
   // spec fields for any job type without requiring a per-type schema.
@@ -41,7 +43,7 @@ message CLJobInfo {
 
   // Event metadata.
   CLJobInfoTrigger trigger = 40;
-  string timestamp = 41;
+  google.protobuf.Timestamp timestamp = 41;
 
   // Job Distributor provenance, set only for jobs that reached the node as an
   // approved job proposal. Jobs created directly (CLI, UI, TOML on disk) leave
@@ -53,8 +55,9 @@ message CLJobInfo {
   // spec_version is the revision of the approved proposal spec that produced
   // the running job.
   optional int32 spec_version = 52;
-  optional string proposed_at = 53;
-  optional string approved_at = 54;
+  // Unset (nil) rather than the epoch when the job has no approved proposal.
+  google.protobuf.Timestamp proposed_at = 53;
+  google.protobuf.Timestamp approved_at = 54;
 }
 
 // CLJobInfoTrigger is the reason a CLJobInfo event was emitted.
