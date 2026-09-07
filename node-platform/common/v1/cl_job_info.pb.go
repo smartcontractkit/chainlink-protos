@@ -9,7 +9,6 @@ package v1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -88,6 +87,15 @@ func (CLJobInfoTrigger) EnumDescriptor() ([]byte, []int) {
 // carries a structured spec, both carry the TOML document as an opaque string
 // alongside identity metadata. No JD message describes a job's contents, so
 // there is nothing to reuse here and this message follows the same shape.
+//
+// Timestamps are int64 epoch milliseconds rather than google.protobuf.Timestamp.
+// No proto registered with chip-ingress from any domain imports a well-known
+// type — every import in node-platform and data-feeds is a local, same-domain
+// file. This message originally used google.protobuf.Timestamp, registered
+// against staging successfully, and then never had a table created, while
+// NodeBuildInfo from the same node and the same emitter kept landing. Enums and
+// `optional` are fine on this path: data-feeds job_spec_event.proto uses both
+// and has a table.
 type CLJobInfo struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Node identity.
@@ -96,21 +104,26 @@ type CLJobInfo struct {
 	Hostname     string `protobuf:"bytes,3,opt,name=hostname,proto3" json:"hostname,omitempty"`
 	// Job identity — fields common to every job type (they live on job.Job
 	// itself rather than a type-specific spec).
-	ExternalJobId     string                 `protobuf:"bytes,10,opt,name=external_job_id,json=externalJobId,proto3" json:"external_job_id,omitempty"`
-	JobId             int32                  `protobuf:"varint,11,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
-	Name              string                 `protobuf:"bytes,12,opt,name=name,proto3" json:"name,omitempty"`
-	JobType           string                 `protobuf:"bytes,13,opt,name=job_type,json=jobType,proto3" json:"job_type,omitempty"`
-	SchemaVersion     uint32                 `protobuf:"varint,14,opt,name=schema_version,json=schemaVersion,proto3" json:"schema_version,omitempty"`
-	ForwardingAllowed bool                   `protobuf:"varint,15,opt,name=forwarding_allowed,json=forwardingAllowed,proto3" json:"forwarding_allowed,omitempty"`
-	GasLimit          *uint32                `protobuf:"varint,16,opt,name=gas_limit,json=gasLimit,proto3,oneof" json:"gas_limit,omitempty"`
-	StreamId          *uint32                `protobuf:"varint,17,opt,name=stream_id,json=streamId,proto3,oneof" json:"stream_id,omitempty"`
-	CreatedAt         *timestamppb.Timestamp `protobuf:"bytes,18,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	ExternalJobId     string  `protobuf:"bytes,10,opt,name=external_job_id,json=externalJobId,proto3" json:"external_job_id,omitempty"`
+	JobId             int32   `protobuf:"varint,11,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
+	Name              string  `protobuf:"bytes,12,opt,name=name,proto3" json:"name,omitempty"`
+	JobType           string  `protobuf:"bytes,13,opt,name=job_type,json=jobType,proto3" json:"job_type,omitempty"`
+	SchemaVersion     uint32  `protobuf:"varint,14,opt,name=schema_version,json=schemaVersion,proto3" json:"schema_version,omitempty"`
+	ForwardingAllowed bool    `protobuf:"varint,15,opt,name=forwarding_allowed,json=forwardingAllowed,proto3" json:"forwarding_allowed,omitempty"`
+	GasLimit          *uint32 `protobuf:"varint,16,opt,name=gas_limit,json=gasLimit,proto3,oneof" json:"gas_limit,omitempty"`
+	StreamId          *uint32 `protobuf:"varint,17,opt,name=stream_id,json=streamId,proto3,oneof" json:"stream_id,omitempty"`
+	// Unix epoch milliseconds, UTC; unset when the job has no creation time.
+	// Milliseconds rather than an RFC3339 string because Go trims trailing zeros
+	// from the fractional seconds, which makes those strings variable-width and
+	// not lexicographically ordered: a whole-second value sorts after every
+	// sub-second value in the same second.
+	CreatedAtMs *int64 `protobuf:"varint,18,opt,name=created_at_ms,json=createdAtMs,proto3,oneof" json:"created_at_ms,omitempty"`
 	// Complete job definition serialized as TOML. Captures all type-specific
 	// spec fields for any job type without requiring a per-type schema.
 	SpecToml string `protobuf:"bytes,30,opt,name=spec_toml,json=specToml,proto3" json:"spec_toml,omitempty"`
 	// Event metadata.
-	Trigger   CLJobInfoTrigger       `protobuf:"varint,40,opt,name=trigger,proto3,enum=common.v1.CLJobInfoTrigger" json:"trigger,omitempty"`
-	Timestamp *timestamppb.Timestamp `protobuf:"bytes,41,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Trigger     CLJobInfoTrigger `protobuf:"varint,40,opt,name=trigger,proto3,enum=common.v1.CLJobInfoTrigger" json:"trigger,omitempty"`
+	TimestampMs int64            `protobuf:"varint,41,opt,name=timestamp_ms,json=timestampMs,proto3" json:"timestamp_ms,omitempty"`
 	// Job Distributor provenance, set only for jobs that reached the node as an
 	// approved job proposal. Jobs created directly (CLI, UI, TOML on disk) leave
 	// these unset, which is itself the signal that the job is unmanaged.
@@ -120,10 +133,9 @@ type CLJobInfo struct {
 	RemoteUuid *string `protobuf:"bytes,51,opt,name=remote_uuid,json=remoteUuid,proto3,oneof" json:"remote_uuid,omitempty"`
 	// spec_version is the revision of the approved proposal spec that produced
 	// the running job.
-	SpecVersion *int32 `protobuf:"varint,52,opt,name=spec_version,json=specVersion,proto3,oneof" json:"spec_version,omitempty"`
-	// Unset (nil) rather than the epoch when the job has no approved proposal.
-	ProposedAt    *timestamppb.Timestamp `protobuf:"bytes,53,opt,name=proposed_at,json=proposedAt,proto3" json:"proposed_at,omitempty"`
-	ApprovedAt    *timestamppb.Timestamp `protobuf:"bytes,54,opt,name=approved_at,json=approvedAt,proto3" json:"approved_at,omitempty"`
+	SpecVersion   *int32 `protobuf:"varint,52,opt,name=spec_version,json=specVersion,proto3,oneof" json:"spec_version,omitempty"`
+	ProposedAtMs  *int64 `protobuf:"varint,53,opt,name=proposed_at_ms,json=proposedAtMs,proto3,oneof" json:"proposed_at_ms,omitempty"`
+	ApprovedAtMs  *int64 `protobuf:"varint,54,opt,name=approved_at_ms,json=approvedAtMs,proto3,oneof" json:"approved_at_ms,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -235,11 +247,11 @@ func (x *CLJobInfo) GetStreamId() uint32 {
 	return 0
 }
 
-func (x *CLJobInfo) GetCreatedAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.CreatedAt
+func (x *CLJobInfo) GetCreatedAtMs() int64 {
+	if x != nil && x.CreatedAtMs != nil {
+		return *x.CreatedAtMs
 	}
-	return nil
+	return 0
 }
 
 func (x *CLJobInfo) GetSpecToml() string {
@@ -256,11 +268,11 @@ func (x *CLJobInfo) GetTrigger() CLJobInfoTrigger {
 	return CLJobInfoTrigger_CL_JOB_INFO_TRIGGER_UNSPECIFIED
 }
 
-func (x *CLJobInfo) GetTimestamp() *timestamppb.Timestamp {
+func (x *CLJobInfo) GetTimestampMs() int64 {
 	if x != nil {
-		return x.Timestamp
+		return x.TimestampMs
 	}
-	return nil
+	return 0
 }
 
 func (x *CLJobInfo) GetFeedsManagerId() int64 {
@@ -284,25 +296,25 @@ func (x *CLJobInfo) GetSpecVersion() int32 {
 	return 0
 }
 
-func (x *CLJobInfo) GetProposedAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.ProposedAt
+func (x *CLJobInfo) GetProposedAtMs() int64 {
+	if x != nil && x.ProposedAtMs != nil {
+		return *x.ProposedAtMs
 	}
-	return nil
+	return 0
 }
 
-func (x *CLJobInfo) GetApprovedAt() *timestamppb.Timestamp {
-	if x != nil {
-		return x.ApprovedAt
+func (x *CLJobInfo) GetApprovedAtMs() int64 {
+	if x != nil && x.ApprovedAtMs != nil {
+		return *x.ApprovedAtMs
 	}
-	return nil
+	return 0
 }
 
 var File_node_platform_common_v1_cl_job_info_proto protoreflect.FileDescriptor
 
 const file_node_platform_common_v1_cl_job_info_proto_rawDesc = "" +
 	"\n" +
-	")node-platform/common/v1/cl_job_info.proto\x12\tcommon.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x8a\a\n" +
+	")node-platform/common/v1/cl_job_info.proto\x12\tcommon.v1\"\xf5\x06\n" +
 	"\tCLJobInfo\x12$\n" +
 	"\x0ecsa_public_key\x18\x01 \x01(\tR\fcsaPublicKey\x12!\n" +
 	"\fnode_version\x18\x02 \x01(\tR\vnodeVersion\x12\x1a\n" +
@@ -315,27 +327,27 @@ const file_node_platform_common_v1_cl_job_info_proto_rawDesc = "" +
 	"\x0eschema_version\x18\x0e \x01(\rR\rschemaVersion\x12-\n" +
 	"\x12forwarding_allowed\x18\x0f \x01(\bR\x11forwardingAllowed\x12 \n" +
 	"\tgas_limit\x18\x10 \x01(\rH\x00R\bgasLimit\x88\x01\x01\x12 \n" +
-	"\tstream_id\x18\x11 \x01(\rH\x01R\bstreamId\x88\x01\x01\x129\n" +
-	"\n" +
-	"created_at\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12\x1b\n" +
+	"\tstream_id\x18\x11 \x01(\rH\x01R\bstreamId\x88\x01\x01\x12'\n" +
+	"\rcreated_at_ms\x18\x12 \x01(\x03H\x02R\vcreatedAtMs\x88\x01\x01\x12\x1b\n" +
 	"\tspec_toml\x18\x1e \x01(\tR\bspecToml\x125\n" +
-	"\atrigger\x18( \x01(\x0e2\x1b.common.v1.CLJobInfoTriggerR\atrigger\x128\n" +
-	"\ttimestamp\x18) \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\x12-\n" +
-	"\x10feeds_manager_id\x182 \x01(\x03H\x02R\x0efeedsManagerId\x88\x01\x01\x12$\n" +
-	"\vremote_uuid\x183 \x01(\tH\x03R\n" +
+	"\atrigger\x18( \x01(\x0e2\x1b.common.v1.CLJobInfoTriggerR\atrigger\x12!\n" +
+	"\ftimestamp_ms\x18) \x01(\x03R\vtimestampMs\x12-\n" +
+	"\x10feeds_manager_id\x182 \x01(\x03H\x03R\x0efeedsManagerId\x88\x01\x01\x12$\n" +
+	"\vremote_uuid\x183 \x01(\tH\x04R\n" +
 	"remoteUuid\x88\x01\x01\x12&\n" +
-	"\fspec_version\x184 \x01(\x05H\x04R\vspecVersion\x88\x01\x01\x12;\n" +
-	"\vproposed_at\x185 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"proposedAt\x12;\n" +
-	"\vapproved_at\x186 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"approvedAtB\f\n" +
+	"\fspec_version\x184 \x01(\x05H\x05R\vspecVersion\x88\x01\x01\x12)\n" +
+	"\x0eproposed_at_ms\x185 \x01(\x03H\x06R\fproposedAtMs\x88\x01\x01\x12)\n" +
+	"\x0eapproved_at_ms\x186 \x01(\x03H\aR\fapprovedAtMs\x88\x01\x01B\f\n" +
 	"\n" +
 	"_gas_limitB\f\n" +
 	"\n" +
-	"_stream_idB\x13\n" +
+	"_stream_idB\x10\n" +
+	"\x0e_created_at_msB\x13\n" +
 	"\x11_feeds_manager_idB\x0e\n" +
 	"\f_remote_uuidB\x0f\n" +
-	"\r_spec_version*\x9a\x01\n" +
+	"\r_spec_versionB\x11\n" +
+	"\x0f_proposed_at_msB\x11\n" +
+	"\x0f_approved_at_ms*\x9a\x01\n" +
 	"\x10CLJobInfoTrigger\x12#\n" +
 	"\x1fCL_JOB_INFO_TRIGGER_UNSPECIFIED\x10\x00\x12!\n" +
 	"\x1dCL_JOB_INFO_TRIGGER_HEARTBEAT\x10\x01\x12\x1e\n" +
@@ -357,21 +369,16 @@ func file_node_platform_common_v1_cl_job_info_proto_rawDescGZIP() []byte {
 var file_node_platform_common_v1_cl_job_info_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_node_platform_common_v1_cl_job_info_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_node_platform_common_v1_cl_job_info_proto_goTypes = []any{
-	(CLJobInfoTrigger)(0),         // 0: common.v1.CLJobInfoTrigger
-	(*CLJobInfo)(nil),             // 1: common.v1.CLJobInfo
-	(*timestamppb.Timestamp)(nil), // 2: google.protobuf.Timestamp
+	(CLJobInfoTrigger)(0), // 0: common.v1.CLJobInfoTrigger
+	(*CLJobInfo)(nil),     // 1: common.v1.CLJobInfo
 }
 var file_node_platform_common_v1_cl_job_info_proto_depIdxs = []int32{
-	2, // 0: common.v1.CLJobInfo.created_at:type_name -> google.protobuf.Timestamp
-	0, // 1: common.v1.CLJobInfo.trigger:type_name -> common.v1.CLJobInfoTrigger
-	2, // 2: common.v1.CLJobInfo.timestamp:type_name -> google.protobuf.Timestamp
-	2, // 3: common.v1.CLJobInfo.proposed_at:type_name -> google.protobuf.Timestamp
-	2, // 4: common.v1.CLJobInfo.approved_at:type_name -> google.protobuf.Timestamp
-	5, // [5:5] is the sub-list for method output_type
-	5, // [5:5] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	0, // 0: common.v1.CLJobInfo.trigger:type_name -> common.v1.CLJobInfoTrigger
+	1, // [1:1] is the sub-list for method output_type
+	1, // [1:1] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_node_platform_common_v1_cl_job_info_proto_init() }
