@@ -4,36 +4,22 @@ package common.v1;
 
 option go_package = "github.com/smartcontractkit/chainlink-protos/node-platform/common/v1";
 
-// CLJobInfo is a generic, type-agnostic snapshot of a single Chainlink job.
+// CLJobInfo is a type-agnostic snapshot of a single Chainlink job: common
+// identity fields plus the whole job definition as TOML, so any job type is
+// reported through one schema with no per-type message or extractor. This is
+// also how JD moves specs around — ProposeJobRequest and Proposal both carry
+// the TOML as an opaque string.
 //
-// Unlike NodeJobInfo (which projects a few specific submitter/transmitter
-// addresses across all jobs into a flat schema), CLJobInfo carries the job's
-// common identity fields plus the complete job definition as a raw TOML string.
-// This lets any job type be reported through a single schema without a
-// dedicated proto message or extractor per job type.
-//
-// spec_toml deliberately mirrors how the Job Distributor already moves a job
-// definition around: neither cfm.ProposeJobRequest nor api.job.v1.Proposal
-// carries a structured spec, both carry the TOML document as an opaque string
-// alongside identity metadata. No JD message describes a job's contents, so
-// there is nothing to reuse here and this message follows the same shape.
-//
-// Timestamps are int64 epoch milliseconds rather than google.protobuf.Timestamp.
-// No proto registered with chip-ingress from any domain imports a well-known
-// type — every import in node-platform and data-feeds is a local, same-domain
-// file. This message originally used google.protobuf.Timestamp, registered
-// against staging successfully, and then never had a table created, while
-// NodeBuildInfo from the same node and the same emitter kept landing. Enums and
-// `optional` are fine on this path: data-feeds job_spec_event.proto uses both
-// and has a table.
+// Timestamps are int64 epoch millis, not google.protobuf.Timestamp: nothing
+// registered with chip-ingress imports a WKT, and the Timestamp version
+// registered fine but never got a table.
 message CLJobInfo {
   // Node identity.
   string csa_public_key = 1;
   string node_version = 2;
   string hostname = 3;
 
-  // Job identity — fields common to every job type (they live on job.Job
-  // itself rather than a type-specific spec).
+  // Job identity — common to every job type.
   string external_job_id = 10;
   int32 job_id = 11;
   string name = 12;
@@ -42,30 +28,23 @@ message CLJobInfo {
   bool forwarding_allowed = 15;
   optional uint32 gas_limit = 16;
   optional uint32 stream_id = 17;
-  // Unix epoch milliseconds, UTC; unset when the job has no creation time.
-  // Milliseconds rather than an RFC3339 string because Go trims trailing zeros
-  // from the fractional seconds, which makes those strings variable-width and
-  // not lexicographically ordered: a whole-second value sorts after every
-  // sub-second value in the same second.
+  // Epoch millis, UTC. Not RFC3339: Go emits those at variable width, so they
+  // don't sort chronologically.
   optional int64 created_at_ms = 18;
 
-  // Complete job definition serialized as TOML. Captures all type-specific
-  // spec fields for any job type without requiring a per-type schema.
+  // Whole job definition as TOML, covering all type-specific spec fields.
   string spec_toml = 30;
 
   // Event metadata.
   CLJobInfoTrigger trigger = 40;
   int64 timestamp_ms = 41;
 
-  // Job Distributor provenance, set only for jobs that reached the node as an
-  // approved job proposal. Jobs created directly (CLI, UI, TOML on disk) leave
-  // these unset, which is itself the signal that the job is unmanaged.
+  // JD provenance. Unset for jobs created directly (CLI, UI, TOML on disk),
+  // which is how a consumer spots an unmanaged job.
   optional int64 feeds_manager_id = 50;
-  // remote_uuid is the proposal's UUID in the Job Distributor, i.e. the join
-  // key back to api.job.v1.Job.uuid.
+  // Join key back to api.job.v1.Job.uuid.
   optional string remote_uuid = 51;
-  // spec_version is the revision of the approved proposal spec that produced
-  // the running job.
+  // Revision of the approved proposal spec that produced this job.
   optional int32 spec_version = 52;
   optional int64 proposed_at_ms = 53;
   optional int64 approved_at_ms = 54;
