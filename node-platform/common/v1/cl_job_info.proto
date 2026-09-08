@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package common.v1;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/node-platform/common/v1";
+
+// CLJobInfo is a type-agnostic snapshot of a single Chainlink job: common
+// identity fields plus the whole job definition as TOML, so any job type is
+// reported through one schema with no per-type message or extractor. This is
+// also how JD moves specs around — ProposeJobRequest and Proposal both carry
+// the TOML as an opaque string.
+//
+// Timestamps are int64 epoch millis, not google.protobuf.Timestamp: nothing
+// registered with chip-ingress imports a WKT, and the Timestamp version
+// registered fine but never got a table.
+message CLJobInfo {
+  // Node identity.
+  string csa_public_key = 1;
+  string node_version = 2;
+  string hostname = 3;
+
+  // Job identity — common to every job type.
+  string external_job_id = 10;
+  int32 job_id = 11;
+  string name = 12;
+  string job_type = 13;
+  uint32 schema_version = 14;
+  bool forwarding_allowed = 15;
+  optional uint32 gas_limit = 16;
+  optional uint32 stream_id = 17;
+  // Epoch millis, UTC. Not RFC3339: Go emits those at variable width, so they
+  // don't sort chronologically.
+  optional int64 created_at_ms = 18;
+
+  // Whole job definition as TOML, covering all type-specific spec fields.
+  string spec_toml = 30;
+
+  // Event metadata.
+  CLJobInfoTrigger trigger = 40;
+  int64 timestamp_ms = 41;
+
+  // JD provenance. Unset for jobs created directly (CLI, UI, TOML on disk),
+  // which is how a consumer spots an unmanaged job.
+  optional int64 feeds_manager_id = 50;
+  // Join key back to api.job.v1.Job.uuid.
+  optional string remote_uuid = 51;
+  // Revision of the approved proposal spec that produced this job.
+  optional int32 spec_version = 52;
+  optional int64 proposed_at_ms = 53;
+  optional int64 approved_at_ms = 54;
+}
+
+// CLJobInfoTrigger is the reason a CLJobInfo event was emitted.
+enum CLJobInfoTrigger {
+  CL_JOB_INFO_TRIGGER_UNSPECIFIED = 0;
+  CL_JOB_INFO_TRIGGER_HEARTBEAT = 1;
+  CL_JOB_INFO_TRIGGER_CREATE = 2;
+  CL_JOB_INFO_TRIGGER_DELETE = 3;
+}
