@@ -74,36 +74,22 @@ func (CLJobInfoTrigger) EnumDescriptor() ([]byte, []int) {
 	return file_node_platform_common_v1_cl_job_info_proto_rawDescGZIP(), []int{0}
 }
 
-// CLJobInfo is a generic, type-agnostic snapshot of a single Chainlink job.
+// CLJobInfo is a type-agnostic snapshot of a single Chainlink job: common
+// identity fields plus the whole job definition as TOML, so any job type is
+// reported through one schema with no per-type message or extractor. This is
+// also how JD moves specs around — ProposeJobRequest and Proposal both carry
+// the TOML as an opaque string.
 //
-// Unlike NodeJobInfo (which projects a few specific submitter/transmitter
-// addresses across all jobs into a flat schema), CLJobInfo carries the job's
-// common identity fields plus the complete job definition as a raw TOML string.
-// This lets any job type be reported through a single schema without a
-// dedicated proto message or extractor per job type.
-//
-// spec_toml deliberately mirrors how the Job Distributor already moves a job
-// definition around: neither cfm.ProposeJobRequest nor api.job.v1.Proposal
-// carries a structured spec, both carry the TOML document as an opaque string
-// alongside identity metadata. No JD message describes a job's contents, so
-// there is nothing to reuse here and this message follows the same shape.
-//
-// Timestamps are int64 epoch milliseconds rather than google.protobuf.Timestamp.
-// No proto registered with chip-ingress from any domain imports a well-known
-// type — every import in node-platform and data-feeds is a local, same-domain
-// file. This message originally used google.protobuf.Timestamp, registered
-// against staging successfully, and then never had a table created, while
-// NodeBuildInfo from the same node and the same emitter kept landing. Enums and
-// `optional` are fine on this path: data-feeds job_spec_event.proto uses both
-// and has a table.
+// Timestamps are int64 epoch millis, not google.protobuf.Timestamp: nothing
+// registered with chip-ingress imports a WKT, and the Timestamp version
+// registered fine but never got a table.
 type CLJobInfo struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Node identity.
 	CsaPublicKey string `protobuf:"bytes,1,opt,name=csa_public_key,json=csaPublicKey,proto3" json:"csa_public_key,omitempty"`
 	NodeVersion  string `protobuf:"bytes,2,opt,name=node_version,json=nodeVersion,proto3" json:"node_version,omitempty"`
 	Hostname     string `protobuf:"bytes,3,opt,name=hostname,proto3" json:"hostname,omitempty"`
-	// Job identity — fields common to every job type (they live on job.Job
-	// itself rather than a type-specific spec).
+	// Job identity — common to every job type.
 	ExternalJobId     string  `protobuf:"bytes,10,opt,name=external_job_id,json=externalJobId,proto3" json:"external_job_id,omitempty"`
 	JobId             int32   `protobuf:"varint,11,opt,name=job_id,json=jobId,proto3" json:"job_id,omitempty"`
 	Name              string  `protobuf:"bytes,12,opt,name=name,proto3" json:"name,omitempty"`
@@ -112,27 +98,20 @@ type CLJobInfo struct {
 	ForwardingAllowed bool    `protobuf:"varint,15,opt,name=forwarding_allowed,json=forwardingAllowed,proto3" json:"forwarding_allowed,omitempty"`
 	GasLimit          *uint32 `protobuf:"varint,16,opt,name=gas_limit,json=gasLimit,proto3,oneof" json:"gas_limit,omitempty"`
 	StreamId          *uint32 `protobuf:"varint,17,opt,name=stream_id,json=streamId,proto3,oneof" json:"stream_id,omitempty"`
-	// Unix epoch milliseconds, UTC; unset when the job has no creation time.
-	// Milliseconds rather than an RFC3339 string because Go trims trailing zeros
-	// from the fractional seconds, which makes those strings variable-width and
-	// not lexicographically ordered: a whole-second value sorts after every
-	// sub-second value in the same second.
+	// Epoch millis, UTC. Not RFC3339: Go emits those at variable width, so they
+	// don't sort chronologically.
 	CreatedAtMs *int64 `protobuf:"varint,18,opt,name=created_at_ms,json=createdAtMs,proto3,oneof" json:"created_at_ms,omitempty"`
-	// Complete job definition serialized as TOML. Captures all type-specific
-	// spec fields for any job type without requiring a per-type schema.
+	// Whole job definition as TOML, covering all type-specific spec fields.
 	SpecToml string `protobuf:"bytes,30,opt,name=spec_toml,json=specToml,proto3" json:"spec_toml,omitempty"`
 	// Event metadata.
 	Trigger     CLJobInfoTrigger `protobuf:"varint,40,opt,name=trigger,proto3,enum=common.v1.CLJobInfoTrigger" json:"trigger,omitempty"`
 	TimestampMs int64            `protobuf:"varint,41,opt,name=timestamp_ms,json=timestampMs,proto3" json:"timestamp_ms,omitempty"`
-	// Job Distributor provenance, set only for jobs that reached the node as an
-	// approved job proposal. Jobs created directly (CLI, UI, TOML on disk) leave
-	// these unset, which is itself the signal that the job is unmanaged.
+	// JD provenance. Unset for jobs created directly (CLI, UI, TOML on disk),
+	// which is how a consumer spots an unmanaged job.
 	FeedsManagerId *int64 `protobuf:"varint,50,opt,name=feeds_manager_id,json=feedsManagerId,proto3,oneof" json:"feeds_manager_id,omitempty"`
-	// remote_uuid is the proposal's UUID in the Job Distributor, i.e. the join
-	// key back to api.job.v1.Job.uuid.
+	// Join key back to api.job.v1.Job.uuid.
 	RemoteUuid *string `protobuf:"bytes,51,opt,name=remote_uuid,json=remoteUuid,proto3,oneof" json:"remote_uuid,omitempty"`
-	// spec_version is the revision of the approved proposal spec that produced
-	// the running job.
+	// Revision of the approved proposal spec that produced this job.
 	SpecVersion   *int32 `protobuf:"varint,52,opt,name=spec_version,json=specVersion,proto3,oneof" json:"spec_version,omitempty"`
 	ProposedAtMs  *int64 `protobuf:"varint,53,opt,name=proposed_at_ms,json=proposedAtMs,proto3,oneof" json:"proposed_at_ms,omitempty"`
 	ApprovedAtMs  *int64 `protobuf:"varint,54,opt,name=approved_at_ms,json=approvedAtMs,proto3,oneof" json:"approved_at_ms,omitempty"`
