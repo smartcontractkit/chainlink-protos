@@ -423,6 +423,10 @@ service Client {
             {
               key: "xlayer-testnet"
               value: 10212741611335999305
+            },
+            {
+              key: "private-testnet-basalt"
+              value: 18362000170840307455
             }
           ]
         }
