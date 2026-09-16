@@ -269,6 +269,10 @@ service Client {
               value: 1562403441176082196
             },
             {
+              key: "ethereum-testnet-hoodi"
+              value: 10380998176179737091
+            },
+            {
               key: "ethereum-testnet-sepolia"
               value: 16015286601757825753
             },
