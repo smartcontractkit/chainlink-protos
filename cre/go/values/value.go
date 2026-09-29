@@ -221,7 +221,7 @@ func FromProto(val *pb.Value) (Value, error) {
 	case *pb.Value_BoolValue:
 		return NewBool(val.GetBoolValue()), nil
 	case *pb.Value_DecimalValue:
-		return fromDecimalValueProto(val.GetDecimalValue()), nil
+		return fromDecimalValueProto(val.GetDecimalValue())
 	case *pb.Value_Int64Value:
 		return NewInt64(val.GetInt64Value()), nil
 	case *pb.Value_BytesValue:
@@ -276,13 +276,17 @@ func FromListValueProto(lv *pb.List) (*List, error) {
 	return &List{Underlying: nl}, nil
 }
 
-func fromDecimalValueProto(dec *pb.Decimal) *Decimal {
+func fromDecimalValueProto(dec *pb.Decimal) (*Decimal, error) {
 	if dec == nil {
-		return nil
+		return nil, nil
+	}
+
+	if dec.Coefficient == nil {
+		return nil, errors.New("decimal must have a non-nil coefficient")
 	}
 
 	dc := decimal.NewFromBigInt(ProtoToBigInt(dec.Coefficient), dec.Exponent)
-	return NewDecimal(dc)
+	return NewDecimal(dc), nil
 }
 
 func ProtoToBigInt(biv *pb.BigInt) *big.Int {
