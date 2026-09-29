@@ -1017,6 +1017,11 @@ message ConfidentialWorkflowResponse {
   // the same sdk.v1alpha.ExecutionResult as the serialized execution_result
   // bytes field; the two are independent on the wire.
   sdk.v1alpha.ExecutionResult sdk_execution_result = 2;
+  // execution_duration_ms is the enclave-measured wall-clock duration of the
+  // WASM execution in milliseconds, used to meter confidential compute
+  // (cre:workflow:compute). Presence distinguishes an unavailable measurement
+  // from a measured zero; older enclaves leave it unset.
+  optional int64 execution_duration_ms = 3;
 }
 
 message ProvidedTeesResponse {
