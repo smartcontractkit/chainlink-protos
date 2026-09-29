@@ -6,6 +6,8 @@ import (
 	"github.com/shopspring/decimal"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/smartcontractkit/chainlink-protos/cre/go/values/pb"
 )
 
 func Test_DecimalUnwrapTo(t *testing.T) {
@@ -130,4 +132,15 @@ func Test_DecimalUnwrapToFloat32(t *testing.T) {
 		var actual float32
 		require.Error(t, wrapped.UnwrapTo(&actual))
 	})
+}
+
+func Test_DecimalFromProto_NilCoefficient(t *testing.T) {
+	v := &pb.Value{
+		Value: &pb.Value_DecimalValue{
+			DecimalValue: &pb.Decimal{Exponent: 2},
+		},
+	}
+
+	_, err := FromProto(v)
+	assert.ErrorContains(t, err, "decimal must have a non-nil coefficient")
 }
