@@ -13,6 +13,9 @@ service CommitteeVerifier {
   rpc ReadCommitteeVerifierNodeResult(ReadCommitteeVerifierNodeResultRequest) returns (ReadCommitteeVerifierNodeResultResponse);
   rpc WriteChainStatus(WriteChainStatusRequest) returns (WriteChainStatusResponse);
   rpc ReadChainStatus(ReadChainStatusRequest) returns (ReadChainStatusResponse);
+  // GetMessageStatus is public: anonymous callers can use it. It returns the quorum progress of one message.
+  // The count is returned also when the message CCV addresses do not include the committee source verifier.
+  rpc GetMessageStatus(GetMessageStatusRequest) returns (GetMessageStatusResponse);
 }
 
 enum WriteStatus {
@@ -81,3 +84,24 @@ message ReadCommitteeVerifierNodeResultResponse {
   CommitteeVerifierNodeResult committee_verifier_node_result = 1;
 }
 
+message GetMessageStatusRequest {
+  // The message ID. It must be exactly 32 bytes.
+  bytes message_id = 1;
+}
+
+message GetMessageStatusResponse {
+  bytes message_id = 1;
+  // The number of committee signers that verified the message. It can be more than the threshold.
+  uint32 verification_count = 2;
+  // The number of signers that is necessary for the quorum.
+  uint32 threshold = 3;
+  // True when GetVerifierResultsForMessage returns a result for the message with the current committee.
+  // For message-discovery messages, true when an aggregated report exists.
+  bool aggregated = 4;
+  // Unix milliseconds when the aggregator received the first counted verification. Zero when the count is zero.
+  int64 first_verification_at = 5;
+  // Unix milliseconds when the aggregator received the latest counted verification. Zero when the count is zero.
+  int64 latest_verification_at = 6;
+  // Unix milliseconds when the aggregator stored the report. Zero when aggregated is false.
+  int64 aggregated_at = 7;
+}
