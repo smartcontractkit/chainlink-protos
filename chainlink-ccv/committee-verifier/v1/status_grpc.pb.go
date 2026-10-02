@@ -8,6 +8,7 @@ package v1
 
 import (
 	context "context"
+
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -28,6 +29,7 @@ const (
 //
 // CommitteeVerifierStatus is a public read-only API that shows the quorum progress of a message.
 type CommitteeVerifierStatusClient interface {
+	// The count is returned also when the message CCV addresses do not include the committee source verifier.
 	GetMessageStatus(ctx context.Context, in *GetMessageStatusRequest, opts ...grpc.CallOption) (*GetMessageStatusResponse, error)
 }
 
@@ -55,6 +57,7 @@ func (c *committeeVerifierStatusClient) GetMessageStatus(ctx context.Context, in
 //
 // CommitteeVerifierStatus is a public read-only API that shows the quorum progress of a message.
 type CommitteeVerifierStatusServer interface {
+	// The count is returned also when the message CCV addresses do not include the committee source verifier.
 	GetMessageStatus(context.Context, *GetMessageStatusRequest) (*GetMessageStatusResponse, error)
 	mustEmbedUnimplementedCommitteeVerifierStatusServer()
 }

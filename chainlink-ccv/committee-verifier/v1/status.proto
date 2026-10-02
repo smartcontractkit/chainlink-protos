@@ -6,6 +6,7 @@ option go_package = "github.com/smartcontractkit/chainlink-protos/chainlink-ccv/
 
 // CommitteeVerifierStatus is a public read-only API that shows the quorum progress of a message.
 service CommitteeVerifierStatus {
+  // The count is returned also when the message CCV addresses do not include the committee source verifier.
   rpc GetMessageStatus(GetMessageStatusRequest) returns (GetMessageStatusResponse);
 }
 
@@ -20,6 +21,13 @@ message GetMessageStatusResponse {
   uint32 verification_count = 2;
   // The number of signers that is necessary for the quorum.
   uint32 threshold = 3;
-  // True when the aggregator has an aggregated report for the message.
+  // True when GetVerifierResultsForMessage returns a result for the message with the current committee.
+  // For message-discovery messages, true when an aggregated report exists.
   bool aggregated = 4;
+  // Unix milliseconds when the aggregator received the first counted verification. Zero when the count is zero.
+  int64 first_verification_at = 5;
+  // Unix milliseconds when the aggregator received the latest counted verification. Zero when the count is zero.
+  int64 latest_verification_at = 6;
+  // Unix milliseconds when the aggregator stored the report. Zero when aggregated is false.
+  int64 aggregated_at = 7;
 }

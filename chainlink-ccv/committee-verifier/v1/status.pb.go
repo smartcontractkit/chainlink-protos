@@ -73,8 +73,15 @@ type GetMessageStatusResponse struct {
 	VerificationCount uint32 `protobuf:"varint,2,opt,name=verification_count,json=verificationCount,proto3" json:"verification_count,omitempty"`
 	// The number of signers that is necessary for the quorum.
 	Threshold uint32 `protobuf:"varint,3,opt,name=threshold,proto3" json:"threshold,omitempty"`
-	// True when the aggregator has an aggregated report for the message.
-	Aggregated    bool `protobuf:"varint,4,opt,name=aggregated,proto3" json:"aggregated,omitempty"`
+	// True when GetVerifierResultsForMessage returns a result for the message with the current committee.
+	// For message-discovery messages, true when an aggregated report exists.
+	Aggregated bool `protobuf:"varint,4,opt,name=aggregated,proto3" json:"aggregated,omitempty"`
+	// Unix milliseconds when the aggregator received the first counted verification. Zero when the count is zero.
+	FirstVerificationAt int64 `protobuf:"varint,5,opt,name=first_verification_at,json=firstVerificationAt,proto3" json:"first_verification_at,omitempty"`
+	// Unix milliseconds when the aggregator received the latest counted verification. Zero when the count is zero.
+	LatestVerificationAt int64 `protobuf:"varint,6,opt,name=latest_verification_at,json=latestVerificationAt,proto3" json:"latest_verification_at,omitempty"`
+	// Unix milliseconds when the aggregator stored the report. Zero when aggregated is false.
+	AggregatedAt  int64 `protobuf:"varint,7,opt,name=aggregated_at,json=aggregatedAt,proto3" json:"aggregated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -137,6 +144,27 @@ func (x *GetMessageStatusResponse) GetAggregated() bool {
 	return false
 }
 
+func (x *GetMessageStatusResponse) GetFirstVerificationAt() int64 {
+	if x != nil {
+		return x.FirstVerificationAt
+	}
+	return 0
+}
+
+func (x *GetMessageStatusResponse) GetLatestVerificationAt() int64 {
+	if x != nil {
+		return x.LatestVerificationAt
+	}
+	return 0
+}
+
+func (x *GetMessageStatusResponse) GetAggregatedAt() int64 {
+	if x != nil {
+		return x.AggregatedAt
+	}
+	return 0
+}
+
 var File_committee_verifier_v1_status_proto protoreflect.FileDescriptor
 
 const file_committee_verifier_v1_status_proto_rawDesc = "" +
@@ -144,7 +172,7 @@ const file_committee_verifier_v1_status_proto_rawDesc = "" +
 	"\"committee-verifier/v1/status.proto\x12#chainlink_ccv.committee_verifier.v1\"8\n" +
 	"\x17GetMessageStatusRequest\x12\x1d\n" +
 	"\n" +
-	"message_id\x18\x01 \x01(\fR\tmessageId\"\xa6\x01\n" +
+	"message_id\x18\x01 \x01(\fR\tmessageId\"\xb5\x02\n" +
 	"\x18GetMessageStatusResponse\x12\x1d\n" +
 	"\n" +
 	"message_id\x18\x01 \x01(\fR\tmessageId\x12-\n" +
@@ -152,7 +180,10 @@ const file_committee_verifier_v1_status_proto_rawDesc = "" +
 	"\tthreshold\x18\x03 \x01(\rR\tthreshold\x12\x1e\n" +
 	"\n" +
 	"aggregated\x18\x04 \x01(\bR\n" +
-	"aggregated2\xab\x01\n" +
+	"aggregated\x122\n" +
+	"\x15first_verification_at\x18\x05 \x01(\x03R\x13firstVerificationAt\x124\n" +
+	"\x16latest_verification_at\x18\x06 \x01(\x03R\x14latestVerificationAt\x12#\n" +
+	"\raggregated_at\x18\a \x01(\x03R\faggregatedAt2\xab\x01\n" +
 	"\x17CommitteeVerifierStatus\x12\x8f\x01\n" +
 	"\x10GetMessageStatus\x12<.chainlink_ccv.committee_verifier.v1.GetMessageStatusRequest\x1a=.chainlink_ccv.committee_verifier.v1.GetMessageStatusResponseBRZPgithub.com/smartcontractkit/chainlink-protos/chainlink-ccv/committee-verifier/v1b\x06proto3"
 
