@@ -24,6 +24,7 @@ const (
 	CommitteeVerifier_ReadCommitteeVerifierNodeResult_FullMethodName       = "/chainlink_ccv.committee_verifier.v1.CommitteeVerifier/ReadCommitteeVerifierNodeResult"
 	CommitteeVerifier_WriteChainStatus_FullMethodName                      = "/chainlink_ccv.committee_verifier.v1.CommitteeVerifier/WriteChainStatus"
 	CommitteeVerifier_ReadChainStatus_FullMethodName                       = "/chainlink_ccv.committee_verifier.v1.CommitteeVerifier/ReadChainStatus"
+	CommitteeVerifier_GetMessageStatus_FullMethodName                      = "/chainlink_ccv.committee_verifier.v1.CommitteeVerifier/GetMessageStatus"
 )
 
 // CommitteeVerifierClient is the client API for CommitteeVerifier service.
@@ -35,6 +36,9 @@ type CommitteeVerifierClient interface {
 	ReadCommitteeVerifierNodeResult(ctx context.Context, in *ReadCommitteeVerifierNodeResultRequest, opts ...grpc.CallOption) (*ReadCommitteeVerifierNodeResultResponse, error)
 	WriteChainStatus(ctx context.Context, in *WriteChainStatusRequest, opts ...grpc.CallOption) (*WriteChainStatusResponse, error)
 	ReadChainStatus(ctx context.Context, in *ReadChainStatusRequest, opts ...grpc.CallOption) (*ReadChainStatusResponse, error)
+	// GetMessageStatus is public: anonymous callers can use it. It returns the quorum progress of one message.
+	// The count is returned also when the message CCV addresses do not include the committee source verifier.
+	GetMessageStatus(ctx context.Context, in *GetMessageStatusRequest, opts ...grpc.CallOption) (*GetMessageStatusResponse, error)
 }
 
 type committeeVerifierClient struct {
@@ -95,6 +99,16 @@ func (c *committeeVerifierClient) ReadChainStatus(ctx context.Context, in *ReadC
 	return out, nil
 }
 
+func (c *committeeVerifierClient) GetMessageStatus(ctx context.Context, in *GetMessageStatusRequest, opts ...grpc.CallOption) (*GetMessageStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetMessageStatusResponse)
+	err := c.cc.Invoke(ctx, CommitteeVerifier_GetMessageStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CommitteeVerifierServer is the server API for CommitteeVerifier service.
 // All implementations must embed UnimplementedCommitteeVerifierServer
 // for forward compatibility.
@@ -104,6 +118,9 @@ type CommitteeVerifierServer interface {
 	ReadCommitteeVerifierNodeResult(context.Context, *ReadCommitteeVerifierNodeResultRequest) (*ReadCommitteeVerifierNodeResultResponse, error)
 	WriteChainStatus(context.Context, *WriteChainStatusRequest) (*WriteChainStatusResponse, error)
 	ReadChainStatus(context.Context, *ReadChainStatusRequest) (*ReadChainStatusResponse, error)
+	// GetMessageStatus is public: anonymous callers can use it. It returns the quorum progress of one message.
+	// The count is returned also when the message CCV addresses do not include the committee source verifier.
+	GetMessageStatus(context.Context, *GetMessageStatusRequest) (*GetMessageStatusResponse, error)
 	mustEmbedUnimplementedCommitteeVerifierServer()
 }
 
@@ -128,6 +145,9 @@ func (UnimplementedCommitteeVerifierServer) WriteChainStatus(context.Context, *W
 }
 func (UnimplementedCommitteeVerifierServer) ReadChainStatus(context.Context, *ReadChainStatusRequest) (*ReadChainStatusResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReadChainStatus not implemented")
+}
+func (UnimplementedCommitteeVerifierServer) GetMessageStatus(context.Context, *GetMessageStatusRequest) (*GetMessageStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMessageStatus not implemented")
 }
 func (UnimplementedCommitteeVerifierServer) mustEmbedUnimplementedCommitteeVerifierServer() {}
 func (UnimplementedCommitteeVerifierServer) testEmbeddedByValue()                           {}
@@ -240,6 +260,24 @@ func _CommitteeVerifier_ReadChainStatus_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CommitteeVerifier_GetMessageStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMessageStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CommitteeVerifierServer).GetMessageStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CommitteeVerifier_GetMessageStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CommitteeVerifierServer).GetMessageStatus(ctx, req.(*GetMessageStatusRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CommitteeVerifier_ServiceDesc is the grpc.ServiceDesc for CommitteeVerifier service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -266,6 +304,10 @@ var CommitteeVerifier_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ReadChainStatus",
 			Handler:    _CommitteeVerifier_ReadChainStatus_Handler,
+		},
+		{
+			MethodName: "GetMessageStatus",
+			Handler:    _CommitteeVerifier_GetMessageStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
