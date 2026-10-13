@@ -1563,6 +1563,7 @@ message ExecutionResult {
     TriggerSubscriptionRequest trigger_subscriptions = 3;
     Restrictions restrictions = 4;
   }
+  optional int64 compute_duration_ms = 5;
 }
 
 message GetSecretsRequest {
