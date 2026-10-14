@@ -1449,14 +1449,8 @@ type ExecutionResult struct {
 	//	*ExecutionResult_Error
 	//	*ExecutionResult_TriggerSubscriptions
 	//	*ExecutionResult_Restrictions
-	Result isExecutionResult_Result `protobuf_oneof:"result"`
-	// compute_duration_ms is the wall-clock duration of the workflow run in
-	// milliseconds, as measured by the module that executed it: the guest run
-	// for the WASM host, the enclave-reported duration for confidential
-	// workflows. The host sets it after the run and the engine meters it as
-	// compute (cre:workflow:compute). Presence distinguishes an unavailable
-	// measurement from a measured zero.
-	ComputeDurationMs *int64 `protobuf:"varint,5,opt,name=compute_duration_ms,json=computeDurationMs,proto3,oneof" json:"compute_duration_ms,omitempty"`
+	Result            isExecutionResult_Result `protobuf_oneof:"result"`
+	ComputeDurationMs *int64                   `protobuf:"varint,5,opt,name=compute_duration_ms,json=computeDurationMs,proto3,oneof" json:"compute_duration_ms,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }

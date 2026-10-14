@@ -146,12 +146,6 @@ message ExecutionResult {
     TriggerSubscriptionRequest trigger_subscriptions = 3;
     Restrictions restrictions = 4;
   }
-  // compute_duration_ms is the wall-clock duration of the workflow run in
-  // milliseconds, as measured by the module that executed it: the guest run
-  // for the WASM host, the enclave-reported duration for confidential
-  // workflows. The host sets it after the run and the engine meters it as
-  // compute (cre:workflow:compute). Presence distinguishes an unavailable
-  // measurement from a measured zero.
   optional int64 compute_duration_ms = 5;
 }
 
