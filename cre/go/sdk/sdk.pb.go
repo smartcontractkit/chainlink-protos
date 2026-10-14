@@ -1441,9 +1441,10 @@ type ExecutionResult struct {
 	//	*ExecutionResult_Error
 	//	*ExecutionResult_TriggerSubscriptions
 	//	*ExecutionResult_Restrictions
-	Result        isExecutionResult_Result `protobuf_oneof:"result"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Result            isExecutionResult_Result `protobuf_oneof:"result"`
+	ComputeDurationMs *int64                   `protobuf:"varint,5,opt,name=compute_duration_ms,json=computeDurationMs,proto3,oneof" json:"compute_duration_ms,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *ExecutionResult) Reset() {
@@ -1517,6 +1518,13 @@ func (x *ExecutionResult) GetRestrictions() *Restrictions {
 		}
 	}
 	return nil
+}
+
+func (x *ExecutionResult) GetComputeDurationMs() int64 {
+	if x != nil && x.ComputeDurationMs != nil {
+		return *x.ComputeDurationMs
+	}
+	return 0
 }
 
 type isExecutionResult_Result interface {
@@ -2519,13 +2527,15 @@ const file_sdk_v1alpha_sdk_proto_rawDesc = "" +
 	"\atrigger\x18\x03 \x01(\v2\x14.sdk.v1alpha.TriggerH\x00R\atrigger\x121\n" +
 	"\bpre_hook\x18\x05 \x01(\v2\x14.sdk.v1alpha.TriggerH\x00R\apreHook\x12*\n" +
 	"\x11max_response_size\x18\x04 \x01(\x04R\x0fmaxResponseSizeB\t\n" +
-	"\arequest\"\xfe\x01\n" +
+	"\arequest\"\xcb\x02\n" +
 	"\x0fExecutionResult\x12(\n" +
 	"\x05value\x18\x01 \x01(\v2\x10.values.v1.ValueH\x00R\x05value\x12\x16\n" +
 	"\x05error\x18\x02 \x01(\tH\x00R\x05error\x12^\n" +
 	"\x15trigger_subscriptions\x18\x03 \x01(\v2'.sdk.v1alpha.TriggerSubscriptionRequestH\x00R\x14triggerSubscriptions\x12?\n" +
-	"\frestrictions\x18\x04 \x01(\v2\x19.sdk.v1alpha.RestrictionsH\x00R\frestrictionsB\b\n" +
-	"\x06result\"l\n" +
+	"\frestrictions\x18\x04 \x01(\v2\x19.sdk.v1alpha.RestrictionsH\x00R\frestrictions\x123\n" +
+	"\x13compute_duration_ms\x18\x05 \x01(\x03H\x01R\x11computeDurationMs\x88\x01\x01B\b\n" +
+	"\x06resultB\x16\n" +
+	"\x14_compute_duration_ms\"l\n" +
 	"\x11GetSecretsRequest\x126\n" +
 	"\brequests\x18\x01 \x03(\v2\x1a.sdk.v1alpha.SecretRequestR\brequests\x12\x1f\n" +
 	"\vcallback_id\x18\x02 \x01(\x05R\n" +
