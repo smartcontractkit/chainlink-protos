@@ -1504,6 +1504,15 @@ message WorkflowExecution {
   // restrictions on the capabilities and the secrets.bool
   // This is sent to avoid overhead when a TEE is not compromised, the DON will verify the restrictions on its end as well.
   sdk.v1alpha.Restrictions restrictions = 10;
+
+  // workflow_don_name is the name of the workflow DON that started this execution,
+  // as configured on Gateway nodes: the node's GatewayConnector DonID without its
+  // "_shard-N" suffix. The enclave copies it into confidential relay requests so the
+  // Gateway routes them to the right DON.
+  string workflow_don_name = 11;
+  // workflow_don_shard_index is the shard of that DON that started this execution,
+  // parsed from the "_shard-N" suffix of the GatewayConnector DonID (0 if absent).
+  uint32 workflow_don_shard_index = 12;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
