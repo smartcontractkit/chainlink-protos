@@ -107,7 +107,7 @@ jobs:
 
       - name: Commit auto-fix changes using ghcommit
         if: github.actor != 'app-token-issuer-engops[bot]' && steps.setup.outputs.cre_changed == 'true'
-        uses: planetscale/ghcommit-action@v0.1.45
+        uses: planetscale/ghcommit-action@88c53665a0c85bc370b410610f2bcf1979204651 # v0.1.45
         with:
           commit_message: "Auto-fix: buf format, gofmt, go generate, go mod tidy"
           repo: ${{ github.repository }}

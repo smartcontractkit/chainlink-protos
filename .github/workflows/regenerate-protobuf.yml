@@ -171,7 +171,7 @@ jobs:
         run: |
           task proto:all
 
-      - uses: planetscale/ghcommit-action@v0.1.45
+      - uses: planetscale/ghcommit-action@88c53665a0c85bc370b410610f2bcf1979204651 # v0.1.45
         if: github.actor != 'app-token-issuer-engops[bot]'
         with:
           commit_message: "bot: regenerate protobuf files"
