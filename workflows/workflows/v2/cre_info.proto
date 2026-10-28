@@ -23,4 +23,8 @@ message CreInfo {
   //   - GRPC source:      "grpc:{source_name}:v1"
   //   - File source:      "file:{source_name}:v1"
   string workflowSource = 11;
+  // shardIndex is the shard the emitting node belongs to.
+  uint32 shardIndex = 12;
+  // workflowDonID is the workflow DON the event's execution belongs to.
+  int32 workflowDonID = 13;
 }
