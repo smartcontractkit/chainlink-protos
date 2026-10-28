@@ -39,8 +39,12 @@ type CreInfo struct {
 	//   - GRPC source:      "grpc:{source_name}:v1"
 	//   - File source:      "file:{source_name}:v1"
 	WorkflowSource string `protobuf:"bytes,11,opt,name=workflowSource,proto3" json:"workflowSource,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// shardIndex is the shard the emitting node belongs to.
+	ShardIndex uint32 `protobuf:"varint,12,opt,name=shardIndex,proto3" json:"shardIndex,omitempty"`
+	// workflowDonID is the workflow DON the event's execution belongs to.
+	WorkflowDonID int32 `protobuf:"varint,13,opt,name=workflowDonID,proto3" json:"workflowDonID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreInfo) Reset() {
@@ -150,11 +154,25 @@ func (x *CreInfo) GetWorkflowSource() string {
 	return ""
 }
 
+func (x *CreInfo) GetShardIndex() uint32 {
+	if x != nil {
+		return x.ShardIndex
+	}
+	return 0
+}
+
+func (x *CreInfo) GetWorkflowDonID() int32 {
+	if x != nil {
+		return x.WorkflowDonID
+	}
+	return 0
+}
+
 var File_workflows_v2_cre_info_proto protoreflect.FileDescriptor
 
 const file_workflows_v2_cre_info_proto_rawDesc = "" +
 	"\n" +
-	"\x1bworkflows/v2/cre_info.proto\x12\fworkflows.v2\"\xb7\x03\n" +
+	"\x1bworkflows/v2/cre_info.proto\x12\fworkflows.v2\"\xfd\x03\n" +
 	"\aCreInfo\x12\x14\n" +
 	"\x05donID\x18\x01 \x01(\x05R\x05donID\x12\x12\n" +
 	"\x04donF\x18\x02 \x01(\x05R\x04donF\x12\x12\n" +
@@ -169,7 +187,11 @@ const file_workflows_v2_cre_info_proto_rawDesc = "" +
 	"donVersion\x18\n" +
 	" \x01(\tR\n" +
 	"donVersion\x12&\n" +
-	"\x0eworkflowSource\x18\v \x01(\tR\x0eworkflowSourceB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
+	"\x0eworkflowSource\x18\v \x01(\tR\x0eworkflowSource\x12\x1e\n" +
+	"\n" +
+	"shardIndex\x18\f \x01(\rR\n" +
+	"shardIndex\x12$\n" +
+	"\rworkflowDonID\x18\r \x01(\x05R\rworkflowDonIDB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
 
 var (
 	file_workflows_v2_cre_info_proto_rawDescOnce sync.Once
