@@ -128,6 +128,16 @@ message AwaitCapabilitiesRequest {
 message AwaitCapabilitiesResponse {
   map<int32, CapabilityResponse> responses = 1;
 }
+
+// WorkflowExecutionMetadata describes execution and its DON snapshot.
+message WorkflowExecutionMetadata {
+  string workflow_id = 1; // 32-byte lowercase hex id w/o a 0x prefix.
+  string execution_id = 2; // Empty for subscribe; otherwise the engine-generated execution identifier.
+  string workflow_owner = 3; // 20-byte lowercase hex owner w/o a 0x prefix.
+  uint32 don_id = 4;
+  uint32 don_f = 5;
+}
+
 message ExecuteRequest {
   bytes config = 1;
   oneof request {
@@ -137,6 +147,7 @@ message ExecuteRequest {
   }
   uint64 max_response_size = 4;
   bool suspend_on_await = 6;
+  WorkflowExecutionMetadata execution_metadata = 7;
 }
 
 message ExecutionResult {
