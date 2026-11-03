@@ -1454,6 +1454,7 @@ const computeConfidentialworkflowV1alphaClientEmbedded = `syntax = "proto3";
 
 package capabilities.compute.confidentialworkflow.v1alpha;
 
+import "google/protobuf/duration.proto";
 import "google/protobuf/empty.proto";
 import "sdk/v1alpha/sdk.proto";
 import "tools/generator/v1alpha/cre_metadata.proto";
@@ -1504,6 +1505,43 @@ message WorkflowExecution {
   // restrictions on the capabilities and the secrets.bool
   // This is sent to avoid overhead when a TEE is not compromised, the DON will verify the restrictions on its end as well.
   sdk.v1alpha.Restrictions restrictions = 10;
+
+  // limits carries the CRE limits the workflow DON resolved for this execution.
+  // Being part of PublicData, it is covered by ComputeRequest.Hash() and signed
+  // by the DON quorum. When absent, the enclave applies no CRE limits.
+  ExecutionLimits limits = 11;
+}
+
+// ExecutionLimits holds CRE limits resolved by the workflow DON. An unset field
+// is not applied; the enclave decides how to apply the rest.
+message ExecutionLimits {
+  HTTPActionLimits http_action = 1;
+  WASMLimits wasm = 2;
+}
+
+// HTTPActionLimits mirrors PerWorkflow.HTTPAction.* for in-enclave http-actions.
+message HTTPActionLimits {
+  optional uint32 call_limit = 1;
+  optional uint64 request_size_limit_bytes = 2;
+  optional uint64 response_size_limit_bytes = 3;
+  google.protobuf.Duration connection_timeout = 4;
+}
+
+// WASMLimits mirrors the PerWorkflow limits CRE applies around the WASM host.
+// Binary sizes are omitted because the DON enforces them at registration, and
+// the response size limit travels as sdk_execute_request.max_response_size.
+message WASMLimits {
+  optional uint64 memory_limit_bytes = 1;
+  google.protobuf.Duration execution_timeout = 2;
+  optional bool response_limit_enforced = 3;
+  optional uint32 capability_concurrency_limit = 4;
+  optional uint64 log_line_limit_bytes = 5;
+  optional uint32 log_event_limit = 6;
+  optional bool user_metric_enabled = 7;
+  optional uint64 user_metric_payload_limit_bytes = 8;
+  optional uint32 user_metric_name_length_limit = 9;
+  optional uint32 user_metric_labels_per_metric = 10;
+  optional uint32 user_metric_label_value_length = 11;
 }
 
 // ConfidentialWorkflowRequest is the input provided to the confidential workflows capability.
