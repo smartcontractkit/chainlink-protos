@@ -676,6 +676,7 @@ message WriteReportReply {
   optional bytes tx_hash = 3;
   optional values.v1.BigInt transaction_fee = 4;
   optional string error_message = 5;
+  optional uint64 block_timestamp = 6; // block timestamp in microseconds
 }
 `
 
