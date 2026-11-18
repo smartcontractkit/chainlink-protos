@@ -87,6 +87,9 @@ beholder:
     - entity: TransactionInfo
       schema: "workflows/v2/transaction_info.proto"
 
+    - entity: ChainTransactionObserved
+      schema: "workflows/v2/chain_transaction_observed.proto"
+
     - entity: Workflow
       schema: "workflows/v2/workflow.proto"
       references:
