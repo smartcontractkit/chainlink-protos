@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package workflows.v2;
+
+option go_package = "github.com/smartcontractkit/chainlink-protos/workflows/go/v2";
+
+// TxStatus is the on-chain outcome of the billed transaction, as known when the capability
+// reports its fee. Consumers fetch the receipt for anything beyond that.
+enum TxStatus {
+  TX_STATUS_UNSPECIFIED = 0;
+  TX_STATUS_SUCCESS = 1;
+  TX_STATUS_REVERTED = 2;
+  TX_STATUS_FAILED = 3;
+}
+
+// TransmissionOutcome is what happened to the report once it reached the receiver, as seen by
+// the forwarder. It is independent of TxStatus: a transaction can succeed on chain while the
+// receiver rejects or reverts the report.
+enum TransmissionOutcome {
+  TRANSMISSION_OUTCOME_UNSPECIFIED = 0;
+  // The forwarder delivered the report and the receiver accepted it.
+  TRANSMISSION_OUTCOME_SUCCEEDED = 1;
+  // The forwarder delivered the report but the receiver call reverted (an internal revert).
+  TRANSMISSION_OUTCOME_RECEIVER_REVERTED = 2;
+  // The receiver is not a valid report receiver, so the forwarder did not deliver the report.
+  TRANSMISSION_OUTCOME_INVALID_RECEIVER = 3;
+  // The transmission failed for another reason.
+  TRANSMISSION_OUTCOME_FAILED = 4;
+  // The forwarder has no record of a delivery attempt for this report.
+  TRANSMISSION_OUTCOME_NOT_ATTEMPTED = 5;
+}
+
+// ChainTransactionObserved is emitted once per write, for the transaction whose fee the
+// capability puts in its billing metadata. That is the first successful transmission when
+// the report landed, or the failed transmission the capability still charges for. It carries
+// only what is needed to attribute that transaction to the execution; the Blockchain Finality
+// Service dedups events by (chain_selector, tx_hash) and resolves the receipt, fee and
+// finality itself.
+message ChainTransactionObserved {
+  string workflow_execution_id = 1;
+  string workflow_id = 2;
+  uint64 chain_selector = 3;
+  // Chain-native encoding. EVM: 0x-prefixed lowercase hex. Solana: base58 signature.
+  string tx_hash = 4;
+  TxStatus tx_status = 5;
+  // Unix milliseconds at which the node observed the transaction.
+  int64 observed_at_ms = 6;
+  // Outcome of the report transmission as seen by the forwarder, when the chain reports one.
+  TransmissionOutcome transmission_outcome = 7;
+  // IsBilled indicates whether the customer was build for this tx.
+  bool is_billed = 8;
+}

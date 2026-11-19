@@ -190,6 +190,10 @@
       ]
     },
     {
+      "entity": "workflows.v2.ChainTransactionObserved",
+      "path": "workflows/v2/chain_transaction_observed.proto"
+    },
+    {
       "entity": "workflows.v2.WorkflowExecutionFinished",
       "path": "workflows/v2/workflow_execution_finished.proto",
       "references": [
