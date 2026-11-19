@@ -29,6 +29,7 @@ const (
 	TxStatus_TX_STATUS_UNSPECIFIED TxStatus = 0
 	TxStatus_TX_STATUS_SUCCESS     TxStatus = 1
 	TxStatus_TX_STATUS_REVERTED    TxStatus = 2
+	TxStatus_TX_STATUS_FAILED      TxStatus = 3
 )
 
 // Enum value maps for TxStatus.
@@ -37,11 +38,13 @@ var (
 		0: "TX_STATUS_UNSPECIFIED",
 		1: "TX_STATUS_SUCCESS",
 		2: "TX_STATUS_REVERTED",
+		3: "TX_STATUS_FAILED",
 	}
 	TxStatus_value = map[string]int32{
 		"TX_STATUS_UNSPECIFIED": 0,
 		"TX_STATUS_SUCCESS":     1,
 		"TX_STATUS_REVERTED":    2,
+		"TX_STATUS_FAILED":      3,
 	}
 )
 
@@ -156,8 +159,10 @@ type ChainTransactionObserved struct {
 	ObservedAtMs int64 `protobuf:"varint,6,opt,name=observed_at_ms,json=observedAtMs,proto3" json:"observed_at_ms,omitempty"`
 	// Outcome of the report transmission as seen by the forwarder, when the chain reports one.
 	TransmissionOutcome TransmissionOutcome `protobuf:"varint,7,opt,name=transmission_outcome,json=transmissionOutcome,proto3,enum=workflows.v2.TransmissionOutcome" json:"transmission_outcome,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	// IsBilled indicates whether the customer was build for this tx.
+	IsBilled      bool `protobuf:"varint,8,opt,name=is_billed,json=isBilled,proto3" json:"is_billed,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ChainTransactionObserved) Reset() {
@@ -239,11 +244,18 @@ func (x *ChainTransactionObserved) GetTransmissionOutcome() TransmissionOutcome 
 	return TransmissionOutcome_TRANSMISSION_OUTCOME_UNSPECIFIED
 }
 
+func (x *ChainTransactionObserved) GetIsBilled() bool {
+	if x != nil {
+		return x.IsBilled
+	}
+	return false
+}
+
 var File_workflows_v2_chain_transaction_observed_proto protoreflect.FileDescriptor
 
 const file_workflows_v2_chain_transaction_observed_proto_rawDesc = "" +
 	"\n" +
-	"-workflows/v2/chain_transaction_observed.proto\x12\fworkflows.v2\"\xe0\x02\n" +
+	"-workflows/v2/chain_transaction_observed.proto\x12\fworkflows.v2\"\xfd\x02\n" +
 	"\x18ChainTransactionObserved\x122\n" +
 	"\x15workflow_execution_id\x18\x01 \x01(\tR\x13workflowExecutionId\x12\x1f\n" +
 	"\vworkflow_id\x18\x02 \x01(\tR\n" +
@@ -252,11 +264,13 @@ const file_workflows_v2_chain_transaction_observed_proto_rawDesc = "" +
 	"\atx_hash\x18\x04 \x01(\tR\x06txHash\x123\n" +
 	"\ttx_status\x18\x05 \x01(\x0e2\x16.workflows.v2.TxStatusR\btxStatus\x12$\n" +
 	"\x0eobserved_at_ms\x18\x06 \x01(\x03R\fobservedAtMs\x12T\n" +
-	"\x14transmission_outcome\x18\a \x01(\x0e2!.workflows.v2.TransmissionOutcomeR\x13transmissionOutcome*T\n" +
+	"\x14transmission_outcome\x18\a \x01(\x0e2!.workflows.v2.TransmissionOutcomeR\x13transmissionOutcome\x12\x1b\n" +
+	"\tis_billed\x18\b \x01(\bR\bisBilled*j\n" +
 	"\bTxStatus\x12\x19\n" +
 	"\x15TX_STATUS_UNSPECIFIED\x10\x00\x12\x15\n" +
 	"\x11TX_STATUS_SUCCESS\x10\x01\x12\x16\n" +
-	"\x12TX_STATUS_REVERTED\x10\x02*\xff\x01\n" +
+	"\x12TX_STATUS_REVERTED\x10\x02\x12\x14\n" +
+	"\x10TX_STATUS_FAILED\x10\x03*\xff\x01\n" +
 	"\x13TransmissionOutcome\x12$\n" +
 	" TRANSMISSION_OUTCOME_UNSPECIFIED\x10\x00\x12\"\n" +
 	"\x1eTRANSMISSION_OUTCOME_SUCCEEDED\x10\x01\x12*\n" +
