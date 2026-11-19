@@ -10,6 +10,7 @@ enum TxStatus {
   TX_STATUS_UNSPECIFIED = 0;
   TX_STATUS_SUCCESS = 1;
   TX_STATUS_REVERTED = 2;
+  TX_STATUS_FAILED = 3;
 }
 
 // TransmissionOutcome is what happened to the report once it reached the receiver, as seen by
@@ -46,4 +47,6 @@ message ChainTransactionObserved {
   int64 observed_at_ms = 6;
   // Outcome of the report transmission as seen by the forwarder, when the chain reports one.
   TransmissionOutcome transmission_outcome = 7;
+  // IsBilled indicates whether the customer was build for this tx.
+  bool is_billed = 8;
 }
