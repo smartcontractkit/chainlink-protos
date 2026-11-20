@@ -141,6 +141,7 @@ message Receipt {
   values.v1.BigInt effective_gas_price = 8; // actual gas price paid in wei (include after EIP-1559)
   values.v1.BigInt block_number = 9; // block number containing the transaction
   bytes contract_address = 10; // address of the contract if this transaction created one in evm address [20]byte fix-sized array format
+  values.v1.BigInt l1_fee = 11; // L1 data fee paid on top of gas (L2 chains only), in wei
 }
 
 // ----- Request/Reply Wrappers -----
