@@ -27,4 +27,8 @@ message CreInfo {
   uint32 shardIndex = 12;
   // workflowDonID is the workflow DON the event's execution belongs to.
   int32 workflowDonID = 13;
+  // primaryDonID is the primary DON of the workflow's shard assignment; 0 when unknown.
+  uint32 primaryDonID = 14;
+  // secondaryDonID is the secondary DON of the workflow's shard assignment; 0 when unknown.
+  uint32 secondaryDonID = 15;
 }

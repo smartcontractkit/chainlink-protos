@@ -43,8 +43,12 @@ type CreInfo struct {
 	ShardIndex uint32 `protobuf:"varint,12,opt,name=shardIndex,proto3" json:"shardIndex,omitempty"`
 	// workflowDonID is the workflow DON the event's execution belongs to.
 	WorkflowDonID int32 `protobuf:"varint,13,opt,name=workflowDonID,proto3" json:"workflowDonID,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	// primaryDonID is the primary DON of the workflow's shard assignment; 0 when unknown.
+	PrimaryDonID uint32 `protobuf:"varint,14,opt,name=primaryDonID,proto3" json:"primaryDonID,omitempty"`
+	// secondaryDonID is the secondary DON of the workflow's shard assignment; 0 when unknown.
+	SecondaryDonID uint32 `protobuf:"varint,15,opt,name=secondaryDonID,proto3" json:"secondaryDonID,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *CreInfo) Reset() {
@@ -168,11 +172,25 @@ func (x *CreInfo) GetWorkflowDonID() int32 {
 	return 0
 }
 
+func (x *CreInfo) GetPrimaryDonID() uint32 {
+	if x != nil {
+		return x.PrimaryDonID
+	}
+	return 0
+}
+
+func (x *CreInfo) GetSecondaryDonID() uint32 {
+	if x != nil {
+		return x.SecondaryDonID
+	}
+	return 0
+}
+
 var File_workflows_v2_cre_info_proto protoreflect.FileDescriptor
 
 const file_workflows_v2_cre_info_proto_rawDesc = "" +
 	"\n" +
-	"\x1bworkflows/v2/cre_info.proto\x12\fworkflows.v2\"\xfd\x03\n" +
+	"\x1bworkflows/v2/cre_info.proto\x12\fworkflows.v2\"\xc9\x04\n" +
 	"\aCreInfo\x12\x14\n" +
 	"\x05donID\x18\x01 \x01(\x05R\x05donID\x12\x12\n" +
 	"\x04donF\x18\x02 \x01(\x05R\x04donF\x12\x12\n" +
@@ -191,7 +209,9 @@ const file_workflows_v2_cre_info_proto_rawDesc = "" +
 	"\n" +
 	"shardIndex\x18\f \x01(\rR\n" +
 	"shardIndex\x12$\n" +
-	"\rworkflowDonID\x18\r \x01(\x05R\rworkflowDonIDB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
+	"\rworkflowDonID\x18\r \x01(\x05R\rworkflowDonID\x12\"\n" +
+	"\fprimaryDonID\x18\x0e \x01(\rR\fprimaryDonID\x12&\n" +
+	"\x0esecondaryDonID\x18\x0f \x01(\rR\x0esecondaryDonIDB>Z<github.com/smartcontractkit/chainlink-protos/workflows/go/v2b\x06proto3"
 
 var (
 	file_workflows_v2_cre_info_proto_rawDescOnce sync.Once
