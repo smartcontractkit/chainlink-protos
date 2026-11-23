@@ -407,6 +407,10 @@ service Client {
               value: 13264668187771770619
             },
             {
+              key: "bitcoin-testnet-sepolia-bob-1"
+              value: 5535534526963509396
+            },
+            {
               key: "celo-mainnet"
               value: 1346049177634351622
             },
@@ -587,6 +591,10 @@ service Client {
               value: 6915682381028791124
             },
             {
+              key: "private-testnet-basalt"
+              value: 18362000170840307455
+            },
+            {
               key: "private-testnet-pumice"
               value: 1564738277398880633
             },
@@ -615,6 +623,10 @@ service Client {
               value: 11793402411494852765
             },
             {
+              key: "t-rex-testnet"
+              value: 17611928792452358269
+            },
+            {
               key: "tac-testnet"
               value: 9488606126177218005
             },
@@ -623,16 +635,8 @@ service Client {
               value: 8457817439310187923
             },
             {
-              key: "t-rex-testnet"
-              value: 17611928792452358269
-            },
-            {
               key: "xlayer-testnet"
               value: 10212741611335999305
-            },
-            {
-              key: "private-testnet-basalt"
-              value: 18362000170840307455
             }
           ]
         }
